@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="libmissioncontrol-server-mcd-chan-handler">
+<refmeta>
+<refentrytitle role="top_of_page" id="libmissioncontrol-server-mcd-chan-handler.top_of_page">McdChannelHandler</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdChannelHandler</refname>
+<refpurpose>Channel handler class corresponding to each .chandler file</refpurpose>
+</refnamediv>
+<refsect1 id="libmissioncontrol-server-mcd-chan-handler.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="libmissioncontrol-server-mcd-chan-handler.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-chan-handler.h&gt;
+
+<link linkend="GHashTable">GHashTable</link>*         <link linkend="mcd-get-channel-handlers">mcd_get_channel_handlers</link>            (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="libmissioncontrol-server-mcd-chan-handler.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+FIXME</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="libmissioncontrol-server-mcd-chan-handler.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="mcd-get-channel-handlers" role="function">
+<title>mcd_get_channel_handlers ()</title>
+<indexterm zone="mcd-get-channel-handlers"><primary sortas="mcd_get_channel_handlers">mcd_get_channel_handlers</primary></indexterm><programlisting><link linkend="GHashTable">GHashTable</link>*         mcd_get_channel_handlers            (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

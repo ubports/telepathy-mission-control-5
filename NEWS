@@ -1,0 +1,222 @@
+telepathy-mission-control 5.2.0 (2009-07-30)
+============================================
+
+The "too many timeouts, reducing the advertised EDNS UDP packet size to 512
+octets" release.
+
+This is the first release of a new 5.2.x stable branch, available in git as
+the 'telepathy-mission-control-5.2' branch. Feature development will continue
+in the 5.3.x series.
+
+Enhancements:
+
+* Update ContactCapabilities draft to the version in telepathy-spec 0.17.26
+  (smcv)
+
+* Add regression tests for Capabilities, and for ContactCapabilities draft 1
+  (smcv)
+
+Fixes:
+
+* McdConnection: fix a rare crash if no fallbacks for a presence are
+  supported (smcv)
+
+* libmcclient: avoid invoking callback twice if the object is already
+  ready (mardy)
+
+telepathy-mission-control 5.1.4 (2009-07-09)
+============================================
+
+The "I only came here seeking peas" release.
+
+Dependencies:
+
+* fd.o #22332: GConf is no longer required (if it is not available, then the
+  MC 4 to MC 5 migration tool, mc-account-convert, will not be built)
+
+Enhancements:
+
+* fd.o #21378: support connection manager parameters whose value is a single
+  byte (smcv)
+
+* Add simple man pages for the daemon and utilities (smcv)
+
+Fixes:
+
+* fd.o #22670: don't assume a client has crashed just because it has lost a
+  well-known name (smcv)
+
+* Don't use the AutomaticPresence status from account configuration unless the
+  presence type is an online presence (mardy)
+
+* fd.o #22585: remove symbols from libmissioncontrol-server that collide with
+  symbols in libmcclient, allowing the telepathy-mission-control daemon to be
+  statically linked on platforms that don't want to support plugins (smcv)
+
+telepathy-mission-control 5.1.3 (2009-07-01)
+============================================
+
+The "wilting" release.
+
+Enhancements:
+
+* Improve test coverage, including EnsureChannel (smcv)
+
+* In tests, add the ability to test an installed MC binary (installcheck)
+  (smcv)
+
+Fixes:
+
+* Make sure that ChannelDispatchOperations emit Finished before they are
+  unreffed for the last time (smcv)
+
+* Stop mcd_mission_abort() from implicitly closing channels, meaning that
+  when Close() has an extra protocol-level meaning (for instance, when using
+  an IRC proxy), we don't respond to connection loss by departing from all
+  channels. Instead, explicitly close channels whenever desired (smcv)
+
+* Add API for plugins to destroy channels, close channels with a reason,
+  or "forget" (do not dispatch) channels (smcv)
+
+* In situations where channels can't be handled, use Destroy() to terminate
+  them, if available (smcv)
+
+* In wait-for-name, initialize error properly if we can't connect to D-Bus
+  (smcv)
+
+* In tests, restructure `make check-torture` so it doesn't exceed command-line
+  length limits (smcv)
+
+* Use g_file_set_contents to overwrite files (mardy)
+
+telepathy-mission-control 5.1.2 (2009-06-26)
+============================================
+
+The "don't cross the stream engines" release.
+
+Dependencies:
+
+* telepathy-glib >= 0.7.32 (or 0.7.33 if you want to run the regression tests)
+
+Enhancements:
+
+* Stop generating duplicate bindings in the daemon for interfaces that are
+  now available in telepathy-glib 0.7.32
+
+Fixes:
+
+* Fix a subtle use-after-free that can crash MC if more than 4 distinct
+  properties change in a 10ms interval (!)
+
+* Make various fixes to putting accounts online:
+  - ConnectAutomatically takes effect immediately
+  - Fix a race between loading accounts and requesting channels
+  - Never consider accounts to be Valid until they've loaded, meaning that we
+    never try to put an account online before we've loaded its parameters (!)
+  - Don't connect (automatically or by request) unless the account is Valid
+  - Don't connect in order to satisfy a channel request unless the account is
+    both Valid and Enabled
+  - Allow setting RequestedPresence on disabled accounts, fixing creation of
+    accounts that already have a RequestedPresence
+  - Improve regression test coverage considerably
+  - If an account's parameters change and it becomes Valid, consider putting it
+    online
+  - If an account becomes enabled after an online presence was requested, try
+    to put it online
+
+* Change the default RequestedPresence on startup from UNSET to OFFLINE
+
+* Simplify API for low memory indication
+
+* Delete some unnecessary code from McdMaster, and simplify some redundant code
+
+* Forbid setting AutomaticPresence to a non-online status
+
+* Forbid setting RequestedPresence to a status that can't be set on yourself
+
+* Fix a memory leak and some races in the regression tests
+
+* Turn the daemon into a convenience library so one of the tests can link it
+  statically even if it's eventually going to be a shared library, fixing
+  make check with --enable-plugins
+
+telepathy-mission-control 5.1.1 (2009-06-16)
+============================================
+
+The "Beautiful And Damned" release.
+
+Fixes:
+
+* fd.o #22169: allowed PreferredHandler to be empty when requesting a
+  channel (smcv)
+
+* Updated code generation from telepathy-glib and followed the recommendations
+  of telepathy-glib 0.7.6's NEWS, fixing some possible assertion
+  failures (smcv)
+
+* Ensured that AccountValidityChanged will be emitted if an account is added
+  in an already-valid state (smcv)
+
+* fd.o #21377: added support for 64-bit integers, doubles and object paths as
+  CM parameters, did some work towards supporting bytes as CM parameters,
+  and fixed serialization of large 32-bit unsigned integers and
+  deserialization of integers of large magnitude (smcv)
+
+* fd.o #21299: prevented automatic reconnection after Name_In_Use error (smcv)
+
+* fd.o #22201: avoided rewriting accounts.cfg if nothing changed (smcv)
+
+* Ensured that the transport was reset when a Connection disconnected (mardy)
+
+telepathy-mission-control 5.1.0 (2009-06-05)
+============================================
+
+The "beta 75 would have been silly" release.
+
+After months of development, this is the first numbered release of Mission
+Control 5. We jumped straight to 5.1 in order to use the Linux-style odd/even
+versioning seen in the other Telepathy components, so the 5.1.x development
+branch will lead to the 5.2.x stable branch.
+
+Changes since Mission Control 4 are too numerous to list here, but here are
+the major architectural changes.
+
+The proprietary MissionControl API no longer exists; the daemon is a
+telepathy-spec-compliant AccountManager, and also a telepathy-spec-compliant
+ChannelDispatcher. Consequences of this include:
+
+* Clients are no longer expected to implement the ChannelHandler interface.
+  Instead, they may implement the Observer, Approver and/or Handler interfaces
+  specified in telepathy-spec.
+
+* The design of channel dispatching copes better with having multiple user
+  interface components installed.
+
+* Accounts' presence, avatar and nickname are now independent (stored
+  per-account), allowing for more precise control by UIs.
+
+* Accounts no longer have to belong to a "profile", although they still can
+  (albeit only by using a non-standard extension).
+
+Accounts are now stored in a flat file, rather than by abusing GConf. The
+included mc-account-convert tool might be able to convert MC 4 accounts to
+the MC 5 format, if you're lucky.
+
+libmissioncontrol-server has changed its API and ABI considerably, and is not
+yet considered stable in its new form either. It is no longer installed by
+default (in a normal configuration it'll just be compiled into the daemon).
+
+libmissioncontrol (based on libtelepathy and also known as
+libmissioncontrol-client) no longer exists, and has been replaced by
+libmcclient (based on telepathy-glib).
+
+Mission Control 5 is not a drop-in replacement for Mission Control 4, and
+cannot be used by Mission-Control-4-based applications like Empathy 2.26
+and the Maemo 4 platform. However, both versions can be installed
+independently in the same directory prefix, to facilitate porting from one to
+the other.
+
+Known regressions since Mission Control 4:
+
+* There is no gnome-keyring integration yet.
+* The client and server library APIs are not considered to be stable yet.

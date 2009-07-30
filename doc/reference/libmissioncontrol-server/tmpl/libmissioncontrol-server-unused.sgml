@@ -1,0 +1,503 @@
+<!-- ##### SECTION ./tmpl/mcd-service-gen.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/mcd-service-gen.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/mcd-service-gen.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/mcd-service-gen.sgml:Title ##### -->
+mcd-service-gen
+
+
+<!-- ##### SECTION ./tmpl/stamp-mcd-enum-types.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/stamp-mcd-enum-types.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/stamp-mcd-enum-types.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/stamp-mcd-enum-types.sgml:Title ##### -->
+stamp-mcd-enum-types
+
+
+<!-- ##### ARG McdChannel:name-ready ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG McdChannel:self-handle-ready ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG McdManager:presence-frame ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG McdMaster:presence-frame ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT McdPresenceFrame ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL McdPresenceFrame::presence-requested ##### -->
+<para>
+
+</para>
+
+@mcdpresenceframe: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__POINTER_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__POINTER_POINTER_POINTER_POINTER_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__STRING_POINTER_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__STRING_POINTER_POINTER_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__UINT_STRING_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_NONE__POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_NONE__STRING_STRING_STRING_INT_UINT_POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_NONE__STRING_STRING_UINT_INT_UINT_POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_NONE__STRING_UINT_STRING_POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_NONE__UINT_POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_VOID__POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_VOID__STRING_STRING_STRING_INT_UINT_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_VOID__STRING_STRING_UINT_INT_UINT_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### FUNCTION dbus_glib_marshal_mcd_service_VOID__STRING_UINT_STRING_POINTER ##### -->
+<para>
+
+</para>
+
+@closure: 
+@return_value: 
+@n_param_values: 
+@param_values: 
+@invocation_hint: 
+@marshal_data: 
+
+<!-- ##### MACRO dbus_glib_marshal_mcd_service_VOID__UINT_POINTER ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO g_marshal_value_peek_boolean ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_boxed ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_char ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_double ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_enum ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_flags ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_float ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_int ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_int64 ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_long ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_object ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_param ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_pointer ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_string ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_uchar ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_uint ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_uint64 ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### MACRO g_marshal_value_peek_ulong ##### -->
+<para>
+
+</para>
+
+@v: 
+
+<!-- ##### FUNCTION mcd_channel_get_flags ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_channel_get_members ##### -->
+<para>
+
+</para>
+
+@channel: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_channel_new ##### -->
+<para>
+
+</para>
+
+@channel: 
+@channel_type: 
+@channel_handle: 
+@channel_handle_type: 
+@outgoing: 
+@requestor_serial: 
+@requestor_client_id: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_channel_set_status ##### -->
+<para>
+
+</para>
+
+@channel: 
+@status: 
+
+<!-- ##### FUNCTION mcd_connection_get_telepathy_details ##### -->
+<para>
+
+</para>
+
+@id: 
+@ret_servname: 
+@ret_objpath: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_connection_new ##### -->
+<para>
+
+</para>
+
+@dbus_daemon: 
+@bus_name: 
+@tp_conn_mgr: 
+@account: 
+@dispatcher: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_connection_remote_avatar_changed ##### -->
+<para>
+
+</para>
+
+@connection: 
+@contact_id: 
+@token: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_dispatcher_get_channel_capabilities ##### -->
+<para>
+
+</para>
+
+@dispatcher: 
+@protocol: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_dispatcher_register_filter ##### -->
+<para>
+
+</para>
+
+@dispatcher: 
+@filter: 
+@channel_type_quark: 
+@filter_flags: 
+@priority: 
+@user_data: 
+
+<!-- ##### FUNCTION mcd_dispatcher_register_filters ##### -->
+<para>
+
+</para>
+
+@dispatcher: 
+@filters: 
+@channel_type_quark: 
+@filter_flags: 
+
+<!-- ##### FUNCTION mcd_dispatcher_send ##### -->
+<para>
+
+</para>
+
+@dispatcher: 
+@channel: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_dispatcher_unregister_filter ##### -->
+<para>
+
+</para>
+
+@dispatcher: 
+@filter: 
+@channel_type_quark: 
+@filter_flags: 
+
+<!-- ##### FUNCTION mcd_presence_frame_get_actual_presence ##### -->
+<para>
+
+</para>
+
+@presence_frame: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_presence_frame_get_actual_presence_message ##### -->
+<para>
+
+</para>
+
+@presence_frame: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_presence_frame_get_requested_presence ##### -->
+<para>
+
+</para>
+
+@presence_frame: 
+@Returns: 
+
+<!-- ##### FUNCTION mcd_presence_frame_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION mcd_presence_frame_request_presence ##### -->
+<para>
+
+</para>
+
+@presence_frame: 
+@presence: 
+@presence_message: 
+

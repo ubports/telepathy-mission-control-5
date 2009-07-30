@@ -1,0 +1,34 @@
+telepathy-mission-control-5 (5.2.0-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 30 Jul 2009 12:11:55 +0100
+
+telepathy-mission-control-5 (5.1.4-1) unstable; urgency=low
+
+  * New upstream release
+    - Building the libraries statically now works, so do that, since we don't
+      want to use them outside this source package
+    - Install the new man pages for all executables
+    - Remove GConf build dependency (which is now optional) since we're not
+      going to install mc-account-convert anyway
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 09 Jul 2009 10:36:56 +0100
+
+telepathy-mission-control-5 (5.1.3-1) unstable; urgency=low
+
+  * Initial upload of Mission Control 5 (Closes: #534750), which will
+    eventually replace telepathy-mission-control. It's basically a rewrite of
+    MC 4, and is incompatible but parallel-installable, so I've packaged it
+    from scratch.
+  * Don't package libmcclient headers, development symlink or docs, but just
+    bundle the shared library (which has -release versioning) with the daemon:
+    it's not ABI-stable, and shouldn't be used in mainstream distributions
+    (use telepathy-glib instead). The shared library has to remain shared,
+    since it has symbols that collide with the daemon itself (albeit with the
+    same implementations; this is in the process of being fixed upstream).
+  * Don't package mc-account-convert, since it's the only thing in this
+    package that needs gconf, and Empathy will probably ship its own
+    MC 4 to MC 5 converter (perhaps based on mc-account-convert).
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 01 Jul 2009 16:33:16 +0100

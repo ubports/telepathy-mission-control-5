@@ -1,0 +1,1 @@
+SUBDIRS = libmcclient libmissioncontrol-server

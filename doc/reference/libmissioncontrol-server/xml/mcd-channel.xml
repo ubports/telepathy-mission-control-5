@@ -1,0 +1,297 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="McdChannel">
+<refmeta>
+<refentrytitle role="top_of_page" id="McdChannel.top_of_page">McdChannel</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdChannel</refname>
+<refpurpose>Channel class representing Telepathy channel class</refpurpose>
+</refnamediv>
+<refsect1 id="McdChannel.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="McdChannel.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-channel.h&gt;
+
+                    <link linkend="McdChannel-struct">McdChannel</link>;
+enum                <link linkend="McdChannelStatus">McdChannelStatus</link>;
+<link linkend="McdChannelStatus">McdChannelStatus</link>    <link linkend="mcd-channel-get-status">mcd_channel_get_status</link>              (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="gboolean">gboolean</link>            <link linkend="mcd-channel-get-members-accepted">mcd_channel_get_members_accepted</link>    (<link linkend="McdChannel">McdChannel</link> *channel);
+const <link linkend="gchar">gchar</link>*        <link linkend="mcd-channel-get-channel-type">mcd_channel_get_channel_type</link>        (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="GQuark">GQuark</link>              <link linkend="mcd-channel-get-channel-type-quark">mcd_channel_get_channel_type_quark</link>  (<link linkend="McdChannel">McdChannel</link> *channel);
+const <link linkend="gchar">gchar</link>*        <link linkend="mcd-channel-get-object-path">mcd_channel_get_object_path</link>         (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="guint">guint</link>               <link linkend="mcd-channel-get-handle">mcd_channel_get_handle</link>              (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="TpHandleType">TpHandleType</link>        <link linkend="mcd-channel-get-handle-type">mcd_channel_get_handle_type</link>         (<link linkend="McdChannel">McdChannel</link> *channel);
+const <link linkend="gchar">gchar</link> *       <link linkend="mcd-channel-get-name">mcd_channel_get_name</link>                (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="gboolean">gboolean</link>            <link linkend="mcd-channel-is-requested">mcd_channel_is_requested</link>            (<link linkend="McdChannel">McdChannel</link> *channel);
+<link linkend="McdAccount">McdAccount</link> *        <link linkend="mcd-channel-get-account">mcd_channel_get_account</link>             (<link linkend="McdChannel">McdChannel</link> *channel);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="McdChannel.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="McdMission">McdMission</link>
+         +----McdChannel
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="McdChannel.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+McdChannel implements
+ <link linkend="TpSvcChannelRequest">TpSvcChannelRequest</link> and  <link linkend="TpSvcDBusProperties">TpSvcDBusProperties</link>.</para>
+</refsect1>
+
+
+<refsect1 id="McdChannel.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="McdChannel--account-path">account-path</link>&quot;             <link linkend="DBusGObjectPath">DBusGObjectPath</link>*      : Read
+  &quot;<link linkend="McdChannel--interfaces">interfaces</link>&quot;               <link linkend="GStrv">GStrv</link>*                : Read
+  &quot;<link linkend="McdChannel--outgoing">outgoing</link>&quot;                 <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only
+  &quot;<link linkend="McdChannel--preferred-handler">preferred-handler</link>&quot;        <link linkend="gchar">gchar</link>*                : Read
+  &quot;<link linkend="McdChannel--requests">requests</link>&quot;                 <link linkend="GPtrArray-GHashTable-gchararray+GValue--*">GPtrArray_GHashTable_gchararray+GValue__*</link>  : Read
+  &quot;<link linkend="McdChannel--tp-channel">tp-channel</link>&quot;               <link linkend="TpChannel">TpChannel</link>*            : Read / Write / Construct
+  &quot;<link linkend="McdChannel--user-action-time">user-action-time</link>&quot;         <link linkend="gint64">gint64</link>                : Read
+</synopsis>
+</refsect1>
+
+<refsect1 id="McdChannel.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="McdChannel-members-accepted">members-accepted</link>&quot;                               : Run First
+  &quot;<link linkend="McdChannel-status-changed">status-changed</link>&quot;                                 : Run First
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="McdChannel.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+FIXME</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="McdChannel.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="McdChannel-struct" role="struct">
+<title>McdChannel</title>
+<indexterm zone="McdChannel-struct"><primary sortas="McdChannel">McdChannel</primary></indexterm><programlisting>typedef struct _McdChannel McdChannel;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="McdChannelStatus" role="enum">
+<title>enum McdChannelStatus</title>
+<indexterm zone="McdChannelStatus"><primary sortas="McdChannelStatus">McdChannelStatus</primary></indexterm><programlisting>typedef enum
+{
+    MCD_CHANNEL_STATUS_UNDISPATCHED, /* used for channels created in the
+                                        NewChannel signal before the connection
+                                        is ready */
+    MCD_CHANNEL_STATUS_REQUEST,      /* Telepathy channel is not yet created */
+    MCD_CHANNEL_STATUS_REQUESTED,    /* Channel has been requested from the CM
+                                      */
+    MCD_CHANNEL_STATUS_DISPATCHING,  /* Telepathy channel is created and
+                                        waiting dispatch */
+    MCD_CHANNEL_STATUS_HANDLER_INVOKED,
+    MCD_CHANNEL_STATUS_DISPATCHED,   /* Channel has been dispatched to handler
+                                      */
+    MCD_CHANNEL_STATUS_FAILED,       /* Channel creation failed, or channel
+                                        could not be dispached to a handler */
+} McdChannelStatus;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mcd-channel-get-status" role="function">
+<title>mcd_channel_get_status ()</title>
+<indexterm zone="mcd-channel-get-status"><primary sortas="mcd_channel_get_status">mcd_channel_get_status</primary></indexterm><programlisting><link linkend="McdChannelStatus">McdChannelStatus</link>    mcd_channel_get_status              (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-members-accepted" role="function">
+<title>mcd_channel_get_members_accepted ()</title>
+<indexterm zone="mcd-channel-get-members-accepted"><primary sortas="mcd_channel_get_members_accepted">mcd_channel_get_members_accepted</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            mcd_channel_get_members_accepted    (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-channel-type" role="function">
+<title>mcd_channel_get_channel_type ()</title>
+<indexterm zone="mcd-channel-get-channel-type"><primary sortas="mcd_channel_get_channel_type">mcd_channel_get_channel_type</primary></indexterm><programlisting>const <link linkend="gchar">gchar</link>*        mcd_channel_get_channel_type        (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-channel-type-quark" role="function">
+<title>mcd_channel_get_channel_type_quark ()</title>
+<indexterm zone="mcd-channel-get-channel-type-quark"><primary sortas="mcd_channel_get_channel_type_quark">mcd_channel_get_channel_type_quark</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mcd_channel_get_channel_type_quark  (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-object-path" role="function">
+<title>mcd_channel_get_object_path ()</title>
+<indexterm zone="mcd-channel-get-object-path"><primary sortas="mcd_channel_get_object_path">mcd_channel_get_object_path</primary></indexterm><programlisting>const <link linkend="gchar">gchar</link>*        mcd_channel_get_object_path         (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-handle" role="function">
+<title>mcd_channel_get_handle ()</title>
+<indexterm zone="mcd-channel-get-handle"><primary sortas="mcd_channel_get_handle">mcd_channel_get_handle</primary></indexterm><programlisting><link linkend="guint">guint</link>               mcd_channel_get_handle              (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-handle-type" role="function">
+<title>mcd_channel_get_handle_type ()</title>
+<indexterm zone="mcd-channel-get-handle-type"><primary sortas="mcd_channel_get_handle_type">mcd_channel_get_handle_type</primary></indexterm><programlisting><link linkend="TpHandleType">TpHandleType</link>        mcd_channel_get_handle_type         (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-name" role="function">
+<title>mcd_channel_get_name ()</title>
+<indexterm zone="mcd-channel-get-name"><primary sortas="mcd_channel_get_name">mcd_channel_get_name</primary></indexterm><programlisting>const <link linkend="gchar">gchar</link> *       mcd_channel_get_name                (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+Get the Telepathy name of <parameter>channel</parameter> (calls InspectHandles on the channel
+handle).</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdChannel"><type>McdChannel</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a const string holding the channel name.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-is-requested" role="function">
+<title>mcd_channel_is_requested ()</title>
+<indexterm zone="mcd-channel-is-requested"><primary sortas="mcd_channel_is_requested">mcd_channel_is_requested</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            mcd_channel_is_requested            (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdChannel"><type>McdChannel</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if <parameter>channel</parameter> was requested, <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> otherwise.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-channel-get-account" role="function">
+<title>mcd_channel_get_account ()</title>
+<indexterm zone="mcd-channel-get-account"><primary sortas="mcd_channel_get_account">mcd_channel_get_account</primary></indexterm><programlisting><link linkend="McdAccount">McdAccount</link> *        mcd_channel_get_account             (<link linkend="McdChannel">McdChannel</link> *channel);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>channel</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdChannel"><type>McdChannel</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <link linkend="McdAccount"><type>McdAccount</type></link> on which this channel was created.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="McdChannel.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="McdChannel--account-path" role="property"><title>The <literal>&quot;account-path&quot;</literal> property</title>
+<indexterm zone="McdChannel--account-path"><primary sortas="McdChannel:account-path">McdChannel:account-path</primary></indexterm><programlisting>  &quot;account-path&quot;             <link linkend="DBusGObjectPath">DBusGObjectPath</link>*      : Read</programlisting>
+<para>Object path of the Account.</para></refsect2>
+<refsect2 id="McdChannel--interfaces" role="property"><title>The <literal>&quot;interfaces&quot;</literal> property</title>
+<indexterm zone="McdChannel--interfaces"><primary sortas="McdChannel:interfaces">McdChannel:interfaces</primary></indexterm><programlisting>  &quot;interfaces&quot;               <link linkend="GStrv">GStrv</link>*                : Read</programlisting>
+<para>A dbus-glib 'as'.</para></refsect2>
+<refsect2 id="McdChannel--outgoing" role="property"><title>The <literal>&quot;outgoing&quot;</literal> property</title>
+<indexterm zone="McdChannel--outgoing"><primary sortas="McdChannel:outgoing">McdChannel:outgoing</primary></indexterm><programlisting>  &quot;outgoing&quot;                 <link linkend="gboolean">gboolean</link>              : Read / Write / Construct Only</programlisting>
+<para>True if the channel was requested by us.</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="McdChannel--preferred-handler" role="property"><title>The <literal>&quot;preferred-handler&quot;</literal> property</title>
+<indexterm zone="McdChannel--preferred-handler"><primary sortas="McdChannel:preferred-handler">McdChannel:preferred-handler</primary></indexterm><programlisting>  &quot;preferred-handler&quot;        <link linkend="gchar">gchar</link>*                : Read</programlisting>
+<para>Well-known bus name of the preferred Handler.</para><para>Default value: NULL</para>
+</refsect2>
+<refsect2 id="McdChannel--requests" role="property"><title>The <literal>&quot;requests&quot;</literal> property</title>
+<indexterm zone="McdChannel--requests"><primary sortas="McdChannel:requests">McdChannel:requests</primary></indexterm><programlisting>  &quot;requests&quot;                 <link linkend="GPtrArray-GHashTable-gchararray+GValue--*">GPtrArray_GHashTable_gchararray+GValue__*</link>  : Read</programlisting>
+<para>A dbus-glib aa{sv}.</para></refsect2>
+<refsect2 id="McdChannel--tp-channel" role="property"><title>The <literal>&quot;tp-channel&quot;</literal> property</title>
+<indexterm zone="McdChannel--tp-channel"><primary sortas="McdChannel:tp-channel">McdChannel:tp-channel</primary></indexterm><programlisting>  &quot;tp-channel&quot;               <link linkend="TpChannel">TpChannel</link>*            : Read / Write / Construct</programlisting>
+<para>Telepathy Channel.</para></refsect2>
+<refsect2 id="McdChannel--user-action-time" role="property"><title>The <literal>&quot;user-action-time&quot;</literal> property</title>
+<indexterm zone="McdChannel--user-action-time"><primary sortas="McdChannel:user-action-time">McdChannel:user-action-time</primary></indexterm><programlisting>  &quot;user-action-time&quot;         <link linkend="gint64">gint64</link>                : Read</programlisting>
+<para>Time of user action in seconds since 1970.</para><para>Default value: 0</para>
+</refsect2>
+</refsect1>
+
+<refsect1 id="McdChannel.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="McdChannel-members-accepted" role="signal"><title>The <literal>&quot;members-accepted&quot;</literal> signal</title>
+<indexterm zone="McdChannel-members-accepted"><primary sortas="McdChannel::members-accepted">McdChannel::members-accepted</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdChannel">McdChannel</link> *mcdchannel,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdchannel</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdChannel-status-changed" role="signal"><title>The <literal>&quot;status-changed&quot;</literal> signal</title>
+<indexterm zone="McdChannel-status-changed"><primary sortas="McdChannel::status-changed">McdChannel::status-changed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdChannel">McdChannel</link> *mcdchannel,
+                                                        <link linkend="gint">gint</link>        arg1,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdchannel</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

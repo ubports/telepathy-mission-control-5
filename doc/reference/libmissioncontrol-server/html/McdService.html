@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>McdService</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="libmissioncontrol-server Reference Manual">
+<link rel="up" href="ch01.html" title="libmissioncontrol-server">
+<link rel="prev" href="McdOperation.html" title="McdOperation">
+<link rel="next" href="McdChannel.html" title="McdChannel">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="McdOperation.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">libmissioncontrol-server Reference Manual</th>
+<td><a accesskey="n" href="McdChannel.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#McdService.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#McdService.description" class="shortcut">Description</a>
+                 | 
+                <a href="#McdService.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" title="McdService">
+<a name="McdService"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="McdService.top_of_page"></a>McdService</span></h2>
+<p>McdService — Service interface implementation</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" title="Stability Level">
+<a name="McdService.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="McdService.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;mcd-service.h&gt;
+
+                    <a class="link" href="McdService.html#McdService-struct" title="McdService">McdService</a>;
+<a class="link" href="McdService.html" title="McdService">McdService</a> *        <a class="link" href="McdService.html#mcd-service-new" title="mcd_service_new ()">mcd_service_new</a>                     (void);
+void                <a class="link" href="McdService.html#mcd-service-run" title="mcd_service_run ()">mcd_service_run</a>                     (<a class="link" href="McdService.html" title="McdService">McdService</a> *self);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="McdService.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
+         +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
+               +----<a class="link" href="McdController.html" title="McdController">McdController</a>
+                     +----<a class="link" href="McdMaster.html" title="McdMaster">McdMaster</a>
+                           +----McdService
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="McdService.description"></a><h2>Description</h2>
+<p>
+It is the frontline interface object that exposes mission-control to outside
+world through a dbus interface. It basically subclasses McdMaster and
+wraps up everything inside it and translate them into mission-control
+dbus interface.</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="McdService.details"></a><h2>Details</h2>
+<div class="refsect2" title="McdService">
+<a name="McdService-struct"></a><h3>McdService</h3>
+<pre class="programlisting">typedef struct _McdService McdService;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcd_service_new ()">
+<a name="mcd-service-new"></a><h3>mcd_service_new ()</h3>
+<pre class="programlisting"><a class="link" href="McdService.html" title="McdService">McdService</a> *        mcd_service_new                     (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_service_run ()">
+<a name="mcd-service-run"></a><h3>mcd_service_run ()</h3>
+<pre class="programlisting">void                mcd_service_run                     (<a class="link" href="McdService.html" title="McdService">McdService</a> *self);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

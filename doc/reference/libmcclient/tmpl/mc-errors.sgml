@@ -1,0 +1,41 @@
+<!-- ##### SECTION Title ##### -->
+mc-errors
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO MC_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MCError ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION mc_error_quark ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

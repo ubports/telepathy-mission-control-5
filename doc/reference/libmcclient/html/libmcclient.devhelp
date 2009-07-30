@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="libmcclient Reference Manual" link="index.html" author="" name="libmcclient">
+  <chapters>
+    <sub name="The AccountManager object proxy" link="ch-account-manager.html">
+      <sub name="McAccountManager" link="libmcclient-mc-account-manager.html"/>
+    </sub>
+    <sub name="The Account object proxy" link="ch-account.html">
+      <sub name="McAccount" link="libmcclient-mc-account.html"/>
+    </sub>
+    <sub name="Utility class to access account profiles" link="ch-profile.html">
+      <sub name="McProfile" link="McProfile.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <function name="McAccountManager" link="libmcclient-mc-account-manager.html#McAccountManager-struct"/>
+    <function name="McAccountManagerClass" link="libmcclient-mc-account-manager.html#McAccountManagerClass"/>
+    <function name="mc_account_manager_new ()" link="libmcclient-mc-account-manager.html#mc-account-manager-new"/>
+    <function name="McAccountManagerWhenReadyCb ()" link="libmcclient-mc-account-manager.html#McAccountManagerWhenReadyCb"/>
+    <function name="mc_account_manager_call_when_ready ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-ready"/>
+    <function name="McAccountManagerWhenReadyObjectCb ()" link="libmcclient-mc-account-manager.html#McAccountManagerWhenReadyObjectCb"/>
+    <function name="mc_account_manager_call_when_iface_ready ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-iface-ready"/>
+    <function name="mc_account_manager_call_when_ready_with_accounts ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-ready-with-accounts"/>
+    <function name="mc_account_manager_get_account ()" link="libmcclient-mc-account-manager.html#mc-account-manager-get-account"/>
+    <function name="McAccountFilterFunc ()" link="libmcclient-mc-account-manager.html#McAccountFilterFunc"/>
+    <function name="mc_account_manager_list_accounts ()" link="libmcclient-mc-account-manager.html#mc-account-manager-list-accounts"/>
+    <function name="mc_cli_account_manager_signal_callback_account_removed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-signal-callback-account-removed"/>
+    <function name="mc_cli_account_manager_connect_to_account_removed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-removed"/>
+    <function name="mc_cli_account_manager_signal_callback_account_validity_changed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-signal-callback-account-validity-changed"/>
+    <function name="mc_cli_account_manager_connect_to_account_validity_changed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-validity-changed"/>
+    <function name="mc_cli_account_manager_callback_for_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-callback-for-create-account"/>
+    <function name="mc_cli_account_manager_call_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-call-create-account"/>
+    <function name="mc_cli_account_manager_interface_creation_callback_for_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-callback-for-create-account"/>
+    <function name="mc_cli_account_manager_interface_creation_call_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-call-create-account"/>
+    <function name="mc_cli_account_manager_interface_query_callback_for_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-callback-for-find-accounts"/>
+    <function name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
+    <function name="The &quot;account-created&quot; signal" link="libmcclient-mc-account-manager.html#McAccountManager-account-created"/>
+    <function name="The &quot;account-ready&quot; signal" link="libmcclient-mc-account-manager.html#McAccountManager-account-ready"/>
+    <function name="McAccount" link="libmcclient-mc-account.html#McAccount-struct"/>
+    <function name="McAccountClass" link="libmcclient-mc-account.html#McAccountClass"/>
+    <function name="mc_account_new ()" link="libmcclient-mc-account.html#mc-account-new"/>
+    <function name="McAccountWhenReadyCb ()" link="libmcclient-mc-account.html#McAccountWhenReadyCb"/>
+    <function name="mc_account_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-ready"/>
+    <function name="McAccountWhenReadyObjectCb ()" link="libmcclient-mc-account.html#McAccountWhenReadyObjectCb"/>
+    <function name="mc_account_call_when_iface_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-iface-ready"/>
+    <function name="mc_account_call_when_all_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-all-ready"/>
+    <function name="mc_account_get_display_name ()" link="libmcclient-mc-account.html#mc-account-get-display-name"/>
+    <function name="mc_account_get_icon ()" link="libmcclient-mc-account.html#mc-account-get-icon"/>
+    <function name="mc_account_is_valid ()" link="libmcclient-mc-account.html#mc-account-is-valid"/>
+    <function name="mc_account_is_enabled ()" link="libmcclient-mc-account.html#mc-account-is-enabled"/>
+    <function name="mc_account_has_been_online ()" link="libmcclient-mc-account.html#mc-account-has-been-online"/>
+    <function name="mc_account_connects_automatically ()" link="libmcclient-mc-account.html#mc-account-connects-automatically"/>
+    <function name="mc_account_get_nickname ()" link="libmcclient-mc-account.html#mc-account-get-nickname"/>
+    <function name="mc_account_get_parameters ()" link="libmcclient-mc-account.html#mc-account-get-parameters"/>
+    <function name="mc_account_get_automatic_presence ()" link="libmcclient-mc-account.html#mc-account-get-automatic-presence"/>
+    <function name="mc_account_get_connection_path ()" link="libmcclient-mc-account.html#mc-account-get-connection-path"/>
+    <function name="mc_account_get_connection_name ()" link="libmcclient-mc-account.html#mc-account-get-connection-name"/>
+    <function name="mc_account_get_connection_status ()" link="libmcclient-mc-account.html#mc-account-get-connection-status"/>
+    <function name="mc_account_get_connection_status_reason ()" link="libmcclient-mc-account.html#mc-account-get-connection-status-reason"/>
+    <function name="mc_account_get_current_presence ()" link="libmcclient-mc-account.html#mc-account-get-current-presence"/>
+    <function name="mc_account_get_requested_presence ()" link="libmcclient-mc-account.html#mc-account-get-requested-presence"/>
+    <function name="mc_account_get_normalized_name ()" link="libmcclient-mc-account.html#mc-account-get-normalized-name"/>
+    <function name="mc_account_set_display_name ()" link="libmcclient-mc-account.html#mc-account-set-display-name"/>
+    <function name="mc_account_set_icon ()" link="libmcclient-mc-account.html#mc-account-set-icon"/>
+    <function name="mc_account_set_enabled ()" link="libmcclient-mc-account.html#mc-account-set-enabled"/>
+    <function name="mc_account_set_connect_automatically ()" link="libmcclient-mc-account.html#mc-account-set-connect-automatically"/>
+    <function name="mc_account_set_nickname ()" link="libmcclient-mc-account.html#mc-account-set-nickname"/>
+    <function name="mc_account_set_automatic_presence ()" link="libmcclient-mc-account.html#mc-account-set-automatic-presence"/>
+    <function name="mc_account_set_requested_presence ()" link="libmcclient-mc-account.html#mc-account-set-requested-presence"/>
+    <function name="mc_account_avatar_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-avatar-call-when-ready"/>
+    <function name="mc_account_avatar_get ()" link="libmcclient-mc-account.html#mc-account-avatar-get"/>
+    <function name="mc_account_avatar_set ()" link="libmcclient-mc-account.html#mc-account-avatar-set"/>
+    <function name="mc_account_compat_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-compat-call-when-ready"/>
+    <function name="mc_account_compat_get_profile ()" link="libmcclient-mc-account.html#mc-account-compat-get-profile"/>
+    <function name="mc_account_compat_get_avatar_file ()" link="libmcclient-mc-account.html#mc-account-compat-get-avatar-file"/>
+    <function name="mc_account_compat_set_profile ()" link="libmcclient-mc-account.html#mc-account-compat-set-profile"/>
+    <function name="mc_account_compat_set_secondary_vcard_fields ()" link="libmcclient-mc-account.html#mc-account-compat-set-secondary-vcard-fields"/>
+    <function name="mc_account_conditions_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-conditions-call-when-ready"/>
+    <function name="mc_account_conditions_get ()" link="libmcclient-mc-account.html#mc-account-conditions-get"/>
+    <function name="mc_account_conditions_set ()" link="libmcclient-mc-account.html#mc-account-conditions-set"/>
+    <function name="McAccountChannelrequestData" link="libmcclient-mc-account.html#McAccountChannelrequestData"/>
+    <function name="enum McAccountChannelrequestEvent" link="libmcclient-mc-account.html#McAccountChannelrequestEvent"/>
+    <function name="McAccountChannelrequestCb ()" link="libmcclient-mc-account.html#McAccountChannelrequestCb"/>
+    <function name="enum McAccountChannelrequestFlags" link="libmcclient-mc-account.html#McAccountChannelrequestFlags"/>
+    <function name="mc_account_channelrequest ()" link="libmcclient-mc-account.html#mc-account-channelrequest"/>
+    <function name="mc_account_channelrequest_ht ()" link="libmcclient-mc-account.html#mc-account-channelrequest-ht"/>
+    <function name="mc_account_channelrequest_add ()" link="libmcclient-mc-account.html#mc-account-channelrequest-add"/>
+    <function name="mc_account_channelrequest_cancel ()" link="libmcclient-mc-account.html#mc-account-channelrequest-cancel"/>
+    <function name="mc_account_channelrequest_get_error ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-error"/>
+    <function name="mc_account_channelrequest_get_path ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-path"/>
+    <function name="mc_account_channelrequest_get_from_path ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-from-path"/>
+    <function name="mc_cli_account_signal_callback_removed ()" link="libmcclient-mc-account.html#mc-cli-account-signal-callback-removed"/>
+    <function name="mc_cli_account_connect_to_removed ()" link="libmcclient-mc-account.html#mc-cli-account-connect-to-removed"/>
+    <function name="mc_cli_account_signal_callback_account_property_changed ()" link="libmcclient-mc-account.html#mc-cli-account-signal-callback-account-property-changed"/>
+    <function name="mc_cli_account_connect_to_account_property_changed ()" link="libmcclient-mc-account.html#mc-cli-account-connect-to-account-property-changed"/>
+    <function name="mc_cli_account_callback_for_remove ()" link="libmcclient-mc-account.html#mc-cli-account-callback-for-remove"/>
+    <function name="mc_cli_account_call_remove ()" link="libmcclient-mc-account.html#mc-cli-account-call-remove"/>
+    <function name="mc_cli_account_callback_for_update_parameters ()" link="libmcclient-mc-account.html#mc-cli-account-callback-for-update-parameters"/>
+    <function name="mc_cli_account_call_update_parameters ()" link="libmcclient-mc-account.html#mc-cli-account-call-update-parameters"/>
+    <function name="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()" link="libmcclient-mc-account.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed"/>
+    <function name="mc_cli_account_interface_avatar_connect_to_avatar_changed ()" link="libmcclient-mc-account.html#mc-cli-account-interface-avatar-connect-to-avatar-changed"/>
+    <function name="The &quot;avatar-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-avatar-changed"/>
+    <function name="The &quot;channel-count-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-channel-count-changed"/>
+    <function name="The &quot;connection-status-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-connection-status-changed"/>
+    <function name="The &quot;flag-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-flag-changed"/>
+    <function name="The &quot;parameters-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-parameters-changed"/>
+    <function name="The &quot;presence-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-presence-changed"/>
+    <function name="The &quot;string-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-string-changed"/>
+    <function name="enum McProfileCapabilityFlags" link="McProfile.html#McProfileCapabilityFlags"/>
+    <function name="McProfile" link="McProfile.html#McProfile-struct"/>
+    <function name="McProfileClass" link="McProfile.html#McProfileClass"/>
+    <function name="mc_profile_lookup ()" link="McProfile.html#mc-profile-lookup"/>
+    <function name="mc_profile_lookup_default_for_vcard_field ()" link="McProfile.html#mc-profile-lookup-default-for-vcard-field"/>
+    <function name="mc_profile_get_filename ()" link="McProfile.html#mc-profile-get-filename"/>
+    <function name="mc_profile_clear_cache ()" link="McProfile.html#mc-profile-clear-cache"/>
+    <function name="mc_profiles_list ()" link="McProfile.html#mc-profiles-list"/>
+    <function name="mc_profiles_list_by_vcard_field ()" link="McProfile.html#mc-profiles-list-by-vcard-field"/>
+    <function name="mc_profiles_list_by_protocol ()" link="McProfile.html#mc-profiles-list-by-protocol"/>
+    <function name="mc_profiles_free_list ()" link="McProfile.html#mc-profiles-free-list"/>
+    <function name="mc_profile_get_unique_name ()" link="McProfile.html#mc-profile-get-unique-name"/>
+    <function name="mc_profile_get_configuration_ui ()" link="McProfile.html#mc-profile-get-configuration-ui"/>
+    <function name="mc_profile_get_display_name ()" link="McProfile.html#mc-profile-get-display-name"/>
+    <function name="mc_profile_get_icon_name ()" link="McProfile.html#mc-profile-get-icon-name"/>
+    <function name="mc_profile_get_branding_icon_name ()" link="McProfile.html#mc-profile-get-branding-icon-name"/>
+    <function name="mc_profile_get_vcard_field ()" link="McProfile.html#mc-profile-get-vcard-field"/>
+    <function name="mc_profile_get_default_account_domain ()" link="McProfile.html#mc-profile-get-default-account-domain"/>
+    <function name="mc_profile_get_avatar_mime_type ()" link="McProfile.html#mc-profile-get-avatar-mime-type"/>
+    <function name="mc_profile_get_supported_presences ()" link="McProfile.html#mc-profile-get-supported-presences"/>
+    <function name="mc_profile_supports_presence ()" link="McProfile.html#mc-profile-supports-presence"/>
+    <function name="mc_profile_get_priority ()" link="McProfile.html#mc-profile-get-priority"/>
+    <function name="mc_profile_get_default_account_name ()" link="McProfile.html#mc-profile-get-default-account-name"/>
+    <function name="mc_profile_get_protocol_name ()" link="McProfile.html#mc-profile-get-protocol-name"/>
+    <function name="mc_profile_get_manager_name ()" link="McProfile.html#mc-profile-get-manager-name"/>
+    <function name="mc_profile_is_default_for_vcard_field ()" link="McProfile.html#mc-profile-is-default-for-vcard-field"/>
+    <function name="mc_profile_get_capabilities ()" link="McProfile.html#mc-profile-get-capabilities"/>
+    <function name="mc_profile_get_default_setting ()" link="McProfile.html#mc-profile-get-default-setting"/>
+    <function name="mc_profile_get_vcard_mangle ()" link="McProfile.html#mc-profile-get-vcard-mangle"/>
+    <function name="mc_profile_presence_get_name ()" link="McProfile.html#mc-profile-presence-get-name"/>
+    <function name="mc_profile_presence_get_type ()" link="McProfile.html#mc-profile-presence-get-type"/>
+    <function name="mc_profile_presence_get_icon_name ()" link="McProfile.html#mc-profile-presence-get-icon-name"/>
+  </functions>
+</book>

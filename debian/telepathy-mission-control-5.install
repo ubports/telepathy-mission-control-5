@@ -1,0 +1,4 @@
+debian/tmp/usr/bin/mc-tool
+debian/tmp/usr/bin/mc-wait-for-name
+debian/tmp/usr/lib/telepathy/mission-control-5
+debian/tmp/usr/share/dbus-1/services/org.freedesktop.Telepathy.MissionControl5.service

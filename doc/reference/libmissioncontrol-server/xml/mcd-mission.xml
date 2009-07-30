@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="McdMission">
+<refmeta>
+<refentrytitle role="top_of_page" id="McdMission.top_of_page">McdMission</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdMission</refname>
+<refpurpose>Base class for server classes</refpurpose>
+</refnamediv>
+<refsect1 id="McdMission.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="McdMission.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-mission.h&gt;
+
+                    <link linkend="McdMission-struct">McdMission</link>;
+#define             <link linkend="MCD-MISSION-GET-FLAGS-MASKED--CAPS">MCD_MISSION_GET_FLAGS_MASKED</link>        (mission, flags)
+#define             <link linkend="MCD-MISSION-SET-FLAGS-MASKED--CAPS">MCD_MISSION_SET_FLAGS_MASKED</link>        (mission, flags)
+#define             <link linkend="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS">MCD_MISSION_UNSET_FLAGS_MASKED</link>      (mission, flags)
+enum                <link linkend="McdMode">McdMode</link>;
+enum                <link linkend="McdSystemFlags">McdSystemFlags</link>;
+<link linkend="McdMission">McdMission</link> *        <link linkend="mcd-mission-new">mcd_mission_new</link>                     (void);
+<link linkend="gboolean">gboolean</link>            <link linkend="mcd-mission-is-connected">mcd_mission_is_connected</link>            (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="McdMission">McdMission</link> *        <link linkend="mcd-mission-get-parent">mcd_mission_get_parent</link>              (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="void">void</link>                <link linkend="mcd-mission-abort">mcd_mission_abort</link>                   (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="void">void</link>                <link linkend="mcd-mission-set-parent">mcd_mission_set_parent</link>              (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdMission">McdMission</link> *parent);
+<link linkend="void">void</link>                <link linkend="mcd-mission-connect">mcd_mission_connect</link>                 (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="void">void</link>                <link linkend="mcd-mission-disconnect">mcd_mission_disconnect</link>              (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="void">void</link>                <link linkend="mcd-mission-set-flags">mcd_mission_set_flags</link>               (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdSystemFlags">McdSystemFlags</link> flags);
+<link linkend="McdSystemFlags">McdSystemFlags</link>      <link linkend="mcd-mission-get-flags">mcd_mission_get_flags</link>               (<link linkend="McdMission">McdMission</link> *mission);
+<link linkend="void">void</link>                <link linkend="mcd-mission-set-mode">mcd_mission_set_mode</link>                (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdMode">McdMode</link> mode);
+<link linkend="McdMode">McdMode</link>             <link linkend="mcd-mission-get-mode">mcd_mission_get_mode</link>                (<link linkend="McdMission">McdMission</link> *mission);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="McdMission.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----McdMission
+         +----<link linkend="McdChannel">McdChannel</link>
+         +----<link linkend="McdOperation">McdOperation</link>
+         +----<link linkend="McdDispatcher">McdDispatcher</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="McdMission.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="McdMission--mode">mode</link>&quot;                     <link linkend="McdMode">McdMode</link>               : Read / Write
+  &quot;<link linkend="McdMission--parent">parent</link>&quot;                   <link linkend="McdMission">McdMission</link>*           : Read / Write
+  &quot;<link linkend="McdMission--system-flags">system-flags</link>&quot;             <link linkend="McdMode">McdMode</link>               : Read / Write
+</synopsis>
+</refsect1>
+
+<refsect1 id="McdMission.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="McdMission-abort">abort</link>&quot;                                          : Run First
+  &quot;<link linkend="McdMission-connected">connected</link>&quot;                                      : Run First
+  &quot;<link linkend="McdMission-disconnected">disconnected</link>&quot;                                   : Run First
+  &quot;<link linkend="McdMission-flags-changed">flags-changed</link>&quot;                                  : Run First
+  &quot;<link linkend="McdMission-mode-set">mode-set</link>&quot;                                       : Run First
+  &quot;<link linkend="McdMission-parent-set">parent-set</link>&quot;                                     : Run First
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="McdMission.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+It is the base class for every object in mission-control. It defines
+a set of virtual functions and set of corresponding action signals.
+all virtual functions results in emission of their corresponding action
+signals. The virtual functions define states of the object, such
+as memory conserved state, connected state, locked state, low power state,
+lit state, sleeping state etc. Each of the object states can also be queried
+independently as properties.
+</para>
+<para>
+There are also some action signals such as abort, which is used to notify
+other objects holding hard references to it to release them (this object
+should then automatically die since all held references are released). It
+is mandatory for all other objects that hold a hard reference to it to
+listen for this signal and release the reference in signal handler.
+</para>
+<para>
+Concrete derived classes should override the sate  methods to implement
+object specific state managements.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="McdMission.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="McdMission-struct" role="struct">
+<title>McdMission</title>
+<indexterm zone="McdMission-struct"><primary sortas="McdMission">McdMission</primary></indexterm><programlisting>typedef struct _McdMission McdMission;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-MISSION-GET-FLAGS-MASKED--CAPS" role="macro">
+<title>MCD_MISSION_GET_FLAGS_MASKED()</title>
+<indexterm zone="MCD-MISSION-GET-FLAGS-MASKED--CAPS"><primary sortas="MCD_MISSION_GET_FLAGS_MASKED">MCD_MISSION_GET_FLAGS_MASKED</primary></indexterm><programlisting>#define             MCD_MISSION_GET_FLAGS_MASKED(mission, flags)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MCD-MISSION-SET-FLAGS-MASKED--CAPS" role="macro">
+<title>MCD_MISSION_SET_FLAGS_MASKED()</title>
+<indexterm zone="MCD-MISSION-SET-FLAGS-MASKED--CAPS"><primary sortas="MCD_MISSION_SET_FLAGS_MASKED">MCD_MISSION_SET_FLAGS_MASKED</primary></indexterm><programlisting>#define             MCD_MISSION_SET_FLAGS_MASKED(mission, flags)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS" role="macro">
+<title>MCD_MISSION_UNSET_FLAGS_MASKED()</title>
+<indexterm zone="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"><primary sortas="MCD_MISSION_UNSET_FLAGS_MASKED">MCD_MISSION_UNSET_FLAGS_MASKED</primary></indexterm><programlisting>#define             MCD_MISSION_UNSET_FLAGS_MASKED(mission, flags)</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="McdMode" role="enum">
+<title>enum McdMode</title>
+<indexterm zone="McdMode"><primary sortas="McdMode">McdMode</primary></indexterm><programlisting>typedef enum
+{
+    MCD_MODE_UNKNOWN,
+    MCD_MODE_NORMAL,
+    MCD_MODE_RESTRICTED,
+    MCD_MODE_CALL
+} McdMode;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="McdSystemFlags" role="enum">
+<title>enum McdSystemFlags</title>
+<indexterm zone="McdSystemFlags"><primary sortas="McdSystemFlags">McdSystemFlags</primary></indexterm><programlisting>typedef enum
+{
+    MCD_SYSTEM_CONNECTED          = 1,
+    MCD_SYSTEM_MEMORY_CONSERVED   = 1 &lt;&lt; 1,
+    MCD_SYSTEM_POWER_CONSERVED    = 1 &lt;&lt; 2,
+    MCD_SYSTEM_SCREEN_BLANKED     = 1 &lt;&lt; 3,
+    MCD_SYSTEM_LOCKED             = 1 &lt;&lt; 4,
+    MCD_SYSTEM_IDLE               = 1 &lt;&lt; 5
+} McdSystemFlags;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mcd-mission-new" role="function">
+<title>mcd_mission_new ()</title>
+<indexterm zone="mcd-mission-new"><primary sortas="mcd_mission_new">mcd_mission_new</primary></indexterm><programlisting><link linkend="McdMission">McdMission</link> *        mcd_mission_new                     (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-is-connected" role="function">
+<title>mcd_mission_is_connected ()</title>
+<indexterm zone="mcd-mission-is-connected"><primary sortas="mcd_mission_is_connected">mcd_mission_is_connected</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            mcd_mission_is_connected            (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-get-parent" role="function">
+<title>mcd_mission_get_parent ()</title>
+<indexterm zone="mcd-mission-get-parent"><primary sortas="mcd_mission_get_parent">mcd_mission_get_parent</primary></indexterm><programlisting><link linkend="McdMission">McdMission</link> *        mcd_mission_get_parent              (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-abort" role="function">
+<title>mcd_mission_abort ()</title>
+<indexterm zone="mcd-mission-abort"><primary sortas="mcd_mission_abort">mcd_mission_abort</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_abort                   (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-set-parent" role="function">
+<title>mcd_mission_set_parent ()</title>
+<indexterm zone="mcd-mission-set-parent"><primary sortas="mcd_mission_set_parent">mcd_mission_set_parent</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_set_parent              (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdMission">McdMission</link> *parent);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>parent</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-connect" role="function">
+<title>mcd_mission_connect ()</title>
+<indexterm zone="mcd-mission-connect"><primary sortas="mcd_mission_connect">mcd_mission_connect</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_connect                 (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-disconnect" role="function">
+<title>mcd_mission_disconnect ()</title>
+<indexterm zone="mcd-mission-disconnect"><primary sortas="mcd_mission_disconnect">mcd_mission_disconnect</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_disconnect              (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-set-flags" role="function">
+<title>mcd_mission_set_flags ()</title>
+<indexterm zone="mcd-mission-set-flags"><primary sortas="mcd_mission_set_flags">mcd_mission_set_flags</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_set_flags               (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdSystemFlags">McdSystemFlags</link> flags);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-get-flags" role="function">
+<title>mcd_mission_get_flags ()</title>
+<indexterm zone="mcd-mission-get-flags"><primary sortas="mcd_mission_get_flags">mcd_mission_get_flags</primary></indexterm><programlisting><link linkend="McdSystemFlags">McdSystemFlags</link>      mcd_mission_get_flags               (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-set-mode" role="function">
+<title>mcd_mission_set_mode ()</title>
+<indexterm zone="mcd-mission-set-mode"><primary sortas="mcd_mission_set_mode">mcd_mission_set_mode</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_mission_set_mode                (<link linkend="McdMission">McdMission</link> *mission,
+                                                         <link linkend="McdMode">McdMode</link> mode);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mode</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-mission-get-mode" role="function">
+<title>mcd_mission_get_mode ()</title>
+<indexterm zone="mcd-mission-get-mode"><primary sortas="mcd_mission_get_mode">mcd_mission_get_mode</primary></indexterm><programlisting><link linkend="McdMode">McdMode</link>             mcd_mission_get_mode                (<link linkend="McdMission">McdMission</link> *mission);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mission</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="McdMission.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="McdMission--mode" role="property"><title>The <literal>&quot;mode&quot;</literal> property</title>
+<indexterm zone="McdMission--mode"><primary sortas="McdMission:mode">McdMission:mode</primary></indexterm><programlisting>  &quot;mode&quot;                     <link linkend="McdMode">McdMode</link>               : Read / Write</programlisting>
+<para>Platform-specific modes.</para><para>Default value: MCD_MODE_NORMAL</para>
+</refsect2>
+<refsect2 id="McdMission--parent" role="property"><title>The <literal>&quot;parent&quot;</literal> property</title>
+<indexterm zone="McdMission--parent"><primary sortas="McdMission:parent">McdMission:parent</primary></indexterm><programlisting>  &quot;parent&quot;                   <link linkend="McdMission">McdMission</link>*           : Read / Write</programlisting>
+<para>Parent mission.</para></refsect2>
+<refsect2 id="McdMission--system-flags" role="property"><title>The <literal>&quot;system-flags&quot;</literal> property</title>
+<indexterm zone="McdMission--system-flags"><primary sortas="McdMission:system-flags">McdMission:system-flags</primary></indexterm><programlisting>  &quot;system-flags&quot;             <link linkend="McdMode">McdMode</link>               : Read / Write</programlisting>
+<para>Mission control system flags.</para><para>Default value: MCD_MODE_NORMAL</para>
+</refsect2>
+</refsect1>
+
+<refsect1 id="McdMission.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="McdMission-abort" role="signal"><title>The <literal>&quot;abort&quot;</literal> signal</title>
+<indexterm zone="McdMission-abort"><primary sortas="McdMission::abort">McdMission::abort</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link> *mcdmission,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdMission-connected" role="signal"><title>The <literal>&quot;connected&quot;</literal> signal</title>
+<indexterm zone="McdMission-connected"><primary sortas="McdMission::connected">McdMission::connected</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link> *mcdmission,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdMission-disconnected" role="signal"><title>The <literal>&quot;disconnected&quot;</literal> signal</title>
+<indexterm zone="McdMission-disconnected"><primary sortas="McdMission::disconnected">McdMission::disconnected</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link> *mcdmission,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdMission-flags-changed" role="signal"><title>The <literal>&quot;flags-changed&quot;</literal> signal</title>
+<indexterm zone="McdMission-flags-changed"><primary sortas="McdMission::flags-changed">McdMission::flags-changed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link>    *mcdmission,
+                                                        <link linkend="McdSystemFlags">McdSystemFlags</link> arg1,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdMission-mode-set" role="signal"><title>The <literal>&quot;mode-set&quot;</literal> signal</title>
+<indexterm zone="McdMission-mode-set"><primary sortas="McdMission::mode-set">McdMission::mode-set</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link> *mcdmission,
+                                                        <link linkend="McdMode">McdMode</link>     arg1,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdMission-parent-set" role="signal"><title>The <literal>&quot;parent-set&quot;</literal> signal</title>
+<indexterm zone="McdMission-parent-set"><primary sortas="McdMission::parent-set">McdMission::parent-set</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdMission">McdMission</link> *mcdmission,
+                                                        <link linkend="gpointer">gpointer</link>    user_data)       : Run First</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcdmission</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

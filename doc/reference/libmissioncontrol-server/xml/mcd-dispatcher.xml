@@ -1,0 +1,271 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="McdDispatcher">
+<refmeta>
+<refentrytitle role="top_of_page" id="McdDispatcher.top_of_page">McdDispatcher</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdDispatcher</refname>
+<refpurpose>Dispatcher class to dispatch channels to handlers</refpurpose>
+</refnamediv>
+<refsect1 id="McdDispatcher.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="McdDispatcher.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-dispatcher.h&gt;
+
+                    <link linkend="McdDispatcher-struct">McdDispatcher</link>;
+<link linkend="McdDispatcher">McdDispatcher</link> *     <link linkend="mcd-dispatcher-new">mcd_dispatcher_new</link>                  (<link linkend="TpDBusDaemon">TpDBusDaemon</link> *dbus_daemon,
+                                                         <link linkend="McdMaster">McdMaster</link> *master);
+<link linkend="gint">gint</link>                <link linkend="mcd-dispatcher-get-channel-type-usage">mcd_dispatcher_get_channel_type_usage</link>
+                                                        (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="GQuark">GQuark</link> chan_type_quark);
+<link linkend="void">void</link>                <link linkend="mcd-dispatcher-add-filter">mcd_dispatcher_add_filter</link>           (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="McdFilterFunc">McdFilterFunc</link> filter,
+                                                         <link linkend="guint">guint</link> priority,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="void">void</link>                <link linkend="mcd-dispatcher-add-filters">mcd_dispatcher_add_filters</link>          (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         const <link linkend="McdFilter">McdFilter</link> *filters);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="McdDispatcher.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="McdMission">McdMission</link>
+         +----McdDispatcher
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="McdDispatcher.implemented-interfaces" role="impl_interfaces">
+<title role="impl_interfaces.title">Implemented Interfaces</title>
+<para>
+McdDispatcher implements
+ <link linkend="TpSvcChannelDispatcher">TpSvcChannelDispatcher</link>,  <link linkend="TpSvcChannelDispatcherInterfaceOperationList">TpSvcChannelDispatcherInterfaceOperationList</link> and  <link linkend="TpSvcDBusProperties">TpSvcDBusProperties</link>.</para>
+</refsect1>
+
+
+<refsect1 id="McdDispatcher.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="McdDispatcher--dbus-daemon">dbus-daemon</link>&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct
+  &quot;<link linkend="McdDispatcher--dispatch-operations">dispatch-operations</link>&quot;      <link linkend="GPtrArray-GValueArray-DBusGObjectPath+GHashTable-gchararray+GValue---*">GPtrArray_GValueArray_DBusGObjectPath+GHashTable_gchararray+GValue___*</link>  : Read
+  &quot;<link linkend="McdDispatcher--interfaces">interfaces</link>&quot;               <link linkend="GStrv">GStrv</link>*                : Read
+  &quot;<link linkend="McdDispatcher--mcd-master">mcd-master</link>&quot;               <link linkend="McdMaster">McdMaster</link>*            : Read / Write / Construct
+</synopsis>
+</refsect1>
+
+<refsect1 id="McdDispatcher.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="McdDispatcher-channel-added">channel-added</link>&quot;                                  : Run Last / Has Details
+  &quot;<link linkend="McdDispatcher-channel-removed">channel-removed</link>&quot;                                : Run Last / Has Details
+  &quot;<link linkend="McdDispatcher-dispatch-completed">dispatch-completed</link>&quot;                             : Run Last
+  &quot;<link linkend="McdDispatcher-dispatch-failed">dispatch-failed</link>&quot;                                : Run Last / Has Details
+  &quot;<link linkend="McdDispatcher-dispatched">dispatched</link>&quot;                                     : Run Last / Has Details
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="McdDispatcher.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+FIXME</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="McdDispatcher.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="McdDispatcher-struct" role="struct">
+<title>McdDispatcher</title>
+<indexterm zone="McdDispatcher-struct"><primary sortas="McdDispatcher">McdDispatcher</primary></indexterm><programlisting>typedef struct _McdDispatcher McdDispatcher;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mcd-dispatcher-new" role="function">
+<title>mcd_dispatcher_new ()</title>
+<indexterm zone="mcd-dispatcher-new"><primary sortas="mcd_dispatcher_new">mcd_dispatcher_new</primary></indexterm><programlisting><link linkend="McdDispatcher">McdDispatcher</link> *     mcd_dispatcher_new                  (<link linkend="TpDBusDaemon">TpDBusDaemon</link> *dbus_daemon,
+                                                         <link linkend="McdMaster">McdMaster</link> *master);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dbus_daemon</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>master</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-get-channel-type-usage" role="function">
+<title>mcd_dispatcher_get_channel_type_usage ()</title>
+<indexterm zone="mcd-dispatcher-get-channel-type-usage"><primary sortas="mcd_dispatcher_get_channel_type_usage">mcd_dispatcher_get_channel_type_usage</primary></indexterm><programlisting><link linkend="gint">gint</link>                mcd_dispatcher_get_channel_type_usage
+                                                        (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="GQuark">GQuark</link> chan_type_quark);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>chan_type_quark</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-add-filter" role="function">
+<title>mcd_dispatcher_add_filter ()</title>
+<indexterm zone="mcd-dispatcher-add-filter"><primary sortas="mcd_dispatcher_add_filter">mcd_dispatcher_add_filter</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_dispatcher_add_filter           (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="McdFilterFunc">McdFilterFunc</link> filter,
+                                                         <link linkend="guint">guint</link> priority,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Register a filter into the dispatcher chain: <parameter>filter</parameter> will be invoked
+whenever channels need to be dispatched.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
+<listitem><simpara> The <link linkend="McdDispatcher"><type>McdDispatcher</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filter</parameter>&#160;:</term>
+<listitem><simpara> the filter function to be registered.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>priority</parameter>&#160;:</term>
+<listitem><simpara> The priority of the filter.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> user data to be passed to <parameter>filter</parameter> on invocation.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-add-filters" role="function">
+<title>mcd_dispatcher_add_filters ()</title>
+<indexterm zone="mcd-dispatcher-add-filters"><primary sortas="mcd_dispatcher_add_filters">mcd_dispatcher_add_filters</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_dispatcher_add_filters          (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         const <link linkend="McdFilter">McdFilter</link> *filters);</programlisting>
+<para>
+Convenience function to add a batch of filters at once.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
+<listitem><simpara> The <link linkend="McdDispatcher"><type>McdDispatcher</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filters</parameter>&#160;:</term>
+<listitem><simpara> a zero-terminated array of <link linkend="McdFilter"><type>McdFilter</type></link> elements.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="McdDispatcher.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="McdDispatcher--dbus-daemon" role="property"><title>The <literal>&quot;dbus-daemon&quot;</literal> property</title>
+<indexterm zone="McdDispatcher--dbus-daemon"><primary sortas="McdDispatcher:dbus-daemon">McdDispatcher:dbus-daemon</primary></indexterm><programlisting>  &quot;dbus-daemon&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct</programlisting>
+<para>DBus daemon.</para></refsect2>
+<refsect2 id="McdDispatcher--dispatch-operations" role="property"><title>The <literal>&quot;dispatch-operations&quot;</literal> property</title>
+<indexterm zone="McdDispatcher--dispatch-operations"><primary sortas="McdDispatcher:dispatch-operations">McdDispatcher:dispatch-operations</primary></indexterm><programlisting>  &quot;dispatch-operations&quot;      <link linkend="GPtrArray-GValueArray-DBusGObjectPath+GHashTable-gchararray+GValue---*">GPtrArray_GValueArray_DBusGObjectPath+GHashTable_gchararray+GValue___*</link>  : Read</programlisting>
+<para>A dbus-glib a(oa{sv}).</para></refsect2>
+<refsect2 id="McdDispatcher--interfaces" role="property"><title>The <literal>&quot;interfaces&quot;</literal> property</title>
+<indexterm zone="McdDispatcher--interfaces"><primary sortas="McdDispatcher:interfaces">McdDispatcher:interfaces</primary></indexterm><programlisting>  &quot;interfaces&quot;               <link linkend="GStrv">GStrv</link>*                : Read</programlisting>
+<para>Interfaces.</para></refsect2>
+<refsect2 id="McdDispatcher--mcd-master" role="property"><title>The <literal>&quot;mcd-master&quot;</literal> property</title>
+<indexterm zone="McdDispatcher--mcd-master"><primary sortas="McdDispatcher:mcd-master">McdDispatcher:mcd-master</primary></indexterm><programlisting>  &quot;mcd-master&quot;               <link linkend="McdMaster">McdMaster</link>*            : Read / Write / Construct</programlisting>
+<para>McdMaster.</para></refsect2>
+</refsect1>
+
+<refsect1 id="McdDispatcher.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="McdDispatcher-channel-added" role="signal"><title>The <literal>&quot;channel-added&quot;</literal> signal</title>
+<indexterm zone="McdDispatcher-channel-added"><primary sortas="McdDispatcher::channel-added">McdDispatcher::channel-added</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
+                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdDispatcher-channel-removed" role="signal"><title>The <literal>&quot;channel-removed&quot;</literal> signal</title>
+<indexterm zone="McdDispatcher-channel-removed"><primary sortas="McdDispatcher::channel-removed">McdDispatcher::channel-removed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
+                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdDispatcher-dispatch-completed" role="signal"><title>The <literal>&quot;dispatch-completed&quot;</literal> signal</title>
+<indexterm zone="McdDispatcher-dispatch-completed"><primary sortas="McdDispatcher::dispatch-completed">McdDispatcher::dispatch-completed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                        <link linkend="gpointer">gpointer</link>       context,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)       : Run Last</programlisting>
+<para>
+This signal is emitted when a dispatch operation has terminated. One can
+inspect <parameter>context</parameter> to get the status of the channels.
+After this signal returns, <parameter>context</parameter> is no longer valid.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdDispatcher"><type>McdDispatcher</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="McdDispatcherContext"><type>McdDispatcherContext</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdDispatcher-dispatch-failed" role="signal"><title>The <literal>&quot;dispatch-failed&quot;</literal> signal</title>
+<indexterm zone="McdDispatcher-dispatch-failed"><primary sortas="McdDispatcher::dispatch-failed">McdDispatcher::dispatch-failed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
+                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
+                                                        <link linkend="gpointer">gpointer</link>       arg2,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg2</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="McdDispatcher-dispatched" role="signal"><title>The <literal>&quot;dispatched&quot;</literal> signal</title>
+<indexterm zone="McdDispatcher-dispatched"><primary sortas="McdDispatcher::dispatched">McdDispatcher::dispatched</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
+                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

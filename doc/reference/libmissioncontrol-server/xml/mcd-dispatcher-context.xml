@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="libmissioncontrol-server-mcd-dispatcher-context">
+<refmeta>
+<refentrytitle role="top_of_page" id="libmissioncontrol-server-mcd-dispatcher-context.top_of_page">mcd-dispatcher-context</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>mcd-dispatcher-context</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="libmissioncontrol-server-mcd-dispatcher-context.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="MCD-PLUGIN-INIT-FUNC--CAPS">MCD_PLUGIN_INIT_FUNC</link>
+#define             <link linkend="MCD-FILTER-IN--CAPS">MCD_FILTER_IN</link>
+#define             <link linkend="MCD-FILTER-OUT--CAPS">MCD_FILTER_OUT</link>
+                    <link linkend="McdDispatcherContext">McdDispatcherContext</link>;
+<link linkend="void">void</link>                (<link linkend="McdFilterFunc">*McdFilterFunc</link>)                    (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+#define             <link linkend="MCD-FILTER-PRIORITY-CRITICAL--CAPS">MCD_FILTER_PRIORITY_CRITICAL</link>
+#define             <link linkend="MCD-FILTER-PRIORITY-SYSTEM--CAPS">MCD_FILTER_PRIORITY_SYSTEM</link>
+#define             <link linkend="MCD-FILTER-PRIORITY-USER--CAPS">MCD_FILTER_PRIORITY_USER</link>
+#define             <link linkend="MCD-FILTER-PRIORITY-NOTICE--CAPS">MCD_FILTER_PRIORITY_NOTICE</link>
+#define             <link linkend="MCD-FILTER-PRIORITY-LOW--CAPS">MCD_FILTER_PRIORITY_LOW</link>
+                    <link linkend="McdFilter">McdFilter</link>;
+<link linkend="McdDispatcher">McdDispatcher</link>*      <link linkend="mcd-dispatcher-context-get-dispatcher">mcd_dispatcher_context_get_dispatcher</link>
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);
+<link linkend="TpChannel">TpChannel</link> *         <link linkend="mcd-dispatcher-context-get-channel-object">mcd_dispatcher_context_get_channel_object</link>
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);
+<link linkend="TpConnection">TpConnection</link> *      <link linkend="mcd-dispatcher-context-get-connection-object">mcd_dispatcher_context_get_connection_object</link>
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);
+<link linkend="McdChannel">McdChannel</link> *        <link linkend="mcd-dispatcher-context-get-channel">mcd_dispatcher_context_get_channel</link>  (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);
+const <link linkend="GList">GList</link> *       <link linkend="mcd-dispatcher-context-get-channels">mcd_dispatcher_context_get_channels</link> (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context);
+<link linkend="McdChannel">McdChannel</link> *        <link linkend="mcd-dispatcher-context-get-channel-by-type">mcd_dispatcher_context_get_channel_by_type</link>
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context,
+                                                         <link linkend="GQuark">GQuark</link> type);
+<link linkend="McdConnection">McdConnection</link> *     <link linkend="mcd-dispatcher-context-get-connection">mcd_dispatcher_context_get_connection</link>
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context);
+<link linkend="void">void</link>                <link linkend="mcd-dispatcher-context-process">mcd_dispatcher_context_process</link>      (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx,
+                                                         <link linkend="gboolean">gboolean</link> result);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="libmissioncontrol-server-mcd-dispatcher-context.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="libmissioncontrol-server-mcd-dispatcher-context.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MCD-PLUGIN-INIT-FUNC--CAPS" role="macro">
+<title>MCD_PLUGIN_INIT_FUNC</title>
+<indexterm zone="MCD-PLUGIN-INIT-FUNC--CAPS"><primary sortas="MCD_PLUGIN_INIT_FUNC">MCD_PLUGIN_INIT_FUNC</primary></indexterm><programlisting>#define MCD_PLUGIN_INIT_FUNC  "mcd_plugin_init"
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-IN--CAPS" role="macro">
+<title>MCD_FILTER_IN</title>
+<indexterm zone="MCD-FILTER-IN--CAPS"><primary sortas="MCD_FILTER_IN">MCD_FILTER_IN</primary></indexterm><programlisting>#define MCD_FILTER_IN  1&lt;&lt;0
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-OUT--CAPS" role="macro">
+<title>MCD_FILTER_OUT</title>
+<indexterm zone="MCD-FILTER-OUT--CAPS"><primary sortas="MCD_FILTER_OUT">MCD_FILTER_OUT</primary></indexterm><programlisting>#define MCD_FILTER_OUT 1&lt;&lt;1
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="McdDispatcherContext" role="struct">
+<title>McdDispatcherContext</title>
+<indexterm zone="McdDispatcherContext"><primary sortas="McdDispatcherContext">McdDispatcherContext</primary></indexterm><programlisting>typedef struct _McdDispatcherContext McdDispatcherContext;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="McdFilterFunc" role="function">
+<title>McdFilterFunc ()</title>
+<indexterm zone="McdFilterFunc"><primary sortas="McdFilterFunc">McdFilterFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*McdFilterFunc)                    (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MCD-FILTER-PRIORITY-CRITICAL--CAPS" role="macro">
+<title>MCD_FILTER_PRIORITY_CRITICAL</title>
+<indexterm zone="MCD-FILTER-PRIORITY-CRITICAL--CAPS"><primary sortas="MCD_FILTER_PRIORITY_CRITICAL">MCD_FILTER_PRIORITY_CRITICAL</primary></indexterm><programlisting>#define MCD_FILTER_PRIORITY_CRITICAL 10000
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-PRIORITY-SYSTEM--CAPS" role="macro">
+<title>MCD_FILTER_PRIORITY_SYSTEM</title>
+<indexterm zone="MCD-FILTER-PRIORITY-SYSTEM--CAPS"><primary sortas="MCD_FILTER_PRIORITY_SYSTEM">MCD_FILTER_PRIORITY_SYSTEM</primary></indexterm><programlisting>#define MCD_FILTER_PRIORITY_SYSTEM   20000
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-PRIORITY-USER--CAPS" role="macro">
+<title>MCD_FILTER_PRIORITY_USER</title>
+<indexterm zone="MCD-FILTER-PRIORITY-USER--CAPS"><primary sortas="MCD_FILTER_PRIORITY_USER">MCD_FILTER_PRIORITY_USER</primary></indexterm><programlisting>#define MCD_FILTER_PRIORITY_USER     30000
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-PRIORITY-NOTICE--CAPS" role="macro">
+<title>MCD_FILTER_PRIORITY_NOTICE</title>
+<indexterm zone="MCD-FILTER-PRIORITY-NOTICE--CAPS"><primary sortas="MCD_FILTER_PRIORITY_NOTICE">MCD_FILTER_PRIORITY_NOTICE</primary></indexterm><programlisting>#define MCD_FILTER_PRIORITY_NOTICE   40000
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="MCD-FILTER-PRIORITY-LOW--CAPS" role="macro">
+<title>MCD_FILTER_PRIORITY_LOW</title>
+<indexterm zone="MCD-FILTER-PRIORITY-LOW--CAPS"><primary sortas="MCD_FILTER_PRIORITY_LOW">MCD_FILTER_PRIORITY_LOW</primary></indexterm><programlisting>#define MCD_FILTER_PRIORITY_LOW	     50000
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="McdFilter" role="struct">
+<title>McdFilter</title>
+<indexterm zone="McdFilter"><primary sortas="McdFilter">McdFilter</primary></indexterm><programlisting>typedef struct {
+    McdFilterFunc func;
+    guint priority;
+    gpointer user_data;
+} McdFilter;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-dispatcher" role="function">
+<title>mcd_dispatcher_context_get_dispatcher ()</title>
+<indexterm zone="mcd-dispatcher-context-get-dispatcher"><primary sortas="mcd_dispatcher_context_get_dispatcher">mcd_dispatcher_context_get_dispatcher</primary></indexterm><programlisting><link linkend="McdDispatcher">McdDispatcher</link>*      mcd_dispatcher_context_get_dispatcher
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-channel-object" role="function">
+<title>mcd_dispatcher_context_get_channel_object ()</title>
+<indexterm zone="mcd-dispatcher-context-get-channel-object"><primary sortas="mcd_dispatcher_context_get_channel_object">mcd_dispatcher_context_get_channel_object</primary></indexterm><programlisting><link linkend="TpChannel">TpChannel</link> *         mcd_dispatcher_context_get_channel_object
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-connection-object" role="function">
+<title>mcd_dispatcher_context_get_connection_object ()</title>
+<indexterm zone="mcd-dispatcher-context-get-connection-object"><primary sortas="mcd_dispatcher_context_get_connection_object">mcd_dispatcher_context_get_connection_object</primary></indexterm><programlisting><link linkend="TpConnection">TpConnection</link> *      mcd_dispatcher_context_get_connection_object
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-channel" role="function">
+<title>mcd_dispatcher_context_get_channel ()</title>
+<indexterm zone="mcd-dispatcher-context-get-channel"><primary sortas="mcd_dispatcher_context_get_channel">mcd_dispatcher_context_get_channel</primary></indexterm><programlisting><link linkend="McdChannel">McdChannel</link> *        mcd_dispatcher_context_get_channel  (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-channels" role="function">
+<title>mcd_dispatcher_context_get_channels ()</title>
+<indexterm zone="mcd-dispatcher-context-get-channels"><primary sortas="mcd_dispatcher_context_get_channels">mcd_dispatcher_context_get_channels</primary></indexterm><programlisting>const <link linkend="GList">GList</link> *       mcd_dispatcher_context_get_channels (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdDispatcherContext"><type>McdDispatcherContext</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="GList"><type>GList</type></link> of <link linkend="McdChannel"><type>McdChannel</type></link> elements.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-channel-by-type" role="function">
+<title>mcd_dispatcher_context_get_channel_by_type ()</title>
+<indexterm zone="mcd-dispatcher-context-get-channel-by-type"><primary sortas="mcd_dispatcher_context_get_channel_by_type">mcd_dispatcher_context_get_channel_by_type</primary></indexterm><programlisting><link linkend="McdChannel">McdChannel</link> *        mcd_dispatcher_context_get_channel_by_type
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context,
+                                                         <link linkend="GQuark">GQuark</link> type);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdDispatcherContext"><type>McdDispatcherContext</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="GQuark"><type>GQuark</type></link> representing the channel type.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the first <link linkend="McdChannel"><type>McdChannel</type></link> of the requested type, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-get-connection" role="function">
+<title>mcd_dispatcher_context_get_connection ()</title>
+<indexterm zone="mcd-dispatcher-context-get-connection"><primary sortas="mcd_dispatcher_context_get_connection">mcd_dispatcher_context_get_connection</primary></indexterm><programlisting><link linkend="McdConnection">McdConnection</link> *     mcd_dispatcher_context_get_connection
+                                                        (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *context);</programlisting>
+<para>
+</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>context</parameter>&#160;:</term>
+<listitem><simpara> the <link linkend="McdDispatcherContext"><type>McdDispatcherContext</type></link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the <link linkend="McdConnection"><type>McdConnection</type></link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-dispatcher-context-process" role="function">
+<title>mcd_dispatcher_context_process ()</title>
+<indexterm zone="mcd-dispatcher-context-process"><primary sortas="mcd_dispatcher_context_process">mcd_dispatcher_context_process</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_dispatcher_context_process      (<link linkend="McdDispatcherContext">McdDispatcherContext</link> *ctx,
+                                                         <link linkend="gboolean">gboolean</link> result);</programlisting>
+<para>
+Continue to process the <parameter>context</parameter>.
+</para>
+<para>
+mcd_dispatcher_context_process (c, TRUE) is exactly equivalent to
+mcd_dispatcher_context_proceed (c), which should be used instead in new
+code.
+</para>
+<para>
+mcd_dispatcher_context_process (c, TRUE) is exactly equivalent to
+mcd_dispatcher_context_destroy_all (c) followed by
+mcd_dispatcher_context_proceed (c), which should be used instead in new
+code.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>ctx</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>result</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> if the channels are to be destroyed
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="libmcclient-mc-quark">
+<refmeta>
+<refentrytitle role="top_of_page" id="libmcclient-mc-quark.top_of_page">mc-quark</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMCCLIENT Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>mc-quark</refname>
+<refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv id="libmcclient-mc-quark.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+#define             <link linkend="MC-QUARK-REQUESTED-PRESENCE--CAPS">MC_QUARK_REQUESTED_PRESENCE</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-requested-presence">mc_quark_requested_presence</link>         (void);
+#define             <link linkend="MC-QUARK-CURRENT-PRESENCE--CAPS">MC_QUARK_CURRENT_PRESENCE</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-current-presence">mc_quark_current_presence</link>           (void);
+#define             <link linkend="MC-QUARK-AUTOMATIC-PRESENCE--CAPS">MC_QUARK_AUTOMATIC_PRESENCE</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-automatic-presence">mc_quark_automatic_presence</link>         (void);
+#define             <link linkend="MC-QUARK-DISPLAY-NAME--CAPS">MC_QUARK_DISPLAY_NAME</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-display-name">mc_quark_display_name</link>               (void);
+#define             <link linkend="MC-QUARK-NORMALIZED-NAME--CAPS">MC_QUARK_NORMALIZED_NAME</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-normalized-name">mc_quark_normalized_name</link>            (void);
+#define             <link linkend="MC-QUARK-ICON--CAPS">MC_QUARK_ICON</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-icon">mc_quark_icon</link>                       (void);
+#define             <link linkend="MC-QUARK-NICKNAME--CAPS">MC_QUARK_NICKNAME</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-nickname">mc_quark_nickname</link>                   (void);
+#define             <link linkend="MC-QUARK-ENABLED--CAPS">MC_QUARK_ENABLED</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-enabled">mc_quark_enabled</link>                    (void);
+#define             <link linkend="MC-QUARK-VALID--CAPS">MC_QUARK_VALID</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-valid">mc_quark_valid</link>                      (void);
+#define             <link linkend="MC-QUARK-CONNECT-AUTOMATICALLY--CAPS">MC_QUARK_CONNECT_AUTOMATICALLY</link>
+<link linkend="GQuark">GQuark</link>              <link linkend="mc-quark-connect-automatically">mc_quark_connect_automatically</link>      (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="libmcclient-mc-quark.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="libmcclient-mc-quark.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="MC-QUARK-REQUESTED-PRESENCE--CAPS" role="macro">
+<title>MC_QUARK_REQUESTED_PRESENCE</title>
+<indexterm zone="MC-QUARK-REQUESTED-PRESENCE--CAPS"><primary sortas="MC_QUARK_REQUESTED_PRESENCE">MC_QUARK_REQUESTED_PRESENCE</primary></indexterm><programlisting>#define             MC_QUARK_REQUESTED_PRESENCE</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-requested-presence" role="function">
+<title>mc_quark_requested_presence ()</title>
+<indexterm zone="mc-quark-requested-presence"><primary sortas="mc_quark_requested_presence">mc_quark_requested_presence</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_requested_presence         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-CURRENT-PRESENCE--CAPS" role="macro">
+<title>MC_QUARK_CURRENT_PRESENCE</title>
+<indexterm zone="MC-QUARK-CURRENT-PRESENCE--CAPS"><primary sortas="MC_QUARK_CURRENT_PRESENCE">MC_QUARK_CURRENT_PRESENCE</primary></indexterm><programlisting>#define             MC_QUARK_CURRENT_PRESENCE</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-current-presence" role="function">
+<title>mc_quark_current_presence ()</title>
+<indexterm zone="mc-quark-current-presence"><primary sortas="mc_quark_current_presence">mc_quark_current_presence</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_current_presence           (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-AUTOMATIC-PRESENCE--CAPS" role="macro">
+<title>MC_QUARK_AUTOMATIC_PRESENCE</title>
+<indexterm zone="MC-QUARK-AUTOMATIC-PRESENCE--CAPS"><primary sortas="MC_QUARK_AUTOMATIC_PRESENCE">MC_QUARK_AUTOMATIC_PRESENCE</primary></indexterm><programlisting>#define             MC_QUARK_AUTOMATIC_PRESENCE</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-automatic-presence" role="function">
+<title>mc_quark_automatic_presence ()</title>
+<indexterm zone="mc-quark-automatic-presence"><primary sortas="mc_quark_automatic_presence">mc_quark_automatic_presence</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_automatic_presence         (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-DISPLAY-NAME--CAPS" role="macro">
+<title>MC_QUARK_DISPLAY_NAME</title>
+<indexterm zone="MC-QUARK-DISPLAY-NAME--CAPS"><primary sortas="MC_QUARK_DISPLAY_NAME">MC_QUARK_DISPLAY_NAME</primary></indexterm><programlisting>#define             MC_QUARK_DISPLAY_NAME</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-display-name" role="function">
+<title>mc_quark_display_name ()</title>
+<indexterm zone="mc-quark-display-name"><primary sortas="mc_quark_display_name">mc_quark_display_name</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_display_name               (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-NORMALIZED-NAME--CAPS" role="macro">
+<title>MC_QUARK_NORMALIZED_NAME</title>
+<indexterm zone="MC-QUARK-NORMALIZED-NAME--CAPS"><primary sortas="MC_QUARK_NORMALIZED_NAME">MC_QUARK_NORMALIZED_NAME</primary></indexterm><programlisting>#define             MC_QUARK_NORMALIZED_NAME</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-normalized-name" role="function">
+<title>mc_quark_normalized_name ()</title>
+<indexterm zone="mc-quark-normalized-name"><primary sortas="mc_quark_normalized_name">mc_quark_normalized_name</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_normalized_name            (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-ICON--CAPS" role="macro">
+<title>MC_QUARK_ICON</title>
+<indexterm zone="MC-QUARK-ICON--CAPS"><primary sortas="MC_QUARK_ICON">MC_QUARK_ICON</primary></indexterm><programlisting>#define             MC_QUARK_ICON</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-icon" role="function">
+<title>mc_quark_icon ()</title>
+<indexterm zone="mc-quark-icon"><primary sortas="mc_quark_icon">mc_quark_icon</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_icon                       (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-NICKNAME--CAPS" role="macro">
+<title>MC_QUARK_NICKNAME</title>
+<indexterm zone="MC-QUARK-NICKNAME--CAPS"><primary sortas="MC_QUARK_NICKNAME">MC_QUARK_NICKNAME</primary></indexterm><programlisting>#define             MC_QUARK_NICKNAME</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-nickname" role="function">
+<title>mc_quark_nickname ()</title>
+<indexterm zone="mc-quark-nickname"><primary sortas="mc_quark_nickname">mc_quark_nickname</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_nickname                   (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-ENABLED--CAPS" role="macro">
+<title>MC_QUARK_ENABLED</title>
+<indexterm zone="MC-QUARK-ENABLED--CAPS"><primary sortas="MC_QUARK_ENABLED">MC_QUARK_ENABLED</primary></indexterm><programlisting>#define             MC_QUARK_ENABLED</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-enabled" role="function">
+<title>mc_quark_enabled ()</title>
+<indexterm zone="mc-quark-enabled"><primary sortas="mc_quark_enabled">mc_quark_enabled</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_enabled                    (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-VALID--CAPS" role="macro">
+<title>MC_QUARK_VALID</title>
+<indexterm zone="MC-QUARK-VALID--CAPS"><primary sortas="MC_QUARK_VALID">MC_QUARK_VALID</primary></indexterm><programlisting>#define             MC_QUARK_VALID</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-valid" role="function">
+<title>mc_quark_valid ()</title>
+<indexterm zone="mc-quark-valid"><primary sortas="mc_quark_valid">mc_quark_valid</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_valid                      (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="MC-QUARK-CONNECT-AUTOMATICALLY--CAPS" role="macro">
+<title>MC_QUARK_CONNECT_AUTOMATICALLY</title>
+<indexterm zone="MC-QUARK-CONNECT-AUTOMATICALLY--CAPS"><primary sortas="MC_QUARK_CONNECT_AUTOMATICALLY">MC_QUARK_CONNECT_AUTOMATICALLY</primary></indexterm><programlisting>#define             MC_QUARK_CONNECT_AUTOMATICALLY</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mc-quark-connect-automatically" role="function">
+<title>mc_quark_connect_automatically ()</title>
+<indexterm zone="mc-quark-connect-automatically"><primary sortas="mc_quark_connect_automatically">mc_quark_connect_automatically</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_quark_connect_automatically      (void);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

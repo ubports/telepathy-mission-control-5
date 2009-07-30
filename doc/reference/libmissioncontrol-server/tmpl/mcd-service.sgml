@@ -1,0 +1,41 @@
+<!-- ##### SECTION Title ##### -->
+McdService
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT McdService ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mcd_service_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION mcd_service_run ##### -->
+<para>
+
+</para>
+
+@self: 
+
+

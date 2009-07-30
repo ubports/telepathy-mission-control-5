@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="McdMaster">
+<refmeta>
+<refentrytitle role="top_of_page" id="McdMaster.top_of_page">McdMaster</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdMaster</refname>
+<refpurpose>Server master class</refpurpose>
+</refnamediv>
+<refsect1 id="McdMaster.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="McdMaster.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-master.h&gt;
+
+                    <link linkend="McdMaster-struct">McdMaster</link>;
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="McdMaster.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="McdMission">McdMission</link>
+         +----<link linkend="McdOperation">McdOperation</link>
+               +----<link linkend="McdController">McdController</link>
+                     +----McdMaster
+                           +----<link linkend="McdService">McdService</link>
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="McdMaster.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="McdMaster--account-manager">account-manager</link>&quot;          <link linkend="McdAccountManager">McdAccountManager</link>*    : Read / Write / Construct Only
+  &quot;<link linkend="McdMaster--dbus-connection">dbus-connection</link>&quot;          <link linkend="gpointer">gpointer</link>              : Read
+  &quot;<link linkend="McdMaster--dbus-daemon">dbus-daemon</link>&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct Only
+  &quot;<link linkend="McdMaster--dispatcher">dispatcher</link>&quot;               <link linkend="McdDispatcher">McdDispatcher</link>*        : Read
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="McdMaster.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This class implements actual mission-control. It keeps track of
+individual account presence and connection states in a McdPresenceFrame
+member object, which is available as a property.
+</para>
+<para>
+The McdPresenceFrame object could be easily utilized for
+any presence releated events and actions, either within this class or
+any other class subclassing it or using it.
+</para>
+<para>
+It is basically a container for all McdManager objects and
+takes care of their management. It also takes care of sleep and awake
+cycles (e.g. translates to auto away somewhere down the hierarchy).
+</para>
+<para>
+McdMaster is a subclass of McdConroller, which essentially means it
+is subject to all device control.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="McdMaster.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="McdMaster-struct" role="struct">
+<title>McdMaster</title>
+<indexterm zone="McdMaster-struct"><primary sortas="McdMaster">McdMaster</primary></indexterm><programlisting>typedef struct _McdMaster McdMaster;</programlisting>
+<para>
+</para></refsect2>
+
+</refsect1>
+<refsect1 id="McdMaster.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="McdMaster--account-manager" role="property"><title>The <literal>&quot;account-manager&quot;</literal> property</title>
+<indexterm zone="McdMaster--account-manager"><primary sortas="McdMaster:account-manager">McdMaster:account-manager</primary></indexterm><programlisting>  &quot;account-manager&quot;          <link linkend="McdAccountManager">McdAccountManager</link>*    : Read / Write / Construct Only</programlisting>
+<para>AccountManager.</para></refsect2>
+<refsect2 id="McdMaster--dbus-connection" role="property"><title>The <literal>&quot;dbus-connection&quot;</literal> property</title>
+<indexterm zone="McdMaster--dbus-connection"><primary sortas="McdMaster:dbus-connection">McdMaster:dbus-connection</primary></indexterm><programlisting>  &quot;dbus-connection&quot;          <link linkend="gpointer">gpointer</link>              : Read</programlisting>
+<para>D-Bus Connection.</para></refsect2>
+<refsect2 id="McdMaster--dbus-daemon" role="property"><title>The <literal>&quot;dbus-daemon&quot;</literal> property</title>
+<indexterm zone="McdMaster--dbus-daemon"><primary sortas="McdMaster:dbus-daemon">McdMaster:dbus-daemon</primary></indexterm><programlisting>  &quot;dbus-daemon&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct Only</programlisting>
+<para>DBus daemon.</para></refsect2>
+<refsect2 id="McdMaster--dispatcher" role="property"><title>The <literal>&quot;dispatcher&quot;</literal> property</title>
+<indexterm zone="McdMaster--dispatcher"><primary sortas="McdMaster:dispatcher">McdMaster:dispatcher</primary></indexterm><programlisting>  &quot;dispatcher&quot;               <link linkend="McdDispatcher">McdDispatcher</link>*        : Read</programlisting>
+<para>Dispatcher.</para></refsect2>
+</refsect1>
+
+
+
+
+</refentry>

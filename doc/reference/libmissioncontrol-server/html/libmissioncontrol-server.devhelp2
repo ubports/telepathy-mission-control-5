@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="libmissioncontrol-server Reference Manual" link="index.html" author="" name="libmissioncontrol-server" version="2" language="c">
+  <chapters>
+    <sub name="libmissioncontrol-server" link="ch01.html">
+      <sub name="McdMaster" link="McdMaster.html"/>
+      <sub name="McdConnection" link="libmissioncontrol-server-mcd-connection.html"/>
+      <sub name="McdOperation" link="McdOperation.html"/>
+      <sub name="McdService" link="McdService.html"/>
+      <sub name="McdChannel" link="McdChannel.html"/>
+      <sub name="McdManager" link="McdManager.html"/>
+      <sub name="McdMission" link="McdMission.html"/>
+      <sub name="McdProxy" link="McdProxy.html"/>
+      <sub name="McdController" link="McdController.html"/>
+      <sub name="McdDispatcher" link="McdDispatcher.html"/>
+      <sub name="mcd-dispatcher-context" link="libmissioncontrol-server-mcd-dispatcher-context.html"/>
+      <sub name="Debugging" link="libmissioncontrol-server-mcd-debug.html"/>
+      <sub name="mcd-enum-types" link="libmissioncontrol-server-mcd-enum-types.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <keyword type="struct" name="McdMaster" link="McdMaster.html#McdMaster-struct"/>
+    <keyword type="property" name="The &quot;account-manager&quot; property" link="McdMaster.html#McdMaster--account-manager"/>
+    <keyword type="property" name="The &quot;dbus-connection&quot; property" link="McdMaster.html#McdMaster--dbus-connection"/>
+    <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdMaster.html#McdMaster--dbus-daemon"/>
+    <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdMaster.html#McdMaster--dispatcher"/>
+    <keyword type="struct" name="McdConnection" link="libmissioncontrol-server-mcd-connection.html#McdConnection-struct"/>
+    <keyword type="function" name="mcd_connection_get_account ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-get-account"/>
+    <keyword type="function" name="mcd_connection_request_channel ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-request-channel"/>
+    <keyword type="function" name="mcd_connection_cancel_channel_request ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-cancel-channel-request"/>
+    <keyword type="function" name="mcd_connection_close ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-close"/>
+    <keyword type="property" name="The &quot;account&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--account"/>
+    <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--dbus-daemon"/>
+    <keyword type="property" name="The &quot;dispatcher&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--dispatcher"/>
+    <keyword type="property" name="The &quot;tp-connection&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-connection"/>
+    <keyword type="property" name="The &quot;tp-manager&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-manager"/>
+    <keyword type="signal" name="The &quot;connection-status-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-connection-status-changed"/>
+    <keyword type="signal" name="The &quot;ready&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-ready"/>
+    <keyword type="signal" name="The &quot;self-nickname-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-self-nickname-changed"/>
+    <keyword type="signal" name="The &quot;self-presence-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-self-presence-changed"/>
+    <keyword type="struct" name="McdOperation" link="McdOperation.html#McdOperation-struct"/>
+    <keyword type="function" name="mcd_operation_new ()" link="McdOperation.html#mcd-operation-new"/>
+    <keyword type="function" name="mcd_operation_take_mission ()" link="McdOperation.html#mcd-operation-take-mission"/>
+    <keyword type="function" name="mcd_operation_remove_mission ()" link="McdOperation.html#mcd-operation-remove-mission"/>
+    <keyword type="function" name="mcd_operation_foreach ()" link="McdOperation.html#mcd-operation-foreach"/>
+    <keyword type="function" name="mcd_operation_get_missions ()" link="McdOperation.html#mcd-operation-get-missions"/>
+    <keyword type="signal" name="The &quot;mission-removed&quot; signal" link="McdOperation.html#McdOperation-mission-removed"/>
+    <keyword type="signal" name="The &quot;mission-taken&quot; signal" link="McdOperation.html#McdOperation-mission-taken"/>
+    <keyword type="struct" name="McdService" link="McdService.html#McdService-struct"/>
+    <keyword type="function" name="mcd_service_new ()" link="McdService.html#mcd-service-new"/>
+    <keyword type="function" name="mcd_service_run ()" link="McdService.html#mcd-service-run"/>
+    <keyword type="struct" name="McdChannel" link="McdChannel.html#McdChannel-struct"/>
+    <keyword type="enum" name="enum McdChannelStatus" link="McdChannel.html#McdChannelStatus"/>
+    <keyword type="function" name="mcd_channel_get_status ()" link="McdChannel.html#mcd-channel-get-status"/>
+    <keyword type="function" name="mcd_channel_get_members_accepted ()" link="McdChannel.html#mcd-channel-get-members-accepted"/>
+    <keyword type="function" name="mcd_channel_get_channel_type ()" link="McdChannel.html#mcd-channel-get-channel-type"/>
+    <keyword type="function" name="mcd_channel_get_channel_type_quark ()" link="McdChannel.html#mcd-channel-get-channel-type-quark"/>
+    <keyword type="function" name="mcd_channel_get_object_path ()" link="McdChannel.html#mcd-channel-get-object-path"/>
+    <keyword type="function" name="mcd_channel_get_handle ()" link="McdChannel.html#mcd-channel-get-handle"/>
+    <keyword type="function" name="mcd_channel_get_handle_type ()" link="McdChannel.html#mcd-channel-get-handle-type"/>
+    <keyword type="function" name="mcd_channel_get_name ()" link="McdChannel.html#mcd-channel-get-name"/>
+    <keyword type="function" name="mcd_channel_is_requested ()" link="McdChannel.html#mcd-channel-is-requested"/>
+    <keyword type="function" name="mcd_channel_get_account ()" link="McdChannel.html#mcd-channel-get-account"/>
+    <keyword type="property" name="The &quot;account-path&quot; property" link="McdChannel.html#McdChannel--account-path"/>
+    <keyword type="property" name="The &quot;interfaces&quot; property" link="McdChannel.html#McdChannel--interfaces"/>
+    <keyword type="property" name="The &quot;outgoing&quot; property" link="McdChannel.html#McdChannel--outgoing"/>
+    <keyword type="property" name="The &quot;preferred-handler&quot; property" link="McdChannel.html#McdChannel--preferred-handler"/>
+    <keyword type="property" name="The &quot;requests&quot; property" link="McdChannel.html#McdChannel--requests"/>
+    <keyword type="property" name="The &quot;tp-channel&quot; property" link="McdChannel.html#McdChannel--tp-channel"/>
+    <keyword type="property" name="The &quot;user-action-time&quot; property" link="McdChannel.html#McdChannel--user-action-time"/>
+    <keyword type="signal" name="The &quot;members-accepted&quot; signal" link="McdChannel.html#McdChannel-members-accepted"/>
+    <keyword type="signal" name="The &quot;status-changed&quot; signal" link="McdChannel.html#McdChannel-status-changed"/>
+    <keyword type="struct" name="McdManager" link="McdManager.html#McdManager-struct"/>
+    <keyword type="function" name="mcd_manager_new ()" link="McdManager.html#mcd-manager-new"/>
+    <keyword type="function" name="mcd_manager_cancel_channel_request ()" link="McdManager.html#mcd-manager-cancel-channel-request"/>
+    <keyword type="function" name="mcd_manager_get_connection ()" link="McdManager.html#mcd-manager-get-connection"/>
+    <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdManager.html#McdManager--dbus-daemon"/>
+    <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdManager.html#McdManager--dispatcher"/>
+    <keyword type="property" name="The &quot;name&quot; property" link="McdManager.html#McdManager--name"/>
+    <keyword type="struct" name="McdMission" link="McdMission.html#McdMission-struct"/>
+    <keyword type="macro" name="MCD_MISSION_GET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-GET-FLAGS-MASKED--CAPS"/>
+    <keyword type="macro" name="MCD_MISSION_SET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-SET-FLAGS-MASKED--CAPS"/>
+    <keyword type="macro" name="MCD_MISSION_UNSET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"/>
+    <keyword type="enum" name="enum McdMode" link="McdMission.html#McdMode"/>
+    <keyword type="enum" name="enum McdSystemFlags" link="McdMission.html#McdSystemFlags"/>
+    <keyword type="function" name="mcd_mission_new ()" link="McdMission.html#mcd-mission-new"/>
+    <keyword type="function" name="mcd_mission_is_connected ()" link="McdMission.html#mcd-mission-is-connected"/>
+    <keyword type="function" name="mcd_mission_get_parent ()" link="McdMission.html#mcd-mission-get-parent"/>
+    <keyword type="function" name="mcd_mission_abort ()" link="McdMission.html#mcd-mission-abort"/>
+    <keyword type="function" name="mcd_mission_set_parent ()" link="McdMission.html#mcd-mission-set-parent"/>
+    <keyword type="function" name="mcd_mission_connect ()" link="McdMission.html#mcd-mission-connect"/>
+    <keyword type="function" name="mcd_mission_disconnect ()" link="McdMission.html#mcd-mission-disconnect"/>
+    <keyword type="function" name="mcd_mission_set_flags ()" link="McdMission.html#mcd-mission-set-flags"/>
+    <keyword type="function" name="mcd_mission_get_flags ()" link="McdMission.html#mcd-mission-get-flags"/>
+    <keyword type="function" name="mcd_mission_set_mode ()" link="McdMission.html#mcd-mission-set-mode"/>
+    <keyword type="function" name="mcd_mission_get_mode ()" link="McdMission.html#mcd-mission-get-mode"/>
+    <keyword type="property" name="The &quot;mode&quot; property" link="McdMission.html#McdMission--mode"/>
+    <keyword type="property" name="The &quot;parent&quot; property" link="McdMission.html#McdMission--parent"/>
+    <keyword type="property" name="The &quot;system-flags&quot; property" link="McdMission.html#McdMission--system-flags"/>
+    <keyword type="signal" name="The &quot;abort&quot; signal" link="McdMission.html#McdMission-abort"/>
+    <keyword type="signal" name="The &quot;connected&quot; signal" link="McdMission.html#McdMission-connected"/>
+    <keyword type="signal" name="The &quot;disconnected&quot; signal" link="McdMission.html#McdMission-disconnected"/>
+    <keyword type="signal" name="The &quot;flags-changed&quot; signal" link="McdMission.html#McdMission-flags-changed"/>
+    <keyword type="signal" name="The &quot;mode-set&quot; signal" link="McdMission.html#McdMission-mode-set"/>
+    <keyword type="signal" name="The &quot;parent-set&quot; signal" link="McdMission.html#McdMission-parent-set"/>
+    <keyword type="struct" name="McdProxy" link="McdProxy.html#McdProxy-struct"/>
+    <keyword type="function" name="mcd_proxy_new ()" link="McdProxy.html#mcd-proxy-new"/>
+    <keyword type="function" name="mcd_proxy_get_proxy_object ()" link="McdProxy.html#mcd-proxy-get-proxy-object"/>
+    <keyword type="property" name="The &quot;proxy-object&quot; property" link="McdProxy.html#McdProxy--proxy-object"/>
+    <keyword type="struct" name="McdController" link="McdController.html#McdController-struct"/>
+    <keyword type="function" name="mcd_controller_new ()" link="McdController.html#mcd-controller-new"/>
+    <keyword type="function" name="mcd_controller_shutdown ()" link="McdController.html#mcd-controller-shutdown"/>
+    <keyword type="function" name="mcd_controller_cancel_shutdown ()" link="McdController.html#mcd-controller-cancel-shutdown"/>
+    <keyword type="struct" name="McdDispatcher" link="McdDispatcher.html#McdDispatcher-struct"/>
+    <keyword type="function" name="mcd_dispatcher_new ()" link="McdDispatcher.html#mcd-dispatcher-new"/>
+    <keyword type="function" name="mcd_dispatcher_get_channel_type_usage ()" link="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage"/>
+    <keyword type="function" name="mcd_dispatcher_add_filter ()" link="McdDispatcher.html#mcd-dispatcher-add-filter"/>
+    <keyword type="function" name="mcd_dispatcher_add_filters ()" link="McdDispatcher.html#mcd-dispatcher-add-filters"/>
+    <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdDispatcher.html#McdDispatcher--dbus-daemon"/>
+    <keyword type="property" name="The &quot;dispatch-operations&quot; property" link="McdDispatcher.html#McdDispatcher--dispatch-operations"/>
+    <keyword type="property" name="The &quot;interfaces&quot; property" link="McdDispatcher.html#McdDispatcher--interfaces"/>
+    <keyword type="property" name="The &quot;mcd-master&quot; property" link="McdDispatcher.html#McdDispatcher--mcd-master"/>
+    <keyword type="signal" name="The &quot;channel-added&quot; signal" link="McdDispatcher.html#McdDispatcher-channel-added"/>
+    <keyword type="signal" name="The &quot;channel-removed&quot; signal" link="McdDispatcher.html#McdDispatcher-channel-removed"/>
+    <keyword type="signal" name="The &quot;dispatch-completed&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatch-completed"/>
+    <keyword type="signal" name="The &quot;dispatch-failed&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatch-failed"/>
+    <keyword type="signal" name="The &quot;dispatched&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatched"/>
+    <keyword type="macro" name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT--CAPS"/>
+    <keyword type="struct" name="McdDispatcherContext" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext"/>
+    <keyword type="function" name="McdFilterFunc ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilterFunc"/>
+    <keyword type="macro" name="MCD_FILTER_PRIORITY_CRITICAL" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-CRITICAL--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_PRIORITY_SYSTEM" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-SYSTEM--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_PRIORITY_USER" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-USER--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_PRIORITY_NOTICE" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-NOTICE--CAPS"/>
+    <keyword type="macro" name="MCD_FILTER_PRIORITY_LOW" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-LOW--CAPS"/>
+    <keyword type="struct" name="McdFilter" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilter"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_dispatcher ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-dispatcher"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_channel_object ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-object"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_connection_object ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-connection-object"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_channel ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_channels ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channels"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_channel_by_type ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-by-type"/>
+    <keyword type="function" name="mcd_dispatcher_context_get_connection ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-connection"/>
+    <keyword type="function" name="mcd_dispatcher_context_process ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-process"/>
+    <keyword type="macro" name="g_object_ref()" link="libmissioncontrol-server-mcd-debug.html#g-object-ref"/>
+    <keyword type="macro" name="g_object_unref()" link="libmissioncontrol-server-mcd-debug.html#g-object-unref"/>
+    <keyword type="function" name="mcd_debug_init ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-init"/>
+    <keyword type="function" name="mcd_debug_ref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-ref"/>
+    <keyword type="function" name="mcd_debug_unref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-unref"/>
+    <keyword type="function" name="mcd_debug_print_tree ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-print-tree"/>
+    <keyword type="function" name="mcd_mode_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-mode-get-type"/>
+    <keyword type="macro" name="MCD_TYPE_MODE" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-MODE--CAPS"/>
+    <keyword type="function" name="mcd_system_flags_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-system-flags-get-type"/>
+    <keyword type="macro" name="MCD_TYPE_SYSTEM_FLAGS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-SYSTEM-FLAGS--CAPS"/>
+    <keyword type="function" name="mcd_channel_status_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-channel-status-get-type"/>
+    <keyword type="macro" name="MCD_TYPE_CHANNEL_STATUS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-CHANNEL-STATUS--CAPS"/>
+  </functions>
+</book>

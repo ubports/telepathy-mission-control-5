@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="McdManager">
+<refmeta>
+<refentrytitle role="top_of_page" id="McdManager.top_of_page">McdManager</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>LIBMISSIONCONTROL-SERVER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>McdManager</refname>
+<refpurpose>Manager class representing Telepathy connection manager</refpurpose>
+</refnamediv>
+<refsect1 id="McdManager.stability-level">
+<title>Stability Level</title>
+Unstable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="McdManager.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;mcd-manager.h&gt;
+
+                    <link linkend="McdManager-struct">McdManager</link>;
+<link linkend="McdManager">McdManager</link> *        <link linkend="mcd-manager-new">mcd_manager_new</link>                     (const <link linkend="gchar">gchar</link> *unique_name,
+                                                         <link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="TpDBusDaemon">TpDBusDaemon</link> *dbus_daemon);
+<link linkend="gboolean">gboolean</link>            <link linkend="mcd-manager-cancel-channel-request">mcd_manager_cancel_channel_request</link>  (<link linkend="McdManager">McdManager</link> *manager,
+                                                         <link linkend="guint">guint</link> operation_id,
+                                                         const <link linkend="gchar">gchar</link> *requestor_client_pid,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="McdConnection">McdConnection</link> *     <link linkend="mcd-manager-get-connection">mcd_manager_get_connection</link>          (<link linkend="McdManager">McdManager</link> *manager,
+                                                         const <link linkend="gchar">gchar</link> *object_path);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="McdManager.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="McdMission">McdMission</link>
+         +----<link linkend="McdOperation">McdOperation</link>
+               +----McdManager
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="McdManager.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="McdManager--dbus-daemon">dbus-daemon</link>&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct
+  &quot;<link linkend="McdManager--dispatcher">dispatcher</link>&quot;               <link linkend="McdDispatcher">McdDispatcher</link>*        : Read / Write / Construct Only
+  &quot;<link linkend="McdManager--name">name</link>&quot;                     <link linkend="gchar">gchar</link>*                : Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1 id="McdManager.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+FIXME</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="McdManager.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="McdManager-struct" role="struct">
+<title>McdManager</title>
+<indexterm zone="McdManager-struct"><primary sortas="McdManager">McdManager</primary></indexterm><programlisting>typedef struct _McdManager McdManager;</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="mcd-manager-new" role="function">
+<title>mcd_manager_new ()</title>
+<indexterm zone="mcd-manager-new"><primary sortas="mcd_manager_new">mcd_manager_new</primary></indexterm><programlisting><link linkend="McdManager">McdManager</link> *        mcd_manager_new                     (const <link linkend="gchar">gchar</link> *unique_name,
+                                                         <link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
+                                                         <link linkend="TpDBusDaemon">TpDBusDaemon</link> *dbus_daemon);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>unique_name</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dbus_daemon</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-manager-cancel-channel-request" role="function">
+<title>mcd_manager_cancel_channel_request ()</title>
+<indexterm zone="mcd-manager-cancel-channel-request"><primary sortas="mcd_manager_cancel_channel_request">mcd_manager_cancel_channel_request</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            mcd_manager_cancel_channel_request  (<link linkend="McdManager">McdManager</link> *manager,
+                                                         <link linkend="guint">guint</link> operation_id,
+                                                         const <link linkend="gchar">gchar</link> *requestor_client_pid,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>manager</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>operation_id</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>requestor_client_pid</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="mcd-manager-get-connection" role="function">
+<title>mcd_manager_get_connection ()</title>
+<indexterm zone="mcd-manager-get-connection"><primary sortas="mcd_manager_get_connection">mcd_manager_get_connection</primary></indexterm><programlisting><link linkend="McdConnection">McdConnection</link> *     mcd_manager_get_connection          (<link linkend="McdManager">McdManager</link> *manager,
+                                                         const <link linkend="gchar">gchar</link> *object_path);</programlisting>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>manager</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>object_path</parameter>&#160;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1 id="McdManager.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="McdManager--dbus-daemon" role="property"><title>The <literal>&quot;dbus-daemon&quot;</literal> property</title>
+<indexterm zone="McdManager--dbus-daemon"><primary sortas="McdManager:dbus-daemon">McdManager:dbus-daemon</primary></indexterm><programlisting>  &quot;dbus-daemon&quot;              <link linkend="TpDBusDaemon">TpDBusDaemon</link>*         : Read / Write / Construct</programlisting>
+<para>DBus daemon.</para></refsect2>
+<refsect2 id="McdManager--dispatcher" role="property"><title>The <literal>&quot;dispatcher&quot;</literal> property</title>
+<indexterm zone="McdManager--dispatcher"><primary sortas="McdManager:dispatcher">McdManager:dispatcher</primary></indexterm><programlisting>  &quot;dispatcher&quot;               <link linkend="McdDispatcher">McdDispatcher</link>*        : Read / Write / Construct Only</programlisting>
+<para>Dispatcher.</para></refsect2>
+<refsect2 id="McdManager--name" role="property"><title>The <literal>&quot;name&quot;</literal> property</title>
+<indexterm zone="McdManager--name"><primary sortas="McdManager:name">McdManager:name</primary></indexterm><programlisting>  &quot;name&quot;                     <link linkend="gchar">gchar</link>*                : Write / Construct Only</programlisting>
+<para>Name.</para><para>Default value: NULL</para>
+</refsect2>
+</refsect1>
+
+
+
+
+</refentry>

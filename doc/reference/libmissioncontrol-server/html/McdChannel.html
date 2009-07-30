@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>McdChannel</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="libmissioncontrol-server Reference Manual">
+<link rel="up" href="ch01.html" title="libmissioncontrol-server">
+<link rel="prev" href="McdService.html" title="McdService">
+<link rel="next" href="McdManager.html" title="McdManager">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="McdService.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">libmissioncontrol-server Reference Manual</th>
+<td><a accesskey="n" href="McdManager.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#McdChannel.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#McdChannel.description" class="shortcut">Description</a>
+                 | 
+                <a href="#McdChannel.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#McdChannel.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                 | 
+                <a href="#McdChannel.properties" class="shortcut">Properties</a>
+                 | 
+                <a href="#McdChannel.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="McdChannel">
+<a name="McdChannel"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="McdChannel.top_of_page"></a>McdChannel</span></h2>
+<p>McdChannel — Channel class representing Telepathy channel class</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" title="Stability Level">
+<a name="McdChannel.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="McdChannel.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;mcd-channel.h&gt;
+
+                    <a class="link" href="McdChannel.html#McdChannel-struct" title="McdChannel">McdChannel</a>;
+enum                <a class="link" href="McdChannel.html#McdChannelStatus" title="enum McdChannelStatus">McdChannelStatus</a>;
+<a class="link" href="McdChannel.html#McdChannelStatus" title="enum McdChannelStatus">McdChannelStatus</a>    <a class="link" href="McdChannel.html#mcd-channel-get-status" title="mcd_channel_get_status ()">mcd_channel_get_status</a>              (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="McdChannel.html#mcd-channel-get-members-accepted" title="mcd_channel_get_members_accepted ()">mcd_channel_get_members_accepted</a>    (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*        <a class="link" href="McdChannel.html#mcd-channel-get-channel-type" title="mcd_channel_get_channel_type ()">mcd_channel_get_channel_type</a>        (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"
+>GQuark</a>              <a class="link" href="McdChannel.html#mcd-channel-get-channel-type-quark" title="mcd_channel_get_channel_type_quark ()">mcd_channel_get_channel_type_quark</a>  (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*        <a class="link" href="McdChannel.html#mcd-channel-get-object-path" title="mcd_channel_get_object_path ()">mcd_channel_get_object_path</a>         (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               <a class="link" href="McdChannel.html#mcd-channel-get-handle" title="mcd_channel_get_handle ()">mcd_channel_get_handle</a>              (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+<a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"
+>TpHandleType</a>        <a class="link" href="McdChannel.html#mcd-channel-get-handle-type" title="mcd_channel_get_handle_type ()">mcd_channel_get_handle_type</a>         (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *       <a class="link" href="McdChannel.html#mcd-channel-get-name" title="mcd_channel_get_name ()">mcd_channel_get_name</a>                (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="McdChannel.html#mcd-channel-is-requested" title="mcd_channel_is_requested ()">mcd_channel_is_requested</a>            (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+McdAccount *        <a class="link" href="McdChannel.html#mcd-channel-get-account" title="mcd_channel_get_account ()">mcd_channel_get_account</a>             (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="McdChannel.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
+         +----McdChannel
+</pre>
+</div>
+<div class="refsect1" title="Implemented Interfaces">
+<a name="McdChannel.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+McdChannel implements
+ <a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-channel-request.html#TpSvcChannelRequest"
+>TpSvcChannelRequest</a> and  <a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties"
+>TpSvcDBusProperties</a>.</p>
+</div>
+<div class="refsect1" title="Properties">
+<a name="McdChannel.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="McdChannel.html#McdChannel--account-path" title='The "account-path" property'>account-path</a>"             DBusGObjectPath*      : Read
+  "<a class="link" href="McdChannel.html#McdChannel--interfaces" title='The "interfaces" property'>interfaces</a>"               <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"
+>GStrv</a>*                : Read
+  "<a class="link" href="McdChannel.html#McdChannel--outgoing" title='The "outgoing" property'>outgoing</a>"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only
+  "<a class="link" href="McdChannel.html#McdChannel--preferred-handler" title='The "preferred-handler" property'>preferred-handler</a>"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read
+  "<a class="link" href="McdChannel.html#McdChannel--requests" title='The "requests" property'>requests</a>"                 GPtrArray_GHashTable_gchararray+GValue__*  : Read
+  "<a class="link" href="McdChannel.html#McdChannel--tp-channel" title='The "tp-channel" property'>tp-channel</a>"               <a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"
+>TpChannel</a>*            : Read / Write / Construct
+  "<a class="link" href="McdChannel.html#McdChannel--user-action-time" title='The "user-action-time" property'>user-action-time</a>"         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a>                : Read
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="McdChannel.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="McdChannel.html#McdChannel-members-accepted" title='The "members-accepted" signal'>members-accepted</a>"                               : Run First
+  "<a class="link" href="McdChannel.html#McdChannel-status-changed" title='The "status-changed" signal'>status-changed</a>"                                 : Run First
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="McdChannel.description"></a><h2>Description</h2>
+<p>
+FIXME</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="McdChannel.details"></a><h2>Details</h2>
+<div class="refsect2" title="McdChannel">
+<a name="McdChannel-struct"></a><h3>McdChannel</h3>
+<pre class="programlisting">typedef struct _McdChannel McdChannel;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum McdChannelStatus">
+<a name="McdChannelStatus"></a><h3>enum McdChannelStatus</h3>
+<pre class="programlisting">typedef enum
+{
+    MCD_CHANNEL_STATUS_UNDISPATCHED, /* used for channels created in the
+                                        NewChannel signal before the connection
+                                        is ready */
+    MCD_CHANNEL_STATUS_REQUEST,      /* Telepathy channel is not yet created */
+    MCD_CHANNEL_STATUS_REQUESTED,    /* Channel has been requested from the CM
+                                      */
+    MCD_CHANNEL_STATUS_DISPATCHING,  /* Telepathy channel is created and
+                                        waiting dispatch */
+    MCD_CHANNEL_STATUS_HANDLER_INVOKED,
+    MCD_CHANNEL_STATUS_DISPATCHED,   /* Channel has been dispatched to handler
+                                      */
+    MCD_CHANNEL_STATUS_FAILED,       /* Channel creation failed, or channel
+                                        could not be dispached to a handler */
+} McdChannelStatus;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_status ()">
+<a name="mcd-channel-get-status"></a><h3>mcd_channel_get_status ()</h3>
+<pre class="programlisting"><a class="link" href="McdChannel.html#McdChannelStatus" title="enum McdChannelStatus">McdChannelStatus</a>    mcd_channel_get_status              (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_members_accepted ()">
+<a name="mcd-channel-get-members-accepted"></a><h3>mcd_channel_get_members_accepted ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            mcd_channel_get_members_accepted    (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_channel_type ()">
+<a name="mcd-channel-get-channel-type"></a><h3>mcd_channel_get_channel_type ()</h3>
+<pre class="programlisting">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*        mcd_channel_get_channel_type        (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_channel_type_quark ()">
+<a name="mcd-channel-get-channel-type-quark"></a><h3>mcd_channel_get_channel_type_quark ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"
+>GQuark</a>              mcd_channel_get_channel_type_quark  (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_object_path ()">
+<a name="mcd-channel-get-object-path"></a><h3>mcd_channel_get_object_path ()</h3>
+<pre class="programlisting">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*        mcd_channel_get_object_path         (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_handle ()">
+<a name="mcd-channel-get-handle"></a><h3>mcd_channel_get_handle ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"
+>guint</a>               mcd_channel_get_handle              (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_handle_type ()">
+<a name="mcd-channel-get-handle-type"></a><h3>mcd_channel_get_handle_type ()</h3>
+<pre class="programlisting"><a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"
+>TpHandleType</a>        mcd_channel_get_handle_type         (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_name ()">
+<a name="mcd-channel-get-name"></a><h3>mcd_channel_get_name ()</h3>
+<pre class="programlisting">const <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a> *       mcd_channel_get_name                (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+Get the Telepathy name of <em class="parameter"><code>channel</code></em> (calls InspectHandles on the channel
+handle).</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td> the <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a const string holding the channel name.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_is_requested ()">
+<a name="mcd-channel-is-requested"></a><h3>mcd_channel_is_requested ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            mcd_channel_is_requested            (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td> the <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE--CAPS"
+><code class="literal">TRUE</code></a> if <em class="parameter"><code>channel</code></em> was requested, <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE--CAPS"
+><code class="literal">FALSE</code></a> otherwise.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_channel_get_account ()">
+<a name="mcd-channel-get-account"></a><h3>mcd_channel_get_account ()</h3>
+<pre class="programlisting">McdAccount *        mcd_channel_get_account             (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *channel);</pre>
+<p>
+</p>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td> the <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a>.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> the <span class="type">McdAccount</span> on which this channel was created.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="McdChannel.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "account-path" property'>
+<a name="McdChannel--account-path"></a><h3>The <code class="literal">"account-path"</code> property</h3>
+<pre class="programlisting">  "account-path"             DBusGObjectPath*      : Read</pre>
+<p>Object path of the Account.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "interfaces" property'>
+<a name="McdChannel--interfaces"></a><h3>The <code class="literal">"interfaces"</code> property</h3>
+<pre class="programlisting">  "interfaces"               <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"
+>GStrv</a>*                : Read</pre>
+<p>A dbus-glib 'as'.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "outgoing" property'>
+<a name="McdChannel--outgoing"></a><h3>The <code class="literal">"outgoing"</code> property</h3>
+<pre class="programlisting">  "outgoing"                 <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>              : Read / Write / Construct Only</pre>
+<p>True if the channel was requested by us.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" title='The "preferred-handler" property'>
+<a name="McdChannel--preferred-handler"></a><h3>The <code class="literal">"preferred-handler"</code> property</h3>
+<pre class="programlisting">  "preferred-handler"        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"
+>gchar</a>*                : Read</pre>
+<p>Well-known bus name of the preferred Handler.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "requests" property'>
+<a name="McdChannel--requests"></a><h3>The <code class="literal">"requests"</code> property</h3>
+<pre class="programlisting">  "requests"                 GPtrArray_GHashTable_gchararray+GValue__*  : Read</pre>
+<p>A dbus-glib aa{sv}.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "tp-channel" property'>
+<a name="McdChannel--tp-channel"></a><h3>The <code class="literal">"tp-channel"</code> property</h3>
+<pre class="programlisting">  "tp-channel"               <a
+href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"
+>TpChannel</a>*            : Read / Write / Construct</pre>
+<p>Telepathy Channel.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "user-action-time" property'>
+<a name="McdChannel--user-action-time"></a><h3>The <code class="literal">"user-action-time"</code> property</h3>
+<pre class="programlisting">  "user-action-time"         <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"
+>gint64</a>                : Read</pre>
+<p>Time of user action in seconds since 1970.</p>
+<p>Default value: 0</p>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="McdChannel.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "members-accepted" signal'>
+<a name="McdChannel-members-accepted"></a><h3>The <code class="literal">"members-accepted"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *mcdchannel,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdchannel</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "status-changed" signal'>
+<a name="McdChannel-status-changed"></a><h3>The <code class="literal">"status-changed"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a> *mcdchannel,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"
+>gint</a>        arg1,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdchannel</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

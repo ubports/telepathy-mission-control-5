@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>McdMission</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.1">
+<link rel="home" href="index.html" title="libmissioncontrol-server Reference Manual">
+<link rel="up" href="ch01.html" title="libmissioncontrol-server">
+<link rel="prev" href="McdManager.html" title="McdManager">
+<link rel="next" href="McdProxy.html" title="McdProxy">
+<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="McdManager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">libmissioncontrol-server Reference Manual</th>
+<td><a accesskey="n" href="McdProxy.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#McdMission.synopsis" class="shortcut">Top</a>
+                 | 
+                <a href="#McdMission.description" class="shortcut">Description</a>
+                 | 
+                <a href="#McdMission.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                 | 
+                <a href="#McdMission.properties" class="shortcut">Properties</a>
+                 | 
+                <a href="#McdMission.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="McdMission">
+<a name="McdMission"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="McdMission.top_of_page"></a>McdMission</span></h2>
+<p>McdMission — Base class for server classes</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" title="Stability Level">
+<a name="McdMission.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="McdMission.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+
+#include &lt;mcd-mission.h&gt;
+
+                    <a class="link" href="McdMission.html#McdMission-struct" title="McdMission">McdMission</a>;
+#define             <a class="link" href="McdMission.html#MCD-MISSION-GET-FLAGS-MASKED--CAPS" title="MCD_MISSION_GET_FLAGS_MASKED()">MCD_MISSION_GET_FLAGS_MASKED</a>        (mission, flags)
+#define             <a class="link" href="McdMission.html#MCD-MISSION-SET-FLAGS-MASKED--CAPS" title="MCD_MISSION_SET_FLAGS_MASKED()">MCD_MISSION_SET_FLAGS_MASKED</a>        (mission, flags)
+#define             <a class="link" href="McdMission.html#MCD-MISSION-UNSET-FLAGS-MASKED--CAPS" title="MCD_MISSION_UNSET_FLAGS_MASKED()">MCD_MISSION_UNSET_FLAGS_MASKED</a>      (mission, flags)
+enum                <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>;
+enum                <a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a>;
+<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *        <a class="link" href="McdMission.html#mcd-mission-new" title="mcd_mission_new ()">mcd_mission_new</a>                     (void);
+<a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            <a class="link" href="McdMission.html#mcd-mission-is-connected" title="mcd_mission_is_connected ()">mcd_mission_is_connected</a>            (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *        <a class="link" href="McdMission.html#mcd-mission-get-parent" title="mcd_mission_get_parent ()">mcd_mission_get_parent</a>              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+void                <a class="link" href="McdMission.html#mcd-mission-abort" title="mcd_mission_abort ()">mcd_mission_abort</a>                   (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+void                <a class="link" href="McdMission.html#mcd-mission-set-parent" title="mcd_mission_set_parent ()">mcd_mission_set_parent</a>              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html" title="McdMission">McdMission</a> *parent);
+void                <a class="link" href="McdMission.html#mcd-mission-connect" title="mcd_mission_connect ()">mcd_mission_connect</a>                 (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+void                <a class="link" href="McdMission.html#mcd-mission-disconnect" title="mcd_mission_disconnect ()">mcd_mission_disconnect</a>              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+void                <a class="link" href="McdMission.html#mcd-mission-set-flags" title="mcd_mission_set_flags ()">mcd_mission_set_flags</a>               (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a> flags);
+<a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a>      <a class="link" href="McdMission.html#mcd-mission-get-flags" title="mcd_mission_get_flags ()">mcd_mission_get_flags</a>               (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+void                <a class="link" href="McdMission.html#mcd-mission-set-mode" title="mcd_mission_set_mode ()">mcd_mission_set_mode</a>                (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a> mode);
+<a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>             <a class="link" href="McdMission.html#mcd-mission-get-mode" title="mcd_mission_get_mode ()">mcd_mission_get_mode</a>                (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="McdMission.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a
+href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
+>GObject</a>
+   +----McdMission
+         +----<a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a>
+         +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
+         +----<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a>
+</pre>
+</div>
+<div class="refsect1" title="Properties">
+<a name="McdMission.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="McdMission.html#McdMission--mode" title='The "mode" property'>mode</a>"                     <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>               : Read / Write
+  "<a class="link" href="McdMission.html#McdMission--parent" title='The "parent" property'>parent</a>"                   <a class="link" href="McdMission.html" title="McdMission">McdMission</a>*           : Read / Write
+  "<a class="link" href="McdMission.html#McdMission--system-flags" title='The "system-flags" property'>system-flags</a>"             <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>               : Read / Write
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="McdMission.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="McdMission.html#McdMission-abort" title='The "abort" signal'>abort</a>"                                          : Run First
+  "<a class="link" href="McdMission.html#McdMission-connected" title='The "connected" signal'>connected</a>"                                      : Run First
+  "<a class="link" href="McdMission.html#McdMission-disconnected" title='The "disconnected" signal'>disconnected</a>"                                   : Run First
+  "<a class="link" href="McdMission.html#McdMission-flags-changed" title='The "flags-changed" signal'>flags-changed</a>"                                  : Run First
+  "<a class="link" href="McdMission.html#McdMission-mode-set" title='The "mode-set" signal'>mode-set</a>"                                       : Run First
+  "<a class="link" href="McdMission.html#McdMission-parent-set" title='The "parent-set" signal'>parent-set</a>"                                     : Run First
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="McdMission.description"></a><h2>Description</h2>
+<p>
+It is the base class for every object in mission-control. It defines
+a set of virtual functions and set of corresponding action signals.
+all virtual functions results in emission of their corresponding action
+signals. The virtual functions define states of the object, such
+as memory conserved state, connected state, locked state, low power state,
+lit state, sleeping state etc. Each of the object states can also be queried
+independently as properties.
+</p>
+<p>
+There are also some action signals such as abort, which is used to notify
+other objects holding hard references to it to release them (this object
+should then automatically die since all held references are released). It
+is mandatory for all other objects that hold a hard reference to it to
+listen for this signal and release the reference in signal handler.
+</p>
+<p>
+Concrete derived classes should override the sate  methods to implement
+object specific state managements.</p>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="McdMission.details"></a><h2>Details</h2>
+<div class="refsect2" title="McdMission">
+<a name="McdMission-struct"></a><h3>McdMission</h3>
+<pre class="programlisting">typedef struct _McdMission McdMission;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MCD_MISSION_GET_FLAGS_MASKED()">
+<a name="MCD-MISSION-GET-FLAGS-MASKED--CAPS"></a><h3>MCD_MISSION_GET_FLAGS_MASKED()</h3>
+<pre class="programlisting">#define             MCD_MISSION_GET_FLAGS_MASKED(mission, flags)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MCD_MISSION_SET_FLAGS_MASKED()">
+<a name="MCD-MISSION-SET-FLAGS-MASKED--CAPS"></a><h3>MCD_MISSION_SET_FLAGS_MASKED()</h3>
+<pre class="programlisting">#define             MCD_MISSION_SET_FLAGS_MASKED(mission, flags)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MCD_MISSION_UNSET_FLAGS_MASKED()">
+<a name="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"></a><h3>MCD_MISSION_UNSET_FLAGS_MASKED()</h3>
+<pre class="programlisting">#define             MCD_MISSION_UNSET_FLAGS_MASKED(mission, flags)</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum McdMode">
+<a name="McdMode"></a><h3>enum McdMode</h3>
+<pre class="programlisting">typedef enum
+{
+    MCD_MODE_UNKNOWN,
+    MCD_MODE_NORMAL,
+    MCD_MODE_RESTRICTED,
+    MCD_MODE_CALL
+} McdMode;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="enum McdSystemFlags">
+<a name="McdSystemFlags"></a><h3>enum McdSystemFlags</h3>
+<pre class="programlisting">typedef enum
+{
+    MCD_SYSTEM_CONNECTED          = 1,
+    MCD_SYSTEM_MEMORY_CONSERVED   = 1 &lt;&lt; 1,
+    MCD_SYSTEM_POWER_CONSERVED    = 1 &lt;&lt; 2,
+    MCD_SYSTEM_SCREEN_BLANKED     = 1 &lt;&lt; 3,
+    MCD_SYSTEM_LOCKED             = 1 &lt;&lt; 4,
+    MCD_SYSTEM_IDLE               = 1 &lt;&lt; 5
+} McdSystemFlags;
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_new ()">
+<a name="mcd-mission-new"></a><h3>mcd_mission_new ()</h3>
+<pre class="programlisting"><a class="link" href="McdMission.html" title="McdMission">McdMission</a> *        mcd_mission_new                     (void);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_is_connected ()">
+<a name="mcd-mission-is-connected"></a><h3>mcd_mission_is_connected ()</h3>
+<pre class="programlisting"><a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"
+>gboolean</a>            mcd_mission_is_connected            (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_get_parent ()">
+<a name="mcd-mission-get-parent"></a><h3>mcd_mission_get_parent ()</h3>
+<pre class="programlisting"><a class="link" href="McdMission.html" title="McdMission">McdMission</a> *        mcd_mission_get_parent              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_abort ()">
+<a name="mcd-mission-abort"></a><h3>mcd_mission_abort ()</h3>
+<pre class="programlisting">void                mcd_mission_abort                   (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_set_parent ()">
+<a name="mcd-mission-set-parent"></a><h3>mcd_mission_set_parent ()</h3>
+<pre class="programlisting">void                mcd_mission_set_parent              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html" title="McdMission">McdMission</a> *parent);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parent</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_connect ()">
+<a name="mcd-mission-connect"></a><h3>mcd_mission_connect ()</h3>
+<pre class="programlisting">void                mcd_mission_connect                 (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_disconnect ()">
+<a name="mcd-mission-disconnect"></a><h3>mcd_mission_disconnect ()</h3>
+<pre class="programlisting">void                mcd_mission_disconnect              (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_set_flags ()">
+<a name="mcd-mission-set-flags"></a><h3>mcd_mission_set_flags ()</h3>
+<pre class="programlisting">void                mcd_mission_set_flags               (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a> flags);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_get_flags ()">
+<a name="mcd-mission-get-flags"></a><h3>mcd_mission_get_flags ()</h3>
+<pre class="programlisting"><a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a>      mcd_mission_get_flags               (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_set_mode ()">
+<a name="mcd-mission-set-mode"></a><h3>mcd_mission_set_mode ()</h3>
+<pre class="programlisting">void                mcd_mission_set_mode                (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission,
+                                                         <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a> mode);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mode</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_mission_get_mode ()">
+<a name="mcd-mission-get-mode"></a><h3>mcd_mission_get_mode ()</h3>
+<pre class="programlisting"><a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>             mcd_mission_get_mode                (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mission);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="McdMission.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "mode" property'>
+<a name="McdMission--mode"></a><h3>The <code class="literal">"mode"</code> property</h3>
+<pre class="programlisting">  "mode"                     <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>               : Read / Write</pre>
+<p>Platform-specific modes.</p>
+<p>Default value: MCD_MODE_NORMAL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "parent" property'>
+<a name="McdMission--parent"></a><h3>The <code class="literal">"parent"</code> property</h3>
+<pre class="programlisting">  "parent"                   <a class="link" href="McdMission.html" title="McdMission">McdMission</a>*           : Read / Write</pre>
+<p>Parent mission.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "system-flags" property'>
+<a name="McdMission--system-flags"></a><h3>The <code class="literal">"system-flags"</code> property</h3>
+<pre class="programlisting">  "system-flags"             <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>               : Read / Write</pre>
+<p>Mission control system flags.</p>
+<p>Default value: MCD_MODE_NORMAL</p>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="McdMission.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "abort" signal'>
+<a name="McdMission-abort"></a><h3>The <code class="literal">"abort"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mcdmission,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "connected" signal'>
+<a name="McdMission-connected"></a><h3>The <code class="literal">"connected"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mcdmission,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "disconnected" signal'>
+<a name="McdMission-disconnected"></a><h3>The <code class="literal">"disconnected"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mcdmission,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "flags-changed" signal'>
+<a name="McdMission-flags-changed"></a><h3>The <code class="literal">"flags-changed"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a>    *mcdmission,
+                                                        <a class="link" href="McdMission.html#McdSystemFlags" title="enum McdSystemFlags">McdSystemFlags</a> arg1,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>       user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "mode-set" signal'>
+<a name="McdMission-mode-set"></a><h3>The <code class="literal">"mode-set"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mcdmission,
+                                                        <a class="link" href="McdMission.html#McdMode" title="enum McdMode">McdMode</a>     arg1,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "parent-set" signal'>
+<a name="McdMission-parent-set"></a><h3>The <code class="literal">"parent-set"</code> signal</h3>
+<pre class="programlisting">void                user_function                      (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *mcdmission,
+                                                        <a
+href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
+>gpointer</a>    user_data)       : Run First</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.11</div>
+</body>
+</html>

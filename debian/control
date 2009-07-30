@@ -1,0 +1,51 @@
+Source: telepathy-mission-control-5
+Section: net
+Priority: optional
+Maintainer: Debian Telepathy maintainers <pkg-telepathy-maintainers@lists.alioth.debian.org>
+Uploaders: Simon McVittie <smcv@debian.org>
+Build-Depends: cdbs,
+               debhelper (>= 5),
+               libdbus-1-dev (>= 1.0),
+               libdbus-glib-1-dev (>= 0.80),
+               libglib2.0-dev (>= 2.16),
+               libtelepathy-glib-dev (>= 0.7.33),
+               pkg-config (>= 0.21),
+               python (>= 2.5),
+               xsltproc
+Standards-Version: 3.8.2
+Vcs-Git: git://git.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git
+Vcs-Browser: http://git.debian.org/?p=pkg-telepathy/telepathy-mission-control-5.git
+Homepage: http://telepathy.freedesktop.org/wiki/
+
+Package: telepathy-mission-control-5
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: management daemon for Telepathy real-time communication framework
+ Telepathy Mission Control 5 is an account manager and channel dispatcher for
+ the Telepathy framework, allowing user interfaces and other clients
+ to share connections to real-time communication services without conflicting.
+ It implements the AccountManager and ChannelDispatcher D-Bus APIs as described
+ by telepathy-spec.
+ .
+ The account manager part stores real time communication account details,
+ connects to the stored accounts on request, and sets the accounts' presence,
+ nickname and avatar according to requests from Telepathy user interfaces and
+ other components.
+ .
+ The channel dispatcher part responds to incoming communication channels
+ (message streams, voice/video calls, file transfers etc.) by dispatching
+ them to suitable user interfaces, and requests outgoing communication
+ channels according to requests from a Telepathy UI.
+ .
+ This is not a compatible replacement for Mission Control 4 (in the
+ telepathy-mission-control package), but they can be installed in parallel.
+
+Package: telepathy-mission-control-5-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends: telepathy-mission-control-5 (= ${binary:Version}), ${misc:Depends}
+Description: management daemon for Telepathy (debug symbols)
+ Telepathy Mission Control 5 is an account manager and channel dispatcher for
+ the Telepathy framework. This package contains debug symbols which can be
+ used to debug Mission Control.
