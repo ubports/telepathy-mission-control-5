@@ -1,3 +1,18 @@
+telepathy-mission-control-5 (5.2.1-1) unstable; urgency=low
+
+  * New upstream version
+  * Standards-Version: 3.8.3 (no changes needed)
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 27 Aug 2009 16:35:00 +0100
+
+telepathy-mission-control-5 (5.2.0-2) unstable; urgency=low
+
+  * debian/control:
+    + Added myself to Uploaders.
+    + Added conflicts on telepathy-mission-control.
+
+ -- Jonny Lamb <jonny@debian.org>  Wed, 26 Aug 2009 12:54:06 +0100
+
 telepathy-mission-control-5 (5.2.0-1) unstable; urgency=low
 
   * New upstream release

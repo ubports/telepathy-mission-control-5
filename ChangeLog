@@ -1,3 +1,298 @@
+commit 8bd643c8d5547aa5e147fcfa12cb6166c2fb3857
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 14:41:59 +0100
+
+    Alter tests to catch up with mardy's ConnectionStatusReason change
+    
+    Because CSR is initially REQUESTED now, there is no change when we start
+    CONNECTING, so it's omitted from the signal.
+
+ test/twisted/account-manager/auto-connect.py   |    4 ++--
+ test/twisted/account-manager/avatar-persist.py |    2 --
+ test/twisted/account-manager/avatar-refresh.py |    2 --
+ 3 files changed, 2 insertions(+), 6 deletions(-)
+
+commit d73be4c5bc1037aa42eca92573864a66c833e03a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 14:30:25 +0100
+
+    Prepare stable version 5.2.1
+
+ NEWS         |   28 ++++++++++++++++++++++++++++
+ configure.ac |    2 +-
+ 2 files changed, 29 insertions(+), 1 deletions(-)
+
+commit d907e218035c046812dccd151d7d60b51c73c54e
+Merge: e127546 e0960a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 14:16:23 +0100
+
+    Merge branch '52-unwanted-connections' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit e12754647acd3ccaac552a6129398feeda02d70b
+Merge: a45a778 ffbab24
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 14:15:59 +0100
+
+    Merge branch '52-claim-delay' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit a45a7788bb0c92866e0fd6f1406d731cf9d17974
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-26 15:37:36 +0300
+
+    Set initial connection reason to Requested
+    
+    None_Specified is really a synonim of "generic error", but we have no error
+    here.
+
+ src/mcd-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit e0960a061a601609be9c10be99b4668eac9ae0e2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 13:08:41 +0100
+
+    McdConnection: if the connection is stopped by transport plugins while still waiting for RequestConnection, kill off the Connection when it turns up
+    
+    Otherwise, we'll have a Connection floating around uselessly in
+    pre-Connect state, which gets in the way of making another Connection to
+    the same account.
+    
+    This can happen when transport plugins go offline and online rapidly.
+
+ src/mcd-connection.c |   94 +++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 85 insertions(+), 9 deletions(-)
+
+commit ffbab24092805954a496058662f2629f9591fb81
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 17:24:35 +0100
+
+    McdDispatcher: block dispatch operations from finishing until all observers have replied
+    
+    In particular, this means that if an observer or approver calls Claim,
+    it won't get a reply until all other observers have had a chance to start.
+    This is necessary if the observer/approver will be acknowledging Text
+    messages, which a logger observer would miss as a result.
+
+ src/mcd-dispatcher.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit d5d83bc35763b6f80266a1e0e4210261edf6012b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 17:23:10 +0100
+
+    McdDispatchOperation: don't allow Claim() to return successfully until we're allowed to finish
+    
+    In particular, if some approvers haven't returned yet, don't allow the
+    dispatch operation to be claimed from under them.
+
+ src/mcd-dispatch-operation.c |   21 ++++++++++++++++++---
+ 1 files changed, 18 insertions(+), 3 deletions(-)
+
+commit 6204840f2757acbf6871dc461ba3d07614d23767
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:13:31 +0300
+
+    Add mcd_account_connection_proceed_with_reason
+    
+    Use _mcd_account_set_connection_status to set the connection status reason.
+
+ src/mcd-account-connection.c |   21 +++++++++++++--------
+ src/mcd-connection-plugin.h  |    4 ++++
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+commit 414b1872f00872dcbf9ae8db09ec2a2bb2cd689b
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:12:38 +0300
+
+    Add _mcd_connection_set_status()
+
+ src/mcd-account-priv.h |    3 +++
+ src/mcd-account.c      |    8 ++++++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+commit dcdd24519ba1025a065cf3b8fdf1815e452dfebc
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:10:37 +0300
+
+    Always process online requests.
+    
+    The transition DISCONNECTED -> DISCONNECTED should also trigger the completion
+    of online requests.
+
+ src/mcd-account.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 0c8144be32206246a91ff892a073fed0eb45d1fe
+Merge: 063f515 1193f79
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-21 11:39:53 +0100
+
+    Merge branch '52-virtual-check-request' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 1193f79b5c4526a6043da6d3902a9071ac25252b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-21 11:02:43 +0100
+
+    McdAccount: turn the lowmem check for requests into an overridable virtual method
+
+ src/mcd-account-priv.h     |    5 ++++-
+ src/mcd-account-requests.c |   34 ++++++++++++++++++++++++++++++++--
+ src/mcd-account.c          |    1 +
+ src/mcd-account.h          |    6 +++++-
+ 4 files changed, 42 insertions(+), 4 deletions(-)
+
+commit 063f515dd919c6988ed63c52d7b49d8ff5ad7e10
+Author: Naveen Verma <naveen.verma@nokia.com>
+Date:   2009-08-19 16:25:51 +0300
+
+    Detect missed calls correctly
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-channel.c |   24 ++++++++++++++++--------
+ 1 files changed, 16 insertions(+), 8 deletions(-)
+
+commit 781e360f0734363275144331831be67f95820244
+Merge: c155811 c30e6ed
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-17 12:08:56 +0100
+
+    Merge branch '52-transports' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit c30e6edeebc9eae8a2579c5d1133261b20531633
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-13 16:48:47 +0100
+
+    Rename _mcd_master_account_conditions_satisfied to _mcd_master_account_replace_transport
+    
+    It has the startling side-effect of binding the account to the selected
+    transport, so the old name was rather misleading.
+
+ src/mcd-account.c     |    2 +-
+ src/mcd-master-priv.h |    4 ++--
+ src/mcd-master.c      |    6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 9bf68a46beee4e2dba68c3f2174c43a2da0c4c89
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-13 16:41:38 +0100
+
+    McdAccount: don't allow transition from one transport to another
+    
+    A Telepathy Connection "almost always" represents a TCP socket or
+    something similar, which has a source address that is fixed at the time
+    the socket is created. TCP sockets cannot migrate between source
+    addresses, so we would be wrong to suggest that Telepathy Connections can.
+    
+    Accordingly, allow the transitions none -> anything and anything -> none,
+    but silently suppress attempts to go t1 -> t2 for t1, t2 different
+    transports.
+    
+    The bug that this fixes:
+    
+    * we have a transport T1 with source address 1.1.1.1
+    * a transport T2 comes up with source address 2.2.2.2
+    * a Connection C1 to an account A whose server is 9.9.9.9
+      (its TCP socket is 1.1.1.1:11111 <-> 9.9.9.9:9999) is still CONNECTING
+    * as a result of T2 coming up while C1 is not yet CONNECTED, McdMaster
+      tells C1 (again) to connect [1]
+    * transport T1 drops
+    
+    Desired result:
+    * because C1 is bound to T1, it is disconnected
+    * McdMaster looks for another transport usable by A, finds T2, and
+      creates a new connection C2; C2's underlying TCP stream is now
+      something like 2.2.2.2:22222 <-> 9.9.9.9:9999
+    
+    Buggy result:
+    * at [1], McdMaster re-binds C1 to T2
+    * because C1 is not bound to T1, it is not disconnected
+    * the TCP stream (1.1.1.1:11111 <-> 9.9.9.9:9999) still exists, even
+      though it cannot possibly work, until keepalives (or similar)
+      cause the CM to notice that the connection has gone down
+
+ src/mcd-account.c |   25 ++++++++++++++++++++++++-
+ 1 files changed, 24 insertions(+), 1 deletions(-)
+
+commit c15581125a7da9ea3864af54189bf225ac65606a
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:13:27 +0300
+
+    Setup property monitoring
+    
+    This will update the local preoperties when MC daemon emits the
+    CompatPropertyChanged signal.
+
+ libmcclient/mc-account-compat.c |   33 ++++++++++++++++++++++++++++++---
+ 1 files changed, 30 insertions(+), 3 deletions(-)
+
+commit 196d85898b4d436001e38530c25b519bab3c9467
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:12:35 +0300
+
+    Move casting around
+    
+    Conflicts:
+
+ libmcclient/mc-account-compat.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
+
+commit 6561d2a2899dd570ea2f1ffe22fe8aea871e1c2f
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:11:28 +0300
+
+    Update the Compat interface code
+    
+    Use the new internal APIs to update the properties.
+
+ libmcclient/mc-account-compat.c |   57 ++++++++++++++++++++++++---------------
+ 1 files changed, 35 insertions(+), 22 deletions(-)
+
+commit cc37784f1e70a4ab078653dc4d0bf36a0b4b1a16
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:18:16 +0300
+
+    Use GSlice
+
+ libmcclient/mc-account-compat.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 08da8866f0d99b1662ecb11656d425312ef249cd
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:16:20 +0300
+
+    Emit the CompatPropertyChanged signal
+
+ src/mcd-account-compat.c |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+commit 858a0eac90a79ec3729ee3175e8e1cd531e16476
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:15:42 +0300
+
+    Add change notification to Compat interface definition
+
+ xml/Account_Interface_Compat.xml |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
+
+commit b932df26e3be91a0e1f950389da7f47146c9bebc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-07-30 12:48:04 +0100
+
+    5.2.1 development
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
 commit 82be8c897a960400753cd33ca179ff40760ca2c6
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-07-30 12:05:16 +0100

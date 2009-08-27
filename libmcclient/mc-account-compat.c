@@ -33,15 +33,16 @@
 struct _McAccountCompatProps {
     gchar *avatar_file;
     gchar *profile;
-    const gchar **secondary_vcard_fields;
+    gchar **secondary_vcard_fields;
 };
 
 static void create_props (TpProxy *proxy, GHashTable *props);
+static void setup_props_monitor (TpProxy *proxy, GQuark interface);
 
 static McIfaceDescription iface_description = {
     G_STRUCT_OFFSET (McAccountPrivate, compat_props),
     create_props,
-    NULL,
+    setup_props_monitor,
 };
 
 
@@ -58,35 +59,48 @@ _mc_account_compat_props_free (McAccountCompatProps *props)
 {
     g_free (props->profile);
     g_free (props->avatar_file);
-    g_strfreev ((gchar **)props->secondary_vcard_fields);
-    g_free (props);
+    g_strfreev (props->secondary_vcard_fields);
+    g_slice_free (McAccountCompatProps, props);
 }
 
 static void
-update_property (gpointer key, gpointer ht_value, gpointer user_data)
+update_profile (const gchar *name, const GValue *value, gpointer user_data)
 {
-    McAccount *account = user_data;
+    McAccount *account = MC_ACCOUNT (user_data);
     McAccountCompatProps *props = account->priv->compat_props;
-    GValue *value = ht_value;
-    const gchar *name = key;
 
-    if (strcmp (name, "Profile") == 0)
-    {
-	g_free (props->profile);
-	props->profile = g_value_dup_string (value);
-    }
-    else if (strcmp (name, "AvatarFile") == 0)
-    {
-	g_free (props->avatar_file);
-	props->avatar_file = g_value_dup_string (value);
-    }
-    else if (strcmp (name, "SecondaryVCardFields") == 0)
-    {
-	g_strfreev ((gchar **)props->secondary_vcard_fields);
-	props->secondary_vcard_fields = g_value_get_boxed (value);
-	_mc_gvalue_stolen (value);
-    }
+    g_free (props->profile);
+    props->profile = g_value_dup_string (value);
 }
+
+static void
+update_avatar_file (const gchar *name, const GValue *value, gpointer user_data)
+{
+    McAccount *account = MC_ACCOUNT (user_data);
+    McAccountCompatProps *props = account->priv->compat_props;
+
+    g_free (props->avatar_file);
+    props->avatar_file = g_value_dup_string (value);
+}
+
+static void
+update_secondary_vcard_fields (const gchar *name, const GValue *value,
+                               gpointer user_data)
+{
+    McAccount *account = MC_ACCOUNT (user_data);
+    McAccountCompatProps *props = account->priv->compat_props;
+
+    g_strfreev (props->secondary_vcard_fields);
+    props->secondary_vcard_fields = g_value_dup_boxed (value);
+}
+
+static const McIfaceProperty account_compat_properties[] =
+{
+    { "Profile", "s", update_profile },
+    { "AvatarFile", "s", update_avatar_file },
+    { "SecondaryVCardFields", "as", update_secondary_vcard_fields },
+    { NULL, NULL, NULL }
+};
 
 static void
 create_props (TpProxy *proxy, GHashTable *props)
@@ -94,8 +108,8 @@ create_props (TpProxy *proxy, GHashTable *props)
     McAccount *account = MC_ACCOUNT (proxy);
     McAccountPrivate *priv = account->priv;
 
-    priv->compat_props = g_malloc0 (sizeof (McAccountCompatProps));
-    g_hash_table_foreach (props, update_property, account);
+    priv->compat_props = g_slice_new0 (McAccountCompatProps);
+    _mc_iface_update_props (account_compat_properties, props, account);
 }
 
 /**
@@ -121,9 +135,13 @@ mc_account_compat_call_when_ready (McAccount *account,
     iface_data.props_data_ptr = (gpointer)&account->priv->compat_props;
     iface_data.create_props = create_props;
 
-    _mc_iface_call_when_ready_int ((TpProxy *)account,
+    if (_mc_iface_call_when_ready_int ((TpProxy *)account,
 				   (McIfaceWhenReadyCb)callback, user_data,
-				   &iface_data);
+                                       &iface_data))
+    {
+        setup_props_monitor ((TpProxy *)account,
+                             MC_IFACE_QUARK_ACCOUNT_INTERFACE_COMPAT);
+    }
 }
 
 /**
@@ -171,7 +189,30 @@ mc_account_compat_get_secondary_vcard_fields (McAccount *account)
     g_return_val_if_fail (MC_IS_ACCOUNT (account), NULL);
 
     if (G_UNLIKELY (!account->priv->compat_props)) return NULL;
-    return account->priv->compat_props->secondary_vcard_fields;
+    return (const gchar * const *)
+        account->priv->compat_props->secondary_vcard_fields;
+}
+
+static void
+on_compat_property_changed (TpProxy *proxy, GHashTable *properties,
+                            gpointer user_data, GObject *weak_object)
+{
+    McAccount *account = MC_ACCOUNT (proxy);
+    McAccountPrivate *priv = account->priv;
+
+    /* if the GetAll method hasn't returned yet, we do nothing */
+    if (G_UNLIKELY (!priv->compat_props)) return;
+
+    _mc_iface_update_props (account_compat_properties, properties, account);
+}
+
+static void
+setup_props_monitor (TpProxy *proxy, GQuark interface)
+{
+    McAccount *account = MC_ACCOUNT (proxy);
+
+    mc_cli_account_interface_compat_connect_to_compat_property_changed
+        (account, on_compat_property_changed, NULL, NULL, NULL, NULL);
 }
 
 /**

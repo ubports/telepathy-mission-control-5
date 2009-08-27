@@ -83,6 +83,9 @@ G_GNUC_INTERNAL void _mcd_account_load (McdAccount *account,
                                         gpointer user_data);
 G_GNUC_INTERNAL void _mcd_account_set_connection (McdAccount *account,
                                                   McdConnection *connection);
+G_GNUC_INTERNAL void _mcd_account_set_connection_status
+    (McdAccount *account, TpConnectionStatus status,
+     TpConnectionStatusReason reason);
 
 typedef void (*McdOnlineRequestCb) (McdAccount *account, gpointer userdata,
 				    const GError *error);
@@ -165,5 +168,8 @@ void account_stats_iface_init (McSvcAccountInterfaceStatsClass *iface,
                                gpointer iface_data);
 void account_stats_instance_init (TpSvcDBusProperties *self);
 
-#endif /* __MCD_ACCOUNT_PRIV_H__ */
+G_GNUC_INTERNAL gboolean _mcd_account_check_request_real (McdAccount *account,
+                                                          GHashTable *request,
+                                                          GError **error);
 
+#endif /* __MCD_ACCOUNT_PRIV_H__ */

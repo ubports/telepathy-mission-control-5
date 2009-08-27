@@ -2,7 +2,7 @@ Source: telepathy-mission-control-5
 Section: net
 Priority: optional
 Maintainer: Debian Telepathy maintainers <pkg-telepathy-maintainers@lists.alioth.debian.org>
-Uploaders: Simon McVittie <smcv@debian.org>
+Uploaders: Simon McVittie <smcv@debian.org>, Jonny Lamb <jonny@debian.org>
 Build-Depends: cdbs,
                debhelper (>= 5),
                libdbus-1-dev (>= 1.0),
@@ -12,7 +12,7 @@ Build-Depends: cdbs,
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc
-Standards-Version: 3.8.2
+Standards-Version: 3.8.3
 Vcs-Git: git://git.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git
 Vcs-Browser: http://git.debian.org/?p=pkg-telepathy/telepathy-mission-control-5.git
 Homepage: http://telepathy.freedesktop.org/wiki/
@@ -20,6 +20,7 @@ Homepage: http://telepathy.freedesktop.org/wiki/
 Package: telepathy-mission-control-5
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Conflicts: telepathy-mission-control
 Description: management daemon for Telepathy real-time communication framework
  Telepathy Mission Control 5 is an account manager and channel dispatcher for
  the Telepathy framework, allowing user interfaces and other clients

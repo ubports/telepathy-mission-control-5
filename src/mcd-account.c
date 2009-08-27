@@ -207,7 +207,7 @@ _mcd_account_maybe_autoconnect (McdAccount *account)
 
     master = mcd_master_get_default ();
 
-    if (!_mcd_master_account_conditions_satisfied (master, account))
+    if (!_mcd_master_account_replace_transport (master, account))
     {
         DEBUG ("%s conditions not satisfied", priv->unique_name);
         return;
@@ -2125,6 +2125,7 @@ mcd_account_class_init (McdAccountClass * klass)
     klass->set_parameter = set_parameter;
     klass->delete = _mcd_account_delete;
     klass->load = _mcd_account_load_real;
+    klass->check_request = _mcd_account_check_request_real;
 
     g_object_class_install_property
         (object_class, PROP_DBUS_DAEMON,
@@ -2189,6 +2190,7 @@ mcd_account_init (McdAccount *account)
     mcd_dbus_init_interfaces_instances (account);
 
     priv->conn_status = TP_CONNECTION_STATUS_DISCONNECTED;
+    priv->conn_reason = TP_CONNECTION_STATUS_REASON_REQUESTED;
 }
 
 McdAccount *
@@ -2706,6 +2708,14 @@ on_conn_status_changed (McdConnection *connection,
                         TpConnectionStatusReason reason,
                         McdAccount *account)
 {
+    _mcd_account_set_connection_status (account, status, reason);
+}
+
+void
+_mcd_account_set_connection_status (McdAccount *account,
+                                    TpConnectionStatus status,
+                                    TpConnectionStatusReason reason)
+{
     McdAccountPrivate *priv = MCD_ACCOUNT_PRIV (account);
     gboolean changed = FALSE;
 
@@ -2724,8 +2734,6 @@ on_conn_status_changed (McdConnection *connection,
 				      &value);
 	g_value_unset (&value);
 	changed = TRUE;
-
-	process_online_requests (account, status, reason);
     }
     if (reason != priv->conn_reason)
     {
@@ -2738,6 +2746,8 @@ on_conn_status_changed (McdConnection *connection,
 	g_value_unset (&value);
 	changed = TRUE;
     }
+
+    process_online_requests (account, status, reason);
 
     if (changed)
 	g_signal_emit (account,
@@ -3099,7 +3109,30 @@ mcd_account_connection_bind_transport (McdAccount *account,
 {
     g_return_if_fail (MCD_IS_ACCOUNT (account));
 
-    account->priv->transport = transport;
+    if (transport == account->priv->transport)
+    {
+        DEBUG ("account %s transport remains %p",
+               account->priv->unique_name, transport);
+    }
+    else if (transport == NULL)
+    {
+        DEBUG ("unbinding account %s from transport %p",
+               account->priv->unique_name, account->priv->transport);
+        account->priv->transport = NULL;
+    }
+    else if (account->priv->transport == NULL)
+    {
+        DEBUG ("binding account %s to transport %p",
+               account->priv->unique_name, transport);
+
+        account->priv->transport = transport;
+    }
+    else
+    {
+        DEBUG ("disallowing migration of account %s from transport %p to %p",
+               account->priv->unique_name, account->priv->transport,
+               transport);
+    }
 }
 
 McdTransport *
