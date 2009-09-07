@@ -1,3 +1,268 @@
+commit 05f9b2510a67db7d8cd660d7764404e0e3101847
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 18:19:36 +0100
+
+    Prepare stable release 5.2.2
+
+ NEWS         |   28 ++++++++++++++++++++++++++++
+ configure.ac |    2 +-
+ 2 files changed, 29 insertions(+), 1 deletions(-)
+
+commit d5dc73bd8ccbbb6e8b0f19b8ff21939bd948422e
+Merge: 7cc10f8 82bc885
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 18:07:45 +0100
+
+    Merge branches '52-permissions' and '52-tubes' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 7cc10f837f3e5d18fac9c6bd12b0a54dd80c7485
+Merge: 3b8dd46 294bcaa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 17:39:36 +0100
+
+    Merge branch '52-pre-presence' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 82bc885c03aec790413fae8fbdf732426b914887
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 17:23:50 +0100
+
+    Factor out identical "should I close it?" logic from _mcd_channel_close, _mcd_channel_undispatchable
+
+ src/mcd-channel.c |   56 ++++++++++++++++++++++------------------------------
+ 1 files changed, 24 insertions(+), 32 deletions(-)
+
+commit 60e0d8fdaadcfae731f6e86cbd725646597253dc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 15:25:48 +0100
+
+    _mcd_channel_close: don't close old Tubes channels
+
+ src/mcd-channel.c |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
+
+commit 17ffc6b3c5643f1bdd1bd6a1b3e118b2db44fd45
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 14:13:07 +0100
+
+    Don't close Tubes channels if undispatchable
+    
+    This implicitly closes every Tube in the channel too, which isn't useful.
+
+ src/mcd-channel.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit e5c70d5e3a845d4fd6cbf02b5be0aced9097c0b3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 14:12:07 +0100
+
+    McdChannel: improve debug when not closing an undispatchable channel
+
+ src/mcd-channel.c |   23 +++++++++++++++++------
+ 1 files changed, 17 insertions(+), 6 deletions(-)
+
+commit 3558c3b2fe488ce66ebb11e7b9b0c6f7b7c9a630
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 16:59:03 +0100
+
+    fd.o#23778: fix permissions of any existing account storage with _mcd_chmod_private, and don't use 0777 permissions to start with
+
+ src/mcd-account-manager.c |    4 +++-
+ src/mcd-account.c         |    3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
+commit c16f40ec0dd163a7ab761eedeeb6dd4fd0e74167
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 16:56:18 +0100
+
+    mcd-misc: add _mcd_chmod_private()
+
+ src/mcd-misc.c |   31 +++++++++++++++++++++++++++++++
+ src/mcd-misc.h |    2 ++
+ 2 files changed, 33 insertions(+), 0 deletions(-)
+
+commit 2a42ac03118011c093f0e7409a893656604c8d72
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 16:55:55 +0100
+
+    McdMaster: if umask is available, create dirs/files with 0700/0600 permissions
+
+ src/mcd-master.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+commit 16c556251b8396d3f0fdbe0c497979a65617c4c6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 16:55:26 +0100
+
+    configure.ac: check for umask and its headers
+
+ configure.ac |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 294bcaac27f19e567204d2462e3791d602d9f8cc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:32:20 +0100
+
+    auto-connect: be less strict about ordering of events
+    
+    Now that we "pre-load" presence, CurrentPresence can change sooner; so,
+    don't expect the signal (it can happen at basically any time), but just
+    do a Get for the property at the end.
+
+ test/twisted/account-manager/auto-connect.py |   11 +++++------
+ 1 files changed, 5 insertions(+), 6 deletions(-)
+
+commit cadffcde5dc8a32ca2a3291c87ecdd5617b9935c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:25:37 +0100
+
+    dispatcher/already-has-*.py: succeed despite early GetInterfaces call
+    
+    These tests make assumptions about the order of method calls in order to
+    set up unusual situations, so the early call to GetInterfaces made them
+    deadlock.
+    
+    Also take the opportunity to exercise the code path in which
+    GetInterfaces fails before the connection goes CONNECTED, emulating a
+    telepathy-glib 0.7.35 (or older) CM.
+
+ test/twisted/constants.py                       |    1 +
+ test/twisted/dispatcher/already-has-channel.py  |    6 ++++++
+ test/twisted/dispatcher/already-has-obsolete.py |    5 +++++
+ 3 files changed, 12 insertions(+), 0 deletions(-)
+
+commit 9323bd7eb5aa1d4b15ce47cddccb79eba6d9538b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:05:17 +0100
+
+    account-manager/presence.py: assert that we try to set presence before Connect()
+
+ test/twisted/account-manager/presence.py |   48 ++++++++++++++++++++++++-----
+ 1 files changed, 39 insertions(+), 9 deletions(-)
+
+commit e3d796f2aa6373734b0f92815c42e0d7a622bdb1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:04:22 +0100
+
+    mctest: allow expecting events before Connect()
+
+ test/twisted/mctest.py |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 2218bb016548bab6ccd6d1be2184c5c0d00a24b4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:04:08 +0100
+
+    mctest: simulate SimplePresence more accurately
+
+ test/twisted/mctest.py |   25 ++++++++++++++++++-------
+ 1 files changed, 18 insertions(+), 7 deletions(-)
+
+commit 90b82f03ddafd68de73d0aa9a776c0bb32e58010
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 19:03:27 +0100
+
+    McdConnection: before calling Connect, try to set initial presence
+    
+    If this fails, it's no big deal - we'll set it again later anyway.
+    
+    The infrastructure I've set up is fairly generic, so we can re-use it for
+    anything else that we want to try to set up before going online (to
+    include ContactCapabilities in 5.3, and perhaps Avatars and Aliasing
+    later).
+
+ src/mcd-connection.c |  134 ++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 129 insertions(+), 5 deletions(-)
+
+commit 3b8dd4652f69764bb3c7e270d73df4fee83f0147
+Author: Jonh Wendell <jwendell@gnome.org>
+Date:   2009-08-20 15:42:50 -0300
+
+    Replaced deprecated g_strcasecmp by g_ascii_strcasecmp.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ util/mc-tool.c |   44 ++++++++++++++++++++++----------------------
+ 1 files changed, 22 insertions(+), 22 deletions(-)
+
+commit 67136cb48edf7886d269cf011964b172a244f9e2
+Merge: 8be3241 2003e2d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 13:52:43 +0100
+
+    Merge branch '52-always-on' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 8be324191f058b703b1bf2a0d19df6e526eab2e4
+Merge: 05a1197 57ca26f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 13:52:20 +0100
+
+    Merge branch '52-more-debug' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 2003e2d124a715c370007e949957b50af53ea5f7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-02 17:44:31 +0100
+
+    Add the concept of always-on accounts
+    
+    This has the following effects:
+    
+    * the account is Enabled, and can't be disabled
+    * the account always connects automatically
+    * an offline presence can't be requested on this account
+    * the conditions for this account can't be changed
+
+ src/mcd-account-conditions.c |   11 +++++-
+ src/mcd-account-priv.h       |    2 +
+ src/mcd-account.c            |   78 ++++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 83 insertions(+), 8 deletions(-)
+
+commit 57ca26fa2944da2ef6aaacd5d78fc22a4b7e7ac2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-02 12:21:13 +0100
+
+    Debug when dispatch operations emit Finished and when they reply to Claim
+
+ src/mcd-dispatch-operation.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 41148cb98b748fed8e4cff827e972a24d7b32b5f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-02 12:20:35 +0100
+
+    Debug when ObserveChannels succeeds, as well as when it fails
+
+ src/mcd-dispatcher.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 43686335cbbda5663ce68cb8a0d822215b528ac5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-02 12:27:11 +0100
+
+    mcd_debug_init: log the telepathy-mission-control version
+    
+    It's easier to interpret MC logs if they mention the version number
+    up-front.
+
+ src/mcd-debug.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 05a11975f45ded09428206dc8e3746f4064dce09
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-02 11:46:26 +0100
+
+    Post-release version bump
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
 commit 8bd643c8d5547aa5e147fcfa12cb6166c2fb3857
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-08-26 14:41:59 +0100

@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (5.2.2-1) unstable; urgency=high
+
+  * New upstream version
+  * urgency=high to fix incorrect permissions on ~/.mission-control/accounts
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 07 Sep 2009 18:24:12 +0100
+
 telepathy-mission-control-5 (5.2.1-1) unstable; urgency=low
 
   * New upstream version

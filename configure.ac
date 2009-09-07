@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.0.beta42 immediately before a release.
 dnl Set the version number to e.g. 5.0.beta42+ immediately after (this will
 dnl enable -Werror).
-AC_INIT(telepathy-mission-control, 5.2.1)
+AC_INIT(telepathy-mission-control, 5.2.2)
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -18,6 +18,8 @@ AC_PROG_LIBTOOL
 AM_PROG_MKDIR_P
 
 AC_HEADER_STDC
+AC_CHECK_HEADERS([sys/stat.h sys/types.h])
+AC_CHECK_FUNCS([umask])
 
 case "$PACKAGE_VERSION" in
   *+)
