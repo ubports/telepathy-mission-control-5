@@ -20,6 +20,7 @@ TWISTED_BASIC_TESTS = \
 	account-requests/create-text.py \
 	account-requests/delete-account-during-request.py \
 	capabilities/draft-1.py \
+	capabilities/contact-caps.py \
 	capabilities/legacy-caps.py \
 	dispatcher/approver-fails.py \
 	dispatcher/already-has-channel.py \
@@ -91,14 +92,17 @@ INCLUDES = \
 	-DMC_DISABLE_DEPRECATED \
 	-DLIBDIR="@libdir@" -DLIBVERSION="0"
 
+if ENABLE_GNOME_KEYRING
+INCLUDES += $(GNOME_KEYRING_CFLAGS)
+endif
+
 TESTS =
 
 TMPSUFFIX = foo
 
 BASIC_TESTS_ENVIRONMENT = \
 	PYTHONPATH=@abs_top_srcdir@/test/twisted:@abs_top_builddir@/test/twisted \
-	MC_DEBUG=2 \
-	MC_TP_DEBUG=all \
+	MC_DEBUG=all \
 	MC_FILTER_PLUGIN_DIR=@abs_top_builddir@/test/twisted/.libs \
 	MC_CHANDLERS_DIR=@abs_top_srcdir@/test/twisted/chandlers \
 	MC_ACCOUNT_DIR=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
@@ -195,6 +199,8 @@ check-separate:
 EXTRA_DIST = \
 	$(TWISTED_BASIC_TESTS) \
 	$(TWISTED_SEPARATE_TESTS) \
+	accounts/README \
+	chandlers/README \
 	telepathy/clients/README \
 	telepathy/clients/AbiWord.client \
 	telepathy/managers/fakecm.manager \

@@ -144,8 +144,6 @@
     <keyword type="function" name="mcd_dispatcher_context_get_channel_by_type ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-by-type"/>
     <keyword type="function" name="mcd_dispatcher_context_get_connection ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-connection"/>
     <keyword type="function" name="mcd_dispatcher_context_process ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-process"/>
-    <keyword type="macro" name="g_object_ref()" link="libmissioncontrol-server-mcd-debug.html#g-object-ref"/>
-    <keyword type="macro" name="g_object_unref()" link="libmissioncontrol-server-mcd-debug.html#g-object-unref"/>
     <keyword type="function" name="mcd_debug_init ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-init"/>
     <keyword type="function" name="mcd_debug_ref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-ref"/>
     <keyword type="function" name="mcd_debug_unref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-unref"/>

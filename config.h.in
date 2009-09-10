@@ -9,6 +9,9 @@
 /* Directory for channel handlers */
 #undef CHANDLERS_DIR
 
+/* Define whether gnome-keyring support is enabled */
+#undef ENABLE_GNOME_KEYRING
+
 /* Define if plugins should be enabled */
 #undef ENABLE_PLUGINS
 

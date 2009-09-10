@@ -24,8 +24,6 @@ Unstable, unless otherwise indicated
 
 #include &lt;mcd-debug.h&gt;
 
-#define             <link linkend="g-object-ref">g_object_ref</link>                        (obj)
-#define             <link linkend="g-object-unref">g_object_unref</link>                      (obj)
 <link linkend="void">void</link>                <link linkend="mcd-debug-init">mcd_debug_init</link>                      (void);
 <link linkend="gpointer">gpointer</link>            <link linkend="mcd-debug-ref">mcd_debug_ref</link>                       (<link linkend="gpointer">gpointer</link> obj,
                                                          const <link linkend="gchar">gchar</link> *filename,
@@ -55,24 +53,6 @@ FIXME</para>
 
 <refsect1 id="libmissioncontrol-server-mcd-debug.details" role="details">
 <title role="details.title">Details</title>
-<refsect2 id="g-object-ref" role="macro">
-<title>g_object_ref()</title>
-<indexterm zone="g-object-ref"><primary sortas="g_object_ref">g_object_ref</primary></indexterm><programlisting>#define             g_object_ref(obj)</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>obj</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-</variablelist></refsect2>
-<refsect2 id="g-object-unref" role="macro">
-<title>g_object_unref()</title>
-<indexterm zone="g-object-unref"><primary sortas="g_object_unref">g_object_unref</primary></indexterm><programlisting>#define             g_object_unref(obj)</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>obj</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-</variablelist></refsect2>
 <refsect2 id="mcd-debug-init" role="function">
 <title>mcd_debug_init ()</title>
 <indexterm zone="mcd-debug-init"><primary sortas="mcd_debug_init">mcd_debug_init</primary></indexterm><programlisting><link linkend="void">void</link>                mcd_debug_init                      (void);</programlisting>

@@ -3,7 +3,12 @@ INCLUDES = \
 	   $(DBUS_CFLAGS) \
 	   $(GLIB_CFLAGS) \
 	   -DDBUS_API_SUBJECT_TO_CHANGE \
+	   -DG_LOG_DOMAIN=\"mcd\" \
 	   -DMC_DISABLE_DEPRECATED -I$(top_srcdir)
+
+if ENABLE_GNOME_KEYRING
+INCLUDES += $(GNOME_KEYRING_CFLAGS)
+endif
 
 mc_headers = \
 	mcd-account.h \
@@ -11,7 +16,6 @@ mc_headers = \
 	mcd-account-conditions.h \
 	mcd-account-manager.h \
 	mcd-debug.h \
-	mcd-dispatch-operation.h \
 	mcd-mission.h \
 	mcd-operation.h \
 	mcd-master.h \
@@ -31,6 +35,7 @@ mc_headers = \
 	mcd-provisioning-factory.h
 
 mc_gen_headers = \
+	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
 	_gen/enums.h \
 	_gen/svc-Account_Interface_ChannelRequests.h \
@@ -41,6 +46,7 @@ mc_gen_headers = \
 	_gen/svc-Account_Manager_Interface_Query.h
 
 nodist_libmcd_convenience_la_SOURCES = \
+	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities-body.h \
 	_gen/register-dbus-glib-marshallers-body.h \
 	_gen/signals-marshal.c \
@@ -52,18 +58,17 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Stats.c \
 	_gen/svc-Account_Manager_Interface_Creation.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
+	mcd-enum-types.c \
+	mcd-enum-types.h \
+	mcd-signals-marshal.c \
+	mcd-signals-marshal.h \
 	$(mc_gen_headers)
 
 BUILT_SOURCES = \
 	_gen/mcd.xml \
-	mcd-signals-marshal.h \
-	mcd-signals-marshal.c \
-	mcd-enum-types.c \
-	mcd-enum-types.h \
 	stamp-mcd-enum-types.h \
-	$(nodist_libmcd_convenience_la_SOURCES) \
-	$(mc_gen_headers)
- 
+	$(nodist_libmcd_convenience_la_SOURCES)
+
 CLEANFILES = $(BUILT_SOURCES)
 
 libmcd_convenience_la_LIBADD = \
@@ -71,6 +76,10 @@ libmcd_convenience_la_LIBADD = \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
 	$(GLIB_LIBS)
+
+if ENABLE_GNOME_KEYRING
+libmcd_convenience_la_LIBADD += $(GNOME_KEYRING_LIBS)
+endif
 
 noinst_LTLIBRARIES = libmcd-convenience.la
 
@@ -130,11 +139,8 @@ libmcd_convenience_la_SOURCES = \
 	mcd-debug.c \
 	mcd-dispatch-operation.c \
 	mcd-dispatch-operation-priv.h \
-	mcd-enum-types.c \
-	mcd-enum-types.h \
 	mcd-handler-map.c \
 	mcd-handler-map-priv.h \
-	mcd-signals-marshal.c \
 	mcd-misc.c \
 	mcd-misc.h \
 	mcd-mission.c \
@@ -156,16 +162,6 @@ libmcd_convenience_la_SOURCES = \
 	mcd-provisioning-factory.c \
 	sp_timestamp.h \
 	$(mc_headers)
-
-# bin_PROGRAMS = mission-control
-# mission_control_LDFLAGS = -export-dynamic
-# 
-# mission_control_LDADD = $(GCONF_LIBS) $(TELEPATHY_LIBS) \
-# 		       	$(top_builddir)/libmissioncontrol/libmissioncontrol-config.la \
-# 		       	libmissioncontrol-server.la
-#
-# mission_control_SOURCES = \
-# 	mcd-main.c
 
 %-signals-marshal.h: %-signals-marshal.list Makefile
 	glib-genmarshal --header --prefix=_$(subst -,_,$*)_marshal $< > $*-signals-marshal.h

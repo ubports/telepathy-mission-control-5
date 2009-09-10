@@ -37,7 +37,8 @@ DEB_CONFIGURE_EXTRA_FLAGS := \
 	--disable-plugins \
 	--enable-server \
 	--disable-shared \
-	--enable-static
+	--enable-static \
+	--enable-gnome-keyring
 
 # we symlink some of the doc directories together
 DEB_INSTALL_DOCS_telepathy-mission-control-5-dbg := --no-act

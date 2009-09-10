@@ -1,3 +1,77 @@
+telepathy-mission-control 5.3.0 (2009-09-14)
+============================================
+
+The "displatcher" release, starting a new development branch.
+
+Dependencies:
+
+* The GNOME Keyring library is a new optional dependency (only if configured
+  with --enable-gnome-keyring=yes or --enable-gnome-keyring=auto).
+  
+  If it is enabled, having the library at runtime is required, but having the
+  daemon itself is optional - the current plain-text storage will be used for
+  passwords if the keyring daemon is not available.
+
+Enhancements:
+
+* fd.o#20903: support the final version of ContactCapabilities, from
+  telepathy-spec 0.17.28 (smcv)
+
+* fd.o#22231: add optional gnome-keyring integration. This is off by default,
+  but distributions should consider configuring MC with --enable-gnome-keyring
+  to get this functionality. (jonnylamb/smcv)
+
+* mc-tool: show full Presence information (sjoerd)
+
+* Use the "mcd" G_LOG_DOMAIN (smcv)
+
+* fd.o#23501: support TpDebugSender (smcv)
+
+* Stop #define'ing g_object_ref, g_object_unref (smcv)
+
+* fd.o#22705: support MC_DEBUG=all (smcv)
+
+Fixes:
+
+* Escape "-" in protocol names in Account names, as required by the Telepathy
+  spec (sjoerd)
+
+* fd.o #23818: if HandleChannels fails, try all Handlers in sequence before
+  giving up (smcv)
+
+* Refactor client locking in McdDispatcher to be more obviously correct (smcv)
+
+* Don't define macros used in glibc feature-test internals, possibly fixing
+  failure to build from source on Debian GNU/kFreeBSD (smcv)
+
+* Fix a reference leak when shooting down an unwanted Connection (wjt/smcv)
+
+* fd.o#23921: force dbus-daemon to re-detect .service files on MC startup,
+  as a partial workaround for D-Bus bug fd.o#23925 (George Goldberg)
+
+* fd.o#23935: call AddRequest if appropriate even on clients that match only
+  channels with Requested=true, and use requested channels' complete
+  properties in preference to the properties that were requested (smcv)
+
+* Make signed values in .client files work instead of g_critical'ing (smcv)
+
+* This release also includes all bugfixes from stable-branch versions up to
+  and including 5.2.3.
+
+telepathy-mission-control 5.2.3 (2009-09-10)
+============================================
+
+The "Morden, via Bank" release.
+
+Fixes:
+
+* fd.o #23807: even if someone without gconf headers makes the tarball, ship
+  the necessary files so people with gconf headers can compile it (smcv)
+
+* Resync what's in git with what's in tarball releases: remove some unused
+  source files from git, add more support files to tarballs, and don't
+  distribute any generated source in tarballs (smcv)
+
 telepathy-mission-control 5.2.2 (2009-09-07)
 ============================================
 

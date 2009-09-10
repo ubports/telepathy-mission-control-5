@@ -1,3 +1,846 @@
+commit 54de5b519ce57b5dbf03165d53549e77b9bf7821
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:26:46 +0100
+
+    Prepare version 5.3.0
+
+ NEWS         |    2 +-
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit f9bd0d11570a1688add54c8d41fc3aca04d68c9d
+Merge: 7a3838e 6106be7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:18:07 +0100
+
+    Merge branch 'requested'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 7a3838ee44d3faa77f2242eec8e5b2a0be512a11
+Merge: 52d55a7 7e056b0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:15:56 +0100
+
+    Merge branch 'misc'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 52d55a74474ad23321434e449061a034bedc6809
+Merge: 7327b4f 3cdf7eb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:09:53 +0100
+
+    Merge branch 'keyring'
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 6106be7eaa42ba3a4519bb9604ce16c9209c3292
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:08:05 +0100
+
+    NEWS for gnome-keyring and fixes
+
+ NEWS |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+
+commit bf8ebe7af57200d9198539470e0fb8c1e53b0176
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:59:33 +0100
+
+    fd.o#23935: add regression test in dispatcher/create-no-preferred-handler.py
+
+ .../dispatcher/create-no-preferred-handler.py      |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 3ed0229e30028baf4c7e07ca5afb3ccaba4965ab
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:45:13 +0100
+
+    McdDispatcher: improve debug
+
+ src/mcd-dispatcher.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
+
+commit 4b80bccabda1381fc8f6acccdcb20a131a6a043b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:45:00 +0100
+
+    McdDispatcher: match_filters: when choosing where to call AddRequest, assume that the returned channel will have Requested=TRUE
+    
+    This makes AddRequest work on clients that only want to handle outgoing
+    channels (like the VNC-tube server).
+
+ src/mcd-dispatcher.c |   29 ++++++++++++++++++++++-------
+ 1 files changed, 22 insertions(+), 7 deletions(-)
+
+commit 75b635ddd2c7bc86b89b0ec7e45d26409acfa722
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:42:35 +0100
+
+    McdDispatcher: when selecting a Handler for requested channels, use their real properties if possible
+    
+    When we have the properties of the actual channel, we should use those,
+    rather than relying on the incomplete set of properties that were
+    requested.
+
+ src/mcd-dispatcher.c |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 39a99c435b6274008933b3c2f8849ca9493ee882
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:41:19 +0100
+
+    McdDispatcher: rename get_default_handler to mcd_dispatcher_guess_request_handler
+    
+    That's the only place where it's actually used, now.
+
+ src/mcd-dispatcher.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 7e056b020ffbf31f6b4e0e526082779ce4fe1c43
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 17:32:01 +0100
+
+    Actually delete the obsolete mcd-dispatch-operation.h
+
+ src/mcd-dispatch-operation.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit a5e9402974b572019c1f0db0757e10bc8533c263
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 17:31:25 +0100
+
+    McdDispatchOperation: make signed values in .client files actually work
+    
+    G_TYPE_INT64 requires g_value_set_int64.
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 3cdf7ebbce398efc8934410a07fbe190a8b8ffc4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 17:19:08 +0100
+
+    _mcd_account_delete: don't assume that the account has parameters - failed accounts might not
+    
+    This fixes NULL pointer dereferences in account-manager/bad-cm.py, in
+    which we create an account whose CM doesn't exist, and delete it.
+
+ src/mcd-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 781ee5f5ce19816d6dd3592524373cbde5d827d9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 17:08:24 +0100
+
+    McdAccount: set_parameters_finish: defer _mcd_account_maybe_autoconnect til we know whether we're valid now
+    
+    Otherwise, account-manager/make-valid.py fails, as we set the password,
+    but don't make the resulting invalid -> valid transition until after we've
+    already decided that we can't connect.
+
+ src/mcd-account.c |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
+
+commit 4260ae741e715f3d6394b04af16f1ce2e68b2809
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 16:42:00 +0100
+
+    Downgrade warnings about "no gnome-keyring" to messages
+    
+    KDE users on Debian will probably get these, for instance (we plan to
+    compile MC with gnome-keyring support and require libgnome-keyring -
+    the cost is only 200K - but KDE users probably won't want the actual
+    gnome-keyring daemon).
+
+ src/mcd-account.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit a88454df97f01403e47e86476f28688822999a3a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 16:35:45 +0100
+
+    Makefile.am: explicitly disable gnome-keyring support in distcheck
+    
+    The rationale is the same as disabling debug when distchecking
+    telepathy-glib - we expect most developers to be using the "enable" code
+    path, so we should test the "disable" code path at least sometimes.
+
+ Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit a8f8fe143dc55998a0ea254d4d80b2123d905cd1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 16:34:01 +0100
+
+    autogen.sh: enable gnome-keyring if the developer has it
+    
+    Much like the situation with plugins, we don't want distributions to
+    enable gnome-keyring accidentally, but we do want developers to enable it,
+    to get better test coverage.
+
+ autogen.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 6fccd479ba8c6d44f5a9b07e6ee6a7d0e8170c71
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 16:24:30 +0100
+
+    configure.ac: add the ability to autodetect gnome-keyring
+    
+    The default is still to disable it - distributors enabling this extra
+    dependency (which is probably desirable) should make a conscious decision
+    to do so.
+
+ configure.ac |   20 +++++++++++++-------
+ 1 files changed, 13 insertions(+), 7 deletions(-)
+
+commit 0d7e297137f9010d502b88129f15e558a79da692
+Merge: 7327b4f f1ec445
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 16:08:23 +0100
+
+    Merge commit 'jonny/gnome-keyring'
+    
+    Conflicts:
+    	src/mcd-account-connection.c
+    	src/mcd-main.c
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 7327b4f02a00b7bcf5140578c994edaa7ecaea06
+Merge: d1e6424 a5f2b24
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 15:34:35 +0100
+
+    Merge branch 'trivia'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit a5f2b24e2f3745146613b66218ec7a7a2ade81da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 15:12:57 +0100
+
+    Update to telepathy-spec 0.17.28's version of ContactCapabilities
+    
+    In a future version, I'll require telepathy-glib 0.7.37 instead.
+
+ xml/Connection_Interface_Contact_Capabilities.xml |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit ed5b54a404465f1925f211771c4f76a76728df13
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 15:12:01 +0100
+
+    NEWS for 5.3.0, so far
+
+ NEWS |   40 ++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 38 insertions(+), 2 deletions(-)
+
+commit d1e64240bf681433086a08f1877d53b528134cad
+Author: George Goldberg <george.goldberg@collabora.co.uk>
+Date:   2009-09-14 12:22:53 +0100
+
+    Band-aid patch for fd.o bug 23921. This bug is actually in dbus-daemon and should be fixed there.
+    
+    This patch forces the dbus-daemon to reload its configuration before MC asks it to list
+    activatable names on startup. This makes it detect .service files that have been
+    installed since starting the dbus daemon.
+    
+    It does NOT allow adding more activatable clients once MC has been started up.
+    
+    Upstream DBus bug is fd.o bug 23925.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-dispatcher.c |   34 +++++++++++++++++++++++++++++-----
+ 1 files changed, 29 insertions(+), 5 deletions(-)
+
+commit 5b9a37b84cd79f09f9a31d12f096d0f42943eb75
+Merge: d06e064 aadbac3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 19:17:37 +0100
+
+    Merge branch 'contact-caps-undraft'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com> (partially)
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit d06e06461a782e5e6c17b7dbe8f0684a92cf39f9
+Merge: 9299f3d 0926471
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 19:17:28 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit 0926471182c40802bcb1587d05cee94dcff95eea
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 18:42:16 +0100
+
+    When shooting down unwanted Connections, don't leak the temporary proxy
+    
+    Spotted by wjt while reviewing another branch.
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+ src/mcd-connection.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit aadbac38cb0f7ccf19c1cd3e5b944b66d1b97b88
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 17:41:15 +0100
+
+    Distribute the XML for ContactCapabilities (final), fixing distcheck
+
+ xml/Makefile.am |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit bf6d07fadf4fd51f0e6c4421d78bf8436469519d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 17:40:58 +0100
+
+    Implement final version of ContactCapabilities instead of draft 2
+
+ src/Makefile.am                                    |    4 +-
+ src/mcd-connection.c                               |   30 ++--
+ src/mcd-dispatcher.c                               |    2 +-
+ src/mcd.xml                                        |    2 +-
+ test/twisted/Makefile.am                           |    2 +-
+ test/twisted/capabilities/contact-caps.py          |  168 +++++++++++++
+ test/twisted/capabilities/draft-2.py               |  168 -------------
+ test/twisted/capabilities/legacy-caps.py           |    4 -
+ test/twisted/constants.py                          |    2 +-
+ xml/Connection_Interface_Contact_Capabilities.xml  |  245 +++++++++++++++++++
+ ...ction_Interface_Contact_Capabilities_Draft2.xml |  247 --------------------
+ xml/nmc5.xml                                       |    2 +-
+ 12 files changed, 434 insertions(+), 442 deletions(-)
+
+commit f1ec4451f0c683684ccf8c8b77de4b5acb85ecd5
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-09-11 13:11:54 +0100
+
+    account-manager: only free the ptr array if it's non-NULL
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 9299f3d228e7d3e9e2685f9d2a61cd5fb92690ff
+Merge: 2d3c6c7 3cec11e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 13:10:37 +0100
+
+    Merge branch 'debug-sender'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 2d3c6c746e9e9c6c831b9bea5a68417e22cf3df2
+Merge: a4bd989 a2b8b14
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 13:10:11 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit a2b8b14f3d8617c52a097b97b15e081a236d558f
+Merge: dd94054 5b3fb1d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 13:09:40 +0100
+
+    Merge branch '52-trivia' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 3cec11efff953a853e95eeb22e01392fb7db579e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 12:51:21 +0100
+
+    mcd_debug_init: use G_N_ELEMENTS to count debug keys
+
+ src/mcd-debug.c |    8 ++------
+ 1 files changed, 2 insertions(+), 6 deletions(-)
+
+commit 87a855e674513e88bd5edff59c01683db22b6cd6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 12:48:36 +0100
+
+    Use less complex syntax for condition, as per Jonny's review
+
+ src/mcd-debug.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 11a4da5468628601437606b8280419dfee658291
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 12:28:14 +0100
+
+    Remove unnecessary guard as per Jonny's review
+
+ server/mc-server.c |    5 +----
+ 1 files changed, 1 insertions(+), 4 deletions(-)
+
+commit a4bd989d89c32701bdba6313b21e8da17880e7ba
+Merge: f670dca 5b3fb1d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-11 12:18:33 +0100
+
+    Merge branch '52-trivia'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 8df3d596a5c9f6eb886b7493da2ab27ddefe22db
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:47:20 +0100
+
+    McdDispatcher: remove a pointlessly defensive check
+    
+    When we're using a TpHandleRepoIface as a simple string pool, the returned
+    handle is always nonzero, because there's no concept of an invalid string.
+    
+    As per wjt's review.
+
+ src/mcd-dispatcher.c |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+commit e96526e625fd9a8d595ec83a9fc34f958aca14bb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:45:43 +0100
+
+    mcd_dispatcher_release_startup_lock: don't duplicate _mcd_dispatcher_dup_client_caps
+    
+    As per wjt's review
+
+ src/mcd-dispatcher.c |    9 +--------
+ 1 files changed, 1 insertions(+), 8 deletions(-)
+
+commit bb9982ea25c036d292333e1e56eb924a84e64f90
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:27:34 +0100
+
+    Document the new semantics of MC_DEBUG
+
+ server/mission-control-5.8.in |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+commit 4cc4e1f3c194287d0c0913fcea09d2e0acd215f0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:17:46 +0100
+
+    test/twisted/Makefile.am: use MC_DEBUG=all
+
+ test/twisted/Makefile.am |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit a4e7fc6a8cab04c5b381774aa2431067bb225795
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:17:33 +0100
+
+    fd.o#22705: turn on both MC and tp-glib debug if MC_DEBUG=all
+    
+    Also put in basic support for MC having Gabble-style debug categories
+    in future.
+
+ src/mcd-debug.c |   66 +++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 64 insertions(+), 2 deletions(-)
+
+commit 57d9f1eeace13a9948f602f7ac01ee532b883efb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 19:12:50 +0100
+
+    mcd_debug_[un]ref: deprecate, and stop overriding g_object_[un]ref
+    
+    The output from these turns out not to be as useful as you might think:
+    about half the refs and unrefs happen somewhere in the bowels of GObject
+    (e.g. g_value_dup_object creates a ref without calling mcd_debug_ref),
+    so the debug log, while verbose, doesn't actually provide enough
+    information to locate leaks.
+    
+    refdbg is what I actually ended up using to find leaks during 5.1
+    development; it works considerably better in practice, and doesn't require
+    source code modification (or namespace pollution).
+
+ .../libmissioncontrol-server/tmpl/mcd-debug.sgml   |   16 -----------
+ src/mcd-debug.c                                    |   27 ++++++--------------
+ src/mcd-debug.h                                    |   12 +++------
+ 3 files changed, 12 insertions(+), 43 deletions(-)
+
+commit 6614dda6bfba2c62ec68ac3952cc0d56ed90edb4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 18:28:22 +0100
+
+    mc-server: use a TpDebugSender, to log everything over D-Bus if enabled
+    
+    This isn't in the library, so other things that link
+    libmissioncontrol-server (mainly osso-mission-control on Maemo) won't
+    automatically have a TpDebugSender.
+
+ server/mc-server.c |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+commit 2179153d64ce7dfd6b0e90f66d3394fbd46f98ba
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 17:42:35 +0100
+
+    with-session-bus.sh: fix bashism (&> doesn't work in dash)
+
+ test/twisted/tools/with-session-bus.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit cd1ba4ff4f53b5734e93b0ba47f89b60264037aa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 17:24:33 +0100
+
+    src: set a proper G_LOG_DOMAIN (mcd)
+    
+    This will lead to log messages like:
+    
+    (process:12345): mcd-DEBUG: telepathy-mission-control version 5.2.3+
+
+ src/Makefile.am |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 5b3fb1dc9ab3a315b968dfae083520c32d28aeac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:58:15 +0100
+
+    mcd-misc.c: don't define macros used in glibc feature-test internals
+    
+    These appear to have been used to get fsync and fdopen (for which the
+    documented glibc macros, either _XOPEN_SOURCE or the combination of
+    _BSD_SOURCE and _POSIX_SOURCE, should have been used instead).
+    
+    Now that we no longer reimplement g_file_set_contents, neither should be
+    necessary.
+    
+    As well as being better style, this might fix build failures on
+    Debian/kFreeBSD:
+    
+    https://buildd.debian.org/fetch.cgi?pkg=telepathy-mission-control-5&arch=kfreebsd-i386&ver=5.2.2-1&stamp=1252349125&file=log&as=raw
+    https://buildd.debian.org/fetch.cgi?pkg=telepathy-mission-control-5&arch=kfreebsd-amd64&ver=5.2.2-1&stamp=1252349248&file=log&as=raw
+
+ src/mcd-misc.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit f670dca32179269118f1bed365279293cfd90fa9
+Merge: 920b6db dd94054
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:53:54 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+    
+    Conflicts:
+    	configure.ac
+
+commit dd94054047b3f835703425fb6c8521acd4551ddc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:53:33 +0100
+
+    Post-release version bump
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit fe25745d35224a64c57559a11b65774edad04b09
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:11:11 +0100
+
+    Prepare new bugfix release
+
+ NEWS         |   14 ++++++++++++++
+ configure.ac |    2 +-
+ 2 files changed, 15 insertions(+), 1 deletions(-)
+
+commit 920b6db9b0b3bc21c4aca0225e193824ab53f294
+Merge: 27ba5ab 46faa8e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:06:49 +0100
+
+    Merge branch '52-try-more-handlers' into master
+    
+    Originally targeted for 5.2, but probably too risky there.
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 27ba5ab8ae2782c93e94d5417da32fb3459e4ad3
+Merge: b8691d9 6e6c072
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:06:03 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+    
+    Conflicts:
+    	configure.ac
+
+commit 6e6c072f7e470f6fb540e796afc701416ae0c903
+Merge: a133520 aaeedc2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-10 13:05:17 +0100
+
+    Merge branch '52-trivia' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit aaeedc2e091328ada0358a1db0767be482ad3ff6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 19:40:44 +0100
+
+    Don't distribute generated sources in tarball
+
+ src/Makefile.am |   16 ++++++----------
+ 1 files changed, 6 insertions(+), 10 deletions(-)
+
+commit 022dc8b44912cea56126efcb4bf817df2cc6d913
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 19:41:55 +0100
+
+    Distribute assorted files that are present in git but not in tarballs
+
+ test/twisted/Makefile.am       |    2 ++
+ test/twisted/tools/Makefile.am |    1 +
+ 2 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 803ada9cc9dcfc309478764d25db9ed77e9d15f6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 19:39:13 +0100
+
+    Remove src/mcd-main.c
+    
+    It's not compiled (server/mc-server.c is the real daemon), and not
+    distributed in tarballs.
+
+ src/Makefile.am |   10 ----------
+ src/mcd-main.c  |   42 ------------------------------------------
+ 2 files changed, 0 insertions(+), 52 deletions(-)
+
+commit 192a11f4a20b1dd80bd0b343631c3ff3bbed3d1a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 19:37:48 +0100
+
+    Remove unused mcd-filtering-int.h from git
+    
+    It's not distributed in tarballs, or compiled.
+
+ doc/reference/libmissioncontrol-server/Makefile.am |    3 +--
+ src/mcd-filtering-int.h                            |   17 -----------------
+ 2 files changed, 1 insertions(+), 19 deletions(-)
+
+commit 1d068367228e4d053965b4a28b2ed7a01d3ecd4b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 19:42:57 +0100
+
+    fd.o #23807: distribute mc-account-convert.1 in tarballs even if gconf was not available at configure time
+    
+    Otherwise, people who have gconf headers can't compile tarballs produced
+    by people who don't have gconf headers.
+
+ util/Makefile.am |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 46faa8edf403aae55263fdbe6f5a0305affb7c00
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 16:37:44 +0100
+
+    dispatcher/handle-channels-fails.py: assert that we try more than one handler
+
+ test/twisted/dispatcher/handle-channels-fails.py |   34 ++++++++++++++++++++-
+ 1 files changed, 32 insertions(+), 2 deletions(-)
+
+commit b1dbc26902f3ec168412a0f5b406709814c826ca
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 13:39:13 +0100
+
+    If HandleChannels fails, remember that the handler is broken and move on to the next one
+    
+    If there are no handlers we haven't tried, mcd_dispatcher_run_handlers
+    will close the channels anyway, so there's no longer any need to close
+    them in the HandleChannels callback.
+
+ src/mcd-dispatcher.c |   76 ++++++++++++++++++++++++++++---------------------
+ 1 files changed, 43 insertions(+), 33 deletions(-)
+
+commit c863787bf7ca70a827428d09ebc41d2ead6b34cd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 13:11:03 +0100
+
+    McdDispatcher: rename skip_approval to approved, and set it from more places
+    
+    Instead of implicitly approving channels in the following situations, we
+    now set the flag explicitly:
+    
+    - all approvers reject the channels (or, as a trivial case, no approver
+      is run at all)
+    - a handler exists that bypasses approval (this is not quite right,
+      fd.o #23687, but preserves existing behaviour)
+    - a CDO finishes
+    - the channel has Requested=TRUE to start with
+
+ src/mcd-dispatcher.c |   48 +++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 35 insertions(+), 13 deletions(-)
+
+commit 55824cd9af114bb1b8410e0d2317ecf49b6c8ffa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 12:18:43 +0100
+
+    _mcd_dispatcher_enter_state_machine: don't short-cut to running clients if there are no filters
+    
+    If there are no filters, mcd_dispatcher_context_proceed will run the
+    clients anyway, so we might as well reduce the number of code paths.
+
+ src/mcd-dispatcher.c |   18 ++++--------------
+ 1 files changed, 4 insertions(+), 14 deletions(-)
+
+commit fe2413f19c3cc5abef98c679ab092f117b533fc9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 12:17:18 +0100
+
+    _mcd_dispatcher_enter_state_machine: use mcd_dispatcher_context_proceed instead of the equivalent call to mcd_dispatcher_context_process
+    
+    _process's semantics are less obvious and it will be deprecated
+    eventually.
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 34adca9ac34ebd4e0dfd3d0a7377202a6ed8cdc4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-09 12:09:17 +0100
+
+    Correct a comment
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit f1f69b027ad132091418badfc5fbd254e8144988
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 19:07:06 +0100
+
+    McdDispatchOperation: change _mcd_dispatch_operation_handle_with to _mcd_dispatch_operation_approve
+    
+    It's only called from outside McdDispatchOperation in order to say
+    "handling with any handler is acceptable" (because a request constitutes
+    approval), never to say "handle with this specific handler".
+    
+    It also doesn't need to return the error, because the only possible error
+    is NotYours, which the caller ignores anyway.
+
+ src/mcd-dispatch-operation-priv.h |    5 +--
+ src/mcd-dispatch-operation.c      |   45 +++++++++++++++++++------------------
+ src/mcd-dispatcher.c              |    3 +-
+ 3 files changed, 26 insertions(+), 27 deletions(-)
+
+commit 6aa2d96990085d371388e7bed94d49b5d493fa05
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 18:40:45 +0100
+
+    Remove McdDispatchOperation from public API/ABI
+
+ src/Makefile.am                   |    1 -
+ src/mcd-dispatch-operation-priv.h |   44 ++++++++++++++++++++++-
+ src/mcd-dispatch-operation.c      |   44 +++++++++++-----------
+ src/mcd-dispatch-operation.h      |   71 -------------------------------------
+ src/mcd-dispatcher.c              |   29 +++++++--------
+ 5 files changed, 79 insertions(+), 110 deletions(-)
+
+commit 811a58d941410c0ede9409d35f2eb7f34feddfc7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 18:31:34 +0100
+
+    McdDispatchOperation: factor out mcd_dispatch_operation_check_handle_with (the checks that can be done synchronously)
+
+ src/mcd-dispatch-operation.c |   49 ++++++++++++++++++++++++++++++-----------
+ 1 files changed, 36 insertions(+), 13 deletions(-)
+
+commit f88f4422e3d8570d09bcebad7a88b24821101fe3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 17:14:18 +0100
+
+    McdDispatcherContext: always release all client locks, and use a separate flag to suppress handlers
+    
+    This makes the handling of CTXREF14 more obviously correct.
+
+ src/mcd-dispatcher.c |   39 +++++++++++++++++----------------------
+ 1 files changed, 17 insertions(+), 22 deletions(-)
+
+commit 89fc13d3e32513059f8dcccce3eb1e2072a5f757
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 17:08:38 +0100
+
+    Replace McdDispatcherContext->client_locks with a boolean
+    
+    It only has one use, now.
+
+ src/mcd-dispatcher.c |   28 +++++++++-------------------
+ 1 files changed, 9 insertions(+), 19 deletions(-)
+
+commit 8f53b837a0ae239b20c0256fb76917650ae01f44
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 17:04:22 +0100
+
+    McdDispatcherContext: replace the troublesome CTXREF13 with a ref held exactly when we're awaiting approval
+    
+    This is more obviously correct; previously, it wasn't at all clear that
+    the refcounting worked correctly.
+
+ src/mcd-dispatcher.c |   30 ++++++++++++++++++------------
+ 1 files changed, 18 insertions(+), 12 deletions(-)
+
+commit e7054f49a30571ea50421203cb90401ec44b8237
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 17:02:29 +0100
+
+    McdDispatcherContext: ref the context for the duration of on_operation_finished
+
+ src/mcd-dispatcher.c |    9 ++++++++-
+ 1 files changed, 8 insertions(+), 1 deletions(-)
+
+commit 3d63c4ccf47cb227bd2b5ff1905c92c9cc78b6b8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 17:00:31 +0100
+
+    Improve comments that explain how client locks work
+
+ src/mcd-dispatcher.c |   18 ++++++++++++------
+ 1 files changed, 12 insertions(+), 6 deletions(-)
+
+commit ef9521a83004dde45b2cd1955cfbdaff832c6d1c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 16:16:58 +0100
+
+    McdDispatcherContext: separate pending approvers out from client_locks into awaiting_approval and approvers_pending
+
+ src/mcd-dispatcher.c |   66 +++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 41 insertions(+), 25 deletions(-)
+
+commit 55dd45dbe51089208f481f8a28df022bee19608c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-08 14:50:24 +0100
+
+    McdDispatcherContext: separate pending observers from other "client locks"
+
+ src/mcd-dispatcher.c |   43 +++++++++++++++++++++++++++++++------------
+ 1 files changed, 31 insertions(+), 12 deletions(-)
+
+commit a13352076c27a86312f08ff9977faa9addce43f8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 18:37:55 +0100
+
+    Post-release version bump
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit b8691d964ec61dfa4c10fa5acb26594ab57ea24c
+Merge: d55ca04 05f9b25
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 18:36:26 +0100
+
+    Merge commit 'telepathy-mission-control-5.2.2'
+    
+    Conflicts:
+    	configure.ac
+
 commit 05f9b2510a67db7d8cd660d7764404e0e3101847
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-09-07 18:19:36 +0100
@@ -102,6 +945,44 @@ Date:   2009-09-07 16:55:26 +0100
  configure.ac |    2 ++
  1 files changed, 2 insertions(+), 0 deletions(-)
 
+commit 6ac92b87b1d07ad45de8f2a7492dcf0dadd4ad39
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-04 15:55:11 +0100
+
+    capabilities/draft-2.py: assert that UpdateCapabilities is called before, as well as after, Connect
+
+ test/twisted/capabilities/draft-2.py |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+commit 03045c28e3dfa84b5660728a6dbe374d416e883a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-04 15:54:31 +0100
+
+    McdConnection: try to give connections their capabilities before connecting
+
+ src/mcd-connection.c |   26 ++++++++++++++++++++++++++
+ 1 files changed, 26 insertions(+), 0 deletions(-)
+
+commit 29b5d6d70f83383c7f1fa6dcf94316567e8dc0e0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-04 15:53:30 +0100
+
+    McdDispatcher: factor out _mcd_dispatcher_dup_client_caps
+
+ src/mcd-dispatcher-priv.h |    3 +++
+ src/mcd-dispatcher.c      |   39 +++++++++++++++++++++++++++------------
+ 2 files changed, 30 insertions(+), 12 deletions(-)
+
+commit 8653b7ccbbe58d32110ee371e0d2e86f7505b162
+Merge: 6204dba 294bcaa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-04 13:43:36 +0100
+
+    Merge branch '52-pre-presence' into contact-caps-early
+    
+    Conflicts:
+    	configure.ac (version number only)
+
 commit 294bcaac27f19e567204d2462e3791d602d9f8cc
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-09-03 19:32:20 +0100
@@ -176,6 +1057,16 @@ Date:   2009-09-03 19:03:27 +0100
 
  src/mcd-connection.c |  134 ++++++++++++++++++++++++++++++++++++++++++++++++--
  1 files changed, 129 insertions(+), 5 deletions(-)
+
+commit d55ca0431c20127d6e6f3b0da394b69f303cc3b9
+Merge: 8ce49d5 3b8dd46
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-03 15:29:33 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+    
+    Conflicts:
+    	configure.ac
 
 commit 3b8dd4652f69764bb3c7e270d73df4fee83f0147
 Author: Jonh Wendell <jwendell@gnome.org>
@@ -263,6 +1154,26 @@ Date:   2009-09-02 11:46:26 +0100
  configure.ac |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
+commit 6204dbaa7f5a4ca65c5cf1d141c4d8c4089e63b5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 16:15:33 +0100
+
+    McdDispatcher: if a client exits, tell the CM it has no capabilities
+
+ src/mcd-dispatcher.c                 |   65 +++++++++++++++++++++++----------
+ test/twisted/capabilities/draft-2.py |   21 ++++++++++-
+ 2 files changed, 65 insertions(+), 21 deletions(-)
+
+commit 8ce49d5c7a6d03f5244dbf3943b0df1a94ff51ce
+Merge: 0ae0454 8bd643c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-26 15:21:22 +0100
+
+    Merge commit 'telepathy-mission-control-5.2.1'
+    
+    Conflicts:
+    	configure.ac
+
 commit 8bd643c8d5547aa5e147fcfa12cb6166c2fb3857
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-08-26 14:41:59 +0100
@@ -317,6 +1228,18 @@ Date:   2009-08-26 15:37:36 +0300
  src/mcd-account.c |    1 +
  1 files changed, 1 insertions(+), 0 deletions(-)
 
+commit 0ae045487b667dfac1a0de691de6c0f9d30f163d
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-26 15:37:36 +0300
+
+    Set initial connection reason to Requested
+    
+    None_Specified is really a synonim of "generic error", but we have no error
+    here.
+
+ src/mcd-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
 commit e0960a061a601609be9c10be99b4668eac9ae0e2
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-08-26 13:08:41 +0100
@@ -331,6 +1254,257 @@ Date:   2009-08-26 13:08:41 +0100
 
  src/mcd-connection.c |   94 +++++++++++++++++++++++++++++++++++++++++++++-----
  1 files changed, 85 insertions(+), 9 deletions(-)
+
+commit 4acaa7954f9cfadf8da931849704d5439be0d2d8
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-26 12:31:49 +0100
+
+    mcd-account-manager: add errors and set appropriate error when setting a parameter fails
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |   14 ++++++++++++++
+ src/mcd-account-manager.h |    8 ++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
+
+commit b471ec9da5e7b037f2ff92ce2c59f89c7852f38b
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-18 14:27:53 +0100
+
+    mcd-account: remove secret keys from the keyfile when set in the keyring
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+commit 9923b9ea71ffac4203627ae3a40614e297bd2e33
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-18 14:22:28 +0100
+
+    mc-debug-server: create a new temporary keyring for each test
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ test/twisted/Makefile.am       |    4 ++
+ test/twisted/mc-debug-server.c |   76 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 80 insertions(+), 0 deletions(-)
+
+commit 92ca48786ade8076343b84284dcca98262006b45
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-17 19:04:31 +0100
+
+    mcd-account: fall back to getting keyfile parameters if the keyring yields nothing
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   67 ++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 41 insertions(+), 26 deletions(-)
+
+commit f3fffa73e986d840f55a44c75a3e48cdc1aca578
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-17 18:48:35 +0100
+
+    mcd-account: set errors appropriately
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   21 ++++++++++++++-------
+ 1 files changed, 14 insertions(+), 7 deletions(-)
+
+commit b54b67da76cc36a44c6682eee44e9baf8149ca4b
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-17 18:42:58 +0100
+
+    mcd-account: allow non-string secrets by using GKeyFile's serialisation
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |  485 ++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 272 insertions(+), 213 deletions(-)
+
+commit 2ea752ddf617647ca22eb6b4ec2eabef95b9b606
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-17 18:01:15 +0100
+
+    mcd-account: remove password on a NULL value argument to set_parameter
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   25 ++++++++++++++++++-------
+ 1 files changed, 18 insertions(+), 7 deletions(-)
+
+commit 219e844727a523105c22c483b4f78d3f1684d5b6
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-17 17:16:17 +0100
+
+    mcd-account: give a better warning message when get_parameter doesn't know the GType
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 99c08383b85a95e123d12f82785876e99d81904b
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-16 02:26:06 +0100
+
+    mcd-account: delete secret string parameters from the keyring when removing the account
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 42 insertions(+), 0 deletions(-)
+
+commit ed4bb437fc838fff3792f5729368f4426f78f8c0
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-16 02:00:00 +0100
+
+    mcd-account: only set or get strings in or from the keyring
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   96 +++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 60 insertions(+), 36 deletions(-)
+
+commit 59cd0a34bbadb3beb848caa8d839eee0331fdb24
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 22:02:38 +0100
+
+    mcd-account: initial gnome-keyring support
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |  146 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 146 insertions(+), 0 deletions(-)
+
+commit 63596058cf09fa2bd7019cf6fb7388f08735b9a9
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 22:01:22 +0100
+
+    mcd-account: add error quark and some error codes
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   11 +++++++++++
+ src/mcd-account.h |   10 ++++++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
+
+commit 918b38554c2b9f081eca6939ee71010309ba3e61
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 21:45:33 +0100
+
+    mcd-main: set application name to something sensible to show in the UI
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-main.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 11367ba596e4013f579c8f57b3dc8939b058ef4d
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 18:50:32 +0100
+
+    configure: add --enable-gnome-keyring support
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ configure.ac     |   28 ++++++++++++++++++++++++++++
+ src/Makefile.am  |    8 ++++++++
+ test/Makefile.am |    4 ++++
+ 3 files changed, 40 insertions(+), 0 deletions(-)
+
+commit 335ef3999291caff82695238f1cbedda5afcc5c6
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 18:15:23 +0100
+
+    mcd-account: make Parameters an async property
+    
+    This finally unbreaks the Parameters property by implementing an async
+    get function for it.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   50 ++++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 36 insertions(+), 14 deletions(-)
+
+commit 40b7b452d6dd5f79dc272dfe4fb3eb71e6e18fd0
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 18:14:58 +0100
+
+    mcd-dbusprop: implement getting dbus properties asynchronously
+    
+    Getting the Parameters property is still broken because the Parameters
+    property hasn't implemented an async get function.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-dbusprop.c |  145 ++++++++++++++++++++++++++++++++++++++-------------
+ src/mcd-dbusprop.h |    9 +++-
+ 2 files changed, 116 insertions(+), 38 deletions(-)
+
+commit 62545ced7a67a40266f0c92dc0c432f15ead36b6
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-14 16:18:35 +0100
+
+    mcd-dbusprop: move the McdDBusProp struct getting code into another function
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-dbusprop.c |   89 +++++++++++++++++++++++++++------------------------
+ 1 files changed, 47 insertions(+), 42 deletions(-)
+
+commit 65f2c739ddbdfeb2ab9a4f0b38b4e7d906b9abcb
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-26 13:05:44 +0100
+
+    mcd-account: refactored set_parameters to be async and iteratively set params
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-connection.c |   28 +-
+ src/mcd-account-manager.c    |   99 +++--
+ src/mcd-account-priv.h       |   24 +-
+ src/mcd-account.c            |  978 ++++++++++++++++++++++++++++--------------
+ src/mcd-account.h            |   17 +-
+ 5 files changed, 782 insertions(+), 364 deletions(-)
+
+commit 07248b054fe4a78166de01d66029f3151b012890
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 17:05:09 +0100
+
+    mcd-manager: add mcd_manager_get_protocol_param convenience function
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-manager.c |   22 ++++++++++++++++++++++
+ src/mcd-manager.h |    4 ++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
+
+commit f16fcab8c125d080395c22204606fc10f2af7a22
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 14:34:51 +0100
+
+    mcd-account: initial move to async set_parameter function
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   24 ++++++++++++++++++------
+ src/mcd-account.h |    7 ++++++-
+ 2 files changed, 24 insertions(+), 7 deletions(-)
+
+commit f25034d5b214bd9d68e1ceb43a9be683f8589316
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 12:46:21 +0100
+
+    mcd-account: make mcd_account_delete async use write_conf_async
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |    2 +-
+ src/mcd-account.c         |   97 ++++++++++++++++++++++++++++++++++-----------
+ src/mcd-account.h         |    9 +++-
+ 3 files changed, 81 insertions(+), 27 deletions(-)
 
 commit ffbab24092805954a496058662f2629f9591fb81
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -357,6 +1531,165 @@ Date:   2009-08-25 17:23:10 +0100
 
  src/mcd-dispatch-operation.c |   21 ++++++++++++++++++---
  1 files changed, 18 insertions(+), 3 deletions(-)
+
+commit bb897bc7f549c1fec738fb8235f4db3c51d44de6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:53:06 +0100
+
+    capabilities/draft-2.py: assert that clients springing into existence are supported
+
+ test/twisted/capabilities/draft-2.py |   22 ++++++++++++++++++++++
+ 1 files changed, 22 insertions(+), 0 deletions(-)
+
+commit df53f00c1dc04f669434cebf1371467341306068
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:45:13 +0100
+
+    capabilities/draft-2.py: exercise capability tokens
+
+ test/twisted/capabilities/draft-2.py          |   19 +++++++++++++++++--
+ test/twisted/telepathy/clients/AbiWord.client |    4 ++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
+
+commit 2fb4d82533f05c751a3e81a21b56cd5bf9916779
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:44:52 +0100
+
+    mctest.SimulatedClient: add support for Handler capability tokens
+
+ test/twisted/mctest.py |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
+
+commit 779e79753ba154cd5767b2f76f2b8a39b8be7803
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:44:25 +0100
+
+    McdDispatcher: debug-output what is in each client's DRAFT2 caps
+
+ src/mcd-dispatcher.c |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
+
+commit 87e458b4866113c1dcaae7e162d31a228dfc7fc5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:31:06 +0100
+
+    Add a regression test for DRAFT2 ContactCapabilities
+
+ test/twisted/Makefile.am             |    1 +
+ test/twisted/capabilities/draft-2.py |  104 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 105 insertions(+), 0 deletions(-)
+
+commit 6308386ca5c7a12f0bd53a170eb5aa451c44bc5a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:30:42 +0100
+
+    Support DRAFT2 ContactCapabilities
+
+ src/mcd-connection-priv.h |    5 +-
+ src/mcd-connection.c      |   28 +++++++++-
+ src/mcd-dispatcher.c      |  135 +++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 162 insertions(+), 6 deletions(-)
+
+commit 593beb6c14bdcf550500848863cc7e106e4875f8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:30:20 +0100
+
+    Add hook in mcd_client_start_introspection for inactive Handlers
+    
+    Currently it just debugs, but when we support DRAFT2 contact caps, we'll
+    have to send the client's capabilities to all connections.
+
+ src/mcd-dispatcher.c |   28 +++++++++++++++++-----------
+ 1 files changed, 17 insertions(+), 11 deletions(-)
+
+commit d36b685b09ee9026468f8b1bcfc4c098153dbd2d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 16:27:46 +0100
+
+    McdDispatcher: harvest capability tokens from Handlers and their .client files
+
+ src/mcd-dispatcher.c |   45 ++++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 42 insertions(+), 3 deletions(-)
+
+commit 62052abab70138fc9e7c7e2e58b1d29b7bd28067
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 12:12:55 +0100
+
+    mcd-account{,-manager}: first port of using write_conf to write_conf_async
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |    2 +-
+ src/mcd-account-priv.h    |    2 +-
+ src/mcd-account.c         |   21 +++++++++++----------
+ 3 files changed, 13 insertions(+), 12 deletions(-)
+
+commit 753b03dfa13ca93addb682d0cd446421e04d1825
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 12:00:35 +0100
+
+    mcd-account-manager: add gtk-doc for _write_conf and deprecate it
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 6044c2847be7b5c6d418435a2c544b5627077790
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-08-13 11:58:11 +0100
+
+    mcd-account-manager: add initial version of write_conf_async
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account-manager.c |   58 +++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-account-manager.h |    8 ++++++
+ 2 files changed, 66 insertions(+), 0 deletions(-)
+
+commit f3bab9d373b33223aab2dec6aa78874657fd507e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 15:17:51 +0100
+
+    McdDispatcher: add storage for capability tokens
+    
+    We use TpDynamicHandleRepo/TpHandleSet as a refcounted string pool and
+    a set of strings from that pool (respectively), since capability tokens
+    are very likely to be duplicated betwen clients.
+
+ src/mcd-dispatcher.c |   26 +++++++++++++++++++++++++-
+ 1 files changed, 25 insertions(+), 1 deletions(-)
+
+commit c834d92f94612e5e7df0133ceca5ad0eb1618084
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 14:35:53 +0100
+
+    Generate code for ContactCapabilities (draft 2) and do basic setup for it
+
+ src/Makefile.am                                    |    2 +
+ src/mcd-connection.c                               |   26 ++-
+ src/mcd.xml                                        |    1 +
+ ...ction_Interface_Contact_Capabilities_Draft2.xml |  247 ++++++++++++++++++++
+ xml/all.xml                                        |    2 +
+ xml/nmc5.xml                                       |    1 +
+ 6 files changed, 276 insertions(+), 3 deletions(-)
+
+commit 14eb49c3df1a8acd378c8c8b9698ecd5042693bf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-25 13:30:29 +0100
+
+    Re-namespace ContactCapabilities to Contact_Capabilities_Draft1
+    
+    This is necessary so we can support draft 2 at the same time.
+
+ src/Makefile.am                                    |    4 +-
+ src/mcd-connection.c                               |   18 +-
+ src/mcd.xml                                        |    2 +-
+ xml/Connection_Interface_Contact_Capabilities.xml  |  166 --------------------
+ ...ction_Interface_Contact_Capabilities_Draft1.xml |  166 ++++++++++++++++++++
+ xml/Makefile.am                                    |    2 +-
+ xml/nmc5.xml                                       |    2 +-
+ 7 files changed, 180 insertions(+), 180 deletions(-)
 
 commit 6204840f2757acbf6871dc461ba3d07614d23767
 Author: Alberto Mardegan <alberto.mardegan@nokia.com>
@@ -392,6 +1725,20 @@ Date:   2009-08-20 16:10:37 +0300
  src/mcd-account.c |    4 ++--
  1 files changed, 2 insertions(+), 2 deletions(-)
 
+commit 0ee11aab4ecc9956c5e8aa007d5b7da08b1a7dbf
+Merge: cb25279 5ccdf56
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-21 17:00:29 +0300
+
+    Merge commit 'upstream/master'
+
+commit 5ccdf562089413247d05ec75281763aec5960d3d
+Merge: f1fcfb1 0c8144b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-21 11:40:47 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
 commit 0c8144be32206246a91ff892a073fed0eb45d1fe
 Merge: 063f515 1193f79
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -413,6 +1760,40 @@ Date:   2009-08-21 11:02:43 +0100
  src/mcd-account.h          |    6 +++++-
  4 files changed, 42 insertions(+), 4 deletions(-)
 
+commit cb25279f7d4a8017855593fd4569a377b749a565
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:13:31 +0300
+
+    Add mcd_account_connection_proceed_with_reason
+    
+    Use _mcd_account_set_connection_status to set the connection status reason.
+
+ src/mcd-account-connection.c |   21 +++++++++++++--------
+ src/mcd-connection-plugin.h  |    4 ++++
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+commit e228c32d5d1bf6b4e647c4552672f690ba7780d3
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:12:38 +0300
+
+    Add _mcd_connection_set_status()
+
+ src/mcd-account-priv.h |    3 +++
+ src/mcd-account.c      |    8 ++++++++
+ 2 files changed, 11 insertions(+), 0 deletions(-)
+
+commit 46b8f3ae6b1655eee9b628e60b24d2a38bda6c7b
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-20 16:10:37 +0300
+
+    Always process online requests.
+    
+    The transition DISCONNECTED -> DISCONNECTED should also trigger the completion
+    of online requests.
+
+ src/mcd-account.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
 commit 063f515dd919c6988ed63c52d7b49d8ff5ad7e10
 Author: Naveen Verma <naveen.verma@nokia.com>
 Date:   2009-08-19 16:25:51 +0300
@@ -423,6 +1804,46 @@ Date:   2009-08-19 16:25:51 +0300
 
  src/mcd-channel.c |   24 ++++++++++++++++--------
  1 files changed, 16 insertions(+), 8 deletions(-)
+
+commit f1fcfb10b02b64d36dd20d935e044e3454c7c6eb
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2009-08-19 11:30:22 +0100
+
+    Show the full simple presence information in the output
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ util/mc-tool.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+commit 365ae206bc6970c74f83c5e3946a9674886643f4
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2009-08-18 18:33:12 +0100
+
+    Fix unique name creation such that it actually works again
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-account-manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 563d06e2fee5e8432e7e2c41122767f24db115c8
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2009-08-18 17:22:46 +0100
+
+    Escape - in protocol names as described in the spec
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-account-manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 4b41b0e73a0c3631ebd9ba618802f7c7bdbb39fb
+Merge: 4cff37f 781e360
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-08-17 12:09:26 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
 
 commit 781e360f0734363275144331831be67f95820244
 Merge: c155811 c30e6ed
@@ -548,6 +1969,76 @@ Date:   2009-08-11 11:15:42 +0300
 
  xml/Account_Interface_Compat.xml |   17 +++++++++++++++++
  1 files changed, 17 insertions(+), 0 deletions(-)
+
+commit 4cff37f910b2aea3d59552c8b5110d23f8c008e4
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:13:27 +0300
+
+    Setup property monitoring
+    
+    This will update the local preoperties when MC daemon emits the
+    CompatPropertyChanged signal.
+
+ libmcclient/mc-account-compat.c |   33 ++++++++++++++++++++++++++++++---
+ 1 files changed, 30 insertions(+), 3 deletions(-)
+
+commit c8b780672dd20f8866d4fc9b293e31d0072ac764
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:12:35 +0300
+
+    Move casting around
+    
+    Conflicts:
+
+ libmcclient/mc-account-compat.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
+
+commit b85d157aa2a4dab5781439cbe7f614e1247e82ee
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 16:11:28 +0300
+
+    Update the Compat interface code
+    
+    Use the new internal APIs to update the properties.
+
+ libmcclient/mc-account-compat.c |   57 ++++++++++++++++++++++++---------------
+ 1 files changed, 35 insertions(+), 22 deletions(-)
+
+commit fc58968e33dc1f0cb5f91d948a2953f75d17dde0
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:18:16 +0300
+
+    Use GSlice
+
+ libmcclient/mc-account-compat.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 07b6f9ae56dbed9321ce18a5bda274a5531f6198
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:16:20 +0300
+
+    Emit the CompatPropertyChanged signal
+
+ src/mcd-account-compat.c |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+commit 27f713b551f651d4a237baa4016ed6ed58d7941b
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-08-11 11:15:42 +0300
+
+    Add change notification to Compat interface definition
+
+ xml/Account_Interface_Compat.xml |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
+
+commit 0b39668572b5e2dca1702ca3c63b3ccc53c9a4a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-07-30 12:49:30 +0100
+
+    Start 5.3.0 development
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 commit b932df26e3be91a0e1f950389da7f47146c9bebc
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>

@@ -2,10 +2,6 @@
 <!DOCTYPE indexdiv PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <indexdiv>
-<indexdiv><title>G</title>
-<indexentry><primaryie linkends="g-object-ref"><link linkend="g-object-ref">g_object_ref</link></primaryie></indexentry>
-<indexentry><primaryie linkends="g-object-unref"><link linkend="g-object-unref">g_object_unref</link></primaryie></indexentry>
-</indexdiv>
 <indexdiv><title>M</title>
 <indexentry><primaryie linkends="McdChannel-struct"><link linkend="McdChannel">McdChannel</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdChannel-members-accepted"><link linkend="McdChannel-members-accepted">McdChannel::members-accepted</link></primaryie></indexentry>

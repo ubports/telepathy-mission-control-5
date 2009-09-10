@@ -219,8 +219,6 @@
 <ANCHOR id="libmissioncontrol-server-mcd-debug.synopsis" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#libmissioncontrol-server-mcd-debug.synopsis">
 <ANCHOR id="libmissioncontrol-server-mcd-debug.description" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#libmissioncontrol-server-mcd-debug.description">
 <ANCHOR id="libmissioncontrol-server-mcd-debug.details" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#libmissioncontrol-server-mcd-debug.details">
-<ANCHOR id="g-object-ref" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#g-object-ref">
-<ANCHOR id="g-object-unref" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#g-object-unref">
 <ANCHOR id="mcd-debug-init" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#mcd-debug-init">
 <ANCHOR id="mcd-debug-ref" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#mcd-debug-ref">
 <ANCHOR id="mcd-debug-unref" href="libmissioncontrol-server/libmissioncontrol-server-mcd-debug.html#mcd-debug-unref">

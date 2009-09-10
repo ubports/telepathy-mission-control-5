@@ -41,6 +41,7 @@ host_triplet = @host@
 @ENABLE_PLUGINS_TRUE@	dispatcher/dispatch-rejected-by-plugin.py
 
 noinst_PROGRAMS = mc-debug-server$(EXEEXT)
+@ENABLE_GNOME_KEYRING_TRUE@am__append_2 = $(GNOME_KEYRING_CFLAGS)
 subdir = test/twisted
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -124,6 +125,8 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EGREP = @EGREP@
+ENABLE_GNOME_KEYRING_FALSE = @ENABLE_GNOME_KEYRING_FALSE@
+ENABLE_GNOME_KEYRING_TRUE = @ENABLE_GNOME_KEYRING_TRUE@
 ENABLE_GTK_DOC_FALSE = @ENABLE_GTK_DOC_FALSE@
 ENABLE_GTK_DOC_TRUE = @ENABLE_GTK_DOC_TRUE@
 ENABLE_MC_CLIENT_SO6_FALSE = @ENABLE_MC_CLIENT_SO6_FALSE@
@@ -143,6 +146,8 @@ GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
 GMODULE_CFLAGS = @GMODULE_CFLAGS@
 GMODULE_LIBS = @GMODULE_LIBS@
+GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
+GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
 GTK_DOC_USE_LIBTOOL_FALSE = @GTK_DOC_USE_LIBTOOL_FALSE@
@@ -266,8 +271,9 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	account-manager/update-parameters.py \
 	account-requests/cancel.py account-requests/create-text.py \
 	account-requests/delete-account-during-request.py \
-	capabilities/draft-1.py capabilities/legacy-caps.py \
-	dispatcher/approver-fails.py dispatcher/already-has-channel.py \
+	capabilities/draft-1.py capabilities/contact-caps.py \
+	capabilities/legacy-caps.py dispatcher/approver-fails.py \
+	dispatcher/already-has-channel.py \
 	dispatcher/already-has-obsolete.py \
 	dispatcher/bypass-approval.py dispatcher/cancel.py \
 	dispatcher/capture-bundle.py dispatcher/connect-for-request.py \
@@ -308,20 +314,15 @@ TWISTED_SEPARATE_TESTS = \
 @ENABLE_PLUGINS_TRUE@test_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
 mc_debug_server_SOURCES = mc-debug-server.c
 mc_debug_server_LDADD = $(top_builddir)/src/libmissioncontrol-server.la
-INCLUDES = \
-	-I$(top_srcdir) -I$(top_builddir) \
-	-I$(top_srcdir)/src -I$(top_builddir)/src \
-	$(DBUS_CFLAGS) \
-	$(TELEPATHY_CFLAGS) \
-	-DMC_DISABLE_DEPRECATED \
-	-DLIBDIR="@libdir@" -DLIBVERSION="0"
-
+INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/src \
+	-I$(top_builddir)/src $(DBUS_CFLAGS) $(TELEPATHY_CFLAGS) \
+	-DMC_DISABLE_DEPRECATED -DLIBDIR="@libdir@" -DLIBVERSION="0" \
+	$(am__append_2)
 TESTS = 
 TMPSUFFIX = foo
 BASIC_TESTS_ENVIRONMENT = \
 	PYTHONPATH=@abs_top_srcdir@/test/twisted:@abs_top_builddir@/test/twisted \
-	MC_DEBUG=2 \
-	MC_TP_DEBUG=all \
+	MC_DEBUG=all \
 	MC_FILTER_PLUGIN_DIR=@abs_top_builddir@/test/twisted/.libs \
 	MC_CHANDLERS_DIR=@abs_top_srcdir@/test/twisted/chandlers \
 	MC_ACCOUNT_DIR=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
@@ -351,6 +352,8 @@ TORTURE_REPEATS = 100
 EXTRA_DIST = \
 	$(TWISTED_BASIC_TESTS) \
 	$(TWISTED_SEPARATE_TESTS) \
+	accounts/README \
+	chandlers/README \
 	telepathy/clients/README \
 	telepathy/clients/AbiWord.client \
 	telepathy/managers/fakecm.manager \
@@ -673,7 +676,7 @@ check-TESTS: $(TESTS)
 	else :; fi
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/account-manager $(distdir)/account-requests $(distdir)/capabilities $(distdir)/crash-recovery $(distdir)/dispatcher $(distdir)/telepathy/clients $(distdir)/telepathy/managers
+	$(mkdir_p) $(distdir)/account-manager $(distdir)/account-requests $(distdir)/accounts $(distdir)/capabilities $(distdir)/chandlers $(distdir)/crash-recovery $(distdir)/dispatcher $(distdir)/telepathy/clients $(distdir)/telepathy/managers
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

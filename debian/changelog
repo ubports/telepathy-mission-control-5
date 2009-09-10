@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (5.3.0-1) experimental; urgency=low
+
+  * New upstream version
+  * Enable gnome-keyring
+  * Upload to experimental, initially
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 10 Sep 2009 13:39:59 +0100
+
 telepathy-mission-control-5 (5.2.2-1) unstable; urgency=high
 
   * New upstream version
