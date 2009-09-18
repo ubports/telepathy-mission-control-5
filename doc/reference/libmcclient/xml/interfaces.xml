@@ -39,10 +39,6 @@
 #define             <link linkend="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-QUERY--CAPS">MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_QUERY</link>
 <link linkend="GQuark">GQuark</link>              <link linkend="mc-iface-quark-account-manager-interface-query">mc_iface_quark_account_manager_interface_query</link>
                                                         (void);
-#define             <link linkend="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS">MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION</link>
-#define             <link linkend="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS">MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION</link>
-<link linkend="GQuark">GQuark</link>              <link linkend="mc-iface-quark-account-manager-interface-creation">mc_iface_quark_account_manager_interface_creation</link>
-                                                        (void);
 </synopsis>
 </refsynopsisdiv>
 
@@ -192,29 +188,6 @@ Expands to a call to a function that returns a quark for the interface name "com
 <refsect2 id="mc-iface-quark-account-manager-interface-query" role="function">
 <title>mc_iface_quark_account_manager_interface_query ()</title>
 <indexterm zone="mc-iface-quark-account-manager-interface-query"><primary sortas="mc_iface_quark_account_manager_interface_query">mc_iface_quark_account_manager_interface_query</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_iface_quark_account_manager_interface_query
-                                                        (void);</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara>
-</simpara></listitem></varlistentry>
-</variablelist></refsect2>
-<refsect2 id="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS" role="macro">
-<title>MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION</title>
-<indexterm zone="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS"><primary sortas="MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION">MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION</primary></indexterm><programlisting>#define             MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION</programlisting>
-<para>
-The interface name "org.freedesktop.Telepathy.AccountManager.Interface.Creation.DRAFT"</para>
-<para>
-</para></refsect2>
-<refsect2 id="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS" role="macro">
-<title>MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION</title>
-<indexterm zone="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS"><primary sortas="MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION">MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION</primary></indexterm><programlisting>#define             MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION</programlisting>
-<para>
-Expands to a call to a function that returns a quark for the interface name "org.freedesktop.Telepathy.AccountManager.Interface.Creation.DRAFT"</para>
-<para>
-</para></refsect2>
-<refsect2 id="mc-iface-quark-account-manager-interface-creation" role="function">
-<title>mc_iface_quark_account_manager_interface_creation ()</title>
-<indexterm zone="mc-iface-quark-account-manager-interface-creation"><primary sortas="mc_iface_quark_account_manager_interface_creation">mc_iface_quark_account_manager_interface_creation</primary></indexterm><programlisting><link linkend="GQuark">GQuark</link>              mc_iface_quark_account_manager_interface_creation
                                                         (void);</programlisting>
 <para>
 </para><variablelist role="params">

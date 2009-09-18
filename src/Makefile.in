@@ -106,7 +106,6 @@ nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
 	svc-Account_Interface_Compat.lo \
 	svc-Account_Interface_Conditions.lo \
 	svc-Account_Interface_Stats.lo \
-	svc-Account_Manager_Interface_Creation.lo \
 	svc-Account_Manager_Interface_Query.lo mcd-enum-types.lo \
 	mcd-signals-marshal.lo $(am__objects_1)
 libmcd_convenience_la_OBJECTS = $(am_libmcd_convenience_la_OBJECTS) \
@@ -254,6 +253,10 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
+PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
+PYTHON_PLATFORM = @PYTHON_PLATFORM@
+PYTHON_PREFIX = @PYTHON_PREFIX@
+PYTHON_VERSION = @PYTHON_VERSION@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -261,7 +264,6 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
-TEST_PYTHON = @TEST_PYTHON@
 VERSION = @VERSION@
 WANT_TWISTED_TESTS_FALSE = @WANT_TWISTED_TESTS_FALSE@
 WANT_TWISTED_TESTS_TRUE = @WANT_TWISTED_TESTS_TRUE@
@@ -307,18 +309,21 @@ mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
+pkgpyexecdir = @pkgpyexecdir@
+pkgpythondir = @pkgpythondir@
 pluginlibdir = @pluginlibdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+pyexecdir = @pyexecdir@
+pythondir = @pythondir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 INCLUDES = $(TELEPATHY_CFLAGS) $(DBUS_CFLAGS) $(GLIB_CFLAGS) \
-	-DDBUS_API_SUBJECT_TO_CHANGE -DG_LOG_DOMAIN=\"mcd\" \
-	-DMC_DISABLE_DEPRECATED -I$(top_srcdir) $(am__append_1) \
-	$(am__append_6)
+	-DG_LOG_DOMAIN=\"mcd\" -DMC_DISABLE_DEPRECATED -I$(top_srcdir) \
+	$(am__append_1) $(am__append_6)
 mc_headers = \
 	mcd-account.h \
 	mcd-account-compat.h \
@@ -351,7 +356,6 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
-	_gen/svc-Account_Manager_Interface_Creation.h \
 	_gen/svc-Account_Manager_Interface_Query.h
 
 nodist_libmcd_convenience_la_SOURCES = \
@@ -365,7 +369,6 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
-	_gen/svc-Account_Manager_Interface_Creation.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
@@ -423,6 +426,7 @@ libmcd_convenience_la_SOURCES = \
 	mcd-misc.c \
 	mcd-misc.h \
 	mcd-mission.c \
+	mcd-mission-priv.h \
 	mcd-operation.c \
 	mcd-controller.c \
 	mcd-master.c \
@@ -569,7 +573,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Compat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Stats.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Creation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Query.Plo@am__quote@
 
 .c.o:
@@ -627,13 +630,6 @@ svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Stats.c' object='svc-Account_Interface_Stats.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
-
-svc-Account_Manager_Interface_Creation.lo: _gen/svc-Account_Manager_Interface_Creation.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Creation.lo -MD -MP -MF "$(DEPDIR)/svc-Account_Manager_Interface_Creation.Tpo" -c -o svc-Account_Manager_Interface_Creation.lo `test -f '_gen/svc-Account_Manager_Interface_Creation.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Creation.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/svc-Account_Manager_Interface_Creation.Tpo" "$(DEPDIR)/svc-Account_Manager_Interface_Creation.Plo"; else rm -f "$(DEPDIR)/svc-Account_Manager_Interface_Creation.Tpo"; exit 1; fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_Creation.c' object='svc-Account_Manager_Interface_Creation.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Manager_Interface_Creation.lo `test -f '_gen/svc-Account_Manager_Interface_Creation.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Creation.c
 
 svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query.c
 @am__fastdepCC_TRUE@	if $(LIBTOOL) --tag=CC --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Query.lo -MD -MP -MF "$(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo" -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c; \

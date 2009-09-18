@@ -26,9 +26,6 @@ from mctest import exec_test, create_fakecm_account, enable_fakecm_account
 import constants as cs
 
 def test(q, bus, mc):
-    account_manager = bus.get_object(cs.AM, cs.AM_PATH)
-    account_manager_iface = dbus.Interface(account_manager, cs.AM)
-
     params = dbus.Dictionary({"account": "wjt@example.com",
         "password": "secrecy"}, signature='sv')
     (cm_name_ref, account) = create_fakecm_account(q, bus, mc, params)
@@ -49,16 +46,23 @@ def test(q, bus, mc):
     assert account_props.Get(cs.ACCOUNT, 'Nickname') == 'resiak'
 
     # OK, let's go online
-    conn, e = enable_fakecm_account(q, bus, mc, account, params,
-            has_aliasing=True,
+    conn, get_aliases, set_aliases = enable_fakecm_account(q, bus, mc,
+            account, params, has_aliasing=True,
             expect_after_connect=[
+                EventPattern('dbus-method-call',
+                    interface=cs.CONN_IFACE_ALIASING, method='GetAliases',
+                    handled=False),
                 EventPattern('dbus-method-call',
                     interface=cs.CONN_IFACE_ALIASING, method='SetAliases',
                     handled=False),
                 ])
 
-    assert e.args[0] == { conn.self_handle: 'resiak' }
-    q.dbus_return(e.message, signature='')
+    assert get_aliases.args[0] == [ conn.self_handle ]
+    q.dbus_return(get_aliases.message, { conn.self_handle: 'wjt@example.com' },
+            signature='a{us}')
+
+    assert set_aliases.args[0] == { conn.self_handle: 'resiak' }
+    q.dbus_return(set_aliases.message, signature='')
 
     # Change alias after going online
     call_async(q, account_props, 'Set', cs.ACCOUNT, 'Nickname',

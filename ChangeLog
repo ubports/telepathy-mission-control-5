@@ -1,3 +1,756 @@
+commit b4afe61f89a5c6f5af8deb6e807c114a7c962bfe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 17:43:14 +0100
+
+    Prepare version 5.3.1
+
+ NEWS         |   14 +++++++++++---
+ configure.ac |    2 +-
+ 2 files changed, 12 insertions(+), 4 deletions(-)
+
+commit fa09409b48a5fd8673ae7867e1fd1cf6a025a23a
+Merge: d4c014b 8c10974
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:56:58 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit 8c1097434ed0215bd9f5dbb4635eb2810ebbee32
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:54:48 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit c4d3de868b0909272fa8bdee83f9678ae8dbc5b8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:41:54 +0100
+
+    Point release 5.2.5
+
+ NEWS         |   23 +++++++++++++++++++++--
+ configure.ac |    2 +-
+ 2 files changed, 22 insertions(+), 3 deletions(-)
+
+commit 3420be0e786f0871898339cc80ba804bd04c0189
+Merge: 0fbae60 c880f1b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:29:58 +0100
+
+    Merge branch '52-backports' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 0fbae60891eff7b7fb32151cd1b06d65e1b77dc7
+Merge: 77bc681 126a5a7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:27:54 +0100
+
+    Merge branch '52-leaks' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit c880f1b73119dc05a4b6bd4e90129b7c07b29061
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:59:33 +0100
+
+    fd.o#23935: add regression test in dispatcher/create-no-preferred-handler.py
+
+ .../dispatcher/create-no-preferred-handler.py      |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 0f732d6e402f2a32186f14dd65225b90bf026c91
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:45:13 +0100
+
+    McdDispatcher: improve debug
+
+ src/mcd-dispatcher.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
+
+commit b6ea74dcd28b2cd06825fdc2d073d8822ec152da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:45:00 +0100
+
+    McdDispatcher: match_filters: when choosing where to call AddRequest, assume that the returned channel will have Requested=TRUE
+    
+    This makes AddRequest work on clients that only want to handle outgoing
+    channels (like the VNC-tube server).
+
+ src/mcd-dispatcher.c |   29 ++++++++++++++++++++++-------
+ 1 files changed, 22 insertions(+), 7 deletions(-)
+
+commit bba5e02b8dca6d1033eea89d80dc7361c5598270
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:42:35 +0100
+
+    McdDispatcher: when selecting a Handler for requested channels, use their real properties if possible
+    
+    When we have the properties of the actual channel, we should use those,
+    rather than relying on the incomplete set of properties that were
+    requested.
+
+ src/mcd-dispatcher.c |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
+
+commit b9705f0bd382830078928a14e3321fecc35709e4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 18:41:19 +0100
+
+    McdDispatcher: rename get_default_handler to mcd_dispatcher_guess_request_handler
+    
+    That's the only place where it's actually used, now.
+
+ src/mcd-dispatcher.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 42638fcb34b2294b16ece8e9c2e86996305b393a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 17:31:25 +0100
+
+    McdDispatchOperation: make signed values in .client files actually work
+    
+    G_TYPE_INT64 requires g_value_set_int64.
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 126a5a7554f4b49f77e010fdcab32da659289d0b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 13:17:49 +0100
+
+    Loosen some matches in valgrind.supp using the "..." wildcard
+
+ test/twisted/tools/valgrind.supp |  147 ++++----------------------------------
+ 1 files changed, 14 insertions(+), 133 deletions(-)
+
+commit 136d63c6bc5618762bcf49abc070dcfd86eb82a8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 13:12:26 +0100
+
+    valgrind.supp: loosen a false-positive check to match newer GLib/valgrind
+
+ test/twisted/tools/valgrind.supp |   22 ++++++++++++++--------
+ 1 files changed, 14 insertions(+), 8 deletions(-)
+
+commit 03e292ca2ca5304298d63206dbe53c4a4f5b7181
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 13:10:45 +0100
+
+    account-manager/presence.py: don't assert about the ordering of SetPresence vs AccountPropertyChanged(CurrentPresence)
+    
+    They might come out in either order, in fact (it's a race). The test seems
+    to be more likely to lose the race if MC is slow, for instance because
+    it's run under qemu (Scratchbox) or valgrind.
+    
+    Also make the failure message clearer if things happen in the wrong order.
+
+ test/twisted/account-manager/presence.py |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit ef68b618bcb0f548690925e0cf7bf2a8dc329573
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 19:39:16 +0100
+
+    Don't leak automatic presence status when loading accounts
+    
+    Impact: small leak once per McdAccount loaded or created
+
+ src/mcd-account.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 9c5fef9f40874c0433737360c49907663350677a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 19:00:21 +0100
+
+    Don't assume MC will start up "quickly" - under valgrind, it doesn't
+
+ test/twisted/servicetest.py |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 2527de7005353cbebbb4c9d6661f91e8a3422d7c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 18:59:54 +0100
+
+    mcd_account_setup: don't leak the automatic presence message
+    
+    Impact: g_strdup ("") is leaked once per McdAccount loaded or created,
+    once per process
+
+ src/mcd-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 77bc68123fa9e166c4fe3528901cb19ac5fb66c7
+Merge: 409d661 f512b48
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 12:46:35 +0100
+
+    Merge branch '52-probation' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit f512b480253849d77e8e24e124acbf34e76595d2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 12:34:12 +0100
+
+    _mcd_connection_dispose: remove probation and reconnect timers explicitly
+    
+    The previous code was misleading. It said:
+    
+        /* Remove any pending source: timer and idle */
+        g_source_remove_by_user_data (connection);
+    
+    However, this has multiple flaws:
+    * the comment is wrong - g_source_remove_by_user_data never removes more
+      than one source
+    * as a result, either the probation timer or the reconnect timer could be
+      removed, but never both, so if both were running, we'd get a
+      use-after-free
+    * because the McdConnection is a "publically-available" pointer, we could
+      theoretically remove a timeout/idle set by someone else (the McdAccount?)
+      that happened to have the McdConnection as its user_data
+    * even if the comment had been true, the code wouldn't have been obviously
+      correct
+
+ src/mcd-connection.c |   13 +++++++++++--
+ 1 files changed, 11 insertions(+), 2 deletions(-)
+
+commit d4c014b9fbf587f76dfe2e554b71cf9fc2de097b
+Merge: 3d247ab 9e88c1b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 12:17:56 +0100
+
+    Merge branch 'no-modes'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 3d247aba7bffa5b55e53f4d0e286a1b01c5af4a7
+Merge: 309f35e 9ba1545
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 12:17:24 +0100
+
+    Merge branch 'more-tp-glib'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 309f35e1cb211a68856915a606f5bf40db4b4d03
+Merge: b528b04 ecaa98b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 12:16:55 +0100
+
+    Merge branch 'trivia'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit b528b042e2c738522d2f0205e50646dc102b2f14
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-09-18 01:00:04 +0100
+
+    mcd-account: allow setting a parameter to the same value
+    
+    SetParameters checks if the parameter being set is actually being
+    changed. Previously, it would only move on the list of parameters to
+    change if it was actually being changed, leading to an endless
+    loop. However, we want it to carry on even if the parameter is
+    unchanged.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+commit d49c479f74068581a78b8f2b4c86e5d81dbb7328
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:07:40 +0100
+
+    McdAccount: set_parameter: ref the account across the gnome-keyring call
+    
+    Otherwise, the account won't necessarily still be there when we return...
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 0bc8bcc0edd7456a3b3af91d73d7d2ce83bfcedd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 18:16:14 +0100
+
+    Add a test for the "probation" functionality of McdConnection
+    
+    Because of the exponential backoff, this is fairly slow, so to enable it,
+    you have to set CHECK_TWISTED_SLOW to a non-empty value (or use
+    check-torture, which is slow already).
+
+ test/twisted/Makefile.am                        |   14 ++-
+ test/twisted/account-manager/server-drops-us.py |  128 +++++++++++++++++++++++
+ 2 files changed, 140 insertions(+), 2 deletions(-)
+
+commit 6ebc54a903af899df2d16ee98fab61d004bba9f4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 17:15:20 +0100
+
+    McdConnection: if dropped (connected -> disconnected) more than 3 times in 2 minutes, stop reconnecting
+    
+    Also apply exponential backoff to reconnects within the first 2 minutes.
+    
+    Previously, if connecting to a server that allowed us to connect but then
+    immediately dropped us again, we'd go into a tight loop, without the
+    benefit of the usual backoff algorithm.
+
+ src/mcd-connection.c |   66 +++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 63 insertions(+), 3 deletions(-)
+
+commit 1f979cc373b1ff2968f5307eebd4774abb3c61d6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 17:11:00 +0100
+
+    Update gtkdoc
+
+ .../libmissioncontrol-server/tmpl/mcd-channel.sgml |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 947648d379a199addd17c13b437c59109ff60cc9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 16:23:15 +0100
+
+    McdConnection: proxy_destroyed: rename to mcd_connection_invalidated_cb
+    
+    This makes it clearer that it's the callback for TpConnection::invalidated.
+
+ src/mcd-connection.c |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+commit 9ba1545bcef8310282dc743984be8d3dbbd83c8b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 23:40:17 +0100
+
+    Use telepathy-glib for ContactCapabilities (final) and the 'ao' type
+
+ configure.ac         |    2 +-
+ src/mcd-connection.c |    6 +++---
+ src/mcd-dispatcher.c |    2 +-
+ src/mcd-misc.c       |   10 ----------
+ src/mcd-misc.h       |    5 -----
+ src/mcd.xml          |    1 -
+ 6 files changed, 5 insertions(+), 21 deletions(-)
+
+commit 9e88c1ba97acde24dd8c22d3d1776f2760fceb4b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 20:09:04 +0100
+
+    Un-virtualize mcd_mission_set_parent and make it library-internal
+    
+    Plugins/subclasses shouldn't be manipulating the parent/child hierarchy!
+
+ .../libmissioncontrol-server/tmpl/mcd-mission.sgml |    9 -----
+ src/Makefile.am                                    |    1 +
+ src/mcd-mission-priv.h                             |   38 ++++++++++++++++++++
+ src/mcd-mission.c                                  |   17 ++-------
+ src/mcd-mission.h                                  |    3 +-
+ src/mcd-operation.c                                |    5 ++-
+ 6 files changed, 47 insertions(+), 26 deletions(-)
+
+commit f1bb5569a06fbb256dbbffc900cfb3430d84ecb9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 20:02:54 +0100
+
+    mcd_mission_new: remove
+    
+    A factory function for useless base-class instances isn't actually very
+    useful :-)
+
+ .../libmissioncontrol-server/tmpl/mcd-mission.sgml |    8 --------
+ src/mcd-mission.c                                  |   10 ----------
+ src/mcd-mission.h                                  |    1 -
+ 3 files changed, 0 insertions(+), 19 deletions(-)
+
+commit c8d02adf3f119b70403ae9618dad929fb95ca57c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:46:18 +0100
+
+    Remove McdSystemFlags, McdMode from docs
+
+ .../libmissioncontrol-server-sections.txt          |   13 ----
+ .../tmpl/mcd-enum-types.sgml                       |   15 ----
+ .../libmissioncontrol-server/tmpl/mcd-mission.sgml |   70 --------------------
+ 3 files changed, 0 insertions(+), 98 deletions(-)
+
+commit 2f7ec9ada6d126bec4056fcebcc3582129966bcb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:46:03 +0100
+
+    Remove McdSystemFlags
+
+ src/mcd-mission.c              |   83 ++++------------------------------------
+ src/mcd-mission.h              |   28 +------------
+ src/mcd-operation.c            |   13 ------
+ src/mcd-proxy.c                |    5 --
+ test/twisted/mc-debug-server.c |    3 +
+ 5 files changed, 14 insertions(+), 118 deletions(-)
+
+commit 51e57899d34a4a122cf7a5817187c50987a37952
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:14:38 +0100
+
+    Remove McdMode
+
+ .../tmpl/mcd-enum-types.sgml                       |   15 ----
+ .../libmissioncontrol-server/tmpl/mcd-mission.sgml |   41 ------------
+ src/mcd-mission.c                                  |   69 +-------------------
+ src/mcd-mission.h                                  |   17 +----
+ src/mcd-operation.c                                |   16 +----
+ src/mcd-proxy.c                                    |    5 --
+ 6 files changed, 6 insertions(+), 157 deletions(-)
+
+commit a23c9d3a268b3b36d9c8f427824eb15b39160d5c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:14:19 +0100
+
+    Change McdMission::system-flags to the right type
+
+ src/mcd-mission.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit e388436f8d460eadb38eb71564033cadb13c86b8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:07:40 +0100
+
+    McdAccount: set_parameter: ref the account across the gnome-keyring call
+    
+    Otherwise, the account won't necessarily still be there when we return...
+
+ src/mcd-account.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 313c1673cc480d52179aa79e845c89e07064f414
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 18:56:59 +0100
+
+    McdMaster: remove no-op connect, disconnect methods
+
+ src/mcd-master.c |   21 ---------------------
+ 1 files changed, 0 insertions(+), 21 deletions(-)
+
+commit b5b47e74b965654dc637666586d16176c2ef9ba1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 18:56:47 +0100
+
+    McdMaster: detach idle/low-memory from McdMission flags
+
+ src/mcd-master.c |  135 +++++++++++++++++++----------------------------------
+ 1 files changed, 49 insertions(+), 86 deletions(-)
+
+commit ce0c91372149bddaf48ed7eda67e568e602683c6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 19:03:51 +0100
+
+    mc-debug-server: use McdMaster API for idle/lowmem
+
+ test/twisted/mc-debug-server.c |   28 +++++++++++++++++++++-------
+ 1 files changed, 21 insertions(+), 7 deletions(-)
+
+commit ecaa98bc229dec93196db3fc3644883cb0631430
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 18:34:59 +0100
+
+    Remove -DDBUS_API_SUBJECT_TO_CHANGE - it isn't
+
+ src/Makefile.am |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 33304fd2fac9e6e71c6f30de06f2d5f9873d1e8e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 18:09:21 +0100
+
+    Require Python 2.5, and simplify checking for it
+
+ configure.ac             |   32 ++++++++------------------------
+ test/twisted/Makefile.am |    4 ++--
+ 2 files changed, 10 insertions(+), 26 deletions(-)
+
+commit 39e8115d1b41029374c92f6c1fceb7d4d0f53846
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 17:17:38 +0100
+
+    gtkdoc: remove things that no longer exist
+
+ .../libmissioncontrol-server-sections.txt          |   41 --------------------
+ 1 files changed, 0 insertions(+), 41 deletions(-)
+
+commit e0ec8d8bc6516cfd19cfefd565724f73db676054
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 17:12:15 +0100
+
+    Regenerate gtkdoc stuff
+
+ .../libmissioncontrol-server/tmpl/mcd-channel.sgml |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit afb901ad7efad012fe3ad1db2e780e323a1c136f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 18:29:31 +0100
+
+    _mcd_account_migrate_secrets: fix a potential crash when migrating (deja vu...)
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 2db843b4978423837ad543c381f833548434d878
+Merge: a858e02 e452e60
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 17:04:59 +0100
+
+    Merge branch 'no-creation'
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+    Conflicts:
+    	src/mcd-account-manager.c
+    	test/twisted/Makefile.am
+    	test/twisted/account-manager/old-create-with-properties.py
+
+commit a858e02a7f53dce0011173786f80ed648f280943
+Merge: e6d744b 409d661
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 14:41:48 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit 409d661facabcf8c77fcdf6799e9f13d24319e73
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-14 15:23:43 +0300
+
+    Allow state change from FAILED to ABORTED
+
+ src/mcd-channel.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 0562797448b87694d6513acb66c08ee5fbe17687
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-08 12:33:45 +0300
+
+    Add MCD_CHANNEL_STATUS_ABORTED
+    
+    Change the channel status when a channel is aborted.
+    This fixes a problem with mcd_dispatcher_get_channel_type_usage(), which
+    otherwise can count even aborted channels.
+    
+    Add a debug line to mcd_dispatcher_get_channel_type_usage().
+
+ src/mcd-channel.c    |    2 ++
+ src/mcd-channel.h    |    1 +
+ src/mcd-dispatcher.c |    3 +++
+ 3 files changed, 6 insertions(+), 0 deletions(-)
+
+commit e6d744b2b5f85de43b17d27444dc0959478a6322
+Merge: 1776f76 d298520
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 14:27:15 +0100
+
+    Merge branch 'telepathy-mission-control-5.2' and update NEWS
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit d2985202c26281ffe464f5503f6943e1460f551f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 14:21:48 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit 575777c8537a65ce8c5e6677f6e386fae737b57e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 14:07:58 +0100
+
+    Prepare point release 5.2.4
+
+ NEWS         |   16 ++++++++++++++--
+ configure.ac |    2 +-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
+
+commit 1776f76768c3fe8aed34f5d09bc5281b6b0befed
+Merge: eb023f4 b777b76
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 13:15:18 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit b777b762d06232d850e15534897ecd0b7357375e
+Merge: dda4879 a55b44f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-16 13:14:48 +0100
+
+    Merge branch '52-test-race' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit a55b44f82b4a608a1a1d1193aaf463dcf75b9e6e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-15 18:33:48 +0100
+
+    Avoid races by always waiting for the AM bus name (and the CD bus name, in most cases) to exist
+
+ test/twisted/account-manager/auto-connect.py   |   26 +++++++++++++++--------
+ test/twisted/account-manager/avatar-persist.py |   26 +++++++++++++++--------
+ test/twisted/account-manager/avatar-refresh.py |   26 +++++++++++++++--------
+ test/twisted/account-manager/make-valid.py     |    2 +-
+ test/twisted/mctest.py                         |   12 +++++++++++
+ 5 files changed, 64 insertions(+), 28 deletions(-)
+
+commit 727d39769bb3e7c5fca0a55e2a092b87fa48a392
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-15 17:54:59 +0100
+
+    mctest: use get_account_manager() internally, too
+
+ test/twisted/mctest.py |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 1a85723c2a0698face0e7075b2e8e0b33ab3bb24
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-15 17:16:40 +0100
+
+    tests: create AM proxy with follow_name_owner_changes=True
+    
+    This fixes a race between MC starting up and claiming its bus name, and
+    the test running.
+
+ test/twisted/account-manager/account-basics.py     |    4 ++--
+ test/twisted/account-manager/bad-cm.py             |    4 ++--
+ .../account-manager/create-with-properties.py      |    4 ++--
+ .../account-manager/old-create-with-properties.py  |    4 ++--
+ test/twisted/account-manager/param-types.py        |    4 ++--
+ test/twisted/mctest.py                             |    4 ++++
+ 6 files changed, 14 insertions(+), 10 deletions(-)
+
+commit ffb6cdc5f41ac1333889064ad042b39fc204dc5b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-15 16:51:04 +0100
+
+    tests: remove unused account_manager objects throughout
+
+ test/twisted/account-manager/avatar.py             |    3 ---
+ .../twisted/account-manager/create-auto-connect.py |    3 ---
+ .../twisted/account-manager/enable-auto-connect.py |    3 ---
+ test/twisted/account-manager/enable.py             |    3 ---
+ test/twisted/account-manager/nickname.py           |    3 ---
+ test/twisted/account-manager/presence.py           |    3 ---
+ test/twisted/dispatcher/connect-for-request.py     |    3 ---
+ .../twisted/dispatcher/request-disabled-account.py |    3 ---
+ 8 files changed, 0 insertions(+), 24 deletions(-)
+
+commit eb023f46bd0b4754deed464c1bca19b917aded2a
+Merge: 10a3e32 5f5373f
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-15 15:50:25 +0300
+
+    Merge commit 'upstream/master'
+
+commit 10a3e32c94df153f0f64ced15505612fa290ed53
+Merge: c461a5d dda4879
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-15 15:49:34 +0300
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit dda487905697f4cecd5cb0b1250ad474a6aa7b2a
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-15 14:44:11 +0300
+
+    Get own nickname on new connections
+    
+    When a new connection with aliases support is established, get our own
+    nickname.
+    
+    Originally written by Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-connection.c                     |   44 ++++++++++++++++++++++++++++++
+ test/twisted/account-manager/nickname.py |   15 +++++++---
+ 2 files changed, 55 insertions(+), 4 deletions(-)
+
+commit 5f5373fe36c7b629f12b7609be69176837f48125
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-09-15 11:51:35 +0100
+
+    mcd-account: don't migrate if the keyring daemon is not available
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 71747aba8d7d3a05d656b3e6a1027b6be3b2ef95
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-09-15 11:35:58 +0100
+
+    mcd-account: migrate secret parameters from the keyfile to keyring
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |   82 ++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 78 insertions(+), 4 deletions(-)
+
+commit 92ffda483e322fe0c1469b2288908d72c70cff72
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2009-09-15 11:33:11 +0100
+
+    mcd-account: remove the correct key from the keyfile after saving a secret
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-account.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+commit c461a5d2f217759549764c5063242c2d9dd37a0c
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-14 15:23:43 +0300
+
+    Allow state change from FAILED to ABORTED
+
+ src/mcd-channel.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 5fcbeb84962bde67125dd853fb84ccd0e8c6975f
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-09-08 12:33:45 +0300
+
+    Add MCD_CHANNEL_STATUS_ABORTED
+    
+    Change the channel status when a channel is aborted.
+    This fixes a problem with mcd_dispatcher_get_channel_type_usage(), which
+    otherwise can count even aborted channels.
+    
+    Add a debug line to mcd_dispatcher_get_channel_type_usage().
+
+ src/mcd-channel.c    |    2 ++
+ src/mcd-channel.h    |    1 +
+ src/mcd-dispatcher.c |    3 +++
+ 3 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 2d21979adc548877250409bf593acf427ec7022e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-14 19:46:46 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 54de5b519ce57b5dbf03165d53549e77b9bf7821
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-09-14 19:26:46 +0100
@@ -3943,6 +4696,41 @@ Date:   2009-06-11 10:24:06 +0100
     Merge branch 'update-scripts'
     
     Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit e452e606d720ad22a905c2ab482ef294a96609c2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-06-10 17:54:36 +0100
+
+    Remove the Creation interface altogether
+
+ .../libmcclient/tmpl/interfaces-body.sgml          |    8 --
+ doc/reference/libmcclient/tmpl/interfaces.sgml     |   22 ------
+ .../libmcclient/tmpl/libmcclient-unused.sgml       |   48 ++++++++++++
+ .../libmcclient/tmpl/mc-account-manager.sgml       |   31 --------
+ libmcclient/account-manager.xml                    |    1 -
+ libmcclient/mc-account-manager.c                   |    2 -
+ src/Makefile.am                                    |    2 -
+ test/twisted/constants.py                          |    1 -
+ util/mc-tool.c                                     |    2 +-
+ xml/Account_Manager_Interface_Creation.xml         |   77 --------------------
+ xml/Makefile.am                                    |    1 -
+ xml/nmc5.xml                                       |    1 -
+ 12 files changed, 49 insertions(+), 147 deletions(-)
+
+commit 1de1203c0d0b26e6aef093aa9c5264f86ecae1a1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-06-09 17:13:39 +0100
+
+    MCD: stop implementing the Creation draft
+    
+    Its functionality is now present in the standard AccountManager interface.
+
+ src/mcd-account-manager.c                          |   62 ---------
+ test/twisted/Makefile.am                           |    1 -
+ .../account-manager/create-with-properties.py      |    1 -
+ .../account-manager/old-create-with-properties.py  |  131 --------------------
+ test/twisted/test-account.py                       |    1 -
+ 5 files changed, 0 insertions(+), 196 deletions(-)
 
 commit 0e052b09e962c74ad9871fd0252c533c83b382c5
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>

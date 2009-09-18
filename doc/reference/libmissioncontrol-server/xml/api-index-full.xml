@@ -51,20 +51,14 @@
 <indexentry><primaryie linkends="McdMission-abort"><link linkend="McdMission-abort">McdMission::abort</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdMission-connected"><link linkend="McdMission-connected">McdMission::connected</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdMission-disconnected"><link linkend="McdMission-disconnected">McdMission::disconnected</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdMission-flags-changed"><link linkend="McdMission-flags-changed">McdMission::flags-changed</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdMission-mode-set"><link linkend="McdMission-mode-set">McdMission::mode-set</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdMission-parent-set"><link linkend="McdMission-parent-set">McdMission::parent-set</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdMission--mode"><link linkend="McdMission--mode">McdMission:mode</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdMission--parent"><link linkend="McdMission--parent">McdMission:parent</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdMission--system-flags"><link linkend="McdMission--system-flags">McdMission:system-flags</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdMode"><link linkend="McdMode">McdMode</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdOperation-struct"><link linkend="McdOperation">McdOperation</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdOperation-mission-removed"><link linkend="McdOperation-mission-removed">McdOperation::mission-removed</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdOperation-mission-taken"><link linkend="McdOperation-mission-taken">McdOperation::mission-taken</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdProxy-struct"><link linkend="McdProxy">McdProxy</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdProxy--proxy-object"><link linkend="McdProxy--proxy-object">McdProxy:proxy-object</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdService-struct"><link linkend="McdService">McdService</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdSystemFlags"><link linkend="McdSystemFlags">McdSystemFlags</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-channel-get-account"><link linkend="mcd-channel-get-account">mcd_channel_get_account</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-channel-get-channel-type"><link linkend="mcd-channel-get-channel-type">mcd_channel_get_channel_type</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-channel-get-channel-type-quark"><link linkend="mcd-channel-get-channel-type-quark">mcd_channel_get_channel_type_quark</link></primaryie></indexentry>
@@ -112,18 +106,8 @@
 <indexentry><primaryie linkends="mcd-mission-abort"><link linkend="mcd-mission-abort">mcd_mission_abort</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-mission-connect"><link linkend="mcd-mission-connect">mcd_mission_connect</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-mission-disconnect"><link linkend="mcd-mission-disconnect">mcd_mission_disconnect</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-get-flags"><link linkend="mcd-mission-get-flags">mcd_mission_get_flags</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MCD-MISSION-GET-FLAGS-MASKED--CAPS"><link linkend="MCD-MISSION-GET-FLAGS-MASKED--CAPS">MCD_MISSION_GET_FLAGS_MASKED</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-get-mode"><link linkend="mcd-mission-get-mode">mcd_mission_get_mode</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-mission-get-parent"><link linkend="mcd-mission-get-parent">mcd_mission_get_parent</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-mission-is-connected"><link linkend="mcd-mission-is-connected">mcd_mission_is_connected</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-new"><link linkend="mcd-mission-new">mcd_mission_new</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-set-flags"><link linkend="mcd-mission-set-flags">mcd_mission_set_flags</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MCD-MISSION-SET-FLAGS-MASKED--CAPS"><link linkend="MCD-MISSION-SET-FLAGS-MASKED--CAPS">MCD_MISSION_SET_FLAGS_MASKED</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-set-mode"><link linkend="mcd-mission-set-mode">mcd_mission_set_mode</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mission-set-parent"><link linkend="mcd-mission-set-parent">mcd_mission_set_parent</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"><link linkend="MCD-MISSION-UNSET-FLAGS-MASKED--CAPS">MCD_MISSION_UNSET_FLAGS_MASKED</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-mode-get-type"><link linkend="mcd-mode-get-type">mcd_mode_get_type</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-operation-foreach"><link linkend="mcd-operation-foreach">mcd_operation_foreach</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-operation-get-missions"><link linkend="mcd-operation-get-missions">mcd_operation_get_missions</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-operation-new"><link linkend="mcd-operation-new">mcd_operation_new</link></primaryie></indexentry>
@@ -134,9 +118,6 @@
 <indexentry><primaryie linkends="mcd-proxy-new"><link linkend="mcd-proxy-new">mcd_proxy_new</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-service-new"><link linkend="mcd-service-new">mcd_service_new</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mcd-service-run"><link linkend="mcd-service-run">mcd_service_run</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mcd-system-flags-get-type"><link linkend="mcd-system-flags-get-type">mcd_system_flags_get_type</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MCD-TYPE-CHANNEL-STATUS--CAPS"><link linkend="MCD-TYPE-CHANNEL-STATUS--CAPS">MCD_TYPE_CHANNEL_STATUS</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MCD-TYPE-MODE--CAPS"><link linkend="MCD-TYPE-MODE--CAPS">MCD_TYPE_MODE</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MCD-TYPE-SYSTEM-FLAGS--CAPS"><link linkend="MCD-TYPE-SYSTEM-FLAGS--CAPS">MCD_TYPE_SYSTEM_FLAGS</link></primaryie></indexentry>
 </indexdiv>
 </indexdiv>

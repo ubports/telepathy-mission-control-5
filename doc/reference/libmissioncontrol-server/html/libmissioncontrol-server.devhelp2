@@ -78,30 +78,15 @@
     <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdManager.html#McdManager--dispatcher"/>
     <keyword type="property" name="The &quot;name&quot; property" link="McdManager.html#McdManager--name"/>
     <keyword type="struct" name="McdMission" link="McdMission.html#McdMission-struct"/>
-    <keyword type="macro" name="MCD_MISSION_GET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-GET-FLAGS-MASKED--CAPS"/>
-    <keyword type="macro" name="MCD_MISSION_SET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-SET-FLAGS-MASKED--CAPS"/>
-    <keyword type="macro" name="MCD_MISSION_UNSET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"/>
-    <keyword type="enum" name="enum McdMode" link="McdMission.html#McdMode"/>
-    <keyword type="enum" name="enum McdSystemFlags" link="McdMission.html#McdSystemFlags"/>
-    <keyword type="function" name="mcd_mission_new ()" link="McdMission.html#mcd-mission-new"/>
     <keyword type="function" name="mcd_mission_is_connected ()" link="McdMission.html#mcd-mission-is-connected"/>
     <keyword type="function" name="mcd_mission_get_parent ()" link="McdMission.html#mcd-mission-get-parent"/>
     <keyword type="function" name="mcd_mission_abort ()" link="McdMission.html#mcd-mission-abort"/>
-    <keyword type="function" name="mcd_mission_set_parent ()" link="McdMission.html#mcd-mission-set-parent"/>
     <keyword type="function" name="mcd_mission_connect ()" link="McdMission.html#mcd-mission-connect"/>
     <keyword type="function" name="mcd_mission_disconnect ()" link="McdMission.html#mcd-mission-disconnect"/>
-    <keyword type="function" name="mcd_mission_set_flags ()" link="McdMission.html#mcd-mission-set-flags"/>
-    <keyword type="function" name="mcd_mission_get_flags ()" link="McdMission.html#mcd-mission-get-flags"/>
-    <keyword type="function" name="mcd_mission_set_mode ()" link="McdMission.html#mcd-mission-set-mode"/>
-    <keyword type="function" name="mcd_mission_get_mode ()" link="McdMission.html#mcd-mission-get-mode"/>
-    <keyword type="property" name="The &quot;mode&quot; property" link="McdMission.html#McdMission--mode"/>
     <keyword type="property" name="The &quot;parent&quot; property" link="McdMission.html#McdMission--parent"/>
-    <keyword type="property" name="The &quot;system-flags&quot; property" link="McdMission.html#McdMission--system-flags"/>
     <keyword type="signal" name="The &quot;abort&quot; signal" link="McdMission.html#McdMission-abort"/>
     <keyword type="signal" name="The &quot;connected&quot; signal" link="McdMission.html#McdMission-connected"/>
     <keyword type="signal" name="The &quot;disconnected&quot; signal" link="McdMission.html#McdMission-disconnected"/>
-    <keyword type="signal" name="The &quot;flags-changed&quot; signal" link="McdMission.html#McdMission-flags-changed"/>
-    <keyword type="signal" name="The &quot;mode-set&quot; signal" link="McdMission.html#McdMission-mode-set"/>
     <keyword type="signal" name="The &quot;parent-set&quot; signal" link="McdMission.html#McdMission-parent-set"/>
     <keyword type="struct" name="McdProxy" link="McdProxy.html#McdProxy-struct"/>
     <keyword type="function" name="mcd_proxy_new ()" link="McdProxy.html#mcd-proxy-new"/>
@@ -148,10 +133,6 @@
     <keyword type="function" name="mcd_debug_ref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-ref"/>
     <keyword type="function" name="mcd_debug_unref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-unref"/>
     <keyword type="function" name="mcd_debug_print_tree ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-print-tree"/>
-    <keyword type="function" name="mcd_mode_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-mode-get-type"/>
-    <keyword type="macro" name="MCD_TYPE_MODE" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-MODE--CAPS"/>
-    <keyword type="function" name="mcd_system_flags_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-system-flags-get-type"/>
-    <keyword type="macro" name="MCD_TYPE_SYSTEM_FLAGS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-SYSTEM-FLAGS--CAPS"/>
     <keyword type="function" name="mcd_channel_status_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-channel-status-get-type"/>
     <keyword type="macro" name="MCD_TYPE_CHANNEL_STATUS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-CHANNEL-STATUS--CAPS"/>
   </functions>

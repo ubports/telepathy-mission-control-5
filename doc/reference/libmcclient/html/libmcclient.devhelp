@@ -30,8 +30,6 @@
     <function name="mc_cli_account_manager_connect_to_account_validity_changed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-validity-changed"/>
     <function name="mc_cli_account_manager_callback_for_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-callback-for-create-account"/>
     <function name="mc_cli_account_manager_call_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-call-create-account"/>
-    <function name="mc_cli_account_manager_interface_creation_callback_for_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-callback-for-create-account"/>
-    <function name="mc_cli_account_manager_interface_creation_call_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-call-create-account"/>
     <function name="mc_cli_account_manager_interface_query_callback_for_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-callback-for-find-accounts"/>
     <function name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
     <function name="The &quot;account-created&quot; signal" link="libmcclient-mc-account-manager.html#McAccountManager-account-created"/>

@@ -584,6 +584,8 @@ mcd_channel_abort (McdMission *mission)
         mcd_channel_take_error (channel, error);
     }
 
+    _mcd_channel_set_status (channel, MCD_CHANNEL_STATUS_ABORTED);
+
     /* chain up with the parent */
     MCD_MISSION_CLASS (mcd_channel_parent_class)->abort (mission);
 }
@@ -846,7 +848,9 @@ _mcd_channel_set_status (McdChannel *channel, McdChannelStatus status)
 
     if (status != channel->priv->status)
     {
-        g_return_if_fail (channel->priv->status != MCD_CHANNEL_STATUS_FAILED);
+        if (status != MCD_CHANNEL_STATUS_ABORTED)
+            g_return_if_fail (channel->priv->status !=
+                              MCD_CHANNEL_STATUS_FAILED);
         g_object_ref (channel);
         g_signal_emit_by_name (channel, "status-changed", status);
         g_object_unref (channel);

@@ -22,8 +22,6 @@
 <ANCHOR id="mc-cli-account-manager-connect-to-account-validity-changed" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-validity-changed">
 <ANCHOR id="mc-cli-account-manager-callback-for-create-account" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-callback-for-create-account">
 <ANCHOR id="mc-cli-account-manager-call-create-account" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-call-create-account">
-<ANCHOR id="mc-cli-account-manager-interface-creation-callback-for-create-account" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-callback-for-create-account">
-<ANCHOR id="mc-cli-account-manager-interface-creation-call-create-account" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-creation-call-create-account">
 <ANCHOR id="mc-cli-account-manager-interface-query-callback-for-find-accounts" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-callback-for-find-accounts">
 <ANCHOR id="mc-cli-account-manager-interface-query-call-find-accounts" href="libmcclient/libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-call-find-accounts">
 <ANCHOR id="libmcclient-mc-account-manager.signal-details" href="libmcclient/libmcclient-mc-account-manager.html#libmcclient-mc-account-manager.signal-details">

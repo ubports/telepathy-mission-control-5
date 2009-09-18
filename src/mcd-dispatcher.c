@@ -439,7 +439,10 @@ mcd_dispatcher_get_channel_type_usage (McdDispatcher * dispatcher,
                      status == MCD_CHANNEL_STATUS_DISPATCHED) &&
                     mcd_channel_get_channel_type_quark (channel) ==
                     chan_type_quark)
+                {
+                    DEBUG ("Channel %p is active", channel);
                     usage_counter++;
+                }
                 channels = channels->next;
             }
             connections = connections->next;
@@ -2337,7 +2340,7 @@ handler_get_all_cb (TpProxy *proxy,
                                                  G_TYPE_STRV));
 
     channels = tp_asv_get_boxed (properties, "HandledChannels",
-                                 MC_ARRAY_TYPE_OBJECT);
+                                 TP_ARRAY_TYPE_OBJECT_PATH_LIST);
 
     unique_name = _mcd_client_proxy_get_unique_name (client_proxy);
 

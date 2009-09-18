@@ -22,12 +22,12 @@ import dbus.service
 
 from servicetest import EventPattern, tp_name_prefix, tp_path_prefix, \
         call_async
-from mctest import exec_test, create_fakecm_account
+from mctest import exec_test, create_fakecm_account, get_account_manager
 import constants as cs
 
 def test(q, bus, mc):
     # Get the AccountManager interface
-    account_manager = bus.get_object(cs.AM, cs.AM_PATH)
+    account_manager = get_account_manager(bus)
     account_manager_iface = dbus.Interface(account_manager, cs.AM)
 
     # Introspect AccountManager for debugging purpose
@@ -47,7 +47,6 @@ def test(q, bus, mc):
     supported = properties.get('SupportedAccountProperties')
 
     # assert that current functionality exists
-    assert cs.AM_IFACE_CREATION_DRAFT in interfaces, interfaces
     assert cs.AM_IFACE_NOKIA_QUERY in interfaces, interfaces
 
     assert (cs.ACCOUNT + '.AutomaticPresence') in supported

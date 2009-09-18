@@ -9,7 +9,6 @@ TWISTED_BASIC_TESTS = \
 	account-manager/enable.py \
 	account-manager/enable-auto-connect.py \
 	account-manager/nickname.py \
-	account-manager/old-create-with-properties.py \
 	account-manager/param-types.py \
 	account-manager/presence.py \
 	account-manager/reconnect.py \
@@ -57,6 +56,9 @@ endif
 TWISTED_SPECIAL_BUILD_TESTS = \
 	account-manager/auto-away.py \
 	dispatcher/create-lowmem.py
+
+TWISTED_SLOW_TESTS = \
+	account-manager/server-drops-us.py
 
 TWISTED_BASIC_TESTS += $(TWISTED_SPECIAL_BUILD_TESTS)
 
@@ -121,12 +123,12 @@ WITH_SESSION_BUS = \
 
 COMBINED_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
-	$(TEST_PYTHON)
+	$(PYTHON)
 
 SEPARATE_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
 	$(WITH_SESSION_BUS) \
-	$(TEST_PYTHON)
+	$(PYTHON)
 
 if WANT_TWISTED_TESTS
 check-local: check-twisted
@@ -179,16 +181,23 @@ TORTURE_REPEATS = 100
 _check-torture:
 	for i in `seq 1 $(TORTURE_REPEATS)`; do \
 		$(MAKE) check-TESTS \
-			TESTS='$$(TWISTED_BASIC_TESTS)' \
+			TESTS='$$(TWISTED_BASIC_TESTS) $$(TWISTED_SLOW_TESTS)'\
 			TESTS_ENVIRONMENT='$$(COMBINED_TESTS_ENVIRONMENT)'; \
 		e=$$?; \
 		test z$$e = z0 || break; \
 	done
 
+CHECK_TWISTED_SLOW =
+
 check-combined:
+	if test x$(CHECK_TWISTED_SLOW) = x; then \
+		extra_tests= ; \
+	else \
+		extra_tests=' $$(TWISTED_SLOW_TESTS)'; \
+	fi; \
 	env $(BASIC_TESTS_ENVIRONMENT) $(WITH_SESSION_BUS) \
 	$(MAKE) check-TESTS \
-		TESTS='$$(TWISTED_BASIC_TESTS)' \
+		TESTS='$$(TWISTED_BASIC_TESTS)'"$${extra_tests}" \
 		TESTS_ENVIRONMENT='$$(COMBINED_TESTS_ENVIRONMENT)'
 
 check-separate:

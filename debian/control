@@ -9,7 +9,7 @@ Build-Depends: cdbs,
                libdbus-glib-1-dev (>= 0.80),
                libglib2.0-dev (>= 2.16),
                libgnome-keyring-dev,
-               libtelepathy-glib-dev (>= 0.7.33),
+               libtelepathy-glib-dev (>= 0.7.37),
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc

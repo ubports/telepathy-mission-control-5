@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (5.3.1-1) unstable; urgency=low
+
+  * New upstream version
+  * Target unstable (where the previous release also ended up, by mistake...)
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 18 Sep 2009 17:46:49 +0100
+
 telepathy-mission-control-5 (5.3.0-1) experimental; urgency=low
 
   * New upstream version

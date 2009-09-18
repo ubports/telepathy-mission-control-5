@@ -92,8 +92,6 @@
 <indexentry><primaryie linkends="mc-cli-account-manager-call-create-account"><link linkend="mc-cli-account-manager-call-create-account">mc_cli_account_manager_call_create_account</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-cli-account-manager-connect-to-account-removed"><link linkend="mc-cli-account-manager-connect-to-account-removed">mc_cli_account_manager_connect_to_account_removed</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-cli-account-manager-connect-to-account-validity-changed"><link linkend="mc-cli-account-manager-connect-to-account-validity-changed">mc_cli_account_manager_connect_to_account_validity_changed</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mc-cli-account-manager-interface-creation-callback-for-create-account"><link linkend="mc-cli-account-manager-interface-creation-callback-for-create-account">mc_cli_account_manager_interface_creation_callback_for_create_account</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mc-cli-account-manager-interface-creation-call-create-account"><link linkend="mc-cli-account-manager-interface-creation-call-create-account">mc_cli_account_manager_interface_creation_call_create_account</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-cli-account-manager-interface-query-callback-for-find-accounts"><link linkend="mc-cli-account-manager-interface-query-callback-for-find-accounts">mc_cli_account_manager_interface_query_callback_for_find_accounts</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-cli-account-manager-interface-query-call-find-accounts"><link linkend="mc-cli-account-manager-interface-query-call-find-accounts">mc_cli_account_manager_interface_query_call_find_accounts</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-cli-account-manager-signal-callback-account-removed"><link linkend="mc-cli-account-manager-signal-callback-account-removed">mc_cli_account_manager_signal_callback_account_removed</link></primaryie></indexentry>
@@ -107,7 +105,6 @@
 <indexentry><primaryie linkends="MC-IFACE-ACCOUNT-INTERFACE-COMPAT--CAPS"><link linkend="MC-IFACE-ACCOUNT-INTERFACE-COMPAT--CAPS">MC_IFACE_ACCOUNT_INTERFACE_COMPAT</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-ACCOUNT-INTERFACE-CONDITIONS--CAPS"><link linkend="MC-IFACE-ACCOUNT-INTERFACE-CONDITIONS--CAPS">MC_IFACE_ACCOUNT_INTERFACE_CONDITIONS</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-ACCOUNT-MANAGER--CAPS"><link linkend="MC-IFACE-ACCOUNT-MANAGER--CAPS">MC_IFACE_ACCOUNT_MANAGER</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS"><link linkend="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS">MC_IFACE_ACCOUNT_MANAGER_INTERFACE_CREATION</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-QUERY--CAPS"><link linkend="MC-IFACE-ACCOUNT-MANAGER-INTERFACE-QUERY--CAPS">MC_IFACE_ACCOUNT_MANAGER_INTERFACE_QUERY</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-iface-quark-account"><link linkend="mc-iface-quark-account">mc_iface_quark_account</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-QUARK-ACCOUNT--CAPS"><link linkend="MC-IFACE-QUARK-ACCOUNT--CAPS">MC_IFACE_QUARK_ACCOUNT</link></primaryie></indexentry>
@@ -119,8 +116,6 @@
 <indexentry><primaryie linkends="mc-iface-quark-account-interface-conditions"><link linkend="mc-iface-quark-account-interface-conditions">mc_iface_quark_account_interface_conditions</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-QUARK-ACCOUNT-MANAGER--CAPS"><link linkend="MC-IFACE-QUARK-ACCOUNT-MANAGER--CAPS">MC_IFACE_QUARK_ACCOUNT_MANAGER</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-iface-quark-account-manager"><link linkend="mc-iface-quark-account-manager">mc_iface_quark_account_manager</link></primaryie></indexentry>
-<indexentry><primaryie linkends="mc-iface-quark-account-manager-interface-creation"><link linkend="mc-iface-quark-account-manager-interface-creation">mc_iface_quark_account_manager_interface_creation</link></primaryie></indexentry>
-<indexentry><primaryie linkends="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS"><link linkend="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-CREATION--CAPS">MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_CREATION</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-iface-quark-account-manager-interface-query"><link linkend="mc-iface-quark-account-manager-interface-query">mc_iface_quark_account_manager_interface_query</link></primaryie></indexentry>
 <indexentry><primaryie linkends="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-QUERY--CAPS"><link linkend="MC-IFACE-QUARK-ACCOUNT-MANAGER-INTERFACE-QUERY--CAPS">MC_IFACE_QUARK_ACCOUNT_MANAGER_INTERFACE_QUERY</link></primaryie></indexentry>
 <indexentry><primaryie linkends="mc-profiles-free-list"><link linkend="mc-profiles-free-list">mc_profiles_free_list</link></primaryie></indexentry>

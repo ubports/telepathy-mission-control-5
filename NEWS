@@ -1,3 +1,39 @@
+telepathy-mission-control 5.3.1 (2009-09-18)
+============================================
+
+The "only available in Belgium" release.
+
+Dependencies:
+
+* Python >= 2.5 is now required for compilation
+* telepathy-glib >= 0.7.37 is now required
+
+Enhancements:
+
+* Automatically migrate passwords and other secrets from accounts.cfg into the
+  GNOME keyring (if enabled and available) on MC startup (jonnylamb)
+
+Fixes:
+
+* Deal with the user's alias in a race-free way by calling GetAliases as well
+  as binding to the AliasesChanged signal (smcv/mardy)
+
+* Fix some race conditions in the regression tests (smcv)
+
+* Fix mcd_dispatcher_get_channel_type_usage sometimes counting aborted
+  channels, by introducing MCD_CHANNEL_STATUS_ABORTED (mardy)
+
+* If we see too many transitions from CONNECTED to DISCONNECTED state (i.e.
+  we get kicked off by the server more than 3 times in 2 minutes), stop
+  reconnecting; also, don't reset the exponential backoff until we've been
+  connected for 2 minutes. This avoids reconnecting in a tight loop if the
+  server lets us connect, then immediately drops our connection. (smcv)
+
+* Fix some minor memory leaks (smcv)
+
+All fixes from stable releases 5.2.4 and 5.2.5 have been incorporated in this
+release.
+
 telepathy-mission-control 5.3.0 (2009-09-14)
 ============================================
 
@@ -7,7 +43,7 @@ Dependencies:
 
 * The GNOME Keyring library is a new optional dependency (only if configured
   with --enable-gnome-keyring=yes or --enable-gnome-keyring=auto).
-  
+
   If it is enabled, having the library at runtime is required, but having the
   daemon itself is optional - the current plain-text storage will be used for
   passwords if the keyring daemon is not available.

@@ -26,9 +26,6 @@ from mctest import exec_test, create_fakecm_account, enable_fakecm_account
 import constants as cs
 
 def test(q, bus, mc):
-    account_manager = bus.get_object(cs.AM, cs.AM_PATH)
-    account_manager_iface = dbus.Interface(account_manager, cs.AM)
-
     params = dbus.Dictionary({"account": "jc.denton@example.com",
         "password": "ionstorm"}, signature='sv')
     (cm_name_ref, account) = create_fakecm_account(q, bus, mc, params)
@@ -80,13 +77,12 @@ def test(q, bus, mc):
                 EventPattern('dbus-signal', path=account.object_path,
                     interface=cs.ACCOUNT, signal='AccountPropertyChanged',
                     predicate=lambda e:
-                        e.args[0].get('CurrentPresence') == presence and
-                        (log.append('APC(CurrentPresence)') or True)),
+                        e.args[0].get('CurrentPresence') == presence),
                 ])
 
     # The events before Connect must happen in this order
     assert log == ['GetInterfaces', 'Get(Statuses)[1]', 'SetPresence[1]',
-            'Get(Statuses)[2]', 'SetPresence[2]', 'APC(CurrentPresence)']
+            'Get(Statuses)[2]', 'SetPresence[2]'], log
 
     # Change requested presence after going online
     presence = dbus.Struct((dbus.UInt32(cs.PRESENCE_TYPE_AWAY), 'away',

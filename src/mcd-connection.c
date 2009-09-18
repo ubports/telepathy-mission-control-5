@@ -107,6 +107,8 @@ struct _McdConnectionPrivate
 
     guint reconnect_timer; 	/* timer for reconnection */
     guint reconnect_interval;
+    guint probation_timer;      /* for mcd_connection_probation_ended_cb */
+    guint probation_drop_count;
 
     /* Supported presences (values are McdPresenceInfo structs) */
     GHashTable *recognized_presences;
@@ -130,6 +132,9 @@ struct _McdConnectionPrivate
 
     /* FALSE until we got the first PresencesChanged for the self handle */
     guint got_presences_changed : 1;
+
+    /* TRUE if the last status change was to CONNECTED */
+    guint connected : 1;
 
     /* FALSE until mcd_connection_close() is called */
     guint closed : 1;
@@ -926,15 +931,59 @@ _mcd_connection_set_nickname (McdConnection *connection,
 }
 
 static void
+_mcd_connection_get_aliases_cb (TpConnection *proxy,
+                                GHashTable *aliases,
+                                const GError *error,
+                                gpointer user_data,
+                                GObject *weak_object)
+{
+    McdConnectionPrivate *priv = user_data;
+    guint self_handle;
+    const gchar *alias;
+
+    DEBUG ("called");
+
+    if (error != NULL)
+    {
+        DEBUG ("GetAliases([SelfHandle]) failed: %s", error->message);
+        return;
+    }
+
+    self_handle = tp_connection_get_self_handle (proxy);
+
+    alias = g_hash_table_lookup (aliases,GUINT_TO_POINTER (self_handle));
+
+    if (alias != NULL &&
+        (priv->alias == NULL || tp_strdiff (priv->alias, alias)))
+    {
+            g_free (priv->alias);
+            priv->alias = g_strdup (alias);
+            g_signal_emit (weak_object, signals[SELF_NICKNAME_CHANGED], 0,
+                           alias);
+    }
+}
+
+static void
 _mcd_connection_setup_alias (McdConnection *connection)
 {
     McdConnectionPrivate *priv = connection->priv;
+    GArray *self_handle_array;
+    guint self_handle;
+
+    self_handle_array = g_array_sized_new (FALSE, FALSE, sizeof (guint), 1);
+    self_handle = tp_connection_get_self_handle (priv->tp_conn);
+    g_array_append_val (self_handle_array, self_handle);
 
     tp_cli_connection_interface_aliasing_connect_to_aliases_changed (priv->tp_conn,
 								     on_aliases_changed,
 								     priv, NULL,
 								     (GObject *)connection,
 								     NULL);
+
+    tp_cli_connection_interface_aliasing_call_get_aliases
+        (priv->tp_conn, -1, self_handle_array, _mcd_connection_get_aliases_cb,
+         priv, NULL, (GObject *) connection);
+    g_array_free (self_handle_array, TRUE);
 }
 
 static gboolean
@@ -942,6 +991,30 @@ mcd_connection_reconnect (McdConnection *connection)
 {
     DEBUG ("%p", connection);
     _mcd_connection_attempt (connection);
+    return FALSE;
+}
+
+/* Number of seconds after which to assume the connection is basically stable.
+ * If we have too many disconnections within this time, assume something
+ * serious is wrong, and stop reconnecting. */
+#define PROBATION_SEC 120
+/* Maximum number of dropped connections within PROBATION_SEC. Connections
+ * that never reached CONNECTED state don't count towards this limit, so we'll
+ * keep retrying indefinitely for those (with exponential back-off). */
+#define PROBATION_MAX_DROPPED 3
+
+static gboolean
+mcd_connection_probation_ended_cb (gpointer user_data)
+{
+    McdConnection *self = user_data;
+
+    /* We've been connected for PROBATION_SEC seconds. We can probably now
+     * assume that the connection is stable */
+    DEBUG ("probation finished, assuming connection is stable: %s",
+           tp_proxy_get_object_path (self->priv->tp_conn));
+    self->priv->probation_timer = 0;
+    self->priv->probation_drop_count = 0;
+    self->priv->reconnect_interval = INITIAL_RECONNECTION_TIME;
     return FALSE;
 }
 
@@ -965,13 +1038,24 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                        conn_status, conn_reason);
         priv->abort_reason = TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED;
+        priv->connected = FALSE;
         break;
 
     case TP_CONNECTION_STATUS_CONNECTED:
         {
             g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                            conn_status, conn_reason);
-            priv->reconnect_interval = INITIAL_RECONNECTION_TIME;
+
+            if (priv->probation_timer == 0)
+            {
+                DEBUG ("setting probation timer (%d) seconds, for %s",
+                       PROBATION_SEC, tp_proxy_get_object_path (tp_conn));
+                priv->probation_timer = g_timeout_add_seconds (PROBATION_SEC,
+                    mcd_connection_probation_ended_cb, connection);
+                priv->probation_drop_count = 0;
+            }
+
+            priv->connected = TRUE;
         }
         break;
 
@@ -983,6 +1067,8 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
 	 * will hold a temporary ref to it.
 	 */
 	priv->abort_reason = conn_reason;
+        /* priv->connected will be reset to FALSE in the invalidated
+         * callback */
 	break;
 
     default:
@@ -990,16 +1076,38 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     }
 }
 
-static void proxy_destroyed (TpConnection *tp_conn, guint domain, gint code,
-			     gchar *message, McdConnection *connection)
+static void
+mcd_connection_invalidated_cb (TpConnection *tp_conn,
+                               guint domain,
+                               gint code,
+                               gchar *message,
+                               McdConnection *connection)
 {
     McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (connection);
+
     DEBUG ("Proxy destroyed (%s)!", message);
 
     _mcd_connection_release_tp_connection (connection);
 
-    if (priv->abort_reason == TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED ||
-        priv->abort_reason == TP_CONNECTION_STATUS_REASON_NETWORK_ERROR)
+    if (priv->connected &&
+        priv->abort_reason != TP_CONNECTION_STATUS_REASON_REQUESTED &&
+        priv->probation_timer != 0)
+    {
+        DEBUG ("connection dropped while on probation: %s",
+               tp_proxy_get_object_path (tp_conn));
+
+        if (++priv->probation_drop_count > PROBATION_MAX_DROPPED)
+        {
+            DEBUG ("connection dropped too many times, will stop "
+                   "reconnecting");
+        }
+    }
+
+    priv->connected = FALSE;
+
+    if ((priv->abort_reason == TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED ||
+         priv->abort_reason == TP_CONNECTION_STATUS_REASON_NETWORK_ERROR) &&
+        priv->probation_drop_count <= PROBATION_MAX_DROPPED)
     {
         /* we were disconnected by a network error or by a connection manager
          * crash (in the latter case, we get NoneSpecified as a reason): don't
@@ -1404,7 +1512,7 @@ on_connection_ready (TpConnection *tp_conn, const GError *error,
     priv->has_contact_capabilities_draft1_if = tp_proxy_has_interface_by_id (tp_conn,
         MC_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES_DRAFT1);
     priv->has_contact_capabilities_if = tp_proxy_has_interface_by_id (tp_conn,
-        MC_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES);
+        TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES);
     priv->has_requests_if = tp_proxy_has_interface_by_id (tp_conn,
         TP_IFACE_QUARK_CONNECTION_INTERFACE_REQUESTS);
 
@@ -1463,7 +1571,7 @@ _mcd_connection_update_client_caps (McdConnection *self,
     }
 
     DEBUG ("Sending client caps to connection");
-    mc_cli_connection_interface_contact_capabilities_call_update_capabilities
+    tp_cli_connection_interface_contact_capabilities_call_update_capabilities
       (self->priv->tp_conn, -1, client_caps, NULL, NULL, NULL, NULL);
 }
 
@@ -1570,7 +1678,7 @@ mcd_connection_early_get_interfaces_cb (TpConnection *tp_conn,
                     mcd_connection_early_get_statuses_cb, NULL, NULL,
                     (GObject *) self);
             }
-            else if (q == MC_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES)
+            else if (q == TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES)
             {
                 GPtrArray *client_caps;
 
@@ -1768,9 +1876,8 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
 	g_signal_handlers_disconnect_by_func (priv->tp_conn,
 					      G_CALLBACK (on_connection_status_changed),
 					      connection);
-	g_signal_handlers_disconnect_by_func (G_OBJECT (priv->tp_conn),
-					      G_CALLBACK (proxy_destroyed),
-					      connection);
+        g_signal_handlers_disconnect_by_func (G_OBJECT (priv->tp_conn),
+            G_CALLBACK (mcd_connection_invalidated_cb), connection);
 
 	_mcd_connection_call_disconnect (connection);
 	g_object_unref (priv->tp_conn);
@@ -1812,8 +1919,17 @@ _mcd_connection_dispose (GObject * object)
 
     priv->is_disposed = TRUE;
 
-    /* Remove any pending source: timer and idle */
-    g_source_remove_by_user_data (connection);
+    if (priv->probation_timer)
+    {
+        g_source_remove (priv->probation_timer);
+        priv->probation_timer = 0;
+    }
+
+    if (priv->reconnect_timer)
+    {
+        g_source_remove (priv->reconnect_timer);
+        priv->reconnect_timer = 0;
+    }
 
     mcd_operation_foreach (MCD_OPERATION (connection),
 			   (GFunc) _foreach_channel_remove, connection);
@@ -2456,7 +2572,7 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
 
     /* Setup signals */
     g_signal_connect (priv->tp_conn, "invalidated",
-                      G_CALLBACK (proxy_destroyed), connection);
+                      G_CALLBACK (mcd_connection_invalidated_cb), connection);
     g_signal_connect (priv->tp_conn, "notify::status",
                       G_CALLBACK (on_connection_status_changed),
                       connection);

@@ -78,30 +78,15 @@
     <function name="The &quot;dispatcher&quot; property" link="McdManager.html#McdManager--dispatcher"/>
     <function name="The &quot;name&quot; property" link="McdManager.html#McdManager--name"/>
     <function name="McdMission" link="McdMission.html#McdMission-struct"/>
-    <function name="MCD_MISSION_GET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-GET-FLAGS-MASKED--CAPS"/>
-    <function name="MCD_MISSION_SET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-SET-FLAGS-MASKED--CAPS"/>
-    <function name="MCD_MISSION_UNSET_FLAGS_MASKED()" link="McdMission.html#MCD-MISSION-UNSET-FLAGS-MASKED--CAPS"/>
-    <function name="enum McdMode" link="McdMission.html#McdMode"/>
-    <function name="enum McdSystemFlags" link="McdMission.html#McdSystemFlags"/>
-    <function name="mcd_mission_new ()" link="McdMission.html#mcd-mission-new"/>
     <function name="mcd_mission_is_connected ()" link="McdMission.html#mcd-mission-is-connected"/>
     <function name="mcd_mission_get_parent ()" link="McdMission.html#mcd-mission-get-parent"/>
     <function name="mcd_mission_abort ()" link="McdMission.html#mcd-mission-abort"/>
-    <function name="mcd_mission_set_parent ()" link="McdMission.html#mcd-mission-set-parent"/>
     <function name="mcd_mission_connect ()" link="McdMission.html#mcd-mission-connect"/>
     <function name="mcd_mission_disconnect ()" link="McdMission.html#mcd-mission-disconnect"/>
-    <function name="mcd_mission_set_flags ()" link="McdMission.html#mcd-mission-set-flags"/>
-    <function name="mcd_mission_get_flags ()" link="McdMission.html#mcd-mission-get-flags"/>
-    <function name="mcd_mission_set_mode ()" link="McdMission.html#mcd-mission-set-mode"/>
-    <function name="mcd_mission_get_mode ()" link="McdMission.html#mcd-mission-get-mode"/>
-    <function name="The &quot;mode&quot; property" link="McdMission.html#McdMission--mode"/>
     <function name="The &quot;parent&quot; property" link="McdMission.html#McdMission--parent"/>
-    <function name="The &quot;system-flags&quot; property" link="McdMission.html#McdMission--system-flags"/>
     <function name="The &quot;abort&quot; signal" link="McdMission.html#McdMission-abort"/>
     <function name="The &quot;connected&quot; signal" link="McdMission.html#McdMission-connected"/>
     <function name="The &quot;disconnected&quot; signal" link="McdMission.html#McdMission-disconnected"/>
-    <function name="The &quot;flags-changed&quot; signal" link="McdMission.html#McdMission-flags-changed"/>
-    <function name="The &quot;mode-set&quot; signal" link="McdMission.html#McdMission-mode-set"/>
     <function name="The &quot;parent-set&quot; signal" link="McdMission.html#McdMission-parent-set"/>
     <function name="McdProxy" link="McdProxy.html#McdProxy-struct"/>
     <function name="mcd_proxy_new ()" link="McdProxy.html#mcd-proxy-new"/>
@@ -148,10 +133,6 @@
     <function name="mcd_debug_ref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-ref"/>
     <function name="mcd_debug_unref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-unref"/>
     <function name="mcd_debug_print_tree ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-print-tree"/>
-    <function name="mcd_mode_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-mode-get-type"/>
-    <function name="MCD_TYPE_MODE" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-MODE--CAPS"/>
-    <function name="mcd_system_flags_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-system-flags-get-type"/>
-    <function name="MCD_TYPE_SYSTEM_FLAGS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-SYSTEM-FLAGS--CAPS"/>
     <function name="mcd_channel_status_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-channel-status-get-type"/>
     <function name="MCD_TYPE_CHANNEL_STATUS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-CHANNEL-STATUS--CAPS"/>
   </functions>
