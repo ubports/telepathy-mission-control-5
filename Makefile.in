@@ -80,8 +80,8 @@ pkgconfigDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(pkgconfig_DATA)
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = m4 tools xml libmcclient src server util examples doc \
-	test
+DIST_SUBDIRS = m4 tools xml libmcclient src server util test doc \
+	examples
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -264,8 +264,8 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = m4 tools xml libmcclient src server util $(am__append_1) doc \
-	test
+SUBDIRS = m4 tools xml libmcclient src server util test doc \
+	$(am__append_1)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libmcclient.pc $(am__append_2)
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-gnome-keyring

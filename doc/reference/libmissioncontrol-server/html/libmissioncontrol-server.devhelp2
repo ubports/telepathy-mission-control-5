@@ -105,11 +105,6 @@
     <keyword type="property" name="The &quot;dispatch-operations&quot; property" link="McdDispatcher.html#McdDispatcher--dispatch-operations"/>
     <keyword type="property" name="The &quot;interfaces&quot; property" link="McdDispatcher.html#McdDispatcher--interfaces"/>
     <keyword type="property" name="The &quot;mcd-master&quot; property" link="McdDispatcher.html#McdDispatcher--mcd-master"/>
-    <keyword type="signal" name="The &quot;channel-added&quot; signal" link="McdDispatcher.html#McdDispatcher-channel-added"/>
-    <keyword type="signal" name="The &quot;channel-removed&quot; signal" link="McdDispatcher.html#McdDispatcher-channel-removed"/>
-    <keyword type="signal" name="The &quot;dispatch-completed&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatch-completed"/>
-    <keyword type="signal" name="The &quot;dispatch-failed&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatch-failed"/>
-    <keyword type="signal" name="The &quot;dispatched&quot; signal" link="McdDispatcher.html#McdDispatcher-dispatched"/>
     <keyword type="macro" name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC--CAPS"/>
     <keyword type="macro" name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN--CAPS"/>
     <keyword type="macro" name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT--CAPS"/>

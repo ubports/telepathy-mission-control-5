@@ -31,6 +31,7 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/create-handler-fails.py \
 	dispatcher/create-no-preferred-handler.py \
 	dispatcher/create-text.py \
+	dispatcher/created-behind-our-back.py \
 	dispatcher/dispatch-activatable.py \
 	dispatcher/dispatch-obsolete.py \
 	dispatcher/dispatch-text.py \
@@ -48,6 +49,8 @@ TWISTED_BASIC_TESTS = \
 
 if ENABLE_PLUGINS
 TWISTED_BASIC_TESTS += \
+	dispatcher/create-delayed-by-plugin.py \
+	dispatcher/dispatch-delayed-by-plugin.py \
 	dispatcher/dispatch-rejected-by-plugin.py
 endif
 

@@ -38,6 +38,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @ENABLE_PLUGINS_TRUE@am__append_1 = \
+@ENABLE_PLUGINS_TRUE@	dispatcher/create-delayed-by-plugin.py \
+@ENABLE_PLUGINS_TRUE@	dispatcher/dispatch-delayed-by-plugin.py \
 @ENABLE_PLUGINS_TRUE@	dispatcher/dispatch-rejected-by-plugin.py
 
 noinst_PROGRAMS = mc-debug-server$(EXEEXT)
@@ -284,7 +286,9 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	dispatcher/capture-bundle.py dispatcher/connect-for-request.py \
 	dispatcher/create-handler-fails.py \
 	dispatcher/create-no-preferred-handler.py \
-	dispatcher/create-text.py dispatcher/dispatch-activatable.py \
+	dispatcher/create-text.py \
+	dispatcher/created-behind-our-back.py \
+	dispatcher/dispatch-activatable.py \
 	dispatcher/dispatch-obsolete.py dispatcher/dispatch-text.py \
 	dispatcher/ensure-and-redispatch.py \
 	dispatcher/ensure-is-approval.py dispatcher/ensure-rapidly.py \

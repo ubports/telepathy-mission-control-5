@@ -30,6 +30,7 @@
 #include <glib-object.h>
 
 #include <telepathy-glib/client.h>
+#include <telepathy-glib/handle-repo.h>
 
 G_BEGIN_DECLS
 
@@ -67,21 +68,56 @@ G_GNUC_INTERNAL GType _mcd_client_proxy_get_type (void);
                               McdClientProxyClass))
 
 G_GNUC_INTERNAL McdClientProxy *_mcd_client_proxy_new (
-    TpDBusDaemon *dbus_daemon, const gchar *name_suffix,
-    const gchar *unique_name_if_known);
+    TpDBusDaemon *dbus_daemon, TpHandleRepoIface *string_pool,
+    const gchar *well_known_name, const gchar *unique_name_if_known,
+    gboolean activatable);
+
+G_GNUC_INTERNAL gboolean _mcd_client_proxy_is_ready (McdClientProxy *self);
 
 G_GNUC_INTERNAL gboolean _mcd_client_check_valid_name (
     const gchar *name_suffix, GError **error);
 
 G_GNUC_INTERNAL gboolean _mcd_client_proxy_is_active (McdClientProxy *self);
+G_GNUC_INTERNAL gboolean _mcd_client_proxy_is_activatable
+    (McdClientProxy *self);
 G_GNUC_INTERNAL const gchar *_mcd_client_proxy_get_unique_name (
     McdClientProxy *self);
 
 G_GNUC_INTERNAL void _mcd_client_proxy_set_inactive (McdClientProxy *self);
 G_GNUC_INTERNAL void _mcd_client_proxy_set_active (McdClientProxy *self,
                                                    const gchar *unique_name);
+G_GNUC_INTERNAL void _mcd_client_proxy_set_activatable (McdClientProxy *self);
+
+G_GNUC_INTERNAL const GList *_mcd_client_proxy_get_approver_filters
+    (McdClientProxy *self);
+G_GNUC_INTERNAL const GList *_mcd_client_proxy_get_observer_filters
+    (McdClientProxy *self);
+G_GNUC_INTERNAL const GList *_mcd_client_proxy_get_handler_filters
+    (McdClientProxy *self);
+G_GNUC_INTERNAL gboolean _mcd_client_proxy_get_bypass_approval
+    (McdClientProxy *self);
+
+G_GNUC_INTERNAL GValueArray *_mcd_client_proxy_dup_handler_capabilities (
+    McdClientProxy *self);
+
+G_GNUC_INTERNAL void _mcd_client_proxy_inc_ready_lock (McdClientProxy *self);
+G_GNUC_INTERNAL void _mcd_client_proxy_dec_ready_lock (McdClientProxy *self);
 
 #define MC_CLIENT_BUS_NAME_BASE_LEN (sizeof (TP_CLIENT_BUS_NAME_BASE) - 1)
+
+G_GNUC_INTERNAL gboolean _mcd_client_match_property (
+    GHashTable *channel_properties, gchar *property_name,
+    GValue *filter_value);
+
+G_GNUC_INTERNAL guint _mcd_client_match_filters (
+    GHashTable *channel_properties, const GList *filters,
+    gboolean assume_requested);
+
+G_GNUC_INTERNAL void _mcd_client_proxy_handle_channels (McdClientProxy *self,
+    gint timeout_ms, const GList *channels,
+    gint64 user_action_time, GHashTable *handler_info,
+    tp_cli_client_handler_callback_for_handle_channels callback,
+    gpointer user_data, GDestroyNotify destroy, GObject *weak_object);
 
 G_END_DECLS
 

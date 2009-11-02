@@ -79,6 +79,7 @@ struct _McdChannelPrivate
 
     McdChannelRequestData *request_data;
     GList *satisfied_requests;
+    gint64 latest_request_time;
 };
 
 struct _McdChannelRequestData
@@ -176,7 +177,9 @@ on_members_changed (TpChannel *proxy, const gchar *message,
     }
 
     if (removed && removed->len > 0 &&
-        (actor == 0 || (actor != self_handle && actor != conn_self_handle)))
+        (actor == 0 ||
+         reason == TP_CHANNEL_GROUP_CHANGE_REASON_ERROR ||
+         (actor != self_handle && actor != conn_self_handle)))
     {
         for (i = 0; i < removed->len; i++)
         {
@@ -248,41 +251,44 @@ on_channel_ready (TpChannel *tp_chan, const GError *error, gpointer user_data)
 	_mcd_channel_setup_group (channel);
 }
 
-static gboolean
-mcd_channel_should_close (McdChannel *channel,
-                          const gchar *verb)
+gboolean
+_mcd_tp_channel_should_close (TpChannel *channel,
+                              const gchar *verb)
 {
-    McdChannelPrivate *priv = MCD_CHANNEL_PRIV (channel);
     const GError *invalidated;
+    const gchar *object_path;
     GQuark channel_type;
 
-    if (priv->tp_chan == NULL)
+    if (channel == NULL)
     {
-        DEBUG ("Not %s %p: no TpChannel", verb, channel);
+        DEBUG ("Not %s NULL channel", verb);
         return FALSE;
     }
 
-    invalidated = TP_PROXY (priv->tp_chan)->invalidated;
+    invalidated = tp_proxy_get_invalidated (channel);
+    object_path = tp_proxy_get_object_path (channel);
 
     if (invalidated != NULL)
     {
-        DEBUG ("Not %s %p, already invalidated: %s %d: %s",
-               verb, channel, g_quark_to_string (invalidated->domain),
+        DEBUG ("Not %s %p:%s, already invalidated: %s %d: %s",
+               verb, channel, object_path,
+               g_quark_to_string (invalidated->domain),
                invalidated->code, invalidated->message);
         return FALSE;
     }
 
-    channel_type = tp_channel_get_channel_type_id (priv->tp_chan);
+    channel_type = tp_channel_get_channel_type_id (channel);
 
     if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_CONTACT_LIST)
     {
-        DEBUG ("Not %s %p, it's a ContactList", verb, channel);
+        DEBUG ("Not %s %p:%s, it's a ContactList", verb, channel, object_path);
         return FALSE;
     }
 
     if (channel_type == TP_IFACE_QUARK_CHANNEL_TYPE_TUBES)
     {
-        DEBUG ("Not %s %p, it's an old Tubes channel", verb, channel);
+        DEBUG ("Not %s %p:%s, it's an old Tubes channel", verb, channel,
+               object_path);
         return FALSE;
     }
 
@@ -294,7 +300,7 @@ _mcd_channel_close (McdChannel *channel)
 {
     McdChannelPrivate *priv = MCD_CHANNEL_PRIV (channel);
 
-    if (!mcd_channel_should_close (channel, "closing"))
+    if (!_mcd_tp_channel_should_close (priv->tp_chan, "closing"))
     {
         return;
     }
@@ -309,7 +315,7 @@ _mcd_channel_undispatchable (McdChannel *channel)
 {
     McdChannelPrivate *priv = MCD_CHANNEL_PRIV (channel);
 
-    if (!mcd_channel_should_close (channel, "destroying"))
+    if (!_mcd_tp_channel_should_close (priv->tp_chan, "destroying"))
     {
         return;
     }
@@ -1069,22 +1075,22 @@ _mcd_channel_get_immutable_properties (McdChannel *channel)
  * with _mcd_channel_details_free().
  */
 GPtrArray *
-_mcd_channel_details_build_from_list (GList *channels)
+_mcd_channel_details_build_from_list (const GList *channels)
 {
     GPtrArray *channel_array;
-    GList *list;
+    const GList *list;
+    GType type = TP_STRUCT_TYPE_CHANNEL_DETAILS;
 
-    channel_array = g_ptr_array_sized_new (g_list_length (channels));
+    channel_array = g_ptr_array_sized_new (g_list_length ((GList *) channels));
+
     for (list = channels; list != NULL; list = list->next)
     {
         McdChannel *channel = MCD_CHANNEL (list->data);
         GHashTable *properties;
         GValue channel_val = { 0, };
-        GType type;
 
         properties = _mcd_channel_get_immutable_properties (channel);
 
-        type = TP_STRUCT_TYPE_CHANNEL_DETAILS;
         g_value_init (&channel_val, type);
         g_value_take_boxed (&channel_val,
                             dbus_g_type_specialized_construct (type));
@@ -1108,12 +1114,7 @@ _mcd_channel_details_build_from_list (GList *channels)
 void
 _mcd_channel_details_free (GPtrArray *channels)
 {
-    GValue value = { 0, };
-
-    /* to free the array, put it into a GValue */
-    g_value_init (&value, TP_ARRAY_TYPE_CHANNEL_DETAILS_LIST);
-    g_value_take_boxed (&value, channels);
-    g_value_unset (&value);
+    g_boxed_free (TP_ARRAY_TYPE_CHANNEL_DETAILS_LIST, channels);
 }
 
 /*
@@ -1230,6 +1231,7 @@ mcd_channel_new_request (McdAccount *account,
     channel->priv->request_data = crd;
     channel->priv->satisfied_requests = g_list_prepend (NULL,
                                                         g_strdup (crd->path));
+    channel->priv->latest_request_time = user_time;
 
     _mcd_channel_set_status (channel, MCD_CHANNEL_STATUS_REQUEST);
 
@@ -1279,15 +1281,22 @@ _mcd_channel_get_request_path (McdChannel *channel)
 /*
  * _mcd_channel_get_satisfied_requests:
  * @channel: the #McdChannel.
+ * @get_latest_time: if not %NULL, the most recent request time will be copied
+ *  through this pointer
  *
  * Returns: a list of the object paths of the channel requests satisfied by
  * this channel, if the channel status is not yet MCD_CHANNEL_STATUS_DISPATCHED
  * or MCD_CHANNEL_STATUS_FAILED.
  */
 const GList *
-_mcd_channel_get_satisfied_requests (McdChannel *channel)
+_mcd_channel_get_satisfied_requests (McdChannel *channel,
+                                     gint64 *get_latest_time)
 {
     g_return_val_if_fail (MCD_IS_CHANNEL (channel), NULL);
+
+    if (get_latest_time != NULL)
+        *get_latest_time = channel->priv->latest_request_time;
+
     return channel->priv->satisfied_requests;
 }
 
@@ -1438,6 +1447,10 @@ _mcd_channel_set_request_proxy (McdChannel *channel, McdChannel *source)
     request_path = _mcd_channel_get_request_path (channel);
     if (G_LIKELY (request_path))
     {
+        source->priv->latest_request_time =
+            MAX (source->priv->latest_request_time,
+                 channel->priv->latest_request_time);
+
         source->priv->satisfied_requests =
             g_list_prepend (source->priv->satisfied_requests,
                             g_strdup (request_path));

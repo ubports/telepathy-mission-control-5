@@ -68,16 +68,6 @@ McdDispatcher implements
 </synopsis>
 </refsect1>
 
-<refsect1 id="McdDispatcher.signals" role="signal_proto">
-<title role="signal_proto.title">Signals</title>
-<synopsis>
-  &quot;<link linkend="McdDispatcher-channel-added">channel-added</link>&quot;                                  : Run Last / Has Details
-  &quot;<link linkend="McdDispatcher-channel-removed">channel-removed</link>&quot;                                : Run Last / Has Details
-  &quot;<link linkend="McdDispatcher-dispatch-completed">dispatch-completed</link>&quot;                             : Run Last
-  &quot;<link linkend="McdDispatcher-dispatch-failed">dispatch-failed</link>&quot;                                : Run Last / Has Details
-  &quot;<link linkend="McdDispatcher-dispatched">dispatched</link>&quot;                                     : Run Last / Has Details
-</synopsis>
-</refsect1>
 
 
 <refsect1 id="McdDispatcher.description" role="desc">
@@ -183,88 +173,6 @@ Convenience function to add a batch of filters at once.</para>
 <para>McdMaster.</para></refsect2>
 </refsect1>
 
-<refsect1 id="McdDispatcher.signal-details" role="signals">
-<title role="signals.title">Signal Details</title>
-<refsect2 id="McdDispatcher-channel-added" role="signal"><title>The <literal>&quot;channel-added&quot;</literal> signal</title>
-<indexterm zone="McdDispatcher-channel-added"><primary sortas="McdDispatcher::channel-added">McdDispatcher::channel-added</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
-                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
-                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
-<listitem><simpara>the object which received the signal.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
-<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
-</variablelist></refsect2><refsect2 id="McdDispatcher-channel-removed" role="signal"><title>The <literal>&quot;channel-removed&quot;</literal> signal</title>
-<indexterm zone="McdDispatcher-channel-removed"><primary sortas="McdDispatcher::channel-removed">McdDispatcher::channel-removed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
-                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
-                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
-<listitem><simpara>the object which received the signal.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
-<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
-</variablelist></refsect2><refsect2 id="McdDispatcher-dispatch-completed" role="signal"><title>The <literal>&quot;dispatch-completed&quot;</literal> signal</title>
-<indexterm zone="McdDispatcher-dispatch-completed"><primary sortas="McdDispatcher::dispatch-completed">McdDispatcher::dispatch-completed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *dispatcher,
-                                                        <link linkend="gpointer">gpointer</link>       context,
-                                                        <link linkend="gpointer">gpointer</link>       user_data)       : Run Last</programlisting>
-<para>
-This signal is emitted when a dispatch operation has terminated. One can
-inspect <parameter>context</parameter> to get the status of the channels.
-After this signal returns, <parameter>context</parameter> is no longer valid.</para>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>dispatcher</parameter>&#160;:</term>
-<listitem><simpara> the <link linkend="McdDispatcher"><type>McdDispatcher</type></link>.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>context</parameter>&#160;:</term>
-<listitem><simpara> a <link linkend="McdDispatcherContext"><type>McdDispatcherContext</type></link>.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
-<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
-</variablelist></refsect2><refsect2 id="McdDispatcher-dispatch-failed" role="signal"><title>The <literal>&quot;dispatch-failed&quot;</literal> signal</title>
-<indexterm zone="McdDispatcher-dispatch-failed"><primary sortas="McdDispatcher::dispatch-failed">McdDispatcher::dispatch-failed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
-                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
-                                                        <link linkend="gpointer">gpointer</link>       arg2,
-                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
-<listitem><simpara>the object which received the signal.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>arg2</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
-<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
-</variablelist></refsect2><refsect2 id="McdDispatcher-dispatched" role="signal"><title>The <literal>&quot;dispatched&quot;</literal> signal</title>
-<indexterm zone="McdDispatcher-dispatched"><primary sortas="McdDispatcher::dispatched">McdDispatcher::dispatched</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="McdDispatcher">McdDispatcher</link> *mcddispatcher,
-                                                        <link linkend="McdChannel">McdChannel</link>    *arg1,
-                                                        <link linkend="gpointer">gpointer</link>       user_data)          : Run Last / Has Details</programlisting>
-<para>
-</para><variablelist role="params">
-<varlistentry><term><parameter>mcddispatcher</parameter>&#160;:</term>
-<listitem><simpara>the object which received the signal.
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>arg1</parameter>&#160;:</term>
-<listitem><simpara>
-</simpara></listitem></varlistentry>
-<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
-<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
-</variablelist></refsect2>
-</refsect1>
 
 
 

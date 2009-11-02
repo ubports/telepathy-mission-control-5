@@ -1,3 +1,9 @@
+telepathy-mission-control-5 (5.3.2-1) unstable; urgency=low
+
+  * New upstream version
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 02 Nov 2009 19:15:52 +0000
+
 telepathy-mission-control-5 (5.3.1-1) unstable; urgency=low
 
   * New upstream version

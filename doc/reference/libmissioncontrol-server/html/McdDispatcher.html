@@ -31,8 +31,6 @@
                 <a href="#McdDispatcher.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
                  | 
                 <a href="#McdDispatcher.properties" class="shortcut">Properties</a>
-                 | 
-                <a href="#McdDispatcher.signals" class="shortcut">Signals</a>
 </td></tr>
 </table>
 <div class="refentry" title="McdDispatcher">
@@ -111,16 +109,6 @@ href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaem
 href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"
 >GStrv</a>*                : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--mcd-master" title='The "mcd-master" property'>mcd-master</a>"               <a class="link" href="McdMaster.html" title="McdMaster">McdMaster</a>*            : Read / Write / Construct
-</pre>
-</div>
-<div class="refsect1" title="Signals">
-<a name="McdDispatcher.signals"></a><h2>Signals</h2>
-<pre class="synopsis">
-  "<a class="link" href="McdDispatcher.html#McdDispatcher-channel-added" title='The "channel-added" signal'>channel-added</a>"                                  : Run Last / Has Details
-  "<a class="link" href="McdDispatcher.html#McdDispatcher-channel-removed" title='The "channel-removed" signal'>channel-removed</a>"                                : Run Last / Has Details
-  "<a class="link" href="McdDispatcher.html#McdDispatcher-dispatch-completed" title='The "dispatch-completed" signal'>dispatch-completed</a>"                             : Run Last
-  "<a class="link" href="McdDispatcher.html#McdDispatcher-dispatch-failed" title='The "dispatch-failed" signal'>dispatch-failed</a>"                                : Run Last / Has Details
-  "<a class="link" href="McdDispatcher.html#McdDispatcher-dispatched" title='The "dispatched" signal'>dispatched</a>"                                     : Run Last / Has Details
 </pre>
 </div>
 <div class="refsect1" title="Description">
@@ -297,172 +285,6 @@ href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#G
 <a name="McdDispatcher--mcd-master"></a><h3>The <code class="literal">"mcd-master"</code> property</h3>
 <pre class="programlisting">  "mcd-master"               <a class="link" href="McdMaster.html" title="McdMaster">McdMaster</a>*            : Read / Write / Construct</pre>
 <p>McdMaster.</p>
-</div>
-</div>
-<div class="refsect1" title="Signal Details">
-<a name="McdDispatcher.signal-details"></a><h2>Signal Details</h2>
-<div class="refsect2" title='The "channel-added" signal'>
-<a name="McdDispatcher-channel-added"></a><h3>The <code class="literal">"channel-added"</code> signal</h3>
-<pre class="programlisting">void                user_function                      (<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a> *mcddispatcher,
-                                                        <a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a>    *arg1,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       user_data)          : Run Last / Has Details</pre>
-<p>
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mcddispatcher</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data set when the signal handler was connected.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title='The "channel-removed" signal'>
-<a name="McdDispatcher-channel-removed"></a><h3>The <code class="literal">"channel-removed"</code> signal</h3>
-<pre class="programlisting">void                user_function                      (<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a> *mcddispatcher,
-                                                        <a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a>    *arg1,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       user_data)          : Run Last / Has Details</pre>
-<p>
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mcddispatcher</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data set when the signal handler was connected.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title='The "dispatch-completed" signal'>
-<a name="McdDispatcher-dispatch-completed"></a><h3>The <code class="literal">"dispatch-completed"</code> signal</h3>
-<pre class="programlisting">void                user_function                      (<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a> *dispatcher,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       context,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       user_data)       : Run Last</pre>
-<p>
-This signal is emitted when a dispatch operation has terminated. One can
-inspect <em class="parameter"><code>context</code></em> to get the status of the channels.
-After this signal returns, <em class="parameter"><code>context</code></em> is no longer valid.</p>
-<p>
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>dispatcher</code></em> :</span></p></td>
-<td> the <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a>.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
-<td> a <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data set when the signal handler was connected.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title='The "dispatch-failed" signal'>
-<a name="McdDispatcher-dispatch-failed"></a><h3>The <code class="literal">"dispatch-failed"</code> signal</h3>
-<pre class="programlisting">void                user_function                      (<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a> *mcddispatcher,
-                                                        <a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a>    *arg1,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       arg2,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       user_data)          : Run Last / Has Details</pre>
-<p>
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mcddispatcher</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg2</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data set when the signal handler was connected.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2" title='The "dispatched" signal'>
-<a name="McdDispatcher-dispatched"></a><h3>The <code class="literal">"dispatched"</code> signal</h3>
-<pre class="programlisting">void                user_function                      (<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a> *mcddispatcher,
-                                                        <a class="link" href="McdChannel.html" title="McdChannel">McdChannel</a>    *arg1,
-                                                        <a
-href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"
->gpointer</a>       user_data)          : Run Last / Has Details</pre>
-<p>
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mcddispatcher</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data set when the signal handler was connected.</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 </div>
 </div>

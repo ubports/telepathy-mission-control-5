@@ -26,11 +26,6 @@
 <indexentry><primaryie linkends="McdConnection--tp-manager"><link linkend="McdConnection--tp-manager">McdConnection:tp-manager</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdController-struct"><link linkend="McdController">McdController</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdDispatcher-struct"><link linkend="McdDispatcher">McdDispatcher</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdDispatcher-channel-added"><link linkend="McdDispatcher-channel-added">McdDispatcher::channel-added</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdDispatcher-channel-removed"><link linkend="McdDispatcher-channel-removed">McdDispatcher::channel-removed</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdDispatcher-dispatch-completed"><link linkend="McdDispatcher-dispatch-completed">McdDispatcher::dispatch-completed</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdDispatcher-dispatch-failed"><link linkend="McdDispatcher-dispatch-failed">McdDispatcher::dispatch-failed</link></primaryie></indexentry>
-<indexentry><primaryie linkends="McdDispatcher-dispatched"><link linkend="McdDispatcher-dispatched">McdDispatcher::dispatched</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdDispatcher--dbus-daemon"><link linkend="McdDispatcher--dbus-daemon">McdDispatcher:dbus-daemon</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdDispatcher--dispatch-operations"><link linkend="McdDispatcher--dispatch-operations">McdDispatcher:dispatch-operations</link></primaryie></indexentry>
 <indexentry><primaryie linkends="McdDispatcher--interfaces"><link linkend="McdDispatcher--interfaces">McdDispatcher:interfaces</link></primaryie></indexentry>

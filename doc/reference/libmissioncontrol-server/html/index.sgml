@@ -157,7 +157,6 @@
 <ANCHOR id="McdDispatcher.object-hierarchy" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.object-hierarchy">
 <ANCHOR id="McdDispatcher.implemented-interfaces" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.implemented-interfaces">
 <ANCHOR id="McdDispatcher.properties" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.properties">
-<ANCHOR id="McdDispatcher.signals" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.signals">
 <ANCHOR id="McdDispatcher.description" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.description">
 <ANCHOR id="McdDispatcher.details" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.details">
 <ANCHOR id="McdDispatcher-struct" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-struct">
@@ -170,12 +169,6 @@
 <ANCHOR id="McdDispatcher--dispatch-operations" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--dispatch-operations">
 <ANCHOR id="McdDispatcher--interfaces" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--interfaces">
 <ANCHOR id="McdDispatcher--mcd-master" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--mcd-master">
-<ANCHOR id="McdDispatcher.signal-details" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher.signal-details">
-<ANCHOR id="McdDispatcher-channel-added" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-channel-added">
-<ANCHOR id="McdDispatcher-channel-removed" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-channel-removed">
-<ANCHOR id="McdDispatcher-dispatch-completed" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-dispatch-completed">
-<ANCHOR id="McdDispatcher-dispatch-failed" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-dispatch-failed">
-<ANCHOR id="McdDispatcher-dispatched" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher-dispatched">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context.synopsis" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html#libmissioncontrol-server-mcd-dispatcher-context.synopsis">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context.description" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html#libmissioncontrol-server-mcd-dispatcher-context.description">

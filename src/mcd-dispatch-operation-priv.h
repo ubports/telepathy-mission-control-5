@@ -27,6 +27,9 @@
 #include <telepathy-glib/dbus.h>
 #include <telepathy-glib/enums.h>
 
+#include "client-registry.h"
+#include "mcd-handler-map-priv.h"
+
 G_BEGIN_DECLS
 
 typedef struct _McdDispatchOperation McdDispatchOperation;
@@ -55,12 +58,8 @@ G_GNUC_INTERNAL const gchar *_mcd_dispatch_operation_get_path
     (McdDispatchOperation *operation);
 G_GNUC_INTERNAL GHashTable *_mcd_dispatch_operation_get_properties
     (McdDispatchOperation *operation);
-G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_is_claimed
-    (McdDispatchOperation *operation);
-G_GNUC_INTERNAL const gchar *_mcd_dispatch_operation_get_handler
-    (McdDispatchOperation *operation);
 G_GNUC_INTERNAL void _mcd_dispatch_operation_approve
-    (McdDispatchOperation *self);
+    (McdDispatchOperation *self, const gchar *preferred_handler);
 
 #define MCD_TYPE_DISPATCH_OPERATION         (_mcd_dispatch_operation_get_type ())
 #define MCD_DISPATCH_OPERATION(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), MCD_TYPE_DISPATCH_OPERATION, McdDispatchOperation))
@@ -70,24 +69,28 @@ G_GNUC_INTERNAL void _mcd_dispatch_operation_approve
 #define MCD_DISPATCH_OPERATION_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), MCD_TYPE_DISPATCH_OPERATION, McdDispatchOperationClass))
 
 G_GNUC_INTERNAL McdDispatchOperation *_mcd_dispatch_operation_new (
-    TpDBusDaemon *dbus_daemon, GList *channels, GStrv possible_handlers);
-G_GNUC_INTERNAL void _mcd_dispatch_operation_lose_channel (
-    McdDispatchOperation *self, McdChannel *channel, GList **channels);
+    McdClientRegistry *client_registry, McdHandlerMap *handler_map,
+    gboolean needs_approval, gboolean observe_only, GList *channels,
+    const gchar * const *possible_handlers);
 
-G_GNUC_INTERNAL GPtrArray *_mcd_dispatch_operation_dup_channel_details (
+G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_has_channel (
+    McdDispatchOperation *self, McdChannel *channel);
+G_GNUC_INTERNAL const GList *_mcd_dispatch_operation_peek_channels (
     McdDispatchOperation *self);
+G_GNUC_INTERNAL GList *_mcd_dispatch_operation_dup_channels (
+    McdDispatchOperation *self);
+
 G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_is_finished (
     McdDispatchOperation *self);
-G_GNUC_INTERNAL void _mcd_dispatch_operation_block_finished (
+G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_needs_approval (
     McdDispatchOperation *self);
-G_GNUC_INTERNAL void _mcd_dispatch_operation_unblock_finished (
+
+G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_get_cancelled (
     McdDispatchOperation *self);
-G_GNUC_INTERNAL const gchar *_mcd_dispatch_operation_get_claimer (
-    McdDispatchOperation *operation);
-G_GNUC_INTERNAL gboolean _mcd_dispatch_operation_finish (
-    McdDispatchOperation *operation);
+
+G_GNUC_INTERNAL void _mcd_dispatch_operation_run_clients (
+    McdDispatchOperation *self);
 
 G_END_DECLS
 
 #endif
-

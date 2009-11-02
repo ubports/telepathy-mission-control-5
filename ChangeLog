@@ -1,3 +1,3523 @@
+commit 53ac478c5ab53644f7829075bd16a4f7c73f914c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 19:04:14 +0000
+
+    Prepare version 5.3.2
+
+ NEWS         |    4 +++-
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 9d97cf4c696a6ce53f720e27af05ac050b34f96d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 18:45:12 +0000
+
+    Update NEWS
+
+ NEWS |   44 +++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 41 insertions(+), 3 deletions(-)
+
+commit 4300b9969fb1fb5e0844ce2ad0a07ed0e38fedb9
+Merge: edd5e03 04e29b7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 18:22:24 +0000
+
+    Merge branch 'telepathy-mission-control-5.2'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+    	src/mcd-connection.c
+    	src/mcd-dispatcher.c
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit edd5e0391766d6a3dfe7716c2f9c5a7183065178
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-21 18:07:23 +0100
+
+    Makefile.am: re-format SUBDIRS
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+ Makefile.am |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+commit be18a0e8d236900a9a16a6a9c6acb47951a43078
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-21 18:06:27 +0100
+
+    Makefile.am: build tests before docs
+    
+    This makes it quicker to see whether `make check` has failed - if
+    you see the docs building, it means the tests must have passed :-)
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+ Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 7af74d7c5012b772552401417ea48aed63359be3
+Merge: 6a35b8f 924d306
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 18:15:36 +0000
+
+    Merge branch 'wait-for-handlers'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 924d306fcd4aad26d6561317795b9bbc1444f7ce
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 17:46:57 +0000
+
+    McdDispatchOperation: comment the fact that handle_with_time is global
+    
+    In an earlier version of the branch I separated it to be per Approval
+    and used the timestamp from the appropriate approval, but during review
+    Sjoerd considered this to be unnecessarily complicated; it's also
+    undesirable if several HandleWith calls are "compatible", e.g.
+    HandleWith("...Empathy") and HandleWith("").
+
+ src/mcd-dispatch-operation.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+commit d4998ef810f440dd2584ad092b35dccb3bd85de9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 15:18:58 +0000
+
+    McdDispatchOperationPrivate: remove now-unused handler member
+
+ src/mcd-dispatch-operation.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 9efbd6e5b18e0705792dada80fcab76bd94a7fa1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 22:06:31 +0000
+
+    _mcd_dispatch_operation_close_as_undispatchable: receive GError from caller
+
+ src/mcd-dispatch-operation.c |   24 ++++++++++++++----------
+ 1 files changed, 14 insertions(+), 10 deletions(-)
+
+commit 50c48d16476b3204a0b654d18737a33e81a020da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 22:03:00 +0000
+
+    _mcd_dispatch_operation_set_handler_failed: if all possible handlers have failed, finish the CDO and terminate the channels
+    
+    _mcd_dispatch_operation_close_as_undispatchable will try and fail to
+    call _mcd_dispatch_operation_finish again, which isn't entirely elegant,
+    but works.
+
+ src/mcd-dispatch-operation.c                     |   18 ++++++++++++++++++
+ test/twisted/dispatcher/handle-channels-fails.py |    5 ++---
+ 2 files changed, 20 insertions(+), 3 deletions(-)
+
+commit 5b1f3c273de8d9e9c3ecfa72688ac31d168d533d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 21:54:25 +0000
+
+    dispatcher/handle-channels-fails.py: add regression test for retrying HandleWith with the same handler
+
+ test/twisted/constants.py                        |    1 +
+ test/twisted/dispatcher/handle-channels-fails.py |   29 ++++++++++-----------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
+
+commit e06d81ae27e9b2cdeb54c9eeb5be4071d9e03149
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 21:45:58 +0000
+
+    _mcd_dispatch_operation_try_next_handler: fail HandleWith calls if the desired Handler doesn't exist
+
+ src/mcd-dispatch-operation.c |   19 ++++++++++++++-----
+ 1 files changed, 14 insertions(+), 5 deletions(-)
+
+commit e24c39a22dfe7c58e0da603de3c440641387d42b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 21:40:37 +0000
+
+    _mcd_dispatch_operation_try_next_handler: remove unnecessary check for approval
+    
+    If we're looking at an Approval from the queue, then clearly someone
+    approved :-)
+
+ src/mcd-dispatch-operation.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 8838ab0d30016e44f6c0deb56cc40831d7b2a929
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 21:38:43 +0000
+
+    _mcd_dispatch_operation_try_next_handler: for HandleWith calls (only), try again even if that handler previously failed
+    
+    This is safe (doesn't cause infinite loops) because on failure, we remove
+    the HandleWith call from the queue of approvals, so we only retry if an
+    approver tries again.
+
+ src/mcd-dispatch-operation.c |   12 ++++++++----
+ 1 files changed, 8 insertions(+), 4 deletions(-)
+
+commit 423c79287bc851ce80a64b6c1ec48f48fdcf240f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 14:27:30 +0000
+
+    McdDispatchOperation: use the approvals queue to choose the preferred handler
+    
+    This requires that requests with a preferred handler also put it in the
+    queue.
+
+ src/mcd-dispatch-operation.c |   47 +++++++++++++++++++----------------------
+ 1 files changed, 22 insertions(+), 25 deletions(-)
+
+commit 4d04f4d504535a2cdbc8cff1e00ab065e3a27963
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 21:15:40 +0000
+
+    _mcd_dispatch_operation_set_handler_failed: fail any pending HandleWith calls if the nominated handler fails HandleChannels
+    
+    This is a behaviour change: HandleWith with a non-empty argument will
+    no longer count as general approval; so in
+    dispatcher/handle-channels-fails, when the first client fails, the second
+    won't run immediately.
+
+ src/mcd-dispatch-operation.c                     |   28 +++++++++++-
+ test/twisted/dispatcher/handle-channels-fails.py |   51 +++++++++++++++++++---
+ 2 files changed, 71 insertions(+), 8 deletions(-)
+
+commit 4504c9d5fbbded6e2c5d3bd6556e7fa06ce5f323
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 14:26:16 +0000
+
+    McdDispatchOperation: give _mcd_dispatch_operation_finish a GError, to fail all incompatible approvals with
+
+ src/mcd-dispatch-operation.c         |  104 +++++++++++++++++++++------------
+ test/twisted/dispatcher/lose-text.py |    5 +-
+ 2 files changed, 70 insertions(+), 39 deletions(-)
+
+commit 0fd82fe9c809acfdb7cee14e1a6e86b233103883
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 20:19:25 +0000
+
+    McdDispatchOperation: remove channels_handled, which is now synonymous with wants_to_finish
+
+ src/mcd-dispatch-operation.c |   16 +++-------------
+ 1 files changed, 3 insertions(+), 13 deletions(-)
+
+commit 9ad3e8a3fde767a8cbc99d309a8623f9739676a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 20:17:09 +0000
+
+    _mcd_dispatch_operation_lose_channel: set channels_handled here, if we have
+    
+    This means we don't need to check for the "no channels" case in
+    _mcd_dispatch_operation_check_client_locks.
+
+ src/mcd-dispatch-operation.c |    9 +--------
+ 1 files changed, 1 insertions(+), 8 deletions(-)
+
+commit 14c0160103042ff34522d31317c4f3a12890d3f8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 20:12:48 +0000
+
+    fd.o#21003 (partial): save up HandleWith calls until we finish, and return from all of them when finished
+
+ src/mcd-dispatch-operation.c                     |   81 ++++++++++++++++++++-
+ test/twisted/dispatcher/handle-channels-fails.py |   14 ++---
+ 2 files changed, 82 insertions(+), 13 deletions(-)
+
+commit 7d03db047f05bde0a5967e119e8b1aa4729e2a4d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 18:44:18 +0000
+
+    McdDispatchOperation: if not finished, queue up Claim() calls, and reply to all of them when allowed to do so
+
+ src/mcd-dispatch-operation.c |   91 +++++++++++++++++++++++++++++++-----------
+ 1 files changed, 68 insertions(+), 23 deletions(-)
+
+commit 4f0e7cf15fc1c1c85b43583449f291644784942e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 18:06:52 +0000
+
+    mcd_dispatch_operation_may_signal_finished: never signal Finished until we've at least considered running observers
+
+ src/mcd-dispatch-operation.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+commit 5209d05ff6fbd3c53b1592b9b8b9abba32f6cac1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 18:06:18 +0000
+
+    McdDispatchOperation: when unable to emit Finished or ChannelLost, debug why
+
+ src/mcd-dispatch-operation.c |   22 ++++++++++++++++++----
+ 1 files changed, 18 insertions(+), 4 deletions(-)
+
+commit 1faa9c34886cfde11e7590d692869852086354a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 18:04:01 +0000
+
+    test/twisted/test-plugin.c: don't leak McdDispatcherContext in reject_with_reason, reject_rickrolling
+    
+    Oops... this is a memory leak, and could also prevent Finished from being
+    emitted from the corresponding dispatch operations.
+
+ test/twisted/test-plugin.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit 1d820b929c311fc8a9cebb81d440d641f2032b8c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 17:48:21 +0000
+
+    _mcd_dispatch_operation_check_client_locks: debug what's going on
+
+ src/mcd-dispatch-operation.c |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+commit 244cec90bc8f8eb9aa7b0afd8fdc170708573406
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 17:37:44 +0000
+
+    mcd_dispatcher_context_proceed: always call _mcd_dispatch_operation_run_clients at the end of the chain
+    
+    This ensures that the CDO will always get a chance to emit Finished
+    eventually.
+
+ src/mcd-dispatcher.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 37444420e34f508a2a6732a75a8d1ed55a5478f0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-28 17:35:54 +0000
+
+    _mcd_dispatch_operation_run_clients: make it harmless to call this method with no channels left
+    
+    If there are no channels left, we don't want to run observers, approvers
+    or handlers (there's nothing to give them, and they'd just get confused).
+
+ src/mcd-dispatch-operation.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+commit 6c92cb192d6a13d5aca41a885aea6d293d0e6f3e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 22:23:55 +0000
+
+    fd.o#24637: when EnsureChannels() is approval, don't emit Finished immediately
+    
+    Also, in dispatcher/ensure-is-approval.py, assert that we emit Finished
+    later.
+
+ src/mcd-dispatch-operation.c                  |    8 --------
+ test/twisted/dispatcher/ensure-is-approval.py |   10 +++++-----
+ 2 files changed, 5 insertions(+), 13 deletions(-)
+
+commit c29d81e6f7a869d471a1a8fafa3da996ea3051c4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 22:21:49 +0000
+
+    Various tests: assert that Finished is emitted when we've actually finished
+
+ test/twisted/dispatcher/already-has-channel.py     |   14 ++++++--------
+ test/twisted/dispatcher/already-has-obsolete.py    |   14 ++++++--------
+ test/twisted/dispatcher/bypass-approval.py         |   14 ++++++--------
+ test/twisted/dispatcher/capture-bundle.py          |   14 ++++++--------
+ .../dispatcher/dispatch-delayed-by-plugin.py       |   10 +++++-----
+ test/twisted/dispatcher/dispatch-obsolete.py       |   14 ++++++--------
+ test/twisted/dispatcher/dispatch-text.py           |   14 ++++++--------
+ test/twisted/dispatcher/exploding-bundles.py       |   14 ++++++--------
+ test/twisted/dispatcher/recover-from-disconnect.py |   14 ++++++--------
+ 9 files changed, 53 insertions(+), 69 deletions(-)
+
+commit 2b0d2d39014d3beb829701279c69fcd957229797
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 22:20:48 +0000
+
+    fd.o#24637: dispatch_operation_handle_with, dispatch_operation_claim: don't immediately emit Finished
+    
+    We'll emit Finished at the appropriate time later, instead.
+    
+    This behaviour change breaks a too-specific check in
+    dispatcher/handle-channels-fails.py.
+
+ src/mcd-dispatch-operation.c                     |    2 --
+ test/twisted/dispatcher/handle-channels-fails.py |   16 +++++++++-------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+commit d16e43a98beddefa679a49ac13b48030d3de333d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 22:11:36 +0000
+
+    dispatch_operation_claim, mcd_dispatch_operation_check_handle_with: disallow Claim, HandleWith if someone else already approved
+    
+    This is temporary, until fd.o#21003 is fixed...
+
+ src/mcd-dispatch-operation.c |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
+
+commit 902c0634a804e31df01602ec3e8e44dbb8669f05
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 22:00:14 +0000
+
+    _mcd_dispatch_operation_check_client_locks: early-return when there are no channels left
+    
+    We don't want to reply to Claim() or call HandleChannels() if there's
+    nothing there.
+
+ src/mcd-dispatch-operation.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit fa310d0cda17123dda1b92c92326968509ae4058
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:46:33 +0000
+
+    McdDispatchOperation: ensure that _mcd_dispatch_operation_finish is called whenever channels_handled becomes TRUE
+
+ src/mcd-dispatch-operation.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 12ae33e47c9f22e5899ccec6a9c4b7b1e95a69d0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:43:07 +0000
+
+    McdDispatchOperation: check client locks whenever an approval is added to the queue
+
+ src/mcd-dispatch-operation.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 0d06f786e22b6f83c28c6d2e6067508661ac2fba
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:42:30 +0000
+
+    dispatch_operation_claim: adjust to the convention that @self has type McdDispatchOperation
+
+ src/mcd-dispatch-operation.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 418d9ed632d27a7f50deeabaf228a6830c5b3df7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:36:59 +0000
+
+    _mcd_dispatch_operation_approve: simplify
+    
+    We don't need to call mcd_dispatch_operation_check_handle_with, because
+    it's harmless to append a redundant approval to the list even if someone
+    already approved further dispatching.
+    
+    We can also simplify by not optimizing away a call to
+    _mcd_dispatch_operation_check_client_locks (calling that method too many
+    times is harmless).
+
+ src/mcd-dispatch-operation.c |   19 +++++--------------
+ 1 files changed, 5 insertions(+), 14 deletions(-)
+
+commit 37977dd5663e9a1be5c057cf17d308d976783eb9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:22:59 +0000
+
+    McdDispatchOperation: awaiting_approval is no longer a client lock, so adjust and rename to accepted_by_an_approver
+    
+    The difference in semantics is that it can transition from FALSE to TRUE,
+    but never back. We no longer need it to move back, since it's not
+    awaiting_approval that stops further dispatching any more - instead, it's
+    is_approved() (i.e. that approvals is empty) that does that.
+
+ src/mcd-dispatch-operation.c |   22 +++++++---------------
+ 1 files changed, 7 insertions(+), 15 deletions(-)
+
+commit b56579289abd71ca931437d8f5969896ef6aa563
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 21:09:47 +0000
+
+    McdDispatchOperation: process Claim(), and check for no-more-channels, in _mcd_dispatch_operation_check_client_locks rather than in mcd_dispatch_operation_actually_finish
+
+ src/mcd-dispatch-operation.c |   67 ++++++++++++++++++++++-------------------
+ 1 files changed, 36 insertions(+), 31 deletions(-)
+
+commit 4f99a1b33e05cbce11ed014394aa7c626f944fc9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 20:53:35 +0000
+
+    McdDispatchOperation: split up APPROVAL_TYPE_FINISHED according to the real reason, and set it earlier
+    
+    This is a behaviour change:
+    1. an approval is appended to the list as soon as HandleWith or Claim
+       is called, or a channel is re-requested
+    2. no approval is appended to the list if the CDO finishes because all
+       channels have been lost
+    3. no approval is appended to the list when HandleChannels has been called
+       successfully
+    4. no approval is appended to the list if the channels are undispatchable
+    
+    However, none of these is harmful:
+    1. the approval does not cause immediate invocation of the handlers if
+       may_signal_finish() would return false, because both the counters
+       influencing may_signal_finish are also client locks
+    2. approval is meaningless if all channels have been lost
+    3. HandleChannels can only be called after client locks have been
+       released, so adding approval at this stage is not meaningful
+    4. the channels cannot be found to be undispatchable until after client
+       locks have been released, so adding approval at this stage is not
+       meaningful
+
+ src/mcd-dispatch-operation.c |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+commit b989a6a6c2fa67700fea16c9390ac41fec297b70
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 20:41:07 +0000
+
+    McdDispatchOperation: replace the "approved" boolean with a list of reasons for approval
+    
+    Eventually this list can contain dbus-glib contexts, etc.
+
+ src/mcd-dispatch-operation.c |   62 ++++++++++++++++++++++++++++++++---------
+ 1 files changed, 48 insertions(+), 14 deletions(-)
+
+commit cf4d1d9315af66f2a4bc693de989642c326566b1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 18:16:58 +0000
+
+    mcd_dispatch_operation_may_signal_finished: rename from mcd_dispatch_operation_may_finish and comment
+
+ src/mcd-dispatch-operation.c |   15 ++++++++++-----
+ 1 files changed, 10 insertions(+), 5 deletions(-)
+
+commit 6a35b8fb135af4c1bde1c52099aac63f4eb1595c
+Merge: 36129e2 4965c7f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 16:53:51 +0000
+
+    Merge branch 'prefer-preferred-handler'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 36129e26d1c1ef23c1e9554ce33302b49199c103
+Merge: 0f89233 d42fbda
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 15:55:01 +0000
+
+    Merge branch 'limit-approval-bypass'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 0f8923353d53d130c98ec56ff0a739c7a1a0351d
+Merge: b6ae2dc 4a5fdcb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:57:07 +0000
+
+    Merge branch 'undup-handle-channels'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit b6ae2dc2b1d8fd38f057d24c1f85cdd781785ed3
+Merge: c9fef3c 440d2e9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:56:41 +0000
+
+    Merge branch 'always-observe-after-refactor'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 440d2e9013de8b934b8da256c961ca065a9be117
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:56:29 +0000
+
+    _mcd_dispatch_operation_new: tidy up comment and make assertion more obvious
+    
+    As per Sjoerd's review.
+
+ src/mcd-dispatch-operation.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+commit c9fef3c9540e5e3eef81f19925f482e8e3339be5
+Merge: 15c318e 56c6259
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:40:10 +0000
+
+    Merge branch 'dispatcher-refactor-part4'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 15c318e78d0e560f19af4956dfdfb08390442888
+Merge: 7ecf09f 8d58bde
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:39:59 +0000
+
+    Merge branch 'dr4.7'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 7ecf09fa3536801a24d46cf15ac70ca7928a8506
+Merge: d6fdefc 7dfe930
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:39:48 +0000
+
+    Merge branch 'dr4.6'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit d6fdefc8fdb8e9e80019c879539a959b5d5e94d6
+Merge: 2a9f8b5 dba3d8d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 14:39:17 +0000
+
+    Merge branch 'dr4.5'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 8d58bde8d9fa34a8410a17d462e6273560caa38f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 17:27:39 +0000
+
+    Note that collect_satisfied_requests might be doing unnecessary work as per wjt's review
+
+ src/mcd-dispatch-operation.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit ee129cb58487811bb5cf563fb4b3e62d69b13746
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-27 17:23:47 +0000
+
+    Move parenthesis as per wjt's review
+
+ src/mcd-dispatch-operation.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 04e29b76ca3773cd8baa5b608eace7484bd51bf5
+Author: Alberto Mardegan <alberto.mardegan@nokia.com>
+Date:   2009-10-23 14:18:40 +0300
+
+    Invoke callbacks in the right order
+    
+    Callback contexts are added into the list at the beginning (g_slist_prepend),
+    so we must reverse the list before invoking them, to ensure that callbacks are
+    invoked in the same order as they have been installed.
+
+ libmcclient/dbus-api.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 4965c7f20de9dcd27fca9524247e3ca81be5c731
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 21:58:40 +0100
+
+    Remove FIXME comments regarding fd.o#21013, which has been fixed
+
+ test/twisted/account-requests/create-text.py    |    2 --
+ test/twisted/dispatcher/create-handler-fails.py |    2 --
+ test/twisted/dispatcher/create-lowmem.py        |    2 --
+ 3 files changed, 0 insertions(+), 6 deletions(-)
+
+commit 775fbf3a11e819aee7d14320ef8b45c15b66c65b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 21:58:21 +0100
+
+    dispatcher/create-text.py etc.: check that AddRequest is called on the right handler
+
+ test/twisted/dispatcher/create-text.py             |   44 ++++++++------------
+ .../dispatcher/dispatch-delayed-by-plugin.py       |    4 +-
+ test/twisted/dispatcher/ensure-is-approval.py      |   10 +----
+ 3 files changed, 22 insertions(+), 36 deletions(-)
+
+commit d31e55dc2bf57a985e1f0031cbe215989f9ae865
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 21:52:04 +0100
+
+    mcd_dispatcher_guess_request_handler: return the most preferred handler
+
+ src/mcd-dispatcher.c |   50 +++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 31 insertions(+), 19 deletions(-)
+
+commit b3584cda9b4f18be7c251ec70991729100e2b9a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 21:51:28 +0100
+
+    mcd_dispatcher_dup_possible_handlers: factor out mcd_dispatcher_list_possible_handlers
+
+ src/mcd-dispatcher.c |   68 +++++++++++++++++++++++++++++++++++--------------
+ 1 files changed, 48 insertions(+), 20 deletions(-)
+
+commit 0f3d61841d260043f07baf2ff664ba07e0913f9f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 16:24:50 +0100
+
+    dispatcher/create-text.py: add a regression test for requesting a channel that no client claims to be able to handle, with a preferred handler
+    
+    This is ideally what nautilus-sendto would do.
+
+ test/twisted/dispatcher/create-text.py |   84 ++++++++++++++++++--------------
+ 1 files changed, 47 insertions(+), 37 deletions(-)
+
+commit 3e93fa69c7cdf10bcdf505bf21510c5fd704bd2c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 16:24:01 +0100
+
+    McdDispatcher: if there are no possible handlers for a request, assume the preferred handler is OK
+    
+    This bypasses logic elsewhere in MC that terminates dispatching early if
+    there are no suitable handlers at all.
+
+ src/mcd-dispatcher.c |   22 +++++++++++++++++++++-
+ 1 files changed, 21 insertions(+), 1 deletions(-)
+
+commit 0570add4bfbb5affa64a50e80a93a57f7d428df0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 16:02:37 +0100
+
+    dispatcher/create-text.py: regression test for requesting a channel to be dispatched to a filter-less Handler
+
+ test/twisted/dispatcher/create-text.py |   34 +++++++++++++++++++++++--------
+ 1 files changed, 25 insertions(+), 9 deletions(-)
+
+commit a48855aba0efa42166d8245716f477986685e033
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 16:01:48 +0100
+
+    mctest: make it possible to have a SimulatedClient that is a Handler with no filters
+
+ test/twisted/mctest.py |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+commit 839cf83f3b0ab2c2f4d2d7b68970bf9181f06e28
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 15:29:20 +0100
+
+    fd.o #23651 (partial): respect the PreferredHandler from requests that caused a channel to be created
+
+ src/mcd-dispatch-operation.c |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+commit eea6d437e0fdf5a2f3ad3cb4063ca8a437526353
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 14:47:41 +0100
+
+    dispatcher/ensure-is-approval.py: assert that the preferred handler handles the channel
+
+ test/twisted/dispatcher/ensure-is-approval.py |   27 +++++++++++++------------
+ 1 files changed, 14 insertions(+), 13 deletions(-)
+
+commit 3ffe402cac85302485b17265b9b887d51f053f4f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 14:40:32 +0100
+
+    fd.o #23651 (partial): prefer the PreferredHandler when a request approves a pending dispatch operation
+
+ src/mcd-dispatch-operation-priv.h |    2 +-
+ src/mcd-dispatch-operation.c      |   28 +++++++++++++++++++++++++---
+ src/mcd-dispatcher.c              |    5 ++++-
+ 3 files changed, 30 insertions(+), 5 deletions(-)
+
+commit d42fbda45e6b02b92297211d39e91aa169666c2b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:37:15 +0100
+
+    dispatcher/bypass-approval.py: add a regression test for fd.o#23687
+
+ test/twisted/dispatcher/bypass-approval.py |   29 ++++++++++++++++++++++++++++
+ 1 files changed, 29 insertions(+), 0 deletions(-)
+
+commit ccfe730c28aae54fda66732f1f46d8090fc96c60
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:11:32 +0100
+
+    fd.o #23687: if a Handler has BypassApproval but fails, wait for Approvers before running non-BypassApproval Handlers
+
+ src/mcd-dispatch-operation.c |   53 ++++++++++++++++++++++++++++++------------
+ 1 files changed, 38 insertions(+), 15 deletions(-)
+
+commit f85a2425b066c96606b90f8efe62210daf89abeb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:04:56 +0100
+
+    _mcd_dispatch_operation_try_next_handler: if called before approval, only run handlers that bypass approval
+    
+    Currently, this can't happen, but it'll be changed soon so that it can.
+
+ src/mcd-dispatch-operation.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 4674a6fc30559739a4fc099a327d238803825e0e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 23:19:50 +0100
+
+    _mcd_dispatch_operation_try_next_handler: split out code for closing channels as undispatchable
+
+ src/mcd-dispatch-operation.c |   23 +++++++++++++++++------
+ 1 files changed, 17 insertions(+), 6 deletions(-)
+
+commit beafa737884442a5d7d3d8ce5c7a19060e227352
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 23:18:12 +0100
+
+    _mcd_dispatch_operation_run_handlers: rename to the more accurate _mcd_dispatch_operation_try_next_handler
+
+ src/mcd-dispatch-operation.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
+
+commit ae5124c6d7d58d3ca870cf7c59dc860b29a152a1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:44:26 +0100
+
+    _mcd_dispatch_operation_check_client_locks: turn observe_only into an early-return guard
+
+ src/mcd-dispatch-operation.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
+
+commit 97332edd8cdea107369939a17d62d02726ab5be1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 23:00:17 +0100
+
+    _mcd_dispatch_operation_check_client_locks: split out most of the monster conditional into early-return guards
+
+ src/mcd-dispatch-operation.c |   38 +++++++++++++++++++++++++++++++-------
+ 1 files changed, 31 insertions(+), 7 deletions(-)
+
+commit a7073135f8a892df2756dc7c92566f6dc6b8adf2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 22:41:39 +0100
+
+    _mcd_dispatch_operation_run_clients: run approvers from an idle
+
+ src/mcd-dispatch-operation.c |   36 +++++++++++++++++++++++-------------
+ 1 files changed, 23 insertions(+), 13 deletions(-)
+
+commit e6f6283d91ef02d0d14c7cb9680aaf6b63c802da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:41:58 +0100
+
+    McdDispatchOperation: only call _mcd_dispatch_operation_run_handlers via _mcd_dispatch_operation_check_client_locks
+    
+    Previously, we'd set channels_handled before calling any Handler; now it
+    isn't set until dispatching completely finishes (either a handler has
+    accepted the channels, or they have all fallen off the context due to
+    closing.)
+    
+    As a result, we now need to track whether a call to HandleChannels is in
+    flight - this is just a client lock like any other.
+
+ src/mcd-dispatch-operation.c |   25 +++++++++++++++++--------
+ 1 files changed, 17 insertions(+), 8 deletions(-)
+
+commit b2b2081922a91317a201cda16ebe2d0ad65feac6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 18:21:51 +0100
+
+    McdDispatchOperation: split invoked_early_clients into observers, approvers
+
+ src/mcd-dispatch-operation.c |   14 +++++++++-----
+ 1 files changed, 9 insertions(+), 5 deletions(-)
+
+commit 779bf67e385694bb5a15d070a2aaa6f33f974c8d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:54:19 +0100
+
+    McdDispatchOperation: update documentation regarding refcounts
+
+ src/mcd-dispatch-operation.c |   14 ++++++--------
+ 1 files changed, 6 insertions(+), 8 deletions(-)
+
+commit ec415e2ffdf58756ad8f4af43101e3ef0f0fc0eb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:47:11 +0100
+
+    _mcd_dispatch_operation_run_handlers: make it more obvious that this is static
+
+ src/mcd-dispatch-operation.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 459daf052c7930616f945f48ceb885ba1c7251c6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:36:45 +0100
+
+    dispatcher/bypass-approval.py: factor out some common code
+
+ test/twisted/dispatcher/bypass-approval.py |  205 ++++++++++++----------------
+ 1 files changed, 90 insertions(+), 115 deletions(-)
+
+commit 6d21c7182652f74633abf62c1ab4e365d9240a02
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 00:03:47 +0100
+
+    dispatch-obsolete: loosen assertion about AddDispatchOperation's channel properties
+    
+    Previously, we asserted that we got the complete set of immutable
+    properties here, but I suspect that this was only by winning a race.
+    Instead, assert that we get a subset, including at least those that were
+    in the NewChannel signal.
+
+ test/twisted/dispatcher/dispatch-obsolete.py |   11 ++++++++++-
+ 1 files changed, 10 insertions(+), 1 deletions(-)
+
+commit 4a5fdcb8357e3809d4580decaf02f1bf4e025081
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:06:09 +0100
+
+    _mcd_client_proxy_handle_channels: steal debug message from mcd_dispatch_operation_handle_channels
+
+ src/mcd-client.c             |    2 ++
+ src/mcd-dispatch-operation.c |    2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 2ee8027a4f96e279cf2fc2d5b8d0551ab13f51e8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:04:48 +0100
+
+    _mcd_dispatcher_reinvoke_handler: remove FIXME which is no longer true
+
+ src/mcd-dispatcher.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+commit 4065d61962a5310a870e074e86274eb7919e3768
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:03:56 +0100
+
+    _mcd_client_proxy_handle_channels: infer the account path from the first channel
+
+ src/mcd-client-priv.h        |    2 +-
+ src/mcd-client.c             |   19 +++++++++++++++++--
+ src/mcd-dispatch-operation.c |    7 +------
+ src/mcd-dispatcher.c         |   11 +----------
+ 4 files changed, 20 insertions(+), 19 deletions(-)
+
+commit decb08fa6c9020fe293708f11267837ea27fe698
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 14:01:14 +0100
+
+    _mcd_client_proxy_handle_channels: allow handler_info to be NULL, for the common case that it's empty
+    
+    There are no defined keys yet, so it's always empty for now.
+
+ src/mcd-client.c             |   10 ++++++++++
+ src/mcd-dispatch-operation.c |    7 +------
+ src/mcd-dispatcher.c         |    7 +------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+commit 3e2d186e571fbf44fa44e24e9fbed81e385b075b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:58:11 +0100
+
+    _mcd_client_proxy_handle_channels: automatically set MCD_CHANNEL_STATUS_HANDLER_INVOKED
+
+ src/mcd-client.c             |    3 +++
+ src/mcd-dispatch-operation.c |    7 -------
+ src/mcd-dispatcher.c         |    2 --
+ 3 files changed, 3 insertions(+), 9 deletions(-)
+
+commit 2b1728a86c15b7a276aa951bd405b1fba5936891
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 23:00:06 +0100
+
+    _mcd_client_proxy_handle_channels: automatically extract user_action_time from any channels that are really requests
+
+ src/mcd-client-priv.h        |    3 +--
+ src/mcd-client.c             |   14 ++++++++++++--
+ src/mcd-dispatch-operation.c |   20 ++------------------
+ src/mcd-dispatcher.c         |   13 -------------
+ 4 files changed, 15 insertions(+), 35 deletions(-)
+
+commit 2bc1234e1dd6fe402701ba2014571ea1b43b6ec7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:50:40 +0100
+
+    _mcd_client_proxy_handle_channels: automatically extract user_action_time from any channels that are really requests
+
+ src/mcd-client-priv.h        |    2 +-
+ src/mcd-client.c             |   13 ++++++++++++-
+ src/mcd-dispatch-operation.c |    7 +------
+ src/mcd-dispatcher.c         |    8 ++++----
+ 4 files changed, 18 insertions(+), 12 deletions(-)
+
+commit fcfa2b9a72e5f925ce41a963ee093c64efe535e6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 22:51:06 +0100
+
+    mcd_dispatch_operation_handle_channels: set user action time to the most recent time among all requests' action times, and the time that HandleWith() was called
+    
+    The user action time is intended for focus-stealing prevention; we
+    want to set it to the time of the most recent user action, so that the
+    window popping up via gtk_window_present_with_time (or whatever) will
+    take focus if and only if the user hasn't done anything else since they
+    caused it to pop up.
+
+ src/mcd-dispatch-operation.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+commit fd3117aae03fe403242200303ae70289601d2fdf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 22:49:38 +0100
+
+    Tighten assertions about user action times in tests
+
+ .../dispatcher/dispatch-delayed-by-plugin.py       |    2 +-
+ test/twisted/dispatcher/ensure-is-approval.py      |    2 +-
+ test/twisted/dispatcher/ensure-rapidly.py          |    4 +---
+ 3 files changed, 3 insertions(+), 5 deletions(-)
+
+commit d4559d6b3cdc9c20f2d58682f916b110cfdc8e65
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 22:48:19 +0100
+
+    McdChannel: keep the most recent time of a group of requests; McdDispatcher: use it
+
+ src/mcd-channel-priv.h       |    3 ++-
+ src/mcd-channel.c            |   15 ++++++++++++++-
+ src/mcd-dispatch-operation.c |   16 ++++++++--------
+ src/mcd-dispatcher.c         |    6 +++---
+ 4 files changed, 27 insertions(+), 13 deletions(-)
+
+commit cf1c9506fcecde140815bec00e067c6cfc2ed305
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:27:39 +0100
+
+    _mcd_client_proxy_handle_channels: require at least one channel, and recover the connection path from the first
+
+ src/mcd-client-priv.h        |    2 +-
+ src/mcd-client.c             |   21 +++++++++++++++++++--
+ src/mcd-dispatch-operation.c |    5 ++---
+ src/mcd-dispatcher.c         |   21 +--------------------
+ 4 files changed, 23 insertions(+), 26 deletions(-)
+
+commit 250712d767327b112f1890485773bb6be3e15018
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:20:14 +0100
+
+    _mcd_dispatch_operation_dup_channel_details: use _mcd_channel_details_build_from_list instead
+
+ src/mcd-dispatch-operation.c |   36 +++---------------------------------
+ 1 files changed, 3 insertions(+), 33 deletions(-)
+
+commit 53f89b1f87f540e5d5fe35ba93e6638e34b84715
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:19:49 +0100
+
+    _mcd_client_proxy_handle_channels: take the channels as a GList
+
+ src/mcd-client-priv.h        |    2 +-
+ src/mcd-client.c             |    9 ++++++++-
+ src/mcd-dispatch-operation.c |    6 ++----
+ src/mcd-dispatcher.c         |    6 +-----
+ 4 files changed, 12 insertions(+), 11 deletions(-)
+
+commit 61918c1bd25411d6b08b2a7b515bb5d2bb866ff1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:18:34 +0100
+
+    _mcd_channel_details_free: use g_boxed_free instead of playing with GValues
+
+ src/mcd-channel.c |    7 +------
+ 1 files changed, 1 insertions(+), 6 deletions(-)
+
+commit 3b1e48cc09f7879757f3f5b30287f766eb169587
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:18:10 +0100
+
+    _mcd_channel_details_build_from_list: hoist GType-generating call out of loop
+
+ src/mcd-channel.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit bc9aaae5275ad22080cf7787b1849d0de00525fc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:17:46 +0100
+
+    _mcd_channel_details_build_from_list: be more const-correct
+
+ src/mcd-channel-priv.h |    2 +-
+ src/mcd-channel.c      |    7 ++++---
+ 2 files changed, 5 insertions(+), 4 deletions(-)
+
+commit 7a354440274d2cc6632222beef03805116483dcf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-16 13:08:22 +0100
+
+    _mcd_client_proxy_handle_channels: trivial wrapper for tp_cli call
+    
+    Common code from the two places that call HandleChannels can gradually
+    move into this function.
+
+ src/mcd-client-priv.h        |    7 +++++++
+ src/mcd-client.c             |   22 ++++++++++++++++++++++
+ src/mcd-dispatch-operation.c |    2 +-
+ src/mcd-dispatcher.c         |    2 +-
+ 4 files changed, 31 insertions(+), 2 deletions(-)
+
+commit f72721935bee551919a2a595d33042df060a8779
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 16:41:36 +0100
+
+    Tighten assertions about how observe_only, needs_approval and possible_handlers relate
+
+ src/mcd-dispatch-operation.c |    7 +++++++
+ src/mcd-dispatcher.c         |    6 +++++-
+ 2 files changed, 12 insertions(+), 1 deletions(-)
+
+commit 68336d287f945fefb3b49beae74e40545264d71d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 16:41:05 +0100
+
+    Make it clear that we always dispatch unrequested (incoming) channels, whatever subclasses might have to say about it
+
+ src/mcd-connection.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit a406e155ecbf0c5ead07f85beac465821250b2d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 14:12:13 +0100
+
+    fd.o#24474: Add a regression test for channels created behind our back
+    (cherry picked from commit b3071388de1637c2c2150da91587f1a311584402)
+
+ test/twisted/Makefile.am                           |    1 +
+ test/twisted/dispatcher/created-behind-our-back.py |  106 ++++++++++++++++++++
+ 2 files changed, 107 insertions(+), 0 deletions(-)
+
+commit f5c3b39ba47c1100c4e09034e10041aa54dee094
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 15:57:13 +0100
+
+    fd.o#24474: if NewChannels signals Requested channels that we didn't request, observe them but do nothing else
+    
+    Requested channels that we don't know about must have been requested by
+    another process (like Empathy 2.28), by calling Connection methods
+    directly rather than going via MC. As a result, we should not call
+    AddDispatchOperation or HandleChannels.
+    
+    However, we do want to call ObserveChannels, to preserve the invariant
+    that observers are called for *all* channels. This means that observers
+    can do things like present some simple UI for *every* channel, regardless
+    of who the handler is.
+    
+    Forward-ported from 5.2, with changes to suit the refactored McdDispatcher.
+    This version should be reviewed separately.
+
+ src/mcd-connection.c              |   26 ++++++++++++------------
+ src/mcd-dispatch-operation-priv.h |    2 +-
+ src/mcd-dispatch-operation.c      |   39 +++++++++++++++++++++++++++++++++++-
+ src/mcd-dispatcher-priv.h         |    3 +-
+ src/mcd-dispatcher.c              |   25 ++++++++++++++++++-----
+ 5 files changed, 72 insertions(+), 23 deletions(-)
+
+commit 56c6259f73ce7f0c586eac2c7ab336d1641a2b1e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-06 12:29:57 +0100
+
+    _McdDispatcherPrivate: remove unused channel_handler_caps member
+
+ src/mcd-dispatcher.c |    4 ----
+ 1 files changed, 0 insertions(+), 4 deletions(-)
+
+commit 6d78c3bea04d724f880fd5bd88f4d965fed74504
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-06 12:26:44 +0100
+
+    McdDispatchOperation: remove ready-to-dispatch signal
+    
+    Now that the dispatching logic is mostly in the McdDispatchOperation,
+    nothing needs this signal.
+
+ src/mcd-dispatch-operation.c |   17 -----------------
+ 1 files changed, 0 insertions(+), 17 deletions(-)
+
+commit 451e0f07ff95bf03109dcfcab5ac7367ef2010b4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 18:03:58 +0100
+
+    _mcd_dispatch_operation_is_awaiting_approval, set_a_a: inline
+
+ src/mcd-dispatch-operation-priv.h |    6 ------
+ src/mcd-dispatch-operation.c      |   25 +++++--------------------
+ 2 files changed, 5 insertions(+), 26 deletions(-)
+
+commit 3de7b970d0af0be16e8692b08f2afa4f6c96d1ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 18:02:33 +0100
+
+    _mcd_dispatch_operation_get_possible_handlers: inline
+
+ src/mcd-dispatch-operation-priv.h |    3 ---
+ src/mcd-dispatch-operation.c      |   16 ++++------------
+ 2 files changed, 4 insertions(+), 15 deletions(-)
+
+commit 7e863265bc7e8cf8c3c806e369f435107684f043
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 18:00:30 +0100
+
+    _mcd_dispatch_operation_has_ado_pending: inline
+
+ src/mcd-dispatch-operation-priv.h |    4 ----
+ src/mcd-dispatch-operation.c      |   13 +++----------
+ 2 files changed, 3 insertions(+), 14 deletions(-)
+
+commit e5efc9688a7936609f6e625d85c0acf16767e522
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:58:51 +0100
+
+    _mcd_dispatch_operation_approve: remove the subtle and confusing distinction between this function and _mcd_dispatch_operation_set_approved
+
+ src/mcd-dispatch-operation-priv.h |    3 ---
+ src/mcd-dispatch-operation.c      |   23 ++++++++++++++++++-----
+ src/mcd-dispatcher.c              |   13 +------------
+ 3 files changed, 19 insertions(+), 20 deletions(-)
+
+commit f3632ac355e879608b9d2547624ea100b413dfeb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:52:51 +0100
+
+    _mcd_dispatch_operation_handlers_can_bypass_approval: internalize
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    2 +-
+ 2 files changed, 1 insertions(+), 3 deletions(-)
+
+commit 21ceb067e85a2037275ab3cb9ad03d1fe2af9d10
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:52:33 +0100
+
+    _mcd_dispatch_operation_finish: internalize, and return void
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    6 ++----
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+commit 51d0b2de9aeeca20fb58933d126f2959723cb068
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:52:11 +0100
+
+    _mcd_dispatch_operation_dup_channel_details: internalize
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    2 +-
+ 2 files changed, 1 insertions(+), 3 deletions(-)
+
+commit 2a3a3c229c736a74223f705562e631e6243ff825
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:51:55 +0100
+
+    _mcd_dispatch_operation_get_handler: inline
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |   18 ++----------------
+ 2 files changed, 2 insertions(+), 18 deletions(-)
+
+commit 02cfb01951b96bd65e4e5255570613d7783060cb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:51:26 +0100
+
+    _mcd_dispatch_operation_is_claimed: internalize
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |   13 -------------
+ 2 files changed, 0 insertions(+), 15 deletions(-)
+
+commit 9a2be44da21ce53606d23683563a33a2c201d42e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:51:05 +0100
+
+    _mcd_dispatch_operation_get_account_path: internalize
+
+ src/mcd-dispatch-operation-priv.h |    2 -
+ src/mcd-dispatch-operation.c      |   48 ++++++++++++++++++------------------
+ 2 files changed, 24 insertions(+), 26 deletions(-)
+
+commit ee4df4733882bc6f2c6650775619be13e3ce2561
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:50:36 +0100
+
+    _mcd_dispatch_operation_get_handler_failed: internalize
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    8 +++-----
+ 2 files changed, 3 insertions(+), 7 deletions(-)
+
+commit 482c4758aad57c1901de0e0ee3bd596075cd89f4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:49:34 +0100
+
+    _mcd_dispatch_operation_has_observers_pending: inline
+
+ src/mcd-dispatch-operation-priv.h |    3 ---
+ src/mcd-dispatch-operation.c      |    9 +--------
+ 2 files changed, 1 insertions(+), 11 deletions(-)
+
+commit cd6860788e3900eb7a4440fe0267b3d6bb79c70a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:48:53 +0100
+
+    McdDispatcher: don't bother tracking contexts in a list
+    
+    We no longer use that list for anything.
+
+ src/mcd-dispatcher.c |   12 ------------
+ 1 files changed, 0 insertions(+), 12 deletions(-)
+
+commit f9df1666850e3f8b266869ab04227e0aab35cb9c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 20:18:57 +0100
+
+    _mcd_dispatcher_enter_state_machine: don't steal @channels
+
+ src/mcd-dispatcher.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+commit 0d9da8be4d8257d063db0bdf33ddf56339917263
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 20:18:08 +0100
+
+    mcd_dispatch_operation_set_property: don't steal ownership of the channels GList
+
+ src/mcd-dispatch-operation.c |    3 ++-
+ src/mcd-dispatcher.c         |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 4064c2e25f9b9a2c3da54411105241c2fd51ce16
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 20:09:15 +0100
+
+    mcd_dispatcher_guess_request_handler, mcd_dispatcher_dup_possible_handlers: assert that channels do have properties
+    
+    As per wjt's review of dr4.5 branch.
+
+ src/mcd-dispatcher.c |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+commit dba3d8d5aba79d07902da17e012e6a13e5026665
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 19:44:05 +0100
+
+    Fix a misleading comment as per wjt's review
+
+ src/mcd-dispatch-operation.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 7179b65aa5d3b6531b703c3959c9a68550fea94c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:38:12 +0100
+
+    McdDispatcher: don't keep CTXREF15 to the dispatcher context
+    
+    Now that the McdDispatchOperation is self-contained, the dispatcher
+    context can be freed as soon as C filters have been run.
+
+ src/mcd-dispatcher.c |   15 ---------------
+ 1 files changed, 0 insertions(+), 15 deletions(-)
+
+commit 5b241ceff49441f7f8552d4bc2ddd2bb4df76820
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:37:29 +0100
+
+    McdDispatchOperation: artificially stay alive while running clients, and while calling out to other code
+    
+    This ensures that once a dispatch operation is dispatching, it will finish
+    properly, even if all external references are released.
+
+ src/mcd-dispatch-operation.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit eeed384bdcafa679948d6df5ad9cbc5adeca08e6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:30:45 +0100
+
+    _mcd_dispatch_operation_run_handlers etc.: move from McdDispatcher
+
+ src/mcd-dispatch-operation-priv.h |    3 -
+ src/mcd-dispatch-operation.c      |  173 ++++++++++++++++++++++++++++++++---
+ src/mcd-dispatcher.c              |  185 +------------------------------------
+ 3 files changed, 161 insertions(+), 200 deletions(-)
+
+commit 469c89eea3f8de9e9e6ab0afc50a3ea1b247570b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:22:07 +0100
+
+    mcd_dispatcher_run_handlers etc.: don't pass a McdDispatcherContext around
+    
+    The McdDispatchOperation now does everything that's required, and it no
+    longer matters that the McdDispatcherContext might be freed before the
+    dispatch operation completes (because the side-effects of freeing the
+    context have been eliminated).
+
+ src/mcd-dispatcher.c |   80 +++++++++++++++++--------------------------------
+ 1 files changed, 28 insertions(+), 52 deletions(-)
+
+commit 1e3583a6b151b9fa4b13ddc4064556f5a3614acc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:14:51 +0100
+
+    mcd_dispatcher_op_ready_to_dispatch_cb: move most of the code to McdDispatchOperation
+
+ src/mcd-dispatch-operation.c |    6 ++++++
+ src/mcd-dispatcher.c         |   18 ------------------
+ 2 files changed, 6 insertions(+), 18 deletions(-)
+
+commit 6bf3fbdacc207b78b0c6139e3ff4ec0f8cee75d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:11:21 +0100
+
+    McdDispatchOperation: prune now-unnecessary API
+
+ src/mcd-dispatch-operation-priv.h |   22 --------------
+ src/mcd-dispatch-operation.c      |   56 +++++++++++-------------------------
+ 2 files changed, 17 insertions(+), 61 deletions(-)
+
+commit 95815bccff59a3110ce6855feda8885ca924209c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 17:06:24 +0100
+
+    _mcd_dispatch_operation_run_clients: move from McdDispatcher
+    
+    This removes CTXREF07 from the McdDispatcher: in practice, it was never
+    taken without CTXREF01 already in effect.
+
+ src/mcd-dispatch-operation-priv.h |    4 +---
+ src/mcd-dispatch-operation.c      |   31 ++++++++++++++++++++++++++-----
+ src/mcd-dispatcher.c              |   33 +--------------------------------
+ 3 files changed, 28 insertions(+), 40 deletions(-)
+
+commit 70d441716b0184abbbb29ccfbddcc48c9bba590e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 16:59:26 +0100
+
+    McdDispatchOperation: move approver launch from McdDispatcher here
+
+ src/mcd-dispatch-operation-priv.h |    2 +
+ src/mcd-dispatch-operation.c      |  103 ++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |  111 +------------------------------------
+ 3 files changed, 106 insertions(+), 110 deletions(-)
+
+commit 92d18cf0d45ddaa25951ee54c8154ab51b8a6676
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-06 12:46:54 +0100
+
+    _mcd_dispatch_operation_run_observers: move from McdDispatcher
+
+ src/mcd-dispatch-operation-priv.h |    3 +
+ src/mcd-dispatch-operation.c      |  130 ++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |  140 +------------------------------------
+ 3 files changed, 134 insertions(+), 139 deletions(-)
+
+commit 00382a7c0404c8fe4f85407945de925a735189c7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-06 12:46:20 +0100
+
+    _mcd_client_match_property, _mcd_client_match_filters: move from McdDispatcher
+
+ src/mcd-client-priv.h |    8 +++
+ src/mcd-client.c      |  149 +++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |  159 ++-----------------------------------------------
+ 3 files changed, 163 insertions(+), 153 deletions(-)
+
+commit daac7a1ed560172ec62fd101c9b309a1cf923fef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 16:44:22 +0100
+
+    _mcd_dispatch_operation_get_connection_path: factor out
+
+ src/mcd-dispatch-operation.c |   33 +++++++++++++++++++++++++++------
+ 1 files changed, 27 insertions(+), 6 deletions(-)
+
+commit e8ea7bfc0c111d00a47a26f6c51464bb3093a715
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 16:17:42 +0100
+
+    McdDispatcher: only remember unfinished CDOs, and disconnect from their signals correctly
+    
+    For now, "finished" CDOs should keep themselves referenced until they can
+    actually be freed (the definition of "finished" will be corrected later).
+    
+    We only need to store CDOs that want approval in a list, and we only need
+    to do so until they emit finished: the only purpose of having this list,
+    apart from the OperationList interface, is so EnsureChannel requests can
+    cause approval.
+
+ src/mcd-dispatcher.c |   44 +++++++++++++++++++++++++++++++++++---------
+ 1 files changed, 35 insertions(+), 9 deletions(-)
+
+commit d2c0f625e87942c49fdae05db2c65020d67fb447
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 16:19:38 +0100
+
+    mcd_dispatcher_context_unref: remove the side-effect of forcibly finishing the dispatch operation
+    
+    This is no longer useful, since CTXREF15 is held at least until the
+    operation is finished, so this call is always a no-op.
+
+ src/mcd-dispatcher.c |    7 -------
+ 1 files changed, 0 insertions(+), 7 deletions(-)
+
+commit 64d056c9f724ff5df5cc2cb5df96229053f9f0bf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 16:19:30 +0100
+
+    McdDispatcher: use McdDispatchOperation, not McdDispatcherContext, as user_data for AddDispatchOperation/ObserveChannels
+    
+    We no longer need to ref and unref the McdDispatcherContext, because it's
+    kept alive by CTXREF15 at least until the McdDispatchOperation finishes.
+
+ src/mcd-dispatcher.c |   44 +++++++++++++-------------------------------
+ 1 files changed, 13 insertions(+), 31 deletions(-)
+
+commit 4e9599b7c4d8659290d532019f17b460e83f014e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 15:55:13 +0100
+
+    McdDispatcher: remove redundant CTXREF14
+    
+    Now that CTXREF15 covers the whole period leading up to ready-to-dispatch,
+    we don't need CTXREF14 any more.
+
+ src/mcd-dispatcher.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit a5381e39b9a7c42b5759ba142709ebd6662c4ce8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 15:51:55 +0100
+
+    McdDispatcher: always keep the dispatcher context ref'd until ready-to-dispatch
+
+ src/mcd-dispatcher.c |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+commit 7dfe93015afc079d4a8230ac2698ff6c63daf45e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 15:44:41 +0100
+
+    _mcd_dispatch_operation_handle_channels_cb: emit Finished if not done already
+
+ src/mcd-dispatch-operation.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit f8453495cb2c55394400dc2a01467206f3bfabbc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 15:14:27 +0100
+
+    mcd_dispatcher_context_unref: emit a debug message when our side-effect of finishing CDOs happens
+    
+    Ideally, this shouldn't happen.
+
+ src/mcd-dispatcher.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+commit 02e47672ff9a903132804f1b8ac234f575a37181
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 14:50:11 +0100
+
+    McdDispatcher: factor out mcd_dispatcher_borrow_channel_connection_path
+
+ src/mcd-dispatcher.c |   42 +++++++++++++++++++++++++++++-------------
+ 1 files changed, 29 insertions(+), 13 deletions(-)
+
+commit 96b2de4d4a90add285307359236b7b5a00959bdc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 14:29:19 +0100
+
+    McdDispatchOperation: don't allow HandleChannels to be called while approvers are still pending
+
+ src/mcd-dispatch-operation.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 2edab703d4f70571b8c2e582b11f49e4402f2fab
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 14:04:25 +0100
+
+    _mcd_dispatch_operation_set_approved: automatically call _mcd_dispatch_operation_check_client_locks
+    
+    This wasn't previously safe, because no client locks were set until the
+    call to mcd_dispatcher_run_clients. However, the client lock
+    "invoked_early_clients == FALSE" now starts off locked, so now it's safe.
+
+ src/mcd-dispatch-operation.c |    1 +
+ src/mcd-dispatcher.c         |    1 -
+ 2 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 0d80937f5878c4e0d360f072bdf50148d7d5bb9d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 14:03:18 +0100
+
+    McdDispatchOperation: inline a call to _mcd_dispatch_operation_set_approved
+
+ src/mcd-dispatch-operation.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit f6ae712c795ba1c2b63abd678c0fd50893df93ef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 14:00:53 +0100
+
+    McdDispatchOperation: reverse sense of invoking_early_clients flag, and simplify
+    
+    Having this start off locked means that calling
+    _mcd_dispatch_operation_check_client_locks too early is harmless.
+
+ src/mcd-dispatch-operation-priv.h |    6 ++----
+ src/mcd-dispatch-operation.c      |   20 ++++++++------------
+ src/mcd-dispatcher.c              |    5 +----
+ 3 files changed, 11 insertions(+), 20 deletions(-)
+
+commit 5d74bd9aefa99832fd525c7230d517d92c46e527
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 13:55:15 +0100
+
+    dispatcher/dispatch-delayed-by-plugin.py: exercise pre-approval while in the early stages of dispatching
+
+ .../dispatcher/dispatch-delayed-by-plugin.py       |   91 +++++++++++++++++++-
+ 1 files changed, 89 insertions(+), 2 deletions(-)
+
+commit c3c1cd70e9cac36599409f5345d04c4baa2ea36d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 13:54:14 +0100
+
+    _mcd_dispatch_operation_set_channels_handled, get_c_h: inline
+
+ src/mcd-dispatch-operation-priv.h |    5 -----
+ src/mcd-dispatch-operation.c      |   26 +++++---------------------
+ 2 files changed, 5 insertions(+), 26 deletions(-)
+
+commit 0b2a4c322af1023dfb1cb6f265b9b48791561a1c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 13:32:34 +0100
+
+    mcd_dispatch_operation_actually_finish: set channels_handled if no channels remain
+
+ src/mcd-dispatch-operation.c |    6 ++++++
+ src/mcd-dispatcher.c         |    8 --------
+ 2 files changed, 6 insertions(+), 8 deletions(-)
+
+commit 7b37332c355911efc8f6479e5f4c54867b4e48cf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 13:29:35 +0100
+
+    McdDispatchOperation: implement the response to Claim() and a successful HandleChannels() internally
+
+ src/mcd-dispatch-operation-priv.h |    3 +
+ src/mcd-dispatch-operation.c      |   97 ++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   98 +------------------------------------
+ 3 files changed, 102 insertions(+), 96 deletions(-)
+
+commit 775c030b4ca02b0c680ce78ab2be44d3b7a87710
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 13:16:31 +0100
+
+    mcd_dispatcher_context_unref: don't reimplement on_operation_finished
+
+ src/mcd-dispatcher.c |   17 ++++++-----------
+ 1 files changed, 6 insertions(+), 11 deletions(-)
+
+commit 079ca8d802f13ce8b5bdad37db873aae59618bdb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:52:25 +0100
+
+    McdDispatcher: match_filters: operate entirely in terms of properties
+    
+    When calling AddRequest, we know that we don't have a channel, only a
+    request. When calling ObserveChannels or ApproveChannels, we know that
+    we have a channel by now; when getting possible handlers, we could be in
+    either situation, so we need to check both.
+
+ src/mcd-dispatcher.c |   37 ++++++++++++++++++++++++-------------
+ 1 files changed, 24 insertions(+), 13 deletions(-)
+
+commit ea506fc74ba824c715f88cb932dfda5fb060a9bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:46:53 +0100
+
+    McdDispatcher: match_filters: remove unused variable
+
+ src/mcd-dispatcher.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+commit f222cb18ae4da322d970c99cf903f49baa4a5096
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:36:40 +0100
+
+    McdDispatchOperation: inline _mcd_dispatch_operation_set_cancelled
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    9 +--------
+ 2 files changed, 1 insertions(+), 10 deletions(-)
+
+commit 76b71cb3d2668a10d4e5f2956a692ce1b356f906
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:36:22 +0100
+
+    McdDispatchOperation: inline a call to _mcd_dispatch_operation_is_awaiting_approval
+
+ src/mcd-dispatch-operation.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 0eefe792a67663f930ffde0e850f2f1547dbe20c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:36:02 +0100
+
+    McdDispatchOperation: inline _mcd_dispatch_operation_is_invoking_early_clients
+
+ src/mcd-dispatch-operation.c |    9 +--------
+ 1 files changed, 1 insertions(+), 8 deletions(-)
+
+commit ff3d5a45bdc600b6377703d89d029a403b457cd0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:35:34 +0100
+
+    McdDispatchOperation: internalize _mcd_dispatch_operation_lose_channel
+
+ src/mcd-dispatch-operation-priv.h |    2 --
+ src/mcd-dispatch-operation.c      |    5 ++++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+commit ceac014839cf14b851b659841b9365f4a2c21536
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 12:03:12 +0100
+
+    McdDispatchOperation: have a McdHandlerMap
+
+ src/mcd-dispatch-operation-priv.h |    6 ++++--
+ src/mcd-dispatch-operation.c      |   31 ++++++++++++++++++++++++++++++-
+ src/mcd-dispatcher.c              |    3 ++-
+ 3 files changed, 36 insertions(+), 4 deletions(-)
+
+commit 54090df813452d6aea3a690354a8b1c8ca5541c5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:55:19 +0100
+
+    mcd_dispatcher_op_ready_to_dispatch_cb: only check client locks if we could have released one
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit e46ceccb9997947f7d3b4e0ee3c7a6e5c03a8797
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:52:45 +0100
+
+    _mcd_dispatch_operation_set_invoking_early_clients: automatically check client locks
+
+ src/mcd-dispatch-operation.c |    5 +++++
+ src/mcd-dispatcher.c         |    1 -
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+commit 53ee1211b67ac3e19640b214173b0cb7a9632c8f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:51:36 +0100
+
+    _mcd_dispatch_operation_dec_observers_pending: incorporate the functionality of mcd_dispatcher_context_release_pending_observer
+
+ src/mcd-dispatch-operation.c |    1 +
+ src/mcd-dispatcher.c         |    9 +--------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
+
+commit 3cdbc81cbe4733fe4d2e4144104146c07bc595dc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:51:13 +0100
+
+    _mcd_dispatch_operation_dec_ado_pending: take the functionality of the similar function from McdDispatcher, and inline it
+
+ src/mcd-dispatch-operation.c |   11 +++++++++++
+ src/mcd-dispatcher.c         |   28 ++--------------------------
+ 2 files changed, 13 insertions(+), 26 deletions(-)
+
+commit 9fad21fcdafe54b47c798ee0088d4b4deb71b197
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:46:25 +0100
+
+    _mcd_dispatch_operation_check_client_locks: move mcd_dispatcher_context_check_client_locks here; use new run-handlers signal to tell context to run handlers
+
+ src/mcd-dispatch-operation-priv.h |    3 ++
+ src/mcd-dispatch-operation.c      |   25 +++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   39 ++++++++++++++----------------------
+ 3 files changed, 43 insertions(+), 24 deletions(-)
+
+commit 3f4c00f4263a1c3d2a0416de8943033f5e509712
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 10:23:59 +0100
+
+    McdDispatcher: pass the dispatcher, not the context, as user_data for McdDispatchOperation::finished
+
+ src/mcd-dispatcher.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+commit 0e54c52870a4a08474de458a82af9f189095f466
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 09:47:02 +0100
+
+    McdDispatchOperation: emit ready-to-dispatch just after finished
+    
+    This separates the D-Bus finished signal (which triggers the McdDispatcher
+    signalling us as finished) from the GObject ready-to-dispatch signal
+    (which triggers the next stage of the dispatch chain).
+
+ src/mcd-dispatch-operation.c |   16 ++++++++++++++++
+ src/mcd-dispatcher.c         |   23 +++++++++++++++++------
+ 2 files changed, 33 insertions(+), 6 deletions(-)
+
+commit d6f574c5641b88765eda048693f4500510de748a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 09:33:37 +0100
+
+    McdDispatcher: track a list of operations and a list of contexts separately
+    
+    This is necessary to make the CDO outlive the context.
+
+ src/mcd-dispatcher.c |   53 ++++++++++++++++++++++++++++++-------------------
+ 1 files changed, 32 insertions(+), 21 deletions(-)
+
+commit ecc46172e3ab8a39ac30618cf33dae01cf74ff20
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 09:23:44 +0100
+
+    McdDispatchOperation: track channels' life-cycles here, not in McdDispatcherContext
+    
+    This is a step towards having mcd_dispatcher_context_unref not have
+    unwanted side-effects.
+
+ src/mcd-dispatch-operation.c |   40 +++++++++++++++++++++++++++++-
+ src/mcd-dispatcher.c         |   56 +----------------------------------------
+ 2 files changed, 41 insertions(+), 55 deletions(-)
+
+commit f57b5080ebc137994492bcfdd89504b712b79056
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-06 12:44:58 +0100
+
+    _mcd_dispatcher_enter_state_machine: make memory allocation more obviously correct
+    
+    Previously, we were borrowing a list that had been given to the
+    McdDispatchOperation, relying on the fact that it hadn't altered the list
+    yet.
+
+ src/mcd-dispatcher.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 428c31c43a433da5680b7d8641b0f7cd8b2b313f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 09:16:58 +0100
+
+    McdDispatcher: look up channels in McdDispatchOperation, not McdDispatcherContext
+
+ src/mcd-dispatch-operation-priv.h |    2 +-
+ src/mcd-dispatch-operation.c      |   11 +----
+ src/mcd-dispatcher.c              |   97 ++++++++++++++++++++-----------------
+ 3 files changed, 54 insertions(+), 56 deletions(-)
+
+commit d62e871e6705661e2df593817798864a7d3854e8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 20:18:31 +0100
+
+    McdDispatchOperation: add accessors for the channels we're processing
+
+ src/mcd-dispatch-operation-priv.h |    7 +++++++
+ src/mcd-dispatch-operation.c      |   26 ++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 0 deletions(-)
+
+commit 8f6b5a3e552a22f6d6a37000576a06d4719a0a85
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 17:36:24 +0100
+
+    _mcd_dispatcher_reinvoke_handler: don't leak temporaries if selected handler doesn't exist any more
+
+ src/mcd-dispatcher.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 40130e8f4d565a42a6d6c391e95908ef9024a93a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-05 09:04:40 +0100
+
+    Add a regression test for _mcd_dispatcher_reinvoke_handler's new behaviour
+
+ test/twisted/dispatcher/ensure-and-redispatch.py |  124 +++++++++++++++-------
+ 1 files changed, 85 insertions(+), 39 deletions(-)
+
+commit a8acb653551a89109aa4f94ecacf44743192b2ad
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-02 15:30:12 +0100
+
+    _mcd_dispatcher_reinvoke_handler: reimplement with correct behaviour
+    
+    While it's superficially similar to the end of the dispatching pipeline,
+    the requirements are actually rather different.
+    
+    When we call HandleChannels the first time, we can use any handler,
+    errors must be handled by trying to dispatch to a different handler, and
+    we need to keep track of who's handling the channel at the end.
+    
+    When an EnsureChannel() call causes us to reinvoke HandleChannels, the
+    previous implementation (using the dispatcher context) was buggy:
+    
+    * if a "better" Handler has appeared since the channel was initially
+      dispatched, it would dispatch to that one, resulting in the channel
+      being handled by two different processes (!)
+    * if handling with the selected client failed, it would try others
+    * if handling failed with all clients, it would close the channel
+    
+    I've corrected these as follows:
+    
+    * only Handlers that match the unique name that we know is already
+      handling the channel will be considered
+    * there is only one attempt to call HandleChannels
+    * if the attempt fails, or there is no suitable Handler object in the
+      process any more, we act as though HandleChannels succeeded - the
+      Handler won't be notified, so it can't bring itself to the foreground
+      or whatever, but if it wanted that it should have kept its Handler
+      object
+
+ src/mcd-dispatcher.c |  154 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 files changed, 124 insertions(+), 30 deletions(-)
+
+commit 430ff8b44d94917c05b3b3915d2bd35e6b069db8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-02 15:07:01 +0100
+
+    mcd_dispatcher_dup_possible_handlers: make it possible to look for a handler with a particular unique name
+    
+    This is necessary for correct channel re-dispatching - we don't want to
+    re-dispatch a channel to a handler that isn't the process currently
+    handling it!
+
+ src/mcd-dispatcher.c |   18 +++++++++++++++---
+ 1 files changed, 15 insertions(+), 3 deletions(-)
+
+commit 4d1e019ca0645d4086a56ff72c0ae8e3285c655c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-02 14:56:31 +0100
+
+    _mcd_dispatcher_reinvoke_handler: rename @channel to @request to match caller
+
+ src/mcd-dispatcher.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 2a9f8b5865cd5d05a1f75f5bbd4956d724c992d8
+Merge: c064c78 87417a9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 18:02:49 +0100
+
+    Merge branch 'use-after-free'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 87417a99c20e20fcf99f3d60d66a2481a045e55a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 17:59:27 +0100
+
+    mcd_client_proxy_unique_name_cb: ensure that _mcd_client_proxy_set_inactive() doesn't cause self to be freed before calling mcd_client_proxy_introspect
+    
+    tp_dbus_daemon_watch_name_owner doesn't take a closure, so we have to ref
+    it ourselves.
+
+ src/mcd-client.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit f49892ea81b725719c374a37379daddaeca31d28
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 17:58:31 +0100
+
+    mc-debug-server: always set GLib and GObject warnings fatal for regression tests
+    
+    In practice, GObject warnings tend to indicate fairly critical badness, so
+    we don't want the tests to trip them.
+    
+    Because MC still uses g_warning() for relatively normal things like failed
+    requests, we can't just make *all* warnings fatal.
+
+ test/twisted/mc-debug-server.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+commit c064c7853343c1f10eb42cd170afb9828f892896
+Merge: aaf91ff 9c88d11
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 16:43:45 +0100
+
+    Merge branch 'dr4.3-move-to-cdo'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit aaf91ff1239e3de08450411441280584a58223f8
+Merge: e34c3b6 09b3927
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 14:03:39 +0100
+
+    Merge branch 'dr4.2-handler-map-tp-channel'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 9c88d11abb5e50aa05109216cf169788deb0f35f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-20 14:02:47 +0100
+
+    mcd_dispatch_operation_constructor: explain why dbus_connection might be NULL
+
+ src/mcd-dispatch-operation.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+commit f94b30819bd98c7084f891ac7ccc847af477ab20
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 18:17:21 +0100
+
+    McdDispatcherContext: rely on the McdDispatchOperation to ref our channels
+    
+    Previously, we had to hold refs here because the McdDispatchOperation
+    didn't necessarily exist.
+
+ src/mcd-dispatcher.c |   22 +++++++---------------
+ 1 files changed, 7 insertions(+), 15 deletions(-)
+
+commit 90baa98137f2be92a816fbda947476f35db37846
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 21:04:07 +0100
+
+    McdDispatchOperation: store the cancelled flag here
+
+ src/mcd-dispatch-operation-priv.h |    5 +++++
+ src/mcd-dispatch-operation.c      |   17 +++++++++++++++++
+ src/mcd-dispatcher.c              |    7 ++-----
+ 3 files changed, 24 insertions(+), 5 deletions(-)
+
+commit 8aaf4cbe044bbeae528aea7a0112c26ce004d180
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 20:06:07 +0100
+
+    McdDispatcher: simplify HandleChannels invocation
+    
+    We never attempt to dispatch subsets of the context's channels to a
+    handler, and the set of channels is "reduce-only", so there's no point in
+    remembering the channels so we can compute their intersection with those
+    remaining in the context - that intersection will always be equal to the
+    set of channels in the context.
+    
+    This is just as well, since the way we tracked the subset of channels was
+    quite precarious (keeping pointers to them without reffing those pointers,
+    then checking whether they were still listed in the context).
+
+ src/mcd-dispatcher.c |   37 +++++++------------------------------
+ 1 files changed, 7 insertions(+), 30 deletions(-)
+
+commit ec9b706745e7df696600a36c3da0105517ef4eda
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 19:35:52 +0100
+
+    McdDispatchOperation: take the channels_handled flag from McdDispatcherContext
+
+ src/mcd-dispatch-operation-priv.h |    5 +++++
+ src/mcd-dispatch-operation.c      |   19 +++++++++++++++++++
+ src/mcd-dispatcher.c              |   18 +++++++++---------
+ 3 files changed, 33 insertions(+), 9 deletions(-)
+
+commit 5701ab90b9d61503488551b9857e9bf907ac405d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 18:31:21 +0100
+
+    McdDispatchOperation: track the "awaiting approval" flag
+
+ src/mcd-dispatch-operation-priv.h |    6 ++++++
+ src/mcd-dispatch-operation.c      |   21 +++++++++++++++++++++
+ src/mcd-dispatcher.c              |   20 ++++++++------------
+ 3 files changed, 35 insertions(+), 12 deletions(-)
+
+commit f8c928b929081daad8f86fc61448f3480967e5b7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 18:11:58 +0100
+
+    McdDispatchOperation: rename ->finished to be less misleading, and correct result of _mcd_dispatch_operation_is_finished
+    
+    The "finished" boolean didn't actually mean "we have emitted Finished",
+    it meant "we will emit Finished as soon as we are allowed to", so
+    wants_to_finish would be a more accurate name.
+    
+    The only current caller of _mcd_dispatch_operation_is_finished is the
+    McdDispatcher, when listing dispatch operations. To be consistent with
+    the change-notification signals, this API should list all dispatch
+    operations that have not yet emitted the D-Bus signal, even if they are
+    going to emit it as soon as their clients have finished.
+
+ src/mcd-dispatch-operation.c |   26 ++++++++++++++------------
+ 1 files changed, 14 insertions(+), 12 deletions(-)
+
+commit 35a44446c866f5c731ccf66e614131fb9aefdd64
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 17:52:56 +0100
+
+    McdDispatchOperation: add the "invoking early clients" temporary lock
+
+ src/mcd-dispatch-operation-priv.h |    6 ++++++
+ src/mcd-dispatch-operation.c      |   22 ++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   13 +++++--------
+ 3 files changed, 33 insertions(+), 8 deletions(-)
+
+commit adaae87266c50b9ffb55d7d71b7fad9e60d0e41f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 17:40:08 +0100
+
+    McdDispatchOperation: infer block_finished from ado_pending and observers_pending
+
+ src/mcd-dispatch-operation-priv.h |    4 ---
+ src/mcd-dispatch-operation.c      |   43 ++++++++++++++++--------------------
+ 2 files changed, 19 insertions(+), 28 deletions(-)
+
+commit 8a1dfe69aa508fb108a44ccc674cb38efcef0671
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 17:32:05 +0100
+
+    McdDispatchOperation: make inc_ado_pending imply block_finished
+
+ src/mcd-dispatch-operation.c |    2 ++
+ src/mcd-dispatcher.c         |    3 ---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+commit df35030de0266fbaee3e8d894d64c271121af23c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:25:08 +0100
+
+    McdDispatchOperation: track approvers that haven't replied to AddDispatchOperation
+    
+    No "much ADO() about nothing" pun intended.
+
+ src/mcd-dispatch-operation-priv.h |    8 +++++++
+ src/mcd-dispatch-operation.c      |   41 +++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   21 ++++++------------
+ 3 files changed, 56 insertions(+), 14 deletions(-)
+
+commit ba15c56e7165b771bfdbc017f35fee4a1de879b6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:23:22 +0100
+
+    McdDispatchOperation: make inc_observers_pending imply block_finished
+
+ src/mcd-dispatch-operation.c |    2 ++
+ src/mcd-dispatcher.c         |    2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 0ddb5f71a26cc87c0f5e45bffe0399da87cbc950
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:21:36 +0100
+
+    McdDispatchOperation: track how many observers are pending
+    
+    Holding a reference to the DO for each pending observer is currently
+    unnecessary, since CTXREF05 keeps the Context alive, and that holds a
+    reference to the DO. However, it'll become significant as the Context
+    becomes less important.
+
+ src/mcd-dispatch-operation-priv.h |    7 ++++++
+ src/mcd-dispatch-operation.c      |   41 +++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   21 +++++-------------
+ 3 files changed, 54 insertions(+), 15 deletions(-)
+
+commit 5c95f7c38c4778c52f2cd205a52d7ff0d56fbdd3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:17:43 +0100
+
+    McdDispatcher: release pending observer before unblocking CDO "finished" signal
+    
+    This means that in on_operation_finished, we can assert that there
+    are no observers still pending.
+
+ src/mcd-dispatcher.c |   10 +++-------
+ 1 files changed, 3 insertions(+), 7 deletions(-)
+
+commit def1340dcf10a2ed209c6c5c599dccbe6380ba5d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 17:02:12 +0100
+
+    McdDispatchOperation: consider it to be approved if no approval was needed
+    
+    This means we don't need to set approved explicitly when creating
+    requested CDOs.
+
+ src/mcd-dispatch-operation.c |    2 +-
+ src/mcd-dispatcher.c         |    8 +-------
+ 2 files changed, 2 insertions(+), 8 deletions(-)
+
+commit 3ed16ca7199e989d9b987c3514624365fcc83b6e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:59:10 +0100
+
+    McdDispatchOperation: add approved flag (previously in the McdDispatcherContext)
+
+ src/mcd-dispatch-operation-priv.h |    6 +++++-
+ src/mcd-dispatch-operation.c      |   20 ++++++++++++++++++++
+ src/mcd-dispatcher.c              |   21 ++++++++-------------
+ 3 files changed, 33 insertions(+), 14 deletions(-)
+
+commit fd04003010aae475da0b1a09bed313aaeacca956
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:18:38 +0100
+
+    _mcd_dispatch_operation_handlers_can_bypass_approval: move from McdDispatcher
+
+ src/mcd-dispatch-operation-priv.h |    2 +
+ src/mcd-dispatch-operation.c      |   35 ++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   40 +-----------------------------------
+ 3 files changed, 39 insertions(+), 38 deletions(-)
+
+commit 044beb10f35dfe047d5e24a4d7d29dc2aab4fd28
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 15:38:18 +0100
+
+    McdDispatchOperation: have a reference to the client registry
+    
+    This will let the CDO manage its own relationship to clients.
+
+ src/mcd-dispatch-operation-priv.h |    6 ++-
+ src/mcd-dispatch-operation.c      |   62 ++++++++++++++++++++++--------------
+ src/mcd-dispatcher.c              |    4 +-
+ 3 files changed, 44 insertions(+), 28 deletions(-)
+
+commit 09b3927a8e1a2fabba47966868e86d48f6d26ab3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 19:16:48 +0100
+
+    McdHandlerMap: operate entirely in terms of TpChannel
+
+ src/mcd-dispatcher.c       |   11 +++++++++--
+ src/mcd-handler-map-priv.h |    5 ++---
+ src/mcd-handler-map.c      |   12 ++++--------
+ 3 files changed, 15 insertions(+), 13 deletions(-)
+
+commit 24b20ef91e5048f7db65dace5afb057def5ce222
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:53:17 +0100
+
+    McdHandlerMap: operate on TpChannel, not McdChannel
+
+ src/mcd-handler-map.c |   38 ++++++++++++++++++++++----------------
+ 1 files changed, 22 insertions(+), 16 deletions(-)
+
+commit ac3b293e3d9c93d9eccfd0ca6b93891b23edce91
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 13:50:28 +0100
+
+    McdChannel: adapt mcd_channel_should_close to be in terms of TpChannel
+    
+    This means we can use it in modules that don't use McdChannel (soon to
+    include McdHandlerMap).
+
+ src/mcd-channel-priv.h |    4 ++++
+ src/mcd-channel.c      |   31 +++++++++++++++++--------------
+ 2 files changed, 21 insertions(+), 14 deletions(-)
+
+commit e34c3b65434f8d5d4b8b9cc97bd003bf0f82ef4a
+Merge: 7fcc877 14321b7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 16:08:27 +0100
+
+    Merge branch 'dr4.1-delete-stuff'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 14321b7c587709d95d1ff4f662e152fbef921ae5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 19:30:21 +0100
+
+    mcd_dispatcher_context_get_protocol_name: remove deprecated method
+
+ src/mcd-dispatcher-context.h |    2 --
+ src/mcd-dispatcher.c         |   19 -------------------
+ 2 files changed, 0 insertions(+), 21 deletions(-)
+
+commit cecdd04da2da2e375bb822cea225717ae227aa66
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:58:29 +0100
+
+    mcd_dispatcher_context_handler_done: remove, it no longer does anything useful
+
+ src/mcd-dispatcher.c |   27 ---------------------------
+ 1 files changed, 0 insertions(+), 27 deletions(-)
+
+commit b8dbdcf8f8a71fd2dc64dc31630fdcf62fae7af1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:35:44 +0100
+
+    McdDispatcher: remove "dispatched" signal
+    
+    Nothing received this.
+
+ .../tmpl/mcd-dispatcher.sgml                       |    8 --------
+ src/mcd-dispatcher.c                               |   19 -------------------
+ src/mcd-dispatcher.h                               |    3 +--
+ 3 files changed, 1 insertions(+), 29 deletions(-)
+
+commit 6f2c56bfa4ca62846da7fe3ca5c0d41e6f19f8f1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:32:12 +0100
+
+    McdDispatcher: remove channel-added, channel-removed signals
+    
+    Not only did nothing catch them, nothing emitted them either.
+
+ .../tmpl/mcd-dispatcher.sgml                       |   16 ----------------
+ src/mcd-dispatcher.c                               |   20 --------------------
+ src/mcd-dispatcher.h                               |    6 ++----
+ 3 files changed, 2 insertions(+), 40 deletions(-)
+
+commit 140f402a2ecdd86b2f5cacc073bccf214f131d81
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:27:54 +0100
+
+    McdDispatcher: remove unused dispatcher-completed signal
+
+ .../tmpl/mcd-dispatcher.sgml                       |    8 -------
+ src/mcd-dispatcher.c                               |   22 +-------------------
+ 2 files changed, 1 insertions(+), 29 deletions(-)
+
+commit fa95dd0272dd16d33ff8d8730df86768ea7f0a16
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 16:25:44 +0100
+
+    McdDispatcher: remove obsolete dispatch-failed signal
+    
+    Nothing catches it.
+
+ .../tmpl/mcd-dispatcher.sgml                       |    9 ---------
+ src/mcd-dispatcher.c                               |   11 -----------
+ src/mcd-dispatcher.h                               |    4 +---
+ 3 files changed, 1 insertions(+), 23 deletions(-)
+
+commit 7fcc877872a6333853260e6e0d004ec1c98cc8fb
+Merge: a4a2002 e0a332d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-19 14:48:22 +0100
+
+    Merge branch 'dispatcher-refactor-part3'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 56f59935ebf2109b84873434d42f936284f7bdce
+Merge: 46d72a2 2b44a30
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-13 20:32:10 +0100
+
+    Merge branch '52-always-observe-new-channels' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 46d72a2e1a46f8bdf6e1c0e36a041ba66f7878ea
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-13 20:32:02 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit e0a332daf518394bccc2c9525dbc06a65ef6a653
+Merge: 08ac73d a4a2002
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 15:38:27 +0100
+
+    Merge branch 'master' into dispatcher-refactor-part3
+    
+    An equivalent of Sjoerd's change to McdDispatcher, to not call
+    ReloadConfig, has been applied to McdClientRegistry already.
+    
+    Conflicts:
+    	src/mcd-dispatcher.c
+
+commit 08ac73de3f81b88a004ee5318e53415d8f0e4731
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 15:36:39 +0100
+
+    McdClientRegistry: don't kick the daemon, it makes it forget pending activations
+    
+    This is essentially a forward-port of commit c51127c9 from master.
+    
+    D-Bus forgets about all current activations when it's asked to reload its
+    configuration. This causes bad side-effects if MissionControl was in the
+    process of activating itself (and for everything else that's activating itself
+    on system startup).
+    
+    The upstream D-Bus bug is fd.o#24350, this also reopens fd.o#23921
+
+ src/client-registry.c |   35 ++++++-----------------------------
+ 1 files changed, 6 insertions(+), 29 deletions(-)
+
+commit 2b44a303999efce4cd5bca1b0efa464f470b10b2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 15:17:44 +0100
+
+    McdConnection: correct sense of suppress_handler in on_new_channel
+    
+    Channels with suppress_handler=TRUE must be Requested;
+    channels with suppress_handler=FALSE can be assumed to be unRequested.
+    Previously, the opposite logic was used.
+
+ src/mcd-connection.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit b3071388de1637c2c2150da91587f1a311584402
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 14:12:13 +0100
+
+    fd.o#24474: Add a regression test for channels created behind our back
+
+ test/twisted/Makefile.am                           |    1 +
+ test/twisted/dispatcher/created-behind-our-back.py |  106 ++++++++++++++++++++
+ 2 files changed, 107 insertions(+), 0 deletions(-)
+
+commit 9b10119cc01e9e6cffe7e4cb6dd98dab9c32280a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-12 14:11:57 +0100
+
+    fd.o#24474: if NewChannels signals Requested channels that we didn't request, observe them but do nothing else
+    
+    Requested channels that we don't know about must have been requested by
+    another process (like Empathy 2.28), by calling Connection methods
+    directly rather than going via MC. As a result, we should not call
+    AddDispatchOperation or HandleChannels.
+    
+    However, we do want to call ObserveChannels, to preserve the invariant
+    that observers are called for *all* channels. This means that observers
+    can do things like present some simple UI for *every* channel, regardless
+    of who the handler is.
+
+ src/mcd-connection.c      |   26 +++++++++++++-------------
+ src/mcd-dispatcher-priv.h |    3 ++-
+ src/mcd-dispatcher.c      |   36 +++++++++++++++++++++++++++++-------
+ 3 files changed, 44 insertions(+), 21 deletions(-)
+
+commit a4a2002ef683dd1de53d311b732775b36f73f03f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 14:33:13 +0100
+
+    Update NEWS
+
+ NEWS |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+commit 5e8bb88e46749d6bc1fcaeb6cadb965e13564bf8
+Merge: faccf87 f8a2f47
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 14:21:36 +0100
+
+    Merge commit 'telepathy-mission-control-5.2.6'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit f8a2f47b410454f77c68cbf9b59ec04ac89d7f1e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 13:24:22 +0100
+
+    Prepare 5.2.6
+
+ NEWS         |   28 ++++++++++++++++++++++++++--
+ configure.ac |    2 +-
+ 2 files changed, 27 insertions(+), 3 deletions(-)
+
+commit 827a53e95c75adba77092d5bcf5a6ca901bad533
+Merge: 22520d7 c725b70
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 12:47:58 +0100
+
+    Merge branch '52-errors-are-missed' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit faccf87d24a474b74fa6f8005ededa04414e5c22
+Merge: 12320e6 ffb5660
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 12:47:27 +0100
+
+    Merge branch 'test-plugin-delay'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 22520d70f1c6834054be4d66f0fb8de2fafd1def
+Merge: 6a4b859 c831c42
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-08 12:46:13 +0100
+
+    Merge branch '52-test-plugin-delay' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 12320e6aab7b719eebc8378677828d0219a418c1
+Merge: 6a422ee c51127c
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2009-10-06 18:55:06 +0100
+
+    Merge branch 'dont-kick-dbus'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c51127c908b6f1efdbab3dae42cb2bf31191ca06
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2009-10-06 18:06:32 +0100
+
+    Don't kick the daemon, it makes it forget pending activations
+    
+    D-Bus forgets about all current activations when it's asked to reload its
+    configuration. This causes bad side-effects if MissionControl was in the
+    process of activating itself (and for everything else that's activating itself
+    on system startup).
+    
+    The upstream D-Bus bug is fd.o#24350, this also reopens fd.o#23921
+
+ src/mcd-dispatcher.c |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+commit ffb56601d84586d11def8d2f804694674f478cb4
+Merge: 6a422ee c831c42
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 20:03:24 +0100
+
+    Merge branch '52-test-plugin-delay' into test-plugin-delay
+    
+    Because of a behaviour change on master (i.e. fixing fd.o#23818),
+    create-delayed-by-plugin now needs to wait for both Empathy and
+    Kopete to (fail to) handle the channels before expecting that they'll
+    be closed.
+
+commit c831c42042cae73b5cb64307ad0d43c00425dd3f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 19:56:33 +0100
+
+    account-manager/make-valid.py: remove race between SetPresence and AccountPropertiesChanged
+
+ test/twisted/account-manager/make-valid.py |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
+
+commit 475ef5bb5bbbe53cb9128d1c9a888a885b2ee682
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 19:58:15 +0100
+
+    Add a regression test for requests being delayed by a plugin
+
+ test/twisted/Makefile.am                           |    1 +
+ .../twisted/dispatcher/create-delayed-by-plugin.py |  165 ++++++++++++++++++++
+ 2 files changed, 166 insertions(+), 0 deletions(-)
+
+commit d053894bb89e284f1e24a6c1d1489fe0d9f7c63e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 19:32:10 +0100
+
+    Add support for delaying dispatch in test-plugin, and a regression test
+
+ test/twisted/Makefile.am                           |    1 +
+ .../dispatcher/dispatch-delayed-by-plugin.py       |  185 ++++++++++++++++++++
+ test/twisted/test-plugin.c                         |   80 +++++++++
+ 3 files changed, 266 insertions(+), 0 deletions(-)
+
+commit 6a422ee2b09499b2b07baa8372489be8d48c0ffa
+Merge: e53579e 2592de2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-01 12:24:47 +0100
+
+    Merge branch 'dispatcher-refactor-part2'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit 8c472f0770e6f29c898c9b3ae36cfa5720ca1663
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 15:10:57 +0100
+
+    McdClientProxy: internalize all temporary API, except the iterator
+    
+    Having the fact that we iterate by using a GHashTableIter leak through
+    the abstraction isn't *that* bad, and it saves writing yet another
+    iterator API! I might revisit this when McdDispatcher is more like the
+    shape I intend it to be.
+
+ src/client-registry.c |   12 +++---------
+ src/client-registry.h |   10 ----------
+ 2 files changed, 3 insertions(+), 19 deletions(-)
+
+commit be631a185d87e3956a1f534178a22682690e7f29
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 14:24:29 +0100
+
+    McdHandlerMap: watch for crashed handlers internally, rather than relying on McdDispatcher
+    
+    This means that MC's only global NameOwnerChanged watch is the one in
+    McdClientRegistry, which watches for new Client bus names - as soon as
+    dbus-daemon supports arg0prefix, that watch can reduce in scope to a watch
+    for Telepathy clients.
+
+ src/mcd-dispatcher.c       |   27 ---------------------
+ src/mcd-handler-map-priv.h |    3 --
+ src/mcd-handler-map.c      |   56 ++++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 49 insertions(+), 37 deletions(-)
+
+commit dae25ea43cca9d390c37a035859e9ec0ed8dea63
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 14:10:34 +0100
+
+    McdHandlerMap: have a TpDBusDaemon
+
+ src/mcd-dispatcher.c       |    4 +-
+ src/mcd-handler-map-priv.h |    4 ++-
+ src/mcd-handler-map.c      |   60 +++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 64 insertions(+), 4 deletions(-)
+
+commit 06f4d386285958f8afe28ec6c65b88c61d142b26
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:57:02 +0100
+
+    Migrate a debug message from McdDispatcher to McdClientRegistry
+
+ src/client-registry.c |    2 ++
+ src/mcd-dispatcher.c  |    2 --
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit c650ec464f19b74c22716079d5a6a5563d84f296
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:56:34 +0100
+
+    McdClientRegistry: watch for new clients here, rather than in McdDispatcher
+    
+    This lets us simplify McdDispatcher's name-owner watch considerably, since
+    now it only cares about unique names.
+
+ src/client-registry.c |   29 ++++++++++++++++++++++++++---
+ src/mcd-dispatcher.c  |   31 ++++---------------------------
+ 2 files changed, 30 insertions(+), 30 deletions(-)
+
+commit 4d24841e6e3d85812addc7348a8b51a9225b28c2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:49:54 +0100
+
+    McdClientRegistry: take responsibility for ListNames etc., from McdDispatcher
+
+ src/client-registry.c |   97 +++++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   95 ------------------------------------------------
+ 2 files changed, 97 insertions(+), 95 deletions(-)
+
+commit 93a8af4fbda5afa809164581c254942a3f2d6246
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:33:48 +0100
+
+    _mcd_client_registry_found_name: combine _mcd_client_registry_add_new with mcd_dispatcher_add_client
+
+ src/client-registry.c |   50 +++++++++++++++++++++++++++++++++------
+ src/client-registry.h |    2 +-
+ src/mcd-dispatcher.c  |   62 ++++--------------------------------------------
+ 3 files changed, 49 insertions(+), 65 deletions(-)
+
+commit 14832eff86fe1219f35a229595d28c46330e619b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:25:40 +0100
+
+    _mcd_client_registry_add_new: re-indent
+
+ src/client-registry.c |   32 ++++++++++++++++----------------
+ 1 files changed, 16 insertions(+), 16 deletions(-)
+
+commit 6dfb50ab7a5eee9d59f89f67d136685cc6050144
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:20:11 +0100
+
+    McdClientRegistry: move watching for clients to be ready here
+
+ src/client-registry.c |   33 +++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   37 -------------------------------------
+ 2 files changed, 33 insertions(+), 37 deletions(-)
+
+commit f77dcc2796afb992153f2dbfff5d20e6536cfd5a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 13:12:17 +0100
+
+    McdClientProxy: manage startup locks here, emitting ready when finished
+
+ src/client-registry.c |   60 +++++++++++++++++++++++++++++
+ src/client-registry.h |    8 ++++
+ src/mcd-dispatcher.c  |   99 ++++++++++++++----------------------------------
+ 3 files changed, 97 insertions(+), 70 deletions(-)
+
+commit b29c78bd7490138ae8b4f27c6be7fd53a7627af4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 12:49:22 +0100
+
+    McdClientRegistry: add a stub "ready" signal
+
+ src/client-registry.c |    8 ++++++++
+ src/mcd-dispatcher.c  |   14 ++++++++++++++
+ 2 files changed, 22 insertions(+), 0 deletions(-)
+
+commit 7ad5db0204e9865cca21a5001f5edb7ce0bd1541
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 12:38:40 +0100
+
+    _mcd_client_registry_dup_client_caps: move from McdDispatcher
+    
+    This fixes a minor memory leak introduced in the 5.3 branch (one GPtrArray
+    per McdConnection made before the McdDispatcher is ready).
+
+ src/client-registry.c |   29 ++++++++++++++++++++++-------
+ src/client-registry.h |    4 +++-
+ src/mcd-dispatcher.c  |   25 +++++++------------------
+ 3 files changed, 32 insertions(+), 26 deletions(-)
+
+commit cab5b59979b22c2a5f495ca7e9b5af519e241079
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 23:38:39 +0100
+
+    McdClientRegistry: remove clients automatically when they disappear
+    
+    Previously, McdDispatcher did this.
+
+ src/client-registry.c |   40 +++++++++++++++++++++++++++++++++++++---
+ src/client-registry.h |    2 --
+ src/mcd-dispatcher.c  |    2 --
+ 3 files changed, 37 insertions(+), 7 deletions(-)
+
+commit f791d3f4b26f0660e478668e1642edb7f547d02c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 23:25:41 +0100
+
+    McdClientRegistry: signal when clients are added
+
+ src/client-registry.c |   18 +++++++++++++++
+ src/mcd-dispatcher.c  |   56 +++++++++++++++++++++++++++++-------------------
+ 2 files changed, 52 insertions(+), 22 deletions(-)
+
+commit c4e4ba7b75374129f6a282127c8a18f5ecdb1b38
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 23:12:52 +0100
+
+    Rely on McdClientProxy to set itself inactive
+
+ src/mcd-dispatcher.c |   11 +----------
+ 1 files changed, 1 insertions(+), 10 deletions(-)
+
+commit 96e569abc4d3f5bf5af5ba894efaed27df1ca575
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 23:11:59 +0100
+
+    McdClientProxy: emit "gone" signal when neither activatable nor active
+
+ src/mcd-client.c     |   10 ++++++++++
+ src/mcd-dispatcher.c |   25 +++++++++++++++++++------
+ 2 files changed, 29 insertions(+), 6 deletions(-)
+
+commit bbb8325412d0eedf4de92301d75c92d58f2779c9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 22:55:47 +0100
+
+    McdClient: manage handler capabilities internally
+    
+    Previously, McdDispatcher dealt with the transition between available
+    (i.e. active || activatable) and not available.
+
+ src/mcd-client.c     |   32 +++++++++++++++++++++++++-------
+ src/mcd-dispatcher.c |   14 +-------------
+ 2 files changed, 26 insertions(+), 20 deletions(-)
+
+commit 1d6d7823c256813fd291935f51ea90a74b43d0ef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 22:48:07 +0100
+
+    McdClientProxy: automatically drop capabilities if inactive and not activatable
+    
+    Previously, we relied on the McdDispatcher to do this.
+
+ src/mcd-client-priv.h |    2 --
+ src/mcd-client.c      |   16 +++++++++++++++-
+ src/mcd-dispatcher.c  |    1 -
+ 3 files changed, 15 insertions(+), 4 deletions(-)
+
+commit f5f9ad9e14bf924f6b3cddbc38f9d782727fc1e3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 23:05:47 +0100
+
+    McdClientProxy: always watch for our own well-known name
+
+ src/mcd-client.c |   47 +++++++++++++++++++++++++++++++----------------
+ 1 files changed, 31 insertions(+), 16 deletions(-)
+
+commit 2ebdc60bc7c4e9c4c4b36915d81730b02dc86e0b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 15:25:05 +0100
+
+    McdDispatcher: don't forcibly remove clients from registry on teardown
+    
+    The client registry should be able to do this by itself (and indeed it
+    does).
+
+ src/mcd-dispatcher.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit ae7b0973cc301452666fd18d4c7ad03e2e799075
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 21:43:23 +0100
+
+    McdDispatcher: keep clients in a McdClientRegistry, not a GHashTable
+
+ src/mcd-dispatcher.c |   82 ++++++++++++++++++++++----------------------------
+ 1 files changed, 36 insertions(+), 46 deletions(-)
+
+commit ef40460b5ba7f8ee23c7804107ff7b8c11608ae8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 14:33:33 +0100
+
+    McdClientRegistry: actually store clients as the name promises
+
+ src/client-registry.c |   64 +++++++++++++++++++++++++++++++++++++++++++++++++
+ src/client-registry.h |   16 ++++++++++++
+ 2 files changed, 80 insertions(+), 0 deletions(-)
+
+commit 063f0117b4d119457cf040d3cb221d633c2c2e1b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-30 14:32:23 +0100
+
+    McdClientRegistry: store a ref to a TpDBusDaemon, and a string pool
+
+ src/client-registry.c |  114 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ src/client-registry.h |    5 ++
+ 2 files changed, 118 insertions(+), 1 deletions(-)
+
+commit 8991cd898c37c3259ff8fd008baa966094779b5a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 20:40:32 +0100
+
+    McdClientRegistry: new stub class
+
+ src/Makefile.am       |    2 +
+ src/client-registry.c |   42 ++++++++++++++++++++++++++++++++
+ src/client-registry.h |   64 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+), 0 deletions(-)
+
+commit c725b70255e0d87079e7cf91d553071403746501
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 20:25:20 +0100
+
+    McdChannel: consider MembersChanged(..., ERROR) to indicate a missed call, even if we were the actor
+    
+    This correctly causes MC to think calls were missed if the streaming
+    implementation calls Error() on telepathy-gabble >= 0.8.4, for instance
+    if none of the candidates provided in the signalling actually work.
+
+ src/mcd-channel.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 2592de2fcbbc7269ee9081ed763f8d78d83f4323
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 19:03:27 +0100
+
+    McdClientProxy: make the introspection pipeline callbacks internal
+
+ src/mcd-client-priv.h |   14 --------------
+ src/mcd-client.c      |   10 ++++++----
+ 2 files changed, 6 insertions(+), 18 deletions(-)
+
+commit 8213b7b0154fc96e83934a78943c118808ba49da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:58:09 +0100
+
+    McdClientProxy: move the beginning of the Client introspection chain here
+
+ src/mcd-client.c     |   58 +++++++++++++++++++++++++++++++++++---------
+ src/mcd-dispatcher.c |   65 --------------------------------------------------
+ 2 files changed, 46 insertions(+), 77 deletions(-)
+
+commit 4db53f61ac0676eb6367e6460d8ac2703d6998fa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:49:49 +0100
+
+    McdClientProxy: make _mcd_client_proxy_get_channel_filter_cb and McdClientInterface static
+
+ src/mcd-client-priv.h |    9 ---------
+ src/mcd-client.c      |    9 ++++++++-
+ 2 files changed, 8 insertions(+), 10 deletions(-)
+
+commit c1e4fe59cc7c6869e1036e4045a20d46273ae6ad
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:47:18 +0100
+
+    McdDispatcher: move get_interfaces_cb into McdClientProxy
+
+ src/mcd-client-priv.h |    3 ++
+ src/mcd-client.c      |   68 ++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   72 +-----------------------------------------------
+ 3 files changed, 73 insertions(+), 70 deletions(-)
+
+commit 6d8ab379cfd4ebd8f71fee0749b7632208cab812
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:43:56 +0100
+
+    McdDispatcher: move skeletal get_channel_filter_cb into McdClientProxy
+
+ src/mcd-client-priv.h |    4 ++--
+ src/mcd-client.c      |   19 +++++++++++++------
+ src/mcd-dispatcher.c  |   18 ++----------------
+ 3 files changed, 17 insertions(+), 24 deletions(-)
+
+commit 40cfc4724cd7f8161b63ec2b4c5a78a4e05e33c1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:38:40 +0100
+
+    _mcd_client_proxy_handler_get_all_cb: combine _mcd_client_proxy_set_handler_properties with the skeleton of the GetAll callback from McdDispatcher
+
+ src/mcd-client-priv.h |    5 +++--
+ src/mcd-client.c      |   14 ++++++++++----
+ src/mcd-dispatcher.c  |   21 ++++-----------------
+ 3 files changed, 17 insertions(+), 23 deletions(-)
+
+commit 85a1cd94038cf4a19f7cd2613bb0eb6ce3acb660
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:34:22 +0100
+
+    McdDispatcher: don't pass the McdDispatcher through the introspection chain
+
+ src/mcd-dispatcher.c |   13 +++++--------
+ 1 files changed, 5 insertions(+), 8 deletions(-)
+
+commit c3508a784b3e6d673b3c6ebe91a236d571876420
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:29:38 +0100
+
+    McdClientProxy: indicate initially-handled channels, and possible changes to handler capabilities, via signals
+
+ src/mcd-client-priv.h |    5 +-
+ src/mcd-client.c      |   57 ++++++++++++++++++++++++----
+ src/mcd-dispatcher.c  |  101 +++++++++++++++++++++++++++---------------------
+ 3 files changed, 108 insertions(+), 55 deletions(-)
+
+commit 5f8726aba5709b5adb8784e089c73d18f2d57747
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 18:04:22 +0100
+
+    McdDispatcher: delegate startup-lock counting to McdClientProxy
+
+ src/mcd-dispatcher.c |   59 +++++++++++++++++---------------------------------
+ 1 files changed, 20 insertions(+), 39 deletions(-)
+
+commit 51b71787378fb791b126b81d1da2dbf18c03777a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 17:55:11 +0100
+
+    McdDispatcher: inc/dec client's ready lock every time we take/release a startup lock on its behalf
+    
+    The exception is that when we first create the client, we don't take
+    a ready lock, and when we receive unique-name-known, we don't release a
+    lock (McdClientProxy already does both of those).
+
+ src/mcd-dispatcher.c |   23 ++++++++++++++++++++---
+ 1 files changed, 20 insertions(+), 3 deletions(-)
+
+commit 96ba6bdfc656f573d2d462c318f2a83fe7b109c2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 17:46:30 +0100
+
+    McdDispatcher: disconnect from McdClientProxy signals whenever we drop a proxy
+    
+    In particular, this guarantees that even if a client proxy outlives the
+    dispatcher, the dispatcher's callbacks won't be invoked when the client
+    finds out its unique name or becomes ready.
+    
+    Each call to mcd_dispatcher_discard_client is annotated with an
+    explanation of why either it can't leak startup locks, or it doesn't matter
+    if it does.
+
+ src/mcd-dispatcher.c |   47 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 42 insertions(+), 5 deletions(-)
+
+commit 37045b44b95184fc82588de501674f73af352466
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-23 17:42:29 +0100
+
+    McdDispatcher: don't allow startup locks to be released once dispose is called
+    
+    If we haven't started to dispatch channels, and now we're
+    self-destructing, we certainly don't want to start dispatching channels
+    to whatever's left of our handlers (in practice, the channels would
+    probably be closed as undispatchable).
+
+ src/mcd-dispatcher.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 1b22dae593cf03ce4f73364a57b711f953186fa5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 17:59:20 +0100
+
+    McdDispatcher: attach a stub handler to McdClient::ready
+
+ src/mcd-dispatcher.c |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
+
+commit 260c8387a7684ccc06373f9deca00c790a303cb7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 18:09:07 +0100
+
+    McdClientProxy: add stub "ready lock" (count of tasks to do before ready)
+
+ src/mcd-client-priv.h |    3 +++
+ src/mcd-client.c      |   42 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+), 0 deletions(-)
+
+commit 102bbe05f323a78dd099c29692f68c4cda9ae728
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 17:50:03 +0100
+
+    McdClientProxy: disentangle "ready" from "unique name known" and the beginning of introspection
+
+ src/mcd-client.c |   24 +++++++++---------------
+ 1 files changed, 9 insertions(+), 15 deletions(-)
+
+commit a66ae32f30fc95b9236561849e824e0a03ee1384
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 17:29:36 +0100
+
+    McdDispatcher: in client introspection pipeline, don't look for the client in our hash table
+    
+    We already have it anyway, from the TpProxy callback mechanism.
+
+ src/mcd-dispatcher.c |   47 +++++++++--------------------------------------
+ 1 files changed, 9 insertions(+), 38 deletions(-)
+
+commit ea509a8c8297898c9816794581d5c1e6f80edeca
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 17:08:38 +0100
+
+    McdDispatcher: mcd_client_start_introspection: correctly disconnect from signal
+
+ src/mcd-dispatcher.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit e10936d2732f3dc73aadbcc504e2401207800855
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 17:21:41 +0100
+
+    McdClientProxy: rename ready to unique-name-known
+    
+    That's what it actually means, at the moment.
+
+ src/mcd-client.c     |   15 ++++++++-------
+ src/mcd-dispatcher.c |    7 +++----
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+commit a2893e97c05ef665ea33521255395c584cf1c5af
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 16:35:52 +0100
+
+    _mcd_client_proxy_set_bypass_approval, _mcd_client_proxy_add_cap_tokens: localize
+
+ src/mcd-client-priv.h |    5 -----
+ src/mcd-client.c      |   20 ++++++--------------
+ 2 files changed, 6 insertions(+), 19 deletions(-)
+
+commit 5c7b25f9d96d204e35857e559faa3ae7d73228a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:54:04 +0100
+
+    McdDispatcher: get_channel_filter_cb: remove pointless check for client disappearance
+    
+    TpProxy guarantees that the McdClientProxy still exists, so this guard
+    isn't needed.
+
+ src/mcd-dispatcher.c |   13 -------------
+ 1 files changed, 0 insertions(+), 13 deletions(-)
+
+commit 8b1fffc9ca8f65b448fd4810c76989512eb2172d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:52:56 +0100
+
+    _mcd_client_proxy_set_channel_filters: factor out most of McdDispatcher's get_channel_filter_cb
+
+ src/mcd-client-priv.h |    4 ++--
+ src/mcd-client.c      |   26 +++++++++++++++++++++++++-
+ src/mcd-dispatcher.c  |   19 +++----------------
+ 3 files changed, 30 insertions(+), 19 deletions(-)
+
+commit 5df3c912c57483bf6a192eaf643a8c5e083369f7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:48:07 +0100
+
+    _mcd_client_proxy_set_handler_properties: factor out most of McdDispatcher's handler_get_all_cb
+
+ src/mcd-client-priv.h |    4 ++++
+ src/mcd-client.c      |   48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   37 +++++--------------------------------
+ 3 files changed, 57 insertions(+), 32 deletions(-)
+
+commit e89dc883ce434fd9fd4e015de0a9c77547bc9e3a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:14:02 +0100
+
+    McdClientProxy: remove some transitional API that's no longer needed
+
+ src/mcd-client-priv.h |   12 ------------
+ src/mcd-client.c      |   30 +++++++++++-------------------
+ 2 files changed, 11 insertions(+), 31 deletions(-)
+
+commit f8f0b5fee3f69c6da32f5b8ea0116403533bc9c2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:08:01 +0100
+
+    _mcd_client_proxy_set_filters: move mcd_client_set_filters to McdClientProxy
+
+ src/mcd-client-priv.h |   10 +++++
+ src/mcd-client.c      |   92 +++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |  105 +-----------------------------------------------
+ 3 files changed, 105 insertions(+), 102 deletions(-)
+
+commit 89e6d420a7304a62977323ee5a28988ca88d69b1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:04:30 +0100
+
+    Inline mcd_dispatcher_append_client_caps now that it's a one-liner
+
+ src/mcd-dispatcher.c |   13 +++----------
+ 1 files changed, 3 insertions(+), 10 deletions(-)
+
+commit 582ac246444736843c3de0b85f9813d8e548f64c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 15:03:44 +0100
+
+    _mcd_client_proxy_dup_handler_capabilities: move main functionality of mcd_dispatcher_append_client_caps to McdClientProxy
+
+ src/mcd-client-priv.h |    3 ++
+ src/mcd-client.c      |   91 +++++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   86 +---------------------------------------------
+ 3 files changed, 95 insertions(+), 85 deletions(-)
+
+commit d10110c28ee24af0d695a3a471b054f894f117c4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:55:09 +0100
+
+    McdClientProxy: move .client file parsing from McdDispatcher
+    
+    parse_client_file, parse_client_filter were moved verbatim.
+
+ src/mcd-client-priv.h |    2 +
+ src/mcd-client.c      |  242 +++++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |  231 +----------------------------------------------
+ 3 files changed, 246 insertions(+), 229 deletions(-)
+
+commit a69fdd0ef293a32b9a93c354c28113619408cf5b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:15:22 +0100
+
+    _mcd_client_proxy_add_interfaces: supersede McdDispatcher's maybe_add_client_interface
+    
+    Also, add all supported interfaces, even if we don't really understand
+    what they are.
+
+ src/mcd-client-priv.h |    3 +++
+ src/mcd-client.c      |   21 +++++++++++++++++++++
+ src/mcd-dispatcher.c  |   49 +++----------------------------------------------
+ 3 files changed, 27 insertions(+), 46 deletions(-)
+
+commit 1c261fdf535ee02f2020559ca05bc2c66cd7aa5a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:08:42 +0100
+
+    McdDispatcher: parse_client_file: remove now-unused string pool argument
+
+ src/mcd-dispatcher.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 20558805bc794a4d0e628eec219b450fc29b7804
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:07:31 +0100
+
+    _mcd_client_proxy_add_cap_tokens: move mcd_client_add_cap_tokens to McdClientProxy
+
+ src/mcd-client-priv.h |    2 ++
+ src/mcd-client.c      |   23 +++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   32 ++++----------------------------
+ 3 files changed, 29 insertions(+), 28 deletions(-)
+
+commit 09d06e12b52e71d002aa8d7cea22e890c5057b68
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:01:22 +0100
+
+    mcd_client_proxy_constructed: debug when a client appears
+    
+    This was previously done in create_mcd_client().
+
+ src/mcd-client.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+commit 4e00e625e3603c0b75361fa8c6099351548e6497
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:01:03 +0100
+
+    McdDispatcher: inline create_mcd_client
+
+ src/mcd-dispatcher.c |   23 +++--------------------
+ 1 files changed, 3 insertions(+), 20 deletions(-)
+
+commit e5c3bfa0deb91f2c6ed52e914cd60285193aa2de
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 14:00:02 +0100
+
+    _mcd_client_proxy_new: take the whole well-known name, not just the suffix
+
+ src/mcd-client-priv.h |    2 +-
+ src/mcd-client.c      |   16 +++++++++-------
+ src/mcd-dispatcher.c  |    3 +--
+ 3 files changed, 11 insertions(+), 10 deletions(-)
+
+commit e53579e358d2c58e373e52e4c459db20e33f04b8
+Merge: 72b1dce c833f9d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 18:57:34 +0100
+
+    Merge branch 'dispatcher-refactor-part1'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit c833f9d1532a7b2af4df73da39a21e284ec4a162
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 17:06:33 +0100
+
+    Fix ambiguous comment
+    
+    I intended "arbitrary non-NULL" to mean "only the fact that it is not
+    NULL is API", but sjoerd briefly thought I meant "user-defined non-NULL".
+
+ src/mcd-dispatch-operation.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 68a52dca8b7a9b3f3504b6ebafa28c83b51ffe9e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 16:46:18 +0100
+
+    mcd_dispatcher_get_possible_handlers: rename to mcd_dispatcher_dup_possible_handlers, since it copies the result
+    
+    As per review from Sjoerd.
+
+ src/mcd-dispatcher.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 72b1dce81d787af55f2c932087617bd5436487d0
+Merge: 4ee78d9 6a4b859
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 12:40:42 +0100
+
+    Merge branch 'telepathy-mission-control-5.2'
+
+commit 6a4b8598f698ad726c43e2ec736bb6b2168fb822
+Merge: 8c10974 73d8192
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-29 12:40:13 +0100
+
+    Merge branch '52-wait-finitely' into telepathy-mission-control-5.2
+    
+    Reviewed-by: Alberto Mardegan <alberto.mardegan@nokia.com>
+
+commit 73d81925fc185f233ad062bd653f5251644be67b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-28 14:17:39 +0100
+
+    mc_account_conditions_call_when_ready: explain why we ignore the result of _mc_iface_call_when_ready_int
+
+ libmcclient/mc-account-conditions.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 2c88f0fd32043a347ef4f906dd2787356a173556
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-28 14:14:07 +0100
+
+    mc-wait-for-name: wait for a finite time (currently 5 minutes), and define exit status better
+
+ configure.ac               |    2 +-
+ util/mc-wait-for-name.1.in |   18 ++++++++-----
+ util/wait-for-name.c       |   56 ++++++++++++++++++++++++++++++++++++++++----
+ 3 files changed, 63 insertions(+), 13 deletions(-)
+
+commit d972798216ce7ee8128996f27355cbe6e816de00
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-28 14:13:12 +0100
+
+    mc-wait-for-name: explicitly check that argv[1] is a valid well-known name
+    
+    This makes the code more obviously correct, causes "mc-wait-for-name foo"
+    to terminate gracefully rather than criticial'ing and waiting forever,
+    and might also shut Coverity up.
+
+ util/wait-for-name.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 26cf02b0767fc85d16827482252b89978c53f7d3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 13:51:19 +0100
+
+    McdDispatcher: store McdClientProxy in priv->clients, and remove McdClient
+
+ src/mcd-dispatcher.c |  213 ++++++++++++++++++++++----------------------------
+ 1 files changed, 95 insertions(+), 118 deletions(-)
+
+commit 4cdc7318b66c6c8f86ecf30a12332b50431f4349
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 13:32:22 +0100
+
+    _mcd_client_proxy_become_incapable: move mcd_client_become_incapable here
+
+ src/mcd-client-priv.h |    1 +
+ src/mcd-client.c      |    9 +++++++++
+ src/mcd-dispatcher.c  |   13 ++-----------
+ 3 files changed, 12 insertions(+), 11 deletions(-)
+
+commit 159d8b34c34624fb6c0e30aa6c5ff9b3c3c6586a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 19:34:49 +0100
+
+    McdDispatcher: remove interfaces member from McdClient
+
+ src/mcd-dispatcher.c |  100 ++++++++++++++++++++++++++++----------------------
+ 1 files changed, 56 insertions(+), 44 deletions(-)
+
+commit 6eccb5a2bb765770d411613c81b5054a670d6982
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-22 13:28:02 +0100
+
+    McdClientProxy: store capability tokens here instead of in McdClient
+
+ src/mcd-client-priv.h |    5 +++++
+ src/mcd-client.c      |   30 ++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   24 ++++++++----------------
+ 3 files changed, 43 insertions(+), 16 deletions(-)
+
+commit 717841c5467278585102355ff664f6c62b54d955
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 18:52:07 +0100
+
+    McdClientProxy: store BypassApproval here instead of in McdClient
+
+ src/mcd-client-priv.h |    4 ++++
+ src/mcd-client.c      |   17 +++++++++++++++++
+ src/mcd-dispatcher.c  |   32 ++++++++++++++++++--------------
+ 3 files changed, 39 insertions(+), 14 deletions(-)
+
+commit f99b5cfa0e47c110dc263e1991cb96c9c88ff116
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 18:44:12 +0100
+
+    Remove @name from McdClient struct
+
+ src/mcd-dispatcher.c |   63 +++++++++++++++++++++++--------------------------
+ 1 files changed, 30 insertions(+), 33 deletions(-)
+
+commit 580139929ab20eb3a4ecd574dd878837c42772f9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 18:34:00 +0100
+
+    McdClient: change type of @proxy from TpClient to McdClientProxy
+    
+    In practice, we need fewer casts that way.
+
+ src/mcd-dispatcher.c |   76 +++++++++++++++++++++----------------------------
+ 1 files changed, 33 insertions(+), 43 deletions(-)
+
+commit 3eb31d80a20c717e2eb35083edb51e77984aba25
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 18:28:28 +0100
+
+    McdClientProxy: store filters here instead of in the McdClient struct
+
+ src/mcd-client-priv.h |   14 +++++
+ src/mcd-client.c      |   91 +++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |  153 ++++++++++++++++++++++++-------------------------
+ 3 files changed, 181 insertions(+), 77 deletions(-)
+
+commit 26c31e11b1dc95605c488c8e8276b5ce713745f9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 18:26:30 +0100
+
+    McdDispatcher: use const GList* for caps where possible
+
+ src/mcd-dispatcher.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 02a38afc36622fa9c4f5eff56f5abfeda4bd3298
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 19:04:39 +0100
+
+    McdDispatcher: find_client_file: move to mcd_client_proxy_find_client_file
+
+ src/mcd-client-priv.h |    3 ++
+ src/mcd-client.c      |   50 +++++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |   52 +------------------------------------------------
+ 3 files changed, 54 insertions(+), 51 deletions(-)
+
+commit b44ce7ec4040b1153f460af3b0896c020bd2c70f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:44:42 +0100
+
+    Move McdClient::activatable to be a property on McdClientProxy
+
+ src/mcd-client-priv.h |    6 +++++-
+ src/mcd-client.c      |   36 +++++++++++++++++++++++++++++++++++-
+ src/mcd-dispatcher.c  |   15 ++++++---------
+ 3 files changed, 46 insertions(+), 11 deletions(-)
+
+commit b3c7daa86c01d192ad239397d2eee789ff010368
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:29:14 +0100
+
+    McdClient::active: remove (it was write-only)
+
+ src/mcd-dispatcher.c |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
+
+commit e7de78488d49b33592faaeab409931155b81af50
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:25:58 +0100
+
+    McdClientProxy: add the beginning of an introspection pipeline
+
+ src/mcd-client.c |   17 ++++++++++-------
+ 1 files changed, 10 insertions(+), 7 deletions(-)
+
+commit bc342eabc0aa24b27eb1fcad721658674a29daab
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:15:31 +0100
+
+    Remove vestigial client_ready_quark from McdClient
+    
+    This never actually "became ready" unless the client disappeared.
+
+ src/mcd-dispatcher.c |    8 --------
+ 1 files changed, 0 insertions(+), 8 deletions(-)
+
+commit 979d8914c9f5d8dfc38e45ccc2fe7a98c6a18fb3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:07:31 +0100
+
+    McdClientProxy: add _mcd_client_proxy_is_ready()
+
+ src/mcd-client-priv.h |    2 ++
+ src/mcd-client.c      |    8 ++++++++
+ 2 files changed, 10 insertions(+), 0 deletions(-)
+
+commit 49f187e0991f2fa7380e9ae2cb1d7d653f10e4e2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 17:04:05 +0100
+
+    McdDispatcher: parse_client_file: use the string pool rather than the dispatcher in the API
+
+ src/mcd-dispatcher.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 302e55a58aeaaaac240841c63d9c022305b6801e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 19:04:33 +0100
+
+    McdClient: have a ref to the McdDispatcher's string pool
+
+ src/mcd-client-priv.h |    5 +++--
+ src/mcd-client.c      |   37 +++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c  |    2 +-
+ 3 files changed, 41 insertions(+), 3 deletions(-)
+
+commit 1c15edb446bc70caf2191d91f110449bab94bde7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 16:39:01 +0100
+
+    mcd_client_add_cap_tokens: change signature to take string pool as argument
+
+ src/mcd-dispatcher.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 8af93d9de9f9f37ce2c0f55847d15b3f990dc507
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 15:30:23 +0100
+
+    mcd_dispatcher_handle_channels: don't steal a GList of channels
+
+ src/mcd-dispatcher.c |   17 +++++++++--------
+ 1 files changed, 9 insertions(+), 8 deletions(-)
+
+commit ca6643b4de0c4112e54649252d212b3147cbeb7e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 13:36:05 +0100
+
+    McdDispatchOperation: move McdDispatcherContext's @account member here
+
+ src/mcd-dispatch-operation-priv.h |    2 +
+ src/mcd-dispatch-operation.c      |   69 ++++++++++++++++++++++++++++++------
+ src/mcd-dispatcher.c              |   14 ++-----
+ 3 files changed, 63 insertions(+), 22 deletions(-)
+
+commit 5171899833d482548f3ff96143e35ee4d0619ead
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 12:26:16 +0100
+
+    McdDispatchOperation: move failed_handlers from McdDispatcherContext
+
+ src/mcd-dispatch-operation-priv.h |    5 ++++
+ src/mcd-dispatch-operation.c      |   45 +++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   34 +++++-----------------------
+ 3 files changed, 56 insertions(+), 28 deletions(-)
+
+commit acceda15b262eaefa81084cb48bda24e044fa691
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 12:10:41 +0100
+
+    _mcd_dispatcher_get_channel_capabilities: remove unused @protocol argument
+
+ src/mcd-connection.c      |    5 +----
+ src/mcd-dispatcher-priv.h |    2 +-
+ src/mcd-dispatcher.c      |    3 +--
+ 3 files changed, 3 insertions(+), 7 deletions(-)
+
+commit ad5390e1daa725c6ef3ef1918def47fbbe9c4f38
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 11:51:54 +0100
+
+    _mcd_dispatcher_enter_state_machine: don't steal @possible_handlers
+
+ src/mcd-dispatcher.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 884a30d9f994b28558f244f868d39d3b807c3b05
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 11:51:17 +0100
+
+    Store possible handlers in the ChannelDispatchOperation (only)
+
+ src/mcd-dispatch-operation-priv.h |    5 ++++-
+ src/mcd-dispatch-operation.c      |    9 ++++++++-
+ src/mcd-dispatcher.c              |   37 ++++++++++++++++++++-----------------
+ 3 files changed, 32 insertions(+), 19 deletions(-)
+
+commit 2c116bc4d62fdc5a807526d2498aa99e503d2175
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:27:29 +0100
+
+    McdDispatcher: remove checks for context->operation now that we always have one
+
+ src/mcd-dispatcher.c |  124 ++++++++++++++++++++------------------------------
+ 1 files changed, 49 insertions(+), 75 deletions(-)
+
+commit e742c0b2e9d1e4159bb86ad3b5e41187d96ec815
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 16:05:34 +0100
+
+    Create a CDO even if channels don't need approval
+    
+    This lets us start to migrate the dispatching state machine from the
+    Dispatcher to the CDO, reducing the size of the Dispatcher.
+
+ src/mcd-dispatch-operation-priv.h |    5 +++-
+ src/mcd-dispatch-operation.c      |   38 +++++++++++++++++++++++++++++++++++-
+ src/mcd-dispatcher.c              |   36 +++++++++++++++++++++++++---------
+ 3 files changed, 66 insertions(+), 13 deletions(-)
+
+commit fdf1a9e6058ac42e559e7f4120725ff36af8c1fb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-07 13:04:19 +0100
+
+    McdDispatcherContext: remove vestigial main_channel member
+    
+    This is never assigned to, so the one code path that looks at it should
+    just consider it to be always-NULL; with that in mind, we can simplify.
+
+ src/mcd-dispatcher.c |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+commit 4ee78d91c5b145e9b25f144ee9401674aeae2950
+Merge: c18f0bb aeaa57a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-21 11:39:46 +0100
+
+    Merge branch '53-leak'
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit c18f0bb773910750aeb56fb0b819aab09721f6ec
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 18:01:47 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit b4afe61f89a5c6f5af8deb6e807c114a7c962bfe
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-09-18 17:43:14 +0100
@@ -121,6 +3641,22 @@ Date:   2009-09-14 17:31:25 +0100
 
  src/mcd-dispatcher.c |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit aeaa57a4a0af8879209282b0a7251955e936f3f4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-17 18:40:12 +0100
+
+    Don't leak check_parameters_get_param_cb closure on error
+
+ src/mcd-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit fe28448789409c094b554713dd77c49e2cff2cfa
+Merge: d4c014b 126a5a7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-09-18 14:40:50 +0100
+
+    Merge branch '52-leaks' into 53-leak
 
 commit 126a5a7554f4b49f77e010fdcab32da659289d0b
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>

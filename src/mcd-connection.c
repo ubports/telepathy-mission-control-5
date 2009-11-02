@@ -538,12 +538,6 @@ on_new_channel (TpConnection *proxy, const gchar *chan_obj_path,
            chan_obj_path, chan_type, handle_type, handle,
            suppress_handler ? 'T' : 'F');
 
-    /* ignore all our own requests (they have always suppress_handler = 1) as
-     * well as other requests for which our intervention has not been requested
-     * */
-    if (suppress_handler) return;
-
-    /* It's an incoming channel, so we create a new McdChannel for it */
     if (priv->dispatched_initial_channels)
     {
         channel = mcd_channel_new_from_path (proxy,
@@ -552,10 +546,16 @@ on_new_channel (TpConnection *proxy, const gchar *chan_obj_path,
         if (G_UNLIKELY (!channel)) return;
         mcd_operation_take_mission (MCD_OPERATION (connection),
                                     MCD_MISSION (channel));
-        /* Dispatch the incoming channel */
+
+        /* MC no longer calls RequestChannel. As a result, if suppress_handler
+         * is TRUE, we know that this channel was requested "behind our back",
+         * therefore we should call ObserveChannels, but refrain from calling
+         * AddDispatchOperation or HandleChannels.
+         *
+         * We assume that channels without suppress_handler are incoming. */
         _mcd_dispatcher_take_channels (priv->dispatcher,
                                        g_list_prepend (NULL, channel),
-                                       FALSE);
+                                       suppress_handler, suppress_handler);
     }
 }
 
@@ -586,7 +586,6 @@ _mcd_connection_setup_capabilities (McdConnection *connection)
     McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (connection);
     GPtrArray *capabilities;
     const gchar *removed = NULL;
-    const gchar *protocol_name;
     GType type;
     guint i;
 
@@ -601,9 +600,7 @@ _mcd_connection_setup_capabilities (McdConnection *connection)
         DEBUG ("connection does not support capabilities interface");
 	return;
     }
-    protocol_name = mcd_account_get_protocol_name (priv->account);
-    capabilities = _mcd_dispatcher_get_channel_capabilities (priv->dispatcher,
-                                                             protocol_name);
+    capabilities = _mcd_dispatcher_get_channel_capabilities (priv->dispatcher);
     DEBUG ("advertising capabilities");
     tp_cli_connection_interface_capabilities_call_advertise_capabilities (priv->tp_conn, -1,
 									  capabilities,
@@ -1202,6 +1199,7 @@ on_new_channels (TpConnection *proxy, const GPtrArray *channels,
     McdChannel *channel;
     GList *channel_list = NULL;
     gboolean requested = FALSE;
+    gboolean only_observe = FALSE;
     guint i;
 
     if (DEBUGGING)
@@ -1232,10 +1230,8 @@ on_new_channels (TpConnection *proxy, const GPtrArray *channels,
      * FALSE: they'll also be in Channels in the GetAll(Requests) result */
     if (!priv->dispatched_initial_channels) return;
 
-    /* first, check if we have to dispatch the channels at all */
-    if (!MCD_CONNECTION_GET_CLASS (connection)->need_dispatch (connection,
-                                                               channels))
-        return;
+    only_observe = ! MCD_CONNECTION_GET_CLASS (connection)->need_dispatch (
+        connection, channels);
 
     sp_timestamp ("NewChannels received");
     for (i = 0; i < channels->len; i++)
@@ -1270,7 +1266,14 @@ on_new_channels (TpConnection *proxy, const GPtrArray *channels,
         channel_list = g_list_prepend (channel_list, channel);
     }
 
-    _mcd_dispatcher_take_channels (priv->dispatcher, channel_list, requested);
+    if (!requested)
+    {
+        /* we always dispatch unrequested (incoming) channels */
+        only_observe = FALSE;
+    }
+
+    _mcd_dispatcher_take_channels (priv->dispatcher, channel_list, requested,
+                                   only_observe);
 }
 
 static void

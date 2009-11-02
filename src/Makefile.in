@@ -94,13 +94,14 @@ am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
 	mcd-account-compat.lo mcd-account-conditions.lo \
 	mcd-account-connection.lo mcd-account-requests.lo \
 	mcd-account-stats.lo mcd-account-manager.lo \
-	mcd-account-manager-query.lo mcd-client.lo mcd-dbusprop.lo \
-	mcd-debug.lo mcd-dispatch-operation.lo mcd-handler-map.lo \
-	mcd-misc.lo mcd-mission.lo mcd-operation.lo mcd-controller.lo \
-	mcd-master.lo mcd-manager.lo mcd-connection.lo \
-	mcd-dispatcher.lo mcd-channel.lo mcd-service.lo mcd-proxy.lo \
-	mcd-transport.lo mcd-provisioning.lo \
-	mcd-provisioning-factory.lo $(am__objects_1)
+	mcd-account-manager-query.lo mcd-client.lo client-registry.lo \
+	mcd-dbusprop.lo mcd-debug.lo mcd-dispatch-operation.lo \
+	mcd-handler-map.lo mcd-misc.lo mcd-mission.lo mcd-operation.lo \
+	mcd-controller.lo mcd-master.lo mcd-manager.lo \
+	mcd-connection.lo mcd-dispatcher.lo mcd-channel.lo \
+	mcd-service.lo mcd-proxy.lo mcd-transport.lo \
+	mcd-provisioning.lo mcd-provisioning-factory.lo \
+	$(am__objects_1)
 nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
 	svc-Account_Interface_ChannelRequests.lo \
 	svc-Account_Interface_Compat.lo \
@@ -416,6 +417,8 @@ libmcd_convenience_la_SOURCES = \
 	mcd-account-priv.h \
 	mcd-client.c \
 	mcd-client-priv.h \
+	client-registry.c \
+	client-registry.h \
 	mcd-dbusprop.c \
 	mcd-dbusprop.h \
 	mcd-debug.c \
@@ -539,6 +542,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client-registry.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-compat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-conditions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-connection.Plo@am__quote@
