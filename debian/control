@@ -2,7 +2,9 @@ Source: telepathy-mission-control-5
 Section: net
 Priority: optional
 Maintainer: Debian Telepathy maintainers <pkg-telepathy-maintainers@lists.alioth.debian.org>
-Uploaders: Simon McVittie <smcv@debian.org>, Jonny Lamb <jonny@debian.org>
+Uploaders: Simon McVittie <smcv@debian.org>,
+           Jonny Lamb <jonny@debian.org>,
+           Sjoerd Simons <sjoerd@debian.org>
 Build-Depends: cdbs,
                debhelper (>= 5),
                libdbus-1-dev (>= 1.0),

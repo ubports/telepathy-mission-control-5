@@ -7,10 +7,6 @@ include /usr/share/cdbs/1/rules/simple-patchsys.mk
 
 # The library isn't stable, and shouldn't be used on mainstream distributions.
 #
-# The AccountManager.service is inappropriate on mainstream distributions,
-# as per telepathy-spec - clients should activate a particular implementation,
-# not the generic name.
-#
 # mc-account-convert requires GConf which we don't want to depend on here,
 # so if we were compiled on a non-minimal system, get rid of it.
 common-binary-post-install-arch:: list-missing
@@ -20,7 +16,6 @@ remove-cruft:
 	rm -f debian/tmp/usr/lib/libmcclient.a
 	rm -f debian/tmp/usr/lib/libmcclient.la
 	rm -rf debian/tmp/usr/lib/pkgconfig
-	rm -f debian/tmp/usr/share/dbus-1/services/org.freedesktop.Telepathy.AccountManager.service
 	rm -rf debian/tmp/usr/share/gtk-doc
 	rm -f debian/tmp/usr/bin/mc-account-convert
 	rm -f debian/tmp/usr/share/man/man1/mc-account-convert.1
