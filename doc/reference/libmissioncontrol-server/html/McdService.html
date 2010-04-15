@@ -8,9 +8,8 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdOperation.html" title="McdOperation">
 <link rel="next" href="McdChannel.html" title="McdChannel">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.14 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -23,10 +22,10 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#McdService.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#McdService.description" class="shortcut">Description</a>
-                 | 
-                <a href="#McdService.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#McdService.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#McdService.object-hierarchy" class="shortcut">Object Hierarchy</a>
 </td></tr>
 </table>
 <div class="refentry" title="McdService">
@@ -45,20 +44,17 @@ Unstable, unless otherwise indicated
 <div class="refsynopsisdiv" title="Synopsis">
 <a name="McdService.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
-
 #include &lt;mcd-service.h&gt;
 
                     <a class="link" href="McdService.html#McdService-struct" title="McdService">McdService</a>;
-<a class="link" href="McdService.html" title="McdService">McdService</a> *        <a class="link" href="McdService.html#mcd-service-new" title="mcd_service_new ()">mcd_service_new</a>                     (void);
-void                <a class="link" href="McdService.html#mcd-service-run" title="mcd_service_run ()">mcd_service_run</a>                     (<a class="link" href="McdService.html" title="McdService">McdService</a> *self);
+<a class="link" href="McdService.html" title="McdService"><span class="returnvalue">McdService</span></a> *        <a class="link" href="McdService.html#mcd-service-new" title="mcd_service_new ()">mcd_service_new</a>                     (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="McdService.html#mcd-service-run" title="mcd_service_run ()">mcd_service_run</a>                     (<em class="parameter"><code><a class="link" href="McdService.html" title="McdService"><span class="type">McdService</span></a> *self</code></em>);
 </pre>
 </div>
 <div class="refsect1" title="Object Hierarchy">
 <a name="McdService.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a
-href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
->GObject</a>
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
          +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
                +----<a class="link" href="McdController.html" title="McdController">McdController</a>
@@ -72,8 +68,7 @@ href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Ty
 It is the frontline interface object that exposes mission-control to outside
 world through a dbus interface. It basically subclasses McdMaster and
 wraps up everything inside it and translate them into mission-control
-dbus interface.</p>
-<p>
+dbus interface.
 </p>
 </div>
 <div class="refsect1" title="Details">
@@ -87,7 +82,7 @@ dbus interface.</p>
 <hr>
 <div class="refsect2" title="mcd_service_new ()">
 <a name="mcd-service-new"></a><h3>mcd_service_new ()</h3>
-<pre class="programlisting"><a class="link" href="McdService.html" title="McdService">McdService</a> *        mcd_service_new                     (void);</pre>
+<pre class="programlisting"><a class="link" href="McdService.html" title="McdService"><span class="returnvalue">McdService</span></a> *        mcd_service_new                     (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -102,7 +97,7 @@ dbus interface.</p>
 <hr>
 <div class="refsect2" title="mcd_service_run ()">
 <a name="mcd-service-run"></a><h3>mcd_service_run ()</h3>
-<pre class="programlisting">void                mcd_service_run                     (<a class="link" href="McdService.html" title="McdService">McdService</a> *self);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcd_service_run                     (<em class="parameter"><code><a class="link" href="McdService.html" title="McdService"><span class="type">McdService</span></a> *self</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -118,6 +113,6 @@ dbus interface.</p>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.14</div>
 </body>
 </html>

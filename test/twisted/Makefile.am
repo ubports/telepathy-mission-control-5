@@ -44,6 +44,8 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/lose-text.py \
 	dispatcher/recover-from-disconnect.py \
 	dispatcher/request-disabled-account.py \
+	dispatcher/respawn-observers.py \
+	dispatcher/respawn-activatable-observers.py \
 	dispatcher/undispatchable.py \
 	dispatcher/vanishing-client.py
 
@@ -115,7 +117,7 @@ BASIC_TESTS_ENVIRONMENT = \
 	XDG_CONFIG_DIRS=@abs_top_srcdir@/test/twisted \
 	XDG_DATA_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	XDG_DATA_DIRS=@abs_top_srcdir@/test/twisted \
-	XDG_CACHE_DIR=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
+	XDG_CACHE_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	MC_CLIENTS_DIR=@abs_top_srcdir@/test/twisted/telepathy/clients \
 	MC_MANAGER_DIR=@abs_top_srcdir@/test/twisted/telepathy/managers \
 	G_DEBUG=fatal_criticals
@@ -215,6 +217,7 @@ EXTRA_DIST = \
 	chandlers/README \
 	telepathy/clients/README \
 	telepathy/clients/AbiWord.client \
+	telepathy/clients/Logger.client \
 	telepathy/managers/fakecm.manager \
 	telepathy/managers/onewitheverything.manager \
 	telepathy/managers/README \

@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (5.4.0-1) unstable; urgency=low
+
+  * New upstream release
+  * Remove patch from previous release, no longer needed
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 15 Apr 2010 20:33:37 +0100
+
 telepathy-mission-control-5 (5.3.2-3) unstable; urgency=low
 
   * debian/update-patches.mk: updated

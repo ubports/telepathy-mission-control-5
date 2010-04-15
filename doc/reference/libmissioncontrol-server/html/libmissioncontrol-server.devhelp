@@ -4,7 +4,7 @@
   <chapters>
     <sub name="libmissioncontrol-server" link="ch01.html">
       <sub name="McdMaster" link="McdMaster.html"/>
-      <sub name="McdConnection" link="libmissioncontrol-server-mcd-connection.html"/>
+      <sub name="McdConnection" link="McdConnection.html"/>
       <sub name="McdOperation" link="McdOperation.html"/>
       <sub name="McdService" link="McdService.html"/>
       <sub name="McdChannel" link="McdChannel.html"/>
@@ -14,7 +14,7 @@
       <sub name="McdController" link="McdController.html"/>
       <sub name="McdDispatcher" link="McdDispatcher.html"/>
       <sub name="mcd-dispatcher-context" link="libmissioncontrol-server-mcd-dispatcher-context.html"/>
-      <sub name="Debugging" link="libmissioncontrol-server-mcd-debug.html"/>
+      <sub name="Debugging" link="libmissioncontrol-server-Debugging.html"/>
       <sub name="mcd-enum-types" link="libmissioncontrol-server-mcd-enum-types.html"/>
     </sub>
   </chapters>
@@ -24,20 +24,20 @@
     <function name="The &quot;dbus-connection&quot; property" link="McdMaster.html#McdMaster--dbus-connection"/>
     <function name="The &quot;dbus-daemon&quot; property" link="McdMaster.html#McdMaster--dbus-daemon"/>
     <function name="The &quot;dispatcher&quot; property" link="McdMaster.html#McdMaster--dispatcher"/>
-    <function name="McdConnection" link="libmissioncontrol-server-mcd-connection.html#McdConnection-struct"/>
-    <function name="mcd_connection_get_account ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-get-account"/>
-    <function name="mcd_connection_request_channel ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-request-channel"/>
-    <function name="mcd_connection_cancel_channel_request ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-cancel-channel-request"/>
-    <function name="mcd_connection_close ()" link="libmissioncontrol-server-mcd-connection.html#mcd-connection-close"/>
-    <function name="The &quot;account&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--account"/>
-    <function name="The &quot;dbus-daemon&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--dbus-daemon"/>
-    <function name="The &quot;dispatcher&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--dispatcher"/>
-    <function name="The &quot;tp-connection&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-connection"/>
-    <function name="The &quot;tp-manager&quot; property" link="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-manager"/>
-    <function name="The &quot;connection-status-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-connection-status-changed"/>
-    <function name="The &quot;ready&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-ready"/>
-    <function name="The &quot;self-nickname-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-self-nickname-changed"/>
-    <function name="The &quot;self-presence-changed&quot; signal" link="libmissioncontrol-server-mcd-connection.html#McdConnection-self-presence-changed"/>
+    <function name="McdConnection" link="McdConnection.html#McdConnection-struct"/>
+    <function name="mcd_connection_get_account ()" link="McdConnection.html#mcd-connection-get-account"/>
+    <function name="mcd_connection_request_channel ()" link="McdConnection.html#mcd-connection-request-channel"/>
+    <function name="mcd_connection_cancel_channel_request ()" link="McdConnection.html#mcd-connection-cancel-channel-request"/>
+    <function name="mcd_connection_close ()" link="McdConnection.html#mcd-connection-close"/>
+    <function name="The &quot;account&quot; property" link="McdConnection.html#McdConnection--account"/>
+    <function name="The &quot;dbus-daemon&quot; property" link="McdConnection.html#McdConnection--dbus-daemon"/>
+    <function name="The &quot;dispatcher&quot; property" link="McdConnection.html#McdConnection--dispatcher"/>
+    <function name="The &quot;tp-connection&quot; property" link="McdConnection.html#McdConnection--tp-connection"/>
+    <function name="The &quot;tp-manager&quot; property" link="McdConnection.html#McdConnection--tp-manager"/>
+    <function name="The &quot;connection-status-changed&quot; signal" link="McdConnection.html#McdConnection-connection-status-changed"/>
+    <function name="The &quot;ready&quot; signal" link="McdConnection.html#McdConnection-ready"/>
+    <function name="The &quot;self-nickname-changed&quot; signal" link="McdConnection.html#McdConnection-self-nickname-changed"/>
+    <function name="The &quot;self-presence-changed&quot; signal" link="McdConnection.html#McdConnection-self-presence-changed"/>
     <function name="McdOperation" link="McdOperation.html#McdOperation-struct"/>
     <function name="mcd_operation_new ()" link="McdOperation.html#mcd-operation-new"/>
     <function name="mcd_operation_take_mission ()" link="McdOperation.html#mcd-operation-take-mission"/>
@@ -105,16 +105,16 @@
     <function name="The &quot;dispatch-operations&quot; property" link="McdDispatcher.html#McdDispatcher--dispatch-operations"/>
     <function name="The &quot;interfaces&quot; property" link="McdDispatcher.html#McdDispatcher--interfaces"/>
     <function name="The &quot;mcd-master&quot; property" link="McdDispatcher.html#McdDispatcher--mcd-master"/>
-    <function name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC--CAPS"/>
-    <function name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN--CAPS"/>
-    <function name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT--CAPS"/>
+    <function name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC:CAPS"/>
+    <function name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN:CAPS"/>
+    <function name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT:CAPS"/>
     <function name="McdDispatcherContext" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext"/>
     <function name="McdFilterFunc ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilterFunc"/>
-    <function name="MCD_FILTER_PRIORITY_CRITICAL" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-CRITICAL--CAPS"/>
-    <function name="MCD_FILTER_PRIORITY_SYSTEM" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-SYSTEM--CAPS"/>
-    <function name="MCD_FILTER_PRIORITY_USER" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-USER--CAPS"/>
-    <function name="MCD_FILTER_PRIORITY_NOTICE" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-NOTICE--CAPS"/>
-    <function name="MCD_FILTER_PRIORITY_LOW" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-LOW--CAPS"/>
+    <function name="MCD_FILTER_PRIORITY_CRITICAL" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-CRITICAL:CAPS"/>
+    <function name="MCD_FILTER_PRIORITY_SYSTEM" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-SYSTEM:CAPS"/>
+    <function name="MCD_FILTER_PRIORITY_USER" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-USER:CAPS"/>
+    <function name="MCD_FILTER_PRIORITY_NOTICE" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-NOTICE:CAPS"/>
+    <function name="MCD_FILTER_PRIORITY_LOW" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-LOW:CAPS"/>
     <function name="McdFilter" link="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilter"/>
     <function name="mcd_dispatcher_context_get_dispatcher ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-dispatcher"/>
     <function name="mcd_dispatcher_context_get_channel_object ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-object"/>
@@ -124,11 +124,11 @@
     <function name="mcd_dispatcher_context_get_channel_by_type ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-by-type"/>
     <function name="mcd_dispatcher_context_get_connection ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-connection"/>
     <function name="mcd_dispatcher_context_process ()" link="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-process"/>
-    <function name="mcd_debug_init ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-init"/>
-    <function name="mcd_debug_ref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-ref"/>
-    <function name="mcd_debug_unref ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-unref"/>
-    <function name="mcd_debug_print_tree ()" link="libmissioncontrol-server-mcd-debug.html#mcd-debug-print-tree"/>
+    <function name="mcd_debug_init ()" link="libmissioncontrol-server-Debugging.html#mcd-debug-init"/>
+    <function name="mcd_debug_ref ()" link="libmissioncontrol-server-Debugging.html#mcd-debug-ref"/>
+    <function name="mcd_debug_unref ()" link="libmissioncontrol-server-Debugging.html#mcd-debug-unref"/>
+    <function name="mcd_debug_print_tree ()" link="libmissioncontrol-server-Debugging.html#mcd-debug-print-tree"/>
     <function name="mcd_channel_status_get_type ()" link="libmissioncontrol-server-mcd-enum-types.html#mcd-channel-status-get-type"/>
-    <function name="MCD_TYPE_CHANNEL_STATUS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-CHANNEL-STATUS--CAPS"/>
+    <function name="MCD_TYPE_CHANNEL_STATUS" link="libmissioncontrol-server-mcd-enum-types.html#MCD-TYPE-CHANNEL-STATUS:CAPS"/>
   </functions>
 </book>

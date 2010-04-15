@@ -8,9 +8,8 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdMission.html" title="McdMission">
 <link rel="next" href="McdController.html" title="McdController">
-<meta name="generator" content="GTK-Doc V1.11 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.14 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
-<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -23,12 +22,12 @@
 </tr>
 <tr><td colspan="5" class="shortcuts">
 <a href="#McdProxy.synopsis" class="shortcut">Top</a>
-                 | 
-                <a href="#McdProxy.description" class="shortcut">Description</a>
-                 | 
-                <a href="#McdProxy.object-hierarchy" class="shortcut">Object Hierarchy</a>
-                 | 
-                <a href="#McdProxy.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#McdProxy.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#McdProxy.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#McdProxy.properties" class="shortcut">Properties</a>
 </td></tr>
 </table>
 <div class="refentry" title="McdProxy">
@@ -47,20 +46,17 @@ Unstable, unless otherwise indicated
 <div class="refsynopsisdiv" title="Synopsis">
 <a name="McdProxy.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
-
 #include &lt;mcd-proxy.h&gt;
 
                     <a class="link" href="McdProxy.html#McdProxy-struct" title="McdProxy">McdProxy</a>;
-<a class="link" href="McdProxy.html" title="McdProxy">McdProxy</a> *          <a class="link" href="McdProxy.html#mcd-proxy-new" title="mcd_proxy_new ()">mcd_proxy_new</a>                       (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *proxy_mission);
-const <a class="link" href="McdMission.html" title="McdMission">McdMission</a> *  <a class="link" href="McdProxy.html#mcd-proxy-get-proxy-object" title="mcd_proxy_get_proxy_object ()">mcd_proxy_get_proxy_object</a>          (<a class="link" href="McdProxy.html" title="McdProxy">McdProxy</a> *proxy);
+<a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          <a class="link" href="McdProxy.html#mcd-proxy-new" title="mcd_proxy_new ()">mcd_proxy_new</a>                       (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *proxy_mission</code></em>);
+const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  <a class="link" href="McdProxy.html#mcd-proxy-get-proxy-object" title="mcd_proxy_get_proxy_object ()">mcd_proxy_get_proxy_object</a>          (<em class="parameter"><code><a class="link" href="McdProxy.html" title="McdProxy"><span class="type">McdProxy</span></a> *proxy</code></em>);
 </pre>
 </div>
 <div class="refsect1" title="Object Hierarchy">
 <a name="McdProxy.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a
-href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"
->GObject</a>
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
          +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
                +----McdProxy
@@ -69,15 +65,14 @@ href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Ty
 <div class="refsect1" title="Properties">
 <a name="McdProxy.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="McdProxy.html#McdProxy--proxy-object" title='The "proxy-object" property'>proxy-object</a>"             <a class="link" href="McdMission.html" title="McdMission">McdMission</a>*           : Read / Write
+  "<a class="link" href="McdProxy.html#McdProxy--proxy-object" title='The "proxy-object" property'>proxy-object</a>"             <a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a>*           : Read / Write
 </pre>
 </div>
 <div class="refsect1" title="Description">
 <a name="McdProxy.description"></a><h2>Description</h2>
 <p>
 This is a simple container class that proxies the events from a proxy
-object to self container.</p>
-<p>
+object to self container.
 </p>
 </div>
 <div class="refsect1" title="Details">
@@ -91,7 +86,7 @@ object to self container.</p>
 <hr>
 <div class="refsect2" title="mcd_proxy_new ()">
 <a name="mcd-proxy-new"></a><h3>mcd_proxy_new ()</h3>
-<pre class="programlisting"><a class="link" href="McdProxy.html" title="McdProxy">McdProxy</a> *          mcd_proxy_new                       (<a class="link" href="McdMission.html" title="McdMission">McdMission</a> *proxy_mission);</pre>
+<pre class="programlisting"><a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          mcd_proxy_new                       (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *proxy_mission</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -113,7 +108,7 @@ object to self container.</p>
 <hr>
 <div class="refsect2" title="mcd_proxy_get_proxy_object ()">
 <a name="mcd-proxy-get-proxy-object"></a><h3>mcd_proxy_get_proxy_object ()</h3>
-<pre class="programlisting">const <a class="link" href="McdMission.html" title="McdMission">McdMission</a> *  mcd_proxy_get_proxy_object          (<a class="link" href="McdProxy.html" title="McdProxy">McdProxy</a> *proxy);</pre>
+<pre class="programlisting">const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  mcd_proxy_get_proxy_object          (<em class="parameter"><code><a class="link" href="McdProxy.html" title="McdProxy"><span class="type">McdProxy</span></a> *proxy</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -137,13 +132,13 @@ object to self container.</p>
 <a name="McdProxy.property-details"></a><h2>Property Details</h2>
 <div class="refsect2" title='The "proxy-object" property'>
 <a name="McdProxy--proxy-object"></a><h3>The <code class="literal">"proxy-object"</code> property</h3>
-<pre class="programlisting">  "proxy-object"             <a class="link" href="McdMission.html" title="McdMission">McdMission</a>*           : Read / Write</pre>
+<pre class="programlisting">  "proxy-object"             <a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a>*           : Read / Write</pre>
 <p>Object to be monitored for McdMission signals.</p>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.11</div>
+          Generated by GTK-Doc V1.14</div>
 </body>
 </html>

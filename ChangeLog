@@ -1,3 +1,413 @@
+commit 77560f63fd5c913980650aaaca123d9674f095a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 20:29:20 +0100
+
+    Prepare release 5.4.0
+
+ NEWS         |    4 +++-
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 60192abfd0c20f927af2201d98c898858fd9a607
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 20:10:55 +0100
+
+    Distribute Logger.client as well as AbiWord.client
+    
+    This hopefully fixes distcheck.
+
+ test/twisted/Makefile.am |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit fa30caa6e1b1da9d53af0e0935c463d0183b7793
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 19:51:24 +0100
+
+    Re-generate doc stuff with gtk-doc 1.14
+
+ doc/reference/libmcclient/tmpl/enums.sgml          |    3 +++
+ doc/reference/libmcclient/tmpl/gtypes-body.sgml    |    3 +++
+ doc/reference/libmcclient/tmpl/gtypes.sgml         |    3 +++
+ .../libmcclient/tmpl/interfaces-body.sgml          |    9 +++++++++
+ doc/reference/libmcclient/tmpl/interfaces.sgml     |    9 +++++++++
+ .../libmcclient/tmpl/mc-account-manager.sgml       |    3 +++
+ doc/reference/libmcclient/tmpl/mc-account.sgml     |    3 +++
+ doc/reference/libmcclient/tmpl/mc-errors.sgml      |    4 ++++
+ doc/reference/libmcclient/tmpl/mc-profile.sgml     |    5 +++++
+ doc/reference/libmcclient/tmpl/mc-quark.sgml       |   13 +++++++++++++
+ .../libmcclient/tmpl/mc-signals-marshal.sgml       |    3 +++
+ .../tmpl/register-dbus-glib-marshallers-body.sgml  |    3 +++
+ .../libmcclient/tmpl/signals-marshal.sgml          |    3 +++
+ .../libmissioncontrol-server/tmpl/mcd-channel.sgml |    3 +++
+ .../tmpl/mcd-connection.sgml                       |    3 +++
+ .../tmpl/mcd-controller.sgml                       |    4 ++++
+ .../libmissioncontrol-server/tmpl/mcd-debug.sgml   |    4 ++++
+ .../tmpl/mcd-dispatcher-context.sgml               |    3 +++
+ .../tmpl/mcd-dispatcher.sgml                       |    3 +++
+ .../tmpl/mcd-enum-types.sgml                       |    4 ++++
+ .../libmissioncontrol-server/tmpl/mcd-manager.sgml |    3 +++
+ .../libmissioncontrol-server/tmpl/mcd-master.sgml  |    3 +++
+ .../libmissioncontrol-server/tmpl/mcd-mission.sgml |    3 +++
+ .../tmpl/mcd-operation.sgml                        |    4 ++++
+ .../libmissioncontrol-server/tmpl/mcd-proxy.sgml   |    3 +++
+ .../libmissioncontrol-server/tmpl/mcd-service.sgml |    4 ++++
+ 26 files changed, 108 insertions(+), 0 deletions(-)
+
+commit 435ce098578838fa0bc097b4fc0a7057543a9817
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 19:26:08 +0100
+
+    Document the Recover feature in NEWS
+
+ NEWS |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+commit f6f1fc57bf6e7c6ca29f841ed2277bc08c97d215
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 19:25:49 +0100
+
+    Add missing #includes
+
+ src/mcd-channel.c     |    1 +
+ src/mcd-handler-map.c |    4 +++-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 1609203111ced2cdd9d26aa55b4dfa3b0ded2e64
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-14 13:19:30 +0200
+
+    McdHandlerMap: perform channel->account lookup internally
+    
+    Instead of giving access to the whole map to the user.
+
+ src/mcd-dispatcher.c       |    5 ++---
+ src/mcd-handler-map-priv.h |    3 ++-
+ src/mcd-handler-map.c      |   10 +++++++---
+ 3 files changed, 11 insertions(+), 7 deletions(-)
+
+commit bce98dcad2fc6f7ad34b645d6b3d58ec2849e7d0
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-14 13:18:51 +0200
+
+    _mcd_client_recover_observer: don't leak connection reference
+
+ src/mcd-client.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+commit fb0dc6853ac6109da9aaa11f5b9c464379613ff4
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-13 13:42:26 +0200
+
+    tests: assert that observer info "recovering" key is set in observer recovery
+
+ .../dispatcher/respawn-activatable-observers.py    |    4 +++-
+ test/twisted/dispatcher/respawn-observers.py       |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+commit 3fa338d7411638dea87f0e30ba2ff9b920905333
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-13 13:33:43 +0200
+
+    moved _mcd_tp_channel_* to a separate file
+
+ src/Makefile.am              |    2 +
+ src/channel-utils.c          |  154 ++++++++++++++++++++++++++++++++++++++++++
+ src/channel-utils.h          |   48 +++++++++++++
+ src/mcd-channel-priv.h       |   11 ---
+ src/mcd-channel.c            |  118 --------------------------------
+ src/mcd-client.c             |   13 ++--
+ src/mcd-dispatch-operation.c |    9 ++-
+ 7 files changed, 217 insertions(+), 138 deletions(-)
+
+commit e9b3c027f74d5e952363020a9f1ccaea21534f93
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:19:47 +0200
+
+    added Logger test client (activatable respawnable observer)
+
+ test/twisted/telepathy/clients/Logger.client |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+commit 5bd212158ba30668698de2048e3f28e72d33b2e9
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:19:04 +0200
+
+    add tests for respawning (activatable) observers
+
+ test/twisted/Makefile.am                           |    2 +
+ .../dispatcher/respawn-activatable-observers.py    |  233 ++++++++++++++++++++
+ test/twisted/dispatcher/respawn-observers.py       |  218 ++++++++++++++++++
+ 3 files changed, 453 insertions(+), 0 deletions(-)
+
+commit 18d7ae454f9ebbea427cbbe6061fa09a4fb76333
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:17:49 +0200
+
+    update existing tests with slightly different use cases due to new feature
+
+ test/twisted/capabilities/contact-caps.py   |    2 +-
+ test/twisted/dispatcher/vanishing-client.py |    8 ++++----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 9ba45d39f44460132c1ce0c25dabf32f1c8b6aed
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:16:56 +0200
+
+    mctest.SimulatedClient: support for optional recovery property for observers
+
+ test/twisted/mctest.py |   19 +++++++++++++++++--
+ 1 files changed, 17 insertions(+), 2 deletions(-)
+
+commit 2f11b88c94130bb0c4ec4e41c23115beccb0e227
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:13:07 +0200
+
+    added Logger client service for twisted tests
+
+ test/twisted/tools/Client.Logger.service.in |    3 +++
+ test/twisted/tools/Makefile.am              |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 43e54e07aa61068f3040caaeba38b2dc632c42aa
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:11:53 +0200
+
+    McdConnection: pass account path _mcd_dispatcher_recover_channel
+
+ src/mcd-connection.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit c8c72ad0531ac1eb2e160401e837fd1dca65b9cc
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:10:56 +0200
+
+    added internal method _mcd_dispatcher_recover_channel()
+
+ src/mcd-dispatcher-priv.h |    3 ++-
+ src/mcd-dispatcher.c      |    5 +++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 03dd5dfa13cc79b60c91c72cc16acd8b1e0ba12e
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:10:11 +0200
+
+    McdDispatcher: listen to McdClient's need-recovery signal
+
+ src/mcd-dispatcher.c |   45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 45 insertions(+), 0 deletions(-)
+
+commit 72e342133acdf97dc6e62a1568de0e312bbbf78d
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:08:34 +0200
+
+    pass on the account path to the handler map
+
+ src/mcd-dispatch-operation.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 33a006b9204e6a3559c92837e4a6c89ff1f0d2f3
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 16:06:43 +0200
+
+    added internal _mcd_channel_details_build_from_tp_chan method
+
+ src/mcd-channel-priv.h |    2 +
+ src/mcd-channel.c      |   54 ++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 41 insertions(+), 15 deletions(-)
+
+commit 375fab4d40d9324b4aeadf3321c33c347bd50d07
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 15:52:00 +0200
+
+    added _mcd_client_recover_observer method
+
+ src/mcd-client-priv.h |    4 ++++
+ src/mcd-client.c      |   32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 0 deletions(-)
+
+commit 83d12e54b7695bc84d232e6be8fa88d25a40cdee
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 15:44:59 +0200
+
+    McdClient: emit need-recovery signal when an observer needs to be respawned
+
+ src/mcd-client.c |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+commit 1e460b65af690a919bdf97869fd7fe526b62856f
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 15:43:43 +0200
+
+    McdClient: query for and parse Observer.Recovery property
+
+ src/mcd-client.c |   58 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 55 insertions(+), 3 deletions(-)
+
+commit dbeee46b71ab742e7946d2e2080e1247c5578466
+Author: Senko Rasic <senko.rasic@collabora.co.uk>
+Date:   2010-04-12 15:27:52 +0200
+
+    McdHandlerMap: maintain a mapping between handled channels and their account paths
+
+ src/mcd-handler-map-priv.h |    7 ++++++-
+ src/mcd-handler-map.c      |   33 ++++++++++++++++++++++++++++++++-
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+
+commit b7e2dc78b22bf09675f9b83097c4bd45a2dff26b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-14 13:58:28 +0100
+
+    Set the right environment variable to run tests with a temporary version of ~/.cache
+
+ test/twisted/Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 39923b9e7427cf4aa29da4d6f7ea9ddddefc7b57
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:18:20 +0000
+
+    trivia: .gitignore: ignore GCOV and with-session-bus droppings
+
+ .gitignore |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 98d52cb5e896f702748f2e99f1ddc996a903286a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-14 13:44:06 +0100
+
+    Prepare NEWS for 5.4
+
+ NEWS |   20 ++++++++++++++++++--
+ 1 files changed, 18 insertions(+), 2 deletions(-)
+
+commit fb4077a47c7e9509e9580020159df07dac6278d1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 15:36:07 +0000
+
+    Incomplete accounts resulted in account manager load locks never being released.
+    
+    This meant that the account manager's dbus name was never claimed, as it
+    sat around forever waiting for the account's manager to become ready,
+    (or fail) but this could never happen as the incomplete account didn't
+    have a manager at all.
+
+ src/mcd-account.c |   30 +++++++++++++++++++++++++++---
+ 1 files changed, 27 insertions(+), 3 deletions(-)
+
+commit a40571a5a56fe6f012d41fb48a00ee24881c1760
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-26 11:12:40 +0100
+
+    Fix error propagation in CreateAccount
+    
+    Fixes fdo#27021
+
+ src/mcd-account-manager.c                          |   20 ++++++++++-------
+ .../account-manager/create-with-properties.py      |   22 ++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 8 deletions(-)
+
+commit e5ed8c0a0d8e955fb3296138d4f68843c393a5b4
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-11 12:29:50 +0100
+
+    Remove misleading reference to GConf
+
+ src/mcd-account-manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 392d331c839db1469c6e13f51dc5abb6f7466b74
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2010-03-01 13:58:58 +0000
+
+    Only time out channel requests after many hours
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-connection.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 9d696fcd7f7b587396b2339c9d67d7aa33b36bfd
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-02-24 14:38:02 +0000
+
+    mc-tool: don't crash on invalid account names
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ libmcclient/mc-account.c |    2 ++
+ util/mc-tool.c           |   11 +++++++++++
+ 2 files changed, 13 insertions(+), 0 deletions(-)
+
+commit e421797f27230432b3f59099537339346bf98049
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-02-18 15:59:57 +0000
+
+    mc-wait-for-name: link to GLib properly
+    
+    See Debian bug #556488 for more info.
+    
+    Fixes: fd.o#25122
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ util/Makefile.am |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 04fc1f7d34b59735489c31b218c4d1f6a8de7771
+Author: Danielle Madeley <danielle@madeley.id.au>
+Date:   2009-11-06 10:54:30 +1100
+
+    Make MC compile with dbus-glib 0.80 by casting const GError* back to GError*
+    
+    Ubuntu Karmic ships with dbus-glib 0.80. Which takes a GError* argument to
+    dbus_g_method_return_error(). We could either bump our minimum dbus-glib
+    version to 0.82, or cast the errors so that it works.
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+ src/mcd-account.c            |    2 +-
+ src/mcd-dispatch-operation.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 39b24ab5220e3d0036fc26c1da70f92a7ef9d189
+Merge: 3aab9cd d0dde79
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 15:19:59 +0000
+
+    Merge branch 'compat'
+    
+    Reviewed-by: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+
+commit d0dde7972aea28765042223cfc983e4d2b07f0b7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 15:03:08 +0000
+
+    Update NEWS
+
+ NEWS |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 29abb230abaf890d33751d5da232b9a69434f0e5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 15:03:03 +0000
+
+    fd.o #24875: reimplement g_error_new_valist to avoid a GLib 2.22 dependency
+
+ src/mcd-dispatch-operation.c |    2 +-
+ src/mcd-misc.c               |   14 ++++++++++++++
+ src/mcd-misc.h               |    4 ++++
+ 3 files changed, 19 insertions(+), 1 deletions(-)
+
+commit 3aab9cdef26ede2ecb22e9959d117e75fea4e7b5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 19:35:27 +0000
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 53ac478c5ab53644f7829075bd16a4f7c73f914c
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2009-11-02 19:04:14 +0000
