@@ -41,51 +41,51 @@
 <a name="McProfile"></a><pre class="synopsis">enum                <a class="link" href="libmcclient-mc-profile.html#McProfileCapabilityFlags" title="enum McProfileCapabilityFlags">McProfileCapabilityFlags</a>;
                     <a class="link" href="libmcclient-mc-profile.html#McProfile-struct" title="McProfile">McProfile</a>;
                     <a class="link" href="libmcclient-mc-profile.html#McProfileClass" title="McProfileClass">McProfileClass</a>;
-<a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         <a class="link" href="libmcclient-mc-profile.html#mc-profile-lookup" title="mc_profile_lookup ()">mc_profile_lookup</a>                   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);
+<a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         <a class="link" href="libmcclient-mc-profile.html#mc-profile-lookup" title="mc_profile_lookup ()">mc_profile_lookup</a>                   (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);
 <a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         <a class="link" href="libmcclient-mc-profile.html#mc-profile-lookup-default-for-vcard-field" title="mc_profile_lookup_default_for_vcard_field ()">mc_profile_lookup_default_for_vcard_field</a>
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-filename" title="mc_profile_get_filename ()">mc_profile_get_filename</a>             (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);
+                                                        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-filename" title="mc_profile_get_filename ()">mc_profile_get_filename</a>             (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="libmcclient-mc-profile.html#mc-profile-clear-cache" title="mc_profile_clear_cache ()">mc_profile_clear_cache</a>              (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list" title="mc_profiles_list ()">mc_profiles_list</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list-by-vcard-field" title="mc_profiles_list_by_vcard_field ()">mc_profiles_list_by_vcard_field</a>     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list-by-protocol" title="mc_profiles_list_by_protocol ()">mc_profiles_list_by_protocol</a>        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()">mc_profiles_free_list</a>               (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *list</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-unique-name" title="mc_profile_get_unique_name ()">mc_profile_get_unique_name</a>          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-configuration-ui" title="mc_profile_get_configuration_ui ()">mc_profile_get_configuration_ui</a>     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-display-name" title="mc_profile_get_display_name ()">mc_profile_get_display_name</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-icon-name" title="mc_profile_get_icon_name ()">mc_profile_get_icon_name</a>            (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-branding-icon-name" title="mc_profile_get_branding_icon_name ()">mc_profile_get_branding_icon_name</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-vcard-field" title="mc_profile_get_vcard_field ()">mc_profile_get_vcard_field</a>          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-domain" title="mc_profile_get_default_account_domain ()">mc_profile_get_default_account_domain</a>
+<a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list" title="mc_profiles_list ()">mc_profiles_list</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list-by-vcard-field" title="mc_profiles_list_by_vcard_field ()">mc_profiles_list_by_vcard_field</a>     (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profiles-list-by-protocol" title="mc_profiles_list_by_protocol ()">mc_profiles_list_by_protocol</a>        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()">mc_profiles_free_list</a>               (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *list</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-unique-name" title="mc_profile_get_unique_name ()">mc_profile_get_unique_name</a>          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-configuration-ui" title="mc_profile_get_configuration_ui ()">mc_profile_get_configuration_ui</a>     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-display-name" title="mc_profile_get_display_name ()">mc_profile_get_display_name</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-icon-name" title="mc_profile_get_icon_name ()">mc_profile_get_icon_name</a>            (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-branding-icon-name" title="mc_profile_get_branding_icon_name ()">mc_profile_get_branding_icon_name</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-vcard-field" title="mc_profile_get_vcard_field ()">mc_profile_get_vcard_field</a>          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-domain" title="mc_profile_get_default_account_domain ()">mc_profile_get_default_account_domain</a>
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-avatar-mime-type" title="mc_profile_get_avatar_mime_type ()">mc_profile_get_avatar_mime_type</a>     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-avatar-mime-type" title="mc_profile_get_avatar_mime_type ()">mc_profile_get_avatar_mime_type</a>     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 const <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a> * <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-supported-presences" title="mc_profile_get_supported_presences ()">mc_profile_get_supported_presences</a>
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmcclient-mc-profile.html#mc-profile-supports-presence" title="mc_profile_supports_presence ()">mc_profile_supports_presence</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmcclient-mc-profile.html#mc-profile-supports-presence" title="mc_profile_supports_presence ()">mc_profile_supports_presence</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-priority" title="mc_profile_get_priority ()">mc_profile_get_priority</a>             (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-name" title="mc_profile_get_default_account_name ()">mc_profile_get_default_account_name</a> (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-protocol-name" title="mc_profile_get_protocol_name ()">mc_profile_get_protocol_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-manager-name" title="mc_profile_get_manager_name ()">mc_profile_get_manager_name</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmcclient-mc-profile.html#mc-profile-is-default-for-vcard-field" title="mc_profile_is_default_for_vcard_field ()">mc_profile_is_default_for_vcard_field</a>
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-priority" title="mc_profile_get_priority ()">mc_profile_get_priority</a>             (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-name" title="mc_profile_get_default_account_name ()">mc_profile_get_default_account_name</a> (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-protocol-name" title="mc_profile_get_protocol_name ()">mc_profile_get_protocol_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-manager-name" title="mc_profile_get_manager_name ()">mc_profile_get_manager_name</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmcclient-mc-profile.html#mc-profile-is-default-for-vcard-field" title="mc_profile_is_default_for_vcard_field ()">mc_profile_is_default_for_vcard_field</a>
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 <a class="link" href="libmcclient-mc-profile.html#McProfileCapabilityFlags" title="enum McProfileCapabilityFlags"><span class="returnvalue">McProfileCapabilityFlags</span></a>  <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-capabilities" title="mc_profile_get_capabilities ()">mc_profile_get_capabilities</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-setting" title="mc_profile_get_default_setting ()">mc_profile_get_default_setting</a>      (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *setting</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-vcard-mangle" title="mc_profile_get_vcard_mangle ()">mc_profile_get_vcard_mangle</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-name" title="mc_profile_presence_get_name ()">mc_profile_presence_get_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-setting" title="mc_profile_get_default_setting ()">mc_profile_get_default_setting</a>      (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *setting</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-vcard-mangle" title="mc_profile_get_vcard_mangle ()">mc_profile_get_vcard_mangle</a>         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-name" title="mc_profile_presence_get_name ()">mc_profile_presence_get_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
 <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-type" title="mc_profile_presence_get_type ()">mc_profile_presence_get_type</a>  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name" title="mc_profile_presence_get_icon_name ()">mc_profile_presence_get_icon_name</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name" title="mc_profile_presence_get_icon_name ()">mc_profile_presence_get_icon_name</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
 </pre>
 </div>
 <div class="refsect1" title="Object Hierarchy">
 <a name="libmcclient-mc-profile.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----McProfile
 </pre>
 </div>
@@ -137,7 +137,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <hr>
 <div class="refsect2" title="mc_profile_lookup ()">
 <a name="mc-profile-lookup"></a><h3>mc_profile_lookup ()</h3>
-<pre class="programlisting"><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         mc_profile_lookup                   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         mc_profile_lookup                   (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);</pre>
 <p>
 Get the profile whose unique name is the one specified. If no profile with
 that name exists, a new one is created. The returned object's reference
@@ -163,7 +163,7 @@ count is incremented.
 <div class="refsect2" title="mc_profile_lookup_default_for_vcard_field ()">
 <a name="mc-profile-lookup-default-for-vcard-field"></a><h3>mc_profile_lookup_default_for_vcard_field ()</h3>
 <pre class="programlisting"><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="returnvalue">McProfile</span></a> *         mc_profile_lookup_default_for_vcard_field
-                                                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
+                                                        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
 <p>
 Get the profile whose vcard field is the one specified. 
 The returned object's reference count is incremented.
@@ -187,7 +187,7 @@ The returned object's reference count is incremented.
 <hr>
 <div class="refsect2" title="mc_profile_get_filename ()">
 <a name="mc-profile-get-filename"></a><h3>mc_profile_get_filename ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_get_filename             (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_get_filename             (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *unique_name</code></em>);</pre>
 <p>
 Get the .profile file path of the profile <em class="parameter"><code>unique_name</code></em>. This can be useful
 for applications which wants to parse the .profile file themselves, for the
@@ -205,7 +205,7 @@ if the .profile file does not exist, this functions fails.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> The path of the .profile file, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+<td> The path of the .profile file, or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
 </td>
 </tr>
 </tbody>
@@ -222,7 +222,7 @@ Clears the profiles cache.
 <hr>
 <div class="refsect2" title="mc_profiles_list ()">
 <a name="mc-profiles-list"></a><h3>mc_profiles_list ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 Lists all configured profiles.
 </p>
@@ -230,7 +230,7 @@ Lists all configured profiles.
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
+<td> a <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
 </td>
 </tr></tbody>
 </table></div>
@@ -238,7 +238,7 @@ Lists all configured profiles.
 <hr>
 <div class="refsect2" title="mc_profiles_list_by_vcard_field ()">
 <a name="mc-profiles-list-by-vcard-field"></a><h3>mc_profiles_list_by_vcard_field ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list_by_vcard_field     (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list_by_vcard_field     (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
 <p>
 Lists all configured profiles with the given vcard field..
 </p>
@@ -252,7 +252,7 @@ Lists all configured profiles with the given vcard field..
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
+<td> a <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
 </td>
 </tr>
 </tbody>
@@ -261,7 +261,7 @@ Lists all configured profiles with the given vcard field..
 <hr>
 <div class="refsect2" title="mc_profiles_list_by_protocol ()">
 <a name="mc-profiles-list-by-protocol"></a><h3>mc_profiles_list_by_protocol ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list_by_protocol        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mc_profiles_list_by_protocol        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>);</pre>
 <p>
 Lists all configured profiles for the given protocol.
 </p>
@@ -275,7 +275,7 @@ Lists all configured profiles for the given protocol.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
+<td> a <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of the profiles (must be freed with <a class="link" href="libmcclient-mc-profile.html#mc-profiles-free-list" title="mc_profiles_free_list ()"><span class="type">mc_profiles_free_list</span></a>).
 </td>
 </tr>
 </tbody>
@@ -284,7 +284,7 @@ Lists all configured profiles for the given protocol.
 <hr>
 <div class="refsect2" title="mc_profiles_free_list ()">
 <a name="mc-profiles-free-list"></a><h3>mc_profiles_free_list ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mc_profiles_free_list               (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *list</code></em>);</pre>
+<pre class="programlisting"><span class="returnvalue">void</span>                mc_profiles_free_list               (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *list</code></em>);</pre>
 <p>
 Frees a list of profiles.
 </p>
@@ -292,7 +292,7 @@ Frees a list of profiles.
 <col align="left" valign="top">
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>list</code></em> :</span></p></td>
-<td>The <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a>.
+<td>The <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a>.
 </td>
 </tr></tbody>
 </table></div>
@@ -300,7 +300,7 @@ Frees a list of profiles.
 <hr>
 <div class="refsect2" title="mc_profile_get_unique_name ()">
 <a name="mc-profile-get-unique-name"></a><h3>mc_profile_get_unique_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_unique_name          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_unique_name          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the unique name of the profile.
 </p>
@@ -323,7 +323,7 @@ Get the unique name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_configuration_ui ()">
 <a name="mc-profile-get-configuration-ui"></a><h3>mc_profile_get_configuration_ui ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_configuration_ui     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_configuration_ui     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the configuration ui of the profile.
 </p>
@@ -346,7 +346,7 @@ Get the configuration ui of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_display_name ()">
 <a name="mc-profile-get-display-name"></a><h3>mc_profile_get_display_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_display_name         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_display_name         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the display name of the profile.
 </p>
@@ -369,7 +369,7 @@ Get the display name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_icon_name ()">
 <a name="mc-profile-get-icon-name"></a><h3>mc_profile_get_icon_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_icon_name            (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_icon_name            (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the icon name of the profile.
 </p>
@@ -392,7 +392,7 @@ Get the icon name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_branding_icon_name ()">
 <a name="mc-profile-get-branding-icon-name"></a><h3>mc_profile_get_branding_icon_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_branding_icon_name   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_branding_icon_name   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the branding icon name of the profile.
 </p>
@@ -415,7 +415,7 @@ Get the branding icon name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_vcard_field ()">
 <a name="mc-profile-get-vcard-field"></a><h3>mc_profile_get_vcard_field ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_vcard_field          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_vcard_field          (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the vcard field of the profile.
 </p>
@@ -438,7 +438,7 @@ Get the vcard field of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_default_account_domain ()">
 <a name="mc-profile-get-default-account-domain"></a><h3>mc_profile_get_default_account_domain ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_account_domain
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_account_domain
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the default account domain of the profile.
@@ -463,7 +463,7 @@ freed).
 <hr>
 <div class="refsect2" title="mc_profile_get_avatar_mime_type ()">
 <a name="mc-profile-get-avatar-mime-type"></a><h3>mc_profile_get_avatar_mime_type ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_avatar_mime_type     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_avatar_mime_type     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the preferred MIME type for the avatar.
 </p>
@@ -511,7 +511,7 @@ It must not be freed.
 <hr>
 <div class="refsect2" title="mc_profile_supports_presence ()">
 <a name="mc-profile-supports-presence"></a><h3>mc_profile_supports_presence ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_profile_supports_presence        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_profile_supports_presence        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);</pre>
 <p>
 </p>
@@ -539,7 +539,7 @@ It must not be freed.
 <hr>
 <div class="refsect2" title="mc_profile_get_priority ()">
 <a name="mc-profile-get-priority"></a><h3>mc_profile_get_priority ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mc_profile_get_priority             (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mc_profile_get_priority             (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the priority of the profile, as an integer number.
 </p>
@@ -562,7 +562,7 @@ Get the priority of the profile, as an integer number.
 <hr>
 <div class="refsect2" title="mc_profile_get_default_account_name ()">
 <a name="mc-profile-get-default-account-name"></a><h3>mc_profile_get_default_account_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_account_name (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_account_name (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the default account display name.
 </p>
@@ -586,7 +586,7 @@ freed).
 <hr>
 <div class="refsect2" title="mc_profile_get_protocol_name ()">
 <a name="mc-profile-get-protocol-name"></a><h3>mc_profile_get_protocol_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_protocol_name        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_protocol_name        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the protocol name of the profile.
 </p>
@@ -609,7 +609,7 @@ Get the protocol name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_manager_name ()">
 <a name="mc-profile-get-manager-name"></a><h3>mc_profile_get_manager_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_manager_name         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_manager_name         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Get the manager name of the profile.
 </p>
@@ -632,7 +632,7 @@ Get the manager name of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_is_default_for_vcard_field ()">
 <a name="mc-profile-is-default-for-vcard-field"></a><h3>mc_profile_is_default_for_vcard_field ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_profile_is_default_for_vcard_field
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_profile_is_default_for_vcard_field
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Checks if this is the default profile for the given vcard field.
@@ -679,8 +679,8 @@ Gets the capabilities of this profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_default_setting ()">
 <a name="mc-profile-get-default-setting"></a><h3>mc_profile_get_default_setting ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_setting      (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *setting</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_default_setting      (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *setting</code></em>);</pre>
 <p>
 Get the default value of a setting of the profile.
 </p>
@@ -708,8 +708,8 @@ Get the default value of a setting of the profile.
 <hr>
 <div class="refsect2" title="mc_profile_get_vcard_mangle ()">
 <a name="mc-profile-get-vcard-mangle"></a><h3>mc_profile_get_vcard_mangle ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_vcard_mangle         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_profile_get_vcard_mangle         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);</pre>
 <p>
 Get a mangle to transform a foreign address to a handle this profile understands
 </p>
@@ -737,8 +737,8 @@ Get a mangle to transform a foreign address to a handle this profile understands
 <hr>
 <div class="refsect2" title="mc_profile_presence_get_name ()">
 <a name="mc-profile-presence-get-name"></a><h3>mc_profile_presence_get_name ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_presence_get_name        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_presence_get_name        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -764,7 +764,7 @@ Get a mangle to transform a foreign address to a handle this profile understands
 <div class="refsect2" title="mc_profile_presence_get_type ()">
 <a name="mc-profile-presence-get-type"></a><h3>mc_profile_presence_get_type ()</h3>
 <pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  mc_profile_presence_get_type  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -789,8 +789,8 @@ Get a mangle to transform a foreign address to a handle this profile understands
 <hr>
 <div class="refsect2" title="mc_profile_presence_get_icon_name ()">
 <a name="mc-profile-presence-get-icon-name"></a><h3>mc_profile_presence_get_icon_name ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_presence_get_icon_name   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mc_profile_presence_get_icon_name   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+                                                         <em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>

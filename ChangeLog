@@ -1,3 +1,93 @@
+commit 91bb48a26e0dc7a9abab8d36b46e887c988a6279
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:16:05 +0100
+
+    Prepare version 5.4.1
+
+ NEWS         |    4 +++-
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 7a24d56cd283cfeea0d29cab157f2498453a24a9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:55:08 +0100
+
+    update NEWS
+
+ NEWS |   10 +++++++++-
+ 1 files changed, 9 insertions(+), 1 deletions(-)
+
+commit 1dedb276b857276562ec4b007387e856ee8d5bfc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 17:53:49 +0100
+
+    Don't cache whether we have the requests interface
+    
+    One use of the caching (in _mcd_connection_request_channel) was subtly
+    incorrect: before using the cached variable we checked whether the
+    TpConnection was ready, but that's not the same thing as checking whether
+    our on_connection_ready() callback (which caches it) has actually been
+    called yet.
+    
+    This fixes a regression in dispatcher/connect-for-request.py.
+
+ src/mcd-connection.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+commit fcfe135a45329d25cd8886b3861f68ee736e672e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 17:06:13 +0100
+
+    Add a regression test for fd.o #25684
+    
+    This turns out to be a regression in the 5.5 branch, but adding a test
+    in the stable branch seems a good way to avoid introducing this bug.
+
+ test/twisted/Makefile.am                     |    1 +
+ test/twisted/account-manager/create-twice.py |   64 ++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 0 deletions(-)
+
+commit b864a277d76c54a803e9259cd65abe1dfdc624d3
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-19 14:45:29 +0200
+
+    set '0' as UserActionTime when HandleWith() is called
+    
+    '0' means 'no user action' which is the safer choice to prevent focus
+    stealing. User should use a futur variant of HandleWith() allowing him to pass
+    a UserActionTime when needed.
+
+ src/mcd-dispatch-operation.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 506f164532b3a2fc5b8b232b42414e7bc79c17b4
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-19 15:33:43 +0200
+
+    account-manager/presence.py: GetInterfaces can be called twice
+
+ test/twisted/account-manager/presence.py |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
+
+commit c758ce6dd21a56641b78b36137274a13d8270488
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-19 15:23:10 +0200
+
+    mctest.py: no need to import 'sha'
+
+ test/twisted/mctest.py |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit c4bb262c3209c172bf0ab2455a1cc4f8a14a1583
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 20:54:43 +0100
+
+    Start 5.4.1 development
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 77560f63fd5c913980650aaaca123d9674f095a0
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-04-15 20:29:20 +0100

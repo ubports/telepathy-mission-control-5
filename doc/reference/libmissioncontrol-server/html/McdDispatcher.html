@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdController.html" title="McdController">
 <link rel="next" href="libmissioncontrol-server-mcd-dispatcher-context.html" title="mcd-dispatcher-context">
-<meta name="generator" content="GTK-Doc V1.14 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -53,13 +53,13 @@ Unstable, unless otherwise indicated
                     <a class="link" href="McdDispatcher.html#McdDispatcher-struct" title="McdDispatcher">McdDispatcher</a>;
 <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     <a class="link" href="McdDispatcher.html#mcd-dispatcher-new" title="mcd_dispatcher_new ()">mcd_dispatcher_new</a>                  (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus_daemon</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a> *master</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage" title="mcd_dispatcher_get_channel_type_usage ()">mcd_dispatcher_get_channel_type_usage</a>
+<a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage" title="mcd_dispatcher_get_channel_type_usage ()">mcd_dispatcher_get_channel_type_usage</a>
                                                         (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> chan_type_quark</code></em>);
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> chan_type_quark</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdDispatcher.html#mcd-dispatcher-add-filter" title="mcd_dispatcher_add_filter ()">mcd_dispatcher_add_filter</a>           (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
                                                          <em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilterFunc" title="McdFilterFunc ()"><span class="type">McdFilterFunc</span></a> filter</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> priority</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> priority</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdDispatcher.html#mcd-dispatcher-add-filters" title="mcd_dispatcher_add_filters ()">mcd_dispatcher_add_filters</a>          (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilter" title="McdFilter"><span class="type">McdFilter</span></a> *filters</code></em>);
 </pre>
@@ -67,7 +67,7 @@ Unstable, unless otherwise indicated
 <div class="refsect1" title="Object Hierarchy">
 <a name="McdDispatcher.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
          +----McdDispatcher
 </pre>
@@ -83,7 +83,7 @@ McdDispatcher implements
 <pre class="synopsis">
   "<a class="link" href="McdDispatcher.html#McdDispatcher--dbus-daemon" title='The "dbus-daemon" property'>dbus-daemon</a>"              <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct
   "<a class="link" href="McdDispatcher.html#McdDispatcher--dispatch-operations" title='The "dispatch-operations" property'>dispatch-operations</a>"      <span class="type">GPtrArray_GValueArray_DBusGObjectPath+GHashTable_gchararray+GValue___*</span>  : Read
-  "<a class="link" href="McdDispatcher.html#McdDispatcher--interfaces" title='The "interfaces" property'>interfaces</a>"               <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read
+  "<a class="link" href="McdDispatcher.html#McdDispatcher--interfaces" title='The "interfaces" property'>interfaces</a>"               <a href="/usr/share/gtk-doc/html/gobject/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--mcd-master" title='The "mcd-master" property'>mcd-master</a>"               <a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a>*            : Read / Write / Construct
 </pre>
 </div>
@@ -132,9 +132,9 @@ FIXME
 <hr>
 <div class="refsect2" title="mcd_dispatcher_get_channel_type_usage ()">
 <a name="mcd-dispatcher-get-channel-type-usage"></a><h3>mcd_dispatcher_get_channel_type_usage ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mcd_dispatcher_get_channel_type_usage
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mcd_dispatcher_get_channel_type_usage
                                                         (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> chan_type_quark</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> chan_type_quark</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -163,8 +163,8 @@ FIXME
 <a name="mcd-dispatcher-add-filter"></a><h3>mcd_dispatcher_add_filter ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_dispatcher_add_filter           (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
                                                          <em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilterFunc" title="McdFilterFunc ()"><span class="type">McdFilterFunc</span></a> filter</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> priority</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> priority</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
 Register a filter into the dispatcher chain: <em class="parameter"><code>filter</code></em> will be invoked
 whenever channels need to be dispatched.
@@ -236,7 +236,7 @@ Convenience function to add a batch of filters at once.
 <hr>
 <div class="refsect2" title='The "interfaces" property'>
 <a name="McdDispatcher--interfaces"></a><h3>The <code class="literal">"interfaces"</code> property</h3>
-<pre class="programlisting">  "interfaces"               <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read</pre>
+<pre class="programlisting">  "interfaces"               <a href="/usr/share/gtk-doc/html/gobject/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read</pre>
 <p>Interfaces.</p>
 </div>
 <hr>
@@ -249,6 +249,6 @@ Convenience function to add a batch of filters at once.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.14</div>
+          Generated by GTK-Doc V1.15</div>
 </body>
 </html>

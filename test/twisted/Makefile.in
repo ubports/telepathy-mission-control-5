@@ -212,6 +212,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -289,6 +291,7 @@ TWISTED_TESTS =
 TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	account-manager/bad-cm.py account-manager/avatar.py \
 	account-manager/create-auto-connect.py \
+	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
 	account-manager/enable.py \
 	account-manager/enable-auto-connect.py \
