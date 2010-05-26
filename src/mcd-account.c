@@ -56,24 +56,6 @@
 #include "mcd-master-priv.h"
 #include "mcd-dbusprop.h"
 
-#if ENABLE_GNOME_KEYRING
-#include <gnome-keyring.h>
-
-GnomeKeyringPasswordSchema keyring_schema = {
-    GNOME_KEYRING_ITEM_GENERIC_SECRET,
-    {
-        { "account", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
-        { "param", GNOME_KEYRING_ATTRIBUTE_TYPE_STRING },
-        { NULL, 0 }
-    }
-};
-
-#define MCD_GNOME_KEYRING_GROUP_NAME "group"
-#define MCD_GNOME_KEYRING_KEY_NAME "key"
-#endif
-
-#define DELAY_PROPERTY_CHANGED
-
 #define MAX_KEY_LENGTH (DBUS_MAXIMUM_NAME_LENGTH + 6)
 #define MC_AVATAR_FILENAME	"avatar.bin"
 
@@ -122,6 +104,7 @@ struct _McdAccountPrivate
     gchar *manager_name;
     gchar *protocol_name;
 
+    TpConnection *tp_connection;
     McdConnection *connection;
     McdManager *manager;
     McdAccountManager *account_manager;
@@ -160,8 +143,10 @@ struct _McdAccountPrivate
     guint has_been_online : 1;
     guint removed : 1;
     guint always_on : 1;
+    guint changing_presence : 1;
 
     /* These fields are used to cache the changed properties */
+    gboolean properties_frozen;
     GHashTable *changed_properties;
     guint properties_source;
 };
@@ -225,7 +210,7 @@ _mcd_account_maybe_autoconnect (McdAccount *account)
 
     if (priv->conn_status != TP_CONNECTION_STATUS_DISCONNECTED)
     {
-        DEBUG ("%s already connected", priv->unique_name);
+        DEBUG ("%s already connecting/connected", priv->unique_name);
         return;
     }
 
@@ -319,75 +304,6 @@ static void get_parameter_from_file (McdAccount *account, const gchar *name,
                                      McdAccountGetParameterCb callback,
                                      gpointer user_data);
 
-#if ENABLE_GNOME_KEYRING
-static void
-_migrate_secrets_set_cb (McdAccount *account,
-                         const GError *error,
-                         gpointer user_data)
-{
-    McdAccountPrivate *priv = account->priv;
-    const gchar *name = user_data;
-
-    if (error != NULL)
-    {
-        DEBUG ("Failed to set secret parameter %s: %s", name, error->message);
-    }
-    else
-    {
-        DEBUG ("Successfully migrated secret parameter %s from keyfile "
-               "to keyring", name);
-
-        /* Every secret which is migrated will cause the conf to be written. I
-         * guess this isn't such a big deal as it'll only happen for secret
-         * parameters on each account (in reality only one parameter), and only
-         * once, on startup. */
-        mcd_account_manager_write_conf_async (priv->account_manager, NULL, NULL);
-    }
-}
-
-static void
-_migrate_secrets_get_cb (McdAccount *account,
-                         const GValue *value,
-                         const GError *error,
-                         gpointer user_data)
-{
-    gchar *name = user_data;
-
-    if (error != NULL || value == NULL)
-        return;
-
-    set_parameter (account, name, value, _migrate_secrets_set_cb,
-                   user_data);
-    g_free (name);
-}
-
-static void
-_mcd_account_migrate_secrets (McdAccount *account)
-{
-    McdAccountPrivate *priv = account->priv;
-    const TpConnectionManagerParam *params, *p;
-
-    if (priv->manager == NULL || priv->protocol_name == NULL)
-        return;
-
-    if (!gnome_keyring_is_available ())
-      return;
-
-    params = mcd_manager_get_parameters (priv->manager, priv->protocol_name);
-
-    for (p = params; p != NULL && p->name != NULL; p++)
-    {
-        if (p->flags & TP_CONN_MGR_PARAM_FLAG_SECRET)
-        {
-            gchar *name = g_strdup (p->name);
-
-            get_parameter_from_file (account, name, _migrate_secrets_get_cb,
-                                     name);
-        }
-    }
-}
-#endif
-
 static void
 mcd_account_loaded (McdAccount *account)
 {
@@ -438,10 +354,6 @@ mcd_account_loaded (McdAccount *account)
     }
 
     _mcd_account_maybe_autoconnect (account);
-
-#if ENABLE_GNOME_KEYRING
-    _mcd_account_migrate_secrets (account);
-#endif
 
     g_object_unref (account);
 }
@@ -535,131 +447,13 @@ keyfile_set_value (GKeyFile *keyfile,
     return TRUE;
 }
 
-#if ENABLE_GNOME_KEYRING
-typedef struct
-{
-    McdAccount *account;
-    gchar *name;
-    McdAccountSetParameterCb callback;
-    gpointer user_data;
-} KeyringSetData;
-
-static void
-keyring_set_cb (GnomeKeyringResult result,
-                gpointer user_data)
-{
-    KeyringSetData *data = (KeyringSetData *) user_data;
-    McdAccountPrivate *priv = data->account->priv;
-    GError *error = NULL;
-    gchar *param;
-
-    if (result != GNOME_KEYRING_RESULT_OK)
-    {
-        g_set_error (&error, MCD_ACCOUNT_ERROR, MCD_ACCOUNT_ERROR_SET_PARAMETER,
-                     "Failed to set item in keyring: %s",
-                     gnome_keyring_result_to_message (result));
-    }
-    else
-    {
-        DEBUG ("Set/deleted secret parameter %s in keyring", data->name);
-
-        param = g_strdup_printf ("param-%s", data->name);
-
-        if (g_key_file_remove_key (priv->keyfile, priv->unique_name,
-                                   param, NULL))
-        {
-            DEBUG ("Removed secret parameter %s from keyfile", data->name);
-        }
-
-        g_free (param);
-    }
-
-    if (data->callback != NULL)
-        data->callback (data->account, error, data->user_data);
-
-    if (error != NULL)
-        g_error_free (error);
-
-    g_free (data->name);
-    g_object_unref (data->account);
-    g_slice_free (KeyringSetData, data);
-}
-#endif
-
 static void
 set_parameter (McdAccount *account, const gchar *name, const GValue *value,
                McdAccountSetParameterCb callback, gpointer user_data)
 {
     McdAccountPrivate *priv = account->priv;
     gchar key[MAX_KEY_LENGTH];
-    const TpConnectionManagerParam *param;
-    gboolean is_secret = FALSE;
     GError *error = NULL;
-
-    param = mcd_manager_get_protocol_param (priv->manager,
-                                            priv->protocol_name, name);
-
-    if (param != NULL && param->flags & TP_CONN_MGR_PARAM_FLAG_SECRET)
-        is_secret = TRUE;
-
-#if ENABLE_GNOME_KEYRING
-    if (is_secret)
-    {
-        if (gnome_keyring_is_available ())
-        {
-            gchar *display_name;
-            KeyringSetData *data;
-
-            data = g_slice_new0 (KeyringSetData);
-            data->account = g_object_ref (account);
-            data->name = g_strdup (name);
-            data->callback = callback;
-            data->user_data = user_data;
-
-            display_name = g_strdup_printf ("account: %s; param: %s",
-                                            priv->unique_name, name);
-
-            if (value != NULL)
-            {
-                GKeyFile *keyfile;
-                gchar *keyfile_data;
-
-                keyfile = g_key_file_new ();
-                keyfile_set_value (keyfile, MCD_GNOME_KEYRING_GROUP_NAME,
-                                   MCD_GNOME_KEYRING_KEY_NAME, value, NULL);
-
-                keyfile_data = g_key_file_get_value (keyfile,
-                                                     MCD_GNOME_KEYRING_GROUP_NAME,
-                                                     MCD_GNOME_KEYRING_KEY_NAME, NULL);
-
-                gnome_keyring_store_password (&keyring_schema, GNOME_KEYRING_DEFAULT,
-                                              display_name, keyfile_data,
-                                              keyring_set_cb, data, NULL,
-                                              "account", priv->unique_name,
-                                              "param", name,
-                                              NULL);
-
-                g_free (keyfile_data);
-                g_key_file_free (keyfile);
-            }
-            else
-            {
-                gnome_keyring_delete_password (&keyring_schema, keyring_set_cb,
-                                               data, NULL,
-                                               "account", priv->unique_name,
-                                               "param", name,
-                                               NULL);
-            }
-            g_free (display_name);
-            return;
-        }
-        else
-        {
-            g_message ("GNOME keyring not available: will not save secret "
-                       "parameters in the keyring");
-        }
-    }
-#endif
 
     g_snprintf (key, sizeof (key), "param-%s", name);
 
@@ -803,110 +597,10 @@ keyfile_get_value (GKeyFile *keyfile,
 
 static GType mc_param_type (const TpConnectionManagerParam *param);
 
-#if ENABLE_GNOME_KEYRING
-typedef struct
-{
-    McdAccount *account;
-    gchar *name;
-    GType type;
-    McdAccountGetParameterCb callback;
-    gpointer user_data;
-} KeyringGetData;
-
-static void
-keyring_get_cb (GnomeKeyringResult result, const gchar* password,
-                gpointer user_data)
-{
-    KeyringGetData *data = (KeyringGetData *) user_data;
-    GValue *value = NULL;
-    GError *error = NULL;
-    GKeyFile *keyfile = NULL;
-
-    if (result != GNOME_KEYRING_RESULT_OK)
-    {
-        g_message ("Failed to get item from keyring: %s",
-                   gnome_keyring_result_to_message (result));
-        g_message ("Falling back to looking in the keyfile");
-
-        get_parameter_from_file (data->account, data->name,
-                                 data->callback, data->user_data);
-    }
-    else
-    {
-        DEBUG ("Successfully got secret parameter %s from keyring", data->name);
-
-        keyfile = g_key_file_new ();
-        g_key_file_set_value (keyfile, MCD_GNOME_KEYRING_GROUP_NAME,
-            MCD_GNOME_KEYRING_KEY_NAME, password);
-
-        value = keyfile_get_value (keyfile, MCD_GNOME_KEYRING_GROUP_NAME,
-                                   MCD_GNOME_KEYRING_KEY_NAME,
-                                   data->type, &error);
-
-        if (data->callback != NULL)
-            data->callback (data->account, value, error, data->user_data);
-
-
-        g_key_file_free (keyfile);
-
-        if (value != NULL)
-            tp_g_value_slice_free (value);
-
-        if (error != NULL)
-            g_error_free (error);
-    }
-
-    g_free (data->name);
-    g_slice_free (KeyringGetData, data);
-}
-#endif
-
 static void
 get_parameter (McdAccount *account, const gchar *name,
                McdAccountGetParameterCb callback, gpointer user_data)
 {
-    McdAccountPrivate *priv = account->priv;
-    const TpConnectionManagerParam *param;
-    gboolean is_secret = FALSE;
-    GType type;
-
-    param = mcd_manager_get_protocol_param (priv->manager,
-                                            priv->protocol_name, name);
-
-    type = mc_param_type (param);
-
-    if (param != NULL && param->flags & TP_CONN_MGR_PARAM_FLAG_SECRET)
-        is_secret = TRUE;
-
-#if ENABLE_GNOME_KEYRING
-    if (is_secret)
-    {
-        if (gnome_keyring_is_available ())
-        {
-            KeyringGetData *data;
-
-            data = g_slice_new0 (KeyringGetData);
-            data->account = account;
-            data->name = g_strdup (name);
-            data->type = type;
-            data->callback = callback;
-            data->user_data = user_data;
-
-            gnome_keyring_find_password (&keyring_schema,
-                                         keyring_get_cb, data, NULL,
-                                         "account", priv->unique_name,
-                                         "param", name,
-                                         NULL);
-            return;
-        }
-        else
-        {
-            g_message ("GNOME keyring not available: will not look in the "
-                       "keyring for secret parameter: %s", name);
-        }
-    }
-#endif
-
     get_parameter_from_file (account, name, callback, user_data);
 }
 
@@ -1040,15 +734,6 @@ _mcd_account_delete_write_conf_cb (McdAccountManager *account_manager,
     g_slice_free (AccountDeleteData, data);
 }
 
-#if ENABLE_GNOME_KEYRING
-static void
-keyring_delete_cb (GnomeKeyringResult result, gpointer user_data)
-{
-    gchar *name = (gchar *) user_data;
-    DEBUG ("Deleted secret parameter %s from keyring", name);
-}
-#endif
-
 static void
 _mcd_account_delete (McdAccount *account,
                      McdAccountDeleteCb callback,
@@ -1094,39 +779,6 @@ _mcd_account_delete (McdAccount *account,
         g_rmdir (data_dir_str);
     }
     g_free (data_dir_str);
-
-#if ENABLE_GNOME_KEYRING
-    /* Delete any secret parameters from the keyring */
-    if (gnome_keyring_is_available ())
-    {
-        const TpConnectionManagerParam *params, *p;
-
-        params = mcd_manager_get_parameters (priv->manager, priv->protocol_name);
-
-        for (p = params; p != NULL && p->name != NULL; p++)
-        {
-            if (p->flags & TP_CONN_MGR_PARAM_FLAG_SECRET
-                && mc_param_type (p) == G_TYPE_STRING)
-            {
-                gchar *name;
-
-                name = g_strdup (p->name);
-                gnome_keyring_delete_password (&keyring_schema,
-                                               keyring_delete_cb,
-                                               name,
-                                               (GDestroyNotify) g_free,
-                                               "account", priv->unique_name,
-                                               "param", name,
-                                               NULL);
-            }
-        }
-    }
-    else
-    {
-        g_message ("GNOME keyring not available: cannot delete secret "
-                   "parameters from keyring");
-    }
-#endif
 
     delete_data = g_slice_new0 (AccountDeleteData);
     delete_data->account = account;
@@ -1199,6 +851,11 @@ mcd_account_request_presence_int (McdAccount *account,
         }
     }
 
+    if (changed)
+    {
+        _mcd_account_set_changing_presence (account, TRUE);
+    }
+
     if (priv->connection == NULL)
     {
         if (type >= TP_CONNECTION_PRESENCE_TYPE_AVAILABLE)
@@ -1239,7 +896,6 @@ _mcd_account_connect (McdAccount *account, GHashTable *params)
     _mcd_connection_connect (priv->connection, params);
 }
 
-#ifdef DELAY_PROPERTY_CHANGED
 static gboolean
 emit_property_changed (gpointer userdata)
 {
@@ -1247,15 +903,42 @@ emit_property_changed (gpointer userdata)
     McdAccountPrivate *priv = account->priv;
 
     DEBUG ("called");
-    tp_svc_account_emit_account_property_changed (account,
-						  priv->changed_properties);
 
-    g_hash_table_remove_all (priv->changed_properties);
+    if (g_hash_table_size (priv->changed_properties) > 0)
+    {
+        tp_svc_account_emit_account_property_changed (account,
+            priv->changed_properties);
+        g_hash_table_remove_all (priv->changed_properties);
+    }
 
-    priv->properties_source = 0;
+    if (priv->properties_source != 0)
+    {
+      g_source_remove (priv->properties_source);
+      priv->properties_source = 0;
+    }
     return FALSE;
 }
-#endif
+
+static void
+mcd_account_freeze_properties (McdAccount *self)
+{
+    g_return_if_fail (!self->priv->properties_frozen);
+    DEBUG ("%s", self->priv->unique_name);
+    self->priv->properties_frozen = TRUE;
+}
+
+static void
+mcd_account_thaw_properties (McdAccount *self)
+{
+    g_return_if_fail (self->priv->properties_frozen);
+    DEBUG ("%s", self->priv->unique_name);
+    self->priv->properties_frozen = FALSE;
+
+    if (g_hash_table_size (self->priv->changed_properties) != 0)
+    {
+        emit_property_changed (self);
+    }
+}
 
 /*
  * This function is responsible of emitting the AccountPropertyChanged signal.
@@ -1267,7 +950,6 @@ static void
 mcd_account_changed_property (McdAccount *account, const gchar *key,
 			      const GValue *value)
 {
-#ifdef DELAY_PROPERTY_CHANGED
     McdAccountPrivate *priv = account->priv;
 
     DEBUG ("called: %s", key);
@@ -1278,37 +960,19 @@ mcd_account_changed_property (McdAccount *account, const gchar *key,
 	 * emission of the signal now, so that the property will appear in two
 	 * separate signals */
         DEBUG ("Forcibly emit PropertiesChanged now");
-	g_source_remove (priv->properties_source);
 	emit_property_changed (account);
-    }
-
-    if (G_UNLIKELY (!priv->changed_properties))
-    {
-	priv->changed_properties =
-	    g_hash_table_new_full (g_str_hash, g_str_equal,
-				   NULL,
-                                   (GDestroyNotify) tp_g_value_slice_free);
     }
 
     if (priv->properties_source == 0)
     {
         DEBUG ("First changed property");
-	priv->properties_source = g_timeout_add (10, emit_property_changed,
-						 account);
+        priv->properties_source = g_timeout_add_full (G_PRIORITY_DEFAULT, 10,
+                                                      emit_property_changed,
+                                                      g_object_ref (account),
+                                                      g_object_unref);
     }
     g_hash_table_insert (priv->changed_properties, (gpointer) key,
                          tp_g_value_slice_dup (value));
-#else
-    GHashTable *properties;
-
-    DEBUG ("called: %s", key);
-    properties = g_hash_table_new (g_str_hash, g_str_equal);
-    g_hash_table_insert (properties, (gpointer)key, (gpointer)value);
-    tp_svc_account_emit_account_property_changed (account,
-						  properties);
-
-    g_hash_table_destroy (properties);
-#endif
 }
 
 typedef enum {
@@ -1956,6 +1620,17 @@ get_requested_presence (TpSvcDBusProperties *self,
 }
 
 static void
+get_changing_presence (TpSvcDBusProperties *self,
+                       const gchar *name, GValue *value)
+{
+    McdAccount *account = MCD_ACCOUNT (self);
+    McdAccountPrivate *priv = account->priv;
+
+    g_value_init (value, G_TYPE_BOOLEAN);
+    g_value_set_boolean (value, priv->changing_presence);
+}
+
+static void
 get_normalized_name (TpSvcDBusProperties *self,
 		     const gchar *name, GValue *value)
 {
@@ -1979,6 +1654,7 @@ static const McdDBusProp account_properties[] = {
     { "ConnectionStatusReason", NULL, get_connection_status_reason },
     { "CurrentPresence", NULL, get_current_presence },
     { "RequestedPresence", set_requested_presence, get_requested_presence },
+    { "ChangingPresence", NULL, get_changing_presence },
     { "NormalizedName", NULL, get_normalized_name },
     { "HasBeenOnline", NULL, get_has_been_online },
     { 0 },
@@ -2009,6 +1685,7 @@ properties_iface_init (TpSvcDBusPropertiesClass *iface, gpointer iface_data)
 static GType
 mc_param_type (const TpConnectionManagerParam *param)
 {
+    if (G_UNLIKELY (param == NULL)) return G_TYPE_INVALID;
     if (G_UNLIKELY (!param->dbus_signature)) return G_TYPE_INVALID;
 
     switch (param->dbus_signature[0])
@@ -2134,7 +1811,7 @@ typedef struct
 static void
 check_parameter_data_free (CheckParameterData *data)
 {
-    _mcd_manager_protocol_free (data->protocol);
+    tp_connection_manager_protocol_free (data->protocol);
     g_slice_free (CheckParameterData, data);
 }
 
@@ -2268,7 +1945,7 @@ set_parameters_data_free (SetParametersData *data)
     if (data->dbus_properties != NULL)
         g_slist_free (data->dbus_properties);
 
-    _mcd_manager_protocol_free (data->protocol);
+    tp_connection_manager_protocol_free (data->protocol);
 
     g_slice_free (SetParametersData, data);
 }
@@ -3071,6 +2748,8 @@ mcd_account_init (McdAccount *account)
     priv->enabled = FALSE;
     priv->connect_automatically = FALSE;
 
+    priv->changing_presence = FALSE;
+
     priv->auto_presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE;
     priv->auto_presence_status = g_strdup ("available");
     priv->auto_presence_message = g_strdup ("");
@@ -3080,6 +2759,9 @@ mcd_account_init (McdAccount *account)
 
     priv->conn_status = TP_CONNECTION_STATUS_DISCONNECTED;
     priv->conn_reason = TP_CONNECTION_STATUS_REASON_REQUESTED;
+
+    priv->changed_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
+        NULL, (GDestroyNotify) tp_g_value_slice_free);
 }
 
 McdAccount *
@@ -3162,7 +2844,7 @@ typedef struct
 static void
 dup_parameters_data_free (DupParametersData *data)
 {
-    _mcd_manager_protocol_free (data->protocol);
+    tp_connection_manager_protocol_free (data->protocol);
     g_slice_free (DupParametersData, data);
 }
 
@@ -3310,6 +2992,11 @@ on_conn_self_presence_changed (McdConnection *connection,
 	g_free (priv->curr_presence_message);
 	priv->curr_presence_message = g_strdup (message);
 	changed = TRUE;
+    }
+
+    if (_mcd_connection_presence_info_is_ready (connection))
+    {
+        _mcd_account_set_changing_presence (account, FALSE);
     }
 
     if (!changed) return;
@@ -3644,27 +3331,64 @@ static void
 on_conn_status_changed (McdConnection *connection,
                         TpConnectionStatus status,
                         TpConnectionStatusReason reason,
+                        TpConnection *tp_conn,
                         McdAccount *account)
 {
-    _mcd_account_set_connection_status (account, status, reason);
+    _mcd_account_set_connection_status (account, status, reason, tp_conn);
 }
 
 void
 _mcd_account_set_connection_status (McdAccount *account,
                                     TpConnectionStatus status,
-                                    TpConnectionStatusReason reason)
+                                    TpConnectionStatusReason reason,
+                                    TpConnection *tp_conn)
 {
     McdAccountPrivate *priv = MCD_ACCOUNT_PRIV (account);
     gboolean changed = FALSE;
+
+    DEBUG ("%s: %u because %u", priv->unique_name, status, reason);
 
     if (status == TP_CONNECTION_STATUS_CONNECTED)
     {
         _mcd_account_set_has_been_online (account);
     }
 
+    mcd_account_freeze_properties (account);
+
+    if (priv->tp_connection != tp_conn)
+    {
+        GValue value = { 0 };
+        const gchar *path;
+
+        if (priv->tp_connection != NULL)
+        {
+            g_object_unref (priv->tp_connection);
+        }
+
+        if (tp_conn != NULL)
+        {
+            priv->tp_connection = g_object_ref (tp_conn);
+            path = tp_proxy_get_object_path (tp_conn);
+        }
+        else
+        {
+            priv->tp_connection = NULL;
+            path = "/";
+        }
+
+        g_value_init (&value, DBUS_TYPE_G_OBJECT_PATH);
+        g_value_set_boxed (&value, path);
+        mcd_account_changed_property (account, "Connection", &value);
+        g_value_unset (&value);
+        changed = TRUE;
+    }
+
     if (status != priv->conn_status)
     {
 	GValue value = { 0 };
+
+        DEBUG ("changing connection status from %u to %u", priv->conn_status,
+               status);
 	priv->conn_status = status;
 	g_value_init (&value, G_TYPE_UINT);
 	g_value_set_uint (&value, status);
@@ -3676,6 +3400,9 @@ _mcd_account_set_connection_status (McdAccount *account,
     if (reason != priv->conn_reason)
     {
 	GValue value = { 0 };
+
+        DEBUG ("changing connection status reason from %u to %u",
+               priv->conn_reason, reason);
 	priv->conn_reason = reason;
 	g_value_init (&value, G_TYPE_UINT);
 	g_value_set_uint (&value, reason);
@@ -3684,6 +3411,11 @@ _mcd_account_set_connection_status (McdAccount *account,
 	g_value_unset (&value);
 	changed = TRUE;
     }
+    DEBUG ("TpConnection changed to %p", tp_conn);
+
+    _mcd_account_tp_connection_changed (account, tp_conn);
+
+    mcd_account_thaw_properties (account);
 
     process_online_requests (account, status, reason);
 
@@ -3708,11 +3440,22 @@ mcd_account_get_connection_status_reason (McdAccount *account)
 }
 
 void
-_mcd_account_tp_connection_changed (McdAccount *account)
+_mcd_account_tp_connection_changed (McdAccount *account,
+                                    TpConnection *tp_conn)
 {
     GValue value = { 0 };
 
-    get_connection ((TpSvcDBusProperties *)account, "Connection", &value);
+    g_value_init (&value, DBUS_TYPE_G_OBJECT_PATH);
+
+    if (tp_conn == NULL)
+    {
+        g_value_set_static_boxed (&value, "/");
+    }
+    else
+    {
+        g_value_set_boxed (&value, tp_proxy_get_object_path (tp_conn));
+    }
+
     mcd_account_changed_property (account, "Connection", &value);
     g_value_unset (&value);
 
@@ -3932,12 +3675,20 @@ mcd_account_connection_ready_cb (McdAccount *account,
     TpConnection *tp_connection;
     GArray *self_handle_array;
     guint self_handle;
+    TpConnectionStatus status;
+    TpConnectionStatusReason reason;
 
     g_return_if_fail (MCD_IS_ACCOUNT (account));
     g_return_if_fail (connection == priv->connection);
 
     tp_connection = mcd_connection_get_tp_connection (connection);
     g_return_if_fail (tp_connection != NULL);
+    g_return_if_fail (priv->tp_connection == NULL ||
+                      tp_connection == priv->tp_connection);
+
+    status = tp_connection_get_status (tp_connection, &reason);
+    _mcd_account_set_connection_status (account, status, reason,
+                                        tp_connection);
 
     self_handle_array = g_array_sized_new (FALSE, FALSE, sizeof (guint), 1);
     self_handle = tp_connection_get_self_handle (tp_connection);
@@ -3989,6 +3740,12 @@ _mcd_account_set_connection (McdAccount *account, McdConnection *connection)
                                               mcd_account_connection_ready_cb,
                                               account);
         g_object_unref (priv->connection);
+    }
+
+    if (priv->tp_connection != NULL)
+    {
+        g_object_unref (priv->tp_connection);
+        priv->tp_connection = NULL;
     }
 
     priv->connection = connection;
@@ -4054,6 +3811,8 @@ _mcd_account_request_temporary_presence (McdAccount *self,
 {
     if (self->priv->connection != NULL)
     {
+        _mcd_account_set_changing_presence (self, TRUE);
+
         _mcd_connection_request_presence (self->priv->connection,
                                           type, status, "");
     }
@@ -4137,4 +3896,34 @@ _mcd_account_get_always_on (McdAccount *self)
     g_return_val_if_fail (MCD_IS_ACCOUNT (self), FALSE);
 
     return self->priv->always_on;
+}
+
+gboolean
+mcd_account_parameter_is_secret (McdAccount *self, const gchar *name)
+{
+    McdAccountPrivate *priv = self->priv;
+    const TpConnectionManagerParam *param;
+
+    param = mcd_manager_get_protocol_param (priv->manager,
+                                            priv->protocol_name, name);
+
+    return (param != NULL &&
+        (param->flags & TP_CONN_MGR_PARAM_FLAG_SECRET) != 0);
+}
+
+void
+_mcd_account_set_changing_presence (McdAccount *self, gboolean value)
+{
+    McdAccountPrivate *priv = self->priv;
+    GValue changing_presence = { 0 };
+
+    priv->changing_presence = value;
+
+    g_value_init (&changing_presence, G_TYPE_BOOLEAN);
+    g_value_set_boolean (&changing_presence, value);
+
+    mcd_account_changed_property (self, "ChangingPresence",
+                                  &changing_presence);
+
+    g_value_unset (&changing_presence);
 }

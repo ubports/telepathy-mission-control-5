@@ -82,7 +82,8 @@ G_GNUC_INTERNAL void _mcd_account_set_alias (McdAccount *account,
 
 G_GNUC_INTERNAL gchar *_mcd_account_get_avatar_filename (McdAccount *account);
 
-G_GNUC_INTERNAL void _mcd_account_tp_connection_changed (McdAccount *account);
+G_GNUC_INTERNAL void _mcd_account_tp_connection_changed (McdAccount *account,
+    TpConnection *tp_conn);
 
 G_GNUC_INTERNAL void _mcd_account_load (McdAccount *account,
                                         McdAccountLoadCb callback,
@@ -91,7 +92,7 @@ G_GNUC_INTERNAL void _mcd_account_set_connection (McdAccount *account,
                                                   McdConnection *connection);
 G_GNUC_INTERNAL void _mcd_account_set_connection_status
     (McdAccount *account, TpConnectionStatus status,
-     TpConnectionStatusReason reason);
+     TpConnectionStatusReason reason, TpConnection *tp_conn);
 
 typedef void (*McdOnlineRequestCb) (McdAccount *account, gpointer userdata,
 				    const GError *error);
@@ -185,5 +186,8 @@ G_GNUC_INTERNAL gboolean _mcd_account_check_request_real (McdAccount *account,
                                                           GError **error);
 
 G_GNUC_INTERNAL gboolean _mcd_account_get_always_on (McdAccount *self);
+
+G_GNUC_INTERNAL void _mcd_account_set_changing_presence (McdAccount *self,
+                                                         gboolean value);
 
 #endif /* __MCD_ACCOUNT_PRIV_H__ */

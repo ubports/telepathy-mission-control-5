@@ -1,0 +1,187 @@
+<!-- ##### SECTION Title ##### -->
+dispatch-operation
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT McpDispatchOperation ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT McpDispatchOperationIface ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT McpDispatchOperationDelay ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_find_channel_by_type ##### -->
+<para>
+
+</para>
+
+@self: 
+@start_from: 
+@handle_type: 
+@channel_type: 
+@ret_index: 
+@ret_dup_path: 
+@ret_ref_immutable_properties: 
+@ret_ref_channel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_ref_connection ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_ref_nth_channel ##### -->
+<para>
+
+</para>
+
+@self: 
+@n: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_account_path ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_connection_path ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_protocol ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_cm_name ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_n_channels ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_get_nth_channel_path ##### -->
+<para>
+
+</para>
+
+@self: 
+@n: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_ref_nth_channel_properties ##### -->
+<para>
+
+</para>
+
+@self: 
+@n: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_start_delay ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_end_delay ##### -->
+<para>
+
+</para>
+
+@self: 
+@delay: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_leave_channels ##### -->
+<para>
+
+</para>
+
+@self: 
+@wait_for_observers: 
+@reason: 
+@message: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_close_channels ##### -->
+<para>
+
+</para>
+
+@self: 
+@wait_for_observers: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_destroy_channels ##### -->
+<para>
+
+</para>
+
+@self: 
+@wait_for_observers: 
+
+

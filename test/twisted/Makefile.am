@@ -31,10 +31,14 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/connect-for-request.py \
 	dispatcher/create-handler-fails.py \
 	dispatcher/create-no-preferred-handler.py \
+	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
 	dispatcher/dispatch-activatable.py \
+	dispatcher/dispatch-before-connected.py \
+	dispatcher/dispatch-delayed-by-mini-plugin.py \
 	dispatcher/dispatch-obsolete.py \
+	dispatcher/dispatch-rejected-by-mini-plugin.py \
 	dispatcher/dispatch-text.py \
 	dispatcher/ensure-and-redispatch.py \
 	dispatcher/ensure-is-approval.py \
@@ -50,7 +54,7 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/undispatchable.py \
 	dispatcher/vanishing-client.py
 
-if ENABLE_PLUGINS
+if ENABLE_MCD_PLUGINS
 TWISTED_BASIC_TESTS += \
 	dispatcher/create-delayed-by-plugin.py \
 	dispatcher/dispatch-delayed-by-plugin.py \
@@ -76,13 +80,23 @@ TWISTED_SEPARATE_TESTS = \
 	crash-recovery/crash-recovery.py \
 	dispatcher/create-at-startup.py
 
-if ENABLE_PLUGINS
-# A demo dispatcher plugin
-noinst_LTLIBRARIES = test-plugin.la
-test_plugin_la_SOURCES = test-plugin.c
+AM_CFLAGS = $(ERROR_CFLAGS)
+
+# A demo dispatcher plugin (new, minimal API)
+noinst_LTLIBRARIES = mcp-plugin.la mcp-account-diversion.la
+mcp_plugin_la_SOURCES = mcp-plugin.c
 # these runes are necessary to make libtool build a dlopen()able shared
 # library even though it's not going to be installed - the default for noinst
 # libraries is static
+mcp_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
+
+mcp_account_diversion_la_SOURCES = mcp-account-diversion.c
+mcp_account_diversion_la_LDFLAGS = $(mcp_plugin_la_LDFLAGS)
+
+if ENABLE_MCD_PLUGINS
+# A demo dispatcher plugin (old API, with access to MCD internals)
+noinst_LTLIBRARIES += test-plugin.la
+test_plugin_la_SOURCES = test-plugin.c
 test_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
 endif
 

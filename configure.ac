@@ -1,11 +1,12 @@
 dnl Set the version number to e.g. 5.0.beta42 immediately before a release.
 dnl Set the version number to e.g. 5.0.beta42+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.4.2])
+AC_INIT([telepathy-mission-control], [5.5.0])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
 AM_INIT_AUTOMAKE([1.9 tar-ustar -Wno-portability])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
 AM_CONFIG_HEADER(config.h)
 
 AC_CANONICAL_HOST
@@ -30,6 +31,30 @@ case "$PACKAGE_VERSION" in
     ;;
 esac
 
+# If API has been removed or changed since last release, change MCP_API (which
+# is part of the directory name under /usr/include) to the version that
+# changed it
+MCP_API_VERSION=5.5
+AC_SUBST([MCP_API_VERSION])
+
+# If ABI has been removed or changed since last release
+#     increment current
+#     set age and revision to 0
+# else if ABI has been added since last release
+#     increment age and current
+#     set revision to 0
+# else if library source has changed since last release
+#     increment revision
+MCP_LT_CURRENT=0
+MCP_LT_REVISION=0
+MCP_LT_AGE=0
+AC_SUBST([MCP_LT_CURRENT])
+AC_SUBST([MCP_LT_REVISION])
+AC_SUBST([MCP_LT_AGE])
+# The ABI version appears in the name of the plugin directory
+MCP_ABI_VERSION=`expr ${MCP_LT_CURRENT} - ${MCP_LT_AGE}`
+AC_SUBST([MCP_ABI_VERSION])
+
 # Recommended CFLAGS for pedantic checking, from telepathy-glib
 
 TP_COMPILER_WARNINGS([ERROR_CFLAGS],
@@ -50,20 +75,6 @@ TP_COMPILER_WARNINGS([ERROR_CFLAGS],
   [missing-field-initializers \
    unused-parameter])
 AC_SUBST([ERROR_CFLAGS])
-
-AM_CFLAGS="$CFLAGS -fno-strict-aliasing -ansi -DDMALLOC $ERROR_CFLAGS"
-AC_SUBST([AM_CFLAGS])
-
-define([EXPAND_VARIABLE],
-[$2=[$]$1
-while true; do
-    case "[$]$2" in
-    *\[$]* ) eval "$2=[$]$2" ;;
-    *) break ;;
-    esac
-done])
-
-EXPAND_VARIABLE(datadir,datadir_expanded)
 
 XSLTPROC=
 AC_CHECK_PROGS([XSLTPROC], [xsltproc])
@@ -155,36 +166,6 @@ fi
 AC_SUBST(CHANDLERS_DIR)
 AC_DEFINE_UNQUOTED(CHANDLERS_DIR,"$CHANDLERS_DIR", [Directory for channel handlers])
 
-test_enabled="yes"
-AC_MSG_CHECKING(whether to build tests)
-AC_ARG_ENABLE(tests,
-	[  --disable-tests           don't build tests. default: enable them],
-	[
-		AC_MSG_RESULT(${enableval})
-		test_enabled="${enableval}"
-	],
-	[
-		AC_MSG_RESULT([yes (default)])
-		test_enabled="yes"
-	]
-)
-AM_CONDITIONAL(HAVE_TESTS, [test x$test_enabled = xyes])
-
-examples_enabled="yes"
-AC_MSG_CHECKING(whether to build examples)
-AC_ARG_ENABLE(examples,
-	[  --disable-examples        don't build examples. default: build them],
-	[
-		AC_MSG_RESULT(${enableval})
-		examples_enabled="${enableval}"
-	],
-	[
-		AC_MSG_RESULT([yes (default)])
-		examples_enabled="yes"
-	]
-)
-AM_CONDITIONAL(HAVE_EXAMPLES, [test x$examples_enabled = xyes])
-
 server_enabled="yes"
 AC_MSG_CHECKING(whether to build the daemon)
 AC_ARG_ENABLE(server,
@@ -230,23 +211,22 @@ AC_ARG_ENABLE(mcserver-so6,
 )
 AM_CONDITIONAL(ENABLE_MC_SERVER_SO6, [test "x$ENABLE_MC_SERVER_SO6" = xyes])
 
-plugins_enabled="no"
 AC_MSG_CHECKING(whether to support plugins)
-AC_ARG_ENABLE(plugins,
-	[  --enable-plugins          support plugins. default=no],
+AC_ARG_ENABLE(mcd-plugins,
+	[  --enable-mcd-plugins       support plugins that use internal APIs. default=no],
 	[
 		AC_MSG_RESULT(${enableval})
-		plugins_enabled="${enableval}"
+		mcd_plugins_enabled="${enableval}"
 	],
 	[
 		AC_MSG_RESULT(no)
-		plugins_enabled="no"
+		mcd_plugins_enabled="no"
 	]
 )
-AM_CONDITIONAL(ENABLE_PLUGINS, [test x$plugins_enabled = xyes])
-if test "x$plugins_enabled" = xyes
+AM_CONDITIONAL(ENABLE_MCD_PLUGINS, [test x$mcd_plugins_enabled = xyes])
+if test "x$mcd_plugins_enabled" = xyes
 then
-  AC_DEFINE([ENABLE_PLUGINS], [1], [Define if plugins should be enabled])
+  AC_DEFINE([ENABLE_MCD_PLUGINS], [1], [Define if MCD plugins should be enabled])
 fi
 
 keyring_enabled="no"
@@ -283,31 +263,50 @@ else
   AC_DEFINE([ENABLE_GNOME_KEYRING], [0], [Define whether gnome-keyring support is enabled])
 fi
 
-PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.51, dbus-glib-1 >= 0.51], have_dbus=yes, have_dbus=no)
+dnl libaccounts-glib SSO
+libaccounts_sso_enabled="no"
+AC_MSG_CHECKING(whether to build with libaccounts-glib SSO suport)
+
+AC_ARG_ENABLE([libaccounts-sso],
+              AC_HELP_STRING([--enable-libaccounts-sso],
+                             [build with SSO suport. default=no]),
+              [ AC_MSG_RESULT(${enableval})
+                libaccounts_sso_enabled="${enableval}" ],
+              [ AC_MSG_RESULT(no) ] )
+
+AS_IF([ test "x$libaccounts_sso_enabled" = xauto ],
+      [ PKG_CHECK_EXISTS([libaccounts-glib],
+                         [libaccounts_sso_enabled=yes],
+                         [libaccounts_sso_enabled=no]) ])
+
+dnl set up the shell/make variable, the #define and check the package version
+AS_IF([ test "x$libaccounts_sso_enabled" = xyes ],
+      [ ENABLE_LIBACCOUNTS_SSO=yes
+        AC_DEFINE(ENABLE_LIBACCOUNTS_SSO, [1],
+                  [Define if libaccounts SSO support is required])
+        PKG_CHECK_MODULES([LIBACCOUNTS_SSO], [libaccounts-glib >= 0.26]) ],
+      [ AC_DEFINE(ENABLE_LIBACCOUNTS_SSO, [0]) ])
+
+dnl export the CFLAGS and LDFLAGS equivalents determined by PKG_CHECK_MODULES
+AC_SUBST(LIBACCOUNTS_SSO_CFLAGS)
+AC_SUBST(LIBACCOUNTS_SSO_LIBS)
+
+dnl the automake conditional
+AM_CONDITIONAL(ENABLE_LIBACCOUNTS_SSO, [test x$libaccounts_sso_enabled = xyes])
+dnl /libaccounts-glib SSO
+
+PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.82])
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES(TELEPATHY, telepathy-glib >= 0.7.37)
+PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.11.6])
 AC_SUBST(TELEPATHY_LIBS)
 AC_SUBST(TELEPATHY_CFLAGS)
 
-GCONF_REQUIRED_VERSION=2.0.0
-PKG_CHECK_MODULES(GCONF, gconf-2.0 >= $GCONF_REQUIRED_VERSION,
-		  [HAVE_GCONF=yes], [HAVE_GCONF=no])
-AM_CONDITIONAL(HAVE_GCONF, [test x$HAVE_GCONF = xyes])
-AC_SUBST(GCONF_CFLAGS)
-AC_SUBST(GCONF_LIBS)
-
-PKG_CHECK_MODULES(GLIB, glib-2.0 gobject-2.0)
+PKG_CHECK_MODULES([GLIB],
+	[glib-2.0 >= 2.24, gobject-2.0, gmodule-no-export-2.0])
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
-
-if test "x$plugins_enabled" = xyes
-then
-  PKG_CHECK_MODULES(GMODULE, gmodule-no-export-2.0)
-  AC_SUBST(GMODULE_LIBS)
-  AC_SUBST(GMODULE_CFLAGS)
-fi
 
 dnl docs/Makefile.am needs to know whether it's an out of tree build
 dnl (srcdir != builddir)
@@ -332,11 +331,14 @@ doc/Makefile \
 doc/reference/Makefile \
 doc/reference/libmcclient/Makefile \
 doc/reference/libmissioncontrol-server/Makefile \
+doc/reference/mission-control-plugins/Makefile \
 examples/Makefile \
 libmcclient.pc \
 libmcclient/Makefile \
 m4/Makefile \
 mission-control.pc \
+mission-control-plugins.pc \
+mission-control-plugins/Makefile \
 server/Makefile \
 src/Makefile \
 test/Makefile \

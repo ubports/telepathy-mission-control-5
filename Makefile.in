@@ -34,14 +34,15 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@HAVE_EXAMPLES_TRUE@am__append_1 = examples
-@ENABLE_PLUGINS_TRUE@am__append_2 = mission-control.pc
+@ENABLE_MCD_PLUGINS_TRUE@am__append_1 = mission-control.pc libmcclient.pc
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
-	$(srcdir)/libmcclient.pc.in $(srcdir)/mission-control.pc.in \
-	$(srcdir)/tools/lcov.am $(srcdir)/tools/telepathy.am \
-	$(top_srcdir)/configure AUTHORS COPYING ChangeLog INSTALL NEWS \
-	config.guess config.sub depcomp install-sh ltmain.sh missing
+	$(srcdir)/libmcclient.pc.in \
+	$(srcdir)/mission-control-plugins.pc.in \
+	$(srcdir)/mission-control.pc.in $(srcdir)/tools/lcov.am \
+	$(srcdir)/tools/telepathy.am $(top_srcdir)/configure AUTHORS \
+	COPYING ChangeLog INSTALL NEWS config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
@@ -57,8 +58,15 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = libmcclient.pc mission-control.pc
+CONFIG_CLEAN_FILES = libmcclient.pc mission-control.pc \
+	mission-control-plugins.pc
 CONFIG_CLEAN_VPATH_FILES =
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -98,8 +106,7 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
 	distdir dist dist-all distcheck
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = m4 tools xml libmcclient src server util test doc \
-	examples
+DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -140,7 +147,7 @@ ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
-AM_CFLAGS = @AM_CFLAGS@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -170,14 +177,10 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-GCONF_CFLAGS = @GCONF_CFLAGS@
-GCONF_LIBS = @GCONF_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
-GMODULE_CFLAGS = @GMODULE_CFLAGS@
-GMODULE_LIBS = @GMODULE_LIBS@
 GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
@@ -192,6 +195,8 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBACCOUNTS_SSO_CFLAGS = @LIBACCOUNTS_SSO_CFLAGS@
+LIBACCOUNTS_SSO_LIBS = @LIBACCOUNTS_SSO_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -200,6 +205,11 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCP_ABI_VERSION = @MCP_ABI_VERSION@
+MCP_API_VERSION = @MCP_API_VERSION@
+MCP_LT_AGE = @MCP_LT_AGE@
+MCP_LT_CURRENT = @MCP_LT_CURRENT@
+MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -292,11 +302,26 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = m4 tools xml libmcclient src server util test doc \
-	$(am__append_1)
+SUBDIRS = \
+    m4 \
+    tools \
+    xml \
+    mission-control-plugins \
+    libmcclient \
+    src \
+    server \
+    util \
+    test \
+    examples \
+    doc
+
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libmcclient.pc $(am__append_2)
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc --disable-gnome-keyring
+pkgconfig_DATA = mission-control-plugins.pc $(am__append_1)
+DISTCHECK_CONFIGURE_FLAGS = \
+	--enable-gtk-doc \
+	--disable-gnome-keyring \
+	--disable-mcd-plugins
+
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -355,6 +380,8 @@ distclean-hdr:
 libmcclient.pc: $(top_builddir)/config.status $(srcdir)/libmcclient.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 mission-control.pc: $(top_builddir)/config.status $(srcdir)/mission-control.pc.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+mission-control-plugins.pc: $(top_builddir)/config.status $(srcdir)/mission-control-plugins.pc.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
@@ -822,6 +849,11 @@ uninstall-am: uninstall-pkgconfigDATA
 	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-recursive \
 	uninstall uninstall-am uninstall-pkgconfigDATA
 
+
+maintainer-upload-release: _maintainer-upload-release-local
+_maintainer-upload-release-local: _maintainer-upload-release-check
+	rsync -rvzPp --chmod=Dg+s,ug+rwX,o=rX doc/reference/mission-control-plugins/html/ \
+	telepathy.freedesktop.org:/srv/telepathy.freedesktop.org/www/doc/mission-control-plugins/
 lcov-reset:
 	lcov --directory @top_srcdir@ --zerocounters
 

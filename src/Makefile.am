@@ -3,7 +3,10 @@ INCLUDES = \
 	   $(DBUS_CFLAGS) \
 	   $(GLIB_CFLAGS) \
 	   -DG_LOG_DOMAIN=\"mcd\" \
+	   -DMCD_PLUGIN_LOADER_DIR=\"@libdir@/mission-control-plugins.@MCP_ABI_VERSION@\" \
 	   -DMC_DISABLE_DEPRECATED -I$(top_srcdir)
+
+AM_CFLAGS = $(ERROR_CFLAGS)
 
 if ENABLE_GNOME_KEYRING
 INCLUDES += $(GNOME_KEYRING_CFLAGS)
@@ -14,6 +17,7 @@ mc_headers = \
 	mcd-account-compat.h \
 	mcd-account-conditions.h \
 	mcd-account-manager.h \
+	mcd-account-manager-default.h \
 	mcd-debug.h \
 	mcd-mission.h \
 	mcd-operation.h \
@@ -33,6 +37,10 @@ mc_headers = \
 	mcd-provisioning.h \
 	mcd-provisioning-factory.h
 
+if ENABLE_LIBACCOUNTS_SSO
+mc_headers += mcd-account-manager-sso.h
+endif
+
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
@@ -41,7 +49,8 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
-	_gen/svc-Account_Manager_Interface_Query.h
+	_gen/svc-Account_Manager_Interface_Query.h \
+	_gen/svc-Account_Manager_Interface_SSO.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
@@ -55,6 +64,7 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
+	_gen/svc-Account_Manager_Interface_SSO.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -70,6 +80,7 @@ CLEANFILES = $(BUILT_SOURCES)
 
 libmcd_convenience_la_LIBADD = \
 	$(top_builddir)/libmcclient/libmcclient.la \
+	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
 	$(GLIB_LIBS)
@@ -78,11 +89,16 @@ if ENABLE_GNOME_KEYRING
 libmcd_convenience_la_LIBADD += $(GNOME_KEYRING_LIBS)
 endif
 
+if ENABLE_LIBACCOUNTS_SSO
+libmcd_convenience_la_LIBADD += $(LIBACCOUNTS_SSO_LIBS)
+libmcd_convenience_la_CFLAGS  = $(LIBACCOUNTS_SSO_CFLAGS)
+endif
+
 noinst_LTLIBRARIES = libmcd-convenience.la
 
-if ENABLE_PLUGINS
-# When plugins are enabled, libmissioncontrol-server.la is a shared library
-# that wraps the convenience library
+if ENABLE_MCD_PLUGINS
+# When this older plugin API is enabled, libmissioncontrol-server.la is a
+# shared library that wraps the convenience library
 lib_LTLIBRARIES = libmissioncontrol-server.la
 libmissioncontrol_server_la_SOURCES =
 libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
@@ -104,18 +120,15 @@ mission_control_include_HEADERS = $(mc_headers)
 genincludedir = $(mission_control_includedir)/_gen
 nodist_geninclude_HEADERS = $(mc_gen_headers)
 
-# We need GModule to load plugins
-libmcd_convenience_la_LIBADD += $(GMODULE_LIBS)
 INCLUDES += \
-	$(GMODULE_CFLAGS) \
 	-DMCD_DEFAULT_FILTER_PLUGIN_DIR=\"@pluginlibdir@\"
-else # ! ENABLE_PLUGINS
-# When plugins are not enabled, libmissioncontrol-server.la is just a copy of
-# the convenience library
+else # ! ENABLE_MCD_PLUGINS
+# When this older plugin API is not enabled, libmissioncontrol-server.la is
+# just a copy of the convenience library
 noinst_LTLIBRARIES += libmissioncontrol-server.la
 libmissioncontrol_server_la_SOURCES =
 libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
-endif # ! ENABLE_PLUGINS
+endif # ! ENABLE_MCD_PLUGINS
 
 libmcd_convenience_la_SOURCES = \
 	mcd-account.c \
@@ -128,6 +141,7 @@ libmcd_convenience_la_SOURCES = \
 	mcd-account-manager.c \
 	mcd-account-manager-priv.h \
 	mcd-account-manager-query.c \
+	mcd-account-manager-default.c \
 	mcd-account-priv.h \
 	mcd-client.c \
 	mcd-client-priv.h \
@@ -163,8 +177,20 @@ libmcd_convenience_la_SOURCES = \
 	mcd-transport.c \
 	mcd-provisioning.c \
 	mcd-provisioning-factory.c \
+	plugin-dispatch-operation.c \
+	plugin-dispatch-operation.h \
+	plugin-loader.c \
+	plugin-loader.h \
+	plugin-request.c \
+	plugin-request.h \
+	plugin-account.c \
+	plugin-account.h \
 	sp_timestamp.h \
 	$(mc_headers)
+
+if ENABLE_LIBACCOUNTS_SSO
+libmcd_convenience_la_SOURCES += mcd-account-manager-sso.c
+endif
 
 %-signals-marshal.h: %-signals-marshal.list Makefile
 	glib-genmarshal --header --prefix=_$(subst -,_,$*)_marshal $< > $*-signals-marshal.h
@@ -228,18 +254,18 @@ _gen/signals-marshal.list: _gen/mcd.xml \
 	$(tools_dir)/glib-signals-marshal-gen.py
 	$(PYTHON) $(tools_dir)/glib-signals-marshal-gen.py $< > $@
 
-_gen/signals-marshal.h: _gen/signals-marshal.list
-	$(GLIB_GENMARSHAL) --header --prefix=_mc_ext_marshal $< > $@
+_gen/signals-marshal.h: _gen/signals-marshal.list Makefile.am
+	$(GLIB_GENMARSHAL) --header --prefix=_mcd_ext_marshal $< > $@
 
-_gen/signals-marshal.c: _gen/signals-marshal.list
+_gen/signals-marshal.c: _gen/signals-marshal.list Makefile.am
 	{ echo '#include "_gen/signals-marshal.h"' && \
-	$(GLIB_GENMARSHAL) --body --prefix=_mc_ext_marshal $<; } \
+	$(GLIB_GENMARSHAL) --body --prefix=_mcd_ext_marshal $<; } \
 	> $@
 
 _gen/register-dbus-glib-marshallers-body.h: _gen/mcd.xml \
-	$(tools_dir)/glib-client-marshaller-gen.py
+	$(tools_dir)/glib-client-marshaller-gen.py Makefile.am
 	$(PYTHON) $(tools_dir)/glib-client-marshaller-gen.py $< \
-		_mc_ext > $@
+		_mcd_ext > $@
 
 _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 	$(XSLTPROC) $(XSLTPROCFLAGS) \
@@ -252,12 +278,12 @@ _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 # (Currently the only "class" is nmc4, but the new API will need "classes"
 # like account, account-manager, ...)
 
-_gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml)
+_gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
 	$(mkdir_p) _gen
 	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
-_gen/%.xml: %.xml $(wildcard $(top_srcdir)/xml/*.xml)
+_gen/%.xml: %.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
 	$(mkdir_p) _gen
 	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
@@ -274,7 +300,7 @@ _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 	$(tools_dir)/glib-ginterface-gen.py Makefile.am
 	$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-$* \
-		--signal-marshal-prefix=_mc_ext \
+		--signal-marshal-prefix=_mcd_ext \
 		--include='<telepathy-glib/dbus.h>' \
 		--include='"_gen/signals-marshal.h"' \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \

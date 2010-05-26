@@ -35,13 +35,16 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-@ENABLE_PLUGINS_TRUE@am__append_1 = \
-@ENABLE_PLUGINS_TRUE@	dispatcher/create-delayed-by-plugin.py \
-@ENABLE_PLUGINS_TRUE@	dispatcher/dispatch-delayed-by-plugin.py \
-@ENABLE_PLUGINS_TRUE@	dispatcher/dispatch-rejected-by-plugin.py
+@ENABLE_MCD_PLUGINS_TRUE@am__append_1 = \
+@ENABLE_MCD_PLUGINS_TRUE@	dispatcher/create-delayed-by-plugin.py \
+@ENABLE_MCD_PLUGINS_TRUE@	dispatcher/dispatch-delayed-by-plugin.py \
+@ENABLE_MCD_PLUGINS_TRUE@	dispatcher/dispatch-rejected-by-plugin.py
 
+
+# A demo dispatcher plugin (old API, with access to MCD internals)
+@ENABLE_MCD_PLUGINS_TRUE@am__append_2 = test-plugin.la
 noinst_PROGRAMS = mc-debug-server$(EXEEXT)
-@ENABLE_GNOME_KEYRING_TRUE@am__append_2 = $(GNOME_KEYRING_CFLAGS)
+@ENABLE_GNOME_KEYRING_TRUE@am__append_3 = $(GNOME_KEYRING_CFLAGS)
 TESTS =
 subdir = test/twisted
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -60,14 +63,32 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
+mcp_account_diversion_la_LIBADD =
+am_mcp_account_diversion_la_OBJECTS = mcp-account-diversion.lo
+mcp_account_diversion_la_OBJECTS =  \
+	$(am_mcp_account_diversion_la_OBJECTS)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+mcp_account_diversion_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(mcp_account_diversion_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+mcp_plugin_la_LIBADD =
+am_mcp_plugin_la_OBJECTS = mcp-plugin.lo
+mcp_plugin_la_OBJECTS = $(am_mcp_plugin_la_OBJECTS)
+mcp_plugin_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(mcp_plugin_la_LDFLAGS) $(LDFLAGS) -o $@
 test_plugin_la_LIBADD =
 am__test_plugin_la_SOURCES_DIST = test-plugin.c
-@ENABLE_PLUGINS_TRUE@am_test_plugin_la_OBJECTS = test-plugin.lo
+@ENABLE_MCD_PLUGINS_TRUE@am_test_plugin_la_OBJECTS = test-plugin.lo
 test_plugin_la_OBJECTS = $(am_test_plugin_la_OBJECTS)
-test_plugin_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(test_plugin_la_LDFLAGS) $(LDFLAGS) -o $@
-@ENABLE_PLUGINS_TRUE@am_test_plugin_la_rpath =
+test_plugin_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) $(test_plugin_la_LDFLAGS) $(LDFLAGS) -o \
+	$@
+@ENABLE_MCD_PLUGINS_TRUE@am_test_plugin_la_rpath =
 PROGRAMS = $(noinst_PROGRAMS)
 am_mc_debug_server_OBJECTS = mc-debug-server.$(OBJEXT)
 mc_debug_server_OBJECTS = $(am_mc_debug_server_OBJECTS)
@@ -79,15 +100,30 @@ am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
-SOURCES = $(test_plugin_la_SOURCES) $(mc_debug_server_SOURCES)
-DIST_SOURCES = $(am__test_plugin_la_SOURCES_DIST) \
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
+SOURCES = $(mcp_account_diversion_la_SOURCES) $(mcp_plugin_la_SOURCES) \
+	$(test_plugin_la_SOURCES) $(mc_debug_server_SOURCES)
+DIST_SOURCES = $(mcp_account_diversion_la_SOURCES) \
+	$(mcp_plugin_la_SOURCES) $(am__test_plugin_la_SOURCES_DIST) \
 	$(mc_debug_server_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
@@ -136,7 +172,7 @@ ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
-AM_CFLAGS = @AM_CFLAGS@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -166,14 +202,10 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-GCONF_CFLAGS = @GCONF_CFLAGS@
-GCONF_LIBS = @GCONF_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
-GMODULE_CFLAGS = @GMODULE_CFLAGS@
-GMODULE_LIBS = @GMODULE_LIBS@
 GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
@@ -188,6 +220,8 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBACCOUNTS_SSO_CFLAGS = @LIBACCOUNTS_SSO_CFLAGS@
+LIBACCOUNTS_SSO_LIBS = @LIBACCOUNTS_SSO_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -196,6 +230,11 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCP_ABI_VERSION = @MCP_ABI_VERSION@
+MCP_API_VERSION = @MCP_API_VERSION@
+MCP_LT_AGE = @MCP_LT_AGE@
+MCP_LT_CURRENT = @MCP_LT_CURRENT@
+MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -310,10 +349,15 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	dispatcher/capture-bundle.py dispatcher/connect-for-request.py \
 	dispatcher/create-handler-fails.py \
 	dispatcher/create-no-preferred-handler.py \
+	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
 	dispatcher/dispatch-activatable.py \
-	dispatcher/dispatch-obsolete.py dispatcher/dispatch-text.py \
+	dispatcher/dispatch-before-connected.py \
+	dispatcher/dispatch-delayed-by-mini-plugin.py \
+	dispatcher/dispatch-obsolete.py \
+	dispatcher/dispatch-rejected-by-mini-plugin.py \
+	dispatcher/dispatch-text.py \
 	dispatcher/ensure-and-redispatch.py \
 	dispatcher/ensure-is-approval.py dispatcher/ensure-rapidly.py \
 	dispatcher/exploding-bundles.py dispatcher/fdo-21034.py \
@@ -342,20 +386,26 @@ TWISTED_SEPARATE_TESTS = \
 	crash-recovery/crash-recovery.py \
 	dispatcher/create-at-startup.py
 
+AM_CFLAGS = $(ERROR_CFLAGS)
 
-# A demo dispatcher plugin
-@ENABLE_PLUGINS_TRUE@noinst_LTLIBRARIES = test-plugin.la
-@ENABLE_PLUGINS_TRUE@test_plugin_la_SOURCES = test-plugin.c
+# A demo dispatcher plugin (new, minimal API)
+noinst_LTLIBRARIES = mcp-plugin.la mcp-account-diversion.la \
+	$(am__append_2)
+mcp_plugin_la_SOURCES = mcp-plugin.c
 # these runes are necessary to make libtool build a dlopen()able shared
 # library even though it's not going to be installed - the default for noinst
 # libraries is static
-@ENABLE_PLUGINS_TRUE@test_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
+mcp_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
+mcp_account_diversion_la_SOURCES = mcp-account-diversion.c
+mcp_account_diversion_la_LDFLAGS = $(mcp_plugin_la_LDFLAGS)
+@ENABLE_MCD_PLUGINS_TRUE@test_plugin_la_SOURCES = test-plugin.c
+@ENABLE_MCD_PLUGINS_TRUE@test_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
 mc_debug_server_SOURCES = mc-debug-server.c
 mc_debug_server_LDADD = $(top_builddir)/src/libmissioncontrol-server.la
 INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/src \
 	-I$(top_builddir)/src $(DBUS_CFLAGS) $(TELEPATHY_CFLAGS) \
 	-DMC_DISABLE_DEPRECATED -DLIBDIR="@libdir@" -DLIBVERSION="0" \
-	$(am__append_2)
+	$(am__append_3)
 TMPSUFFIX = foo
 BASIC_TESTS_ENVIRONMENT = \
 	PYTHONPATH=@abs_top_srcdir@/test/twisted:@abs_top_builddir@/test/twisted \
@@ -457,8 +507,12 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+mcp-account-diversion.la: $(mcp_account_diversion_la_OBJECTS) $(mcp_account_diversion_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(mcp_account_diversion_la_LINK)  $(mcp_account_diversion_la_OBJECTS) $(mcp_account_diversion_la_LIBADD) $(LIBS)
+mcp-plugin.la: $(mcp_plugin_la_OBJECTS) $(mcp_plugin_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(mcp_plugin_la_LINK)  $(mcp_plugin_la_OBJECTS) $(mcp_plugin_la_LIBADD) $(LIBS)
 test-plugin.la: $(test_plugin_la_OBJECTS) $(test_plugin_la_DEPENDENCIES) 
-	$(test_plugin_la_LINK) $(am_test_plugin_la_rpath) $(test_plugin_la_OBJECTS) $(test_plugin_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(test_plugin_la_LINK) $(am_test_plugin_la_rpath) $(test_plugin_la_OBJECTS) $(test_plugin_la_LIBADD) $(LIBS)
 
 clean-noinstPROGRAMS:
 	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
@@ -470,7 +524,7 @@ clean-noinstPROGRAMS:
 	rm -f $$list
 mc-debug-server$(EXEEXT): $(mc_debug_server_OBJECTS) $(mc_debug_server_DEPENDENCIES) 
 	@rm -f mc-debug-server$(EXEEXT)
-	$(LINK) $(mc_debug_server_OBJECTS) $(mc_debug_server_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(mc_debug_server_OBJECTS) $(mc_debug_server_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -479,25 +533,30 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mc-debug-server.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-account-diversion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-plugin.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-plugin.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<

@@ -1,0 +1,38 @@
+<!-- ##### SECTION Title ##### -->
+mission-control-plugins
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION mcp_plugin_ref_nth_object ##### -->
+<para>
+
+</para>
+
+@n: 
+@Returns: 
+
+

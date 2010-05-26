@@ -1,0 +1,61 @@
+<!-- ##### SECTION Title ##### -->
+dispatch-operation-policy
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT McpDispatchOperationPolicy ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT McpDispatchOperationPolicyIface ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_policy_check ##### -->
+<para>
+
+</para>
+
+@policy: 
+@dispatch_operation: 
+
+
+<!-- ##### FUNCTION mcp_dispatch_operation_policy_iface_implement_check ##### -->
+<para>
+
+</para>
+
+@iface: 
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *:
+@McpDispatchOperationPolicy *, McpDispatchOperation *: 
+
+
