@@ -1,3 +1,105 @@
+commit 00d01ea64a02ccbc2c13d58e4f7d7e85e5b73367
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:36:03 +0100
+
+    Prepare version 5.4.2
+
+ NEWS         |   15 +++++++++++++--
+ configure.ac |    2 +-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+commit d708686824f2ba70cf7c867752e9e52cb95f461b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 7707 REVERSE_INULL two gchar ** deref'd w/o check in set_param
+    
+        Also gchar ** strv_type_key potentially leaked in the 'clear' and 'unset' cases
+    (cherry picked from commit c4b90bf71b14da5a6c11bd7ef1898cd2734ffbab)
+
+ util/mc-tool.c |   35 ++++++++++++++++++++---------------
+ 1 files changed, 20 insertions(+), 15 deletions(-)
+
+commit cd48b089e962c9842c97545ad3cb91336a4be675
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 21106 RESOURCE_LEAK in dispatch_operation_claim
+    (cherry picked from commit 07599a7ab74d654d50bc4dd8493f6f4cef5459df)
+
+ src/mcd-dispatch-operation.c |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
+
+commit c773108d1729d00ed832d93c2246e14cb81ec12a
+Merge: 6cf8ed2 80b75c3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:22:04 +0100
+
+    Merge branch '54-unsafe-param-reuse' into telepathy-mission-control-5.4
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 80b75c38c6147eee494e8bf0d63309f4555d8d03
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:09:06 +0100
+
+    _mcd_account_dup_parameters: don't assume that borrowed parameters remain valid
+
+ src/mcd-account.c |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
+
+commit 603f1fb47b08fc329868d6284022e9e397fd73d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:08:32 +0100
+
+    _mcd_account_set_parameters: don't assume that borrowed parameters remain valid
+
+ src/mcd-account.c |   13 +++++++++----
+ 1 files changed, 9 insertions(+), 4 deletions(-)
+
+commit d408af59e2e5066ee87a6ef9c718500b335f704c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:08:10 +0100
+
+    mcd_account_check_parameters: don't assume that borrowed parameters remain valid
+
+ src/mcd-account.c |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
+
+commit fd0180aeca1b266bf4212ce63ca01c36bd151762
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:07:33 +0100
+
+    _mcd_account_migrate_secrets: don't assume that a borrowed string remains valid
+
+ src/mcd-account.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+commit e183be2acb77ebd9117723ff3eb8da874aa8ab16
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:06:45 +0100
+
+    _mcd_manager_dup_protocol, _mcd_manager_protocol_free: add
+    
+    Copied from telepathy-glib 0.11.6 to avoid a dependency on that version
+    in this stable branch; in git master, they should be replaced by calls
+    to the newer telepathy-glib API.
+
+ src/Makefile.am        |    1 +
+ src/mcd-manager-priv.h |   39 +++++++++++++++++++++
+ src/mcd-manager.c      |   89 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 129 insertions(+), 0 deletions(-)
+
+commit 6cf8ed2299d4e473550c1f828ac9af596c607721
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:38:36 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 91bb48a26e0dc7a9abab8d36b46e887c988a6279
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-05-25 19:16:05 +0100
