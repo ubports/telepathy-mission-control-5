@@ -1,6 +1,18 @@
+telepathy-mission-control-5 (5.5.0-3) unstable; urgency=low
+
+  * Merge from experimental into unstable. We've decided to keep 5.5.x in
+    unstable at least for the moment; if it turns out to be problematic, we
+    can re-upload with an epoch.
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 31 May 2010 17:11:12 +0100
+
 telepathy-mission-control-5 (5.5.0-2) experimental; urgency=low
 
-  * Really upload to experimental... (saved by the NEW queue!)
+  * No changes.
+    (This was a failed attempt to recover from 5.5.0-1 incorrectly being
+    uploaded to unstable, by uploading with the correct distribution
+    before 5.5.0-1 was accepted from the NEW queue. The ftp-masters were
+    too fast...)
 
  -- Simon McVittie <smcv@debian.org>  Thu, 27 May 2010 12:06:46 +0100
 
