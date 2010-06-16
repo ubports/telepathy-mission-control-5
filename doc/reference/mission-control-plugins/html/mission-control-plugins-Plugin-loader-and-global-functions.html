@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Plugin loader and global functions</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
+<link rel="up" href="ch01.html" title="Global functions">
+<link rel="prev" href="ch01.html" title="Global functions">
+<link rel="next" href="ch02.html" title="Account storage">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch01.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Mission Control Plugins Reference Manual</th>
+<td><a accesskey="n" href="ch02.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#mission-control-plugins-Plugin-loader-and-global-functions.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#mission-control-plugins-Plugin-loader-and-global-functions.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Plugin loader and global functions">
+<a name="mission-control-plugins-Plugin-loader-and-global-functions"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="mission-control-plugins-Plugin-loader-and-global-functions.top_of_page"></a>Plugin loader and global functions</span></h2>
+<p>Plugin loader and global functions — Writing a plugin, or loading plugins</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="mission-control-plugins-Plugin-loader-and-global-functions.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;mission-control-plugins/mission-control-plugins.h&gt;
+
+<a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()">mcp_plugin_ref_nth_object</a>           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);
+#define             <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS" title="MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL">MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL</a>
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-set-debug" title="mcp_set_debug ()">mcp_set_debug</a>                       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> debug</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-add-object" title="mcp_add_object ()">mcp_add_object</a>                      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-read-dir" title="mcp_read_dir ()">mcp_read_dir</a>                        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+const <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-list-objects" title="mcp_list_objects ()">mcp_list_objects</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="mission-control-plugins-Plugin-loader-and-global-functions.description"></a><h2>Description</h2>
+<p>
+To write plugins for Mission Control, build a GModule whose name starts
+with "mcp-" and ends with <a href="/usr/share/gtk-doc/html/glib/glib-Dynamic-Loading-of-Modules.html#G-MODULE-SUFFIX:CAPS"><code class="literal">G_MODULE_SUFFIX</code></a>, for instance mcp-testplugin.so
+on Linux or mcp-testplugin.dll on Windows. It must be installed in the
+directory given by the ${plugindir} variable in the mission-control-plugins
+pkg-config file.
+</p>
+<p>
+Each plugin must contain an extern (public) function called
+<a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a> which behaves as documented here. Mission
+Control will call that function to load the plugin.
+</p>
+<p>
+Mission Control also uses functions from this part of the library, to load
+the plugins.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="mission-control-plugins-Plugin-loader-and-global-functions.details"></a><h2>Details</h2>
+<div class="refsect2" title="mcp_plugin_ref_nth_object ()">
+<a name="mcp-plugin-ref-nth-object"></a><h3>mcp_plugin_ref_nth_object ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           mcp_plugin_ref_nth_object           (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
+<p>
+Implemented by each plugin (not implemented in this library!) as a hook
+point; it will be called repeatedly with an increasing argument, and must
+return a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> reference each time, until it returns <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+</p>
+<p>
+Mission Control will query each object for the <span class="type">GInterface</span>s it
+implements, and behave accordingly; for instance, the objects might
+implement <a class="link" href="McpRequestPolicy.html" title="McpRequestPolicy"><span class="type">McpRequestPolicy</span></a> and/or <a class="link" href="McpDispatchOperationPolicy.html" title="McpDispatchOperationPolicy"><span class="type">McpDispatchOperationPolicy</span></a>.
+</p>
+<p>
+As currently implemented, these objects are never unreferenced.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>object number, starting from 0
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a new reference to a <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>, or <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is at least the
+ number of objects supported by this plugin
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL">
+<a name="MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS"></a><h3>MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL</h3>
+<pre class="programlisting">#define MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL "mcp_plugin_ref_nth_object"
+</pre>
+<p>
+A string constant whose value is the name <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcp_set_debug ()">
+<a name="mcp-set-debug"></a><h3>mcp_set_debug ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_set_debug                       (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> debug</code></em>);</pre>
+<p>
+Set whether debug output will be produced via <a href="/usr/share/gtk-doc/html/glib/glib-Message-Logging.html#g-debug"><code class="function">g_debug()</code></a> for the plugin
+loader. Plugins shouldn't normally need to call this function.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>debug</code></em> :</span></p></td>
+<td>whether to log debug output
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcp_add_object ()">
+<a name="mcp-add-object"></a><h3>mcp_add_object ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_add_object                      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>);</pre>
+<p>
+Add an object to the list of "plugin objects". Mission Control does this
+automatically for the objects returned by <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>,
+so you should only need to use this if you're embedding part of Mission
+Control in a larger process.
+</p>
+<p>
+As currently implemented, these objects are never unreferenced.
+</p>
+<p>
+Mission Control uses this function to load its plugins; plugins shouldn't
+call it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
+<td>an object implementing one or more plugin interfaces
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcp_read_dir ()">
+<a name="mcp-read-dir"></a><h3>mcp_read_dir ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_read_dir                        (<em class="parameter"><code>const <a href="/usr/share/gtk-doc/html/glib/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);</pre>
+<p>
+Read plugins from the given path. Any file with prefix "mcp-" and suffix
+<a href="/usr/share/gtk-doc/html/glib/glib-Dynamic-Loading-of-Modules.html#G-MODULE-SUFFIX:CAPS"><code class="literal">G_MODULE_SUFFIX</code></a> is considered as a potential plugin, and loaded; if it
+contains the symbol <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>, the plugin is made
+resident, then that symbol is called as a function until it returns <a href="/usr/share/gtk-doc/html/glib/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+</p>
+<p>
+Mission Control uses this function to load its plugins; plugins shouldn't
+call it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
+<td>full path to a plugins directory
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcp_list_objects ()">
+<a name="mcp-list-objects"></a><h3>mcp_list_objects ()</h3>
+<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/glib/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       mcp_list_objects                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Return a list of objects that might implement plugin interfaces.
+</p>
+<p>
+Mission Control uses this function to iterate through the loaded plugin
+objects; plugins shouldn't need to call it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> a constant list of plugin objects
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

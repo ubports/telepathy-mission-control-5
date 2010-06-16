@@ -40,6 +40,9 @@
 #include <stdlib.h>
 
 #include <telepathy-glib/debug.h>
+#include <telepathy-glib/debug-sender.h>
+
+#include <mission-control-plugins/mission-control-plugins.h>
 
 #include "mcd-debug.h"
 #include "mcd-operation.h"
@@ -156,6 +159,10 @@ void mcd_debug_init ()
         }
     }
 
+    mcp_set_debug ((mcd_debug_level >= 1));
+
+    tp_debug_divert_messages (g_getenv ("MC_LOGFILE"));
+
     if (mcd_debug_level >= 1)
         g_debug ("%s version %s", PACKAGE, VERSION);
 }
@@ -164,6 +171,8 @@ void
 mcd_debug_set_level (gint level)
 {
     mcd_debug_level = level;
+
+    mcp_set_debug ((mcd_debug_level >= 1));
 
     if (level >= 1)
     {
@@ -180,3 +189,30 @@ mcd_debug_set_level (gint level)
     }
 }
 
+void
+mcd_debug (const gchar *format,
+    ...)
+{
+  TpDebugSender *dbg;
+  GTimeVal now;
+  gchar *message;
+  va_list args;
+
+  va_start (args, format);
+  message = g_strdup_vprintf (format, args);
+  va_end (args);
+
+  if (_mcd_debug_get_level () > 0)
+    g_debug ("%s", message);
+
+  dbg = tp_debug_sender_dup ();
+
+  g_get_current_time (&now);
+
+  tp_debug_sender_add_message (dbg, &now, G_LOG_DOMAIN,
+                               G_LOG_LEVEL_DEBUG, message);
+
+  g_object_unref (dbg);
+
+  g_free (message);
+}

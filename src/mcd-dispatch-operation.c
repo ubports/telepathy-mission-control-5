@@ -46,7 +46,10 @@
 #include "channel-utils.h"
 #include "mcd-channel-priv.h"
 #include "mcd-dbusprop.h"
+#include "mcd-master-priv.h"
 #include "mcd-misc.h"
+#include "plugin-dispatch-operation.h"
+#include "plugin-loader.h"
 
 #include <libmcclient/mc-errors.h>
 
@@ -253,6 +256,10 @@ struct _McdDispatchOperationPrivate
     /* If TRUE, we've tried all the BypassApproval handlers, which happens
      * before we run approvers. */
     gboolean tried_handlers_before_approval;
+
+    McdPluginDispatchOperation *plugin_api;
+    gsize plugins_pending;
+    gboolean did_post_observer_actions;
 };
 
 static void _mcd_dispatch_operation_check_finished (
@@ -361,18 +368,60 @@ static void _mcd_dispatch_operation_close_as_undispatchable (
 static gboolean mcd_dispatch_operation_idle_run_approvers (gpointer p);
 static void mcd_dispatch_operation_set_channel_handled_by (
     McdDispatchOperation *self, McdChannel *channel, const gchar *unique_name);
+static gboolean _mcd_dispatch_operation_handlers_can_bypass_approval (
+    McdDispatchOperation *self);
 
 static void
 _mcd_dispatch_operation_check_client_locks (McdDispatchOperation *self)
 {
     Approval *approval;
 
+    if (!self->priv->invoked_observers_if_needed)
+    {
+        DEBUG ("waiting for Observers to be called");
+        return;
+    }
+
+    if (self->priv->plugins_pending > 0)
+    {
+        DEBUG ("waiting for plugins to stop delaying");
+        return;
+    }
+
+    /* Check whether plugins' requests to close channels later should be
+     * honoured. We want to do this before running Approvers (if any). */
+    if (self->priv->observers_pending == 0 &&
+        !self->priv->did_post_observer_actions)
+    {
+        _mcd_plugin_dispatch_operation_observers_finished (
+            self->priv->plugin_api);
+        self->priv->did_post_observer_actions = TRUE;
+    }
+
+    /* If nobody is bypassing approval, then we want to run approvers as soon
+     * as possible, without waiting for observers, to improve responsiveness.
+     * (The regression test dispatcher/exploding-bundles.py asserts that we
+     * do this.)
+     *
+     * However, if a handler bypasses approval, we must wait til the observers
+     * return, then run that handler, then proceed with the other handlers. */
+    if (!self->priv->tried_handlers_before_approval &&
+        !_mcd_dispatch_operation_handlers_can_bypass_approval (self)
+        && self->priv->channels != NULL &&
+        ! _mcd_plugin_dispatch_operation_will_terminate (
+            self->priv->plugin_api))
+    {
+        self->priv->tried_handlers_before_approval = TRUE;
+
+        g_idle_add_full (G_PRIORITY_HIGH,
+                         mcd_dispatch_operation_idle_run_approvers,
+                         g_object_ref (self), g_object_unref);
+    }
+
     /* we may not continue until we've called all the Observers, and they've
      * all replied "I'm ready" */
-    if (!self->priv->invoked_observers_if_needed ||
-        self->priv->observers_pending > 0)
+    if (self->priv->observers_pending > 0)
     {
-        DEBUG ("waiting for Observers");
         return;
     }
 
@@ -501,7 +550,7 @@ enum
  * Returns: the D-Bus object path of the Connection associated with @self,
  *    or "/" if none.
  */
-static const gchar *
+const gchar *
 _mcd_dispatch_operation_get_connection_path (McdDispatchOperation *self)
 {
     const gchar *path;
@@ -530,6 +579,30 @@ get_connection (TpSvcDBusProperties *self, const gchar *name, GValue *value)
             MCD_DISPATCH_OPERATION (self)));
 }
 
+const gchar *
+_mcd_dispatch_operation_get_cm_name (McdDispatchOperation *self)
+{
+    const gchar *ret;
+
+    g_return_val_if_fail (MCD_IS_DISPATCH_OPERATION (self), NULL);
+    g_return_val_if_fail (self->priv->account != NULL, NULL);
+    ret = mcd_account_get_manager_name (self->priv->account);
+    g_return_val_if_fail (ret != NULL, NULL);
+    return ret;
+}
+
+const gchar *
+_mcd_dispatch_operation_get_protocol (McdDispatchOperation *self)
+{
+    const gchar *ret;
+
+    g_return_val_if_fail (MCD_IS_DISPATCH_OPERATION (self), NULL);
+    g_return_val_if_fail (self->priv->account != NULL, NULL);
+    ret = mcd_account_get_protocol_name (self->priv->account);
+    g_return_val_if_fail (ret != NULL, NULL);
+    return ret;
+}
+
 /*
  * _mcd_dispatch_operation_get_account_path:
  * @operation: the #McdDispatchOperation.
@@ -537,7 +610,7 @@ get_connection (TpSvcDBusProperties *self, const gchar *name, GValue *value)
  * Returns: the D-Bus object path of the Account associated with @operation,
  *    or "/" if none.
  */
-static const gchar *
+const gchar *
 _mcd_dispatch_operation_get_account_path (McdDispatchOperation *self)
 {
     const gchar *path;
@@ -663,7 +736,7 @@ _mcd_dispatch_operation_finish (McdDispatchOperation *operation,
     }
 
     va_start (ap, format);
-    priv->result = _mcd_g_error_new_valist (domain, code, format, ap);
+    priv->result = g_error_new_valist (domain, code, format, ap);
     va_end (ap);
     DEBUG ("Result: %s", priv->result->message);
 
@@ -696,6 +769,9 @@ _mcd_dispatch_operation_finish (McdDispatchOperation *operation,
                     {
                         DEBUG ("successful HandleWith, channel went to %s",
                                successful_handler);
+
+                        /* HandleWith and HandleWithTime both return void, so
+                         * it's OK to not distinguish */
                         tp_svc_channel_dispatch_operation_return_from_handle_with (
                             approval->context);
                     }
@@ -745,9 +821,10 @@ static gboolean mcd_dispatch_operation_check_handle_with (
     McdDispatchOperation *self, const gchar *handler_name, GError **error);
 
 static void
-dispatch_operation_handle_with (TpSvcChannelDispatchOperation *cdo,
-                                const gchar *handler_name,
-                                DBusGMethodInvocation *context)
+dispatch_operation_handle_with_time (TpSvcChannelDispatchOperation *cdo,
+    const gchar *handler_name,
+    gint64 user_action_timestamp,
+    DBusGMethodInvocation *context)
 {
     GError *error = NULL;
     McdDispatchOperation *self = MCD_DISPATCH_OPERATION (cdo);
@@ -761,12 +838,20 @@ dispatch_operation_handle_with (TpSvcChannelDispatchOperation *cdo,
         return;
     }
 
-    /* 0 is a special case for 'no user action' */
-    self->priv->handle_with_time = 0;
+    self->priv->handle_with_time = user_action_timestamp;
 
     g_queue_push_tail (self->priv->approvals,
                        approval_new_handle_with (handler_name, context));
     _mcd_dispatch_operation_check_client_locks (self);
+}
+
+static void
+dispatch_operation_handle_with (TpSvcChannelDispatchOperation *cdo,
+    const gchar *handler_name,
+    DBusGMethodInvocation *context)
+{
+    /* 0 is a special case for 'no user action' */
+    dispatch_operation_handle_with_time (cdo, handler_name, 0, context);
 }
 
 static void
@@ -800,6 +885,7 @@ dispatch_operation_iface_init (TpSvcChannelDispatchOperationClass *iface,
     iface, dispatch_operation_##x)
     IMPLEMENT(handle_with);
     IMPLEMENT(claim);
+    IMPLEMENT(handle_with_time);
 #undef IMPLEMENT
 }
 
@@ -882,6 +968,8 @@ mcd_dispatch_operation_constructor (GType type, guint n_params,
 
         g_object_unref (dbus_daemon);
     }
+
+    priv->plugin_api = _mcd_plugin_dispatch_operation_new (operation);
 
     return object;
 error:
@@ -1092,6 +1180,12 @@ mcd_dispatch_operation_dispose (GObject *object)
 {
     McdDispatchOperationPrivate *priv = MCD_DISPATCH_OPERATION_PRIV (object);
     GList *list;
+
+    if (priv->plugin_api != NULL)
+    {
+        g_object_unref (priv->plugin_api);
+        priv->plugin_api = NULL;
+    }
 
     if (priv->successful_handler != NULL)
     {
@@ -1999,29 +2093,25 @@ _mcd_dispatch_operation_run_clients (McdDispatchOperation *self)
 
     if (self->priv->channels != NULL)
     {
+        const GList *mini_plugins;
+
+        DEBUG ("Running observers");
         _mcd_dispatch_operation_run_observers (self);
+
+        for (mini_plugins = mcp_list_objects ();
+             mini_plugins != NULL;
+             mini_plugins = mini_plugins->next)
+        {
+            if (MCP_IS_DISPATCH_OPERATION_POLICY (mini_plugins->data))
+            {
+                mcp_dispatch_operation_policy_check (mini_plugins->data,
+                    MCP_DISPATCH_OPERATION (self->priv->plugin_api));
+            }
+        }
     }
 
     DEBUG ("All necessary observers invoked");
     self->priv->invoked_observers_if_needed = TRUE;
-    /* we call check_finished before returning */
-
-    /* If nobody is bypassing approval, then we want to run approvers as soon
-     * as possible, without waiting for observers, to improve responsiveness.
-     * (The regression test dispatcher/exploding-bundles.py asserts that we
-     * do this.)
-     *
-     * However, if a handler bypasses approval, we must wait til the observers
-     * return, then run that handler, then proceed with the other handlers. */
-    if (!_mcd_dispatch_operation_handlers_can_bypass_approval (self)
-        && self->priv->channels != NULL)
-    {
-        self->priv->tried_handlers_before_approval = TRUE;
-
-        g_idle_add_full (G_PRIORITY_HIGH,
-                         mcd_dispatch_operation_idle_run_approvers,
-                         g_object_ref (self), g_object_unref);
-    }
 
     DEBUG ("Checking finished/locks");
     _mcd_dispatch_operation_check_finished (self);
@@ -2153,4 +2243,100 @@ _mcd_dispatch_operation_close_as_undispatchable (McdDispatchOperation *self,
     }
 
     g_list_free (channels);
+}
+
+void
+_mcd_dispatch_operation_start_plugin_delay (McdDispatchOperation *self)
+{
+    g_object_ref (self);
+    DEBUG ("%" G_GSIZE_FORMAT " -> %" G_GSIZE_FORMAT,
+           self->priv->plugins_pending,
+           self->priv->plugins_pending + 1);
+    self->priv->plugins_pending++;
+}
+
+void
+_mcd_dispatch_operation_end_plugin_delay (McdDispatchOperation *self)
+{
+    DEBUG ("%" G_GSIZE_FORMAT " -> %" G_GSIZE_FORMAT,
+           self->priv->plugins_pending,
+           self->priv->plugins_pending - 1);
+    g_return_if_fail (self->priv->plugins_pending > 0);
+    self->priv->plugins_pending--;
+
+    _mcd_dispatch_operation_check_client_locks (self);
+    g_object_unref (self);
+}
+
+void
+_mcd_dispatch_operation_forget_channels (McdDispatchOperation *self)
+{
+    /* make a temporary copy, which is destroyed during the loop - otherwise
+     * we'll be trying to iterate over the list at the same time
+     * that mcd_mission_abort results in modifying it, which would be bad */
+    GList *list = _mcd_dispatch_operation_dup_channels (self);
+
+    while (list != NULL)
+    {
+        mcd_mission_abort (list->data);
+        g_object_unref (list->data);
+        list = g_list_delete_link (list, list);
+    }
+
+    /* There should now be none left (they all aborted) */
+    g_return_if_fail (self->priv->channels == NULL);
+}
+
+void
+_mcd_dispatch_operation_leave_channels (McdDispatchOperation *self,
+                                        TpChannelGroupChangeReason reason,
+                                        const gchar *message)
+{
+    GList *list;
+
+    if (message == NULL)
+    {
+        message = "";
+    }
+
+    list = _mcd_dispatch_operation_dup_channels (self);
+
+    while (list != NULL)
+    {
+        _mcd_channel_depart (list->data, reason, message);
+        g_object_unref (list->data);
+        list = g_list_delete_link (list, list);
+    }
+
+    _mcd_dispatch_operation_forget_channels (self);
+}
+
+void
+_mcd_dispatch_operation_close_channels (McdDispatchOperation *self)
+{
+    GList *list = _mcd_dispatch_operation_dup_channels (self);
+
+    while (list != NULL)
+    {
+        _mcd_channel_close (list->data);
+        g_object_unref (list->data);
+        list = g_list_delete_link (list, list);
+    }
+
+    _mcd_dispatch_operation_forget_channels (self);
+}
+
+void
+_mcd_dispatch_operation_destroy_channels (McdDispatchOperation *self)
+{
+    GList *list = _mcd_dispatch_operation_dup_channels (self);
+
+    while (list != NULL)
+    {
+        _mcd_channel_undispatchable (list->data);
+        g_object_unref (list->data);
+        list = g_list_delete_link (list, list);
+    }
+
+    _mcd_dispatch_operation_forget_channels (self);
 }

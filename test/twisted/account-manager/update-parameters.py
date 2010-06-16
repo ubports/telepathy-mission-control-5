@@ -64,14 +64,6 @@ def test(q, bus, mc):
 
     q.dbus_return(e.message, conn.bus_name, conn.object_path, signature='so')
 
-    # MC calls GetStatus (maybe) and then Connect
-
-    q.expect('dbus-method-call', method='Connect',
-            path=conn.object_path, handled=True)
-
-    # Connect succeeds
-    conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)
-
     # MC does some setup, including fetching the list of Channels
 
     q.expect_many(
@@ -80,6 +72,14 @@ def test(q, bus, mc):
                 args=[cs.CONN_IFACE_REQUESTS],
                 path=conn.object_path, handled=True),
             )
+
+    # MC calls GetStatus (maybe) and then Connect
+
+    q.expect('dbus-method-call', method='Connect',
+            path=conn.object_path, handled=True)
+
+    # Connect succeeds
+    conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)
 
     # Assert that the NormalizedName is harvested from the Connection at some
     # point
@@ -175,7 +175,8 @@ def test(q, bus, mc):
     updated = False
     while i < 500:
 
-        for line in open(accounts_dir + '/accounts.cfg', 'r'):
+        for line in open(accounts_dir +
+                '/mcp-test-diverted-account-plugin.conf', 'r'):
             if line.startswith('param-account=') and '\\' in line:
                 assertEquals(r'param-account=\\\\' + '\n', line)
                 updated = True

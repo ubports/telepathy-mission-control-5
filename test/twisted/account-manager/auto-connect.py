@@ -26,7 +26,7 @@ import dbus
 import dbus.service
 
 from servicetest import EventPattern, tp_name_prefix, tp_path_prefix, \
-        call_async
+        call_async, assertEquals
 from mctest import exec_test, SimulatedConnection, create_fakecm_account, \
         make_mc
 import constants as cs
@@ -81,13 +81,15 @@ def test(q, bus, unused):
 
     mc = make_mc(bus, q.append)
 
-    e, _ = q.expect_many(
+    request_conn, prop_changed, _ = q.expect_many(
             EventPattern('dbus-method-call', method='RequestConnection',
                 args=['fakeprotocol', expected_params],
                 destination=cs.tp_name_prefix + '.ConnectionManager.fakecm',
                 path=cs.tp_path_prefix + '/ConnectionManager/fakecm',
                 interface=cs.tp_name_prefix + '.ConnectionManager',
                 handled=False),
+            EventPattern('dbus-signal', signal='AccountPropertyChanged',
+                predicate=(lambda e: 'ConnectionStatus' in e.args[0])),
             EventPattern('dbus-signal', signal='NameOwnerChanged',
                     predicate=lambda e: e.args[0] == cs.AM and e.args[2]),
             )
@@ -95,30 +97,46 @@ def test(q, bus, unused):
     conn = SimulatedConnection(q, bus, 'fakecm', 'fakeprotocol', '_',
             'myself', has_presence=True, has_aliasing=True, has_avatars=True)
 
-    q.dbus_return(e.message, conn.bus_name, conn.object_path, signature='so')
+    assertEquals('/', prop_changed.args[0].get('Connection'))
+    assertEquals('', prop_changed.args[0].get('ConnectionError'))
+    assertEquals({}, prop_changed.args[0].get('ConnectionErrorDetails'))
+    assertEquals(cs.CONN_STATUS_CONNECTING,
+        prop_changed.args[0].get('ConnectionStatus'))
+    assertEquals(cs.CONN_STATUS_REASON_REQUESTED,
+        prop_changed.args[0].get('ConnectionStatusReason'))
+
+    q.dbus_return(request_conn.message, conn.bus_name, conn.object_path,
+        signature='so')
 
     account_path = (cs.tp_path_prefix + '/Account/' + account_id)
     account = bus.get_object(
         cs.tp_name_prefix + '.AccountManager',
         account_path)
 
-    e, _ = q.expect_many(
-            EventPattern('dbus-signal', signal='AccountPropertyChanged',
-                path=account_path, interface=cs.ACCOUNT,
-                predicate=(lambda e: e.args[0].get('ConnectionStatus') ==
-                    cs.CONN_STATUS_CONNECTING)),
-            EventPattern('dbus-method-call', method='Connect',
-                path=conn.object_path, handled=True, interface=cs.CONN),
-            )
-    assert e.args[0].get('Connection') in (conn.object_path, None)
-    assert e.args[0]['ConnectionStatus'] == cs.CONN_STATUS_CONNECTING
-    assert e.args[0].get('ConnectionStatusReason') in \
-            (cs.CONN_STATUS_REASON_REQUESTED, None)
+    prop_changed, _ = q.expect_many(
+        EventPattern('dbus-signal', signal='AccountPropertyChanged',
+            predicate=(lambda e: 'ConnectionStatus' in e.args[0])),
+        EventPattern('dbus-method-call', method='Connect',
+            path=conn.object_path, handled=True, interface=cs.CONN),
+        )
+
+    assertEquals(conn.object_path, prop_changed.args[0].get('Connection'))
+    assertEquals('', prop_changed.args[0].get('ConnectionError'))
+    assertEquals({}, prop_changed.args[0].get('ConnectionErrorDetails'))
+    assertEquals(cs.CONN_STATUS_CONNECTING,
+        prop_changed.args[0].get('ConnectionStatus'))
+    assertEquals(cs.CONN_STATUS_REASON_REQUESTED,
+        prop_changed.args[0].get('ConnectionStatusReason'))
+
+    props = account.GetAll(cs.ACCOUNT, dbus_interface=cs.PROPERTIES_IFACE)
+    assert props['Connection'] == conn.object_path
+    assert props['ConnectionStatus'] == cs.CONN_STATUS_CONNECTING
+    assert props['ConnectionStatusReason'] == cs.CONN_STATUS_REASON_REQUESTED
 
     print "becoming connected"
     conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)
 
-    set_aliases, set_presence, set_avatar, e = q.expect_many(
+    set_aliases, set_presence, set_avatar, prop_changed = q.expect_many(
             EventPattern('dbus-method-call',
                 interface=cs.CONN_IFACE_ALIASING, method='SetAliases',
                 args=[{ conn.self_handle: 'JC' }],
@@ -132,10 +150,19 @@ def test(q, bus, unused):
                 handled=True),
             EventPattern('dbus-signal', signal='AccountPropertyChanged',
                 path=account_path, interface=cs.ACCOUNT,
-                predicate=lambda e: 'ConnectionStatus' in e.args[0]),
+                predicate=(lambda e:
+                    e.args[0].get('ConnectionStatus') ==
+                        cs.CONN_STATUS_CONNECTED),
+                ),
             )
 
-    assert e.args[0]['ConnectionStatus'] == cs.CONN_STATUS_CONNECTED
+    assertEquals(conn.object_path, prop_changed.args[0].get('Connection'))
+    assertEquals('', prop_changed.args[0].get('ConnectionError'))
+    assertEquals({}, prop_changed.args[0].get('ConnectionErrorDetails'))
+    assertEquals(cs.CONN_STATUS_CONNECTED,
+        prop_changed.args[0].get('ConnectionStatus'))
+    assertEquals(cs.CONN_STATUS_REASON_REQUESTED,
+        prop_changed.args[0].get('ConnectionStatusReason'))
 
     assert account.Get(cs.ACCOUNT, 'CurrentPresence',
             dbus_interface=cs.PROPERTIES_IFACE) == (cs.PRESENCE_TYPE_AVAILABLE,

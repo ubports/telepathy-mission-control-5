@@ -38,10 +38,10 @@ host_triplet = @host@
 
 # the redundant quoting here is to prevent the libtool command line from
 # looking like an error message in an oddly named file
-@ENABLE_MC_CLIENT_SO6_TRUE@am__append_1 = -version-info "10":"0":"4"
-@ENABLE_MC_CLIENT_SO6_FALSE@am__append_2 = -release $(VERSION)
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_CLIENT_SO6_TRUE@am__append_1 = -version-info "10":"0":"4"
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_CLIENT_SO6_FALSE@am__append_2 = -release $(VERSION)
 subdir = libmcclient
-DIST_COMMON = $(libmcclient_include_HEADERS) $(noinst_HEADERS) \
+DIST_COMMON = $(am__libmcclient_include_HEADERS_DIST) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
@@ -81,10 +81,11 @@ am__base_list = \
 am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(libmcclient_includedir)" \
 	"$(DESTDIR)$(genincludedir)"
-LTLIBRARIES = $(lib_LTLIBRARIES)
+LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmcclient_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+am__objects_1 =
 am_libmcclient_la_OBJECTS = libmcclient_la-dbus-api.lo \
 	libmcclient_la-mc-account.lo \
 	libmcclient_la-mc-account-avatar.lo \
@@ -95,31 +96,54 @@ am_libmcclient_la_OBJECTS = libmcclient_la-dbus-api.lo \
 	libmcclient_la-mc-account-stats.lo \
 	libmcclient_la-mc-dispatch-operation.lo \
 	libmcclient_la-mc-errors.lo libmcclient_la-mc-profile.lo \
-	libmcclient_la-mc-signals-marshal.lo
+	libmcclient_la-mc-signals-marshal.lo $(am__objects_1)
 nodist_libmcclient_la_OBJECTS = libmcclient_la-mc-quark.lo \
-	libmcclient_la-svc-client.lo libmcclient_la-signals-marshal.lo
+	libmcclient_la-svc-client.lo libmcclient_la-signals-marshal.lo \
+	$(am__objects_1)
 libmcclient_la_OBJECTS = $(am_libmcclient_la_OBJECTS) \
 	$(nodist_libmcclient_la_OBJECTS)
-libmcclient_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libmcclient_la_CFLAGS) \
-	$(CFLAGS) $(libmcclient_la_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+libmcclient_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(libmcclient_la_CFLAGS) $(CFLAGS) $(libmcclient_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@ENABLE_MCD_PLUGINS_FALSE@am_libmcclient_la_rpath =
+@ENABLE_MCD_PLUGINS_TRUE@am_libmcclient_la_rpath = -rpath $(libdir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CFLAGS) $(CFLAGS)
+AM_V_CC = $(am__v_CC_$(V))
+am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
+am__v_CC_0 = @echo "  CC    " $@;
+AM_V_at = $(am__v_at_$(V))
+am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
+am__v_at_0 = @
 CCLD = $(CC)
-LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
+	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CCLD = $(am__v_CCLD_$(V))
+am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
+am__v_CCLD_0 = @echo "  CCLD  " $@;
+AM_V_GEN = $(am__v_GEN_$(V))
+am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
+am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(libmcclient_la_SOURCES) $(nodist_libmcclient_la_SOURCES)
 DIST_SOURCES = $(libmcclient_la_SOURCES)
-HEADERS = $(libmcclient_include_HEADERS) $(nodist_geninclude_HEADERS) \
-	$(noinst_HEADERS)
+am__libmcclient_include_HEADERS_DIST = dbus-api.h mc-account.h \
+	mc-enums.h mc-errors.h mc-gtypes.h mc-interfaces.h \
+	mc-profile.h mc-account-manager.h mc-dispatch-operation.h \
+	mc-signals-marshal.h mc-svc-client.h
+HEADERS = $(libmcclient_include_HEADERS) $(nodist_geninclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -127,6 +151,7 @@ ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
+AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -156,14 +181,10 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
-GCONF_CFLAGS = @GCONF_CFLAGS@
-GCONF_LIBS = @GCONF_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
-GMODULE_CFLAGS = @GMODULE_CFLAGS@
-GMODULE_LIBS = @GMODULE_LIBS@
 GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
@@ -178,6 +199,8 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
+LIBACCOUNTS_SSO_CFLAGS = @LIBACCOUNTS_SSO_CFLAGS@
+LIBACCOUNTS_SSO_LIBS = @LIBACCOUNTS_SSO_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -186,6 +209,11 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCP_ABI_VERSION = @MCP_ABI_VERSION@
+MCP_API_VERSION = @MCP_API_VERSION@
+MCP_LT_AGE = @MCP_LT_AGE@
+MCP_LT_CURRENT = @MCP_LT_CURRENT@
+MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -291,11 +319,15 @@ BUILT_SOURCES = \
 	_gen/libmcclient.xml \
 	mc-signals-marshal.c \
 	mc-signals-marshal.h \
-	$(nodist_libmcclient_la_SOURCES) \
-	$(nodist_geninclude_HEADERS)
+	$(nodist_libmcclient_la_SOURCES)
 
 CLEANFILES = $(BUILT_SOURCES)
-lib_LTLIBRARIES = libmcclient.la
+@ENABLE_MCD_PLUGINS_TRUE@libmcclient_includedir = $(includedir)/libmcclient
+@ENABLE_MCD_PLUGINS_TRUE@lib_LTLIBRARIES = libmcclient.la
+@ENABLE_MCD_PLUGINS_TRUE@libmcclient_include_HEADERS = $(headers)
+@ENABLE_MCD_PLUGINS_TRUE@genincludedir = $(libmcclient_includedir)/_gen
+@ENABLE_MCD_PLUGINS_TRUE@nodist_geninclude_HEADERS = $(gen_headers)
+@ENABLE_MCD_PLUGINS_FALSE@noinst_LTLIBRARIES = libmcclient.la
 libmcclient_la_CFLAGS = $(GLIB_CFLAGS)
 libmcclient_la_SOURCES = \
 	dbus-api.c \
@@ -304,15 +336,16 @@ libmcclient_la_SOURCES = \
 	mc-account-compat.c \
 	mc-account-conditions.c \
 	mc-account-manager.c \
+	mc-account-priv.h \
 	mc-account-request.c \
 	mc-account-stats.c \
 	mc-dispatch-operation.c \
 	mc-errors.c \
 	mc-profile.c \
-	mc-signals-marshal.c
+	mc-signals-marshal.c \
+	$(headers)
 
-libmcclient_includedir = $(includedir)/libmcclient
-libmcclient_include_HEADERS = \
+headers = \
 	dbus-api.h \
 	mc-account.h \
 	mc-enums.h \
@@ -325,11 +358,7 @@ libmcclient_include_HEADERS = \
 	mc-signals-marshal.h \
 	mc-svc-client.h
 
-noinst_HEADERS = \
-	mc-account-priv.h
-
-genincludedir = $(libmcclient_includedir)/_gen
-nodist_geninclude_HEADERS = \
+gen_headers = \
 	_gen/mc-quark.h \
 	_gen/cli-account.h \
 	_gen/cli-account-manager.h \
@@ -350,15 +379,18 @@ nodist_libmcclient_la_SOURCES = \
 	_gen/register-dbus-glib-marshallers-body.h \
 	_gen/signals-marshal.c \
 	_gen/signals-marshal.h \
-	_gen/signals-marshal.list
+	_gen/signals-marshal.list \
+	$(gen_headers)
 
 libmcclient_la_LIBADD = \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
 	$(GLIB_LIBS)
 
-libmcclient_la_LDFLAGS = -export-symbols-regex \
-	"^(mc_)|(mission_control_)" $(am__append_1) $(am__append_2)
+@ENABLE_MCD_PLUGINS_TRUE@libmcclient_la_LDFLAGS =  \
+@ENABLE_MCD_PLUGINS_TRUE@	-export-symbols-regex \
+@ENABLE_MCD_PLUGINS_TRUE@	"^(mc_)|(mission_control_)" \
+@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_1) $(am__append_2)
 EXTRA_DIST = \
 	$(libmcclient_include_DATA) \
 	libmcclient.xml \
@@ -438,8 +470,17 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
 libmcclient.la: $(libmcclient_la_OBJECTS) $(libmcclient_la_DEPENDENCIES) 
-	$(libmcclient_la_LINK) -rpath $(libdir) $(libmcclient_la_OBJECTS) $(libmcclient_la_LIBADD) $(LIBS)
+	$(AM_V_CCLD)$(libmcclient_la_LINK) $(am_libmcclient_la_rpath) $(libmcclient_la_OBJECTS) $(libmcclient_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -464,130 +505,148 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcclient_la-svc-client.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
 libmcclient_la-dbus-api.lo: dbus-api.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-dbus-api.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-dbus-api.Tpo -c -o libmcclient_la-dbus-api.lo `test -f 'dbus-api.c' || echo '$(srcdir)/'`dbus-api.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-dbus-api.Tpo $(DEPDIR)/libmcclient_la-dbus-api.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-dbus-api.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-dbus-api.Tpo -c -o libmcclient_la-dbus-api.lo `test -f 'dbus-api.c' || echo '$(srcdir)/'`dbus-api.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-dbus-api.Tpo $(DEPDIR)/libmcclient_la-dbus-api.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='dbus-api.c' object='libmcclient_la-dbus-api.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-dbus-api.lo `test -f 'dbus-api.c' || echo '$(srcdir)/'`dbus-api.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-dbus-api.lo `test -f 'dbus-api.c' || echo '$(srcdir)/'`dbus-api.c
 
 libmcclient_la-mc-account.lo: mc-account.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account.Tpo -c -o libmcclient_la-mc-account.lo `test -f 'mc-account.c' || echo '$(srcdir)/'`mc-account.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account.Tpo $(DEPDIR)/libmcclient_la-mc-account.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account.Tpo -c -o libmcclient_la-mc-account.lo `test -f 'mc-account.c' || echo '$(srcdir)/'`mc-account.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account.Tpo $(DEPDIR)/libmcclient_la-mc-account.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account.c' object='libmcclient_la-mc-account.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account.lo `test -f 'mc-account.c' || echo '$(srcdir)/'`mc-account.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account.lo `test -f 'mc-account.c' || echo '$(srcdir)/'`mc-account.c
 
 libmcclient_la-mc-account-avatar.lo: mc-account-avatar.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-avatar.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-avatar.Tpo -c -o libmcclient_la-mc-account-avatar.lo `test -f 'mc-account-avatar.c' || echo '$(srcdir)/'`mc-account-avatar.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-avatar.Tpo $(DEPDIR)/libmcclient_la-mc-account-avatar.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-avatar.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-avatar.Tpo -c -o libmcclient_la-mc-account-avatar.lo `test -f 'mc-account-avatar.c' || echo '$(srcdir)/'`mc-account-avatar.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-avatar.Tpo $(DEPDIR)/libmcclient_la-mc-account-avatar.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-avatar.c' object='libmcclient_la-mc-account-avatar.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-avatar.lo `test -f 'mc-account-avatar.c' || echo '$(srcdir)/'`mc-account-avatar.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-avatar.lo `test -f 'mc-account-avatar.c' || echo '$(srcdir)/'`mc-account-avatar.c
 
 libmcclient_la-mc-account-compat.lo: mc-account-compat.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-compat.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-compat.Tpo -c -o libmcclient_la-mc-account-compat.lo `test -f 'mc-account-compat.c' || echo '$(srcdir)/'`mc-account-compat.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-compat.Tpo $(DEPDIR)/libmcclient_la-mc-account-compat.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-compat.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-compat.Tpo -c -o libmcclient_la-mc-account-compat.lo `test -f 'mc-account-compat.c' || echo '$(srcdir)/'`mc-account-compat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-compat.Tpo $(DEPDIR)/libmcclient_la-mc-account-compat.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-compat.c' object='libmcclient_la-mc-account-compat.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-compat.lo `test -f 'mc-account-compat.c' || echo '$(srcdir)/'`mc-account-compat.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-compat.lo `test -f 'mc-account-compat.c' || echo '$(srcdir)/'`mc-account-compat.c
 
 libmcclient_la-mc-account-conditions.lo: mc-account-conditions.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-conditions.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-conditions.Tpo -c -o libmcclient_la-mc-account-conditions.lo `test -f 'mc-account-conditions.c' || echo '$(srcdir)/'`mc-account-conditions.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-conditions.Tpo $(DEPDIR)/libmcclient_la-mc-account-conditions.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-conditions.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-conditions.Tpo -c -o libmcclient_la-mc-account-conditions.lo `test -f 'mc-account-conditions.c' || echo '$(srcdir)/'`mc-account-conditions.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-conditions.Tpo $(DEPDIR)/libmcclient_la-mc-account-conditions.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-conditions.c' object='libmcclient_la-mc-account-conditions.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-conditions.lo `test -f 'mc-account-conditions.c' || echo '$(srcdir)/'`mc-account-conditions.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-conditions.lo `test -f 'mc-account-conditions.c' || echo '$(srcdir)/'`mc-account-conditions.c
 
 libmcclient_la-mc-account-manager.lo: mc-account-manager.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-manager.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-manager.Tpo -c -o libmcclient_la-mc-account-manager.lo `test -f 'mc-account-manager.c' || echo '$(srcdir)/'`mc-account-manager.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-manager.Tpo $(DEPDIR)/libmcclient_la-mc-account-manager.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-manager.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-manager.Tpo -c -o libmcclient_la-mc-account-manager.lo `test -f 'mc-account-manager.c' || echo '$(srcdir)/'`mc-account-manager.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-manager.Tpo $(DEPDIR)/libmcclient_la-mc-account-manager.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-manager.c' object='libmcclient_la-mc-account-manager.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-manager.lo `test -f 'mc-account-manager.c' || echo '$(srcdir)/'`mc-account-manager.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-manager.lo `test -f 'mc-account-manager.c' || echo '$(srcdir)/'`mc-account-manager.c
 
 libmcclient_la-mc-account-request.lo: mc-account-request.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-request.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-request.Tpo -c -o libmcclient_la-mc-account-request.lo `test -f 'mc-account-request.c' || echo '$(srcdir)/'`mc-account-request.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-request.Tpo $(DEPDIR)/libmcclient_la-mc-account-request.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-request.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-request.Tpo -c -o libmcclient_la-mc-account-request.lo `test -f 'mc-account-request.c' || echo '$(srcdir)/'`mc-account-request.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-request.Tpo $(DEPDIR)/libmcclient_la-mc-account-request.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-request.c' object='libmcclient_la-mc-account-request.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-request.lo `test -f 'mc-account-request.c' || echo '$(srcdir)/'`mc-account-request.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-request.lo `test -f 'mc-account-request.c' || echo '$(srcdir)/'`mc-account-request.c
 
 libmcclient_la-mc-account-stats.lo: mc-account-stats.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-stats.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-stats.Tpo -c -o libmcclient_la-mc-account-stats.lo `test -f 'mc-account-stats.c' || echo '$(srcdir)/'`mc-account-stats.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-stats.Tpo $(DEPDIR)/libmcclient_la-mc-account-stats.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-account-stats.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-account-stats.Tpo -c -o libmcclient_la-mc-account-stats.lo `test -f 'mc-account-stats.c' || echo '$(srcdir)/'`mc-account-stats.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-account-stats.Tpo $(DEPDIR)/libmcclient_la-mc-account-stats.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-account-stats.c' object='libmcclient_la-mc-account-stats.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-stats.lo `test -f 'mc-account-stats.c' || echo '$(srcdir)/'`mc-account-stats.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-account-stats.lo `test -f 'mc-account-stats.c' || echo '$(srcdir)/'`mc-account-stats.c
 
 libmcclient_la-mc-dispatch-operation.lo: mc-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-dispatch-operation.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Tpo -c -o libmcclient_la-mc-dispatch-operation.lo `test -f 'mc-dispatch-operation.c' || echo '$(srcdir)/'`mc-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Tpo $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-dispatch-operation.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Tpo -c -o libmcclient_la-mc-dispatch-operation.lo `test -f 'mc-dispatch-operation.c' || echo '$(srcdir)/'`mc-dispatch-operation.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Tpo $(DEPDIR)/libmcclient_la-mc-dispatch-operation.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-dispatch-operation.c' object='libmcclient_la-mc-dispatch-operation.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-dispatch-operation.lo `test -f 'mc-dispatch-operation.c' || echo '$(srcdir)/'`mc-dispatch-operation.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-dispatch-operation.lo `test -f 'mc-dispatch-operation.c' || echo '$(srcdir)/'`mc-dispatch-operation.c
 
 libmcclient_la-mc-errors.lo: mc-errors.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-errors.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-errors.Tpo -c -o libmcclient_la-mc-errors.lo `test -f 'mc-errors.c' || echo '$(srcdir)/'`mc-errors.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-errors.Tpo $(DEPDIR)/libmcclient_la-mc-errors.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-errors.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-errors.Tpo -c -o libmcclient_la-mc-errors.lo `test -f 'mc-errors.c' || echo '$(srcdir)/'`mc-errors.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-errors.Tpo $(DEPDIR)/libmcclient_la-mc-errors.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-errors.c' object='libmcclient_la-mc-errors.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-errors.lo `test -f 'mc-errors.c' || echo '$(srcdir)/'`mc-errors.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-errors.lo `test -f 'mc-errors.c' || echo '$(srcdir)/'`mc-errors.c
 
 libmcclient_la-mc-profile.lo: mc-profile.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-profile.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-profile.Tpo -c -o libmcclient_la-mc-profile.lo `test -f 'mc-profile.c' || echo '$(srcdir)/'`mc-profile.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-profile.Tpo $(DEPDIR)/libmcclient_la-mc-profile.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-profile.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-profile.Tpo -c -o libmcclient_la-mc-profile.lo `test -f 'mc-profile.c' || echo '$(srcdir)/'`mc-profile.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-profile.Tpo $(DEPDIR)/libmcclient_la-mc-profile.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-profile.c' object='libmcclient_la-mc-profile.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-profile.lo `test -f 'mc-profile.c' || echo '$(srcdir)/'`mc-profile.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-profile.lo `test -f 'mc-profile.c' || echo '$(srcdir)/'`mc-profile.c
 
 libmcclient_la-mc-signals-marshal.lo: mc-signals-marshal.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-signals-marshal.Tpo -c -o libmcclient_la-mc-signals-marshal.lo `test -f 'mc-signals-marshal.c' || echo '$(srcdir)/'`mc-signals-marshal.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-signals-marshal.Tpo $(DEPDIR)/libmcclient_la-mc-signals-marshal.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-signals-marshal.Tpo -c -o libmcclient_la-mc-signals-marshal.lo `test -f 'mc-signals-marshal.c' || echo '$(srcdir)/'`mc-signals-marshal.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-signals-marshal.Tpo $(DEPDIR)/libmcclient_la-mc-signals-marshal.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mc-signals-marshal.c' object='libmcclient_la-mc-signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-signals-marshal.lo `test -f 'mc-signals-marshal.c' || echo '$(srcdir)/'`mc-signals-marshal.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-signals-marshal.lo `test -f 'mc-signals-marshal.c' || echo '$(srcdir)/'`mc-signals-marshal.c
 
 libmcclient_la-mc-quark.lo: _gen/mc-quark.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-quark.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-quark.Tpo -c -o libmcclient_la-mc-quark.lo `test -f '_gen/mc-quark.c' || echo '$(srcdir)/'`_gen/mc-quark.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-mc-quark.Tpo $(DEPDIR)/libmcclient_la-mc-quark.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-mc-quark.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-mc-quark.Tpo -c -o libmcclient_la-mc-quark.lo `test -f '_gen/mc-quark.c' || echo '$(srcdir)/'`_gen/mc-quark.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-mc-quark.Tpo $(DEPDIR)/libmcclient_la-mc-quark.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/mc-quark.c' object='libmcclient_la-mc-quark.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-quark.lo `test -f '_gen/mc-quark.c' || echo '$(srcdir)/'`_gen/mc-quark.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-mc-quark.lo `test -f '_gen/mc-quark.c' || echo '$(srcdir)/'`_gen/mc-quark.c
 
 libmcclient_la-svc-client.lo: _gen/svc-client.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-svc-client.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-svc-client.Tpo -c -o libmcclient_la-svc-client.lo `test -f '_gen/svc-client.c' || echo '$(srcdir)/'`_gen/svc-client.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-svc-client.Tpo $(DEPDIR)/libmcclient_la-svc-client.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-svc-client.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-svc-client.Tpo -c -o libmcclient_la-svc-client.lo `test -f '_gen/svc-client.c' || echo '$(srcdir)/'`_gen/svc-client.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-svc-client.Tpo $(DEPDIR)/libmcclient_la-svc-client.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-client.c' object='libmcclient_la-svc-client.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-svc-client.lo `test -f '_gen/svc-client.c' || echo '$(srcdir)/'`_gen/svc-client.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-svc-client.lo `test -f '_gen/svc-client.c' || echo '$(srcdir)/'`_gen/svc-client.c
 
 libmcclient_la-signals-marshal.lo: _gen/signals-marshal.c
-@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-signals-marshal.Tpo -c -o libmcclient_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libmcclient_la-signals-marshal.Tpo $(DEPDIR)/libmcclient_la-signals-marshal.Plo
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -MT libmcclient_la-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcclient_la-signals-marshal.Tpo -c -o libmcclient_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcclient_la-signals-marshal.Tpo $(DEPDIR)/libmcclient_la-signals-marshal.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/signals-marshal.c' object='libmcclient_la-signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcclient_la_CFLAGS) $(CFLAGS) -c -o libmcclient_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -756,7 +815,7 @@ maintainer-clean-generic:
 clean: clean-am
 
 clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
-	mostlyclean-am
+	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -830,16 +889,17 @@ uninstall-am: uninstall-libLTLIBRARIES \
 .MAKE: all check install install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLTLIBRARIES clean-libtool ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-libmcclient_includeHEADERS \
-	install-man install-nodist_genincludeHEADERS install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
+	clean-libLTLIBRARIES clean-libtool clean-noinstLTLIBRARIES \
+	ctags distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-libLTLIBRARIES \
+	install-libmcclient_includeHEADERS install-man \
+	install-nodist_genincludeHEADERS install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES \

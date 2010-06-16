@@ -1,24 +1,20 @@
 #!/usr/bin/make -f
 
+DEB_DH_MAKESHLIBS_ARGS_libmission-control-plugins0 := -V
+
 include /usr/share/cdbs/1/rules/utils.mk
 include /usr/share/cdbs/1/class/autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/rules/simple-patchsys.mk
 
-# The library isn't stable, and shouldn't be used on mainstream distributions.
-#
-# mc-account-convert requires GConf which we don't want to depend on here,
-# so if we were compiled on a non-minimal system, get rid of it.
+# Having a static library for a plugin loader is pretty useless, so get rid
+# of it. We don't want the libtool stuff either, but we do want to list any
+# other missing files.
 common-binary-post-install-arch:: list-missing
 list-missing: remove-cruft
 remove-cruft:
-	rm -rf debian/tmp/usr/include
-	rm -f debian/tmp/usr/lib/libmcclient.a
-	rm -f debian/tmp/usr/lib/libmcclient.la
-	rm -rf debian/tmp/usr/lib/pkgconfig
-	rm -rf debian/tmp/usr/share/gtk-doc
-	rm -f debian/tmp/usr/bin/mc-account-convert
-	rm -f debian/tmp/usr/share/man/man1/mc-account-convert.1
+	rm -f debian/tmp/usr/lib/libmission-control-plugins*.a
+	rm -f debian/tmp/usr/lib/libmission-control-plugins*.la
 
 DEB_DH_STRIP_ARGS := --dbg-package=telepathy-mission-control-5-dbg
 
@@ -29,16 +25,18 @@ DEB_CONFIGURE_LIBEXECDIR := "\$${prefix}/lib/telepathy"
 # their headers
 DEB_CONFIGURE_EXTRA_FLAGS := \
 	--disable-Werror \
-	--disable-gtk-doc \
-	--disable-plugins \
 	--disable-mcd-plugins \
+	--enable-gtk-doc \
 	--enable-server \
-	--disable-shared \
-	--enable-static \
-	--enable-gnome-keyring
+	--enable-gnome-keyring \
+	--with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc
 
 # we symlink some of the doc directories together
 DEB_INSTALL_DOCS_telepathy-mission-control-5-dbg := --no-act
 DEB_INSTALL_CHANGELOGS_telepathy-mission-control-5-dbg := --no-act
+DEB_INSTALL_DOCS_libmission-control-plugins-dev := --no-act
+DEB_INSTALL_CHANGELOGS_libmission-control-plugins-dev := --no-act
+
+export DPKG_GENSYMBOLS_CHECK_LEVEL = 4
 
 include $(CURDIR)/debian/update-patches.mk

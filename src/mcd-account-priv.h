@@ -82,7 +82,8 @@ G_GNUC_INTERNAL void _mcd_account_set_alias (McdAccount *account,
 
 G_GNUC_INTERNAL gchar *_mcd_account_get_avatar_filename (McdAccount *account);
 
-G_GNUC_INTERNAL void _mcd_account_tp_connection_changed (McdAccount *account);
+G_GNUC_INTERNAL void _mcd_account_tp_connection_changed (McdAccount *account,
+    TpConnection *tp_conn);
 
 G_GNUC_INTERNAL void _mcd_account_load (McdAccount *account,
                                         McdAccountLoadCb callback,
@@ -91,7 +92,8 @@ G_GNUC_INTERNAL void _mcd_account_set_connection (McdAccount *account,
                                                   McdConnection *connection);
 G_GNUC_INTERNAL void _mcd_account_set_connection_status
     (McdAccount *account, TpConnectionStatus status,
-     TpConnectionStatusReason reason);
+     TpConnectionStatusReason reason, TpConnection *tp_conn,
+     const gchar *dbus_error, const GHashTable *details);
 
 typedef void (*McdOnlineRequestCb) (McdAccount *account, gpointer userdata,
 				    const GError *error);
@@ -120,7 +122,7 @@ _mcd_account_write_conf (McdAccount *account)
     account_manager = mcd_account_get_account_manager (account);
     g_return_if_fail (MCD_IS_ACCOUNT_MANAGER (account_manager));
 
-    mcd_account_manager_write_conf_async (account_manager, NULL, NULL);
+    mcd_account_manager_write_conf_async (account_manager, account, NULL, NULL);
 }
 
 G_GNUC_INTERNAL void _mcd_account_compat_class_init (McdAccountClass *klass);
@@ -185,5 +187,12 @@ G_GNUC_INTERNAL gboolean _mcd_account_check_request_real (McdAccount *account,
                                                           GError **error);
 
 G_GNUC_INTERNAL gboolean _mcd_account_get_always_on (McdAccount *self);
+
+G_GNUC_INTERNAL void _mcd_account_set_changing_presence (McdAccount *self,
+                                                         gboolean value);
+G_GNUC_INTERNAL gboolean _mcd_account_set_enabled (McdAccount *account,
+                                                   gboolean enabled,
+                                                   gboolean write_out,
+                                                   GError **error);
 
 #endif /* __MCD_ACCOUNT_PRIV_H__ */

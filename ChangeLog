@@ -1,3 +1,30 @@
+commit b02718b8d943a65b16e7fea1cbdafceb6574a5bb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 14:32:00 +0100
+
+    Prepare version 5.5.2
+
+ NEWS         |   27 +++++++++++++++++++++++----
+ configure.ac |    6 +++---
+ 2 files changed, 26 insertions(+), 7 deletions(-)
+
+commit 2776ff74b764ac348260aa8d42a4cfdafad6cc50
+Merge: c786e7c a14a431
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 13:59:02 +0100
+
+    Merge branch 'telepathy-mission-control-5.4'
+
+commit a14a43178eddc5e199abecc1d665a41e45bf772f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 13:54:47 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 3aa2164dc85d66bde3033bdc3e77bf399260214f
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-06-16 12:23:39 +0100
@@ -105,6 +132,1002 @@ Date:   2010-06-07 19:37:39 +0100
  .../account-manager/recover-from-disconnect.py     |    8 +++--
  2 files changed, 37 insertions(+), 3 deletions(-)
 
+commit c786e7caf31fe178d9c8252857068deb3bb3c81c
+Merge: b5ba07f cac2333
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:57:11 +0100
+
+    Merge branch 'unregister'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit b5ba07f2e899ca1263a3f9f20371a57eaaa65467
+Merge: 54c1c8f 3a3389f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:40:12 +0100
+
+    Merge branch 'only-flush-changed-accounts'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 54c1c8f6d4f3daac868197b807fe64041486cbe1
+Merge: 5d52cfe cdd0f4f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:15:11 +0100
+
+    Merge branch 'backslash'
+    
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+commit 3a3389f92858c6b0870f5593202c1d14237d8a30
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:13:15 +0100
+
+    mcd_account_manager_write_conf_async: pass the intended account to update_one_account
+
+ src/mcd-account-manager.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+commit bd37e72ef995e023522fcd94a2265bf61028a608
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:12:56 +0100
+
+    McdAccountManager: update_one_account: document that @account may be NULL
+
+ src/mcd-account-manager.c |   16 ++++++++++++----
+ 1 files changed, 12 insertions(+), 4 deletions(-)
+
+commit 110206d8fb4ad86f5b89811ae38080a21c06d505
+Merge: 5d52cfe b1569da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-16 11:03:57 +0100
+
+    Merge branch 'only-flush-changed-accounts'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit cdd0f4fe73d5e593e7d3806983ad47296777976f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 19:54:18 +0100
+
+    Add code to a couple of existing tests to verify that serialization in key files is as intended
+
+ test/twisted/account-manager/auto-connect.py      |   10 ++++--
+ test/twisted/account-manager/update-parameters.py |   40 +++++++++++++++++---
+ 2 files changed, 41 insertions(+), 9 deletions(-)
+
+commit dd4f741a4b1ddd9152173336fc9360ad25d26407
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 19:53:50 +0100
+
+    default and diversion plugins: don't escape values from MC as strings again
+    
+    MC gives us a string that has been serialized into something .desktop
+    compatible. If we escape it again, we'll double the number of backslashes
+    compared with MC < 5.4.
+
+ src/mcd-account-manager-default.c    |   20 +++++++++++---------
+ test/twisted/mcp-account-diversion.c |    6 +++---
+ 2 files changed, 14 insertions(+), 12 deletions(-)
+
+commit 84a3808905f2e87ffca975db8a055d8d3b33d405
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 19:52:30 +0100
+
+    fd.o #28557: McdPluginAccountManager: use g_key_file_set_value when receiving a value from plugins
+    
+    When we give plugins something to store, it comes from
+    g_key_file_get_value, so it's already been escaped according to .desktop
+    syntax. When we get it back from the plugin, if we escape it again, we'll
+    double the number of backslashes every time.
+
+ src/plugin-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit cac2333a7956cc97a5acab8cfd3d30187e46a98c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 19:01:26 +0100
+
+    _mcd_account_dup_parameters: if unable, explain why
+
+ src/mcd-account.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit f4de0b512bef298c16079b08f3e83b112294d63c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 18:29:36 +0100
+
+    McdAccount: clear_register_dup_params_cb: survive if params is NULL
+    
+    It can be NULL in crash-recovery.py, apparently. Unfortunately, the
+    async implementation doesn't tell us why it failed, only that it did.
+
+ src/mcd-account.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 92b715d217e5a5bcf2718cb910958168b6f182b9
+Merge: e261ac0 5d52cfe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 18:05:02 +0100
+
+    Merge branch 'master' into unregister
+    
+    Conflicts:
+    	src/mcd-account.c
+    	test/twisted/account-manager/recover-from-disconnect.py
+
+commit e261ac07a489f68a45d82fc73a082dcde1c4efc1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 18:01:52 +0100
+
+    account-manager/recover-from-disconnect.py: comment why register=True
+
+ .../account-manager/recover-from-disconnect.py     |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit d60519d0da47b422cfcd0e1fa3df05cb1179b96c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 17:52:54 +0100
+
+    Remove duplicate call to _mcd_account_set_parameter()
+
+ src/mcd-account.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit 5d52cfe22b8643959d0dd64d8ef5c715a437639b
+Merge: b4b6725 a2b55cb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 17:40:25 +0100
+
+    Merge branch 'connection-error'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit b1569da8b42049f67bb00bc8377b9cfa05821865
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-15 17:36:22 +0100
+
+    Revert AccountStorage commit() method to commit all accounts, and add optional-to-implement commit_one()
+    
+    We don't need to break API straight away to get this bug fixed.
+
+ mission-control-plugins/account-storage.c |   59 +++++++++++++++++++++++++++--
+ mission-control-plugins/account-storage.h |   10 +++++
+ src/mcd-account-manager-default.c         |    2 +-
+ src/mcd-account-manager-sso.c             |    5 +-
+ src/mcd-account-manager.c                 |   16 ++++++--
+ test/twisted/mcp-account-diversion.c      |    3 +-
+ 6 files changed, 81 insertions(+), 14 deletions(-)
+
+commit a2b55cb75d0bf5865effdfd62b7b12204a45a023
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-14 16:48:44 +0100
+
+    Check that the ConnectionError[Details] properties work
+
+ .../account-manager/recover-from-disconnect.py     |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+commit 3988709dcc9022c254f4cf3f276ff8b3a88eab3f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-14 16:48:29 +0100
+
+    Implement ConnectionError, ConnectionErrorDetails properties fully
+    
+    This requires telepathy-glib 0.11.7, so require that in configure.ac.
+
+ configure.ac      |    2 +-
+ src/mcd-account.c |    5 +----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+commit aaaa6e1277ff5f2407855cdca526af8681fdeb93
+Merge: c47409a b4b6725
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-14 16:43:11 +0100
+
+    Merge branch 'master' into connection-error
+
+commit b4b672525723f1555aab1a31f84ef19c52cf1bee
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-11 16:24:09 +0100
+
+    Unused/shadowed variable declaration
+
+ src/mcd-account-manager-sso.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit b83b65230d45f4c3caf38ce908fad45fec161f6e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-11 16:17:40 +0100
+
+    Global enabled flag must be turned on when the local one is
+    
+    If we don't do this, any account ettempting to make the transition from
+    disabled → enabled will simply bounce back to disabled immediately.
+
+ src/mcd-account-manager-sso.c |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+commit 3a0f11b7b93ead7e187ca6b820389302dd5a7d82
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-10 16:43:23 +0100
+
+    Don't call tp_svc_account_emit_removed, gets handled by McdAccount disposal
+
+ src/mcd-account-manager.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+commit 2d31eaeb1d96841a2d8d1fc6323fbb85366fa1e3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 19:11:44 +0100
+
+    The label key (name, DisplayName) must be flagged as global so it gets fetched
+
+ src/mcd-account-manager-sso.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit bc59fcb18c9c46e850de3b5b8243b114420374c4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 18:27:41 +0100
+
+    The global service has no type: we are always interested in its enabled flag
+
+ src/mcd-account-manager-sso.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+commit 70b2dff9c505381cd979320615d4ee5594c236e3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 16:39:47 +0100
+
+    Warnings promoted to errors after rebase to master, misc tweaks to fix same
+
+ src/mcd-account-manager-sso.c |   21 +++++++++++----------
+ src/mcd-account-manager.c     |    3 +--
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+commit 526277cb2e0aa9a01855170c903427872aae1d7f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 16:38:25 +0100
+
+    Remove temporarily disabled callback, unused definitions forbidden after rebase
+
+ src/mcd-account-manager-sso.c |   84 -----------------------------------------
+ 1 files changed, 0 insertions(+), 84 deletions(-)
+
+commit bc4d0f4adc65c0325e0231bea825c394d12fdd10
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 16:37:16 +0100
+
+    Missing header included
+
+ src/mcd-account-manager.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 4f0bfe3e7397cbf37df7ee6dc15dd032d2ceab45
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:41:21 +0100
+
+    Implement account-updated signal handler (not connected up yet)
+    
+    Seems to do the right thing when connected, but the signal itself is not
+    firing when I expect it to (this may be a bug in libaccounts or a
+    misunderstanding on my part): Have disabled the code that connects the
+    signal for now for this reason.
+
+ src/mcd-account-manager-sso.c |   92 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 92 insertions(+), 0 deletions(-)
+
+commit 481e610ae31ff356210da10b70074443a5b0561a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:36:32 +0100
+
+    Hook up the account enabled/disabled signal when we cach an SSO account
+
+ src/mcd-account-manager-sso.c |   51 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 51 insertions(+), 0 deletions(-)
+
+commit bdf7c5110df10a790df5f6ff9f8897ff6954bad4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:33:49 +0100
+
+    The SSO "name" key maps to the MC "DisplayName" key
+
+ src/mcd-account-manager-sso.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+commit 4a70382a58f7b3b7a7fa75600aba8216e5f1c226
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:32:38 +0100
+
+    Use the new helper functions to get/set the enabled state in SSO
+
+ src/mcd-account-manager-sso.c |   31 ++++++++++++++++++++-----------
+ 1 files changed, 20 insertions(+), 11 deletions(-)
+
+commit 0d86aeed97c00d9e3a8351f0a4552c2a8785849e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:28:37 +0100
+
+    Helper functions to get/set the enabled state of SSO accounts
+    
+    SSO accounts have a global enabled flag (the master enabled flag)
+    as well as per service enabled flags: Both flags must be true to
+    enable an SSO account, but either being off disables it.
+
+ src/mcd-account-manager-sso.c |   46 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 46 insertions(+), 0 deletions(-)
+
+commit 7e556e7b4fac1b6dbaca933593edd4a2573ddf8e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:17:45 +0100
+
+    Fix data transmitted with deleted signal (name was prematurely freed before)
+
+ src/mcd-account-manager-sso.c |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
+
+commit 855d672de1469eacc96223b1f2feac7585871807
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:10:07 +0100
+
+    Callback chain to handle account-altered signals from backends
+
+ src/mcd-account-manager.c |   74 +++++++++++++++++++++++++++++++++++++++-----
+ 1 files changed, 65 insertions(+), 9 deletions(-)
+
+commit cef2bb472058c36fd5a47cd6b9b3793bf6f01ba9
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:05:00 +0100
+
+    Tidy up debugging for backend account enabled/disabled signal handler
+
+ src/mcd-account-manager.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+commit e3de2cb8b3272d8d346749b59f824e6ef3d5342b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 15:04:04 +0100
+
+    Finish handling account deletion events from backends
+    
+    Cleanup refs to account, emit Tp signals.
+
+ src/mcd-account-manager.c |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
+
+commit 3c277cf94f1466aeadb7e4445df30dd528040f21
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 14:55:52 +0100
+
+    Implement new list_keys method in shim object for account manager/plugins
+
+ src/plugin-account.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+commit db2c574585ef2d2ec7e0dda982b57efa40005681
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-06-09 14:55:28 +0100
+
+    new account manager/plugin shim object method - list_keys
+
+ mission-control-plugins/account.c        |   13 +++++++++++++
+ mission-control-plugins/account.h        |    3 +++
+ mission-control-plugins/implementation.h |    3 +++
+ 3 files changed, 19 insertions(+), 0 deletions(-)
+
+commit 2b9b455c97949741edabacfa897f1adb245d6fbf
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-06-09 12:53:13 +0100
+
+    Only flush changed account details to disk.
+    
+    Previously every time any property of any account changed, every account
+    was flushed to storage. This is really, really bad if you use
+    gnome-keyring, because it meant a pair of calls to Unlock()/CreateItem()
+    for each secret on each account, every time anything changes. On my
+    machine, signing in 6 accounts entailed 384 pairs of calls — 64 per
+    account! Furthermore,
+    it seems that the implementation of CreateItem() calls fsync(), so my
+    hard disk would thrash for about thirty seconds.
+    
+    This patch adds an optional argument to
+    mcd_account_manager_write_conf_async() and mcp_account_storage_commit(),
+    indicating which account changed. If NULL, everything is flushed; if
+    non-NULL, only that account is flushed. In my testing this reduced
+    logging in to 9 Unlock()/CreateItem() pairs, which is still more than
+    zero, but stops the disk thrashing quite so badly.
+    
+    Removing accounts doesn't cause the secrets to be removed from the
+    keyring... but that's not a new bug. Everything else seems to work as
+    expected.
+    
+    I didn't update the libaccounts-glib backend to benefit from this, but
+    given that all it does is iterate across all accounts and call two
+    methods on each, it should be easy enough.
+    
+    Mitigates: http://bugs.freedesktop.org/show_bug.cgi?id=28390
+
+ mission-control-plugins/account-storage.c |   13 ++-
+ mission-control-plugins/account-storage.h |    8 +-
+ src/mcd-account-manager-default.c         |  177 ++++++++++++++++-------------
+ src/mcd-account-manager-sso.c             |    5 +-
+ src/mcd-account-manager.c                 |  133 ++++++++++++++--------
+ src/mcd-account-manager.h                 |    1 +
+ src/mcd-account-priv.h                    |    2 +-
+ src/mcd-account.c                         |   28 +++--
+ test/twisted/mcp-account-diversion.c      |    3 +-
+ 9 files changed, 221 insertions(+), 149 deletions(-)
+
+commit 23342ff5da50650e8336aace80b545f5cc001331
+Merge: 82662db 92f8ba0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 19:47:46 +0100
+
+    Merge branch 'trivia'
+
+commit 92f8ba0c6472696d906340407854470e24fbce44
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 19:43:27 +0100
+
+    Make AM_CFLAGS matter in src/ again
+    
+    Setting libmcd_convenience_la_CFLAGS to any value, ever, disables use
+    of AM_CFLAGS for those source files. INCLUDES is what we want here.
+
+ src/Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit e12b12bb7b442f21ef5e5e76277dc2db3b6bf6b4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 19:43:23 +0100
+
+    Fix an assortment of compiler warnings
+
+ src/mcd-account-manager.c |    9 ++++-----
+ src/plugin-account.c      |    6 +++---
+ src/plugin-account.h      |    2 +-
+ 3 files changed, 8 insertions(+), 9 deletions(-)
+
+commit 1a60034da6845195948d720dbb9481b2373fd35b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 19:37:39 +0100
+
+    fd.o #28118: clear the 'register' flag when an account goes to CONNECTED
+
+ src/mcd-account.c                                  |   32 ++++++++++++++++++++
+ .../account-manager/recover-from-disconnect.py     |    8 +++--
+ 2 files changed, 37 insertions(+), 3 deletions(-)
+
+commit c47409a249a59c980f87f4e320217f0045758589
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 18:38:32 +0100
+
+    recover-from-disconnect.py: test detailed D-Bus errors
+
+ .../account-manager/recover-from-disconnect.py     |  105 ++++++++++++++++----
+ 1 files changed, 87 insertions(+), 18 deletions(-)
+
+commit a0f67dee25d9a97220c736467297393415ae6637
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 18:33:43 +0100
+
+    mctest: add the ability to emit ConnectionError
+
+ test/twisted/mctest.py |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit 96f555be20529cd91a1d0f4c50a52fd61570f3e4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 19:02:41 +0100
+
+    account-manager/auto-connect.py: test connection details being emitted together
+
+ test/twisted/account-manager/auto-connect.py |   43 ++++++++++++++++++++++---
+ 1 files changed, 37 insertions(+), 6 deletions(-)
+
+commit d05e9d029244e1e789b5e77d9f9f9e031dc7579f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 18:07:34 +0100
+
+    McdAccount: keep track of ConnectionError[Details], and emit them in signals
+    
+    telepathy-glib support will be needed to have them as properties too.
+
+ src/mcd-account.c |   82 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 81 insertions(+), 1 deletions(-)
+
+commit ac9d2eaffc1cc0ddf7dfa2d68181646abf50734a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 17:52:07 +0100
+
+    _mcd_account_set_connection_status: emit change notifications for all related properties
+    
+    If the ConnectionStatus changes, we should put the Connection in the
+    signal too, even if its value hasn't actually changed - it makes the
+    signal easier to interpret.
+
+ src/mcd-account.c |   40 +++++++++++-----------------------------
+ 1 files changed, 11 insertions(+), 29 deletions(-)
+
+commit 4788d069be838ecc290114d098c394f3275b28e4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 18:33:33 +0100
+
+    account-manager tests: don't assume the next ConnectionStatus change will be to CONNECTED
+    
+    This is about to become untrue.
+
+ test/twisted/account-manager/auto-connect.py   |    7 ++++---
+ test/twisted/account-manager/avatar-persist.py |    7 ++++---
+ test/twisted/account-manager/avatar-refresh.py |    7 ++++---
+ 3 files changed, 12 insertions(+), 9 deletions(-)
+
+commit 4a3304105563bbe8ff27f54fffa2232625738599
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 17:48:10 +0100
+
+    _mcd_account_set_connection_status: only emit a change to Connection if something changed
+
+ src/mcd-account.c |   10 ++--------
+ 1 files changed, 2 insertions(+), 8 deletions(-)
+
+commit 50043605991025a0359233a61346e621b988388f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 17:46:03 +0100
+
+    _mcd_account_set_connection_status: take a detailed error
+
+ src/mcd-account-connection.c |    3 ++-
+ src/mcd-account-priv.h       |    3 ++-
+ src/mcd-account.c            |   20 +++++++++++++++++---
+ 3 files changed, 21 insertions(+), 5 deletions(-)
+
+commit 7fe075cae4a60580e54091423561e413cfd1774e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 17:45:25 +0100
+
+    McdConnection: emit TpConnection in CONNECTION_STATUS_CHANGED even when invalidated
+    
+    It's still referenced at this point, and emitting it here will let the
+    McdAccount interrogate it to get the detailed connection error.
+
+ src/mcd-connection.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+commit 3f0403f0a871d1991098c0b8d50ca13d30dcdebe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-06-07 17:44:24 +0100
+
+    _mcd_account_set_connection_status: only save the TpConnection if it's trying to connect
+
+ src/mcd-account.c |   17 +++++++++++++----
+ 1 files changed, 13 insertions(+), 4 deletions(-)
+
+commit d879726fea2fe55c33057ecf87901c48f8d180d2
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-06-06 16:57:13 +0100
+
+    Remove deprecated-and-unused mcd_account_manager_write_conf()
+
+ src/mcd-account-manager.c |   26 +-------------------------
+ src/mcd-account-manager.h |    1 -
+ 2 files changed, 1 insertions(+), 26 deletions(-)
+
+commit 82662dbe3347109d2621c15a15a02dd4855f869b
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-06-03 22:24:51 +1000
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit 9e2634a1cc47a9cc52c8bdf62cac2691a0d9ee43
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-06-03 22:15:32 +1000
+
+    Prepare release 5.5.1
+
+ NEWS         |   17 +++++++++++++++--
+ configure.ac |    2 +-
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+commit 8674090dffeae2a9a6dc029afd133fdda2eed860
+Merge: 5c3568a e509346
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-06-03 22:07:23 +1000
+
+    Merge remote branch 'smcv/plugin-doc'
+
+commit 5c3568a2a91420a27120612ef0730ec968dfc6a6
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-28 12:59:53 +1000
+
+    Implement ::toggled for McpAccountStorage plugins
+    
+    This allows an McpAccountStorage plugin to enable/disable an account.
+
+ src/mcd-account-manager.c |   27 +++++++++++++--
+ src/mcd-account-priv.h    |    4 ++
+ src/mcd-account.c         |   85 ++++++++++++++++++++++++++++++---------------
+ 3 files changed, 85 insertions(+), 31 deletions(-)
+
+commit be025b57f399050908e228cc05828d82f66dbc34
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 20:54:04 +1000
+
+    Change startswith() to strip_prefix() to be clearer about what it does
+    
+    Make it return const, because it doesn't allocate a string.
+    
+    Change prefix() to ensure_prefix()
+    Change strip() to skip_prefix() and make it return const
+
+ util/mc-tool.c |   36 +++++++++++++++++++-----------------
+ 1 files changed, 19 insertions(+), 17 deletions(-)
+
+commit e990954870d791e2623a927f85cc120d3a51a51d
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 15:45:35 +1000
+
+    Update copyright for mc-tool
+
+ util/mc-tool.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 57cf63d319353fe860df91dfe9886d39ac1d9b3d
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 14:40:05 +1000
+
+    Port from McAccount to TpAccount - Part 2
+    
+    This reenables NormalizedName and AutomaticPresence by requesting those
+    properties directly from the Account Manager, since they are not exposed
+    via TpAccount.
+
+ util/mc-tool.c |  134 +++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 files changed, 103 insertions(+), 31 deletions(-)
+
+commit c54b2ee9384a902ff1488ce3f4027484439fc115
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 14:13:36 +1000
+
+    Port from McAccount to TpAccount - Part 1
+    
+    This ports all features that use TpAccount and disables features that are
+    not available through TpAccount (AutomaticPresence and NormalizedName).
+
+ util/mc-tool.c |  286 +++++++++++++++++++++++++++++++++++---------------------
+ 1 files changed, 178 insertions(+), 108 deletions(-)
+
+commit 062d2ea9dc1a1cd8dcd478d4243473f26354feaf
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 12:32:33 +1000
+
+    Port from McAccountManager to TpAccountManager
+
+ util/mc-tool.c |   56 +++++++++++++++++++++++++++++++++-----------------------
+ 1 files changed, 33 insertions(+), 23 deletions(-)
+
+commit 58b12e4a39f8bd1c6c77e41b75d038c73db572d3
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 12:12:44 +1000
+
+    Replace account_prefix with TP_ACCOUNT_OBJECT_PATH_BASE
+
+ util/mc-tool.c |   12 +++++-------
+ 1 files changed, 5 insertions(+), 7 deletions(-)
+
+commit fe2d061111a346f6c730286f8a8b7be620bd135d
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2010-05-27 11:59:01 +1000
+
+    Change names of variables that shadow global functions
+    
+    Allows compilation with -Wshadow
+    
+    Changes:
+      'acct' -> 'account'
+      'daemon' -> 'dbus'
+
+ examples/mc-example-2.c                      |    8 +++---
+ examples/mc-example-3.c                      |    8 +++---
+ examples/mc-example.c                        |    8 +++---
+ mission-control-plugins/account-storage.c    |   28 +++++++++++++-------------
+ mission-control-plugins/account-storage.h    |    6 ++--
+ mission-control-plugins/account.c            |   24 +++++++++++-----------
+ mission-control-plugins/account.h            |    8 +++---
+ mission-control-plugins/dispatch-operation.c |    8 +++---
+ test/twisted/mcp-account-diversion.c         |   26 ++++++++++++------------
+ util/mc-tool.c                               |   10 ++++----
+ 10 files changed, 67 insertions(+), 67 deletions(-)
+
+commit 0398ea62880803d2ec68b088e6a4e0ec21f41c78
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 19:25:03 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
+commit 57ef8f9c6762ab0fc1d15991a15781e52ddff68d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 19:04:43 +0100
+
+    Prepare release 5.5.0
+
+ NEWS         |    4 +++-
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 69d44b7e012282fe8a0d54c9828edd87c41a0304
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:50:24 +0100
+
+    Update NEWS
+
+ NEWS |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+commit 65d3d66a1e739b1670997b1d91ad0c62e4d67916
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:44:23 +0100
+
+    Enable ERROR_CFLAGS in every Makefile.am that compiles C
+
+ examples/Makefile.am                |    1 +
+ libmcclient/Makefile.am             |    2 ++
+ mission-control-plugins/Makefile.am |    2 ++
+ server/Makefile.am                  |    2 ++
+ src/Makefile.am                     |    2 ++
+ test/Makefile.am                    |    2 ++
+ test/twisted/Makefile.am            |    2 ++
+ util/Makefile.am                    |    1 +
+ 8 files changed, 14 insertions(+), 0 deletions(-)
+
+commit eba54b4d4bfdb2132a224c3ce6b5c9aa594022f4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:44:08 +0100
+
+    Include "plugin-loader.h" where needed
+
+ src/mcd-account-manager.c |    1 +
+ src/mcd-dispatcher.c      |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 9104ba032d388ef036aa3dc8eeb40bcbc1b5823b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:43:57 +0100
+
+    McdAccountManager: delete unused variable
+
+ src/mcd-account-manager.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 902be44973e3a03ebaf54ae193faa1c9cca7b597
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:43:40 +0100
+
+    libmcclient/mc-dispatch-operation.c: add missing header for tp_g_hash_table_update
+
+ libmcclient/mc-dispatch-operation.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit a882183f60dea827efe6add35567379de5c6257d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:43:07 +0100
+
+    configure.ac: remove alleged AM_CFLAGS that were never actually used for anything
+
+ configure.ac |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+commit 00c1c83ccc1516eb08908657cba5d950f08cfdc1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:39:44 +0100
+
+    Now that GModule is mandatory, just include it in GLIB_LIBS
+
+ configure.ac    |    7 ++-----
+ src/Makefile.am |    2 --
+ 2 files changed, 2 insertions(+), 7 deletions(-)
+
+commit 079136b04ad5dbb680272a681c73a435eca6da13
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 18:19:41 +0100
+
+    Only install libmcclient.pc if we'll be installing libmcclient
+
+ Makefile.am |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit e53abee95629697235e2abd55583814b8936891c
+Merge: 72e3925 c7d292c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:56:54 +0100
+
+    Merge branch 'plugin-doc-minimal'
+    
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+commit 72e392545e630ef8bd4b8cda0766162b053f1335
+Merge: b4a1727 f120b06
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:56:26 +0100
+
+    Merge branch 'will-this-release-ever-happen'
+    
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+commit f120b06cf7b81739b27984bbbad7a27650c8a81f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:53:00 +0100
+
+    McProfile: don't dereference a NULL pointer and crash on malformed profiles
+
+ libmcclient/mc-profile.c |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
+
+commit 960369ba77533f8f1d0c351a94593b62735c4c0a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:52:33 +0100
+
+    Make it more obvious that g_key_file_get_keys() returning NULL is handled
+
+ src/mcd-account-manager.c |    8 +++++++-
+ src/mcd-client.c          |    6 +++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+commit 183bd3ba76ab9ba9e661ffa85b85e5db4c725556
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:51:24 +0100
+
+    mcp-account-diversion demo plugin: also guard against an error return here
+    
+    See previous commit.
+
+ test/twisted/mcp-account-diversion.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 917cd7469b3cda60e1b0844267965e735c0f1c3f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:50:13 +0100
+
+    Default account storage plugin: guard against g_key_file_get_keys returning NULL
+    
+    If the group in question doesn't exist in the keyfile (typically because
+    an account didn't exist in the GNOME keyring, in the last patch band),
+    the @length argument isn't initialized.
+    
+    We could initialize @length to 0, but that's not very obvious.
+
+ src/mcd-account-manager-default.c |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
+
+commit e5093465d4fd96973d4b1ee59716db1b8e75a076
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:25:03 +0000
+
+    Document the API provided to plugins for dispatch operations
+
+ mission-control-plugins/dispatch-operation.c |  198 ++++++++++++++++++++++++++
+ 1 files changed, 198 insertions(+), 0 deletions(-)
+
+commit 3c48d5ddb33e057fe0016b107aede03f5e19569e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:24:44 +0000
+
+    Document how to be a dispatch operation policy plugin
+
+ .../dispatch-operation-policy.c                    |   65 ++++++++++++++++++++
+ 1 files changed, 65 insertions(+), 0 deletions(-)
+
+commit ad536935616e515e5ac181e83b88862cb01bd1a7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:24:29 +0000
+
+    Add stub documentation for McpRequest
+    
+    I'm not documenting this class until the smcv/requests branch lands, since
+    its API gets more capable in that branch.
+
+ mission-control-plugins/request.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit a85d7dabe7c88df9bb50c591b241b145c586b367
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:23:54 +0000
+
+    Document how to be a request policy
+    
+    Not all of this is strictly true until the smcv/requests branch, which
+    makes request policy plugins able to delay dispatching, is merged.
+
+ mission-control-plugins/request-policy.c |   63 ++++++++++++++++++++++++++++++
+ 1 files changed, 63 insertions(+), 0 deletions(-)
+
+commit efac58c9a03aecb120db3cc25fb1137e383fe35a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:22:48 +0000
+
+    Document global functions for plugins
+
+ mission-control-plugins/loader.c |   66 +++++++++++++++++++++++++++++++++----
+ 1 files changed, 58 insertions(+), 8 deletions(-)
+
+commit c7d292c87b26e5ec9cbf0f9559049ec2ebc75876
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:02:13 +0100
+
+    Makefile.am: when doing `make maintainer-upload-release`, upload MCP docs
+
+ Makefile.am |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
+
+commit cf57e89de87b1e8fcc14671a5d191c7a51d2d8e0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:22:26 +0000
+
+    Move MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL, mcp_plugin_ref_nth_object to loader.h
+    
+    This will mean all the loader.h stuff gets documented together in gtk-doc.
+
+ mission-control-plugins/loader.h                  |    5 +++++
+ mission-control-plugins/mission-control-plugins.h |    9 ---------
+ 2 files changed, 5 insertions(+), 9 deletions(-)
+
+commit 1b5d0af55ede724f9e5bff7e2e8bf98b22eeb6da
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:27:20 +0100
+
+    Add infrastructure for documentation completeness checking, but leave it disabled
+
+ doc/reference/mission-control-plugins/Makefile.am |   49 +++++++++++++++++++++
+ 1 files changed, 49 insertions(+), 0 deletions(-)
+
+commit 0285cf42d28d2af0aa727ed11cbfdb57eb50faed
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 17:26:54 +0100
+
+    Add gtk-doc infrastructure for mission-control-plugins
+
+ .gitignore                                         |    3 +
+ configure.ac                                       |    1 +
+ doc/reference/Makefile.am                          |    2 +-
+ doc/reference/mission-control-plugins/Makefile.am  |   90 ++++++++++++++++++++
+ .../mission-control-plugins-docs.sgml              |   50 +++++++++++
+ 5 files changed, 145 insertions(+), 1 deletions(-)
+
+commit 61b7a526279b205476bb649cd47be85feb83b661
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-01-21 20:20:16 +0000
+
+    mission-control-plugins: use an internal macro that won't confuse gtk-doc
+
+ mission-control-plugins/account-storage.h          |    2 +-
+ mission-control-plugins/account.h                  |    2 +-
+ .../dispatch-operation-policy.h                    |    2 +-
+ mission-control-plugins/dispatch-operation.h       |    2 +-
+ mission-control-plugins/loader.h                   |    2 +-
+ mission-control-plugins/mission-control-plugins.h  |    4 ++--
+ mission-control-plugins/request-policy.h           |    2 +-
+ mission-control-plugins/request.h                  |    2 +-
+ 8 files changed, 9 insertions(+), 9 deletions(-)
+
+commit b4a17274e0bf622deb710b87206a15e7322dded9
+Merge: 447a225 f00511e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:58:22 +0100
+
+    Merge branch 'telepathy-mission-control-5.4'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
 commit f00511ef405f7bccd18029576bf3f65e53504e70
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-05-26 16:57:05 +0100
@@ -155,6 +1178,30 @@ Date:   2010-05-26 16:22:04 +0100
     Merge branch '54-unsafe-param-reuse' into telepathy-mission-control-5.4
     
     Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 447a22525c59429d910cf68061649295e6f4ce1f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:17:30 +0100
+
+    Remove protocol-copying code that was duplicated from telepathy-glib
+    
+    The stable branch needed this, but in this branch we can just depend on
+    a good enough telepathy-glib.
+
+ src/mcd-account.c      |    6 ++--
+ src/mcd-manager-priv.h |    1 -
+ src/mcd-manager.c      |   73 +-----------------------------------------------
+ 3 files changed, 4 insertions(+), 76 deletions(-)
+
+commit ec8e84c00493aa9e46b8e4513a005c8d079405a9
+Merge: bf1963a 80b75c3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 16:15:33 +0100
+
+    Merge branch '54-unsafe-param-reuse' into unsafe-param-reuse
+    
+    Conflicts:
+    	src/mcd-account.c
 
 commit 80b75c38c6147eee494e8bf0d63309f4555d8d03
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -207,6 +1254,256 @@ Date:   2010-05-26 16:06:45 +0100
  src/mcd-manager.c      |   89 ++++++++++++++++++++++++++++++++++++++++++++++++
  3 files changed, 129 insertions(+), 0 deletions(-)
 
+commit bf1963ae9d03b9de9f20cfc41c5c42fe22d93682
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 19:38:30 +0100
+
+    Remove the independent keyring plugin
+
+ src/Makefile.am                   |    2 -
+ src/mcd-account-manager-keyring.c |  572 -------------------------------------
+ src/mcd-account-manager-keyring.h |   72 -----
+ 3 files changed, 0 insertions(+), 646 deletions(-)
+
+commit 68f540a5e4f64bac4fe5eabeac1118eb05824b89
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 19:38:08 +0100
+
+    Remove references to/use of keyring plugin from account manager
+
+ src/mcd-account-manager.c |   12 ------------
+ 1 files changed, 0 insertions(+), 12 deletions(-)
+
+commit 76ae29581db982feea0069151c4f3baedbff8d1f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 15:31:14 +0100
+
+    Move keyring support from independent plugin to keyfile plugin.
+
+ src/mcd-account-manager-default.c |  368 ++++++++++++++++++++++++++++++++++++-
+ src/mcd-account-manager-default.h |    3 +
+ 2 files changed, 366 insertions(+), 5 deletions(-)
+
+commit c4b90bf71b14da5a6c11bd7ef1898cd2734ffbab
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 7707 REVERSE_INULL two gchar ** deref'd w/o check in set_param
+    
+        Also gchar ** strv_type_key potentially leaked in the 'clear' and 'unset' cases
+
+ util/mc-tool.c |   35 ++++++++++++++++++++---------------
+ 1 files changed, 20 insertions(+), 15 deletions(-)
+
+commit 5e6f1c7c8722a660eced18fe88fcd1626ca1d5ef
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 11054 UNUSED_VALUE DBusConnection pointer in register_dbus_service
+
+ src/mcd-account-manager.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit e1ce16433e74c775d81589a6bd6fe28425343dde
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 11729 DEADCODE - message cannot be NULL after g_return_if_fail check
+
+ src/mcd-channel.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit b26ccfced1d7d6caf7e513f89d208784899bc795
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 21104 REVERSE_INULL make mc_param_type consume NULL safely
+
+ src/mcd-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 07599a7ab74d654d50bc4dd8493f6f4cef5459df
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-20 15:43:15 +0100
+
+        Coverity 21106 RESOURCE_LEAK in dispatch_operation_claim
+
+ src/mcd-dispatch-operation.c |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
+
+commit e7af1f7b919cad4443588ab7d1d710768aa923dc
+Merge: 5d4bc3c fc8c19b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 14:05:54 +0100
+
+    Merge branch 'build'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit fc8c19bac53368a36170ae5a2501da566dab1c56
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:25:11 +0100
+
+    Only install documentation for the old libraries if plugins are enabled
+
+ doc/reference/Makefile.am |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+commit 7958edf73362b03362e551c7a48ddbe0484ad32d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:12:07 +0100
+
+    Always check for GModule, which we need for the new plugin API too
+
+ configure.ac |   10 +++-------
+ 1 files changed, 3 insertions(+), 7 deletions(-)
+
+commit 17bf9dce72ab82f08fd9e4b1ea493df5e4520a17
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:10:39 +0100
+
+    Always build examples: they're not installed, and cheap to compile
+
+ Makefile.am  |    5 +----
+ configure.ac |   15 ---------------
+ 2 files changed, 1 insertions(+), 19 deletions(-)
+
+commit c7f56da57ed50073ed8604ec5f635a1b3830ed89
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:10:02 +0100
+
+    Always build tests; remove --disable-tests option
+
+ configure.ac     |   15 ---------------
+ test/Makefile.am |    4 ----
+ 2 files changed, 0 insertions(+), 19 deletions(-)
+
+commit 0441d12aa7256747af7d510b288231dac31ddb15
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:08:11 +0100
+
+    Remove obsolete datadir_expanded check from configure.ac
+    
+    We use g_get_system_data_dirs() etc. now.
+
+ configure.ac |   11 -----------
+ 1 files changed, 0 insertions(+), 11 deletions(-)
+
+commit a8085fc622c922362f7c27ec6ecef59522688edf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 13:05:15 +0100
+
+    fd.o #26634: remove obsolete utility for migration from Mission Control 4
+
+ configure.ac              |    7 -
+ util/Makefile.am          |   14 +-
+ util/mc-account-convert.1 |   17 -
+ util/mc-account-convert.c |  756 ---------------------------------------------
+ 4 files changed, 1 insertions(+), 793 deletions(-)
+
+commit 152fc26baec675dd72a685ce0c76616da7705081
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 12:57:59 +0100
+
+    Explicitly disable MCD plugins when doing distcheck
+    
+    This helps to verify that the configuration we'll be using in
+    distributions (static libmcclient and libmissioncontrol-server, and
+    shared libmission-control-plugins) works correctly.
+
+ Makefile.am |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit d13fa422bdfdda5d6c040fd63f5b5fcb187b0857
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 12:55:08 +0100
+
+    Update README
+
+ README |   40 ++++++++++++++++++++--------------------
+ 1 files changed, 20 insertions(+), 20 deletions(-)
+
+commit 795ce3b4c1d3fecdad026edc4a8dc3999c7cdfa7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 12:27:12 +0100
+
+    libmcclient: only build as a shared library and install headers if MCD plugins are enabled
+    
+    Only Maemo, and MC tools like mc-tool, use this library; the latter can
+    safely be statically linked to it, and the former already enables MCD
+    plugins.
+
+ libmcclient/Makefile.am |   31 +++++++++++++++++++------------
+ 1 files changed, 19 insertions(+), 12 deletions(-)
+
+commit 3efc0b2e69fda63390a03aebfa18a20b8379bcbc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-26 12:04:09 +0100
+
+    src: re-namespace marshallers to avoid clashing with libmcclient if it's static
+
+ src/Makefile.am      |   18 +++++++++---------
+ src/mcd-connection.c |    2 +-
+ src/mcd-misc.h       |    2 +-
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+commit 95a3e0e6d44e6c4178fa6b506be44f9d1180f5cd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:56:59 +0100
+
+    Use a more obvious API version for the plugin headers
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit a069613261c7c27fd4f4dbb844ab3081df07f1a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:49:03 +0100
+
+    Distribute Account_Manager_Interface_SSO
+
+ xml/Makefile.am |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit d5a34a06d764a72da1f7b5c845506f775d06802d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:48:57 +0100
+
+    Remove stale reference to Creation interface, which no longer exists
+
+ src/mcd.xml |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 5d4bc3cd9a3775f41a92850a8a1ba69e9d6a2e9d
+Merge: 02b3518 6cf8ed2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:44:19 +0100
+
+    Merge branch 'telepathy-mission-control-5.4'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+            src/mcd-connection.c
+
+commit 02b3518c046921abe98e0027b870a1fccc5be8e8
+Merge: 8474ddf 6698e40
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 19:40:46 +0100
+
+    Merge branch 'trivia'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 6698e407c41f78ed7a40cd578d599849ec161500
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:51:31 +0100
+
+    biggest NEWS ever?
+
+ NEWS |   49 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 48 insertions(+), 1 deletions(-)
+
 commit 6cf8ed2299d4e473550c1f828ac9af596c607721
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-05-25 19:38:36 +0100
@@ -235,6 +1532,104 @@ Date:   2010-05-25 18:55:08 +0100
 
  NEWS |   10 +++++++++-
  1 files changed, 9 insertions(+), 1 deletions(-)
+
+commit 5574043e9291e983e52848ab1b4c89d9a1bb44cd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:29:09 +0100
+
+    Revert "fd.o #24875: reimplement g_error_new_valist to avoid a GLib 2.22 dependency"
+    
+    This reverts commit 29abb230abaf890d33751d5da232b9a69434f0e5.
+
+ src/mcd-dispatch-operation.c |    2 +-
+ src/mcd-misc.c               |   14 --------------
+ src/mcd-misc.h               |    4 ----
+ 3 files changed, 1 insertions(+), 19 deletions(-)
+
+commit e4e4775f29576e5cf5b0e13b531c1ae2f73cb827
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:28:53 +0100
+
+    Depend on sane versions of GLib, D-Bus and dbus-glib
+
+ configure.ac |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit dc20989d8526005004a9825faa5fc9c2fa506b56
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 17:06:13 +0100
+
+    Add a regression test for fd.o #25684
+
+ test/twisted/Makefile.am                     |    1 +
+ test/twisted/account-manager/create-twice.py |   64 ++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+), 0 deletions(-)
+
+commit 73181507d5320d1f53bf79724f48e355d5e70c5a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 17:05:09 +0100
+
+    fd.o #25684: fix detection of accounts that already exist
+    
+    Based on a patch from Jani Monoses <jani@ubuntu.com>.
+
+ src/plugin-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 39ce98e1be9739a4cd1b2139725a57e84a7eeb8f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 16:39:37 +0100
+
+    fd.o #27129: update and simplify test/twisted/README
+    
+    Based on a patch from Tomeu Vizoso.
+
+ test/twisted/README |   21 ++++++---------------
+ 1 files changed, 6 insertions(+), 15 deletions(-)
+
+commit 4e713cc04ca8a59ecef6fc0c055594456ff95220
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 16:36:34 +0100
+
+    Add silent rules support
+
+ autogen.sh   |   13 +++++++------
+ configure.ac |    1 +
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+commit 0edd9f9222bf7706a749fd3563dfab1a752108e4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 19:58:25 +0100
+
+    Update servicetest from Gabble to display better diagnostics
+
+ test/twisted/servicetest.py |  192 +++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 177 insertions(+), 15 deletions(-)
+
+commit 8474ddfa4435a53a13abe5103cd8828aa4431bfa
+Merge: 90a613b aedf811
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:25:32 +0100
+
+    Merge remote branch 'cassidy/handle-time'
+
+commit 90a613bdb97f751dcf5d33dd3e156002ff817a7f
+Merge: cc5ddd9 7ecb1e6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:24:41 +0100
+
+    Merge remote branch 'andrunko/account-changing-presence'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit cc5ddd9d50e7469d88d45a59360789013d4bde35
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-05-25 18:23:16 +0100
+
+    Depend on telepathy-glib 0.11.6 for ChangingPresence, HandleWithTime
+
+ configure.ac |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
 commit 1dedb276b857276562ec4b007387e856ee8d5bfc
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -266,6 +1661,91 @@ Date:   2010-05-25 17:06:13 +0100
  test/twisted/account-manager/create-twice.py |   64 ++++++++++++++++++++++++++
  2 files changed, 65 insertions(+), 0 deletions(-)
 
+commit aedf81146c7a36c3f7f876b97aac845e9490913e
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-25 13:53:15 +0200
+
+    implement Approver.HandleWithTime()
+
+ src/mcd-dispatch-operation.c             |   23 ++++-
+ test/twisted/dispatcher/dispatch-text.py |  127 ++++++++++++++++++++++++++++++
+ 2 files changed, 145 insertions(+), 5 deletions(-)
+
+commit f64a3c798ce77a5b67f54f6a03b22f28c58241d1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-19 15:44:05 +0100
+
+    Signature of mcd_manager_call_when_ready callback wants a const before GError *
+
+ src/mcd-account-manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 6131c21e87ea4ba1601012c58e9acedf8b725426
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 19:10:51 +0100
+
+    Drop support for unused create parameter from get_ag_account()
+
+ src/mcd-account-manager-sso.c |   20 ++++++--------------
+ 1 files changed, 6 insertions(+), 14 deletions(-)
+
+commit ffeaeb5b6e7618d9926d19defe1e21279634370e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 18:43:18 +0100
+
+    Dead code removed.
+
+ src/mcd-account-manager-sso.c |   33 ++++-----------------------------
+ 1 files changed, 4 insertions(+), 29 deletions(-)
+
+commit 33077472f156d3658354f13fea48b7c78d71b892
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 18:43:07 +0100
+
+    Dangerous call to g_free dropped
+
+ src/mcd-account-manager-sso.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 014994d7128e43e996a0533bcec58e0ae8eeb383
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 18:42:24 +0100
+
+    Minor comment.
+
+ src/mcd-account-manager.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit b308d60d6ddb3d0a94e69dd361e575bc7a4b76b0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 18:42:00 +0100
+
+    Account verification calls shouldn't happen until after the manager is ready.
+    
+    This meant that the first account for any given manager might not have been
+    announced over dbus depending on a race between the CM becoming ready and
+    the account verification callback being invoked (for accounts created by
+    storage backends like libaccounts-glib/SSO at any rate).
+
+ src/mcd-account-manager.c |   65 ++++++++++++++++++++++++++++++++++++---------
+ 1 files changed, 52 insertions(+), 13 deletions(-)
+
+commit faac87f2b3dff316b4cf65b6c7afacb495cbd2db
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-18 18:39:24 +0100
+
+    Typo in debug message (valid/invalid switched).
+
+ src/mcd-account-manager.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit d66e10badab7b6e777b5722d446eff25982ad679
+Merge: 575e003 b864a27
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-19 15:37:46 +0200
+
+    Merge branch 'telepathy-mission-control-5.4'
+
 commit b864a277d76c54a803e9259cd65abe1dfdc624d3
 Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
 Date:   2010-05-19 14:45:29 +0200
@@ -278,6 +1758,13 @@ Date:   2010-05-19 14:45:29 +0200
 
  src/mcd-dispatch-operation.c |    5 ++---
  1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 575e003ecd88ed5ed07612b1f54cc4cb5698d7fe
+Merge: dfdc4d8 506f164
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-05-19 15:35:05 +0200
+
+    Merge branch 'telepathy-mission-control-5.4'
 
 commit 506f164532b3a2fc5b8b232b42414e7bc79c17b4
 Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
@@ -296,6 +1783,293 @@ Date:   2010-05-19 15:23:10 +0200
 
  test/twisted/mctest.py |    1 -
  1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit dfdc4d82c654dad67c89b8a37951f5a079b37a8b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-10 14:15:48 +0100
+
+    Document likely error of an SSO ID account -> MC account dbus call.
+
+ xml/Account_Manager_Interface_SSO.xml |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 56e186485d768b66190d6f1802e6178e7e50a8b0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-26 14:50:14 +0100
+
+    xmlns typo
+
+ xml/Account_Manager_Interface_SSO.xml |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 45a415ec7ae312a86d848d5cd2215e1300324032
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-26 14:04:12 +0100
+
+    Tweak the SSO ID comparison based on review
+
+ src/mcd-account-manager.c |   17 ++++++++++-------
+ 1 files changed, 10 insertions(+), 7 deletions(-)
+
+commit 9d487bab8db34c2e117062178cd9342648a0120d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-26 14:03:41 +0100
+
+    Class, method and variable renaming from review.
+
+ src/Makefile.am                       |    6 +--
+ src/mcd-account-manager-priv.h        |    2 +-
+ src/mcd-account-manager-sso.c         |    8 +--
+ src/mcd-account-manager.c             |   62 +++++++++++++++--------------
+ src/mcd.xml                           |    2 +-
+ xml/Account_Manager_Interface_SSO.xml |   68 +++++++++++++++++++++++++++++++++
+ xml/nmc5.xml                          |    2 +-
+ 7 files changed, 108 insertions(+), 42 deletions(-)
+
+commit a676a8ef98b69eb3f62b1467dd776fad75bf9346
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-26 14:00:41 +0100
+
+    Remove account interface (dropped from requirements)
+
+ src/mcd.xml                           |    1 -
+ xml/Account_Interface_Sso.xml         |   43 ---------------------
+ xml/Account_Manager_Interface_Sso.xml |   68 ---------------------------------
+ xml/nmc5.xml                          |    1 -
+ 4 files changed, 0 insertions(+), 113 deletions(-)
+
+commit 0357b99db643b1e7e30a9f7487468f880af1e3ba
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 13:57:08 +0100
+
+    Implement the new SSO related utility methods.
+
+ src/mcd-account-manager-priv.h        |    1 +
+ src/mcd-account-manager.c             |  167 +++++++++++++++++++++++++++++++++
+ xml/Account_Manager_Interface_Sso.xml |    2 +-
+ 3 files changed, 169 insertions(+), 1 deletions(-)
+
+commit c78decfb9156e20fe423e0121ca3ae2400d82005
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 13:55:17 +0100
+
+    Generate headers and code for the new SSO properties interface.
+
+ src/Makefile.am                       |    6 ++-
+ src/mcd.xml                           |    2 +
+ xml/Account_Interface_Sso.xml         |   43 +++++++++++++++++++++
+ xml/Account_Manager_Interface_Sso.xml |   68 +++++++++++++++++++++++++++++++++
+ xml/nmc5.xml                          |    2 +
+ 5 files changed, 120 insertions(+), 1 deletions(-)
+
+commit fde2102e92081645bcb71a88ae0d4aaee061e47b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-19 13:54:08 +0100
+
+    SSO accounts can have multiple services, but this is not exposed as a property.
+    
+    Instead, expose it as a special property which is not covered by the standard
+    iterator but will be returned if you ask for it.
+    
+    Also, exclude the property from being saved, since the list of services can
+    change and should not be cached in the SSO storage for the account itself.
+
+ src/mcd-account-manager-sso.c |   24 ++++++++++++++++++++++++
+ 1 files changed, 24 insertions(+), 0 deletions(-)
+
+commit 3773279f3f783646aefa23978bff102358823399
+Merge: c9ca4ea 156a6b7
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-10 13:27:11 +0100
+
+    Merge branch 'sso-tmc-uid-is-service-specific'
+
+commit c9ca4ea5f5fdb4cd735aeef816cc53694a518ddb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-10 12:59:02 +0100
+
+    mcd_account_check_validity after async account creation to prepare/announce it
+
+ src/mcd-account-manager.c |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
+
+commit 156a6b76770aed18fc8c39af430f10dcf9e90219
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 16:03:25 +0100
+
+    MC_IDENTITY_KEY wasn't treated as a service local value everywhere, fixed
+
+ src/mcd-account-manager-sso.c |   32 ++++++++++++++++++++++++++------
+ 1 files changed, 26 insertions(+), 6 deletions(-)
+
+commit 2d4a8c7ccfd56ceefe254db813b1b8348f6bc2c1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 14:19:36 +0100
+
+    More explanatory comments.
+
+ src/mcd-account-manager-sso.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 8843d84ca628c928647bc10fbdaefe46dd5b9707
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 14:19:22 +0100
+
+    SSO values (as opposed to params) can now be local (they were all global before)
+
+ src/mcd-account-manager-sso.c |   20 ++++++++++++++++----
+ 1 files changed, 16 insertions(+), 4 deletions(-)
+
+commit e0ff2d813712bf5655f1899391e0b765516d674a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 13:47:44 +0100
+
+    Explanatory comment
+
+ src/mcd-account-manager-sso.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit c83e332c1738e08dc28f818dfc9e006d81971d3a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 13:47:30 +0100
+
+    Change name of get_mc_key to indicate it deals with MC parameters, add comments
+
+ src/mcd-account-manager-sso.c |   21 ++++++++++++---------
+ 1 files changed, 12 insertions(+), 9 deletions(-)
+
+commit 00f6eae530a14e2f99cb3896816af43f06f136cd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 13:41:00 +0100
+
+    Update implementors-note comment to be both true and more useful
+
+ src/mcd-account-manager-sso.c |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
+
+commit 7ecb1e63ca5e93449b5669a81fb80f0889514c09
+Author: Andre Moreira Magalhaes (andrunko) <andre.magalhaes@collabora.co.uk>
+Date:   2010-04-29 03:49:46 -0300
+
+    Added test case for Account.ChangingPresence.
+
+ test/twisted/account-manager/presence.py |   19 ++++++++++++-------
+ 1 files changed, 12 insertions(+), 7 deletions(-)
+
+commit e5f0b40c879c92b2a59944decada5c2c4b1720fb
+Author: Andre Moreira Magalhaes (andrunko) <andre.magalhaes@collabora.co.uk>
+Date:   2010-04-29 03:49:11 -0300
+
+    Proper emit AccountPropertyChanged(ChangingPresence) when the presence is changing.
+
+ src/mcd-account-priv.h    |    3 +++
+ src/mcd-account.c         |   44 ++++++++++++++++++++++++++++++++++++++++++++
+ src/mcd-connection-priv.h |    2 ++
+ src/mcd-connection.c      |   33 +++++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+), 0 deletions(-)
+
+commit 282064d6b7758ad83815c8b63ff4cc6d9cf5b806
+Author: Andre Moreira Magalhaes (andrunko) <andre.magalhaes@collabora.co.uk>
+Date:   2010-04-29 03:48:41 -0300
+
+    Added Account.ChangingPresence property definition.
+
+ xml/Account.xml |   38 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+
+commit 5dcd6cd2011e9b0477493cc7618388f4317cd341
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-07 13:40:24 +0100
+
+    Rename get_ag_key to indicate it applies to params specifically.
+
+ src/mcd-account-manager-sso.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit d06aa5990e57b55ee03d5ea0d25f0f6895a094b5
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-05 18:18:52 +0100
+
+    Variable moved to a more localised scope
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 377f5cc874d5e784c6295d3220f4adfdc6092f8c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-05 18:18:32 +0100
+
+    Unused account name removed
+
+ src/mcd-account-manager-sso.c |    3 ---
+ 1 files changed, 0 insertions(+), 3 deletions(-)
+
+commit 36a87b5cd1377f820326d85320879e3dd6b7f2ea
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-05 18:18:11 +0100
+
+    Unnecessary GList removed
+
+ src/mcd-account-manager-sso.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit d96203693dbb764ccfe93e0f0f6dc307f62ce5fe
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-05 16:22:18 +0100
+
+    Extra debugging to help diagnose a reported but as-yet unverified new-account bug
+
+ src/mcd-account-manager.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit b1105ba4a7c5fdd225a2b3b9d0938970db1599fc
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-05-05 16:21:02 +0100
+
+    Revisit the SSO account storage plugin now we have some concrete examples
+    
+    The following points are addressed:
+    
+    * The hardwired SSO service selection is gone
+    * We now very carefully pick an IM service where necessary
+    * We un-set the service where necessary to get global settings
+    * We are careful to leave the selected service in the same state
+      on function exit as it was on entry.
+
+ src/mcd-account-manager-sso.c |  262 +++++++++++++++++++++++------------------
+ 1 files changed, 147 insertions(+), 115 deletions(-)
+
+commit c8a3f6a72e84e876154b44b595ae2f6ce03b0f74
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-30 17:55:48 +0100
+
+    Don't try to register the account-manager's dbus name again.
+    
+    This was triggered by asynchronous back-end account creation, which is
+    a new code path required by SSO.
+
+ src/mcd-account-manager.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 3465fec353fe5af219039da520d56409ac150a60
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 20:59:14 +0100
+
+    The next release from this branch will be 5.5
+
+ NEWS         |    2 +-
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit c8db874b6bf27dead411d6f83c504f2bb40fd1fd
+Merge: 0901a0a c4bb262
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-15 20:57:50 +0100
+
+    Merge branch 'telepathy-mission-control-5.4'
+    
+    Conflicts:
+    	src/mcd-account-manager.c
 
 commit c4bb262c3209c172bf0ab2455a1cc4f8a14a1583
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -571,6 +2345,15 @@ Date:   2010-04-14 13:58:28 +0100
  test/twisted/Makefile.am |    2 +-
  1 files changed, 1 insertions(+), 1 deletions(-)
 
+commit 0901a0a6c90e24621e35ac35e5cd88fa20c2a205
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-14 13:58:28 +0100
+
+    Set the right environment variable to run tests with a temporary version of ~/.cache
+
+ test/twisted/Makefile.am |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
 commit 39923b9e7427cf4aa29da4d6f7ea9ddddefc7b57
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-01-21 20:18:20 +0000
@@ -661,6 +2444,1809 @@ Date:   2010-02-18 15:59:57 +0000
 
  util/Makefile.am |    4 ++--
  1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 65f032693ee065ea6353fe8d18b77d84ccde61ab
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-04-07 16:06:29 +0100
+
+    Gnome keyring code reintroduced at old location by a merge resolution, removed.
+
+ src/mcd-account.c |   17 -----------------
+ 1 files changed, 0 insertions(+), 17 deletions(-)
+
+commit 0a31a457851ca7c88d106e4379bcf5b96561e92f
+Merge: 4dc67bf 412a7a9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-04-06 19:47:21 +0100
+
+    Merge branch 'account-atomicity'
+    
+    Conflicts:
+    	src/mcd-account.c
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+commit 4dc67bf5422609dc6c054e5373a083a4f311feb4
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-26 11:12:40 +0100
+
+    Fix error propagation in CreateAccount
+    
+    Fixes fdo#27021
+
+ src/mcd-account-manager.c                          |   20 ++++++++++-------
+ .../account-manager/create-with-properties.py      |   22 ++++++++++++++++++++
+ 2 files changed, 34 insertions(+), 8 deletions(-)
+
+commit 9ce5ed091566fac76159f22bd0bb09d8be297dfd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 18:02:01 +0000
+
+    Move the plugin loader init in the master to its _init function
+
+ src/mcd-master.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit dfef1220b713bbbfdda4ae1d0e8c973afd1ed880
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 17:56:18 +0000
+
+    Make another belt-and-braces plugin loader initialisation call.
+
+ src/mcd-dispatcher.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit acdadc00a8919115ceb63b2cd0c786b0fbabc00d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 17:10:55 +0000
+
+    Make sure the plugin loader has been initialised in libmissioncontrol-server.
+
+ src/mcd-account-manager.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 4161863e9f376790c850ef67d27b4afcb9abe69b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 17:10:22 +0000
+
+    Make _mcd_plugin_loader_init idempotent.
+
+ src/plugin-loader.c |   14 ++++++++++----
+ 1 files changed, 10 insertions(+), 4 deletions(-)
+
+commit b1d43671069402ccca45e388a2d1d57c9c29b027
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-24 15:36:07 +0000
+
+    Incomplete accounts resulted in account manager load locks never being released.
+    
+    This meant that the account manager's dbus name was never claimed, as it
+    sat around forever waiting for the account's manager to become ready,
+    (or fail) but this could never happen as the incomplete account didn't
+    have a manager at all.
+
+ src/mcd-account.c |   30 +++++++++++++++++++++++++++---
+ 1 files changed, 27 insertions(+), 3 deletions(-)
+
+commit cebd5b7cce4011f8ea231162b6c10cdbee338905
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-15 16:11:22 +0000
+
+    Don't poke the keyring plugin into the list if it is disabled.
+    (cherry picked from commit 3767b4a3df5a736857fec2b7852f71e695bafc75)
+
+ src/mcd-account-manager.c |   23 ++++++++++++++++-------
+ 1 files changed, 16 insertions(+), 7 deletions(-)
+
+commit aa441c4150ac472d264a6142d3265ebe55c46c20
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-18 20:35:56 +0000
+
+    Consider NULL self to _mcd_plugin_request_dup_denial to be an error.
+    (cherry picked from commit f74dc67f0dd7547c8d60127ac4c823de1865592b)
+
+ src/plugin-request.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 23e1c6ceec44bd0002db04a7624d0ca0dc57d00d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-23 17:21:17 +0000
+
+    Explain why we don't invoke the plugin_api shim ahen there are no plugins.
+    (cherry picked from commit e6caebf7c4332145f99a0f70f73596c0c61fa754)
+
+ src/mcd-account-requests.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 679e396a9e30a32abea5d87ace227591d6021047
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-16 11:52:28 +0000
+
+    Avoid unsetting uninitialized GValues
+    
+    The 'cleanup' block calls g_value_unset(&protocol); if we 'goto
+    cleanup;' before initializing it, we'll critical.
+    (cherry picked from commit e2bf8cb962db707e146db611a09000e1fe5e349d)
+
+ src/mcd-account-manager-sso.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit f87936da0484f2b2c20c70884cd44b2cfdcbab1b
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-15 13:55:41 +0000
+
+    Don't save the manager and protocol keys, they're magic immutables.
+    (cherry picked from commit 1cb84576b8d0ac20282d8062c6359858321186c6)
+
+ src/mcd-account-manager-sso.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+commit c3665f28230481e8827dcb329e13840fa1766589
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-15 13:37:54 +0000
+
+    Correctly handle global settings vs service settings, in a uniform manner.
+    (cherry picked from commit 1aca87caf2e83dcaccd0007046f66299fa10a7df)
+
+ src/mcd-account-manager-sso.c |   79 +++++++++++++++++++++++++++-------------
+ 1 files changed, 53 insertions(+), 26 deletions(-)
+
+commit b9c9b0f3bc9795466f20f1fc63d7d1d873b4bec5
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-13 18:40:05 +0000
+
+    Some settings were found in the global rather than the service section. Cope.
+    
+    It's not clear that they should be in the global section, the tests
+    seem to put them into the service section, but as we don't have a
+    working a-ui at this end, look in both places when fetching, service
+    section first, falling balc to global.
+    (cherry picked from commit 3f0c6915c660171d9dd1b38988e5ce90adc8ee06)
+
+ src/mcd-account-manager-sso.c |   62 +++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 59 insertions(+), 3 deletions(-)
+
+commit 449db2c78d4a79e8f30ca7e76300a651d2f5e3ae
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-13 16:34:58 +0000
+
+    _provider_get_service isn't working reliably: hardwire the service for now
+    
+    We know we only need to support 1 service for now, google-talk - hard wire
+    it as the account to select for now, as we need this for the demo, we can
+    figure out what's wrong witrh it later when we're not hard up against a
+    deadline.
+    (cherry picked from commit edccb1b9846f504d0b621543512b8877acbe868f)
+
+ src/mcd-account-manager-sso.c |   62 ++++++++++++++++++++++++++--------------
+ 1 files changed, 40 insertions(+), 22 deletions(-)
+
+commit 9f0dca248a3212dcb825bdbb013d5064449a88a5
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-13 14:45:21 +0000
+
+    MC param-account, param-password map to AG bare settings username, password.
+    
+    These were mapped to the parameters/ namespace in AG, but that's not
+    where the maemo UI code seems to put them.
+    (cherry picked from commit 805544ba366ab4067de645f415010fff7b6560e6)
+
+ src/mcd-account-manager-sso.c |   26 +++++++++++++++++++++-----
+ 1 files changed, 21 insertions(+), 5 deletions(-)
+
+commit bd537555a2f1d41af7604c5fa3a7b5aec70f2273
+Merge: 0829627 5e21813
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-03-17 11:32:48 -0700
+
+    Merge branch 'dispatch-early'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 5e21813877d46912424a7abff5e21a023ce860ca
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-03-17 11:23:31 -0700
+
+    Expect Connect from mc instead of StatusChanged from SimulatedConnection.
+
+ .../dispatcher/dispatch-before-connected.py        |    7 +++----
+ 1 files changed, 3 insertions(+), 4 deletions(-)
+
+commit 082962702c1db6e08038920916b0c612b65c2d4c
+Merge: 148c720 d09690f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-03-15 14:00:00 +0000
+
+    Merge remote branch 'tomeu/MC_LOGFILE'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 148c7209a55cd196f063e6d43f23fcbfc85ae4f6
+Merge: 31e4e22 27a15d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-03-15 13:59:49 +0000
+
+    Merge remote branch 'tomeu/bug-27038'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 31e4e22855aa5d0bddc8268b23ec426d9be1cd61
+Merge: 5e8f91c f028fbe
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-13 12:45:30 +0000
+
+    Merge branch 'account-storage-plugins'
+    
+    Conflicts:
+    	src/mcd-account-manager.c
+
+commit f028fbed67bb92088a10b2474839f3b9e426bf5b
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-13 11:47:11 +0000
+
+    Removed stray debug message.
+
+ src/plugin-account.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit e92541b13d1093b36377b3b03858aa0e5848607c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-13 11:24:40 +0000
+
+    Don't re-create objects for accounts we already have
+    
+    It seems that accounts from the accounts-glib loader pop up twice, once
+    from the GKeyFile and once from the 'created' signal. Until we figure
+    out why it's happening, let's add a cheesy hack that prevents the
+    instance from the GKeyFile being created.
+    
+    Also add extra debugging to add_account() so we can see when accounts
+    are added and where they've come from.
+
+ src/mcd-account-manager.c |   31 +++++++++++++++++++++++++------
+ 1 files changed, 25 insertions(+), 6 deletions(-)
+
+commit 50ace3c347dfb1692d684f266a4248463208d534
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-13 03:13:09 +0000
+
+    Flush new async-created accounts to the SSO store to save new+derived settings.
+
+ src/mcd-account-manager-sso.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit f77ddc8d02ca3a867a6127da8377edc1c20850d8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-12 22:12:01 +0000
+
+    Uncork storage plugins after reading from GKeyFile
+
+ src/mcd-account-manager.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit ad08f3b4468a5d05f3e0451d10947affa7ee856b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-12 21:33:26 +0000
+
+    Add a FIXME for plugin_account_manager_set_dbus_daemon()
+
+ src/mcd-account-manager.c |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
+
+commit a606766773c3945240628d3a508b3423022a8cf7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-12 21:29:10 +0000
+
+    Uncork account stores when master calls _setup()
+    
+    This ensures that the McdMaster actually exists before we start creating
+    accounts all over the place, and prevents a loop where instantiating an
+    McdAccountManager instantiates an McdAccount which instantiates an
+    McdMaster which instantiates an McdAccountManager...
+
+ src/mcd-account-manager.c |   32 ++++++++++++++++++++------------
+ 1 files changed, 20 insertions(+), 12 deletions(-)
+
+commit e260cc94562a992b20196efc3347f06ed2456ce6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-12 21:23:06 +0000
+
+    Correctly retrieve CM and protocol from libaccounts
+    
+    You need to initialize GValues before you hand them to
+    ag_account_get_value(). Also, 'c' was unused.
+
+ src/mcd-account-manager-sso.c |   16 +++++++---------
+ 1 files changed, 7 insertions(+), 9 deletions(-)
+
+commit f7b7aa8e477abe03c1340c2b200ddcf9c9792c2c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-03-12 21:03:22 +0000
+
+    AM: initialize D-Bus property interfaces in _init()
+    
+    It turns out that it is unsafe to do this at any later point, due to a
+    series of surprising facts:
+    
+    • mcd_dbus_init_interfaces_instances (obj) is implemented in terms of
+      g_type_get_qdata (G_OBJECT_TYPE (obj), ...).
+    
+    • osso-mission-control subclasses McdAccountManager.
+    
+    • This code:
+    
+        GType s, t; // s is a subtype of t;
+    
+        g_type_set_qdata (t, FOO, BAR);
+    
+        gpointer data = g_type_get_qdata (s, FOO);
+    
+      sets data to NULL because g_type_get_qdata() does not consider
+      superclasses.
+    
+    • Remarkably, calling mcd_dbus_init_interfaces_instances() from the
+      _init() function works because the code that runs each instance_init()
+      function in the hierarchy in turn sets the object under construction's
+      GTypeClass to be the particular type whose init() is running, rather
+      than the final type of the object!
+    
+    This was a fun debugging session.
+
+ src/mcd-account-manager.c |    6 ++----
+ 1 files changed, 2 insertions(+), 4 deletions(-)
+
+commit 20bcefab890201dce263d21833dfbfeacc88c8b4
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-12 19:31:36 +0000
+
+    Put a fake create signal on the queue when new accounts are found during init.
+
+ src/mcd-account-manager-sso.c |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
+
+commit 632889e639e44f76745dc96eac5f70782e825f61
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-12 15:24:39 +0000
+
+    Log + hook up signals for _all_ plugins, pseudo and real.
+
+ src/mcd-account-manager.c |   25 +++++++++++++++----------
+ 1 files changed, 15 insertions(+), 10 deletions(-)
+
+commit f1b4a26c5cc8b31c0b208b4629f1eed0b76ebea9
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-12 13:52:51 +0000
+
+    Move some setup to _constructed so that properties are available to the code.
+
+ src/mcd-account-manager.c |   31 +++++++++++++++++++++++++++++--
+ 1 files changed, 29 insertions(+), 2 deletions(-)
+
+commit 6558c7a0f902ef0539e96f0eaf3eea4c3c66a0bb
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-12 13:41:42 +0000
+
+    The dbus daemon isn't available at the point we need to construct the shim.
+    
+    Make the dbus-daemon a non-construct-only property, and provide a convenience
+    method for setting it.
+    
+    Re-order the class_init so glib/gobject actually accepts the property.
+    Implement property getter and setter for same reason.
+
+ src/plugin-account.c |   65 +++++++++++++++++++++++++++++++++++++------------
+ src/plugin-account.h |    5 +++-
+ 2 files changed, 53 insertions(+), 17 deletions(-)
+
+commit 27a15d80e090d4b84ff67d95c9bf283de7b97888
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-12 10:13:55 +0100
+
+    Don't try to propagate a denial if there are no plugins installed.
+    
+    Fixes fdo#27038
+
+ src/mcd-account-requests.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
+
+commit 236b156892b3b31f2331b62489150485045d8468
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:28:07 +0000
+
+    Forward declaration of prototype to keep the compiler happy.
+
+ src/mcd-account-manager-sso.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 15924b732c89cbb5bd5c5965b40e139e33349136
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:27:45 +0000
+
+    Only iterate over parameters, they're the only oones we want.
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit a8dd436c66b42ab8c78c915da2a343887df10d10
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:27:12 +0000
+
+    More type errors.
+
+ src/mcd-account-manager-sso.c |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit 3fe0325fe95272bb73b0b4508aac3f8d08df30cd
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:26:44 +0000
+
+    Type error.
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 532291a3d299dd970b8774fbc045567c75af048c
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:26:18 +0000
+
+    Type, 3 param function called w 2 params.
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 5be4467bcd28189cc4d8ef76269956f356fdc8fe
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:25:50 +0000
+
+    Stash the McpAccountManager for use in signal handlers when _ready is called.
+    
+    Tweak the calling of signal handlers for delayed signals + handler data free
+    operation to be correct (wrong type errors, param reordering typo)
+
+ src/mcd-account-manager-sso.c |    9 ++++++---
+ src/mcd-account-manager-sso.h |    1 +
+ 2 files changed, 7 insertions(+), 3 deletions(-)
+
+commit 4b8b72c968b8928386189a5709debb8d1b04d580
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 19:22:33 +0000
+
+    Typo.
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 8b6c50917d4c7b8294bec21402537a99a4b5ae7c
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:53:36 +0000
+
+    Initialise the list of libaccounts services.
+
+ src/mcd-account-manager-sso.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 32edda37b998906ed33dbbccc829bb9cef591157
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:45:56 +0000
+
+    Accounts not created via libaccounts are not claimed by the sso plugin anymore.
+
+ src/mcd-account-manager-sso.c |   36 +++++-------------------------------
+ 1 files changed, 5 insertions(+), 31 deletions(-)
+
+commit 359ca41ed4cc362d589f76aae4e5b1e404cbecb5
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:32:29 +0000
+
+    Doc typo fixes.
+
+ mission-control-plugins/account.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 5b7e023a99002962eca9420b86ebbcd3adc29cbc
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:32:17 +0000
+
+    Delay account creation signals until ready, use the new unique-name interface.
+
+ src/mcd-account-manager-sso.c |  254 ++++++++++++++++++++++++++++-------------
+ src/mcd-account-manager-sso.h |    2 +
+ 2 files changed, 179 insertions(+), 77 deletions(-)
+
+commit 79054f1e316edc61394281af7401829214d6d8a9
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:30:22 +0000
+
+    Drop the old copy of the unique-name code and use it via the shim interface.
+
+ src/mcd-account-manager.c |   54 +++-----------------------------------------
+ 1 files changed, 4 insertions(+), 50 deletions(-)
+
+commit 2cc024fafe82f61264d829c289d8d8326721335d
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:29:08 +0000
+
+    Copy the unique-name logic into the plugin shim interface and expose it there.
+
+ src/plugin-account.c |  103 +++++++++++++++++++++++++++++++++++++++++++++++++-
+ src/plugin-account.h |    3 +-
+ 2 files changed, 104 insertions(+), 2 deletions(-)
+
+commit 660edddc2530e797b7d92cf512a162ac2e0610d6
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:27:04 +0000
+
+    Define interface to allow plugins to get the unique account name via the shim.
+
+ mission-control-plugins/account.c        |   30 ++++++++++++++++++++++++++++++
+ mission-control-plugins/account.h        |    5 +++++
+ mission-control-plugins/implementation.h |    5 +++++
+ 3 files changed, 40 insertions(+), 0 deletions(-)
+
+commit b221338fbbd712e4105a38e5a7407d02898b525b
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-11 17:24:40 +0000
+
+    Define interface to allow plugins to be told that aync account ops are now valid
+    
+    In other words, we're done with basic startup and listing of accounts that
+    we had seen before, new accounts can now be created, and async notifications
+    from the plugin backend may now be transmitted onwards by the standard
+    signals defined in the interface.
+
+ mission-control-plugins/account-storage.c |   50 +++++++++++++++++++++++++++++
+ mission-control-plugins/account-storage.h |    9 +++++
+ 2 files changed, 59 insertions(+), 0 deletions(-)
+
+commit d09690f086ee4ba4edf4cbd6aa34fa088681d2e8
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-11 16:50:48 +0100
+
+    Add support for MC_LOGFILE
+
+ src/mcd-debug.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 5e8f91cc75916c8768a05130b15f062dded11f4c
+Merge: 34eabb1 1abaae5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-03-11 15:41:42 +0000
+
+    Merge remote branch 'tomeu/bug-27015'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 1abaae519d56caf2478a7af24e5084d2c2476871
+Author: Tomeu Vizoso <tomeu@sugarlabs.org>
+Date:   2010-03-11 12:29:50 +0100
+
+    Remove misleading reference to GConf
+
+ src/mcd-account-manager.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 2e6d574ef1faf1f88fa0e9e18a86ca1114ffefd9
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 19:19:41 +0000
+
+    Remove generated marshaller file(s) when a clean target is invoked.
+
+ mission-control-plugins/Makefile.am |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 901159ab234d78e24c00f98a76ea71363cfc3b42
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 18:26:56 +0000
+
+    Dropped noop dispose instance vtable entry.
+
+ src/plugin-account.c |   11 -----------
+ 1 files changed, 0 insertions(+), 11 deletions(-)
+
+commit 9ce38fa3d5deead66d5185e95459feda033fe75e
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 18:07:47 +0000
+
+    Replace strcmp et al with g_str_equal instead in boolean contexts.
+
+ src/mcd-account-manager-sso.c |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
+
+commit c5b2f19a62091752295a3fa36b00d0bc8d8bf06a
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 18:01:36 +0000
+
+    g_int_equal was a braino - should have been g_direct_equal
+
+ src/mcd-account-manager-sso.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 34de0a64fba030a8a11905093137910faaa2ad1f
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 17:46:33 +0000
+
+    Style trivia.
+
+ src/plugin-account.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 0a897ae7e9aedbf8d758b5acedeecacf7b7fa0f6
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 17:41:26 +0000
+
+    Move the ref/unref of the user data pointer completely out of write_conf.
+
+ src/mcd-account-manager.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit e71beba432935d3f06c9f2547f06a67bf7302fb0
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 17:12:09 +0000
+
+    Drop implementation of noop instance method for set_property.
+
+ src/plugin-account.c |   15 ---------------
+ 1 files changed, 0 insertions(+), 15 deletions(-)
+
+commit ed51ecb1ccf94ed89cf730358920fdfc77801a81
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 16:53:30 +0000
+
+    Free up the keyfiles in the finalisation stage, not the disposal.
+
+ src/plugin-account.c |   13 ++++++-------
+ 1 files changed, 6 insertions(+), 7 deletions(-)
+
+commit 8888f7f1f1955f5cdc765dc2990b1cbdcac21928
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 16:35:11 +0000
+
+    Makefile dependency/nodist fix.
+
+ mission-control-plugins/Makefile.am |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
+
+commit ca9a4fe535cf71a8e0ef3176c0c952c32d73c0b0
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-09 16:20:18 +0000
+
+    Use g_cclosure_marshal_VOID__STRING instead of _mcp_marshal_VOID__STRING.
+
+ mission-control-plugins/account-storage.c        |    6 +++---
+ mission-control-plugins/mcp-signals-marshal.list |    1 -
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+commit 88e1c55d37c7f3b993e7a1c335b3a718e65acd9b
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:19:49 +0000
+
+    Implement and connect up handlers for SSO 3rd party account creation/deletion.
+
+ src/mcd-account-manager-sso.c |   74 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 74 insertions(+), 0 deletions(-)
+
+commit 3e995b79683c92b74bbc0084da0e63e2e03e8060
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:19:10 +0000
+
+    Explanatory comment.
+
+ src/mcd-account-manager.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+
+commit 09f74c6a547574818a5029f5ac098819e7d9c0b7
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:18:52 +0000
+
+    Callback for mcd_account_delete in the account manager.
+
+ src/mcd-account-manager.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit d363fa0c54eb58aae790f1c3d969b2168c56a115
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:17:48 +0000
+
+    Type typo fix and explanatory comments for plugin account deleted callback.
+
+ src/mcd-account-manager.c |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+commit 7e443f93903574f8d0b37721fe60be8041c6c8cf
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:15:18 +0000
+
+    "Enabled" setting is a special case in SSO, handle it as such.
+
+ src/mcd-account-manager-sso.c |   34 +++++++++++++++++++++++-----------
+ 1 files changed, 23 insertions(+), 11 deletions(-)
+
+commit dee3cf66397c8d43ab8c0ae2658d7a6ce7653cf0
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 19:14:06 +0000
+
+    Forward declarations to keep compiler happy when we add the sso callbacks.
+
+ src/mcd-account-manager-sso.c |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+commit 29ca669296c8f2afd6858e2452e098c6ea05dd67
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 16:02:24 +0000
+
+    Remember the ag id -> mc name mapping for use in deletion.
+    
+    Also forget the name and drop our ref to the ag account object when deleting.
+
+ src/mcd-account-manager-sso.c |   26 ++++++++++++++++++++++----
+ src/mcd-account-manager-sso.h |    1 +
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+
+commit 7c6a00ac2ed87e354832f014e9c698ccf88c276b
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-08 15:00:20 +0000
+
+    Remove old debug code.
+
+ src/mcd-account-manager-sso.c |   10 ----------
+ 1 files changed, 0 insertions(+), 10 deletions(-)
+
+commit 283961d700fbc95ecc6cba314d2b62325feba356
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 19:18:16 +0000
+
+    Make the libaccounts-support conditional on the current config.
+
+ src/mcd-account-manager.c |   20 +++++++++++++++++++-
+ 1 files changed, 19 insertions(+), 1 deletions(-)
+
+commit 19e889489b6047cb743f79f660ea9057e6823aed
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 19:17:38 +0000
+
+    Make libaccounts support optional via configure, update Makefile.am accordingly.
+
+ configure.ac    |   32 ++++++++++++++++++++++++++++++++
+ src/Makefile.am |   13 +++++++++++++
+ 2 files changed, 45 insertions(+), 0 deletions(-)
+
+commit 56bb654c974b42f936e79eaabb7730937a44f258
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 19:16:42 +0000
+
+    hash-include fixes
+
+ src/mcd-account-manager-sso.c |    4 +---
+ src/mcd-account-manager-sso.h |    2 ++
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+commit 03dbe99b13454ab2c41200f2a49294e800c30bee
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 19:15:15 +0000
+
+    libaccounts-glib pseudo-plugin for accounts storage.
+
+ src/mcd-account-manager-sso.c |  657 +++++++++++++++++++++++++++++++++++++++++
+ src/mcd-account-manager-sso.h |   70 +++++
+ 2 files changed, 727 insertions(+), 0 deletions(-)
+
+commit e75bd719fbb50cbaf955f01c5ba325fa2126479e
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 14:48:02 +0000
+
+    Dependency to make sure the mcp marshaller(s) are generated in time.
+
+ mission-control-plugins/Makefile.am |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 9b84e17c141fbfe96c7ace4885307ae42ca07964
+Author: Vivek Dasmohapatra <vivek@noise.cbg.collabora.co.uk>
+Date:   2010-03-05 14:47:29 +0000
+
+    debug message emitted when signals we don't process (yet) are received.
+
+ src/mcd-account-manager.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
+
+commit b5cdf7cf5e502bd9c57991a91a9185acadec2764
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-03 03:52:44 +0000
+
+    Handle setting deletion in McdPluginAccountManager.
+
+ src/plugin-account.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
+
+commit 25bc3a8fe7d2d6635a4f71d0ae6cc83a4bb6186a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-03 03:51:44 +0000
+
+    refs/unrefs of the McdPluginAccountManager instance were unbalanced.
+
+ src/mcd-account-manager.c |   14 ++++----------
+ 1 files changed, 4 insertions(+), 10 deletions(-)
+
+commit 1049d59b4c87928a0726424b718ea979c1b7e6c8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-02 18:44:34 +0000
+
+    Set the loaded flag after a successful keyring read.
+
+ src/mcd-account-manager-keyring.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 985c5076811073159e8a4f5d9beaa09d7b73b583
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-02 18:44:13 +0000
+
+    Style trivia.
+
+ src/mcd-account-manager-keyring.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
+
+commit 494aa78683273a89761ff65584a6f9962415ddf4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-02 18:38:48 +0000
+
+    Style trivia.
+
+ src/mcd-account-manager-keyring.c |   14 ++++++++++++++
+ 1 files changed, 14 insertions(+), 0 deletions(-)
+
+commit 257b1761ff7e1275347695f4d2c9ed68a6f6d40d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 21:08:30 +0000
+
+    Style trivia.
+
+ test/twisted/mcp-account-diversion.c |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 785429022cacc75ba5750fd2631fff4dc32cd40b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 21:07:26 +0000
+
+    Use g_get_user_cache_dir to locate the target for the account dicersion plugin.
+
+ test/twisted/mcp-account-diversion.c |   38 +++++++++++++++++++++++++--------
+ 1 files changed, 29 insertions(+), 9 deletions(-)
+
+commit b5b9d676b96294987a2c82a81201ed4d9080f6cd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:53:15 +0000
+
+    Rename plugin prio #defines and provide  _NORMAL and _READONLY constants.
+
+ mission-control-plugins/account-storage.c |    4 ++--
+ mission-control-plugins/account-storage.h |    6 ++++--
+ src/mcd-account-manager-default.c         |    2 +-
+ src/mcd-account-manager-keyring.c         |    2 +-
+ src/mcd-account-manager.c                 |    4 +---
+ test/twisted/mcp-account-diversion.c      |    2 +-
+ 6 files changed, 10 insertions(+), 10 deletions(-)
+
+commit 1c3500945ad2549a96743d51cc5e8d17eaf875ba
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:52:23 +0000
+
+    Allow low priority (readonly) account storage plugins to be sorted correctly.
+
+ src/mcd-account-manager.c |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+commit ac9da0ef2e6508849d3d293c4540e355aa903ff3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:29:08 +0000
+
+    Remove old debug instrumentation.
+
+ mission-control-plugins/account-storage.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit df78e0e4f8a7305fbc950bddd194fbff87f390d0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:27:48 +0000
+
+    Change transplanted code from existing style to preferred style.
+
+ src/mcd-account.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 543e9080b214c04b72b7d5e4733b19b711be1e4e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:25:04 +0000
+
+    Use same #defined noop code as elsewhere.
+
+ mission-control-plugins/account-storage.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 97b805d6e5d5cb909d165fb99d39a4c9dc7ac256
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:24:35 +0000
+
+    Style trivia.
+
+ src/mcd-account-manager-default.c |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
+
+commit bf3c12f3d79774225582207fe66cbf8bc7502ca1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:24:07 +0000
+
+    Style trivia.
+
+ src/mcd-account-manager.c |   51 ++++++++++++++++++++++++++++----------------
+ 1 files changed, 32 insertions(+), 19 deletions(-)
+
+commit 3496d2bf29688b3e2d5d88abe33e7b0491fdef19
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 20:13:26 +0000
+
+    Plugin priority is signed.
+
+ mission-control-plugins/account-storage.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 4e2ce3fd358c29e201fe29b88454ff7180106712
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 19:45:18 +0000
+
+    Unnecessary include removed.
+
+ mission-control-plugins/account.h |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit 06a57ed5d2f149949dd8de470b09287041ef03b0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 19:11:46 +0000
+
+    Minor style issues (variable renaming) and explanatory comments.
+
+ src/mcd-account-manager.c |   36 +++++++++++++++++++-----------------
+ 1 files changed, 19 insertions(+), 17 deletions(-)
+
+commit 53cbba20640f28ae9275f8b29725d6916cc68a85
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 18:48:27 +0000
+
+    Rename account storage plugin comparison function.
+
+ src/mcd-account-manager.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 91e6af087af9e57aa4d3424e2cb48a956ba137c4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 18:43:46 +0000
+
+    Document the McpAccountManager interface.
+
+ mission-control-plugins/account.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
+
+commit 54fb5116e33f5c3e6ba472e5348884eef50d8249
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 18:43:31 +0000
+
+    Document the McpAccountStorage interface.
+
+ mission-control-plugins/account-storage.c |  130 +++++++++++++++++++++++++++++
+ 1 files changed, 130 insertions(+), 0 deletions(-)
+
+commit 70cbc38802864e4859ebc64f4d7f516c5a2bdc06
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 17:17:16 +0000
+
+    Don't include glib subheaders, only the main glib header.
+    
+    Note: This was existing code transplanted from elsewhere. There are lots
+    of other subheader includes in the codebase but I have not addressed those
+    cases here.
+
+ mission-control-plugins/account-storage.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit c45a55d151decc332294adfd443c72ae4acb3170
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-03-01 17:12:22 +0000
+
+    Don't rely on mcd-debug in the plugin interface implementation.
+
+ mission-control-plugins/account-storage.c |   24 +++++++++++++++++-------
+ 1 files changed, 17 insertions(+), 7 deletions(-)
+
+commit fbcd0cb4df51529f039d884fabcef4f4d1ac7163
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 19:26:27 +0000
+
+    Keep one long lived McdPluginAccountManager around and use its keyfile etc.
+
+ src/mcd-account-manager.c |   92 +++++++++++++-------------------------------
+ 1 files changed, 27 insertions(+), 65 deletions(-)
+
+commit 5558750baac59696fd9045a4b5280362d392b4f4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 19:25:31 +0000
+
+    Make the McdPluginAccountManager the owner of the keyfile and secrets GKeyFiles.
+
+ src/plugin-account.c |   51 +++++++++----------------------------------------
+ src/plugin-account.h |   10 ++++++--
+ 2 files changed, 17 insertions(+), 44 deletions(-)
+
+commit d095c537198a619ce26eeb0b0622cabce208aedd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 18:34:27 +0000
+
+    Class rename McdPluginAccount -> McdPluginAccountManager
+
+ src/mcd-account-manager.c |   25 ++++++++++++-----------
+ src/plugin-account.c      |   47 +++++++++++++++++++++++----------------------
+ src/plugin-account.h      |   42 +++++++++++++++++++++-------------------
+ 3 files changed, 59 insertions(+), 55 deletions(-)
+
+commit e02509b21e7757ba188dc652aea3c44b1f264441
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 18:26:57 +0000
+
+    Class/Interface rename - McpAccount[Iface] -> McpAccountManager[Iface]
+
+ mission-control-plugins/account-storage.c |   30 ++++++++++++------------
+ mission-control-plugins/account-storage.h |   20 ++++++++--------
+ mission-control-plugins/account.c         |   23 ++++++++++---------
+ mission-control-plugins/account.h         |   34 +++++++++++++++-------------
+ mission-control-plugins/implementation.h  |   10 ++++----
+ src/mcd-account-manager-default.c         |   14 ++++++------
+ src/mcd-account-manager-keyring.c         |   34 ++++++++++++++--------------
+ src/mcd-account-manager.c                 |   22 +++++++++---------
+ src/plugin-account.c                      |   14 ++++++------
+ test/twisted/mcp-account-diversion.c      |   14 ++++++------
+ 10 files changed, 109 insertions(+), 106 deletions(-)
+
+commit c67c292dbc22b90d64b9acee221cd8811cc79478
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 18:02:16 +0000
+
+    Typo: dead variable no longer used.
+
+ test/twisted/mcp-account-diversion.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 950c800befd43fcb2745d29908b3a5d16bf675db
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 18:02:00 +0000
+
+    Use the plugin marshallers instead of sharing the core marshallers.
+
+ mission-control-plugins/account-storage.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 7103b41e9a578aa3ce14b3c9d25497706d594d02
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-26 18:01:32 +0000
+
+    Generate signal marshallers for plugins separately from the core marshallers.
+
+ mission-control-plugins/Makefile.am              |   24 ++++++++++++++-------
+ mission-control-plugins/mcp-signals-marshal.list |    2 +
+ src/mcd-signals-marshal.list                     |    3 +-
+ 3 files changed, 19 insertions(+), 10 deletions(-)
+
+commit 2b009c68dc8d7b60b335d17369c9259c0ae7b38a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 19:13:33 +0000
+
+    Add a dependency and rule for the marshallers header from the src/ directory.
+
+ mission-control-plugins/Makefile.am |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
+
+commit 3fb1b91b97128411ca7a2df1849d16327398023a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 19:12:52 +0000
+
+    Load and use the account storage plugins, with two pseudo-plugins by default.
+    
+    The pseudo-plugins are the keyfile plugin (an oject that implements the
+    relevant plugin interface, even though it isn't loaded as a plugin) and
+    the gnome keyring plugin (ditto) which are loaded at advertised priorities.
+    
+    When no other plugins are loaded, the keyring plugin should transparently
+    steal all secret parameters from accounts in the mcd-account-manager,
+    provided that the keyring daemon is accessible.
+
+ src/Makefile.am           |    6 +
+ src/mcd-account-manager.c |  478 +++++++++++++++++++++++++++++----------------
+ 2 files changed, 320 insertions(+), 164 deletions(-)
+
+commit b855e67b2b250fb745f38b5e27dff9fb259aae11
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 19:07:37 +0000
+
+    Include the new account shim interface header in the main plugins header.
+
+ mission-control-plugins/mission-control-plugins.h |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 42a6831e4d47a343dca858c573e2013da0e1ddcb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:55:51 +0000
+
+    Implement the gnome keyring and gkeyfile storage plugins
+    
+    These two plugins will always be loaded at known (and exposed) priorities,
+    this allows plugins that want to steal secrets (eg passwords) to slot
+    themselves in at a higher priority than the keyring plugin, and those
+    that should not receive passwords to slot themselves in between the
+    keyring and keyfile plugins.
+
+ src/mcd-account-manager-default.c |  240 ++++++++++++++++
+ src/mcd-account-manager-default.h |   71 +++++
+ src/mcd-account-manager-keyring.c |  557 +++++++++++++++++++++++++++++++++++++
+ src/mcd-account-manager-keyring.h |   72 +++++
+ 4 files changed, 940 insertions(+), 0 deletions(-)
+
+commit e061231b0c83ca4537a6c174485cd1cb5bb96dc5
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:45:35 +0000
+
+    New marshallers for account storage plugins.
+
+ src/mcd-signals-marshal.list |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+commit d3e7cb461a22b24e64d58c725015fad997fd44cb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:44:35 +0000
+
+    Header defining the interface for the account storage shim interface.
+
+ mission-control-plugins/implementation.h |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
+
+commit 52c82684e6e1a55e095d0886701bcd4054e87369
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:43:46 +0000
+
+    Define +implement interface by which account plugins can get/set parameters
+    
+    The shim interface, and the object implementing it, that get passed to
+    account storage plugins to allow them to get/set parameters and to check
+    to see whether they are secret (or flag them as secret).
+
+ mission-control-plugins/account.c |  105 +++++++++++++++++++++
+ mission-control-plugins/account.h |   67 +++++++++++++
+ src/plugin-account.c              |  184 +++++++++++++++++++++++++++++++++++++
+ src/plugin-account.h              |   62 +++++++++++++
+ 4 files changed, 418 insertions(+), 0 deletions(-)
+
+commit 6431ea7b698c43e9fa28864398000cea1e93e09c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:41:05 +0000
+
+    Update the account storage plugin interface to the new API
+    
+    The previous implementation was granular at the account level, new API allows
+    plugins to grab individual account.key pairs, which means we can relocate
+    the gnome-keyring support to the account storage layer instead of having it
+    sit above in the mcd-account object.
+
+ mission-control-plugins/account-storage.c |  243 ++++++++++++++++++++++++-----
+ mission-control-plugins/account-storage.h |   85 ++++++++---
+ 2 files changed, 268 insertions(+), 60 deletions(-)
+
+commit 95b79aff8de71b22502df6c9fec7910945302a49
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:37:45 +0000
+
+    Expose whether a parmater is secret (for use by account storage plugins).
+
+ src/mcd-account.c |   12 ++++++++++++
+ src/mcd-account.h |    3 +++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
+
+commit 6ead3d4396347ec3ae0682809a70ac9daf276ca7
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-25 18:37:04 +0000
+
+    Remove keyring support from mcd-account (will be moved to a plugin shortly)
+
+ src/mcd-account.c |  347 -----------------------------------------------------
+ 1 files changed, 0 insertions(+), 347 deletions(-)
+
+commit a43f6684c21099210debcdcc736ca2aac1efad74
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-14 23:53:06 +0000
+
+    Initialise the storage in the class initialiser, not the instance.
+
+ test/twisted/mcp-account-diversion.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit aaaa63b99f64774a2f00a4c0ceb65220242bbb89
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-10 19:04:02 +0000
+
+    Sample implementation of account storage plugin, for use in tests later.
+
+ test/twisted/Makefile.am             |    5 +-
+ test/twisted/mcp-account-diversion.c |  250 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 254 insertions(+), 1 deletions(-)
+
+commit 5b49274b33c6a46b06c8ad1422f8fce3e850bf9f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-10 19:03:29 +0000
+
+    New plugin class for account storage.
+
+ mission-control-plugins/Makefile.am               |    2 +
+ mission-control-plugins/account-storage.c         |  210 +++++++++++++++++++++
+ mission-control-plugins/account-storage.h         |   86 +++++++++
+ mission-control-plugins/mission-control-plugins.h |    1 +
+ src/mcd-account-manager.c                         |  136 +++++++++++++-
+ 5 files changed, 429 insertions(+), 6 deletions(-)
+
+commit 2fa79a09af19abc64d1d63ae12a76a097c43d93c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-02-10 19:02:30 +0000
+
+    Load plugins before any other components are initialised.
+
+ src/mcd-master.c |    8 +++++---
+ 1 files changed, 5 insertions(+), 3 deletions(-)
+
+commit 34eabb1752fbe705a73339eb0d959f140a63d9cf
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2010-03-01 13:58:58 +0000
+
+    Only time out channel requests after many hours
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ src/mcd-connection.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 24f58efd43b10ad51757be5b2168d49045d0faa2
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-26 08:39:19 -0800
+
+    Changed indentation.
+
+ src/mcd-connection.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit f05e39e125ebecb04e868c87c237bff3f5e49644
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-26 08:38:54 -0800
+
+    Remove redundant assertion in test script.
+
+ .../dispatcher/dispatch-before-connected.py        |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+commit ece1f5b90e9cf6ff33327f4911532b89bbcbdaea
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-25 14:30:17 -0800
+
+    Request unrequested channels when connection is ready.
+    
+    Fixes dispatcher/connect-for-request.py.
+
+ src/mcd-connection.c |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
+
+commit 348a68e677c34cc8221e994f7b4a0e8f504229cb
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-25 14:05:34 -0800
+
+    Move _mcd_dispatcher_add_connection to mcd_connection_done_task_before_connect
+    from mcd_connection_early_get_interfaces_cb. This guarantees the caps iface has
+    been retrieved for UpdateCapabilities.
+
+ src/mcd-connection.c |    9 +++++++--
+ 1 files changed, 7 insertions(+), 2 deletions(-)
+
+commit a0ae71ebf164b59ba4761d4edf4bb9d738343448
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-24 17:45:19 -0800
+
+    Regression test adjustments for new connection/dispatcher order.
+    
+    * mctest.py: Reorder expected GetAll method on requests iface in harness.
+    * account-manager/reconnect.py:
+    * account-manager/recover-from-disconnect.py:
+    * account-manager/request-online.py:
+    * account-manager/update-parameters.py:
+    * dispatcher/recover-from-disconnect.py: Expect GetAll on request iface
+      before connected.
+    * capabilities/contact-caps.py: Remove UpdateCapabilities expectation after
+      connection.
+
+ test/twisted/account-manager/reconnect.py          |   24 +++++++-------
+ .../account-manager/recover-from-disconnect.py     |   32 ++++++-------------
+ test/twisted/account-manager/request-online.py     |   15 ++++-----
+ test/twisted/account-manager/update-parameters.py  |   16 +++++-----
+ test/twisted/capabilities/contact-caps.py          |    9 +-----
+ test/twisted/dispatcher/connect-for-request.py     |    5 +--
+ test/twisted/dispatcher/recover-from-disconnect.py |   28 ++++++++--------
+ test/twisted/mctest.py                             |   20 +++++++-----
+ 8 files changed, 65 insertions(+), 84 deletions(-)
+
+commit 1ffce339da1e367104ef6c697c3eb7540dd3e14f
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-24 16:30:39 -0800
+
+    Added regression test for pre-connected channel dispatching.
+
+ test/twisted/Makefile.am                           |    1 +
+ .../dispatcher/dispatch-before-connected.py        |  105 ++++++++++++++++++++
+ 2 files changed, 106 insertions(+), 0 deletions(-)
+
+commit b47991610a4a9947f262b33e7cc94c923a44897c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-02-24 14:38:02 +0000
+
+    mc-tool: don't crash on invalid account names
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ libmcclient/mc-account.c |    2 ++
+ util/mc-tool.c           |   11 +++++++++++
+ 2 files changed, 13 insertions(+), 0 deletions(-)
+
+commit bee3d1e1c7be2058bfa4eeab9b52477975d577d5
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-17 11:59:34 -0800
+
+    Move _mcd_dispatcher_add_connection to an earlier stage.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=26583
+
+ src/mcd-connection.c |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+commit e4d54ce9b9e51291f8c281aa39b28bdf38fb7822
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2010-02-16 17:34:46 -0800
+
+    Use telepathy debug interface
+    
+    Fixes: fd.o#26597
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ src/mcd-debug.c |   28 ++++++++++++++++++++++++++++
+ src/mcd-debug.h |    8 ++++----
+ 2 files changed, 32 insertions(+), 4 deletions(-)
+
+commit 0d7f1f23dd54fb0cd19e93cfe90aa8b82c9d5396
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-02-18 15:59:57 +0000
+
+    mc-wait-for-name: link to GLib properly
+    
+    See Debian bug #556488 for more info.
+    
+    Fixes: fd.o#25122
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ util/Makefile.am |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 3601f10e676b424c113b4f7ea061d405e93fc4c2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-12-15 17:31:20 +0000
+
+    mcd-debug: hook up plugins' debug level
+
+ src/mcd-debug.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit eef58e645111a18372e69af067cb113ce4e0bc42
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-12-15 17:30:59 +0000
+
+    mission-control-plugins: add debug support
+
+ mission-control-plugins/Makefile.am      |    1 +
+ mission-control-plugins/debug-internal.h |   54 ++++++++++++++++++++++++++++++
+ mission-control-plugins/loader.c         |   29 +++++++++++++++-
+ mission-control-plugins/loader.h         |    2 +
+ 4 files changed, 84 insertions(+), 2 deletions(-)
+
+commit a59e1b8e992ae77d45e77ba1221498220a8a7dc5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-12-15 17:08:53 +0000
+
+    Only load plugins that match mcp-*.so (or mcp-*.dll, etc. as appropriate)
+
+ mission-control-plugins/loader.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+commit 782ffa5a6337ff48b81aaf779d510305b6e7f8bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-12-15 17:07:43 +0000
+
+    Add most of the plugin loader to the mission-control-plugins library
+
+ mission-control-plugins/Makefile.am               |    2 +
+ mission-control-plugins/loader.c                  |  152 +++++++++++++++++++++
+ mission-control-plugins/loader.h                  |   38 +++++
+ mission-control-plugins/mission-control-plugins.h |    5 +-
+ src/mcd-account-requests.c                        |    2 +-
+ src/mcd-dispatch-operation.c                      |    2 +-
+ src/plugin-loader.c                               |   82 +-----------
+ src/plugin-loader.h                               |    1 -
+ 8 files changed, 197 insertions(+), 87 deletions(-)
+
+commit 1671391d4984ae5387f1e042a07b01c001bd58e6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 22:56:10 +0000
+
+    dispatcher/create-rejected-by-mini-plugin.py: new test for McpRequestPolicy
+
+ test/twisted/Makefile.am                           |    1 +
+ .../dispatcher/create-rejected-by-mini-plugin.py   |  102 ++++++++++++++++++++
+ test/twisted/mcp-plugin.c                          |   41 ++++++++
+ 3 files changed, 144 insertions(+), 0 deletions(-)
+
+commit d87dd4d5913410edc9537e623f3ef223284950dc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 22:55:07 +0000
+
+    McdAccount: lazily create a McdPluginRequest and pass it to all McpRequestPolicy objects
+
+ src/mcd-account-requests.c |   50 ++++++++++++++++++++++++++++++++++++++++---
+ 1 files changed, 46 insertions(+), 4 deletions(-)
+
+commit 969199a78c867cefc5ed33fae740f67bab9531d7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 22:54:32 +0000
+
+    McdPluginRequest: add an implementation of McpRequest
+
+ src/Makefile.am      |    2 +
+ src/plugin-request.c |  282 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/plugin-request.h |   64 +++++++++++
+ 3 files changed, 348 insertions(+), 0 deletions(-)
+
+commit 684616798642c8c50db326e9c09bfa9bf2d5a94b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 22:53:52 +0000
+
+    McdChannel: return from Proceed before possibly signalling Failed
+
+ src/mcd-channel.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 2b11293d9d1e9a5e54a8b8124744c3de007b3d8f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 16:30:12 +0000
+
+    mission-control-plugins: add API for noticing and/or denying requests
+
+ mission-control-plugins/Makefile.am               |    8 +-
+ mission-control-plugins/implementation.h          |   16 ++
+ mission-control-plugins/mission-control-plugins.h |    2 +
+ mission-control-plugins/request-policy.c          |   77 ++++++++++
+ mission-control-plugins/request-policy.h          |   58 +++++++
+ mission-control-plugins/request.c                 |  169 +++++++++++++++++++++
+ mission-control-plugins/request.h                 |   72 +++++++++
+ 7 files changed, 400 insertions(+), 2 deletions(-)
+
+commit be415f0f05fe4c7fdee8a78a50f760d2ac36bd79
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 21:02:02 +0000
+
+    dispatcher/dispatch-rejected-by-mini-plugin.py: regression test for immediate and deferred rejection by plugins
+
+ test/twisted/Makefile.am                           |    1 +
+ .../dispatcher/dispatch-rejected-by-mini-plugin.py |  217 ++++++++++++++++++++
+ test/twisted/mcp-plugin.c                          |   83 ++++++++-
+ 3 files changed, 300 insertions(+), 1 deletions(-)
+
+commit f86a0c4d613dd5ce587d88a27d569b5af35e378a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 12:50:43 +0000
+
+    McdDispatchOperation: don't run Approvers early if a plugin has already decided to terminate the channels after observers finish
+
+ src/mcd-dispatch-operation.c    |    4 +++-
+ src/plugin-dispatch-operation.c |    7 +++++++
+ src/plugin-dispatch-operation.h |    3 +++
+ 3 files changed, 13 insertions(+), 1 deletions(-)
+
+commit 3fe828a9518f7ede54350052cf2ae53c431609c3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 12:26:40 +0000
+
+    dispatcher/dispatch-delayed-by-mini-plugin.py: regression test for mini plugin API
+
+ test/twisted/Makefile.am                           |    1 +
+ .../dispatcher/dispatch-delayed-by-mini-plugin.py  |  261 ++++++++++++++++++++
+ 2 files changed, 262 insertions(+), 0 deletions(-)
+
+commit 5290fb2e24d050d89a137fe8b39d3c14f3c80c71
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 20:50:19 +0000
+
+    Port the "delayed acceptance" plugin from the old API to the new
+
+ test/twisted/Makefile.am  |   13 ++-
+ test/twisted/mcp-plugin.c |  199 +++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 208 insertions(+), 4 deletions(-)
+
+commit 6d98902e0e46e95330ed4a5a3630345ff300fccf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 12:26:10 +0000
+
+    McdDispatchOperation: have a McdPluginDispatchOperation and use it to call mcp_dispatch_operation_policy_check()
+
+ src/mcd-dispatch-operation.c |   37 +++++++++++++++++++++++++++++++++++++
+ 1 files changed, 37 insertions(+), 0 deletions(-)
+
+commit e81fab05393db2b89ee37f4bd3559c0fad6f53b0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 20:46:53 +0000
+
+    Link MC against libmission-control-plugins.la and implement McpDispatchOperation
+
+ src/Makefile.am                 |    3 +
+ src/plugin-dispatch-operation.c |  401 +++++++++++++++++++++++++++++++++++++++
+ src/plugin-dispatch-operation.h |   67 +++++++
+ 3 files changed, 471 insertions(+), 0 deletions(-)
+
+commit 4e6d97a4eaad3029d402afa8ea9271870d62f56d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 20:44:34 +0000
+
+    Add a simple loader for plugins using mission-control-plugins
+
+ src/Makefile.am     |   16 ++++---
+ src/mcd-master.c    |    4 ++
+ src/plugin-loader.c |  117 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/plugin-loader.h |   35 +++++++++++++++
+ 4 files changed, 165 insertions(+), 7 deletions(-)
+
+commit 58c340fb4c6610690dc996e08c02b5e1943d56a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 19:44:00 +0000
+
+    Rename --enable-plugins (etc.) to --enable-mcd-plugins (etc.)
+
+ Makefile.am              |    2 +-
+ README                   |    2 +-
+ autogen.sh               |    2 +-
+ configure.ac             |   14 +++++++-------
+ src/Makefile.am          |    6 +++---
+ src/mcd-master.c         |   30 +++++++++++++++---------------
+ test/twisted/Makefile.am |    4 ++--
+ 7 files changed, 30 insertions(+), 30 deletions(-)
+
+commit 4935d23ca73f36efa0940c7de2f22311b9fedad2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 19:42:28 +0000
+
+    Add an interface for plugins to implement in order to filter dispatch operations
+
+ mission-control-plugins/Makefile.am                |    4 +-
+ .../dispatch-operation-policy.c                    |   79 ++++++++++++++++++++
+ .../dispatch-operation-policy.h                    |   61 +++++++++++++++
+ mission-control-plugins/mission-control-plugins.h  |    1 +
+ 4 files changed, 144 insertions(+), 1 deletions(-)
+
+commit c2b9b191c9e456a4bc4585e4052f9aa3046593dc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 19:40:25 +0000
+
+    Remove mission-control-plugins/dummy.c
+
+ mission-control-plugins/Makefile.am |    1 -
+ mission-control-plugins/dummy.c     |    8 --------
+ 2 files changed, 0 insertions(+), 9 deletions(-)
+
+commit 0d89a4eac0929241e1a5641476c7447e0b323af7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 19:39:28 +0000
+
+    Add an object to represent dispatch operations for plugins
+
+ mission-control-plugins/Makefile.am               |    7 +-
+ mission-control-plugins/dispatch-operation.c      |  322 +++++++++++++++++++++
+ mission-control-plugins/dispatch-operation.h      |   98 +++++++
+ mission-control-plugins/implementation.h          |   61 ++++
+ mission-control-plugins/mission-control-plugins.h |    2 +-
+ 5 files changed, 487 insertions(+), 3 deletions(-)
+
+commit e35c90c145db61e7975ea92c2a30dcdfd53cc8cf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-03 16:35:18 +0000
+
+    Add a skeletal library to contain a minimal plugin API
+
+ .gitignore                                        |    1 +
+ Makefile.am                                       |    3 +-
+ configure.ac                                      |   26 +++++++++++++
+ mission-control-plugins.pc.in                     |   14 +++++++
+ mission-control-plugins/Makefile.am               |   29 ++++++++++++++
+ mission-control-plugins/dummy.c                   |    8 ++++
+ mission-control-plugins/mission-control-plugins.h |   42 +++++++++++++++++++++
+ 7 files changed, 122 insertions(+), 1 deletions(-)
+
+commit eb5665a6a0104188342b4faa7c566066f3185704
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-02 17:11:28 +0000
+
+    _mcd_dispatch_operation_check_client_locks: run Approvers from here, not from _mcd_dispatch_operation_run_clients
+    
+    When plugins become able to delay dispatching, we want to delay running
+    Approvers until all plugins have stopped delaying.
+
+ src/mcd-dispatch-operation.c |   52 +++++++++++++++++++++++------------------
+ 1 files changed, 29 insertions(+), 23 deletions(-)
+
+commit cd76b68053aacb23e952e5ef48242589a8b7759d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 18:05:39 +0000
+
+    McdDispatchOperation: add API for plugins to delay dispatching
+
+ src/mcd-dispatch-operation-priv.h |    5 +++++
+ src/mcd-dispatch-operation.c      |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 0 deletions(-)
+
+commit 55d72be29151eeb716f48ca28c770c0c18fc45e0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 18:04:35 +0000
+
+    McdDispatchOperation: add easy API for various dispatch operation attributes
+    
+    Plugins will need these.
+
+ src/mcd-dispatch-operation-priv.h |    9 +++++++++
+ src/mcd-dispatch-operation.c      |   28 ++++++++++++++++++++++++++--
+ 2 files changed, 35 insertions(+), 2 deletions(-)
+
+commit 914b45b46a14e298bb9db75034351570ba74749b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-10-29 17:47:49 +0000
+
+    McdDispatchOperation: add API to close, destroy, leave, forget channels
+
+ src/mcd-dispatch-operation-priv.h |   10 +++++
+ src/mcd-dispatch-operation.c      |   73 +++++++++++++++++++++++++++++++++++++
+ src/mcd-dispatcher.c              |   55 +++-------------------------
+ 3 files changed, 88 insertions(+), 50 deletions(-)
+
+commit 5867ae9ba1a7e2a0292d9e84a96487f64d542b86
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-01-22 13:57:49 +0000
+
+    mc-server: give NULL to the new default log handler now that tp-glib has been fixed
+    
+    fd.o#23843 was fixed in telepathy-glib 0.7.37. MC already depends on
+    0.7.37, so this is just a matter of replacing the user_data workaround
+    smcv added with the correct value of NULL.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+ server/mc-server.c |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
+
+commit 412a7a9858bccff14ec8b7c068fea52f0e7152ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 19:42:42 +0000
+
+    McdAccount: update TpConnection in _mcd_account_set_connection_status
+    
+    When we receive a new TpConnection, that function is called when it's
+    ready, which is more useful than having a connection that isn't ready.
+
+ src/mcd-account.c |   31 ++++++++++++++++++++++++++++---
+ 1 files changed, 28 insertions(+), 3 deletions(-)
+
+commit fdbeb7cf8d8aee7b45f2577f5e49b6fb6ee39924
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 18:20:08 +0000
+
+    Correct a slightly misleading debug message
+
+ src/mcd-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+commit 97abf3047e383872e1c7fdfab12937303a1dfe1a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 18:19:18 +0000
+
+    McdAccount: keep a reference to the TpConnection ourselves
+
+ src/mcd-account.c |   18 ++++++++++++++++++
+ 1 files changed, 18 insertions(+), 0 deletions(-)
+
+commit 6b25231989685a616b3584bde513ce2e63d70794
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 17:06:59 +0000
+
+    McdConnection: pass TpConnection to McdAccount in the same signal as the connection status change
+
+ .../tmpl/mcd-connection.sgml                       |    1 +
+ src/mcd-account-connection.c                       |    2 +-
+ src/mcd-account-priv.h                             |    5 ++-
+ src/mcd-account.c                                  |   24 ++++++++++++++++---
+ src/mcd-connection.c                               |   24 ++++++++++---------
+ src/mcd-signals-marshal.list                       |    1 +
+ 6 files changed, 39 insertions(+), 18 deletions(-)
+
+commit 0df9c9f7a7992ba75542800b161d295822585b88
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 17:03:26 +0000
+
+    McdAccount: guarantee to emit ConnectionStatus and ConnectionStatusReason in the same signal
+    
+    Previously, we relied on the 10ms delay hack to get them to be in the
+    same signal, but this way seems better.
+    
+    This requires a small expectation change in
+    account-manager/auto-connect.py: previously we were relying on the 10ms
+    delay hack delaying the emission of
+    { ConnectionStatusChanged => CONNECTING } until after Connect() was
+    called, which doesn't really seem right in any case (conceptually, we're
+    trying to connect even before we call RequestConnection).
+    
+    Similarly, avatar-persist and avatar-refresh encode the same faulty
+    assumption. Since that code is adequately tested in auto-connect.py,
+    and isn't really the point of the avatar tests, I've just removed the
+    faulty expectation from them.
+
+ src/mcd-account.c                              |   41 ++++++++++++++++++++++-
+ test/twisted/account-manager/auto-connect.py   |   19 ++++-------
+ test/twisted/account-manager/avatar-persist.py |   12 +------
+ test/twisted/account-manager/avatar-refresh.py |   12 +------
+ 4 files changed, 50 insertions(+), 34 deletions(-)
+
+commit bed5596778b31ce7ec733943718c12a6d8de1e35
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 15:33:10 +0000
+
+    McdAccount: emit_property_changed: don't emit empty signals
+
+ src/mcd-account.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 31f25cadb091b490630d60068c453a8ce336d77c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 15:30:10 +0000
+
+    McdAccount: preallocate priv->changed_properties in init
+    
+    In practice, we'll basically always change a property, so there's no point
+    in delaying this.
+
+ src/mcd-account.c |   11 +++--------
+ 1 files changed, 3 insertions(+), 8 deletions(-)
+
+commit a0bdfadc35c1f6571a8c01b02a50c72b17489274
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 15:26:01 +0000
+
+    McdAccount: remove support for emitting property changes instantly
+    
+    There's no point in this being configurable.
+
+ src/mcd-account.c |   16 ----------------
+ 1 files changed, 0 insertions(+), 16 deletions(-)
+
+commit 880110051b779be8435ef99124ef6e97dca8da27
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-11-20 16:37:34 +0000
+
+    mcd_account_changed_property: ref account while waiting for a deferred AccountPropertiesChanged
+    
+    Otherwise there's a possible use-after-free (someone changes a property
+    then deletes the account within 10ms).
+
+ src/mcd-account.c |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
 commit 04fc1f7d34b59735489c31b218c4d1f6a8de7771
 Author: Danielle Madeley <danielle@madeley.id.au>

@@ -1,0 +1,291 @@
+<!-- ##### SECTION Title ##### -->
+account-storage
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### STRUCT McpAccountStorage ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL McpAccountStorage::altered ##### -->
+<para>
+
+</para>
+
+@mcpaccountstorage: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL McpAccountStorage::created ##### -->
+<para>
+
+</para>
+
+@mcpaccountstorage: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL McpAccountStorage::deleted ##### -->
+<para>
+
+</para>
+
+@mcpaccountstorage: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL McpAccountStorage::toggled ##### -->
+<para>
+
+</para>
+
+@mcpaccountstorage: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### STRUCT McpAccountStorageIface ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_set_priority ##### -->
+<para>
+
+</para>
+
+@iface: 
+@prio: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_set_name ##### -->
+<para>
+
+</para>
+
+@iface: 
+@name: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_set_desc ##### -->
+<para>
+
+</para>
+
+@iface: 
+@desc: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_get ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_set ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_delete ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_list ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_commit ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_commit_one ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_ready ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *storage, const McpAccountManager *am: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_priority ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_get ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@account: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_set ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@account: 
+@key: 
+@val: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_delete ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@account: 
+@key: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_ready ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_commit ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_commit_one ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@account: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_list ##### -->
+<para>
+
+</para>
+
+@storage: 
+@am: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_name ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_description ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+

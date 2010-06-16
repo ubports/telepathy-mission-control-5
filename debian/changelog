@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (1:5.5.2-1) experimental; urgency=low
+
+  * New upstream release
+    - update libmission-control-plugins0.symbols
+  * Add -V when invoking dh_makeshlibs
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 16 Jun 2010 14:57:28 +0100
+
 telepathy-mission-control-5 (1:5.4.3-1) unstable; urgency=high
 
   * New upstream stable release
