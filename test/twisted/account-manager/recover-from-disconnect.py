@@ -30,9 +30,11 @@ def test(q, bus, mc):
     cm_name_ref = dbus.service.BusName(
             tp_name_prefix + '.ConnectionManager.fakecm', bus=bus)
 
-    # Create an account
+    # Create an account. We're setting register=True here to verify
+    # that after one successful connection, it'll be removed (fd.o #28118).
     params = dbus.Dictionary({"account": "someguy@example.com",
-        "password": "secrecy"}, signature='sv')
+        "password": "secrecy",
+        "register": True}, signature='sv')
     (cm_name_ref, account) = create_fakecm_account(q, bus, mc, params)
 
     account_iface = dbus.Interface(account, cs.ACCOUNT)
@@ -73,18 +75,25 @@ def test(q, bus, mc):
     # Connect succeeds
     conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)
 
-    q.expect('dbus-method-call',
-             interface=cs.CONN_IFACE_SIMPLE_PRESENCE,
-             method='SetPresence',
-             args=list(presence[1:]),
-             handled=True)
+    q.expect_many(
+            EventPattern('dbus-method-call',
+                interface=cs.CONN_IFACE_SIMPLE_PRESENCE,
+                method='SetPresence',
+                args=list(presence[1:]),
+                handled=True),
+            EventPattern('dbus-method-call',
+                interface=cs.PROPERTIES_IFACE, method='GetAll',
+                args=[cs.CONN_IFACE_REQUESTS],
+                path=conn.object_path, handled=True),
+            )
 
     # Connection falls over for a miscellaneous reason
     conn.StatusChanged(cs.CONN_STATUS_DISCONNECTED,
             cs.CONN_STATUS_REASON_NETWORK_ERROR)
 
-    # MC reconnects
-
+    # MC reconnects. This time, we expect it to have deleted the 'register'
+    # parameter.
+    del params['register']
     e = q.expect('dbus-method-call', method='RequestConnection',
             args=['fakeprotocol', params],
             destination=tp_name_prefix + '.ConnectionManager.fakecm',
@@ -105,11 +114,17 @@ def test(q, bus, mc):
     # Connect succeeds
     conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)
 
-    q.expect('dbus-method-call',
-             interface=cs.CONN_IFACE_SIMPLE_PRESENCE,
-             method='SetPresence',
-             args=list(presence[1:]),
-             handled=True)
+    q.expect_many(
+            EventPattern('dbus-method-call',
+                interface=cs.CONN_IFACE_SIMPLE_PRESENCE,
+                method='SetPresence',
+                args=list(presence[1:]),
+                handled=True),
+            EventPattern('dbus-method-call',
+                interface=cs.PROPERTIES_IFACE, method='GetAll',
+                args=[cs.CONN_IFACE_REQUESTS],
+                path=conn.object_path, handled=True),
+            )
 
 if __name__ == '__main__':
     exec_test(test, {})

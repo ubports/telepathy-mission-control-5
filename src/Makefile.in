@@ -36,21 +36,22 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @ENABLE_GNOME_KEYRING_TRUE@am__append_1 = $(GNOME_KEYRING_CFLAGS)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_2 = mcd-account-manager-sso.h
-@ENABLE_GNOME_KEYRING_TRUE@am__append_3 = $(GNOME_KEYRING_LIBS)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_4 = $(LIBACCOUNTS_SSO_LIBS)
+@ENABLE_GNOME_KEYRING_TRUE@am__append_2 = $(GNOME_KEYRING_LIBS)
 
 # the redundant quoting here is to prevent the libtool command line from
 # looking like an error message in an oddly named file
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_TRUE@am__append_5 = -version-info "10":"0":"4"
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_FALSE@am__append_6 = -release $(VERSION)
-@ENABLE_MCD_PLUGINS_TRUE@am__append_7 = \
-@ENABLE_MCD_PLUGINS_TRUE@	-DMCD_DEFAULT_FILTER_PLUGIN_DIR=\"@pluginlibdir@\"
+@ENABLE_MC_SERVER_SO6_TRUE@@ENABLE_PLUGINS_TRUE@am__append_3 = -version-info "10":"0":"4"
+@ENABLE_MC_SERVER_SO6_FALSE@@ENABLE_PLUGINS_TRUE@am__append_4 = -release $(VERSION)
 
-# When this older plugin API is not enabled, libmissioncontrol-server.la is
-# just a copy of the convenience library
-@ENABLE_MCD_PLUGINS_FALSE@am__append_8 = libmissioncontrol-server.la
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_9 = mcd-account-manager-sso.c
+# We need GModule to load plugins
+@ENABLE_PLUGINS_TRUE@am__append_5 = $(GMODULE_LIBS)
+@ENABLE_PLUGINS_TRUE@am__append_6 = \
+@ENABLE_PLUGINS_TRUE@	$(GMODULE_CFLAGS) \
+@ENABLE_PLUGINS_TRUE@	-DMCD_DEFAULT_FILTER_PLUGIN_DIR=\"@pluginlibdir@\"
+
+# When plugins are not enabled, libmissioncontrol-server.la is just a copy of
+# the convenience library
+@ENABLE_PLUGINS_FALSE@am__append_7 = libmissioncontrol-server.la
 subdir = src
 DIST_COMMON = $(am__mission_control_include_HEADERS_DIST) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -95,156 +96,74 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 @ENABLE_GNOME_KEYRING_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__DEPENDENCIES_3 =  \
-@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(am__DEPENDENCIES_1)
+@ENABLE_PLUGINS_TRUE@am__DEPENDENCIES_3 = $(am__DEPENDENCIES_1)
 libmcd_convenience_la_DEPENDENCIES =  \
 	$(top_builddir)/libmcclient/libmcclient.la \
-	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
 	$(am__DEPENDENCIES_3)
-am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
-	mcd-account-compat.c mcd-account-conditions.c \
-	mcd-account-config.h mcd-account-connection.c \
-	mcd-account-requests.c mcd-account-stats.c \
-	mcd-account-manager.c mcd-account-manager-priv.h \
-	mcd-account-manager-query.c mcd-account-manager-default.c \
-	mcd-account-priv.h mcd-client.c mcd-client-priv.h \
-	channel-utils.c channel-utils.h client-registry.c \
-	client-registry.h mcd-dbusprop.c mcd-dbusprop.h mcd-debug.c \
-	mcd-dispatch-operation.c mcd-dispatch-operation-priv.h \
-	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
-	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
-	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
-	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
-	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
-	mcd-channel-priv.h mcd-service.c mcd-proxy.c mcd-transport.c \
-	mcd-provisioning.c mcd-provisioning-factory.c \
-	plugin-dispatch-operation.c plugin-dispatch-operation.h \
-	plugin-loader.c plugin-loader.h plugin-request.c \
-	plugin-request.h plugin-account.c plugin-account.h \
-	sp_timestamp.h mcd-account.h mcd-account-compat.h \
-	mcd-account-conditions.h mcd-account-manager.h \
-	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
-	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
-	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
-	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-account-manager-sso.h mcd-account-manager-sso.c
 am__objects_1 =
-am__objects_2 = $(am__objects_1)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__objects_3 = libmcd_convenience_la-mcd-account-manager-sso.lo
-am_libmcd_convenience_la_OBJECTS =  \
-	libmcd_convenience_la-mcd-account.lo \
-	libmcd_convenience_la-mcd-account-compat.lo \
-	libmcd_convenience_la-mcd-account-conditions.lo \
-	libmcd_convenience_la-mcd-account-connection.lo \
-	libmcd_convenience_la-mcd-account-requests.lo \
-	libmcd_convenience_la-mcd-account-stats.lo \
-	libmcd_convenience_la-mcd-account-manager.lo \
-	libmcd_convenience_la-mcd-account-manager-query.lo \
-	libmcd_convenience_la-mcd-account-manager-default.lo \
-	libmcd_convenience_la-mcd-client.lo \
-	libmcd_convenience_la-channel-utils.lo \
-	libmcd_convenience_la-client-registry.lo \
-	libmcd_convenience_la-mcd-dbusprop.lo \
-	libmcd_convenience_la-mcd-debug.lo \
-	libmcd_convenience_la-mcd-dispatch-operation.lo \
-	libmcd_convenience_la-mcd-handler-map.lo \
-	libmcd_convenience_la-mcd-misc.lo \
-	libmcd_convenience_la-mcd-mission.lo \
-	libmcd_convenience_la-mcd-operation.lo \
-	libmcd_convenience_la-mcd-controller.lo \
-	libmcd_convenience_la-mcd-master.lo \
-	libmcd_convenience_la-mcd-manager.lo \
-	libmcd_convenience_la-mcd-connection.lo \
-	libmcd_convenience_la-mcd-dispatcher.lo \
-	libmcd_convenience_la-mcd-channel.lo \
-	libmcd_convenience_la-mcd-service.lo \
-	libmcd_convenience_la-mcd-proxy.lo \
-	libmcd_convenience_la-mcd-transport.lo \
-	libmcd_convenience_la-mcd-provisioning.lo \
-	libmcd_convenience_la-mcd-provisioning-factory.lo \
-	libmcd_convenience_la-plugin-dispatch-operation.lo \
-	libmcd_convenience_la-plugin-loader.lo \
-	libmcd_convenience_la-plugin-request.lo \
-	libmcd_convenience_la-plugin-account.lo $(am__objects_2) \
-	$(am__objects_3)
-nodist_libmcd_convenience_la_OBJECTS =  \
-	libmcd_convenience_la-signals-marshal.lo \
-	libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo \
-	libmcd_convenience_la-svc-Account_Interface_Compat.lo \
-	libmcd_convenience_la-svc-Account_Interface_Conditions.lo \
-	libmcd_convenience_la-svc-Account_Interface_Stats.lo \
-	libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo \
-	libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo \
-	libmcd_convenience_la-mcd-enum-types.lo \
-	libmcd_convenience_la-mcd-signals-marshal.lo $(am__objects_1)
+am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
+	mcd-account-compat.lo mcd-account-conditions.lo \
+	mcd-account-connection.lo mcd-account-requests.lo \
+	mcd-account-stats.lo mcd-account-manager.lo \
+	mcd-account-manager-query.lo mcd-client.lo channel-utils.lo \
+	client-registry.lo mcd-dbusprop.lo mcd-debug.lo \
+	mcd-dispatch-operation.lo mcd-handler-map.lo mcd-misc.lo \
+	mcd-mission.lo mcd-operation.lo mcd-controller.lo \
+	mcd-master.lo mcd-manager.lo mcd-connection.lo \
+	mcd-dispatcher.lo mcd-channel.lo mcd-service.lo mcd-proxy.lo \
+	mcd-transport.lo mcd-provisioning.lo \
+	mcd-provisioning-factory.lo $(am__objects_1)
+nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
+	svc-Account_Interface_ChannelRequests.lo \
+	svc-Account_Interface_Compat.lo \
+	svc-Account_Interface_Conditions.lo \
+	svc-Account_Interface_Stats.lo \
+	svc-Account_Manager_Interface_Query.lo mcd-enum-types.lo \
+	mcd-signals-marshal.lo $(am__objects_1)
 libmcd_convenience_la_OBJECTS = $(am_libmcd_convenience_la_OBJECTS) \
 	$(nodist_libmcd_convenience_la_OBJECTS)
-AM_V_lt = $(am__v_lt_$(V))
-am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
-am__v_lt_0 = --silent
-libmcd_convenience_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
-	$(libmcd_convenience_la_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
-@ENABLE_MCD_PLUGINS_FALSE@libmissioncontrol_server_la_DEPENDENCIES =  \
-@ENABLE_MCD_PLUGINS_FALSE@	libmcd-convenience.la
-@ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_DEPENDENCIES =  \
-@ENABLE_MCD_PLUGINS_TRUE@	libmcd-convenience.la
+@ENABLE_PLUGINS_FALSE@libmissioncontrol_server_la_DEPENDENCIES =  \
+@ENABLE_PLUGINS_FALSE@	libmcd-convenience.la
+@ENABLE_PLUGINS_TRUE@libmissioncontrol_server_la_DEPENDENCIES =  \
+@ENABLE_PLUGINS_TRUE@	libmcd-convenience.la
 am_libmissioncontrol_server_la_OBJECTS =
 libmissioncontrol_server_la_OBJECTS =  \
 	$(am_libmissioncontrol_server_la_OBJECTS)
-libmissioncontrol_server_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+libmissioncontrol_server_la_LINK = $(LIBTOOL) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(libmissioncontrol_server_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
-@ENABLE_MCD_PLUGINS_FALSE@am_libmissioncontrol_server_la_rpath =
-@ENABLE_MCD_PLUGINS_TRUE@am_libmissioncontrol_server_la_rpath =  \
-@ENABLE_MCD_PLUGINS_TRUE@	-rpath $(libdir)
+@ENABLE_PLUGINS_FALSE@am_libmissioncontrol_server_la_rpath =
+@ENABLE_PLUGINS_TRUE@am_libmissioncontrol_server_la_rpath = -rpath \
+@ENABLE_PLUGINS_TRUE@	$(libdir)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
-	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
-	$(AM_CFLAGS) $(CFLAGS)
-AM_V_CC = $(am__v_CC_$(V))
-am__v_CC_ = $(am__v_CC_$(AM_DEFAULT_VERBOSITY))
-am__v_CC_0 = @echo "  CC    " $@;
-AM_V_at = $(am__v_at_$(V))
-am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
-am__v_at_0 = @
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
-LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-AM_V_CCLD = $(am__v_CCLD_$(V))
-am__v_CCLD_ = $(am__v_CCLD_$(AM_DEFAULT_VERBOSITY))
-am__v_CCLD_0 = @echo "  CCLD  " $@;
-AM_V_GEN = $(am__v_GEN_$(V))
-am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
-am__v_GEN_0 = @echo "  GEN   " $@;
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 SOURCES = $(libmcd_convenience_la_SOURCES) \
 	$(nodist_libmcd_convenience_la_SOURCES) \
 	$(libmissioncontrol_server_la_SOURCES)
-DIST_SOURCES = $(am__libmcd_convenience_la_SOURCES_DIST) \
+DIST_SOURCES = $(libmcd_convenience_la_SOURCES) \
 	$(libmissioncontrol_server_la_SOURCES)
 am__mission_control_include_HEADERS_DIST = mcd-account.h \
 	mcd-account-compat.h mcd-account-conditions.h \
-	mcd-account-manager.h mcd-account-manager-default.h \
-	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
-	mcd-controller.h mcd-manager.h mcd-connection.h \
-	mcd-connection-plugin.h mcd-plugin.h mcd-presence-frame.h \
-	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
-	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
-	mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-account-manager-sso.h
+	mcd-account-manager.h mcd-debug.h mcd-mission.h \
+	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
+	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
+	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
+	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
+	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h
 HEADERS = $(mission_control_include_HEADERS) \
 	$(nodist_geninclude_HEADERS)
 ETAGS = etags
@@ -254,7 +173,6 @@ ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
-AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
 AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
@@ -284,10 +202,14 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GCONF_CFLAGS = @GCONF_CFLAGS@
+GCONF_LIBS = @GCONF_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
+GMODULE_CFLAGS = @GMODULE_CFLAGS@
+GMODULE_LIBS = @GMODULE_LIBS@
 GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
@@ -302,8 +224,6 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
-LIBACCOUNTS_SSO_CFLAGS = @LIBACCOUNTS_SSO_CFLAGS@
-LIBACCOUNTS_SSO_LIBS = @LIBACCOUNTS_SSO_LIBS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LIBTOOL = @LIBTOOL@
@@ -312,11 +232,6 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
-MCP_ABI_VERSION = @MCP_ABI_VERSION@
-MCP_API_VERSION = @MCP_API_VERSION@
-MCP_LT_AGE = @MCP_LT_AGE@
-MCP_LT_CURRENT = @MCP_LT_CURRENT@
-MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -409,20 +324,33 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 INCLUDES = $(TELEPATHY_CFLAGS) $(DBUS_CFLAGS) $(GLIB_CFLAGS) \
-	-DG_LOG_DOMAIN=\"mcd\" \
-	-DMCD_PLUGIN_LOADER_DIR=\"@libdir@/mission-control-plugins.@MCP_ABI_VERSION@\" \
-	-DMC_DISABLE_DEPRECATED -I$(top_srcdir) $(am__append_1) \
-	$(am__append_7)
+	-DG_LOG_DOMAIN=\"mcd\" -DMC_DISABLE_DEPRECATED -I$(top_srcdir) \
+	$(am__append_1) $(am__append_6)
 AM_CFLAGS = $(ERROR_CFLAGS)
-mc_headers = mcd-account.h mcd-account-compat.h \
-	mcd-account-conditions.h mcd-account-manager.h \
-	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
-	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
-	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
-	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	$(am__append_2)
+mc_headers = \
+	mcd-account.h \
+	mcd-account-compat.h \
+	mcd-account-conditions.h \
+	mcd-account-manager.h \
+	mcd-debug.h \
+	mcd-mission.h \
+	mcd-operation.h \
+	mcd-master.h \
+	mcd-controller.h \
+	mcd-manager.h \
+	mcd-connection.h \
+	mcd-connection-plugin.h \
+	mcd-plugin.h \
+	mcd-presence-frame.h \
+	mcd-channel.h \
+	mcd-proxy.h \
+	mcd-dispatcher.h \
+	mcd-dispatcher-context.h \
+	mcd-service.h \
+	mcd-transport.h \
+	mcd-provisioning.h \
+	mcd-provisioning-factory.h
+
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
@@ -431,8 +359,7 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
-	_gen/svc-Account_Manager_Interface_Query.h \
-	_gen/svc-Account_Manager_Interface_SSO.h
+	_gen/svc-Account_Manager_Interface_Query.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
@@ -446,7 +373,6 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
-	_gen/svc-Account_Manager_Interface_SSO.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -460,49 +386,74 @@ BUILT_SOURCES = \
 
 CLEANFILES = $(BUILT_SOURCES)
 libmcd_convenience_la_LIBADD =  \
-	$(top_builddir)/libmcclient/libmcclient.la \
-	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
-	$(TELEPATHY_LIBS) $(DBUS_LIBS) $(GLIB_LIBS) $(am__append_3) \
-	$(am__append_4)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@libmcd_convenience_la_CFLAGS = $(LIBACCOUNTS_SSO_CFLAGS)
-noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_8)
+	$(top_builddir)/libmcclient/libmcclient.la $(TELEPATHY_LIBS) \
+	$(DBUS_LIBS) $(GLIB_LIBS) $(am__append_2) $(am__append_5)
+noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_7)
 
-# When this older plugin API is enabled, libmissioncontrol-server.la is a
-# shared library that wraps the convenience library
-@ENABLE_MCD_PLUGINS_TRUE@lib_LTLIBRARIES = libmissioncontrol-server.la
-@ENABLE_MCD_PLUGINS_FALSE@libmissioncontrol_server_la_SOURCES = 
-@ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_SOURCES = 
-@ENABLE_MCD_PLUGINS_FALSE@libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
-@ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
-@ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_LDFLAGS =  \
-@ENABLE_MCD_PLUGINS_TRUE@	-export-symbols-regex \
-@ENABLE_MCD_PLUGINS_TRUE@	'^((mc_)|(mcd_)|(mission_control_))' \
-@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_5) $(am__append_6)
-@ENABLE_MCD_PLUGINS_TRUE@mission_control_includedir = $(includedir)/mission-control
-@ENABLE_MCD_PLUGINS_TRUE@mission_control_include_HEADERS = $(mc_headers)
-@ENABLE_MCD_PLUGINS_TRUE@genincludedir = $(mission_control_includedir)/_gen
-@ENABLE_MCD_PLUGINS_TRUE@nodist_geninclude_HEADERS = $(mc_gen_headers)
-libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-compat.c \
-	mcd-account-conditions.c mcd-account-config.h \
-	mcd-account-connection.c mcd-account-requests.c \
-	mcd-account-stats.c mcd-account-manager.c \
-	mcd-account-manager-priv.h mcd-account-manager-query.c \
-	mcd-account-manager-default.c mcd-account-priv.h mcd-client.c \
-	mcd-client-priv.h channel-utils.c channel-utils.h \
-	client-registry.c client-registry.h mcd-dbusprop.c \
-	mcd-dbusprop.h mcd-debug.c mcd-dispatch-operation.c \
-	mcd-dispatch-operation-priv.h mcd-handler-map.c \
-	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
-	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
-	mcd-master.c mcd-master-priv.h mcd-manager.c \
-	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
-	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
-	mcd-channel-priv.h mcd-service.c mcd-proxy.c mcd-transport.c \
-	mcd-provisioning.c mcd-provisioning-factory.c \
-	plugin-dispatch-operation.c plugin-dispatch-operation.h \
-	plugin-loader.c plugin-loader.h plugin-request.c \
-	plugin-request.h plugin-account.c plugin-account.h \
-	sp_timestamp.h $(mc_headers) $(am__append_9)
+# When plugins are enabled, libmissioncontrol-server.la is a shared library
+# that wraps the convenience library
+@ENABLE_PLUGINS_TRUE@lib_LTLIBRARIES = libmissioncontrol-server.la
+@ENABLE_PLUGINS_FALSE@libmissioncontrol_server_la_SOURCES = 
+@ENABLE_PLUGINS_TRUE@libmissioncontrol_server_la_SOURCES = 
+@ENABLE_PLUGINS_FALSE@libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
+@ENABLE_PLUGINS_TRUE@libmissioncontrol_server_la_LIBADD = libmcd-convenience.la
+@ENABLE_PLUGINS_TRUE@libmissioncontrol_server_la_LDFLAGS =  \
+@ENABLE_PLUGINS_TRUE@	-export-symbols-regex \
+@ENABLE_PLUGINS_TRUE@	'^((mc_)|(mcd_)|(mission_control_))' \
+@ENABLE_PLUGINS_TRUE@	$(am__append_3) $(am__append_4)
+@ENABLE_PLUGINS_TRUE@mission_control_includedir = $(includedir)/mission-control
+@ENABLE_PLUGINS_TRUE@mission_control_include_HEADERS = $(mc_headers)
+@ENABLE_PLUGINS_TRUE@genincludedir = $(mission_control_includedir)/_gen
+@ENABLE_PLUGINS_TRUE@nodist_geninclude_HEADERS = $(mc_gen_headers)
+libmcd_convenience_la_SOURCES = \
+	mcd-account.c \
+	mcd-account-compat.c \
+	mcd-account-conditions.c \
+	mcd-account-config.h \
+	mcd-account-connection.c \
+	mcd-account-requests.c \
+	mcd-account-stats.c \
+	mcd-account-manager.c \
+	mcd-account-manager-priv.h \
+	mcd-account-manager-query.c \
+	mcd-account-priv.h \
+	mcd-client.c \
+	mcd-client-priv.h \
+	channel-utils.c \
+	channel-utils.h \
+	client-registry.c \
+	client-registry.h \
+	mcd-dbusprop.c \
+	mcd-dbusprop.h \
+	mcd-debug.c \
+	mcd-dispatch-operation.c \
+	mcd-dispatch-operation-priv.h \
+	mcd-handler-map.c \
+	mcd-handler-map-priv.h \
+	mcd-misc.c \
+	mcd-misc.h \
+	mcd-mission.c \
+	mcd-mission-priv.h \
+	mcd-operation.c \
+	mcd-controller.c \
+	mcd-master.c \
+	mcd-master-priv.h \
+	mcd-manager.c \
+	mcd-manager-priv.h \
+	mcd-connection.c \
+	mcd-connection-priv.h \
+	mcd-dispatcher.c \
+	mcd-dispatcher-priv.h \
+	mcd-channel.c \
+	mcd-channel-priv.h \
+	mcd-service.c \
+	mcd-proxy.c \
+	mcd-transport.c \
+	mcd-provisioning.c \
+	mcd-provisioning-factory.c \
+	sp_timestamp.h \
+	$(mc_headers)
+
 EXTRA_DIST = \
 	mcd.xml \
 	client.xml \
@@ -591,9 +542,9 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libmcd-convenience.la: $(libmcd_convenience_la_OBJECTS) $(libmcd_convenience_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libmcd_convenience_la_LINK)  $(libmcd_convenience_la_OBJECTS) $(libmcd_convenience_la_LIBADD) $(LIBS)
+	$(LINK)  $(libmcd_convenience_la_OBJECTS) $(libmcd_convenience_la_LIBADD) $(LIBS)
 libmissioncontrol-server.la: $(libmissioncontrol_server_la_OBJECTS) $(libmissioncontrol_server_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libmissioncontrol_server_la_LINK) $(am_libmissioncontrol_server_la_rpath) $(libmissioncontrol_server_la_OBJECTS) $(libmissioncontrol_server_la_LIBADD) $(LIBS)
+	$(libmissioncontrol_server_la_LINK) $(am_libmissioncontrol_server_la_rpath) $(libmissioncontrol_server_la_OBJECTS) $(libmissioncontrol_server_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -601,426 +552,106 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-channel-utils.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-client-registry.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-compat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-conditions.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-connection.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-manager-default.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-manager-query.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-manager-sso.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-manager.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-requests.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account-stats.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-account.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-channel.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-client.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-connection.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-controller.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-dbusprop.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-debug.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-dispatch-operation.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-dispatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-enum-types.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-handler-map.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-manager.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-master.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-misc.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-mission.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-operation.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-provisioning-factory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-provisioning.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-proxy.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-service.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-signals-marshal.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-mcd-transport.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-plugin-account.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-plugin-dispatch-operation.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-plugin-loader.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-plugin-request.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-signals-marshal.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_ChannelRequests.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Compat.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Conditions.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Stats.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_Query.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_SSO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/channel-utils.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/client-registry.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-compat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-conditions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-connection.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager-query.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-requests.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-stats.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-channel.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-client.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-connection.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-controller.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-dbusprop.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-debug.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-dispatch-operation.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-dispatcher.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-enum-types.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-handler-map.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-manager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-master.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-misc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-mission.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-operation.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-provisioning-factory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-provisioning.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-proxy.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-service.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-signals-marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-transport.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signals-marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_ChannelRequests.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Compat.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Stats.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Query.Plo@am__quote@
 
 .c.o:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c $<
 
 .c.obj:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@am__fastdepCC_TRUE@	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ $<
 
-libmcd_convenience_la-mcd-account.lo: mcd-account.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account.Tpo -c -o libmcd_convenience_la-mcd-account.lo `test -f 'mcd-account.c' || echo '$(srcdir)/'`mcd-account.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account.c' object='libmcd_convenience_la-mcd-account.lo' libtool=yes @AMDEPBACKSLASH@
+signals-marshal.lo: _gen/signals-marshal.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT signals-marshal.lo -MD -MP -MF $(DEPDIR)/signals-marshal.Tpo -c -o signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/signals-marshal.Tpo $(DEPDIR)/signals-marshal.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/signals-marshal.c' object='signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account.lo `test -f 'mcd-account.c' || echo '$(srcdir)/'`mcd-account.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
 
-libmcd_convenience_la-mcd-account-compat.lo: mcd-account-compat.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-compat.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-compat.Tpo -c -o libmcd_convenience_la-mcd-account-compat.lo `test -f 'mcd-account-compat.c' || echo '$(srcdir)/'`mcd-account-compat.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-compat.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-compat.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-compat.c' object='libmcd_convenience_la-mcd-account-compat.lo' libtool=yes @AMDEPBACKSLASH@
+svc-Account_Interface_ChannelRequests.lo: _gen/svc-Account_Interface_ChannelRequests.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_ChannelRequests.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_ChannelRequests.Tpo -c -o svc-Account_Interface_ChannelRequests.lo `test -f '_gen/svc-Account_Interface_ChannelRequests.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_ChannelRequests.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/svc-Account_Interface_ChannelRequests.Tpo $(DEPDIR)/svc-Account_Interface_ChannelRequests.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_ChannelRequests.c' object='svc-Account_Interface_ChannelRequests.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-compat.lo `test -f 'mcd-account-compat.c' || echo '$(srcdir)/'`mcd-account-compat.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_ChannelRequests.lo `test -f '_gen/svc-Account_Interface_ChannelRequests.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_ChannelRequests.c
 
-libmcd_convenience_la-mcd-account-conditions.lo: mcd-account-conditions.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-conditions.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-conditions.Tpo -c -o libmcd_convenience_la-mcd-account-conditions.lo `test -f 'mcd-account-conditions.c' || echo '$(srcdir)/'`mcd-account-conditions.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-conditions.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-conditions.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-conditions.c' object='libmcd_convenience_la-mcd-account-conditions.lo' libtool=yes @AMDEPBACKSLASH@
+svc-Account_Interface_Compat.lo: _gen/svc-Account_Interface_Compat.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Compat.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Compat.Tpo -c -o svc-Account_Interface_Compat.lo `test -f '_gen/svc-Account_Interface_Compat.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Compat.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/svc-Account_Interface_Compat.Tpo $(DEPDIR)/svc-Account_Interface_Compat.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Compat.c' object='svc-Account_Interface_Compat.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-conditions.lo `test -f 'mcd-account-conditions.c' || echo '$(srcdir)/'`mcd-account-conditions.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Compat.lo `test -f '_gen/svc-Account_Interface_Compat.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Compat.c
 
-libmcd_convenience_la-mcd-account-connection.lo: mcd-account-connection.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-connection.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-connection.Tpo -c -o libmcd_convenience_la-mcd-account-connection.lo `test -f 'mcd-account-connection.c' || echo '$(srcdir)/'`mcd-account-connection.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-connection.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-connection.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-connection.c' object='libmcd_convenience_la-mcd-account-connection.lo' libtool=yes @AMDEPBACKSLASH@
+svc-Account_Interface_Conditions.lo: _gen/svc-Account_Interface_Conditions.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Conditions.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Conditions.Tpo -c -o svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/svc-Account_Interface_Conditions.Tpo $(DEPDIR)/svc-Account_Interface_Conditions.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Conditions.c' object='svc-Account_Interface_Conditions.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-connection.lo `test -f 'mcd-account-connection.c' || echo '$(srcdir)/'`mcd-account-connection.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
 
-libmcd_convenience_la-mcd-account-requests.lo: mcd-account-requests.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-requests.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-requests.Tpo -c -o libmcd_convenience_la-mcd-account-requests.lo `test -f 'mcd-account-requests.c' || echo '$(srcdir)/'`mcd-account-requests.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-requests.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-requests.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-requests.c' object='libmcd_convenience_la-mcd-account-requests.lo' libtool=yes @AMDEPBACKSLASH@
+svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Stats.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Stats.Tpo -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/svc-Account_Interface_Stats.Tpo $(DEPDIR)/svc-Account_Interface_Stats.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Stats.c' object='svc-Account_Interface_Stats.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-requests.lo `test -f 'mcd-account-requests.c' || echo '$(srcdir)/'`mcd-account-requests.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
 
-libmcd_convenience_la-mcd-account-stats.lo: mcd-account-stats.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-stats.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-stats.Tpo -c -o libmcd_convenience_la-mcd-account-stats.lo `test -f 'mcd-account-stats.c' || echo '$(srcdir)/'`mcd-account-stats.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-stats.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-stats.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-stats.c' object='libmcd_convenience_la-mcd-account-stats.lo' libtool=yes @AMDEPBACKSLASH@
+svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query.c
+@am__fastdepCC_TRUE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Query.lo -MD -MP -MF $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo $(DEPDIR)/svc-Account_Manager_Interface_Query.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_Query.c' object='svc-Account_Manager_Interface_Query.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-stats.lo `test -f 'mcd-account-stats.c' || echo '$(srcdir)/'`mcd-account-stats.c
-
-libmcd_convenience_la-mcd-account-manager.lo: mcd-account-manager.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-manager.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-manager.Tpo -c -o libmcd_convenience_la-mcd-account-manager.lo `test -f 'mcd-account-manager.c' || echo '$(srcdir)/'`mcd-account-manager.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-manager.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-manager.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-manager.c' object='libmcd_convenience_la-mcd-account-manager.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-manager.lo `test -f 'mcd-account-manager.c' || echo '$(srcdir)/'`mcd-account-manager.c
-
-libmcd_convenience_la-mcd-account-manager-query.lo: mcd-account-manager-query.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-manager-query.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-query.Tpo -c -o libmcd_convenience_la-mcd-account-manager-query.lo `test -f 'mcd-account-manager-query.c' || echo '$(srcdir)/'`mcd-account-manager-query.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-query.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-query.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-manager-query.c' object='libmcd_convenience_la-mcd-account-manager-query.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-manager-query.lo `test -f 'mcd-account-manager-query.c' || echo '$(srcdir)/'`mcd-account-manager-query.c
-
-libmcd_convenience_la-mcd-account-manager-default.lo: mcd-account-manager-default.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-manager-default.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-default.Tpo -c -o libmcd_convenience_la-mcd-account-manager-default.lo `test -f 'mcd-account-manager-default.c' || echo '$(srcdir)/'`mcd-account-manager-default.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-default.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-default.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-manager-default.c' object='libmcd_convenience_la-mcd-account-manager-default.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-manager-default.lo `test -f 'mcd-account-manager-default.c' || echo '$(srcdir)/'`mcd-account-manager-default.c
-
-libmcd_convenience_la-mcd-client.lo: mcd-client.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-client.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-client.Tpo -c -o libmcd_convenience_la-mcd-client.lo `test -f 'mcd-client.c' || echo '$(srcdir)/'`mcd-client.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-client.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-client.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-client.c' object='libmcd_convenience_la-mcd-client.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-client.lo `test -f 'mcd-client.c' || echo '$(srcdir)/'`mcd-client.c
-
-libmcd_convenience_la-channel-utils.lo: channel-utils.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-channel-utils.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-channel-utils.Tpo -c -o libmcd_convenience_la-channel-utils.lo `test -f 'channel-utils.c' || echo '$(srcdir)/'`channel-utils.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-channel-utils.Tpo $(DEPDIR)/libmcd_convenience_la-channel-utils.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='channel-utils.c' object='libmcd_convenience_la-channel-utils.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-channel-utils.lo `test -f 'channel-utils.c' || echo '$(srcdir)/'`channel-utils.c
-
-libmcd_convenience_la-client-registry.lo: client-registry.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-client-registry.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-client-registry.Tpo -c -o libmcd_convenience_la-client-registry.lo `test -f 'client-registry.c' || echo '$(srcdir)/'`client-registry.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-client-registry.Tpo $(DEPDIR)/libmcd_convenience_la-client-registry.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='client-registry.c' object='libmcd_convenience_la-client-registry.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-client-registry.lo `test -f 'client-registry.c' || echo '$(srcdir)/'`client-registry.c
-
-libmcd_convenience_la-mcd-dbusprop.lo: mcd-dbusprop.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-dbusprop.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-dbusprop.Tpo -c -o libmcd_convenience_la-mcd-dbusprop.lo `test -f 'mcd-dbusprop.c' || echo '$(srcdir)/'`mcd-dbusprop.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-dbusprop.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-dbusprop.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-dbusprop.c' object='libmcd_convenience_la-mcd-dbusprop.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-dbusprop.lo `test -f 'mcd-dbusprop.c' || echo '$(srcdir)/'`mcd-dbusprop.c
-
-libmcd_convenience_la-mcd-debug.lo: mcd-debug.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-debug.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-debug.Tpo -c -o libmcd_convenience_la-mcd-debug.lo `test -f 'mcd-debug.c' || echo '$(srcdir)/'`mcd-debug.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-debug.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-debug.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-debug.c' object='libmcd_convenience_la-mcd-debug.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-debug.lo `test -f 'mcd-debug.c' || echo '$(srcdir)/'`mcd-debug.c
-
-libmcd_convenience_la-mcd-dispatch-operation.lo: mcd-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-dispatch-operation.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-dispatch-operation.Tpo -c -o libmcd_convenience_la-mcd-dispatch-operation.lo `test -f 'mcd-dispatch-operation.c' || echo '$(srcdir)/'`mcd-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-dispatch-operation.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-dispatch-operation.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-dispatch-operation.c' object='libmcd_convenience_la-mcd-dispatch-operation.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-dispatch-operation.lo `test -f 'mcd-dispatch-operation.c' || echo '$(srcdir)/'`mcd-dispatch-operation.c
-
-libmcd_convenience_la-mcd-handler-map.lo: mcd-handler-map.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-handler-map.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-handler-map.Tpo -c -o libmcd_convenience_la-mcd-handler-map.lo `test -f 'mcd-handler-map.c' || echo '$(srcdir)/'`mcd-handler-map.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-handler-map.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-handler-map.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-handler-map.c' object='libmcd_convenience_la-mcd-handler-map.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-handler-map.lo `test -f 'mcd-handler-map.c' || echo '$(srcdir)/'`mcd-handler-map.c
-
-libmcd_convenience_la-mcd-misc.lo: mcd-misc.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-misc.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-misc.Tpo -c -o libmcd_convenience_la-mcd-misc.lo `test -f 'mcd-misc.c' || echo '$(srcdir)/'`mcd-misc.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-misc.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-misc.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-misc.c' object='libmcd_convenience_la-mcd-misc.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-misc.lo `test -f 'mcd-misc.c' || echo '$(srcdir)/'`mcd-misc.c
-
-libmcd_convenience_la-mcd-mission.lo: mcd-mission.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-mission.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-mission.Tpo -c -o libmcd_convenience_la-mcd-mission.lo `test -f 'mcd-mission.c' || echo '$(srcdir)/'`mcd-mission.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-mission.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-mission.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-mission.c' object='libmcd_convenience_la-mcd-mission.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-mission.lo `test -f 'mcd-mission.c' || echo '$(srcdir)/'`mcd-mission.c
-
-libmcd_convenience_la-mcd-operation.lo: mcd-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-operation.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-operation.Tpo -c -o libmcd_convenience_la-mcd-operation.lo `test -f 'mcd-operation.c' || echo '$(srcdir)/'`mcd-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-operation.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-operation.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-operation.c' object='libmcd_convenience_la-mcd-operation.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-operation.lo `test -f 'mcd-operation.c' || echo '$(srcdir)/'`mcd-operation.c
-
-libmcd_convenience_la-mcd-controller.lo: mcd-controller.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-controller.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-controller.Tpo -c -o libmcd_convenience_la-mcd-controller.lo `test -f 'mcd-controller.c' || echo '$(srcdir)/'`mcd-controller.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-controller.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-controller.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-controller.c' object='libmcd_convenience_la-mcd-controller.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-controller.lo `test -f 'mcd-controller.c' || echo '$(srcdir)/'`mcd-controller.c
-
-libmcd_convenience_la-mcd-master.lo: mcd-master.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-master.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-master.Tpo -c -o libmcd_convenience_la-mcd-master.lo `test -f 'mcd-master.c' || echo '$(srcdir)/'`mcd-master.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-master.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-master.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-master.c' object='libmcd_convenience_la-mcd-master.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-master.lo `test -f 'mcd-master.c' || echo '$(srcdir)/'`mcd-master.c
-
-libmcd_convenience_la-mcd-manager.lo: mcd-manager.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-manager.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-manager.Tpo -c -o libmcd_convenience_la-mcd-manager.lo `test -f 'mcd-manager.c' || echo '$(srcdir)/'`mcd-manager.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-manager.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-manager.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-manager.c' object='libmcd_convenience_la-mcd-manager.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-manager.lo `test -f 'mcd-manager.c' || echo '$(srcdir)/'`mcd-manager.c
-
-libmcd_convenience_la-mcd-connection.lo: mcd-connection.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-connection.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-connection.Tpo -c -o libmcd_convenience_la-mcd-connection.lo `test -f 'mcd-connection.c' || echo '$(srcdir)/'`mcd-connection.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-connection.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-connection.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-connection.c' object='libmcd_convenience_la-mcd-connection.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-connection.lo `test -f 'mcd-connection.c' || echo '$(srcdir)/'`mcd-connection.c
-
-libmcd_convenience_la-mcd-dispatcher.lo: mcd-dispatcher.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-dispatcher.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-dispatcher.Tpo -c -o libmcd_convenience_la-mcd-dispatcher.lo `test -f 'mcd-dispatcher.c' || echo '$(srcdir)/'`mcd-dispatcher.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-dispatcher.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-dispatcher.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-dispatcher.c' object='libmcd_convenience_la-mcd-dispatcher.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-dispatcher.lo `test -f 'mcd-dispatcher.c' || echo '$(srcdir)/'`mcd-dispatcher.c
-
-libmcd_convenience_la-mcd-channel.lo: mcd-channel.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-channel.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-channel.Tpo -c -o libmcd_convenience_la-mcd-channel.lo `test -f 'mcd-channel.c' || echo '$(srcdir)/'`mcd-channel.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-channel.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-channel.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-channel.c' object='libmcd_convenience_la-mcd-channel.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-channel.lo `test -f 'mcd-channel.c' || echo '$(srcdir)/'`mcd-channel.c
-
-libmcd_convenience_la-mcd-service.lo: mcd-service.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-service.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-service.Tpo -c -o libmcd_convenience_la-mcd-service.lo `test -f 'mcd-service.c' || echo '$(srcdir)/'`mcd-service.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-service.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-service.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-service.c' object='libmcd_convenience_la-mcd-service.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-service.lo `test -f 'mcd-service.c' || echo '$(srcdir)/'`mcd-service.c
-
-libmcd_convenience_la-mcd-proxy.lo: mcd-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-proxy.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-proxy.Tpo -c -o libmcd_convenience_la-mcd-proxy.lo `test -f 'mcd-proxy.c' || echo '$(srcdir)/'`mcd-proxy.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-proxy.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-proxy.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-proxy.c' object='libmcd_convenience_la-mcd-proxy.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-proxy.lo `test -f 'mcd-proxy.c' || echo '$(srcdir)/'`mcd-proxy.c
-
-libmcd_convenience_la-mcd-transport.lo: mcd-transport.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-transport.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-transport.Tpo -c -o libmcd_convenience_la-mcd-transport.lo `test -f 'mcd-transport.c' || echo '$(srcdir)/'`mcd-transport.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-transport.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-transport.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-transport.c' object='libmcd_convenience_la-mcd-transport.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-transport.lo `test -f 'mcd-transport.c' || echo '$(srcdir)/'`mcd-transport.c
-
-libmcd_convenience_la-mcd-provisioning.lo: mcd-provisioning.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-provisioning.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-provisioning.Tpo -c -o libmcd_convenience_la-mcd-provisioning.lo `test -f 'mcd-provisioning.c' || echo '$(srcdir)/'`mcd-provisioning.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-provisioning.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-provisioning.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-provisioning.c' object='libmcd_convenience_la-mcd-provisioning.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-provisioning.lo `test -f 'mcd-provisioning.c' || echo '$(srcdir)/'`mcd-provisioning.c
-
-libmcd_convenience_la-mcd-provisioning-factory.lo: mcd-provisioning-factory.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-provisioning-factory.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-provisioning-factory.Tpo -c -o libmcd_convenience_la-mcd-provisioning-factory.lo `test -f 'mcd-provisioning-factory.c' || echo '$(srcdir)/'`mcd-provisioning-factory.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-provisioning-factory.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-provisioning-factory.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-provisioning-factory.c' object='libmcd_convenience_la-mcd-provisioning-factory.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-provisioning-factory.lo `test -f 'mcd-provisioning-factory.c' || echo '$(srcdir)/'`mcd-provisioning-factory.c
-
-libmcd_convenience_la-plugin-dispatch-operation.lo: plugin-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-plugin-dispatch-operation.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-plugin-dispatch-operation.Tpo -c -o libmcd_convenience_la-plugin-dispatch-operation.lo `test -f 'plugin-dispatch-operation.c' || echo '$(srcdir)/'`plugin-dispatch-operation.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-plugin-dispatch-operation.Tpo $(DEPDIR)/libmcd_convenience_la-plugin-dispatch-operation.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin-dispatch-operation.c' object='libmcd_convenience_la-plugin-dispatch-operation.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-plugin-dispatch-operation.lo `test -f 'plugin-dispatch-operation.c' || echo '$(srcdir)/'`plugin-dispatch-operation.c
-
-libmcd_convenience_la-plugin-loader.lo: plugin-loader.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-plugin-loader.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-plugin-loader.Tpo -c -o libmcd_convenience_la-plugin-loader.lo `test -f 'plugin-loader.c' || echo '$(srcdir)/'`plugin-loader.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-plugin-loader.Tpo $(DEPDIR)/libmcd_convenience_la-plugin-loader.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin-loader.c' object='libmcd_convenience_la-plugin-loader.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-plugin-loader.lo `test -f 'plugin-loader.c' || echo '$(srcdir)/'`plugin-loader.c
-
-libmcd_convenience_la-plugin-request.lo: plugin-request.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-plugin-request.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-plugin-request.Tpo -c -o libmcd_convenience_la-plugin-request.lo `test -f 'plugin-request.c' || echo '$(srcdir)/'`plugin-request.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-plugin-request.Tpo $(DEPDIR)/libmcd_convenience_la-plugin-request.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin-request.c' object='libmcd_convenience_la-plugin-request.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-plugin-request.lo `test -f 'plugin-request.c' || echo '$(srcdir)/'`plugin-request.c
-
-libmcd_convenience_la-plugin-account.lo: plugin-account.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-plugin-account.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-plugin-account.Tpo -c -o libmcd_convenience_la-plugin-account.lo `test -f 'plugin-account.c' || echo '$(srcdir)/'`plugin-account.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-plugin-account.Tpo $(DEPDIR)/libmcd_convenience_la-plugin-account.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin-account.c' object='libmcd_convenience_la-plugin-account.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-plugin-account.lo `test -f 'plugin-account.c' || echo '$(srcdir)/'`plugin-account.c
-
-libmcd_convenience_la-mcd-account-manager-sso.lo: mcd-account-manager-sso.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-account-manager-sso.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-sso.Tpo -c -o libmcd_convenience_la-mcd-account-manager-sso.lo `test -f 'mcd-account-manager-sso.c' || echo '$(srcdir)/'`mcd-account-manager-sso.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-sso.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-account-manager-sso.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-account-manager-sso.c' object='libmcd_convenience_la-mcd-account-manager-sso.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-account-manager-sso.lo `test -f 'mcd-account-manager-sso.c' || echo '$(srcdir)/'`mcd-account-manager-sso.c
-
-libmcd_convenience_la-signals-marshal.lo: _gen/signals-marshal.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-signals-marshal.Tpo -c -o libmcd_convenience_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-signals-marshal.Tpo $(DEPDIR)/libmcd_convenience_la-signals-marshal.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/signals-marshal.c' object='libmcd_convenience_la-signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
-
-libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo: _gen/svc-Account_Interface_ChannelRequests.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_ChannelRequests.Tpo -c -o libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo `test -f '_gen/svc-Account_Interface_ChannelRequests.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_ChannelRequests.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_ChannelRequests.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_ChannelRequests.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_ChannelRequests.c' object='libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Interface_ChannelRequests.lo `test -f '_gen/svc-Account_Interface_ChannelRequests.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_ChannelRequests.c
-
-libmcd_convenience_la-svc-Account_Interface_Compat.lo: _gen/svc-Account_Interface_Compat.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Interface_Compat.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Compat.Tpo -c -o libmcd_convenience_la-svc-Account_Interface_Compat.lo `test -f '_gen/svc-Account_Interface_Compat.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Compat.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Compat.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Compat.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Compat.c' object='libmcd_convenience_la-svc-Account_Interface_Compat.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Interface_Compat.lo `test -f '_gen/svc-Account_Interface_Compat.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Compat.c
-
-libmcd_convenience_la-svc-Account_Interface_Conditions.lo: _gen/svc-Account_Interface_Conditions.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Interface_Conditions.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Conditions.Tpo -c -o libmcd_convenience_la-svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Conditions.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Conditions.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Conditions.c' object='libmcd_convenience_la-svc-Account_Interface_Conditions.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
-
-libmcd_convenience_la-svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Interface_Stats.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Stats.Tpo -c -o libmcd_convenience_la-svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Stats.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Interface_Stats.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Stats.c' object='libmcd_convenience_la-svc-Account_Interface_Stats.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
-
-libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_Query.Tpo -c -o libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_Query.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_Query.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_Query.c' object='libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
-
-libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo: _gen/svc-Account_Manager_Interface_SSO.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_SSO.Tpo -c -o libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo `test -f '_gen/svc-Account_Manager_Interface_SSO.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_SSO.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_SSO.Tpo $(DEPDIR)/libmcd_convenience_la-svc-Account_Manager_Interface_SSO.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_SSO.c' object='libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-svc-Account_Manager_Interface_SSO.lo `test -f '_gen/svc-Account_Manager_Interface_SSO.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_SSO.c
-
-libmcd_convenience_la-mcd-enum-types.lo: mcd-enum-types.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-enum-types.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-enum-types.Tpo -c -o libmcd_convenience_la-mcd-enum-types.lo `test -f 'mcd-enum-types.c' || echo '$(srcdir)/'`mcd-enum-types.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-enum-types.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-enum-types.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-enum-types.c' object='libmcd_convenience_la-mcd-enum-types.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-enum-types.lo `test -f 'mcd-enum-types.c' || echo '$(srcdir)/'`mcd-enum-types.c
-
-libmcd_convenience_la-mcd-signals-marshal.lo: mcd-signals-marshal.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -MT libmcd_convenience_la-mcd-signals-marshal.lo -MD -MP -MF $(DEPDIR)/libmcd_convenience_la-mcd-signals-marshal.Tpo -c -o libmcd_convenience_la-mcd-signals-marshal.lo `test -f 'mcd-signals-marshal.c' || echo '$(srcdir)/'`mcd-signals-marshal.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmcd_convenience_la-mcd-signals-marshal.Tpo $(DEPDIR)/libmcd_convenience_la-mcd-signals-marshal.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='mcd-signals-marshal.c' object='libmcd_convenience_la-mcd-signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmcd_convenience_la_CFLAGS) $(CFLAGS) -c -o libmcd_convenience_la-mcd-signals-marshal.lo `test -f 'mcd-signals-marshal.c' || echo '$(srcdir)/'`mcd-signals-marshal.c
+@am__fastdepCC_FALSE@	$(LIBTOOL)  --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1330,18 +961,18 @@ _gen/signals-marshal.list: _gen/mcd.xml \
 	$(tools_dir)/glib-signals-marshal-gen.py
 	$(PYTHON) $(tools_dir)/glib-signals-marshal-gen.py $< > $@
 
-_gen/signals-marshal.h: _gen/signals-marshal.list Makefile.am
-	$(GLIB_GENMARSHAL) --header --prefix=_mcd_ext_marshal $< > $@
+_gen/signals-marshal.h: _gen/signals-marshal.list
+	$(GLIB_GENMARSHAL) --header --prefix=_mc_ext_marshal $< > $@
 
-_gen/signals-marshal.c: _gen/signals-marshal.list Makefile.am
+_gen/signals-marshal.c: _gen/signals-marshal.list
 	{ echo '#include "_gen/signals-marshal.h"' && \
-	$(GLIB_GENMARSHAL) --body --prefix=_mcd_ext_marshal $<; } \
+	$(GLIB_GENMARSHAL) --body --prefix=_mc_ext_marshal $<; } \
 	> $@
 
 _gen/register-dbus-glib-marshallers-body.h: _gen/mcd.xml \
-	$(tools_dir)/glib-client-marshaller-gen.py Makefile.am
+	$(tools_dir)/glib-client-marshaller-gen.py
 	$(PYTHON) $(tools_dir)/glib-client-marshaller-gen.py $< \
-		_mcd_ext > $@
+		_mc_ext > $@
 
 _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 	$(XSLTPROC) $(XSLTPROCFLAGS) \
@@ -1353,12 +984,12 @@ _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 # (Currently the only "class" is nmc4, but the new API will need "classes"
 # like account, account-manager, ...)
 
-_gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
+_gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml)
 	$(mkdir_p) _gen
 	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
-_gen/%.xml: %.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
+_gen/%.xml: %.xml $(wildcard $(top_srcdir)/xml/*.xml)
 	$(mkdir_p) _gen
 	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
@@ -1375,7 +1006,7 @@ _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 	$(tools_dir)/glib-ginterface-gen.py Makefile.am
 	$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-$* \
-		--signal-marshal-prefix=_mcd_ext \
+		--signal-marshal-prefix=_mc_ext \
 		--include='<telepathy-glib/dbus.h>' \
 		--include='"_gen/signals-marshal.h"' \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \

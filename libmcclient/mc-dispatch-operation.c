@@ -32,7 +32,6 @@
 #include "mc-signals-marshal.h"
 
 #include <telepathy-glib/proxy-subclass.h>
-#include <telepathy-glib/util.h>
 
 #include "_gen/cli-dispatch-operation-body.h"
 #include "_gen/signals-marshal.h"

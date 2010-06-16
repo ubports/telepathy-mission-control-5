@@ -12,11 +12,8 @@
 /* Define whether gnome-keyring support is enabled */
 #undef ENABLE_GNOME_KEYRING
 
-/* Define if libaccounts SSO support is required */
-#undef ENABLE_LIBACCOUNTS_SSO
-
-/* Define if MCD plugins should be enabled */
-#undef ENABLE_MCD_PLUGINS
+/* Define if plugins should be enabled */
+#undef ENABLE_PLUGINS
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H

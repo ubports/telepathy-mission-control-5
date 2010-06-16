@@ -34,7 +34,6 @@ McdConnection
 @mcdconnection: the object which received the signal.
 @arg1: 
 @arg2: 
-@Param4: 
 
 <!-- ##### SIGNAL McdConnection::ready ##### -->
 <para>

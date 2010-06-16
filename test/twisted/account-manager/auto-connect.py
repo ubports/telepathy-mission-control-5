@@ -41,14 +41,18 @@ def preseed():
     accounts_dir = os.environ['MC_ACCOUNT_DIR']
 
     accounts_cfg = open(accounts_dir + '/accounts.cfg', 'w')
-    accounts_cfg.write("""# Telepathy accounts
+
+    # As a regression test for part of fd.o #28557, the password starts and
+    # ends with a double backslash, which is represented in the file as a
+    # quadruple backslash.
+    accounts_cfg.write(r"""# Telepathy accounts
 [%s]
 manager=fakecm
 protocol=fakeprotocol
 DisplayName=Work account
 NormalizedName=jc.denton@unatco.int
 param-account=jc.denton@unatco.int
-param-password=ionstorm
+param-password=\\\\ionstorm\\\\
 Enabled=1
 ConnectAutomatically=1
 AutomaticPresenceType=2
@@ -72,7 +76,7 @@ def test(q, bus, unused):
 
     expected_params = {
             'account': 'jc.denton@unatco.int',
-            'password': 'ionstorm',
+            'password': r'\\ionstorm\\',
             }
 
     mc = make_mc(bus, q.append)
@@ -98,13 +102,18 @@ def test(q, bus, unused):
         cs.tp_name_prefix + '.AccountManager',
         account_path)
 
-    q.expect('dbus-method-call', method='Connect', path=conn.object_path,
-            handled=True, interface=cs.CONN)
-
-    props = account.GetAll(cs.ACCOUNT, dbus_interface=cs.PROPERTIES_IFACE)
-    assert props['Connection'] == conn.object_path
-    assert props['ConnectionStatus'] == cs.CONN_STATUS_CONNECTING
-    assert props['ConnectionStatusReason'] == cs.CONN_STATUS_REASON_REQUESTED
+    e, _ = q.expect_many(
+            EventPattern('dbus-signal', signal='AccountPropertyChanged',
+                path=account_path, interface=cs.ACCOUNT,
+                predicate=(lambda e: e.args[0].get('ConnectionStatus') ==
+                    cs.CONN_STATUS_CONNECTING)),
+            EventPattern('dbus-method-call', method='Connect',
+                path=conn.object_path, handled=True, interface=cs.CONN),
+            )
+    assert e.args[0].get('Connection') in (conn.object_path, None)
+    assert e.args[0]['ConnectionStatus'] == cs.CONN_STATUS_CONNECTING
+    assert e.args[0].get('ConnectionStatusReason') in \
+            (cs.CONN_STATUS_REASON_REQUESTED, None)
 
     print "becoming connected"
     conn.StatusChanged(cs.CONN_STATUS_CONNECTED, cs.CONN_STATUS_REASON_NONE)

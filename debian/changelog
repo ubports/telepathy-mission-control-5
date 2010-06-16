@@ -1,3 +1,16 @@
+telepathy-mission-control-5 (1:5.4.3-1) unstable; urgency=high
+
+  * New upstream stable release
+  * Roll back to version 5.4.x for unstable, with an epoch.
+    - doesn't corrupt accounts whose parameters contain tab, newline
+      or backslash (Closes: #586099, LP: #590619)
+    - urgency=high for the RC bug fix
+    - if your ~/.mission-control/accounts.cfg is huge (multiple megabytes)
+      after using 5.5.0, see
+      https://bugs.freedesktop.org/show_bug.cgi?id=28557 for a workaround
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 16 Jun 2010 13:50:15 +0100
+
 telepathy-mission-control-5 (5.5.0-3) unstable; urgency=low
 
   * Merge from experimental into unstable. We've decided to keep 5.5.x in

@@ -37,8 +37,10 @@ G_BEGIN_DECLS
 #ifdef ENABLE_DEBUG
 
 #define DEBUGGING (_mcd_debug_get_level () > 0)
-#define DEBUG(format, ...) \
-  mcd_debug ("%s: " format, G_STRFUNC, ##__VA_ARGS__)
+#define DEBUG(format, ...) G_STMT_START {   \
+    if (_mcd_debug_get_level () > 0)        \
+        g_debug ("%s: " format, G_STRFUNC, ##__VA_ARGS__);    \
+} G_STMT_END
 
 #else /* !defined ENABLE_DEBUG */
 
@@ -63,8 +65,6 @@ void mcd_debug_unref (gpointer obj, const gchar *filename, gint linenum)
     G_GNUC_DEPRECATED;
 
 void mcd_debug_print_tree (gpointer obj);
-
-void mcd_debug (const gchar *format, ...);
 
 G_END_DECLS
 

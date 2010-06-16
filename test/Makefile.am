@@ -14,6 +14,8 @@ if ENABLE_GNOME_KEYRING
 INCLUDES += $(GNOME_KEYRING_CFLAGS)
 endif
 
+if HAVE_TESTS
+
 SUBDIRS = twisted
 
 noinst_PROGRAMS = \
@@ -25,3 +27,5 @@ TESTS = $(noinst_PROGRAMS)
 # MC internals.
 test_value_is_same_SOURCES = value-is-same.c
 test_value_is_same_LDADD = $(top_builddir)/src/libmcd-convenience.la
+
+endif

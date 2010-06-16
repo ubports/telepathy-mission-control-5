@@ -7,12 +7,11 @@ Uploaders: Simon McVittie <smcv@debian.org>,
            Sjoerd Simons <sjoerd@debian.org>
 Build-Depends: cdbs,
                debhelper (>= 5),
-               gtk-doc-tools,
                libdbus-1-dev (>= 1.0),
-               libdbus-glib-1-dev (>= 0.82),
-               libglib2.0-dev (>= 2.24),
+               libdbus-glib-1-dev (>= 0.80),
+               libglib2.0-dev (>= 2.16),
                libgnome-keyring-dev,
-               libtelepathy-glib-dev (>= 0.11.6),
+               libtelepathy-glib-dev (>= 0.8),
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc
@@ -24,8 +23,7 @@ Homepage: http://telepathy.freedesktop.org/wiki/
 Package: telepathy-mission-control-5
 Architecture: any
 Depends: ${shlibs:Depends},
-         ${misc:Depends},
-         libmission-control-plugins0 (= ${binary:Version})
+         ${misc:Depends}
 Conflicts: telepathy-mission-control
 Description: management daemon for Telepathy real-time communication framework
  Telepathy Mission Control 5 is an account manager and channel dispatcher for
@@ -56,35 +54,3 @@ Description: management daemon for Telepathy (debug symbols)
  Telepathy Mission Control 5 is an account manager and channel dispatcher for
  the Telepathy framework. This package contains debug symbols which can be
  used to debug Mission Control.
-
-Package: libmission-control-plugins0
-Architecture: any
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: telepathy-mission-control-5 (= ${binary:Version})
-Description: management daemon for Telepathy (library for plugins)
- Telepathy Mission Control 5 is an account manager and channel dispatcher for
- the Telepathy framework. This package contains a library against which plugins
- for Mission Control must be linked.
-
-Package: libmission-control-plugins-dev
-Architecture: any
-Section: libdevel
-Priority: extra
-Depends: libmission-control-plugins0 (= ${binary:Version}),
-         ${misc:Depends}
-Suggests: libmission-control-plugins-doc
-Description: management daemon for Telepathy (headers for plugins)
- Telepathy Mission Control 5 is an account manager and channel dispatcher for
- the Telepathy framework. This package contains development headers to build
- plugins for Mission Control.
-
-Package: libmission-control-plugins-doc
-Architecture: all
-Section: doc
-Priority: extra
-Depends: ${misc:Depends}
-Description: management daemon for Telepathy (documentation for plugins)
- Telepathy Mission Control 5 is an account manager and channel dispatcher for
- the Telepathy framework. This package contains API documentation to build
- plugins for Mission Control.

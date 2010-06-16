@@ -138,9 +138,6 @@ struct _McdConnectionPrivate
     /* FALSE until mcd_connection_close() is called */
     guint closed : 1;
 
-    /* FALSE until connected and the supported presence statuses retrieved */
-    guint presence_info_ready : 1;
-
     gchar *alias;
 
     gboolean is_disposed;
@@ -203,8 +200,6 @@ presence_set_status_cb (TpConnection *proxy, const GError *error,
 
     if (error)
     {
-        _mcd_account_set_changing_presence (priv->account, FALSE);
-
         g_warning ("%s: Setting presence of %s failed: %s",
 		   G_STRFUNC, mcd_account_get_unique_name (priv->account),
                    error->message);
@@ -316,23 +311,8 @@ _mcd_connection_set_presence (McdConnection * connection,
 
     if (_check_presence (priv, presence, &adj_status))
     {
-        TpConnectionPresenceType curr_presence;
-        const gchar *curr_status;
-        const gchar *curr_message;
-
         DEBUG ("Setting status '%s' of type %u ('%s' was requested)",
                adj_status, presence, status);
-
-        mcd_account_get_current_presence (priv->account, &curr_presence,
-                                          &curr_status, &curr_message);
-        if (curr_presence == presence &&
-            tp_strdiff (curr_status, adj_status) == 0 &&
-            tp_strdiff (curr_message, message) == 0)
-        {
-            // PresencesChanged won't be emitted and Account.ChangingPresence
-            // will never go to FALSE, so forcibly set it to FALSE
-            _mcd_account_set_changing_presence (priv->account, FALSE);
-        }
 
         tp_cli_connection_interface_simple_presence_call_set_presence
             (priv->tp_conn, -1, adj_status, message, presence_set_status_cb,
@@ -411,11 +391,6 @@ presence_get_statuses_cb (TpProxy *proxy, const GValue *v_statuses,
     /* Now the presence info is ready. We can set the presence */
     mcd_account_get_requested_presence (priv->account, &presence,
                                         &status, &message);
-    if (priv->connected)
-    {
-        priv->presence_info_ready = TRUE;
-    }
-
     _mcd_connection_set_presence (connection, presence, status, message);
 }
 
@@ -1057,7 +1032,7 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     {
     case TP_CONNECTION_STATUS_CONNECTING:
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
-                       conn_status, conn_reason, tp_conn);
+                       conn_status, conn_reason);
         priv->abort_reason = TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED;
         priv->connected = FALSE;
         break;
@@ -1065,7 +1040,7 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     case TP_CONNECTION_STATUS_CONNECTED:
         {
             g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
-                           conn_status, conn_reason, tp_conn);
+                           conn_status, conn_reason);
 
             if (priv->probation_timer == 0)
             {
@@ -1557,10 +1532,7 @@ on_connection_ready (TpConnection *tp_conn, const GError *error,
     if (priv->has_alias_if)
 	_mcd_connection_setup_alias (connection);
 
-    if (!priv->dispatching_started)
-        _mcd_dispatcher_add_connection (priv->dispatcher, connection);
-
-    request_unrequested_channels (connection);
+    _mcd_dispatcher_add_connection (priv->dispatcher, connection);
 
     g_signal_emit (connection, signals[READY], 0);
 }
@@ -1582,9 +1554,10 @@ _mcd_connection_start_dispatching (McdConnection *self,
     else
         mcd_connection_setup_pre_requests (self);
 
-    /* FIXME: why is this here? if we need to update caps before and after   *
-     * connected, it should be in the call_when_ready callback.              */
     _mcd_connection_update_client_caps (self, client_caps);
+
+    /* and request all channels */
+    request_unrequested_channels (self);
 }
 
 void
@@ -1612,12 +1585,6 @@ mcd_connection_done_task_before_connect (McdConnection *self)
         if (self->priv->tp_conn == NULL)
         {
             DEBUG ("TpConnection went away, not doing anything");
-        }
-
-        if (tp_proxy_has_interface_by_id (self->priv->tp_conn,
-                TP_IFACE_QUARK_CONNECTION_INTERFACE_REQUESTS))
-        {
-            _mcd_dispatcher_add_connection (self->priv->dispatcher, self);
         }
 
         DEBUG ("%s: Calling Connect()",
@@ -1739,12 +1706,6 @@ mcd_connection_early_get_interfaces_cb (TpConnection *tp_conn,
                  * we can't usefully pre-load capabilities - we'll be told
                  * the real capabilities as soon as it has worked them out */
             }
-            else if (q == TP_IFACE_QUARK_CONNECTION_INTERFACE_REQUESTS)
-            {
-              /* If we have the Requests iface, we could start dispatching
-               * before the connection is in CONNECTED state */
-              tp_proxy_add_interface_by_id ((TpProxy *) tp_conn, q);
-            }
         }
     }
 
@@ -1820,7 +1781,7 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
         {
             g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                            TP_CONNECTION_STATUS_DISCONNECTED,
-                           TP_CONNECTION_STATUS_REASON_REQUESTED, NULL);
+                           TP_CONNECTION_STATUS_REASON_REQUESTED);
         }
 
         return;
@@ -1835,7 +1796,7 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
 
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
             TP_CONNECTION_STATUS_DISCONNECTED,
-            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR, NULL);
+            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR);
         return;
     }
 
@@ -1872,7 +1833,7 @@ _mcd_connection_connect_with_params (McdConnection *connection,
 
     g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                    TP_CONNECTION_STATUS_CONNECTING,
-                   TP_CONNECTION_STATUS_REASON_REQUESTED, NULL);
+                   TP_CONNECTION_STATUS_REASON_REQUESTED);
 
     /* If the McdConnection gets aborted (which results in it being freed!),
      * we need to kill off the Connection. So, we can't use connection as the
@@ -1910,7 +1871,7 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
                    TP_CONNECTION_PRESENCE_TYPE_OFFLINE, "offline", "");
     g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                    TP_CONNECTION_STATUS_DISCONNECTED,
-                   priv->abort_reason, NULL);
+                   priv->abort_reason);
     if (priv->tp_conn)
     {
 	/* Disconnect signals */
@@ -1923,6 +1884,7 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
 	_mcd_connection_call_disconnect (connection);
 	g_object_unref (priv->tp_conn);
 	priv->tp_conn = NULL;
+	_mcd_account_tp_connection_changed (priv->account);
     }
 
     /* the interface proxies obtained from this connection must be deleted, too
@@ -2200,7 +2162,7 @@ mcd_connection_class_init (McdConnectionClass * klass)
     klass->need_dispatch = mcd_connection_need_dispatch;
     klass->request_channel = _mcd_connection_request_channel;
 
-    _mcd_ext_register_dbus_glib_marshallers ();
+    _mc_ext_register_dbus_glib_marshallers ();
 
     tp_connection_init_known_interfaces ();
     tp_proxy_or_subclass_hook_on_interface_add (TP_TYPE_CONNECTION,
@@ -2256,8 +2218,8 @@ mcd_connection_class_init (McdConnectionClass * klass)
     signals[CONNECTION_STATUS_CHANGED] = g_signal_new (
         "connection-status-changed", G_OBJECT_CLASS_TYPE (klass),
         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0,
-        NULL, NULL, _mcd_marshal_VOID__UINT_UINT_OBJECT,
-        G_TYPE_NONE, 3, G_TYPE_UINT, G_TYPE_UINT, TP_TYPE_CONNECTION);
+        NULL, NULL, _mcd_marshal_VOID__UINT_UINT,
+        G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
 
     signals[READY] = g_signal_new ("ready",
         G_OBJECT_CLASS_TYPE (klass),
@@ -2610,13 +2572,10 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
     {
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
             TP_CONNECTION_STATUS_DISCONNECTED,
-            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR,
-            NULL);
+            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR);
         return;
     }
-    /* FIXME: need some way to feed the status into the Account, but we don't
-     * actually know it yet */
-    _mcd_account_tp_connection_changed (priv->account, priv->tp_conn);
+    _mcd_account_tp_connection_changed (priv->account);
 
     /* Setup signals */
     g_signal_connect (priv->tp_conn, "invalidated",
@@ -2654,12 +2613,4 @@ _mcd_connection_is_ready (McdConnection *self)
 
     return (self->priv->tp_conn != NULL) &&
         tp_connection_is_ready (self->priv->tp_conn);
-}
-
-gboolean
-_mcd_connection_presence_info_is_ready (McdConnection *self)
-{
-    g_return_val_if_fail (MCD_IS_CONNECTION (self), FALSE);
-
-    return self->priv->presence_info_ready;
 }
