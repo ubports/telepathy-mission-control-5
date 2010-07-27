@@ -3,139 +3,139 @@
 <book xmlns="http://www.devhelp.net/book" title="libmcclient Reference Manual" link="index.html" author="" name="libmcclient" version="2" language="c">
   <chapters>
     <sub name="The AccountManager object proxy" link="ch-account-manager.html">
-      <sub name="McAccountManager" link="McAccountManager.html"/>
+      <sub name="McAccountManager" link="libmcclient-mc-account-manager.html"/>
     </sub>
     <sub name="The Account object proxy" link="ch-account.html">
-      <sub name="McAccount" link="McAccount.html"/>
+      <sub name="McAccount" link="libmcclient-mc-account.html"/>
     </sub>
     <sub name="Utility class to access account profiles" link="ch-profile.html">
-      <sub name="McProfile" link="libmcclient-mc-profile.html"/>
+      <sub name="McProfile" link="McProfile.html"/>
     </sub>
   </chapters>
   <functions>
-    <keyword type="struct" name="McAccountManager" link="McAccountManager.html#McAccountManager-struct"/>
-    <keyword type="struct" name="McAccountManagerClass" link="McAccountManager.html#McAccountManagerClass"/>
-    <keyword type="function" name="mc_account_manager_new ()" link="McAccountManager.html#mc-account-manager-new"/>
-    <keyword type="function" name="McAccountManagerWhenReadyCb ()" link="McAccountManager.html#McAccountManagerWhenReadyCb"/>
-    <keyword type="function" name="mc_account_manager_call_when_ready ()" link="McAccountManager.html#mc-account-manager-call-when-ready"/>
-    <keyword type="function" name="McAccountManagerWhenReadyObjectCb ()" link="McAccountManager.html#McAccountManagerWhenReadyObjectCb"/>
-    <keyword type="function" name="mc_account_manager_call_when_iface_ready ()" link="McAccountManager.html#mc-account-manager-call-when-iface-ready"/>
-    <keyword type="function" name="mc_account_manager_call_when_ready_with_accounts ()" link="McAccountManager.html#mc-account-manager-call-when-ready-with-accounts"/>
-    <keyword type="function" name="mc_account_manager_get_account ()" link="McAccountManager.html#mc-account-manager-get-account"/>
-    <keyword type="function" name="McAccountFilterFunc ()" link="McAccountManager.html#McAccountFilterFunc"/>
-    <keyword type="function" name="mc_account_manager_list_accounts ()" link="McAccountManager.html#mc-account-manager-list-accounts"/>
-    <keyword type="function" name="mc_cli_account_manager_signal_callback_account_removed ()" link="McAccountManager.html#mc-cli-account-manager-signal-callback-account-removed"/>
-    <keyword type="function" name="mc_cli_account_manager_connect_to_account_removed ()" link="McAccountManager.html#mc-cli-account-manager-connect-to-account-removed"/>
-    <keyword type="function" name="mc_cli_account_manager_signal_callback_account_validity_changed ()" link="McAccountManager.html#mc-cli-account-manager-signal-callback-account-validity-changed"/>
-    <keyword type="function" name="mc_cli_account_manager_connect_to_account_validity_changed ()" link="McAccountManager.html#mc-cli-account-manager-connect-to-account-validity-changed"/>
-    <keyword type="function" name="mc_cli_account_manager_callback_for_create_account ()" link="McAccountManager.html#mc-cli-account-manager-callback-for-create-account"/>
-    <keyword type="function" name="mc_cli_account_manager_call_create_account ()" link="McAccountManager.html#mc-cli-account-manager-call-create-account"/>
-    <keyword type="function" name="mc_cli_account_manager_interface_query_callback_for_find_accounts ()" link="McAccountManager.html#mc-cli-account-manager-interface-query-callback-for-find-accounts"/>
-    <keyword type="function" name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="McAccountManager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
-    <keyword type="signal" name="The &quot;account-created&quot; signal" link="McAccountManager.html#McAccountManager-account-created"/>
-    <keyword type="signal" name="The &quot;account-ready&quot; signal" link="McAccountManager.html#McAccountManager-account-ready"/>
-    <keyword type="struct" name="McAccount" link="McAccount.html#McAccount-struct"/>
-    <keyword type="struct" name="McAccountClass" link="McAccount.html#McAccountClass"/>
-    <keyword type="function" name="mc_account_new ()" link="McAccount.html#mc-account-new"/>
-    <keyword type="function" name="McAccountWhenReadyCb ()" link="McAccount.html#McAccountWhenReadyCb"/>
-    <keyword type="function" name="mc_account_call_when_ready ()" link="McAccount.html#mc-account-call-when-ready"/>
-    <keyword type="function" name="McAccountWhenReadyObjectCb ()" link="McAccount.html#McAccountWhenReadyObjectCb"/>
-    <keyword type="function" name="mc_account_call_when_iface_ready ()" link="McAccount.html#mc-account-call-when-iface-ready"/>
-    <keyword type="function" name="mc_account_call_when_all_ready ()" link="McAccount.html#mc-account-call-when-all-ready"/>
-    <keyword type="function" name="mc_account_get_display_name ()" link="McAccount.html#mc-account-get-display-name"/>
-    <keyword type="function" name="mc_account_get_icon ()" link="McAccount.html#mc-account-get-icon"/>
-    <keyword type="function" name="mc_account_is_valid ()" link="McAccount.html#mc-account-is-valid"/>
-    <keyword type="function" name="mc_account_is_enabled ()" link="McAccount.html#mc-account-is-enabled"/>
-    <keyword type="function" name="mc_account_has_been_online ()" link="McAccount.html#mc-account-has-been-online"/>
-    <keyword type="function" name="mc_account_connects_automatically ()" link="McAccount.html#mc-account-connects-automatically"/>
-    <keyword type="function" name="mc_account_get_nickname ()" link="McAccount.html#mc-account-get-nickname"/>
-    <keyword type="function" name="mc_account_get_parameters ()" link="McAccount.html#mc-account-get-parameters"/>
-    <keyword type="function" name="mc_account_get_automatic_presence ()" link="McAccount.html#mc-account-get-automatic-presence"/>
-    <keyword type="function" name="mc_account_get_connection_path ()" link="McAccount.html#mc-account-get-connection-path"/>
-    <keyword type="function" name="mc_account_get_connection_name ()" link="McAccount.html#mc-account-get-connection-name"/>
-    <keyword type="function" name="mc_account_get_connection_status ()" link="McAccount.html#mc-account-get-connection-status"/>
-    <keyword type="function" name="mc_account_get_connection_status_reason ()" link="McAccount.html#mc-account-get-connection-status-reason"/>
-    <keyword type="function" name="mc_account_get_current_presence ()" link="McAccount.html#mc-account-get-current-presence"/>
-    <keyword type="function" name="mc_account_get_requested_presence ()" link="McAccount.html#mc-account-get-requested-presence"/>
-    <keyword type="function" name="mc_account_get_normalized_name ()" link="McAccount.html#mc-account-get-normalized-name"/>
-    <keyword type="function" name="mc_account_set_display_name ()" link="McAccount.html#mc-account-set-display-name"/>
-    <keyword type="function" name="mc_account_set_icon ()" link="McAccount.html#mc-account-set-icon"/>
-    <keyword type="function" name="mc_account_set_enabled ()" link="McAccount.html#mc-account-set-enabled"/>
-    <keyword type="function" name="mc_account_set_connect_automatically ()" link="McAccount.html#mc-account-set-connect-automatically"/>
-    <keyword type="function" name="mc_account_set_nickname ()" link="McAccount.html#mc-account-set-nickname"/>
-    <keyword type="function" name="mc_account_set_automatic_presence ()" link="McAccount.html#mc-account-set-automatic-presence"/>
-    <keyword type="function" name="mc_account_set_requested_presence ()" link="McAccount.html#mc-account-set-requested-presence"/>
-    <keyword type="function" name="mc_account_avatar_call_when_ready ()" link="McAccount.html#mc-account-avatar-call-when-ready"/>
-    <keyword type="function" name="mc_account_avatar_get ()" link="McAccount.html#mc-account-avatar-get"/>
-    <keyword type="function" name="mc_account_avatar_set ()" link="McAccount.html#mc-account-avatar-set"/>
-    <keyword type="function" name="mc_account_compat_call_when_ready ()" link="McAccount.html#mc-account-compat-call-when-ready"/>
-    <keyword type="function" name="mc_account_compat_get_profile ()" link="McAccount.html#mc-account-compat-get-profile"/>
-    <keyword type="function" name="mc_account_compat_get_avatar_file ()" link="McAccount.html#mc-account-compat-get-avatar-file"/>
-    <keyword type="function" name="mc_account_compat_set_profile ()" link="McAccount.html#mc-account-compat-set-profile"/>
-    <keyword type="function" name="mc_account_compat_set_secondary_vcard_fields ()" link="McAccount.html#mc-account-compat-set-secondary-vcard-fields"/>
-    <keyword type="function" name="mc_account_conditions_call_when_ready ()" link="McAccount.html#mc-account-conditions-call-when-ready"/>
-    <keyword type="function" name="mc_account_conditions_get ()" link="McAccount.html#mc-account-conditions-get"/>
-    <keyword type="function" name="mc_account_conditions_set ()" link="McAccount.html#mc-account-conditions-set"/>
-    <keyword type="struct" name="McAccountChannelrequestData" link="McAccount.html#McAccountChannelrequestData"/>
-    <keyword type="enum" name="enum McAccountChannelrequestEvent" link="McAccount.html#McAccountChannelrequestEvent"/>
-    <keyword type="function" name="McAccountChannelrequestCb ()" link="McAccount.html#McAccountChannelrequestCb"/>
-    <keyword type="enum" name="enum McAccountChannelrequestFlags" link="McAccount.html#McAccountChannelrequestFlags"/>
-    <keyword type="function" name="mc_account_channelrequest ()" link="McAccount.html#mc-account-channelrequest"/>
-    <keyword type="function" name="mc_account_channelrequest_ht ()" link="McAccount.html#mc-account-channelrequest-ht"/>
-    <keyword type="function" name="mc_account_channelrequest_add ()" link="McAccount.html#mc-account-channelrequest-add"/>
-    <keyword type="function" name="mc_account_channelrequest_cancel ()" link="McAccount.html#mc-account-channelrequest-cancel"/>
-    <keyword type="function" name="mc_account_channelrequest_get_error ()" link="McAccount.html#mc-account-channelrequest-get-error"/>
-    <keyword type="function" name="mc_account_channelrequest_get_path ()" link="McAccount.html#mc-account-channelrequest-get-path"/>
-    <keyword type="function" name="mc_account_channelrequest_get_from_path ()" link="McAccount.html#mc-account-channelrequest-get-from-path"/>
-    <keyword type="function" name="mc_cli_account_signal_callback_removed ()" link="McAccount.html#mc-cli-account-signal-callback-removed"/>
-    <keyword type="function" name="mc_cli_account_connect_to_removed ()" link="McAccount.html#mc-cli-account-connect-to-removed"/>
-    <keyword type="function" name="mc_cli_account_signal_callback_account_property_changed ()" link="McAccount.html#mc-cli-account-signal-callback-account-property-changed"/>
-    <keyword type="function" name="mc_cli_account_connect_to_account_property_changed ()" link="McAccount.html#mc-cli-account-connect-to-account-property-changed"/>
-    <keyword type="function" name="mc_cli_account_callback_for_remove ()" link="McAccount.html#mc-cli-account-callback-for-remove"/>
-    <keyword type="function" name="mc_cli_account_call_remove ()" link="McAccount.html#mc-cli-account-call-remove"/>
-    <keyword type="function" name="mc_cli_account_callback_for_update_parameters ()" link="McAccount.html#mc-cli-account-callback-for-update-parameters"/>
-    <keyword type="function" name="mc_cli_account_call_update_parameters ()" link="McAccount.html#mc-cli-account-call-update-parameters"/>
-    <keyword type="function" name="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()" link="McAccount.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed"/>
-    <keyword type="function" name="mc_cli_account_interface_avatar_connect_to_avatar_changed ()" link="McAccount.html#mc-cli-account-interface-avatar-connect-to-avatar-changed"/>
-    <keyword type="signal" name="The &quot;avatar-changed&quot; signal" link="McAccount.html#McAccount-avatar-changed"/>
-    <keyword type="signal" name="The &quot;channel-count-changed&quot; signal" link="McAccount.html#McAccount-channel-count-changed"/>
-    <keyword type="signal" name="The &quot;connection-status-changed&quot; signal" link="McAccount.html#McAccount-connection-status-changed"/>
-    <keyword type="signal" name="The &quot;flag-changed&quot; signal" link="McAccount.html#McAccount-flag-changed"/>
-    <keyword type="signal" name="The &quot;parameters-changed&quot; signal" link="McAccount.html#McAccount-parameters-changed"/>
-    <keyword type="signal" name="The &quot;presence-changed&quot; signal" link="McAccount.html#McAccount-presence-changed"/>
-    <keyword type="signal" name="The &quot;string-changed&quot; signal" link="McAccount.html#McAccount-string-changed"/>
-    <keyword type="enum" name="enum McProfileCapabilityFlags" link="libmcclient-mc-profile.html#McProfileCapabilityFlags"/>
-    <keyword type="struct" name="McProfile" link="libmcclient-mc-profile.html#McProfile-struct"/>
-    <keyword type="struct" name="McProfileClass" link="libmcclient-mc-profile.html#McProfileClass"/>
-    <keyword type="function" name="mc_profile_lookup ()" link="libmcclient-mc-profile.html#mc-profile-lookup"/>
-    <keyword type="function" name="mc_profile_lookup_default_for_vcard_field ()" link="libmcclient-mc-profile.html#mc-profile-lookup-default-for-vcard-field"/>
-    <keyword type="function" name="mc_profile_get_filename ()" link="libmcclient-mc-profile.html#mc-profile-get-filename"/>
-    <keyword type="function" name="mc_profile_clear_cache ()" link="libmcclient-mc-profile.html#mc-profile-clear-cache"/>
-    <keyword type="function" name="mc_profiles_list ()" link="libmcclient-mc-profile.html#mc-profiles-list"/>
-    <keyword type="function" name="mc_profiles_list_by_vcard_field ()" link="libmcclient-mc-profile.html#mc-profiles-list-by-vcard-field"/>
-    <keyword type="function" name="mc_profiles_list_by_protocol ()" link="libmcclient-mc-profile.html#mc-profiles-list-by-protocol"/>
-    <keyword type="function" name="mc_profiles_free_list ()" link="libmcclient-mc-profile.html#mc-profiles-free-list"/>
-    <keyword type="function" name="mc_profile_get_unique_name ()" link="libmcclient-mc-profile.html#mc-profile-get-unique-name"/>
-    <keyword type="function" name="mc_profile_get_configuration_ui ()" link="libmcclient-mc-profile.html#mc-profile-get-configuration-ui"/>
-    <keyword type="function" name="mc_profile_get_display_name ()" link="libmcclient-mc-profile.html#mc-profile-get-display-name"/>
-    <keyword type="function" name="mc_profile_get_icon_name ()" link="libmcclient-mc-profile.html#mc-profile-get-icon-name"/>
-    <keyword type="function" name="mc_profile_get_branding_icon_name ()" link="libmcclient-mc-profile.html#mc-profile-get-branding-icon-name"/>
-    <keyword type="function" name="mc_profile_get_vcard_field ()" link="libmcclient-mc-profile.html#mc-profile-get-vcard-field"/>
-    <keyword type="function" name="mc_profile_get_default_account_domain ()" link="libmcclient-mc-profile.html#mc-profile-get-default-account-domain"/>
-    <keyword type="function" name="mc_profile_get_avatar_mime_type ()" link="libmcclient-mc-profile.html#mc-profile-get-avatar-mime-type"/>
-    <keyword type="function" name="mc_profile_get_supported_presences ()" link="libmcclient-mc-profile.html#mc-profile-get-supported-presences"/>
-    <keyword type="function" name="mc_profile_supports_presence ()" link="libmcclient-mc-profile.html#mc-profile-supports-presence"/>
-    <keyword type="function" name="mc_profile_get_priority ()" link="libmcclient-mc-profile.html#mc-profile-get-priority"/>
-    <keyword type="function" name="mc_profile_get_default_account_name ()" link="libmcclient-mc-profile.html#mc-profile-get-default-account-name"/>
-    <keyword type="function" name="mc_profile_get_protocol_name ()" link="libmcclient-mc-profile.html#mc-profile-get-protocol-name"/>
-    <keyword type="function" name="mc_profile_get_manager_name ()" link="libmcclient-mc-profile.html#mc-profile-get-manager-name"/>
-    <keyword type="function" name="mc_profile_is_default_for_vcard_field ()" link="libmcclient-mc-profile.html#mc-profile-is-default-for-vcard-field"/>
-    <keyword type="function" name="mc_profile_get_capabilities ()" link="libmcclient-mc-profile.html#mc-profile-get-capabilities"/>
-    <keyword type="function" name="mc_profile_get_default_setting ()" link="libmcclient-mc-profile.html#mc-profile-get-default-setting"/>
-    <keyword type="function" name="mc_profile_get_vcard_mangle ()" link="libmcclient-mc-profile.html#mc-profile-get-vcard-mangle"/>
-    <keyword type="function" name="mc_profile_presence_get_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-name"/>
-    <keyword type="function" name="mc_profile_presence_get_type ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-type"/>
-    <keyword type="function" name="mc_profile_presence_get_icon_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name"/>
-    <keyword type="constant" name="MC_ACCOUNT_CR_FLAG_USE_EXISTING" link="McAccount.html#MC-ACCOUNT-CR-FLAG-USE-EXISTING:CAPS"/>
+    <keyword type="struct" name="McAccountManager" link="libmcclient-mc-account-manager.html#McAccountManager-struct"/>
+    <keyword type="struct" name="McAccountManagerClass" link="libmcclient-mc-account-manager.html#McAccountManagerClass"/>
+    <keyword type="function" name="mc_account_manager_new ()" link="libmcclient-mc-account-manager.html#mc-account-manager-new"/>
+    <keyword type="function" name="McAccountManagerWhenReadyCb ()" link="libmcclient-mc-account-manager.html#McAccountManagerWhenReadyCb"/>
+    <keyword type="function" name="mc_account_manager_call_when_ready ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-ready"/>
+    <keyword type="function" name="McAccountManagerWhenReadyObjectCb ()" link="libmcclient-mc-account-manager.html#McAccountManagerWhenReadyObjectCb"/>
+    <keyword type="function" name="mc_account_manager_call_when_iface_ready ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-iface-ready"/>
+    <keyword type="function" name="mc_account_manager_call_when_ready_with_accounts ()" link="libmcclient-mc-account-manager.html#mc-account-manager-call-when-ready-with-accounts"/>
+    <keyword type="function" name="mc_account_manager_get_account ()" link="libmcclient-mc-account-manager.html#mc-account-manager-get-account"/>
+    <keyword type="function" name="McAccountFilterFunc ()" link="libmcclient-mc-account-manager.html#McAccountFilterFunc"/>
+    <keyword type="function" name="mc_account_manager_list_accounts ()" link="libmcclient-mc-account-manager.html#mc-account-manager-list-accounts"/>
+    <keyword type="function" name="mc_cli_account_manager_signal_callback_account_removed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-signal-callback-account-removed"/>
+    <keyword type="function" name="mc_cli_account_manager_connect_to_account_removed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-removed"/>
+    <keyword type="function" name="mc_cli_account_manager_signal_callback_account_validity_changed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-signal-callback-account-validity-changed"/>
+    <keyword type="function" name="mc_cli_account_manager_connect_to_account_validity_changed ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-connect-to-account-validity-changed"/>
+    <keyword type="function" name="mc_cli_account_manager_callback_for_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-callback-for-create-account"/>
+    <keyword type="function" name="mc_cli_account_manager_call_create_account ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-call-create-account"/>
+    <keyword type="function" name="mc_cli_account_manager_interface_query_callback_for_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-callback-for-find-accounts"/>
+    <keyword type="function" name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="libmcclient-mc-account-manager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
+    <keyword type="signal" name="The &quot;account-created&quot; signal" link="libmcclient-mc-account-manager.html#McAccountManager-account-created"/>
+    <keyword type="signal" name="The &quot;account-ready&quot; signal" link="libmcclient-mc-account-manager.html#McAccountManager-account-ready"/>
+    <keyword type="struct" name="McAccount" link="libmcclient-mc-account.html#McAccount-struct"/>
+    <keyword type="struct" name="McAccountClass" link="libmcclient-mc-account.html#McAccountClass"/>
+    <keyword type="function" name="mc_account_new ()" link="libmcclient-mc-account.html#mc-account-new"/>
+    <keyword type="function" name="McAccountWhenReadyCb ()" link="libmcclient-mc-account.html#McAccountWhenReadyCb"/>
+    <keyword type="function" name="mc_account_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-ready"/>
+    <keyword type="function" name="McAccountWhenReadyObjectCb ()" link="libmcclient-mc-account.html#McAccountWhenReadyObjectCb"/>
+    <keyword type="function" name="mc_account_call_when_iface_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-iface-ready"/>
+    <keyword type="function" name="mc_account_call_when_all_ready ()" link="libmcclient-mc-account.html#mc-account-call-when-all-ready"/>
+    <keyword type="function" name="mc_account_get_display_name ()" link="libmcclient-mc-account.html#mc-account-get-display-name"/>
+    <keyword type="function" name="mc_account_get_icon ()" link="libmcclient-mc-account.html#mc-account-get-icon"/>
+    <keyword type="function" name="mc_account_is_valid ()" link="libmcclient-mc-account.html#mc-account-is-valid"/>
+    <keyword type="function" name="mc_account_is_enabled ()" link="libmcclient-mc-account.html#mc-account-is-enabled"/>
+    <keyword type="function" name="mc_account_has_been_online ()" link="libmcclient-mc-account.html#mc-account-has-been-online"/>
+    <keyword type="function" name="mc_account_connects_automatically ()" link="libmcclient-mc-account.html#mc-account-connects-automatically"/>
+    <keyword type="function" name="mc_account_get_nickname ()" link="libmcclient-mc-account.html#mc-account-get-nickname"/>
+    <keyword type="function" name="mc_account_get_parameters ()" link="libmcclient-mc-account.html#mc-account-get-parameters"/>
+    <keyword type="function" name="mc_account_get_automatic_presence ()" link="libmcclient-mc-account.html#mc-account-get-automatic-presence"/>
+    <keyword type="function" name="mc_account_get_connection_path ()" link="libmcclient-mc-account.html#mc-account-get-connection-path"/>
+    <keyword type="function" name="mc_account_get_connection_name ()" link="libmcclient-mc-account.html#mc-account-get-connection-name"/>
+    <keyword type="function" name="mc_account_get_connection_status ()" link="libmcclient-mc-account.html#mc-account-get-connection-status"/>
+    <keyword type="function" name="mc_account_get_connection_status_reason ()" link="libmcclient-mc-account.html#mc-account-get-connection-status-reason"/>
+    <keyword type="function" name="mc_account_get_current_presence ()" link="libmcclient-mc-account.html#mc-account-get-current-presence"/>
+    <keyword type="function" name="mc_account_get_requested_presence ()" link="libmcclient-mc-account.html#mc-account-get-requested-presence"/>
+    <keyword type="function" name="mc_account_get_normalized_name ()" link="libmcclient-mc-account.html#mc-account-get-normalized-name"/>
+    <keyword type="function" name="mc_account_set_display_name ()" link="libmcclient-mc-account.html#mc-account-set-display-name"/>
+    <keyword type="function" name="mc_account_set_icon ()" link="libmcclient-mc-account.html#mc-account-set-icon"/>
+    <keyword type="function" name="mc_account_set_enabled ()" link="libmcclient-mc-account.html#mc-account-set-enabled"/>
+    <keyword type="function" name="mc_account_set_connect_automatically ()" link="libmcclient-mc-account.html#mc-account-set-connect-automatically"/>
+    <keyword type="function" name="mc_account_set_nickname ()" link="libmcclient-mc-account.html#mc-account-set-nickname"/>
+    <keyword type="function" name="mc_account_set_automatic_presence ()" link="libmcclient-mc-account.html#mc-account-set-automatic-presence"/>
+    <keyword type="function" name="mc_account_set_requested_presence ()" link="libmcclient-mc-account.html#mc-account-set-requested-presence"/>
+    <keyword type="function" name="mc_account_avatar_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-avatar-call-when-ready"/>
+    <keyword type="function" name="mc_account_avatar_get ()" link="libmcclient-mc-account.html#mc-account-avatar-get"/>
+    <keyword type="function" name="mc_account_avatar_set ()" link="libmcclient-mc-account.html#mc-account-avatar-set"/>
+    <keyword type="function" name="mc_account_compat_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-compat-call-when-ready"/>
+    <keyword type="function" name="mc_account_compat_get_profile ()" link="libmcclient-mc-account.html#mc-account-compat-get-profile"/>
+    <keyword type="function" name="mc_account_compat_get_avatar_file ()" link="libmcclient-mc-account.html#mc-account-compat-get-avatar-file"/>
+    <keyword type="function" name="mc_account_compat_set_profile ()" link="libmcclient-mc-account.html#mc-account-compat-set-profile"/>
+    <keyword type="function" name="mc_account_compat_set_secondary_vcard_fields ()" link="libmcclient-mc-account.html#mc-account-compat-set-secondary-vcard-fields"/>
+    <keyword type="function" name="mc_account_conditions_call_when_ready ()" link="libmcclient-mc-account.html#mc-account-conditions-call-when-ready"/>
+    <keyword type="function" name="mc_account_conditions_get ()" link="libmcclient-mc-account.html#mc-account-conditions-get"/>
+    <keyword type="function" name="mc_account_conditions_set ()" link="libmcclient-mc-account.html#mc-account-conditions-set"/>
+    <keyword type="struct" name="McAccountChannelrequestData" link="libmcclient-mc-account.html#McAccountChannelrequestData"/>
+    <keyword type="enum" name="enum McAccountChannelrequestEvent" link="libmcclient-mc-account.html#McAccountChannelrequestEvent"/>
+    <keyword type="function" name="McAccountChannelrequestCb ()" link="libmcclient-mc-account.html#McAccountChannelrequestCb"/>
+    <keyword type="enum" name="enum McAccountChannelrequestFlags" link="libmcclient-mc-account.html#McAccountChannelrequestFlags"/>
+    <keyword type="function" name="mc_account_channelrequest ()" link="libmcclient-mc-account.html#mc-account-channelrequest"/>
+    <keyword type="function" name="mc_account_channelrequest_ht ()" link="libmcclient-mc-account.html#mc-account-channelrequest-ht"/>
+    <keyword type="function" name="mc_account_channelrequest_add ()" link="libmcclient-mc-account.html#mc-account-channelrequest-add"/>
+    <keyword type="function" name="mc_account_channelrequest_cancel ()" link="libmcclient-mc-account.html#mc-account-channelrequest-cancel"/>
+    <keyword type="function" name="mc_account_channelrequest_get_error ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-error"/>
+    <keyword type="function" name="mc_account_channelrequest_get_path ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-path"/>
+    <keyword type="function" name="mc_account_channelrequest_get_from_path ()" link="libmcclient-mc-account.html#mc-account-channelrequest-get-from-path"/>
+    <keyword type="function" name="mc_cli_account_signal_callback_removed ()" link="libmcclient-mc-account.html#mc-cli-account-signal-callback-removed"/>
+    <keyword type="function" name="mc_cli_account_connect_to_removed ()" link="libmcclient-mc-account.html#mc-cli-account-connect-to-removed"/>
+    <keyword type="function" name="mc_cli_account_signal_callback_account_property_changed ()" link="libmcclient-mc-account.html#mc-cli-account-signal-callback-account-property-changed"/>
+    <keyword type="function" name="mc_cli_account_connect_to_account_property_changed ()" link="libmcclient-mc-account.html#mc-cli-account-connect-to-account-property-changed"/>
+    <keyword type="function" name="mc_cli_account_callback_for_remove ()" link="libmcclient-mc-account.html#mc-cli-account-callback-for-remove"/>
+    <keyword type="function" name="mc_cli_account_call_remove ()" link="libmcclient-mc-account.html#mc-cli-account-call-remove"/>
+    <keyword type="function" name="mc_cli_account_callback_for_update_parameters ()" link="libmcclient-mc-account.html#mc-cli-account-callback-for-update-parameters"/>
+    <keyword type="function" name="mc_cli_account_call_update_parameters ()" link="libmcclient-mc-account.html#mc-cli-account-call-update-parameters"/>
+    <keyword type="function" name="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()" link="libmcclient-mc-account.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed"/>
+    <keyword type="function" name="mc_cli_account_interface_avatar_connect_to_avatar_changed ()" link="libmcclient-mc-account.html#mc-cli-account-interface-avatar-connect-to-avatar-changed"/>
+    <keyword type="signal" name="The &quot;avatar-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-avatar-changed"/>
+    <keyword type="signal" name="The &quot;channel-count-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-channel-count-changed"/>
+    <keyword type="signal" name="The &quot;connection-status-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-connection-status-changed"/>
+    <keyword type="signal" name="The &quot;flag-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-flag-changed"/>
+    <keyword type="signal" name="The &quot;parameters-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-parameters-changed"/>
+    <keyword type="signal" name="The &quot;presence-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-presence-changed"/>
+    <keyword type="signal" name="The &quot;string-changed&quot; signal" link="libmcclient-mc-account.html#McAccount-string-changed"/>
+    <keyword type="enum" name="enum McProfileCapabilityFlags" link="McProfile.html#McProfileCapabilityFlags"/>
+    <keyword type="struct" name="McProfile" link="McProfile.html#McProfile-struct"/>
+    <keyword type="struct" name="McProfileClass" link="McProfile.html#McProfileClass"/>
+    <keyword type="function" name="mc_profile_lookup ()" link="McProfile.html#mc-profile-lookup"/>
+    <keyword type="function" name="mc_profile_lookup_default_for_vcard_field ()" link="McProfile.html#mc-profile-lookup-default-for-vcard-field"/>
+    <keyword type="function" name="mc_profile_get_filename ()" link="McProfile.html#mc-profile-get-filename"/>
+    <keyword type="function" name="mc_profile_clear_cache ()" link="McProfile.html#mc-profile-clear-cache"/>
+    <keyword type="function" name="mc_profiles_list ()" link="McProfile.html#mc-profiles-list"/>
+    <keyword type="function" name="mc_profiles_list_by_vcard_field ()" link="McProfile.html#mc-profiles-list-by-vcard-field"/>
+    <keyword type="function" name="mc_profiles_list_by_protocol ()" link="McProfile.html#mc-profiles-list-by-protocol"/>
+    <keyword type="function" name="mc_profiles_free_list ()" link="McProfile.html#mc-profiles-free-list"/>
+    <keyword type="function" name="mc_profile_get_unique_name ()" link="McProfile.html#mc-profile-get-unique-name"/>
+    <keyword type="function" name="mc_profile_get_configuration_ui ()" link="McProfile.html#mc-profile-get-configuration-ui"/>
+    <keyword type="function" name="mc_profile_get_display_name ()" link="McProfile.html#mc-profile-get-display-name"/>
+    <keyword type="function" name="mc_profile_get_icon_name ()" link="McProfile.html#mc-profile-get-icon-name"/>
+    <keyword type="function" name="mc_profile_get_branding_icon_name ()" link="McProfile.html#mc-profile-get-branding-icon-name"/>
+    <keyword type="function" name="mc_profile_get_vcard_field ()" link="McProfile.html#mc-profile-get-vcard-field"/>
+    <keyword type="function" name="mc_profile_get_default_account_domain ()" link="McProfile.html#mc-profile-get-default-account-domain"/>
+    <keyword type="function" name="mc_profile_get_avatar_mime_type ()" link="McProfile.html#mc-profile-get-avatar-mime-type"/>
+    <keyword type="function" name="mc_profile_get_supported_presences ()" link="McProfile.html#mc-profile-get-supported-presences"/>
+    <keyword type="function" name="mc_profile_supports_presence ()" link="McProfile.html#mc-profile-supports-presence"/>
+    <keyword type="function" name="mc_profile_get_priority ()" link="McProfile.html#mc-profile-get-priority"/>
+    <keyword type="function" name="mc_profile_get_default_account_name ()" link="McProfile.html#mc-profile-get-default-account-name"/>
+    <keyword type="function" name="mc_profile_get_protocol_name ()" link="McProfile.html#mc-profile-get-protocol-name"/>
+    <keyword type="function" name="mc_profile_get_manager_name ()" link="McProfile.html#mc-profile-get-manager-name"/>
+    <keyword type="function" name="mc_profile_is_default_for_vcard_field ()" link="McProfile.html#mc-profile-is-default-for-vcard-field"/>
+    <keyword type="function" name="mc_profile_get_capabilities ()" link="McProfile.html#mc-profile-get-capabilities"/>
+    <keyword type="function" name="mc_profile_get_default_setting ()" link="McProfile.html#mc-profile-get-default-setting"/>
+    <keyword type="function" name="mc_profile_get_vcard_mangle ()" link="McProfile.html#mc-profile-get-vcard-mangle"/>
+    <keyword type="function" name="mc_profile_presence_get_name ()" link="McProfile.html#mc-profile-presence-get-name"/>
+    <keyword type="function" name="mc_profile_presence_get_type ()" link="McProfile.html#mc-profile-presence-get-type"/>
+    <keyword type="function" name="mc_profile_presence_get_icon_name ()" link="McProfile.html#mc-profile-presence-get-icon-name"/>
+    <keyword type="constant" name="MC_ACCOUNT_CR_FLAG_USE_EXISTING" link="libmcclient-mc-account.html#MC-ACCOUNT-CR-FLAG-USE-EXISTING:CAPS"/>
   </functions>
 </book>

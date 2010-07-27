@@ -74,6 +74,15 @@ mcp_account_diversion_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(AM_CFLAGS) $(CFLAGS) $(mcp_account_diversion_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
+mcp_dbus_caller_permission_la_LIBADD =
+am_mcp_dbus_caller_permission_la_OBJECTS =  \
+	mcp-dbus-caller-permission.lo
+mcp_dbus_caller_permission_la_OBJECTS =  \
+	$(am_mcp_dbus_caller_permission_la_OBJECTS)
+mcp_dbus_caller_permission_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(AM_CFLAGS) $(CFLAGS) \
+	$(mcp_dbus_caller_permission_la_LDFLAGS) $(LDFLAGS) -o $@
 mcp_plugin_la_LIBADD =
 am_mcp_plugin_la_OBJECTS = mcp-plugin.lo
 mcp_plugin_la_OBJECTS = $(am_mcp_plugin_la_OBJECTS)
@@ -93,7 +102,8 @@ PROGRAMS = $(noinst_PROGRAMS)
 am_mc_debug_server_OBJECTS = mc-debug-server.$(OBJEXT)
 mc_debug_server_OBJECTS = $(am_mc_debug_server_OBJECTS)
 mc_debug_server_DEPENDENCIES =  \
-	$(top_builddir)/src/libmissioncontrol-server.la
+	$(top_builddir)/src/libmissioncontrol-server.la \
+	$(top_builddir)/src/libmcd-convenience.la
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -120,9 +130,12 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(mcp_account_diversion_la_SOURCES) $(mcp_plugin_la_SOURCES) \
-	$(test_plugin_la_SOURCES) $(mc_debug_server_SOURCES)
+SOURCES = $(mcp_account_diversion_la_SOURCES) \
+	$(mcp_dbus_caller_permission_la_SOURCES) \
+	$(mcp_plugin_la_SOURCES) $(test_plugin_la_SOURCES) \
+	$(mc_debug_server_SOURCES)
 DIST_SOURCES = $(mcp_account_diversion_la_SOURCES) \
+	$(mcp_dbus_caller_permission_la_SOURCES) \
 	$(mcp_plugin_la_SOURCES) $(am__test_plugin_la_SOURCES_DIST) \
 	$(mc_debug_server_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -171,6 +184,7 @@ am__relativize = \
 ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
+AEGIS_LIBS = @AEGIS_LIBS@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
@@ -251,8 +265,6 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
-PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
-PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -334,8 +346,9 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	account-manager/create-with-properties.py \
 	account-manager/enable.py \
 	account-manager/enable-auto-connect.py \
-	account-manager/nickname.py account-manager/param-types.py \
-	account-manager/presence.py account-manager/reconnect.py \
+	account-manager/nickname.py account-manager/service.py \
+	account-manager/param-types.py account-manager/presence.py \
+	account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
 	account-manager/request-online.py \
 	account-manager/update-parameters.py \
@@ -390,7 +403,7 @@ AM_CFLAGS = $(ERROR_CFLAGS)
 
 # A demo dispatcher plugin (new, minimal API)
 noinst_LTLIBRARIES = mcp-plugin.la mcp-account-diversion.la \
-	$(am__append_2)
+	mcp-dbus-caller-permission.la $(am__append_2)
 mcp_plugin_la_SOURCES = mcp-plugin.c
 # these runes are necessary to make libtool build a dlopen()able shared
 # library even though it's not going to be installed - the default for noinst
@@ -398,10 +411,15 @@ mcp_plugin_la_SOURCES = mcp-plugin.c
 mcp_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
 mcp_account_diversion_la_SOURCES = mcp-account-diversion.c
 mcp_account_diversion_la_LDFLAGS = $(mcp_plugin_la_LDFLAGS)
+mcp_dbus_caller_permission_la_SOURCES = mcp-dbus-caller-permission.c
+mcp_dbus_caller_permission_la_LDFLAGS = $(mcp_plugin_la_LDFLAGS)
 @ENABLE_MCD_PLUGINS_TRUE@test_plugin_la_SOURCES = test-plugin.c
 @ENABLE_MCD_PLUGINS_TRUE@test_plugin_la_LDFLAGS = -module -shared -avoid-version -rpath @abs_builddir@
 mc_debug_server_SOURCES = mc-debug-server.c
-mc_debug_server_LDADD = $(top_builddir)/src/libmissioncontrol-server.la
+mc_debug_server_LDADD = \
+	$(top_builddir)/src/libmissioncontrol-server.la \
+	$(top_builddir)/src/libmcd-convenience.la
+
 INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/src \
 	-I$(top_builddir)/src $(DBUS_CFLAGS) $(TELEPATHY_CFLAGS) \
 	-DMC_DISABLE_DEPRECATED -DLIBDIR="@libdir@" -DLIBVERSION="0" \
@@ -509,6 +527,8 @@ clean-noinstLTLIBRARIES:
 	done
 mcp-account-diversion.la: $(mcp_account_diversion_la_OBJECTS) $(mcp_account_diversion_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(mcp_account_diversion_la_LINK)  $(mcp_account_diversion_la_OBJECTS) $(mcp_account_diversion_la_LIBADD) $(LIBS)
+mcp-dbus-caller-permission.la: $(mcp_dbus_caller_permission_la_OBJECTS) $(mcp_dbus_caller_permission_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(mcp_dbus_caller_permission_la_LINK)  $(mcp_dbus_caller_permission_la_OBJECTS) $(mcp_dbus_caller_permission_la_LIBADD) $(LIBS)
 mcp-plugin.la: $(mcp_plugin_la_OBJECTS) $(mcp_plugin_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(mcp_plugin_la_LINK)  $(mcp_plugin_la_OBJECTS) $(mcp_plugin_la_LIBADD) $(LIBS)
 test-plugin.la: $(test_plugin_la_OBJECTS) $(test_plugin_la_DEPENDENCIES) 
@@ -534,6 +554,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mc-debug-server.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-account-diversion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-dbus-caller-permission.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-plugin.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/test-plugin.Plo@am__quote@
 

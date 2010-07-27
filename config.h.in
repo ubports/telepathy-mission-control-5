@@ -9,6 +9,9 @@
 /* Directory for channel handlers */
 #undef CHANDLERS_DIR
 
+/* Define if Aegis is supported */
+#undef ENABLE_AEGIS
+
 /* Define whether gnome-keyring support is enabled */
 #undef ENABLE_GNOME_KEYRING
 

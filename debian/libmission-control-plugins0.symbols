@@ -28,6 +28,16 @@ libmission-control-plugins.so.0 libmission-control-plugins0 #MINVER#
  mcp_account_storage_ready@Base 5.5.0~
  mcp_account_storage_set@Base 5.5.0~
  mcp_add_object@Base 5.5.0~
+ mcp_dbus_acl_authorised@Base 1:5.5.3~
+ mcp_dbus_acl_authorised_async@Base 1:5.5.3~
+ mcp_dbus_acl_authorised_async_step@Base 1:5.5.3~
+ mcp_dbus_acl_description@Base 1:5.5.3~
+ mcp_dbus_acl_get_type@Base 1:5.5.3~
+ mcp_dbus_acl_iface_implement_authorised@Base 1:5.5.3~
+ mcp_dbus_acl_iface_implement_authorised_async@Base 1:5.5.3~
+ mcp_dbus_acl_iface_set_desc@Base 1:5.5.3~
+ mcp_dbus_acl_iface_set_name@Base 1:5.5.3~
+ mcp_dbus_acl_name@Base 1:5.5.3~
  mcp_dispatch_operation_close_channels@Base 5.5.0~
  mcp_dispatch_operation_destroy_channels@Base 5.5.0~
  mcp_dispatch_operation_end_delay@Base 5.5.0~

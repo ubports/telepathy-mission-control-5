@@ -9,17 +9,12 @@ request-policy
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
 
-
 <!-- ##### SECTION Stability_Level ##### -->
-
-
-<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### STRUCT McpRequestPolicy ##### -->
@@ -49,6 +44,6 @@ request-policy
 </para>
 
 @iface: 
-@McpRequestPolicy *, McpRequest *: 
+@impl: 
 
 

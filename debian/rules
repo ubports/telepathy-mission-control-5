@@ -32,10 +32,21 @@ DEB_CONFIGURE_EXTRA_FLAGS := \
 	--with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc
 
 # we symlink some of the doc directories together
-DEB_INSTALL_DOCS_telepathy-mission-control-5-dbg := --no-act
-DEB_INSTALL_CHANGELOGS_telepathy-mission-control-5-dbg := --no-act
-DEB_INSTALL_DOCS_libmission-control-plugins-dev := --no-act
-DEB_INSTALL_CHANGELOGS_libmission-control-plugins-dev := --no-act
+DEB_INSTALL_DOCS_ALL :=
+DEB_INSTALL_DOCS_telepathy-mission-control-5 := README NEWS AUTHORS
+DEB_INSTALL_DOCS_telepathy-mission-control-5-dbg := --link-doc=telepathy-mission-control-5
+DEB_INSTALL_DOCS_libmission-control-plugins-dev := --link-doc=libmission-control-plugins0
+
+debian/stamp-buildinfo: insist-on-symlinks
+insist-on-symlinks:
+	for p in libmission-control-plugins-dev; do \
+		install -d debian/$$p/usr/share/doc || exit $$?; \
+		ln -s libmission-control-plugins0 debian/$$p/usr/share/doc/$$p || exit $$?; \
+	done
+	for p in telepathy-mission-control-5-dbg; do \
+		install -d debian/$$p/usr/share/doc || exit $$?; \
+		ln -s telepathy-mission-control-5 debian/$$p/usr/share/doc/$$p || exit $$?; \
+	done
 
 export DPKG_GENSYMBOLS_CHECK_LEVEL = 4
 

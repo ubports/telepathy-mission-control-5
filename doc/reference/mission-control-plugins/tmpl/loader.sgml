@@ -9,17 +9,12 @@ loader
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
 
-
 <!-- ##### SECTION Stability_Level ##### -->
-
-
-<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### FUNCTION mcp_plugin_ref_nth_object ##### -->
@@ -67,7 +62,6 @@ loader
 
 </para>
 
-@void: 
 @Returns: 
 
 

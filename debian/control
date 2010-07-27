@@ -12,11 +12,11 @@ Build-Depends: cdbs,
                libdbus-glib-1-dev (>= 0.82),
                libglib2.0-dev (>= 2.24),
                libgnome-keyring-dev,
-               libtelepathy-glib-dev (>= 0.11.6),
+               libtelepathy-glib-dev (>= 0.11.9),
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc
-Standards-Version: 3.8.4
+Standards-Version: 3.9.1
 Vcs-Git: git://git.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git
 Vcs-Browser: http://git.debian.org/?p=pkg-telepathy/telepathy-mission-control-5.git
 Homepage: http://telepathy.freedesktop.org/wiki/

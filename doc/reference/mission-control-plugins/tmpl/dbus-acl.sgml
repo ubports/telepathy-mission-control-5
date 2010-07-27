@@ -1,0 +1,180 @@
+<!-- ##### SECTION Title ##### -->
+dbus-acl
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT McpDBusAcl ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT McpDBusAclIface ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION DBusAclAuthorised ##### -->
+<para>
+
+</para>
+
+@call: 
+@data: 
+
+
+<!-- ##### ENUM DBusAclType ##### -->
+<para>
+
+</para>
+
+@DBUS_ACL_TYPE_UNKNOWN: 
+@DBUS_ACL_TYPE_METHOD: 
+@DBUS_ACL_TYPE_GET_PROPERTY: 
+@DBUS_ACL_TYPE_SET_PROPERTY: 
+
+<!-- ##### STRUCT DBusAclAuthData ##### -->
+<para>
+
+</para>
+
+@acl: 
+@next_acl: 
+@context: 
+@type: 
+@name: 
+@params: 
+@dbus: 
+@handler: 
+@data: 
+@cleanup: 
+
+<!-- ##### USER_FUNCTION DBusAclAuthoriser ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+@Param3: 
+@type: 
+@name: 
+@Param6: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION DBusAclAsyncAuthoriser ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Param2: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_authorised_async_step ##### -->
+<para>
+
+</para>
+
+@ad: 
+@permitted: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_authorised_async ##### -->
+<para>
+
+</para>
+
+@dbus: 
+@context: 
+@type: 
+@name: 
+@params: 
+@handler: 
+@data: 
+@cleanup: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_authorised ##### -->
+<para>
+
+</para>
+
+@dbus: 
+@context: 
+@type: 
+@name: 
+@params: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_iface_set_name ##### -->
+<para>
+
+</para>
+
+@iface: 
+@name: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_iface_set_desc ##### -->
+<para>
+
+</para>
+
+@iface: 
+@desc: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_iface_implement_authorised ##### -->
+<para>
+
+</para>
+
+@iface: 
+@method: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_iface_implement_authorised_async ##### -->
+<para>
+
+</para>
+
+@iface: 
+@method: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_name ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_dbus_acl_description ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+

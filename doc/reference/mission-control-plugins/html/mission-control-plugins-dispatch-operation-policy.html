@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>McpDispatchOperationPolicy</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
+<link rel="up" href="ch04.html" title="Channel dispatch operations">
+<link rel="prev" href="ch04.html" title="Channel dispatch operations">
+<link rel="next" href="mission-control-plugins-dispatch-operation.html" title="McpDispatchOperation">
+<meta name="generator" content="GTK-Doc V1.13 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="Global functions">
+<link rel="chapter" href="ch02.html" title="Account storage">
+<link rel="chapter" href="ch03.html" title="Channel requests">
+<link rel="chapter" href="ch04.html" title="Channel dispatch operations">
+<link rel="chapter" href="object-tree.html" title="Object Hierarchy">
+<link rel="index" href="api-index-full.html" title="API Index">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="ch04.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Mission Control Plugins Reference Manual</th>
+<td><a accesskey="n" href="mission-control-plugins-dispatch-operation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#mission-control-plugins-dispatch-operation-policy.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#mission-control-plugins-dispatch-operation-policy.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#mission-control-plugins-dispatch-operation-policy.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#mission-control-plugins-dispatch-operation-policy.prerequisites" class="shortcut">Prerequisites</a>
+</td></tr>
+</table>
+<div class="refentry" title="McpDispatchOperationPolicy">
+<a name="mission-control-plugins-dispatch-operation-policy"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="mission-control-plugins-dispatch-operation-policy.top_of_page"></a>McpDispatchOperationPolicy</span></h2>
+<p>McpDispatchOperationPolicy — Dispatch Operation policy object, implemented by plugins</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="mission-control-plugins-dispatch-operation-policy.synopsis"></a><h2>Synopsis</h2>
+<a name="McpDispatchOperationPolicy"></a><pre class="synopsis">
+#include &lt;mission-control-plugins/mission-control-plugins.h&gt;
+
+                    <a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicy-struct">McpDispatchOperationPolicy</a>;
+                    <a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicyIface">McpDispatchOperationPolicyIface</a>;
+<span class="returnvalue">void</span>                <a href="mission-control-plugins-dispatch-operation-policy.html#mcp-dispatch-operation-policy-check">mcp_dispatch_operation_policy_check</a> (<a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicy"><span class="returnvalue">McpDispatchOperationPolicy</span></a> *policy,
+                                                         <a href="mission-control-plugins-dispatch-operation.html#McpDispatchOperation"><span class="returnvalue">McpDispatchOperation</span></a> *dispatch_operation);
+<span class="returnvalue">void</span>                <a href="mission-control-plugins-dispatch-operation-policy.html#mcp-dispatch-operation-policy-iface-implement-check">mcp_dispatch_operation_policy_iface_implement_check</a>
+                                                        (<a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicyIface"><span class="returnvalue">McpDispatchOperationPolicyIface</span></a> *iface,
+                                                         <span class="returnvalue">void</span> (implMcpDispatchOperationPolicy *, McpDispatchOperation *) ());
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="mission-control-plugins-dispatch-operation-policy.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  GInterface
+   +----McpDispatchOperationPolicy
+</pre>
+</div>
+<div class="refsect1" title="Prerequisites">
+<a name="mission-control-plugins-dispatch-operation-policy.prerequisites"></a><h2>Prerequisites</h2>
+<p>
+McpDispatchOperationPolicy requires
+ <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
+</div>
+<div class="refsect1" title="Description">
+<a name="mission-control-plugins-dispatch-operation-policy.description"></a><h2>Description</h2>
+<p>
+Plugins may implement <a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicy"><span class="type">McpDispatchOperationPolicy</span></a> in order to apply policy
+to Telepathy channel dispatch operations passing through the Channel
+Dispatcher part of Mission Control. This interface behaves rather like the
+Observer clients in the Telepathy specification, and has access to the same
+information, but runs within the Mission Control process rather than being
+invoked over D-Bus.
+</p>
+<p>
+To do so, the plugin must implement a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> subclass that implements
+<a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicy"><span class="type">McpDispatchOperationPolicy</span></a>, then return an instance of that subclass from
+<a href="mission-control-plugins-loader.html#mcp-plugin-ref-nth-object"><code class="function">mcp_plugin_ref_nth_object()</code></a>.
+</p>
+<p>
+The contents of the <a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicyIface"><span class="type">McpDispatchOperationPolicyIface</span></a> struct are not public,
+so to provide an implementation of the check method,
+plugins should call <a href="mission-control-plugins-dispatch-operation-policy.html#mcp-dispatch-operation-policy-iface-implement-check"><code class="function">mcp_dispatch_operation_policy_iface_implement_check()</code></a>
+from the interface initialization function, like this:
+</p>
+<p>
+</p>
+<div class="example">
+<a name="id576057"></a><p class="title"><b>Example 3. </b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="symbol">(</span>MyPlugin<span class="symbol">,</span> my_plugin<span class="symbol">,</span>
+   G_TYPE_OBJECT<span class="symbol">,</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="symbol">(...);</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="symbol">(</span>MCP_TYPE_DISPATCH_OPERATION_POLICY<span class="symbol">,</span>
+     cdo_policy_iface_init<span class="symbol">);</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="symbol">(...))</span>
+<span class="comment">/* ... */</span>
+<span class="gtkdoc kwb">static void</span>
+<span class="function">cdo_policy_iface_init</span> <span class="symbol">(</span>McpDispatchOperationPolicyIface <span class="symbol">*</span>iface<span class="symbol">,</span>
+    gpointer unused G_GNUC_UNUSED<span class="symbol">)</span>
+<span class="symbol">{</span>
+  <span class="function"><a href="mission-control-plugins-dispatch-operation-policy.html#mcp-dispatch-operation-policy-iface-implement-check">mcp_dispatch_operation_policy_iface_implement_check</a></span> <span class="symbol">(</span>iface<span class="symbol">,</span>
+      my_plugin_check_cdo<span class="symbol">);</span>
+<span class="symbol">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+<p><br class="example-break">
+</p>
+<p>
+A single object can implement more than one interface; for instance, it
+may be useful to combine this interface with <a href="mission-control-plugins-request-policy.html#McpRequestPolicy"><span class="type">McpRequestPolicy</span></a>.</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="mission-control-plugins-dispatch-operation-policy.details"></a><h2>Details</h2>
+<div class="refsect2" title="McpDispatchOperationPolicy">
+<a name="McpDispatchOperationPolicy-struct"></a><h3>McpDispatchOperationPolicy</h3>
+<pre class="programlisting">typedef struct _McpDispatchOperationPolicy McpDispatchOperationPolicy;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="McpDispatchOperationPolicyIface">
+<a name="McpDispatchOperationPolicyIface"></a><h3>McpDispatchOperationPolicyIface</h3>
+<pre class="programlisting">typedef struct _McpDispatchOperationPolicyIface McpDispatchOperationPolicyIface;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcp_dispatch_operation_policy_check ()">
+<a name="mcp-dispatch-operation-policy-check"></a><h3>mcp_dispatch_operation_policy_check ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_policy_check (<a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicy"><span class="returnvalue">McpDispatchOperationPolicy</span></a> *policy,
+                                                         <a href="mission-control-plugins-dispatch-operation.html#McpDispatchOperation"><span class="returnvalue">McpDispatchOperation</span></a> *dispatch_operation);</pre>
+<p>
+Check what to do with a bundle of channels. Implementations of this method
+can use methods on <em class="parameter"><code>dispatch_operation</code></em> to examine the channels, delay
+dispatching, close the channels, etc. in order to impose whatever policy
+the plugin requires.
+</p>
+<p>
+Mission Control calls this function in each plugin after invoking
+Observers, but before Approvers, and without waiting for Observers to
+reply.</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
+<td> an implementation of this interface, provided by a plugin
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>dispatch_operation</code></em> :</span></p></td>
+<td> an object representing a dispatch operation, i.e.
+ a bundle of channels being dispatched
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcp_dispatch_operation_policy_iface_implement_check ()">
+<a name="mcp-dispatch-operation-policy-iface-implement-check"></a><h3>mcp_dispatch_operation_policy_iface_implement_check ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_policy_iface_implement_check
+                                                        (<a href="mission-control-plugins-dispatch-operation-policy.html#McpDispatchOperationPolicyIface"><span class="returnvalue">McpDispatchOperationPolicyIface</span></a> *iface,
+                                                         <span class="returnvalue">void</span> (implMcpDispatchOperationPolicy *, McpDispatchOperation *) ());</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>iface</code></em> :</span></p></td>
+<td> the interface
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>impl</code></em> :</span></p></td>
+<td> an implementation of the virtual method
+ <a href="mission-control-plugins-dispatch-operation-policy.html#mcp-dispatch-operation-policy-check"><code class="function">mcp_dispatch_operation_policy_check()</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="See Also">
+<a name="mission-control-plugins-dispatch-operation-policy.see-also"></a><h2>See Also</h2>
+<a href="mission-control-plugins-dispatch-operation.html#McpDispatchOperation"><span class="type">McpDispatchOperation</span></a>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.13</div>
+</body>
+</html>

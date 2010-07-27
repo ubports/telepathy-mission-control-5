@@ -1,3 +1,14 @@
+telepathy-mission-control-5 (1:5.5.3-1) experimental; urgency=low
+
+  * New upstream release
+    - update libmission-control-plugins0.symbols
+  * Bump telepathy-glib dependency to 0.11.9
+  * Make symlinked documentation directories work correctly if dh_buildinfo is
+    installed
+  * Standards-Version: 3.9.1 (no changes needed)
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 27 Jul 2010 11:32:55 +0100
+
 telepathy-mission-control-5 (1:5.5.2-1) experimental; urgency=low
 
   * New upstream release

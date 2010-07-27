@@ -8,8 +8,9 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdMission.html" title="McdMission">
 <link rel="next" href="McdController.html" title="McdController">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.13 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
@@ -49,14 +50,14 @@ Unstable, unless otherwise indicated
 #include &lt;mcd-proxy.h&gt;
 
                     <a class="link" href="McdProxy.html#McdProxy-struct" title="McdProxy">McdProxy</a>;
-<a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          <a class="link" href="McdProxy.html#mcd-proxy-new" title="mcd_proxy_new ()">mcd_proxy_new</a>                       (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *proxy_mission</code></em>);
-const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  <a class="link" href="McdProxy.html#mcd-proxy-get-proxy-object" title="mcd_proxy_get_proxy_object ()">mcd_proxy_get_proxy_object</a>          (<em class="parameter"><code><a class="link" href="McdProxy.html" title="McdProxy"><span class="type">McdProxy</span></a> *proxy</code></em>);
+<a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          <a class="link" href="McdProxy.html#mcd-proxy-new" title="mcd_proxy_new ()">mcd_proxy_new</a>                       (<a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *proxy_mission);
+const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  <a class="link" href="McdProxy.html#mcd-proxy-get-proxy-object" title="mcd_proxy_get_proxy_object ()">mcd_proxy_get_proxy_object</a>          (<a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *proxy);
 </pre>
 </div>
 <div class="refsect1" title="Object Hierarchy">
 <a name="McdProxy.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
-  <a href="/usr/share/gtk-doc/html/gobject/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
    +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
          +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
                +----McdProxy
@@ -72,8 +73,7 @@ const <a class="link" href="McdMission.html" title="McdMission"><span class="ret
 <a name="McdProxy.description"></a><h2>Description</h2>
 <p>
 This is a simple container class that proxies the events from a proxy
-object to self container.
-</p>
+object to self container.</p>
 </div>
 <div class="refsect1" title="Details">
 <a name="McdProxy.details"></a><h2>Details</h2>
@@ -86,7 +86,7 @@ object to self container.
 <hr>
 <div class="refsect2" title="mcd_proxy_new ()">
 <a name="mcd-proxy-new"></a><h3>mcd_proxy_new ()</h3>
-<pre class="programlisting"><a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          mcd_proxy_new                       (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *proxy_mission</code></em>);</pre>
+<pre class="programlisting"><a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *          mcd_proxy_new                       (<a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *proxy_mission);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -108,7 +108,7 @@ object to self container.
 <hr>
 <div class="refsect2" title="mcd_proxy_get_proxy_object ()">
 <a name="mcd-proxy-get-proxy-object"></a><h3>mcd_proxy_get_proxy_object ()</h3>
-<pre class="programlisting">const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  mcd_proxy_get_proxy_object          (<em class="parameter"><code><a class="link" href="McdProxy.html" title="McdProxy"><span class="type">McdProxy</span></a> *proxy</code></em>);</pre>
+<pre class="programlisting">const <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *  mcd_proxy_get_proxy_object          (<a class="link" href="McdProxy.html" title="McdProxy"><span class="returnvalue">McdProxy</span></a> *proxy);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -139,6 +139,6 @@ object to self container.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.13</div>
 </body>
 </html>

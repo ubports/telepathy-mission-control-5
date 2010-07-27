@@ -9,17 +9,12 @@ dispatch-operation-policy
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
 
-
 <!-- ##### SECTION Stability_Level ##### -->
-
-
-<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### STRUCT McpDispatchOperationPolicy ##### -->
@@ -49,6 +44,6 @@ dispatch-operation-policy
 </para>
 
 @iface: 
-@McpDispatchOperationPolicy *, McpDispatchOperation *: 
+@impl: 
 
 

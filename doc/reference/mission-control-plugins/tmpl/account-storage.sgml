@@ -9,17 +9,12 @@ account-storage
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
 
-
 <!-- ##### SECTION Stability_Level ##### -->
-
-
-<!-- ##### SECTION Image ##### -->
 
 
 <!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY ##### -->
@@ -63,6 +58,15 @@ account-storage
 
 @mcpaccountstorage: the object which received the signal.
 @arg1: 
+
+<!-- ##### SIGNAL McpAccountStorage::altered-one ##### -->
+<para>
+
+</para>
+
+@mcpaccountstorage: the object which received the signal.
+@arg1: 
+@arg2: 
 
 <!-- ##### SIGNAL McpAccountStorage::created ##### -->
 <para>
@@ -128,7 +132,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_set ##### -->
@@ -137,7 +141,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_delete ##### -->
@@ -146,7 +150,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_list ##### -->
@@ -155,7 +159,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_commit ##### -->
@@ -164,7 +168,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_commit_one ##### -->
@@ -173,7 +177,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *, const McpAccountManager *, const gchar *: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_ready ##### -->
@@ -182,7 +186,7 @@ account-storage
 </para>
 
 @iface: 
-@ const McpAccountStorage *storage, const McpAccountManager *am: 
+@method: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_priority ##### -->

@@ -80,7 +80,7 @@ am__DEPENDENCIES_1 =
 libmission_control_plugins_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am_libmission_control_plugins_la_OBJECTS = account.lo \
-	account-storage.lo dispatch-operation.lo \
+	account-storage.lo dbus-acl.lo dispatch-operation.lo \
 	dispatch-operation-policy.lo loader.lo request.lo \
 	request-policy.lo
 nodist_libmission_control_plugins_la_OBJECTS = mcp-signals-marshal.lo
@@ -130,6 +130,7 @@ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
 ACLOCAL = @ACLOCAL@
+AEGIS_LIBS = @AEGIS_LIBS@
 AMTAR = @AMTAR@
 AM_DEFAULT_VERBOSITY = @AM_DEFAULT_VERBOSITY@
 AR = @AR@
@@ -210,8 +211,6 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
-PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
-PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -305,6 +304,7 @@ plugins_include_HEADERS = \
 	mission-control-plugins.h \
 	account.h \
 	account-storage.h \
+	dbus-acl.h \
 	dispatch-operation.h \
 	dispatch-operation-policy.h \
 	loader.h \
@@ -329,6 +329,7 @@ libmission_control_plugins_la_SOURCES = \
 	debug-internal.h \
 	account.c \
 	account-storage.c \
+	dbus-acl.c \
 	dispatch-operation.c \
 	dispatch-operation-policy.c \
 	implementation.h \
@@ -415,6 +416,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbus-acl.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dispatch-operation-policy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dispatch-operation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loader.Plo@am__quote@

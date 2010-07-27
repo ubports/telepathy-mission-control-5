@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>McdConnection</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="libmissioncontrol-server Reference Manual">
+<link rel="up" href="ch01.html" title="libmissioncontrol-server">
+<link rel="prev" href="McdMaster.html" title="McdMaster">
+<link rel="next" href="McdOperation.html" title="McdOperation">
+<meta name="generator" content="GTK-Doc V1.13 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+<link rel="chapter" href="ch01.html" title="libmissioncontrol-server">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="McdMaster.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="ch01.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">libmissioncontrol-server Reference Manual</th>
+<td><a accesskey="n" href="McdOperation.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#libmissioncontrol-server-mcd-connection.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#libmissioncontrol-server-mcd-connection.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#libmissioncontrol-server-mcd-connection.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#libmissioncontrol-server-mcd-connection.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#libmissioncontrol-server-mcd-connection.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="McdConnection">
+<a name="libmissioncontrol-server-mcd-connection"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="libmissioncontrol-server-mcd-connection.top_of_page"></a>McdConnection</span></h2>
+<p>McdConnection — Connection class representing Telepathy connection class</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsect1" title="Stability Level">
+<a name="libmissioncontrol-server-mcd-connection.stability-level"></a><h2>Stability Level</h2>
+Unstable, unless otherwise indicated
+</div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="libmissioncontrol-server-mcd-connection.synopsis"></a><h2>Synopsis</h2>
+<a name="McdConnection"></a><pre class="synopsis">
+#include &lt;mcd-connection.h&gt;
+
+                    <a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection-struct" title="McdConnection">McdConnection</a>;
+<span class="returnvalue">McdAccount</span> *        <a class="link" href="libmissioncontrol-server-mcd-connection.html#mcd-connection-get-account" title="mcd_connection_get_account ()">mcd_connection_get_account</a>          (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmissioncontrol-server-mcd-connection.html#mcd-connection-request-channel" title="mcd_connection_request_channel ()">mcd_connection_request_channel</a>      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection,
+                                                         <a class="link" href="McdChannel.html" title="McdChannel"><span class="returnvalue">McdChannel</span></a> *channel);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmissioncontrol-server-mcd-connection.html#mcd-connection-cancel-channel-request" title="mcd_connection_cancel_channel_request ()">mcd_connection_cancel_channel_request</a>
+                                                        (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection,
+                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a> operation_id,
+                                                         const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *requestor_client_id,
+                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="returnvalue">GError</span></a> **error);
+<span class="returnvalue">void</span>                <a class="link" href="libmissioncontrol-server-mcd-connection.html#mcd-connection-close" title="mcd_connection_close ()">mcd_connection_close</a>                (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="libmissioncontrol-server-mcd-connection.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="McdMission.html" title="McdMission">McdMission</a>
+         +----<a class="link" href="McdOperation.html" title="McdOperation">McdOperation</a>
+               +----McdConnection
+</pre>
+</div>
+<div class="refsect1" title="Properties">
+<a name="libmissioncontrol-server-mcd-connection.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection--account" title='The "account" property'>account</a>"                  <span class="type">McdAccount</span>*           : Read / Write / Construct Only
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection--dbus-daemon" title='The "dbus-daemon" property'>dbus-daemon</a>"              <span class="type">TpDBusDaemon</span>*         : Read / Write / Construct Only
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection--dispatcher" title='The "dispatcher" property'>dispatcher</a>"               <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a>*        : Read / Write / Construct Only
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-connection" title='The "tp-connection" property'>tp-connection</a>"            <span class="type">TpConnection</span>*         : Read
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection--tp-manager" title='The "tp-manager" property'>tp-manager</a>"               <span class="type">TpConnectionManager</span>*  : Read / Write / Construct Only
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="libmissioncontrol-server-mcd-connection.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection-connection-status-changed" title='The "connection-status-changed" signal'>connection-status-changed</a>"                      : Run Last / Has Details
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection-ready" title='The "ready" signal'>ready</a>"                                          : Run Last / Has Details
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection-self-nickname-changed" title='The "self-nickname-changed" signal'>self-nickname-changed</a>"                          : Run Last / Has Details
+  "<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection-self-presence-changed" title='The "self-presence-changed" signal'>self-presence-changed</a>"                          : Run Last / Has Details
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="libmissioncontrol-server-mcd-connection.description"></a><h2>Description</h2>
+<p>
+FIXME</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="libmissioncontrol-server-mcd-connection.details"></a><h2>Details</h2>
+<div class="refsect2" title="McdConnection">
+<a name="McdConnection-struct"></a><h3>McdConnection</h3>
+<pre class="programlisting">typedef struct _McdConnection McdConnection;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mcd_connection_get_account ()">
+<a name="mcd-connection-get-account"></a><h3>mcd_connection_get_account ()</h3>
+<pre class="programlisting"><span class="returnvalue">McdAccount</span> *        mcd_connection_get_account          (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_connection_request_channel ()">
+<a name="mcd-connection-request-channel"></a><h3>mcd_connection_request_channel ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcd_connection_request_channel      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection,
+                                                         <a class="link" href="McdChannel.html" title="McdChannel"><span class="returnvalue">McdChannel</span></a> *channel);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>channel</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_connection_cancel_channel_request ()">
+<a name="mcd-connection-cancel-channel-request"></a><h3>mcd_connection_cancel_channel_request ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcd_connection_cancel_channel_request
+                                                        (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection,
+                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a> operation_id,
+                                                         const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *requestor_client_id,
+                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="returnvalue">GError</span></a> **error);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>operation_id</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>requestor_client_id</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mcd_connection_close ()">
+<a name="mcd-connection-close"></a><h3>mcd_connection_close ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcd_connection_close                (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="returnvalue">McdConnection</span></a> *connection);</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>connection</code></em> :</span></p></td>
+<td>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="libmissioncontrol-server-mcd-connection.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "account" property'>
+<a name="McdConnection--account"></a><h3>The <code class="literal">"account"</code> property</h3>
+<pre class="programlisting">  "account"                  <span class="type">McdAccount</span>*           : Read / Write / Construct Only</pre>
+<p>Account.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "dbus-daemon" property'>
+<a name="McdConnection--dbus-daemon"></a><h3>The <code class="literal">"dbus-daemon"</code> property</h3>
+<pre class="programlisting">  "dbus-daemon"              <span class="type">TpDBusDaemon</span>*         : Read / Write / Construct Only</pre>
+<p>DBus daemon.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "dispatcher" property'>
+<a name="McdConnection--dispatcher"></a><h3>The <code class="literal">"dispatcher"</code> property</h3>
+<pre class="programlisting">  "dispatcher"               <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a>*        : Read / Write / Construct Only</pre>
+<p>Dispatcher.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "tp-connection" property'>
+<a name="McdConnection--tp-connection"></a><h3>The <code class="literal">"tp-connection"</code> property</h3>
+<pre class="programlisting">  "tp-connection"            <span class="type">TpConnection</span>*         : Read</pre>
+<p>Telepathy Connection.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "tp-manager" property'>
+<a name="McdConnection--tp-manager"></a><h3>The <code class="literal">"tp-manager"</code> property</h3>
+<pre class="programlisting">  "tp-manager"               <span class="type">TpConnectionManager</span>*  : Read / Write / Construct Only</pre>
+<p>Telepathy Manager.</p>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="libmissioncontrol-server-mcd-connection.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "connection-status-changed" signal'>
+<a name="McdConnection-connection-status-changed"></a><h3>The <code class="literal">"connection-status-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="type">McdConnection</span></a> *mcdconnection,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>          arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>          arg2,
+                                                        <span class="type">TpConnection</span>  *arg3,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)          : Run Last / Has Details</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdconnection</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>Param4</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "ready" signal'>
+<a name="McdConnection-ready"></a><h3>The <code class="literal">"ready"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="type">McdConnection</span></a> *mcdconnection,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)          : Run Last / Has Details</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdconnection</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "self-nickname-changed" signal'>
+<a name="McdConnection-self-nickname-changed"></a><h3>The <code class="literal">"self-nickname-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="type">McdConnection</span></a> *mcdconnection,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>         *arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)          : Run Last / Has Details</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdconnection</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "self-presence-changed" signal'>
+<a name="McdConnection-self-presence-changed"></a><h3>The <code class="literal">"self-presence-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="libmissioncontrol-server-mcd-connection.html#McdConnection"><span class="type">McdConnection</span></a> *mcdconnection,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>          arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>         *arg2,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>         *arg3,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>       user_data)          : Run Last / Has Details</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcdconnection</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg2</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg3</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.13</div>
+</body>
+</html>
