@@ -38,6 +38,7 @@
 #include "_gen/svc-Account_Interface_Compat.h"
 #include "_gen/svc-Account_Interface_Conditions.h"
 #include "_gen/svc-Account_Interface_Stats.h"
+#include "_gen/svc-Account_Interface_Minimum_Presence.h"
 
 G_GNUC_INTERNAL void _mcd_account_maybe_autoconnect (McdAccount *account);
 G_GNUC_INTERNAL void _mcd_account_connect (McdAccount *account,
@@ -113,16 +114,16 @@ typedef struct {
 G_GNUC_INTERNAL
 GList *_mcd_account_get_online_requests (McdAccount *account);
 
+G_GNUC_INTERNAL McdStorage *_mcd_account_get_storage (McdAccount *account);
 
 static inline void
 _mcd_account_write_conf (McdAccount *account)
 {
-    McdAccountManager *account_manager;
+    McdStorage *storage = _mcd_account_get_storage (account);
 
-    account_manager = mcd_account_get_account_manager (account);
-    g_return_if_fail (MCD_IS_ACCOUNT_MANAGER (account_manager));
+    g_return_if_fail (MCD_IS_STORAGE (storage));
 
-    mcd_account_manager_write_conf_async (account_manager, account, NULL, NULL);
+    mcd_storage_commit (storage, mcd_account_get_unique_name (account));
 }
 
 G_GNUC_INTERNAL void _mcd_account_compat_class_init (McdAccountClass *klass);
@@ -141,8 +142,8 @@ extern const McdDBusProp account_channelrequests_properties[];
 
 G_GNUC_INTERNAL McdChannel *_mcd_account_create_request (McdAccount *account,
     GHashTable *properties, gint64 user_action_time,
-    const gchar *preferred_handler, gboolean use_existing,
-    gboolean proceeding, GError **error);
+    const gchar *preferred_handler, GHashTable *request_metadata,
+    gboolean use_existing, gboolean proceeding, GError **error);
 
 G_GNUC_INTERNAL void _mcd_account_proceed_with_request (McdAccount *account,
                                                         McdChannel *channel);
@@ -182,6 +183,13 @@ void account_stats_iface_init (McSvcAccountInterfaceStatsClass *iface,
                                gpointer iface_data);
 void account_stats_instance_init (TpSvcDBusProperties *self);
 
+extern const McdDBusProp minimum_presence_properties[];
+
+void minimum_presence_iface_init (McSvcAccountInterfaceMinimumPresenceClass *iface,
+                                  gpointer iface_data);
+
+void minimum_presence_instance_init (TpSvcDBusProperties *self);
+
 G_GNUC_INTERNAL gboolean _mcd_account_check_request_real (McdAccount *account,
                                                           GHashTable *request,
                                                           GError **error);
@@ -194,5 +202,18 @@ G_GNUC_INTERNAL gboolean _mcd_account_set_enabled (McdAccount *account,
                                                    gboolean enabled,
                                                    gboolean write_out,
                                                    GError **error);
+
+G_GNUC_INTERNAL void _mcd_account_set_minimum_presence (McdAccount *account,
+                                                        TpConnectionPresenceType type,
+                                                        const gchar *status,
+                                                        const gchar *message);
+
+G_GNUC_INTERNAL void _mcd_account_get_combined_presence (McdAccount *account,
+                                                         TpConnectionPresenceType *presence,
+                                                         const gchar **status,
+                                                         const gchar **message);
+
+G_GNUC_INTERNAL gboolean _mcd_account_presence_type_is_settable (
+        TpConnectionPresenceType type);
 
 #endif /* __MCD_ACCOUNT_PRIV_H__ */

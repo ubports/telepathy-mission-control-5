@@ -35,7 +35,13 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @ENABLE_GNOME_KEYRING_TRUE@am__append_1 = $(GNOME_KEYRING_CFLAGS)
-noinst_PROGRAMS = test-value-is-same$(EXEEXT)
+@ENABLE_GNOME_KEYRING_TRUE@am__append_2 = keyring-command
+noinst_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_3)
+TESTS = $(am__EXEEXT_1)
+@ENABLE_GNOME_KEYRING_TRUE@am__append_3 = $(GNOME_KEYRING_LIBS)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_4 = account-store-libaccounts.c account-store-libaccounts.h
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_5 = $(LIBACCOUNTS_SSO_LIBS)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_6 = $(LIBACCOUNTS_SSO_CFLAGS)
 subdir = test
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -52,14 +58,37 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
+am__EXEEXT_1 = test-value-is-same$(EXEEXT)
+@ENABLE_GNOME_KEYRING_TRUE@am__EXEEXT_2 = keyring-command$(EXEEXT)
+am__EXEEXT_3 = account-store$(EXEEXT) $(am__EXEEXT_2)
 PROGRAMS = $(noinst_PROGRAMS)
+am__account_store_SOURCES_DIST = account-store.c \
+	account-store-default.c account-store-default.h \
+	account-store-libaccounts.c account-store-libaccounts.h
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__objects_1 = account-store-libaccounts.$(OBJEXT)
+am_account_store_OBJECTS = account-store.$(OBJEXT) \
+	account-store-default.$(OBJEXT) $(am__objects_1)
+account_store_OBJECTS = $(am_account_store_OBJECTS)
+am__DEPENDENCIES_1 =
+@ENABLE_GNOME_KEYRING_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__DEPENDENCIES_3 =  \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(am__DEPENDENCIES_1)
+account_store_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_2) $(am__DEPENDENCIES_3)
+AM_V_lt = $(am__v_lt_$(V))
+am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
+am__v_lt_0 = --silent
+am__keyring_command_SOURCES_DIST = keyring-command.c
+@ENABLE_GNOME_KEYRING_TRUE@am_keyring_command_OBJECTS =  \
+@ENABLE_GNOME_KEYRING_TRUE@	keyring-command.$(OBJEXT)
+keyring_command_OBJECTS = $(am_keyring_command_OBJECTS)
+@ENABLE_GNOME_KEYRING_TRUE@keyring_command_DEPENDENCIES =  \
+@ENABLE_GNOME_KEYRING_TRUE@	$(am__DEPENDENCIES_1) \
+@ENABLE_GNOME_KEYRING_TRUE@	$(am__DEPENDENCIES_1)
 am_test_value_is_same_OBJECTS = value-is-same.$(OBJEXT)
 test_value_is_same_OBJECTS = $(am_test_value_is_same_OBJECTS)
 test_value_is_same_DEPENDENCIES =  \
 	$(top_builddir)/src/libmcd-convenience.la
-AM_V_lt = $(am__v_lt_$(V))
-am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
-am__v_lt_0 = --silent
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -86,8 +115,11 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(test_value_is_same_SOURCES)
-DIST_SOURCES = $(test_value_is_same_SOURCES)
+SOURCES = $(account_store_SOURCES) $(keyring_command_SOURCES) \
+	$(test_value_is_same_SOURCES)
+DIST_SOURCES = $(am__account_store_SOURCES_DIST) \
+	$(am__keyring_command_SOURCES_DIST) \
+	$(test_value_is_same_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -215,6 +247,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -291,15 +325,21 @@ top_srcdir = @top_srcdir@
 INCLUDES = $(DBUS_CFLAGS) $(TELEPATHY_CFLAGS) -I$(top_srcdir) \
 	-I$(top_builddir) -I$(top_srcdir)/src -I$(top_builddir)/src \
 	-DMC_DISABLE_DEPRECATED -DLIBDIR="@libdir@" -DLIBVERSION="0" \
-	$(am__append_1)
+	$(am__append_1) $(am__append_6)
 AM_CFLAGS = $(ERROR_CFLAGS)
-SUBDIRS = twisted
-TESTS = $(noinst_PROGRAMS)
+SUBDIRS = . twisted
+TEST_EXECUTABLES = test-value-is-same
+NON_TEST_EXECUTABLES = account-store $(am__append_2)
 
 # This test needs linking against the convenience library, so it can use
 # MC internals.
 test_value_is_same_SOURCES = value-is-same.c
 test_value_is_same_LDADD = $(top_builddir)/src/libmcd-convenience.la
+account_store_LDADD = $(GLIB_LIBS) $(am__append_3) $(am__append_5)
+account_store_SOURCES = account-store.c account-store-default.c \
+	account-store-default.h $(am__append_4)
+@ENABLE_GNOME_KEYRING_TRUE@keyring_command_LDADD = $(GLIB_LIBS) $(GNOME_KEYRING_LIBS)
+@ENABLE_GNOME_KEYRING_TRUE@keyring_command_SOURCES = keyring-command.c
 all: all-recursive
 
 .SUFFIXES:
@@ -343,6 +383,12 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+account-store$(EXEEXT): $(account_store_OBJECTS) $(account_store_DEPENDENCIES) 
+	@rm -f account-store$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(account_store_OBJECTS) $(account_store_LDADD) $(LIBS)
+keyring-command$(EXEEXT): $(keyring_command_OBJECTS) $(keyring_command_DEPENDENCIES) 
+	@rm -f keyring-command$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(keyring_command_OBJECTS) $(keyring_command_LDADD) $(LIBS)
 test-value-is-same$(EXEEXT): $(test_value_is_same_OBJECTS) $(test_value_is_same_DEPENDENCIES) 
 	@rm -f test-value-is-same$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_value_is_same_OBJECTS) $(test_value_is_same_LDADD) $(LIBS)
@@ -353,6 +399,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-store-default.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-store-libaccounts.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-store.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/keyring-command.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value-is-same.Po@am__quote@
 
 .c.o:

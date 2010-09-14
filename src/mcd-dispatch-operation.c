@@ -52,6 +52,7 @@
 #include "plugin-loader.h"
 
 #include <libmcclient/mc-errors.h>
+#include "libmcclient/mc-gtypes.h"
 
 #define MCD_CLIENT_BASE_NAME "org.freedesktop.Telepathy.Client."
 #define MCD_CLIENT_BASE_NAME_LEN (sizeof (MCD_CLIENT_BASE_NAME) - 1)
@@ -687,12 +688,10 @@ mcd_dispatch_operation_set_channel_handled_by (McdDispatchOperation *self,
                                                const gchar *unique_name,
                                                const gchar *well_known_name)
 {
-    const gchar *path;
     TpChannel *tp_channel;
 
     g_assert (unique_name != NULL);
 
-    path = mcd_channel_get_object_path (channel);
     tp_channel = mcd_channel_get_tp_channel (channel);
     g_return_if_fail (tp_channel != NULL);
 
@@ -1155,23 +1154,10 @@ mcd_dispatch_operation_finalize (GObject *object)
 {
     McdDispatchOperationPrivate *priv = MCD_DISPATCH_OPERATION_PRIV (object);
 
-    g_strfreev (priv->possible_handlers);
-    priv->possible_handlers = NULL;
-
-    if (priv->properties)
-        g_hash_table_unref (priv->properties);
-
-    if (priv->failed_handlers != NULL)
-    {
-        g_hash_table_unref (priv->failed_handlers);
-    }
-
-    if (priv->result != NULL)
-    {
-        g_error_free (priv->result);
-        priv->result = NULL;
-    }
-
+    tp_clear_pointer (&priv->possible_handlers, g_strfreev);
+    tp_clear_pointer (&priv->properties, g_hash_table_unref);
+    tp_clear_pointer (&priv->failed_handlers, g_hash_table_unref);
+    g_clear_error (&priv->result);
     g_free (priv->object_path);
 
     G_OBJECT_CLASS (_mcd_dispatch_operation_parent_class)->finalize (object);
@@ -1183,19 +1169,10 @@ mcd_dispatch_operation_dispose (GObject *object)
     McdDispatchOperationPrivate *priv = MCD_DISPATCH_OPERATION_PRIV (object);
     GList *list;
 
-    if (priv->plugin_api != NULL)
-    {
-        g_object_unref (priv->plugin_api);
-        priv->plugin_api = NULL;
-    }
+    tp_clear_object (&priv->plugin_api);
+    tp_clear_object (&priv->successful_handler);
 
-    if (priv->successful_handler != NULL)
-    {
-        g_object_unref (priv->successful_handler);
-        priv->successful_handler = NULL;
-    }
-
-    if (priv->channels)
+    if (priv->channels != NULL)
     {
         for (list = priv->channels; list != NULL; list = list->next)
         {
@@ -1204,47 +1181,26 @@ mcd_dispatch_operation_dispose (GObject *object)
             g_object_unref (list->data);
         }
 
-        g_list_free (priv->channels);
-        priv->channels = NULL;
+        tp_clear_pointer (&priv->channels, g_list_free);
     }
 
     if (priv->lost_channels != NULL)
     {
         for (list = priv->lost_channels; list != NULL; list = list->next)
             g_object_unref (list->data);
-        g_list_free (priv->lost_channels);
-        priv->lost_channels = NULL;
+
+        tp_clear_pointer (&priv->lost_channels, g_list_free);
     }
 
-    if (priv->connection)
-    {
-        g_object_unref (priv->connection);
-        priv->connection = NULL;
-    }
-
-    if (priv->account != NULL)
-    {
-        g_object_unref (priv->account);
-        priv->account = NULL;
-    }
-
-    if (priv->handler_map != NULL)
-    {
-        g_object_unref (priv->handler_map);
-        priv->handler_map = NULL;
-    }
-
-    if (priv->client_registry != NULL)
-    {
-        g_object_unref (priv->client_registry);
-        priv->client_registry = NULL;
-    }
+    tp_clear_object (&priv->connection);
+    tp_clear_object (&priv->account);
+    tp_clear_object (&priv->handler_map);
+    tp_clear_object (&priv->client_registry);
 
     if (priv->approvals != NULL)
     {
         g_queue_foreach (priv->approvals, (GFunc) approval_free, NULL);
-        g_queue_free (priv->approvals);
-        priv->approvals = NULL;
+        tp_clear_pointer (&priv->approvals, g_queue_free);
     }
 
     G_OBJECT_CLASS (_mcd_dispatch_operation_parent_class)->dispose (object);
@@ -1851,42 +1807,25 @@ observe_channels_cb (TpClient *proxy, const GError *error,
 }
 
 /* The returned GPtrArray is allocated, but the contents are borrowed. */
-static GPtrArray *
+static GHashTable *
 collect_satisfied_requests (GList *channels)
 {
-    const GList *c, *r;
-    GHashTable *set = g_hash_table_new (g_str_hash, g_str_equal);
-    GHashTableIter iter;
-    gpointer path;
-    GPtrArray *ret;
+    const GList *c;
+    GHashTable *set;
 
-    /* collect object paths into a hash table, to drop duplicates
-     * FIXME (fd.o #24763): this shouldn't be necessary, because there should
-     * never be duplicates, unless my analysis is wrong? */
+    set = g_hash_table_new_full (g_str_hash, g_str_equal,
+        g_free, g_object_unref);
+
     for (c = channels; c != NULL; c = c->next)
     {
-        const GList *reqs = _mcd_channel_get_satisfied_requests (c->data,
+        GHashTable *reqs = _mcd_channel_get_satisfied_requests (c->data,
                                                                  NULL);
-
-        for (r = reqs; r != NULL; r = r->next)
-        {
-            g_hash_table_insert (set, r->data, r->data);
-        }
+        tp_g_hash_table_update (set, reqs,
+            (GBoxedCopyFunc) g_strdup, (GBoxedCopyFunc) g_object_ref);
+        g_hash_table_unref (reqs);
     }
 
-    /* serialize them into a pointer array, which is what dbus-glib wants */
-    ret = g_ptr_array_sized_new (g_hash_table_size (set));
-
-    g_hash_table_iter_init (&iter, set);
-
-    while (g_hash_table_iter_next (&iter, &path, NULL))
-    {
-        g_ptr_array_add (ret, path);
-    }
-
-    g_hash_table_destroy (set);
-
-    return ret;
+    return set;
 }
 
 static void
@@ -1898,7 +1837,7 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
     GHashTableIter iter;
     gpointer client_p;
 
-    observer_info = g_hash_table_new (g_str_hash, g_str_equal);
+    observer_info = tp_asv_new (NULL, NULL);
 
     _mcd_client_registry_init_hash_iter (self->priv->client_registry, &iter);
 
@@ -1908,6 +1847,10 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
         GList *observed = NULL;
         const gchar *account_path, *connection_path;
         GPtrArray *channels_array, *satisfied_requests;
+        GHashTable *reqs;
+        GHashTableIter it;
+        gpointer path, value;
+        GHashTable *request_properties;
 
         if (!tp_proxy_has_interface_by_id (client,
                                            TP_IFACE_QUARK_CLIENT_OBSERVER))
@@ -1937,7 +1880,30 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
          * if the observed list is the same */
         channels_array = _mcd_tp_channel_details_build_from_list (observed);
 
-        satisfied_requests = collect_satisfied_requests (observed);
+        reqs = collect_satisfied_requests (observed);
+
+        satisfied_requests = g_ptr_array_sized_new (g_hash_table_size (reqs));
+        request_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
+            g_free, (GDestroyNotify) g_hash_table_unref);
+
+        /* 'Requests_Satisfied' and 'request-properties' */
+        g_hash_table_iter_init (&it, reqs);
+        while (g_hash_table_iter_next (&it, &path, &value))
+        {
+            GHashTable *props;
+
+            g_ptr_array_add (satisfied_requests, path);
+
+            props = _mcd_channel_dup_request_properties (MCD_CHANNEL (value));
+            g_hash_table_insert (request_properties, g_strdup (path), props);
+        }
+
+        /* transfer ownership into observer_info */
+        /* FIXME: use telepathy-glib type when available */
+        tp_asv_take_boxed (observer_info, "request-properties",
+            MC_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP,
+            request_properties);
+        request_properties = NULL;
 
         if (_mcd_dispatch_operation_needs_approval (self))
         {
@@ -1962,6 +1928,7 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
         _mcd_tp_channel_details_free (channels_array);
 
         g_list_free (observed);
+        g_hash_table_unref (reqs);
     }
 
     g_hash_table_destroy (observer_info);

@@ -39,13 +39,17 @@ typedef struct _McdAccount McdAccount;
 typedef struct _McdAccountPrivate McdAccountPrivate;
 typedef struct _McdAccountClass McdAccountClass;
 
+typedef struct _McdAccountPresencePrivate McdAccountPresencePrivate;
+
 #include "mcd-connection.h"
 #include "mcd-account-manager.h"
+#include "mcd-storage.h"
 
 struct _McdAccount
 {
     GObject parent;
     McdAccountPrivate *priv;
+    McdAccountPresencePrivate *presence_priv;
 };
 
 typedef enum
@@ -99,7 +103,7 @@ GType mcd_account_get_type (void);
 McdAccount *mcd_account_new (McdAccountManager *account_manager,
 			     const gchar *name);
 
-McdAccountManager *mcd_account_get_account_manager (McdAccount *account);
+TpDBusDaemon *mcd_account_get_dbus_daemon (McdAccount *account);
 
 void mcd_account_delete (McdAccount *account, McdAccountDeleteCb callback,
                          gpointer user_data);

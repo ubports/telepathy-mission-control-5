@@ -170,7 +170,7 @@ class SimulatedConnection(object):
     def __init__(self, q, bus, cmname, protocol, account_part, self_ident,
             implement_get_interfaces=True, has_requests=True,
             has_presence=False, has_aliasing=False, has_avatars=False,
-            avatars_persist=True, extra_interfaces=[]):
+            avatars_persist=True, extra_interfaces=[], has_hidden=False):
         self.q = q
         self.bus = bus
 
@@ -274,8 +274,15 @@ class SimulatedConnection(object):
             'error': (cs.PRESENCE_TYPE_ERROR, False, False),
             'unknown': (cs.PRESENCE_TYPE_UNKNOWN, False, False),
             }, signature='s(ubb)')
+
+        if has_hidden:
+            self.statuses['hidden'] = (cs.PRESENCE_TYPE_HIDDEN, True, True)
+
         self.presence = dbus.Struct((cs.PRESENCE_TYPE_OFFLINE, 'offline', ''),
                 signature='uss')
+
+    def forget_avatar(self):
+        self.avatar = (dbus.ByteArray(''), '')
 
     # not actually very relevant for MC so hard-code 0 for now
     def GetAliasFlags(self, e):
@@ -795,12 +802,27 @@ def create_fakecm_account(q, bus, mc, params):
 
     return (cm_name_ref, account)
 
+def get_fakecm_account(bus, mc, account_path):
+    # Get the Account interface
+    account = bus.get_object(
+        cs.tp_name_prefix + '.AccountManager',
+        account_path)
+    account_iface = dbus.Interface(account, cs.ACCOUNT)
+    account_props = dbus.Interface(account, cs.PROPERTIES_IFACE)
+    # Introspect Account for debugging purpose
+    account_introspected = account.Introspect(
+            dbus_interface=cs.INTROSPECTABLE_IFACE)
+    #print account_introspected
+    return account
+
+
 def enable_fakecm_account(q, bus, mc, account, expected_params,
         has_requests=True, has_presence=False, has_aliasing=False,
         has_avatars=False, avatars_persist=True,
         extra_interfaces=[],
         requested_presence=(2, 'available', ''),
-        expect_before_connect=[], expect_after_connect=[]):
+        expect_before_connect=[], expect_after_connect=[],
+        has_hidden=False):
     # Enable the account
     account.Set(cs.ACCOUNT, 'Enabled', True,
             dbus_interface=cs.PROPERTIES_IFACE)
@@ -824,7 +846,8 @@ def enable_fakecm_account(q, bus, mc, account, expected_params,
     conn = SimulatedConnection(q, bus, 'fakecm', 'fakeprotocol', '_',
             'myself', has_requests=has_requests, has_presence=has_presence,
             has_aliasing=has_aliasing, has_avatars=has_avatars,
-            avatars_persist=avatars_persist, extra_interfaces=extra_interfaces)
+            avatars_persist=avatars_persist, extra_interfaces=extra_interfaces,
+            has_hidden=has_hidden)
 
     q.dbus_return(e.message, conn.bus_name, conn.object_path, signature='so')
 
@@ -927,3 +950,47 @@ def expect_client_setup(q, clients, got_interfaces_already=False):
 def get_account_manager(bus):
     return bus.get_object(cs.AM, cs.AM_PATH,
             follow_name_owner_changes=True)
+
+def connect_to_mc(q, bus, mc):
+    # Get the AccountManager interface
+    account_manager = get_account_manager(bus)
+    account_manager_iface = dbus.Interface(account_manager, cs.AM)
+
+    # Introspect AccountManager for debugging purpose
+    account_manager_introspected = account_manager.Introspect(
+            dbus_interface=cs.INTROSPECTABLE_IFACE)
+    #print account_manager_introspected
+
+    # Check AccountManager has D-Bus property interface
+    properties = account_manager.GetAll(cs.AM,
+            dbus_interface=cs.PROPERTIES_IFACE)
+    assert properties is not None
+    interfaces = properties.get('Interfaces')
+
+    # assert that current functionality exists
+    assert cs.AM_IFACE_NOKIA_QUERY in interfaces, interfaces
+
+    return account_manager, properties, interfaces
+
+def keyfile_read(fname):
+    groups = { None: {} }
+    group = None
+    for line in open(fname):
+        line = line[:-1].decode('utf-8').strip()
+        if not line or line.startswith('#'):
+            continue
+
+        if line.startswith('[') and line.endswith(']'):
+            group = line[1:-1]
+            groups[group] = {}
+            continue
+
+        if '=' in line:
+            k, v = line.split('=', 1)
+        else:
+            k = line
+            v = None
+
+        groups[group][k] = v
+    return groups
+

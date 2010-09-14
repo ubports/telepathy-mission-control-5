@@ -13,11 +13,14 @@ SPECS = \
 	Account_Interface_ChannelRequests.xml \
 	Account_Interface_Compat.xml \
 	Account_Interface_Conditions.xml \
+        Account_Interface_Minimum_Presence.xml \
 	Account_Interface_Stats.xml \
 	Channel_Dispatch_Operation.xml \
 	Channel_Dispatcher.xml \
+	Channel_Dispatcher_Future.xml \
 	Channel_Dispatcher_Interface_Operation_List.xml \
 	Channel_Request.xml \
+	Channel_Request_Future.xml \
 	Client.xml \
 	Client_Approver.xml \
 	Client_Handler.xml \

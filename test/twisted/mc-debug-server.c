@@ -26,6 +26,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <glib.h>
 
@@ -43,10 +44,6 @@
 
 static McdService *mcd = NULL;
 
-#if ENABLE_GNOME_KEYRING
-static gchar *keyring_name = NULL;
-#endif
-
 static gboolean
 the_end (gpointer data)
 {
@@ -59,11 +56,16 @@ static void
 on_abort (gpointer unused G_GNUC_UNUSED)
 {
     g_debug ("McdService aborted, unreffing it");
-
     mcd_debug_print_tree (mcd);
+    tp_clear_object (&mcd);
+}
 
-    g_object_unref (mcd);
-    mcd = NULL;
+static gboolean
+delayed_abort (gpointer data G_GNUC_UNUSED)
+{
+    g_message ("Aborting by popular request");
+    mcd_mission_abort ((McdMission *) mcd);
+    return FALSE;
 }
 
 #define MCD_SYSTEM_MEMORY_CONSERVED (1 << 1)
@@ -84,6 +86,23 @@ dbus_filter_function (DBusConnection *connection,
       g_message ("Got disconnected from the session bus");
 
       mcd_mission_abort ((McdMission *) mcd);
+    }
+  else if (dbus_message_is_method_call (message,
+        "org.freedesktop.Telepathy.MissionControl5.RegressionTests",
+        "Abort"))
+    {
+      DBusMessage *reply;
+
+      g_idle_add (delayed_abort, NULL);
+
+      reply = dbus_message_new_method_return (message);
+
+      if (reply == NULL || !dbus_connection_send (connection, reply, NULL))
+        g_error ("Out of memory");
+
+      dbus_message_unref (reply);
+
+      return DBUS_HANDLER_RESULT_HANDLED;
     }
   else if (dbus_message_is_method_call (message,
         "org.freedesktop.Telepathy.MissionControl5.RegressionTests",
@@ -146,7 +165,7 @@ main (int argc, char **argv)
 {
     TpDBusDaemon *bus_daemon = NULL;
     GError *error = NULL;
-    DBusConnection *connection;
+    DBusConnection *connection = NULL;
     int ret = 1;
     GMainLoop *teardown_loop;
     guint linger_time = 5;
@@ -186,30 +205,10 @@ main (int argc, char **argv)
     dbus_connection_add_filter (connection, dbus_filter_function, NULL, NULL);
 
 #if ENABLE_GNOME_KEYRING
-    while (TRUE)
+    if (g_getenv ("MC_KEYRING_NAME") != NULL)
     {
-        keyring_name = g_strdup_printf ("mc-test-%u", g_random_int ());
-        result = gnome_keyring_create_sync (keyring_name, "");
+        const gchar *keyring_name = g_getenv ("MC_KEYRING_NAME");
 
-        if (result == GNOME_KEYRING_RESULT_OK)
-        {
-            break;
-        }
-        else if (result == GNOME_KEYRING_RESULT_KEYRING_ALREADY_EXISTS)
-        {
-            g_free (keyring_name);
-            continue;
-        }
-        else
-        {
-            g_free (keyring_name);
-            keyring_name = NULL;
-            break;
-        }
-    }
-
-    if (keyring_name != NULL)
-    {
         if ((result = gnome_keyring_set_default_keyring_sync (keyring_name)) ==
              GNOME_KEYRING_RESULT_OK)
         {
@@ -218,14 +217,9 @@ main (int argc, char **argv)
         }
         else
         {
-            g_warning ("Failed to set %s as the default kerying: %s",
+            g_warning ("Failed to set %s as the default keyring: %s",
                        keyring_name, gnome_keyring_result_to_message (result));
         }
-    }
-    else
-    {
-        g_debug ("Failed to create keyring %s: %s", keyring_name,
-                 gnome_keyring_result_to_message (result));
     }
 #endif
 
@@ -259,30 +253,14 @@ main (int argc, char **argv)
 
 out:
 
-    if (bus_daemon != NULL)
+    if (connection != NULL)
     {
         dbus_connection_flush (connection);
-        g_object_unref (bus_daemon);
     }
+
+    tp_clear_object (&bus_daemon);
 
     dbus_shutdown ();
-
-#if ENABLE_GNOME_KEYRING
-    if (keyring_name != NULL)
-    {
-	if ((result = gnome_keyring_delete_sync (keyring_name)) ==
-	    GNOME_KEYRING_RESULT_OK)
-	{
-	    g_debug ("Successfully removed temporary keyring %s", keyring_name);
-	}
-	else
-	{
-	    g_warning ("Failed to remove temporary keyring %s", keyring_name);
-	}
-
-	g_free (keyring_name);
-    }
-#endif
 
     g_message ("Exiting with %d", ret);
 

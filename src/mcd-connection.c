@@ -3,8 +3,8 @@
 /*
  * This file is part of mission-control
  *
- * Copyright (C) 2007-2009 Nokia Corporation.
- * Copyright (C) 2009 Collabora Ltd.
+ * Copyright © 2007-2009 Nokia Corporation.
+ * Copyright © 2009-2010 Collabora Ltd.
  *
  * Contact: Naba Kumar  <naba.kumar@nokia.com>
  *
@@ -411,7 +411,7 @@ presence_get_statuses_cb (TpProxy *proxy, const GValue *v_statuses,
     }
 
     /* Now the presence info is ready. We can set the presence */
-    mcd_account_get_requested_presence (priv->account, &presence,
+    _mcd_account_get_combined_presence (priv->account, &presence,
                                         &status, &message);
     if (priv->connected)
     {
@@ -699,6 +699,7 @@ avatars_clear_avatar_cb (TpConnection *proxy, const GError *error,
     }
 }
 
+/* this signal handler only deals with our own avatar updates */
 static void
 on_avatar_retrieved (TpConnection *proxy, guint contact_id, const gchar *token,
 		     const GArray *avatar, const gchar *mime_type,
@@ -735,6 +736,54 @@ avatars_request_avatars_cb (TpConnection *proxy, const GError *error,
 }
 
 static void
+avatars_known_token_cb (TpConnection *proxy, GHashTable *tokens,
+                        const GError *error, gpointer user_data,
+                        GObject *weak_object)
+{
+    McdConnection *connection = MCD_CONNECTION (weak_object);
+    McdConnectionPrivate *priv = connection->priv;
+    const gchar *token;
+    TpHandle self_handle = tp_connection_get_self_handle (proxy);
+    gpointer handle = user_data;
+
+    if (error)
+    {
+        g_warning ("%s: error: %s", G_STRFUNC, error->message);
+        return;
+    }
+
+    if (handle != GUINT_TO_POINTER (self_handle))
+        return;
+
+    token = g_hash_table_lookup (tokens, handle);
+
+    /* we have a token and it is not the empty string (ie no avatar) */
+    if (token != NULL && *token != '\0')
+    {
+        GArray handles = { (gchar *) &handle, 1 };
+
+        /* if we have an avatar, set off the request to fetch it: this will *
+           get picked up as we connect to the retrieved signal elsewhere    */
+        tp_cli_connection_interface_avatars_call_request_avatars (priv->tp_conn,
+                                                                  -1,
+                                                                  &handles,
+                                                                  avatars_request_avatars_cb,
+                                                                  NULL,
+                                                                  NULL,
+                                                                  weak_object);
+    }
+    else
+    {   /* no avatar => will never get a retrieved signal - remove manually */
+        GError *avatar_error = NULL;
+        McdAccount *account = mcd_connection_get_account (connection);
+
+        if (!_mcd_account_set_avatar (account, NULL, "", "", &avatar_error))
+            DEBUG ("Attempt to clear avatar failed: %s", avatar_error->message);
+    }
+}
+
+/* this signal handler only deals with our own avatar updates */
+static void
 on_avatar_updated (TpConnection *proxy, guint contact_id, const gchar *token,
 		   gpointer user_data, GObject *weak_object)
 {
@@ -752,16 +801,16 @@ on_avatar_updated (TpConnection *proxy, guint contact_id, const gchar *token,
 
     if (!prev_token || strcmp (token, prev_token) != 0)
     {
-    	GArray handles;
-        DEBUG ("avatar has changed");
-	/* the avatar has changed, let's retrieve the new one */
-	handles.len = 1;
-	handles.data = (gchar *)&contact_id;
-	tp_cli_connection_interface_avatars_call_request_avatars (priv->tp_conn, -1,
-								  &handles,
-								  avatars_request_avatars_cb,
-								  priv, NULL,
-								  (GObject *)connection);
+        GArray handles = { (gchar *) &contact_id, 1 };
+
+        DEBUG ("avatar has changed or been erased");
+        tp_cli_connection_interface_avatars_call_get_known_avatar_tokens (priv->tp_conn,
+                                                                          -1,
+                                                                          &handles,
+                                                                          avatars_known_token_cb,
+                                                                          GUINT_TO_POINTER (contact_id),
+                                                                          NULL,
+                                                                          (GObject *)connection);
     }
     g_free (prev_token);
 }
@@ -1029,15 +1078,26 @@ mcd_connection_reconnect (McdConnection *connection)
 static gboolean
 mcd_connection_probation_ended_cb (gpointer user_data)
 {
-    McdConnection *self = user_data;
+    McdConnection *self = MCD_CONNECTION (user_data);
+    McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (self);
 
     /* We've been connected for PROBATION_SEC seconds. We can probably now
      * assume that the connection is stable */
-    DEBUG ("probation finished, assuming connection is stable: %s",
-           tp_proxy_get_object_path (self->priv->tp_conn));
+    if (priv->tp_conn != NULL)
+    {
+        DEBUG ("probation finished, assuming connection is stable: %s",
+               tp_proxy_get_object_path (self->priv->tp_conn));
+        self->priv->probation_drop_count = 0;
+        self->priv->reconnect_interval = INITIAL_RECONNECTION_TIME;
+    }
+    else /* probation timer survived beyond its useful life */
+    {
+        g_warning ("probation error: timer should have been removed when the "
+                   "TpConnection was released");
+    }
+
     self->priv->probation_timer = 0;
-    self->priv->probation_drop_count = 0;
-    self->priv->reconnect_interval = INITIAL_RECONNECTION_TIME;
+
     return FALSE;
 }
 
@@ -1196,22 +1256,22 @@ request_unrequested_channels (McdConnection *connection)
 }
 
 static McdChannel *
-find_channel_by_path (McdConnection *connection, const gchar *object_path)
+find_channel_by_path (McdConnection *connection,
+                      const gchar *object_path)
 {
     const GList *list = NULL;
 
     list = mcd_operation_get_missions (MCD_OPERATION (connection));
+
     while (list)
     {
         McdChannel *channel = MCD_CHANNEL (list->data);
-        const gchar *req_object_path;
 
-        req_object_path = mcd_channel_get_object_path (channel);
-        if (req_object_path &&
-            strcmp (object_path, req_object_path) == 0)
+        if (_mcd_channel_is_primary_for_path (channel, object_path))
         {
             return channel;
         }
+
         list = list->next;
     }
     return NULL;
@@ -1926,8 +1986,16 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
             G_CALLBACK (mcd_connection_invalidated_cb), connection);
 
 	_mcd_connection_call_disconnect (connection);
-	g_object_unref (priv->tp_conn);
-	priv->tp_conn = NULL;
+
+        /* the tp_connection has gone away, so we no longer need (or want) *
+           the probation timer to go off: there's nothing for it to check  */
+        if (priv->probation_timer > 0)
+        {
+            g_source_remove (priv->probation_timer);
+            priv->probation_timer = 0;
+        }
+
+        tp_clear_object (&priv->tp_conn);
     }
 
     /* the interface proxies obtained from this connection must be deleted, too
@@ -1987,27 +2055,12 @@ _mcd_connection_dispose (GObject * object)
         g_signal_handlers_disconnect_by_func (priv->account,
                                               G_CALLBACK (on_account_removed),
                                               object);
-	g_object_unref (priv->account);
-	priv->account = NULL;
+        tp_clear_object (&priv->account);
     }
 
-    if (priv->tp_conn_mgr)
-    {
-	g_object_unref (priv->tp_conn_mgr);
-	priv->tp_conn_mgr = NULL;
-    }
-
-    if (priv->dispatcher)
-    {
-	g_object_unref (priv->dispatcher);
-	priv->dispatcher = NULL;
-    }
-
-    if (priv->dbus_daemon)
-    {
-	g_object_unref (priv->dbus_daemon);
-	priv->dbus_daemon = NULL;
-    }
+    tp_clear_object (&priv->tp_conn_mgr);
+    tp_clear_object (&priv->dispatcher);
+    tp_clear_object (&priv->dbus_daemon);
 
     G_OBJECT_CLASS (mcd_connection_parent_class)->dispose (object);
 }
@@ -2030,22 +2083,17 @@ _mcd_connection_set_property (GObject * obj, guint prop_id,
 	    g_return_if_fail (MCD_IS_DISPATCHER (dispatcher));
 	    g_object_ref (dispatcher);
 	}
-	if (priv->dispatcher)
-	{
-	    g_object_unref (priv->dispatcher);
-	}
+	tp_clear_object (&priv->dispatcher);
 	priv->dispatcher = dispatcher;
 	break;
     case PROP_DBUS_DAEMON:
-	if (priv->dbus_daemon)
-	    g_object_unref (priv->dbus_daemon);
+	tp_clear_object (&priv->dbus_daemon);
 	priv->dbus_daemon = TP_DBUS_DAEMON (g_value_dup_object (val));
 	break;
     case PROP_TP_MANAGER:
 	tp_conn_mgr = g_value_get_object (val);
 	g_object_ref (tp_conn_mgr);
-	if (priv->tp_conn_mgr)
-	    g_object_unref (priv->tp_conn_mgr);
+	tp_clear_object (&priv->tp_conn_mgr);
 	priv->tp_conn_mgr = tp_conn_mgr;
 	break;
     case PROP_ACCOUNT:
@@ -2429,6 +2477,17 @@ mcd_connection_request_channel (McdConnection *connection,
 {
     g_return_val_if_fail (MCD_IS_CONNECTION (connection), FALSE);
     g_return_val_if_fail (MCD_IS_CHANNEL (channel), FALSE);
+
+    if (mcd_channel_get_status (channel) == MCD_CHANNEL_STATUS_FAILED)
+    {
+        DEBUG ("Channel %p failed already, never mind", channel);
+        _mcd_channel_close (channel);
+        mcd_mission_abort (MCD_MISSION (channel));
+        /* FIXME: the boolean return is a decoy - everyone returns TRUE and
+         * every caller ignores it - so it's not clear what FALSE would
+         * mean. */
+        return TRUE;
+    }
 
     if (!mcd_mission_get_parent ((McdMission *)channel))
         mcd_operation_take_mission (MCD_OPERATION (connection),

@@ -1,6 +1,7 @@
 TWISTED_TESTS =
 
 TWISTED_BASIC_TESTS = \
+	account/minimum-presence.py \
 	account-manager/account-basics.py \
 	account-manager/bad-cm.py \
 	account-manager/avatar.py \
@@ -31,7 +32,9 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/capture-bundle.py \
 	dispatcher/connect-for-request.py \
 	dispatcher/create-handler-fails.py \
+	dispatcher/create-hints.py \
 	dispatcher/create-no-preferred-handler.py \
+	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
@@ -63,15 +66,17 @@ TWISTED_BASIC_TESTS += \
 endif
 
 # Tests that aren't to be run if we're running the real (installed) MC,
-# because they rely on special behaviour of mc-debug-server
+# because they rely on special behaviour of mc-debug-server.
+#
+# For simplicity, these are also separate tests: at least
+# account-storage/*.py need their own instances.
 TWISTED_SPECIAL_BUILD_TESTS = \
 	account-manager/auto-away.py \
-	dispatcher/create-lowmem.py
+	account-storage/default-keyring-storage.py \
+	account-storage/diverted-storage.py
 
 TWISTED_SLOW_TESTS = \
 	account-manager/server-drops-us.py
-
-TWISTED_BASIC_TESTS += $(TWISTED_SPECIAL_BUILD_TESTS)
 
 TWISTED_SEPARATE_TESTS = \
 	account-manager/auto-connect.py \
@@ -80,6 +85,8 @@ TWISTED_SEPARATE_TESTS = \
 	account-manager/make-valid.py \
 	crash-recovery/crash-recovery.py \
 	dispatcher/create-at-startup.py
+
+TWISTED_SEPARATE_TESTS += $(TWISTED_SPECIAL_BUILD_TESTS)
 
 AM_CFLAGS = $(ERROR_CFLAGS)
 
@@ -138,10 +145,21 @@ BASIC_TESTS_ENVIRONMENT = \
 	XDG_CONFIG_DIRS=@abs_top_srcdir@/test/twisted \
 	XDG_DATA_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	XDG_DATA_DIRS=@abs_top_srcdir@/test/twisted \
+	XDG_CACHE_DIR=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CACHE_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	MC_CLIENTS_DIR=@abs_top_srcdir@/test/twisted/telepathy/clients \
 	MC_MANAGER_DIR=@abs_top_srcdir@/test/twisted/telepathy/managers \
 	G_DEBUG=fatal_criticals
+
+if ENABLE_GNOME_KEYRING
+BASIC_TESTS_ENVIRONMENT += MC_TEST_GNOME_KEYRING=1
+endif
+
+if ENABLE_LIBACCOUNTS_SSO
+BASIC_TESTS_ENVIRONMENT += AG_DEBUG=all \
+	ACCOUNTS=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
+	AG_SERVICES=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX)
+endif
 
 WITH_SESSION_BUS = \
 	sh $(srcdir)/tools/with-session-bus.sh \

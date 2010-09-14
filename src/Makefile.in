@@ -108,24 +108,26 @@ am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	mcd-account-compat.c mcd-account-conditions.c \
 	mcd-account-config.h mcd-account-connection.c \
 	mcd-account-requests.c mcd-account-stats.c \
-	mcd-account-manager.c mcd-account-manager-priv.h \
-	mcd-account-manager-query.c mcd-account-manager-default.c \
-	mcd-account-priv.h mcd-client.c mcd-client-priv.h \
-	channel-utils.c channel-utils.h client-registry.c \
-	client-registry.h mcd-dbusprop.c mcd-dbusprop.h mcd-debug.c \
-	mcd-dispatch-operation.c mcd-dispatch-operation-priv.h \
-	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
-	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
-	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
+	mcd-account-presence.c mcd-account-manager.c \
+	mcd-account-manager-priv.h mcd-account-manager-query.c \
+	mcd-account-manager-default.c mcd-account-priv.h mcd-client.c \
+	mcd-client-priv.h channel-utils.c channel-utils.h \
+	client-registry.c client-registry.h mcd-dbusprop.c \
+	mcd-dbusprop.h mcd-debug.c mcd-dispatch-operation.c \
+	mcd-dispatch-operation-priv.h mcd-handler-map.c \
+	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
+	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
+	mcd-master.c mcd-master-priv.h mcd-manager.c \
 	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-proxy.c mcd-transport.c \
-	mcd-provisioning.c mcd-provisioning-factory.c \
-	plugin-dispatch-operation.c plugin-dispatch-operation.h \
-	plugin-loader.c plugin-loader.h plugin-request.c \
-	plugin-request.h plugin-account.c plugin-account.h \
-	sp_timestamp.h mcd-account.h mcd-account-compat.h \
-	mcd-account-conditions.h mcd-account-manager.h \
+	mcd-provisioning.c mcd-provisioning-factory.c mcd-storage.c \
+	mcd-storage.h mcd-storage-priv.h plugin-dispatch-operation.c \
+	plugin-dispatch-operation.h plugin-loader.c plugin-loader.h \
+	plugin-request.c plugin-request.h plugin-account.c \
+	plugin-account.h request.c request.h sp_timestamp.h \
+	mcd-account.h mcd-account-compat.h mcd-account-conditions.h \
+	mcd-account-presence.h mcd-account-manager.h \
 	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
 	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
 	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
@@ -140,26 +142,29 @@ am__objects_2 = $(am__objects_1)
 am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
 	mcd-account-compat.lo mcd-account-conditions.lo \
 	mcd-account-connection.lo mcd-account-requests.lo \
-	mcd-account-stats.lo mcd-account-manager.lo \
-	mcd-account-manager-query.lo mcd-account-manager-default.lo \
-	mcd-client.lo channel-utils.lo client-registry.lo \
-	mcd-dbusprop.lo mcd-debug.lo mcd-dispatch-operation.lo \
-	mcd-handler-map.lo mcd-misc.lo mcd-mission.lo mcd-operation.lo \
-	mcd-controller.lo mcd-master.lo mcd-manager.lo \
-	mcd-connection.lo mcd-dispatcher.lo mcd-channel.lo \
-	mcd-service.lo mcd-proxy.lo mcd-transport.lo \
-	mcd-provisioning.lo mcd-provisioning-factory.lo \
+	mcd-account-stats.lo mcd-account-presence.lo \
+	mcd-account-manager.lo mcd-account-manager-query.lo \
+	mcd-account-manager-default.lo mcd-client.lo channel-utils.lo \
+	client-registry.lo mcd-dbusprop.lo mcd-debug.lo \
+	mcd-dispatch-operation.lo mcd-handler-map.lo mcd-misc.lo \
+	mcd-mission.lo mcd-operation.lo mcd-controller.lo \
+	mcd-master.lo mcd-manager.lo mcd-connection.lo \
+	mcd-dispatcher.lo mcd-channel.lo mcd-service.lo mcd-proxy.lo \
+	mcd-transport.lo mcd-provisioning.lo \
+	mcd-provisioning-factory.lo mcd-storage.lo \
 	plugin-dispatch-operation.lo plugin-loader.lo \
-	plugin-request.lo plugin-account.lo $(am__objects_2) \
-	$(am__objects_3)
+	plugin-request.lo plugin-account.lo request.lo \
+	$(am__objects_2) $(am__objects_3)
 nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
 	svc-Account_Interface_ChannelRequests.lo \
 	svc-Account_Interface_Compat.lo \
 	svc-Account_Interface_Conditions.lo \
 	svc-Account_Interface_Stats.lo \
+	svc-Account_Interface_Minimum_Presence.lo \
 	svc-Account_Manager_Interface_Query.lo \
-	svc-Account_Manager_Interface_SSO.lo mcd-enum-types.lo \
-	mcd-signals-marshal.lo $(am__objects_1)
+	svc-Account_Manager_Interface_SSO.lo \
+	svc-Channel_Dispatcher_Future.lo svc-Channel_Request_Future.lo \
+	mcd-enum-types.lo mcd-signals-marshal.lo $(am__objects_1)
 libmcd_convenience_la_OBJECTS = $(am_libmcd_convenience_la_OBJECTS) \
 	$(nodist_libmcd_convenience_la_OBJECTS)
 AM_V_lt = $(am__v_lt_$(V))
@@ -212,13 +217,13 @@ DIST_SOURCES = $(am__libmcd_convenience_la_SOURCES_DIST) \
 	$(libmissioncontrol_server_la_SOURCES)
 am__mission_control_include_HEADERS_DIST = mcd-account.h \
 	mcd-account-compat.h mcd-account-conditions.h \
-	mcd-account-manager.h mcd-account-manager-default.h \
-	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
-	mcd-controller.h mcd-manager.h mcd-connection.h \
-	mcd-connection-plugin.h mcd-plugin.h mcd-presence-frame.h \
-	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
-	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
-	mcd-provisioning.h mcd-provisioning-factory.h \
+	mcd-account-presence.h mcd-account-manager.h \
+	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
+	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
+	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
+	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
+	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
+	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
 	mcd-account-manager-sso.h
 HEADERS = $(mission_control_include_HEADERS) \
 	$(nodist_geninclude_HEADERS)
@@ -309,6 +314,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -389,24 +396,28 @@ INCLUDES = $(TELEPATHY_CFLAGS) $(DBUS_CFLAGS) $(GLIB_CFLAGS) \
 	$(am__append_5) $(am__append_8)
 AM_CFLAGS = $(ERROR_CFLAGS)
 mc_headers = mcd-account.h mcd-account-compat.h \
-	mcd-account-conditions.h mcd-account-manager.h \
-	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
-	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
-	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
-	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	$(am__append_2)
+	mcd-account-conditions.h mcd-account-presence.h \
+	mcd-account-manager.h mcd-account-manager-default.h \
+	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
+	mcd-controller.h mcd-manager.h mcd-connection.h \
+	mcd-connection-plugin.h mcd-plugin.h mcd-presence-frame.h \
+	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
+	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
+	mcd-provisioning.h mcd-provisioning-factory.h $(am__append_2)
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
 	_gen/enums.h \
+	_gen/interfaces.h \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
+	_gen/svc-Account_Interface_Minimum_Presence.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
-	_gen/svc-Account_Manager_Interface_SSO.h
+	_gen/svc-Account_Manager_Interface_SSO.h \
+	_gen/svc-Channel_Dispatcher_Future.h \
+	_gen/svc-Channel_Request_Future.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
@@ -419,8 +430,11 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
+	_gen/svc-Account_Interface_Minimum_Presence.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
 	_gen/svc-Account_Manager_Interface_SSO.c \
+	_gen/svc-Channel_Dispatcher_Future.c \
+	_gen/svc-Channel_Request_Future.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -458,24 +472,25 @@ noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_9)
 libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-compat.c \
 	mcd-account-conditions.c mcd-account-config.h \
 	mcd-account-connection.c mcd-account-requests.c \
-	mcd-account-stats.c mcd-account-manager.c \
-	mcd-account-manager-priv.h mcd-account-manager-query.c \
-	mcd-account-manager-default.c mcd-account-priv.h mcd-client.c \
-	mcd-client-priv.h channel-utils.c channel-utils.h \
-	client-registry.c client-registry.h mcd-dbusprop.c \
-	mcd-dbusprop.h mcd-debug.c mcd-dispatch-operation.c \
-	mcd-dispatch-operation-priv.h mcd-handler-map.c \
-	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
-	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
-	mcd-master.c mcd-master-priv.h mcd-manager.c \
+	mcd-account-stats.c mcd-account-presence.c \
+	mcd-account-manager.c mcd-account-manager-priv.h \
+	mcd-account-manager-query.c mcd-account-manager-default.c \
+	mcd-account-priv.h mcd-client.c mcd-client-priv.h \
+	channel-utils.c channel-utils.h client-registry.c \
+	client-registry.h mcd-dbusprop.c mcd-dbusprop.h mcd-debug.c \
+	mcd-dispatch-operation.c mcd-dispatch-operation-priv.h \
+	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
+	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
+	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
 	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-proxy.c mcd-transport.c \
-	mcd-provisioning.c mcd-provisioning-factory.c \
-	plugin-dispatch-operation.c plugin-dispatch-operation.h \
-	plugin-loader.c plugin-loader.h plugin-request.c \
-	plugin-request.h plugin-account.c plugin-account.h \
-	sp_timestamp.h $(mc_headers) $(am__append_10)
+	mcd-provisioning.c mcd-provisioning-factory.c mcd-storage.c \
+	mcd-storage.h mcd-storage-priv.h plugin-dispatch-operation.c \
+	plugin-dispatch-operation.h plugin-loader.c plugin-loader.h \
+	plugin-request.c plugin-request.h plugin-account.c \
+	plugin-account.h request.c request.h sp_timestamp.h \
+	$(mc_headers) $(am__append_10)
 EXTRA_DIST = \
 	mcd.xml \
 	client.xml \
@@ -583,6 +598,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager-query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager-sso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-presence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-requests.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-stats.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account.Plo@am__quote@
@@ -606,18 +622,23 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-proxy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-signals-marshal.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-transport.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-account.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-dispatch-operation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-loader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-request.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/request.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signals-marshal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_ChannelRequests.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Compat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Minimum_Presence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Stats.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_SSO.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Channel_Dispatcher_Future.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Channel_Request_Future.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -683,6 +704,14 @@ svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
 
+svc-Account_Interface_Minimum_Presence.lo: _gen/svc-Account_Interface_Minimum_Presence.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Minimum_Presence.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Tpo -c -o svc-Account_Interface_Minimum_Presence.lo `test -f '_gen/svc-Account_Interface_Minimum_Presence.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Minimum_Presence.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Tpo $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Minimum_Presence.c' object='svc-Account_Interface_Minimum_Presence.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Minimum_Presence.lo `test -f '_gen/svc-Account_Interface_Minimum_Presence.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Minimum_Presence.c
+
 svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Query.lo -MD -MP -MF $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo $(DEPDIR)/svc-Account_Manager_Interface_Query.Plo
@@ -698,6 +727,22 @@ svc-Account_Manager_Interface_SSO.lo: _gen/svc-Account_Manager_Interface_SSO.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_SSO.c' object='svc-Account_Manager_Interface_SSO.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Manager_Interface_SSO.lo `test -f '_gen/svc-Account_Manager_Interface_SSO.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_SSO.c
+
+svc-Channel_Dispatcher_Future.lo: _gen/svc-Channel_Dispatcher_Future.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Channel_Dispatcher_Future.lo -MD -MP -MF $(DEPDIR)/svc-Channel_Dispatcher_Future.Tpo -c -o svc-Channel_Dispatcher_Future.lo `test -f '_gen/svc-Channel_Dispatcher_Future.c' || echo '$(srcdir)/'`_gen/svc-Channel_Dispatcher_Future.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Channel_Dispatcher_Future.Tpo $(DEPDIR)/svc-Channel_Dispatcher_Future.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Channel_Dispatcher_Future.c' object='svc-Channel_Dispatcher_Future.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Channel_Dispatcher_Future.lo `test -f '_gen/svc-Channel_Dispatcher_Future.c' || echo '$(srcdir)/'`_gen/svc-Channel_Dispatcher_Future.c
+
+svc-Channel_Request_Future.lo: _gen/svc-Channel_Request_Future.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Channel_Request_Future.lo -MD -MP -MF $(DEPDIR)/svc-Channel_Request_Future.Tpo -c -o svc-Channel_Request_Future.lo `test -f '_gen/svc-Channel_Request_Future.c' || echo '$(srcdir)/'`_gen/svc-Channel_Request_Future.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Channel_Request_Future.Tpo $(DEPDIR)/svc-Channel_Request_Future.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Channel_Request_Future.c' object='svc-Channel_Request_Future.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Channel_Request_Future.lo `test -f '_gen/svc-Channel_Request_Future.c' || echo '$(srcdir)/'`_gen/svc-Channel_Request_Future.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -1024,6 +1069,14 @@ _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 	$(XSLTPROC) $(XSLTPROCFLAGS) \
 		--stringparam mixed-case-prefix mc \
 		$(tools_dir)/c-constants-generator.xsl \
+		$< > $@
+
+_gen/interfaces.h: _gen/mcd.xml \
+	$(tools_dir)/glib-interfaces-generator.xsl \
+	$(tools_dir)/c-interfaces-generator.xsl
+	$(XSLTPROC) $(XSLTPROCFLAGS) \
+		--stringparam mixed-case-prefix mc \
+		$(tools_dir)/glib-interfaces-generator.xsl \
 		$< > $@
 
 # Generated files which must be generated per "class".

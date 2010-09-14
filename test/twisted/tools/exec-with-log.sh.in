@@ -22,6 +22,7 @@ cd "@abs_top_builddir@/test/twisted/tools"
 
 ulimit -c unlimited
 exec > missioncontrol-$$.log 2>&1
+ln -f missioncontrol-$$.log missioncontrol.log
 
 if test -z "$MC_ACCOUNT_DIR"; then
         echo "MC_ACCOUNT_DIR must be set"
@@ -51,6 +52,12 @@ fi
 
 if test "z$MC_EXECUTABLE" = z; then
         MC_EXECUTABLE=@abs_top_builddir@/test/twisted/mc-debug-server
+fi
+
+if test -f "$MC_ACCOUNT_DIR/gnome-keyring-env"; then
+        cat "$MC_ACCOUNT_DIR/gnome-keyring-env"
+        . "$MC_ACCOUNT_DIR/gnome-keyring-env"
+        export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID MC_KEYRING_NAME SSH_AUTH_SOCK
 fi
 
 exec @abs_top_builddir@/libtool --mode=execute \

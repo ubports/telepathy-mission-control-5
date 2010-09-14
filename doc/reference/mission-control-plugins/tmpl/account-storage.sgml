@@ -17,6 +17,9 @@ account-storage
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### MACRO MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY ##### -->
 <para>
 
@@ -126,13 +129,46 @@ account-storage
 @desc: 
 
 
+<!-- ##### FUNCTION mcp_account_storage_iface_set_provider ##### -->
+<para>
+
+</para>
+
+@iface: 
+@provider: 
+
+
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_get ##### -->
 <para>
 
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_set ##### -->
@@ -141,7 +177,31 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_delete ##### -->
@@ -150,7 +210,31 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_list ##### -->
@@ -159,7 +243,31 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_commit ##### -->
@@ -168,7 +276,31 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_commit_one ##### -->
@@ -177,7 +309,31 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_iface_implement_ready ##### -->
@@ -186,7 +342,121 @@ account-storage
 </para>
 
 @iface: 
-@method: 
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_get_identifier ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_get_additional_info ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_iface_implement_get_restrictions ##### -->
+<para>
+
+</para>
+
+@iface: 
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *: 
 
 
 <!-- ##### FUNCTION mcp_account_storage_priority ##### -->
@@ -275,6 +545,36 @@ account-storage
 @Returns: 
 
 
+<!-- ##### FUNCTION mcp_account_storage_get_identifier ##### -->
+<para>
+
+</para>
+
+@storage: 
+@account: 
+@identifier: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_get_additional_info ##### -->
+<para>
+
+</para>
+
+@storage: 
+@account: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_get_restrictions ##### -->
+<para>
+
+</para>
+
+@storage: 
+@account: 
+@Returns: 
+
+
 <!-- ##### FUNCTION mcp_account_storage_name ##### -->
 <para>
 
@@ -285,6 +585,15 @@ account-storage
 
 
 <!-- ##### FUNCTION mcp_account_storage_description ##### -->
+<para>
+
+</para>
+
+@storage: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_account_storage_provider ##### -->
 <para>
 
 </para>

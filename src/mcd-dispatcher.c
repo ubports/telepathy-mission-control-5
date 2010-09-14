@@ -3,8 +3,8 @@
 /*
  * This file is part of mission-control
  *
- * Copyright (C) 2007-2009 Nokia Corporation.
- * Copyright (C) 2009 Collabora Ltd.
+ * Copyright © 2007-2009 Nokia Corporation.
+ * Copyright © 2009-2010 Collabora Ltd.
  *
  * Contact: Naba Kumar  <naba.kumar@nokia.com>
  *
@@ -60,6 +60,8 @@
 #include "mcd-misc.h"
 #include "plugin-loader.h"
 
+#include "_gen/svc-Channel_Dispatcher_Future.h"
+
 #include <telepathy-glib/defs.h>
 #include <telepathy-glib/gtypes.h>
 #include <telepathy-glib/handle-repo.h>
@@ -82,10 +84,13 @@
 #define MCD_DISPATCHER_PRIV(dispatcher) (MCD_DISPATCHER (dispatcher)->priv)
 
 static void dispatcher_iface_init (gpointer, gpointer);
+static void future_iface_init (gpointer, gpointer);
 
 G_DEFINE_TYPE_WITH_CODE (McdDispatcher, mcd_dispatcher, MCD_TYPE_MISSION,
     G_IMPLEMENT_INTERFACE (TP_TYPE_SVC_CHANNEL_DISPATCHER,
                            dispatcher_iface_init);
+    G_IMPLEMENT_INTERFACE (MC_TYPE_SVC_CHANNEL_DISPATCHER_FUTURE,
+                           future_iface_init);
     G_IMPLEMENT_INTERFACE (
         TP_TYPE_SVC_CHANNEL_DISPATCHER_INTERFACE_OPERATION_LIST,
         NULL);
@@ -122,6 +127,7 @@ typedef struct
   GHashTable *properties;
   gint64 user_action_time;
   gchar *preferred_handler;
+  GHashTable *request_metadata;
   gboolean ensure;
 } McdChannelRequestACL;
 
@@ -260,8 +266,7 @@ mcd_dispatcher_get_channel_type_usage (McdDispatcher * dispatcher,
 static void
 on_master_abort (McdMaster *master, McdDispatcherPrivate *priv)
 {
-    g_object_unref (master);
-    priv->master = NULL;
+    tp_clear_object (&priv->master);
 }
 
 /* return TRUE if the two channel classes are equals
@@ -677,8 +682,7 @@ _mcd_dispatcher_set_property (GObject * obj, guint prop_id,
     switch (prop_id)
     {
     case PROP_DBUS_DAEMON:
-	if (priv->dbus_daemon)
-	    g_object_unref (priv->dbus_daemon);
+	tp_clear_object (&priv->dbus_daemon);
 	priv->dbus_daemon = TP_DBUS_DAEMON (g_value_dup_object (val));
 	break;
     case PROP_MCD_MASTER:
@@ -952,15 +956,10 @@ _mcd_dispatcher_dispose (GObject * object)
     if (priv->operations != NULL)
     {
         g_list_foreach (priv->operations, drop_each_operation, object);
-        g_list_free (priv->operations);
-        priv->operations = NULL;
+        tp_clear_pointer (&priv->operations, g_list_free);
     }
 
-    if (priv->handler_map)
-    {
-        g_object_unref (priv->handler_map);
-        priv->handler_map = NULL;
-    }
+    tp_clear_object (&priv->handler_map);
 
     if (priv->clients != NULL)
     {
@@ -981,23 +980,12 @@ _mcd_dispatcher_dispose (GObject * object)
         g_signal_handlers_disconnect_by_func (priv->clients,
             mcd_dispatcher_client_registry_ready_cb, object);
 
-        g_object_unref (priv->clients);
-        priv->clients = NULL;
+        tp_clear_object (&priv->clients);
     }
 
-    g_hash_table_destroy (priv->connections);
-
-    if (priv->master)
-    {
-	g_object_unref (priv->master);
-	priv->master = NULL;
-    }
-
-    if (priv->dbus_daemon)
-    {
-	g_object_unref (priv->dbus_daemon);
-	priv->dbus_daemon = NULL;
-    }
+    tp_clear_pointer (&priv->connections, g_hash_table_destroy);
+    tp_clear_object (&priv->master);
+    tp_clear_object (&priv->dbus_daemon);
 
     G_OBJECT_CLASS (mcd_dispatcher_parent_class)->dispose (object);
 }
@@ -1521,20 +1509,17 @@ remove_request_data_free (McdRemoveRequestData *rrd)
 }
 
 static void
-on_request_status_changed (McdChannel *channel, McdChannelStatus status,
-                           McdRemoveRequestData *rrd)
+on_request_completed (McdRequest *request,
+                      gboolean successful,
+                      McdRemoveRequestData *rrd)
 {
-    if (status != MCD_CHANNEL_STATUS_FAILED &&
-        status != MCD_CHANNEL_STATUS_DISPATCHED)
-        return;
+    DEBUG ("called, successful=%i", successful);
 
-    DEBUG ("called, %u", status);
-    if (status == MCD_CHANNEL_STATUS_FAILED)
+    if (!successful)
     {
-        const GError *error;
-        gchar *err_string;
-        error = mcd_channel_get_error (channel);
-        err_string = _mcd_build_error_string (error);
+        GError *error = _mcd_request_dup_failure (request);
+        gchar *err_string = _mcd_build_error_string (error);
+
         /* no callback, as we don't really care */
         DEBUG ("calling RemoveRequest on %s for %s",
                tp_proxy_get_object_path (rrd->handler), rrd->request_path);
@@ -1542,12 +1527,12 @@ on_request_status_changed (McdChannel *channel, McdChannelStatus status,
             (rrd->handler, -1, rrd->request_path, err_string, error->message,
              NULL, NULL, NULL, NULL);
         g_free (err_string);
+        g_error_free (error);
     }
 
     /* we don't need the McdRemoveRequestData anymore */
     remove_request_data_free (rrd);
-    g_signal_handlers_disconnect_by_func (channel, on_request_status_changed,
-                                          rrd);
+    g_signal_handlers_disconnect_by_func (request, on_request_completed, rrd);
 }
 
 /*
@@ -1566,12 +1551,6 @@ _mcd_dispatcher_add_request (McdDispatcher *dispatcher, McdAccount *account,
     McdDispatcherPrivate *priv;
     McdClientProxy *handler = NULL;
     GHashTable *properties;
-    GValue v_user_time = { 0, };
-    GValue v_requests = { 0, };
-    GValue v_account = { 0, };
-    GValue v_preferred_handler = { 0, };
-    GValue v_interfaces = { 0, };
-    GPtrArray *requests;
     McdRemoveRequestData *rrd;
 
     g_return_if_fail (MCD_IS_DISPATCHER (dispatcher));
@@ -1603,39 +1582,7 @@ _mcd_dispatcher_add_request (McdDispatcher *dispatcher, McdAccount *account,
            tp_proxy_get_bus_name (handler),
            _mcd_channel_get_request_path (channel));
 
-    properties = g_hash_table_new (g_str_hash, g_str_equal);
-
-    g_value_init (&v_user_time, G_TYPE_UINT64);
-    g_value_set_uint64 (&v_user_time,
-                        _mcd_channel_get_request_user_action_time (channel));
-    g_hash_table_insert (properties, "org.freedesktop.Telepathy.ChannelRequest"
-                         ".UserActionTime", &v_user_time);
-
-    requests = g_ptr_array_sized_new (1);
-    g_ptr_array_add (requests,
-                     _mcd_channel_get_requested_properties (channel));
-    g_value_init (&v_requests, dbus_g_type_get_collection ("GPtrArray",
-         TP_HASH_TYPE_QUALIFIED_PROPERTY_VALUE_MAP));
-    g_value_set_static_boxed (&v_requests, requests);
-    g_hash_table_insert (properties, "org.freedesktop.Telepathy.ChannelRequest"
-                         ".Requests", &v_requests);
-
-    g_value_init (&v_account, DBUS_TYPE_G_OBJECT_PATH);
-    g_value_set_static_boxed (&v_account,
-                              mcd_account_get_object_path (account));
-    g_hash_table_insert (properties, "org.freedesktop.Telepathy.ChannelRequest"
-                         ".Account", &v_account);
-
-    g_value_init (&v_interfaces, G_TYPE_STRV);
-    g_value_set_static_boxed (&v_interfaces, NULL);
-    g_hash_table_insert (properties, "org.freedesktop.Telepathy.ChannelRequest"
-                         ".Interfaces", &v_interfaces);
-
-    g_value_init (&v_preferred_handler, G_TYPE_STRING);
-    g_value_set_static_string (&v_preferred_handler,
-        _mcd_channel_get_request_preferred_handler (channel));
-    g_hash_table_insert (properties, "org.freedesktop.Telepathy.ChannelRequest"
-                         ".PreferredHandler", &v_preferred_handler);
+    properties = _mcd_channel_dup_request_properties (channel);
 
     tp_cli_client_interface_requests_call_add_request (
         (TpClient *) handler, -1,
@@ -1643,7 +1590,6 @@ _mcd_dispatcher_add_request (McdDispatcher *dispatcher, McdAccount *account,
         NULL, NULL, NULL, NULL);
 
     g_hash_table_unref (properties);
-    g_ptr_array_free (requests, TRUE);
 
     /* Prepare for a RemoveRequest */
     rrd = g_slice_new (McdRemoveRequestData);
@@ -1654,8 +1600,8 @@ _mcd_dispatcher_add_request (McdDispatcher *dispatcher, McdAccount *account,
     g_object_ref (handler);
     /* we must watch whether the request fails and in that case call
      * RemoveRequest */
-    g_signal_connect (channel, "status-changed",
-                      G_CALLBACK (on_request_status_changed), rrd);
+    g_signal_connect (_mcd_channel_get_request (channel), "completed",
+                      G_CALLBACK (on_request_completed), rrd);
 }
 
 /*
@@ -2016,6 +1962,7 @@ dispatcher_request_channel (McdDispatcher *self,
                             GHashTable *requested_properties,
                             gint64 user_action_time,
                             const gchar *preferred_handler,
+                            GHashTable *request_metadata,
                             DBusGMethodInvocation *context,
                             gboolean ensure)
 {
@@ -2068,7 +2015,8 @@ dispatcher_request_channel (McdDispatcher *self,
 
     channel = _mcd_account_create_request (account, requested_properties,
                                            user_action_time, preferred_handler,
-                                           ensure, FALSE, &error);
+                                           request_metadata, ensure,
+                                           FALSE, &error);
 
     if (channel == NULL)
     {
@@ -2112,6 +2060,7 @@ dispatcher_channel_request_acl_cleanup (gpointer data)
     g_free (crd->preferred_handler);
     g_hash_table_unref (crd->properties);
     g_object_unref (crd->dispatcher);
+    tp_clear_pointer (&crd->request_metadata, g_hash_table_unref);
 
     g_slice_free (McdChannelRequestACL, crd);
 }
@@ -2129,6 +2078,7 @@ dispatcher_channel_request_acl_success (DBusGMethodInvocation *context,
                                 crd->properties,
                                 crd->user_action_time,
                                 crd->preferred_handler,
+                                crd->request_metadata,
                                 context,
                                 crd->ensure);
 }
@@ -2149,6 +2099,7 @@ dispatcher_channel_request_acl_start (McdDispatcher *dispatcher,
                                       GHashTable *requested_properties,
                                       gint64 user_action_time,
                                       const gchar *preferred_handler,
+                                      GHashTable *request_metadata,
                                       DBusGMethodInvocation *context,
                                       gboolean ensure)
 {
@@ -2167,6 +2118,8 @@ dispatcher_channel_request_acl_start (McdDispatcher *dispatcher,
     crd->properties = g_hash_table_ref (requested_properties);
     crd->user_action_time = user_action_time;
     crd->ensure = ensure;
+    crd->request_metadata = request_metadata != NULL ?
+        g_hash_table_ref (request_metadata) : NULL;
 
     DEBUG ("start %s.%s acl (%p)", account_path, method, crd);
 
@@ -2195,6 +2148,7 @@ dispatcher_create_channel (TpSvcChannelDispatcher *iface,
                                           requested_properties,
                                           user_action_time,
                                           preferred_handler,
+                                          NULL,
                                           context,
                                           FALSE);
 }
@@ -2213,9 +2167,51 @@ dispatcher_ensure_channel (TpSvcChannelDispatcher *iface,
                                           requested_properties,
                                           user_action_time,
                                           preferred_handler,
+                                          NULL,
                                           context,
                                           TRUE);
 }
+
+static void
+dispatcher_create_channel_with_hints (McSvcChannelDispatcherFuture *iface,
+                                      const gchar *account_path,
+                                      GHashTable *requested_properties,
+                                      gint64 user_action_time,
+                                      const gchar *preferred_handler,
+                                      GHashTable *hints,
+                                      DBusGMethodInvocation *context)
+{
+    dispatcher_channel_request_acl_start (MCD_DISPATCHER (iface),
+                                          CREATE_CHANNEL,
+                                          account_path,
+                                          requested_properties,
+                                          user_action_time,
+                                          preferred_handler,
+                                          hints,
+                                          context,
+                                          FALSE);
+}
+
+static void
+dispatcher_ensure_channel_with_hints (McSvcChannelDispatcherFuture *iface,
+                                      const gchar *account_path,
+                                      GHashTable *requested_properties,
+                                      gint64 user_action_time,
+                                      const gchar *preferred_handler,
+                                      GHashTable *hints,
+                                      DBusGMethodInvocation *context)
+{
+    dispatcher_channel_request_acl_start (MCD_DISPATCHER (iface),
+                                          ENSURE_CHANNEL,
+                                          account_path,
+                                          requested_properties,
+                                          user_action_time,
+                                          preferred_handler,
+                                          hints,
+                                          context,
+                                          TRUE);
+}
+
 
 static void
 dispatcher_iface_init (gpointer g_iface,
@@ -2225,6 +2221,17 @@ dispatcher_iface_init (gpointer g_iface,
     g_iface, dispatcher_##x)
     IMPLEMENT (create_channel);
     IMPLEMENT (ensure_channel);
+#undef IMPLEMENT
+}
+
+static void
+future_iface_init (gpointer g_iface,
+                   gpointer iface_data G_GNUC_UNUSED)
+{
+#define IMPLEMENT(x) mc_svc_channel_dispatcher_future_implement_##x (\
+    g_iface, dispatcher_##x)
+    IMPLEMENT (create_channel_with_hints);
+    IMPLEMENT (ensure_channel_with_hints);
 #undef IMPLEMENT
 }
 

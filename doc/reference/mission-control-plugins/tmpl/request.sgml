@@ -17,6 +17,9 @@ request
 <!-- ##### SECTION Stability_Level ##### -->
 
 
+<!-- ##### SECTION Image ##### -->
+
+
 <!-- ##### STRUCT McpRequest ##### -->
 <para>
 
@@ -112,5 +115,23 @@ request
 @domain: 
 @code: 
 @message: 
+
+
+<!-- ##### FUNCTION mcp_request_start_delay ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mcp_request_end_delay ##### -->
+<para>
+
+</para>
+
+@self: 
+@delay: 
 
 

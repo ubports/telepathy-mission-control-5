@@ -1,5 +1,5 @@
 # Copyright (C) 2009 Nokia Corporation
-# Copyright (C) 2009 Collabora Ltd.
+# Copyright (C) 2009-2010 Collabora Ltd.
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,15 +17,14 @@
 # 02110-1301 USA
 
 import dbus
-"""Regression test for ChannelDispatcher rejecting channel creation due to
-low memory.
+"""Test CD.{Create,Ensure}ChannelWithHints
 """
 
 import dbus
 import dbus.service
 
 from servicetest import EventPattern, tp_name_prefix, tp_path_prefix, \
-        call_async
+        call_async, assertEquals
 from mctest import exec_test, SimulatedConnection, SimulatedClient, \
         create_fakecm_account, enable_fakecm_account, SimulatedChannel, \
         expect_client_setup
@@ -43,61 +42,40 @@ def test(q, bus, mc):
         }, signature='sv')
 
     client = SimulatedClient(q, bus, 'Empathy',
-            observe=[text_fixed_properties], approve=[text_fixed_properties],
+            observe=[text_fixed_properties],
             handle=[text_fixed_properties], bypass_approval=False)
-
-    # No Approver should be invoked at any point during this test, because the
-    # Channel was Requested
-    def fail_on_approval(e):
-        raise AssertionError('Approver should not be invoked')
-    q.add_dbus_method_impl(fail_on_approval, path=client.object_path,
-            interface=cs.APPROVER, method='AddDispatchOperation')
 
     # wait for MC to download the properties
     expect_client_setup(q, [client])
 
-    # This is normally a C API, only exposed to D-Bus here for testing
-    secret_debug_api = dbus.Interface(bus.get_object(cs.AM, "/"),
-        'org.freedesktop.Telepathy.MissionControl5.RegressionTests')
-    MCD_SYSTEM_MEMORY_CONSERVED = 2
-
-    # Set the idle flag and fail to create a channel
-    secret_debug_api.ChangeSystemFlags(dbus.UInt32(MCD_SYSTEM_MEMORY_CONSERVED),
-            dbus.UInt32(0))
+    test_channel_creation(q, bus, account, client, conn, False)
     test_channel_creation(q, bus, account, client, conn, True)
 
-    # Unset the idle flag and create a channel
-    secret_debug_api.ChangeSystemFlags(dbus.UInt32(0),
-            dbus.UInt32(MCD_SYSTEM_MEMORY_CONSERVED))
-    test_channel_creation(q, bus, account, client, conn, False)
-
-def test_channel_creation(q, bus, account, client, conn, lowmem):
+def test_channel_creation(q, bus, account, client, conn,
+        ensure=False, prefer=None, channel_type=cs.CHANNEL_TYPE_TEXT):
     user_action_time = dbus.Int64(1238582606)
+    hints = dbus.Dictionary({ 'badger': 42, 'snake': 'pony' },
+        signature='sv')
+
+    if prefer is None:
+        prefer = client
 
     cd = bus.get_object(cs.CD, cs.CD_PATH)
     cd_props = dbus.Interface(cd, cs.PROPERTIES_IFACE)
 
-    # chat UI calls ChannelDispatcher.CreateChannel
+    # chat UI calls ChannelDispatcher.EnsureChannelWithHints or
+    # CreateChannelWithHints
     request = dbus.Dictionary({
-            cs.CHANNEL + '.ChannelType': cs.CHANNEL_TYPE_TEXT,
+            cs.CHANNEL + '.ChannelType': channel_type,
             cs.CHANNEL + '.TargetHandleType': cs.HT_CONTACT,
             cs.CHANNEL + '.TargetID': 'juliet',
             }, signature='sv')
-    account_requests = dbus.Interface(account,
-            cs.ACCOUNT_IFACE_NOKIA_REQUESTS)
-    call_async(q, cd, 'CreateChannel',
-            account.object_path, request, user_action_time, client.bus_name,
-            dbus_interface=cs.CD)
-
-    if lowmem:
-        # FIXME: fd.o #21035: an undocumented error is raised at the wrong time
-        ret = q.expect('dbus-error',
-                method='CreateChannel')
-        assert ret.error.get_dbus_name() == 'com.nokia.MissionControl.Errors.Lowmem'
-        return
-
+    call_async(q, cd,
+            (ensure and 'EnsureChannelWithHints' or 'CreateChannelWithHints'),
+            account.object_path, request, user_action_time, prefer.bus_name,
+            hints, dbus_interface=cs.CD_FUTURE)
     ret = q.expect('dbus-return',
-            method='CreateChannel')
+            method=(ensure and 'EnsureChannelWithHints' or 'CreateChannelWithHints'))
     request_path = ret.value[0]
 
     # chat UI connects to signals and calls ChannelRequest.Proceed()
@@ -107,31 +85,34 @@ def test_channel_creation(q, bus, account, client, conn, lowmem):
     assert request_props['Account'] == account.object_path
     assert request_props['Requests'] == [request]
     assert request_props['UserActionTime'] == user_action_time
-    assert request_props['PreferredHandler'] == client.bus_name
+    assert request_props['PreferredHandler'] == prefer.bus_name
     assert request_props['Interfaces'] == []
+    future_props = cr.GetAll(cs.CR_FUTURE, dbus_interface=cs.PROPERTIES_IFACE)
+    assertEquals(hints, future_props['Hints'])
 
     cr.Proceed(dbus_interface=cs.CR)
 
-    # FIXME: should the CreateChannel call, and the AddRequest
+    # FIXME: should the EnsureChannel/CreateChannel call, and the AddRequest
     # call, be in a defined order? Probably not though, since CMs and Clients
     # aren't meant to be the same process!
 
     cm_request_call, add_request_call = q.expect_many(
             EventPattern('dbus-method-call',
                 interface=cs.CONN_IFACE_REQUESTS,
-                method='CreateChannel',
+                method=(ensure and 'EnsureChannel' or 'CreateChannel'),
                 path=conn.object_path, args=[request], handled=False),
             EventPattern('dbus-method-call', handled=False,
                 interface=cs.CLIENT_IFACE_REQUESTS,
-                method='AddRequest', path=client.object_path),
+                method='AddRequest'),
             )
 
     assert add_request_call.args[0] == request_path
+    assert add_request_call.path == prefer.object_path
     request_props = add_request_call.args[1]
     assert request_props[cs.CR + '.Account'] == account.object_path
     assert request_props[cs.CR + '.Requests'] == [request]
     assert request_props[cs.CR + '.UserActionTime'] == user_action_time
-    assert request_props[cs.CR + '.PreferredHandler'] == client.bus_name
+    assert request_props[cs.CR + '.PreferredHandler'] == prefer.bus_name
     assert request_props[cs.CR + '.Interfaces'] == []
 
     q.dbus_return(add_request_call.message, signature='')
@@ -149,30 +130,37 @@ def test_channel_creation(q, bus, account, client, conn, lowmem):
     channel = SimulatedChannel(conn, channel_immutable)
 
     # this order of events is guaranteed by telepathy-spec (since 0.17.14)
-    q.dbus_return(cm_request_call.message,
-            channel.object_path, channel.immutable, signature='oa{sv}')
+    if ensure:
+        q.dbus_return(cm_request_call.message, True, # <- Yours
+                channel.object_path, channel.immutable, signature='boa{sv}')
+    else:   # Create
+        q.dbus_return(cm_request_call.message,
+                channel.object_path, channel.immutable, signature='oa{sv}')
     channel.announce()
 
-    # Observer should get told, processing waits for it
-    e = q.expect('dbus-method-call',
-            path=client.object_path,
-            interface=cs.OBSERVER, method='ObserveChannels',
-            handled=False)
-    assert e.args[0] == account.object_path, e.args
-    assert e.args[1] == conn.object_path, e.args
-    assert e.args[3] == '/', e.args         # no dispatch operation
-    assert e.args[4] == [request_path], e.args
-    channels = e.args[2]
-    assert len(channels) == 1, channels
-    assert channels[0][0] == channel.object_path, channels
-    assert channels[0][1] == channel_immutable, channels
+    if channel_type == cs.CHANNEL_TYPE_TEXT:
+        # Observer should get told, processing waits for it
+        e = q.expect('dbus-method-call',
+                path=client.object_path,
+                interface=cs.OBSERVER, method='ObserveChannels',
+                handled=False)
+        assert e.args[0] == account.object_path, e.args
+        assert e.args[1] == conn.object_path, e.args
+        assert e.args[3] == '/', e.args         # no dispatch operation
+        assert e.args[4] == [request_path], e.args
+        channels = e.args[2]
+        assert len(channels) == 1, channels
+        assert channels[0][0] == channel.object_path, channels
+        assert channels[0][1] == channel_immutable, channels
+        info = e.args[5]
+        assert info['request-properties'] == {request_path: request_props}, info
 
-    # Observer says "OK, go"
-    q.dbus_return(e.message, signature='')
+        # Observer says "OK, go"
+        q.dbus_return(e.message, signature='')
 
     # Handler is next
     e = q.expect('dbus-method-call',
-            path=client.object_path,
+            path=prefer.object_path,
             interface=cs.HANDLER, method='HandleChannels',
             handled=False)
     assert e.args[0] == account.object_path, e.args
@@ -186,20 +174,27 @@ def test_channel_creation(q, bus, account, client, conn, lowmem):
     assert isinstance(e.args[5], dict)
     assert len(e.args) == 6
 
-    # Handler fails at handling channels
-    q.dbus_raise(e.message, cs.INVALID_ARGUMENT, 'Parlez vous Freezepop?')
+    # Handler accepts the Channels
+    q.dbus_return(e.message, signature='')
 
-    e = q.expect('dbus-method-call', path=client.object_path,
-            interface=cs.CLIENT_IFACE_REQUESTS, method='RemoveRequest',
-            handled=False)
-    q.dbus_raise(e.message, cs.INVALID_ARGUMENT, 'Do you realise?')
+    # SucceededWithChannel is fired first
+    e = q.expect('dbus-signal', path=request_path, interface=cs.CR_FUTURE,
+        signal='SucceededWithChannel')
 
+    assertEquals(conn.object_path, e.args[0])
+    assertEquals(channel.object_path, e.args[1])
+
+    # CR emits Succeeded (or in Mardy's version, Account emits Succeeded)
     q.expect_many(
-            EventPattern('dbus-signal', path=cr.object_path,
-                interface=cs.CR, signal='Failed'),
-            EventPattern('dbus-method-call', path=channel.object_path,
-                interface=cs.CHANNEL, method='Close', handled=True),
+            EventPattern('dbus-signal', path=account.object_path,
+                interface=cs.ACCOUNT_IFACE_NOKIA_REQUESTS, signal='Succeeded',
+                args=[request_path]),
+            EventPattern('dbus-signal', path=request_path,
+                interface=cs.CR, signal='Succeeded'),
             )
+
+    # Close the channel
+    channel.close()
 
 if __name__ == '__main__':
     exec_test(test, {})

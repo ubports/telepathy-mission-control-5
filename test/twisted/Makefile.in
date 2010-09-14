@@ -46,6 +46,11 @@ host_triplet = @host@
 noinst_PROGRAMS = mc-debug-server$(EXEEXT)
 @ENABLE_GNOME_KEYRING_TRUE@am__append_3 = $(GNOME_KEYRING_CFLAGS)
 TESTS =
+@ENABLE_GNOME_KEYRING_TRUE@am__append_4 = MC_TEST_GNOME_KEYRING=1
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_5 = AG_DEBUG=all \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	ACCOUNTS=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	AG_SERVICES=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX)
+
 subdir = test/twisted
 DIST_COMMON = README $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -265,6 +270,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
+PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -339,8 +346,9 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 TWISTED_TESTS = 
-TWISTED_BASIC_TESTS = account-manager/account-basics.py \
-	account-manager/bad-cm.py account-manager/avatar.py \
+TWISTED_BASIC_TESTS = account/minimum-presence.py \
+	account-manager/account-basics.py account-manager/bad-cm.py \
+	account-manager/avatar.py \
 	account-manager/create-auto-connect.py \
 	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
@@ -360,8 +368,9 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	dispatcher/already-has-obsolete.py \
 	dispatcher/bypass-approval.py dispatcher/cancel.py \
 	dispatcher/capture-bundle.py dispatcher/connect-for-request.py \
-	dispatcher/create-handler-fails.py \
+	dispatcher/create-handler-fails.py dispatcher/create-hints.py \
 	dispatcher/create-no-preferred-handler.py \
+	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
@@ -380,25 +389,26 @@ TWISTED_BASIC_TESTS = account-manager/account-basics.py \
 	dispatcher/respawn-observers.py \
 	dispatcher/respawn-activatable-observers.py \
 	dispatcher/undispatchable.py dispatcher/vanishing-client.py \
-	$(am__append_1) $(TWISTED_SPECIAL_BUILD_TESTS)
+	$(am__append_1)
 
 # Tests that aren't to be run if we're running the real (installed) MC,
-# because they rely on special behaviour of mc-debug-server
+# because they rely on special behaviour of mc-debug-server.
+#
+# For simplicity, these are also separate tests: at least
+# account-storage/*.py need their own instances.
 TWISTED_SPECIAL_BUILD_TESTS = \
 	account-manager/auto-away.py \
-	dispatcher/create-lowmem.py
+	account-storage/default-keyring-storage.py \
+	account-storage/diverted-storage.py
 
 TWISTED_SLOW_TESTS = \
 	account-manager/server-drops-us.py
 
-TWISTED_SEPARATE_TESTS = \
-	account-manager/auto-connect.py \
+TWISTED_SEPARATE_TESTS = account-manager/auto-connect.py \
 	account-manager/avatar-persist.py \
 	account-manager/avatar-refresh.py \
-	account-manager/make-valid.py \
-	crash-recovery/crash-recovery.py \
-	dispatcher/create-at-startup.py
-
+	account-manager/make-valid.py crash-recovery/crash-recovery.py \
+	dispatcher/create-at-startup.py $(TWISTED_SPECIAL_BUILD_TESTS)
 AM_CFLAGS = $(ERROR_CFLAGS)
 
 # A demo dispatcher plugin (new, minimal API)
@@ -425,8 +435,7 @@ INCLUDES = -I$(top_srcdir) -I$(top_builddir) -I$(top_srcdir)/src \
 	-DMC_DISABLE_DEPRECATED -DLIBDIR="@libdir@" -DLIBVERSION="0" \
 	$(am__append_3)
 TMPSUFFIX = foo
-BASIC_TESTS_ENVIRONMENT = \
-	PYTHONPATH=@abs_top_srcdir@/test/twisted:@abs_top_builddir@/test/twisted \
+BASIC_TESTS_ENVIRONMENT = PYTHONPATH=@abs_top_srcdir@/test/twisted:@abs_top_builddir@/test/twisted \
 	MC_DEBUG=all \
 	MC_FILTER_PLUGIN_DIR=@abs_top_builddir@/test/twisted/.libs \
 	MC_CHANDLERS_DIR=@abs_top_srcdir@/test/twisted/chandlers \
@@ -435,11 +444,11 @@ BASIC_TESTS_ENVIRONMENT = \
 	XDG_CONFIG_DIRS=@abs_top_srcdir@/test/twisted \
 	XDG_DATA_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	XDG_DATA_DIRS=@abs_top_srcdir@/test/twisted \
+	XDG_CACHE_DIR=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CACHE_HOME=@abs_top_builddir@/test/twisted/tmp-$(TMPSUFFIX) \
 	MC_CLIENTS_DIR=@abs_top_srcdir@/test/twisted/telepathy/clients \
 	MC_MANAGER_DIR=@abs_top_srcdir@/test/twisted/telepathy/managers \
-	G_DEBUG=fatal_criticals
-
+	G_DEBUG=fatal_criticals $(am__append_4) $(am__append_5)
 WITH_SESSION_BUS = \
 	sh $(srcdir)/tools/with-session-bus.sh \
 	--config-file=tools/tmp-session-bus.conf --

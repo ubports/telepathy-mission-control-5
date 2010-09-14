@@ -16,6 +16,7 @@ mc_headers = \
 	mcd-account.h \
 	mcd-account-compat.h \
 	mcd-account-conditions.h \
+	mcd-account-presence.h \
 	mcd-account-manager.h \
 	mcd-account-manager-default.h \
 	mcd-debug.h \
@@ -45,12 +46,16 @@ mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
 	_gen/enums.h \
+	_gen/interfaces.h \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
+	_gen/svc-Account_Interface_Minimum_Presence.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
-	_gen/svc-Account_Manager_Interface_SSO.h
+	_gen/svc-Account_Manager_Interface_SSO.h \
+	_gen/svc-Channel_Dispatcher_Future.h \
+	_gen/svc-Channel_Request_Future.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
@@ -63,8 +68,11 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
+	_gen/svc-Account_Interface_Minimum_Presence.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
 	_gen/svc-Account_Manager_Interface_SSO.c \
+	_gen/svc-Channel_Dispatcher_Future.c \
+	_gen/svc-Channel_Request_Future.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -138,6 +146,7 @@ libmcd_convenience_la_SOURCES = \
 	mcd-account-connection.c \
 	mcd-account-requests.c \
 	mcd-account-stats.c \
+	mcd-account-presence.c \
 	mcd-account-manager.c \
 	mcd-account-manager-priv.h \
 	mcd-account-manager-query.c \
@@ -177,6 +186,9 @@ libmcd_convenience_la_SOURCES = \
 	mcd-transport.c \
 	mcd-provisioning.c \
 	mcd-provisioning-factory.c \
+	mcd-storage.c \
+	mcd-storage.h \
+	mcd-storage-priv.h \
 	plugin-dispatch-operation.c \
 	plugin-dispatch-operation.h \
 	plugin-loader.c \
@@ -185,6 +197,8 @@ libmcd_convenience_la_SOURCES = \
 	plugin-request.h \
 	plugin-account.c \
 	plugin-account.h \
+	request.c \
+	request.h \
 	sp_timestamp.h \
 	$(mc_headers)
 
@@ -273,6 +287,13 @@ _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 		$(tools_dir)/c-constants-generator.xsl \
 		$< > $@
 
+_gen/interfaces.h: _gen/mcd.xml \
+	$(tools_dir)/glib-interfaces-generator.xsl \
+	$(tools_dir)/c-interfaces-generator.xsl
+	$(XSLTPROC) $(XSLTPROCFLAGS) \
+		--stringparam mixed-case-prefix mc \
+		$(tools_dir)/glib-interfaces-generator.xsl \
+		$< > $@
 
 # Generated files which must be generated per "class".
 # (Currently the only "class" is nmc4, but the new API will need "classes"
