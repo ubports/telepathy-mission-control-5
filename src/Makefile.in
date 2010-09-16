@@ -224,7 +224,7 @@ am__mission_control_include_HEADERS_DIST = mcd-account.h \
 	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
 	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
 	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-account-manager-sso.h
+	mcd-storage.h mcd-account-manager-sso.h
 HEADERS = $(mission_control_include_HEADERS) \
 	$(nodist_geninclude_HEADERS)
 ETAGS = etags
@@ -403,7 +403,8 @@ mc_headers = mcd-account.h mcd-account-compat.h \
 	mcd-connection-plugin.h mcd-plugin.h mcd-presence-frame.h \
 	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
 	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
-	mcd-provisioning.h mcd-provisioning-factory.h $(am__append_2)
+	mcd-provisioning.h mcd-provisioning-factory.h mcd-storage.h \
+	$(am__append_2)
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \

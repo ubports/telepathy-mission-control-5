@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.0.beta42 immediately before a release.
 dnl Set the version number to e.g. 5.0.beta42+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.5.4])
+AC_INIT([telepathy-mission-control], [5.6.0])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -72,7 +72,8 @@ TP_COMPILER_WARNINGS([ERROR_CFLAGS],
    format-security \
    init-self \
    ],
-  [missing-field-initializers \
+  [deprecated-declarations \
+   missing-field-initializers \
    unused-parameter])
 AC_SUBST([ERROR_CFLAGS])
 

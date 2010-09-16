@@ -1,3 +1,100 @@
+commit 02023109462143bba05b169ecc1c690038c357c9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-16 16:51:22 +0100
+
+    Prepare MC 5.6.0
+
+ NEWS         |    2 +-
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 50f936b83a8a5970f981bbe2a6b318b3d51adebe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-16 16:49:57 +0100
+
+    Don't warn about deprecated declarations
+    
+    This is about to be a stable branch, so we're not going to fix any
+    uses of newly-deprecated functions in future.
+    
+    (To be reverted in master after branching for 5.6.)
+
+ configure.ac |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 3433a7b4ae90f0f61d4fef130631e88f066fd26a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-16 16:30:56 +0100
+
+    Update NEWS
+
+ NEWS |   36 ++++++++++++++++++++++++++++++++++--
+ 1 files changed, 34 insertions(+), 2 deletions(-)
+
+commit be83db16e4cba060da074a1c4e2db22596310d37
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-09-16 15:52:46 +0100
+
+    If keyring support is off, we define stubroutines, we dn't #if them out
+    
+    The unused definition warning -> error will bite us if we both define
+    a noop stubroutine _and_ #if the use of that name out as well.
+
+ test/account-store-default.c |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+
+commit 51b5efe07c8c14f5d54183561aed95c2cb7926ee
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-09-16 15:28:13 +0100
+
+    Superfluous include
+
+ src/mcd-account.h |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 9c8eb6ae0a8ed6809d944f534e21a5740702c558
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-09-16 15:27:56 +0100
+
+    Install mcd-storage.h [needed by mcd-account-manager.h]
+
+ src/Makefile.am |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit d563ead8cff191753d95d19bb0655db254e77c6e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-15 13:12:42 +0100
+
+    test/account-store: fix one more build warning
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+ test/account-store.c |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+commit 9c5a4e350ae324316297db4ca3af175cbc32a702
+Author: Vincent Untz <vuntz@gnome.org>
+Date:   2010-09-15 13:08:19 +0100
+
+    Fix various build warnings
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+ test/account-store-default.c |    7 ++++---
+ test/account-store.c         |    5 +++--
+ test/keyring-command.c       |    4 ++++
+ 3 files changed, 11 insertions(+), 5 deletions(-)
+
+commit db4960f191d5b1d091dd76537d50194ae579e773
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-14 19:11:05 +0100
+
+    Nano version
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 4c2b540e103cd87b296190ac4bdc72cfb40a3900
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-09-14 18:25:10 +0100

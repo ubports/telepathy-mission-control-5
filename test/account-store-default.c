@@ -23,6 +23,8 @@
 #include <glib.h>
 #include <string.h>
 
+#include "account-store-default.h"
+
 #if ENABLE_GNOME_KEYRING
 #include <gnome-keyring.h>
 
@@ -165,7 +167,6 @@ static GKeyFile * default_keyfile (void)
 {
   GError *error = NULL;
   static GKeyFile *keyfile = NULL;
-  const gchar *base;
   const gchar *path = NULL;
 
   if (keyfile != NULL)
@@ -180,7 +181,7 @@ static GKeyFile * default_keyfile (void)
       if (error != NULL)
         g_warning ("keyfile '%s' error: %s", path, error->message);
       else
-        g_warning ("keyfile '%s' error: unknown error");
+        g_warning ("keyfile '%s' error: unknown error", path);
 
       g_key_file_free (keyfile);
       g_error_free (error);
@@ -190,7 +191,7 @@ static GKeyFile * default_keyfile (void)
   return keyfile;
 }
 
-static gboolean commit_changes ()
+static gboolean commit_changes (void)
 {
   gsize n = 0;
   gchar *data = NULL;
@@ -216,9 +217,7 @@ default_get (const gchar *account,
   if (g_str_has_prefix (key, "param-"))
     pkey = key + strlen("param-");
 
-#if ENABLE_GNOME_KEYRING
   value = _get_secret_from_keyring (account, pkey);
-#endif
 
   if (value == NULL)
     value = g_key_file_get_string (default_keyfile (), account, key, NULL);
