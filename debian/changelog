@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (1:5.6.1-1) experimental; urgency=low
+
+  * New upstream release
+  * Switch to a debhelper 8 rules file
+  * Switch to source format 3.0 (quilt)
+
+ -- Simon McVittie <smcv@debian.org>  Wed, 17 Nov 2010 12:16:37 +0000
+
 telepathy-mission-control-5 (1:5.6.0-1) experimental; urgency=low
 
   * New upstream release

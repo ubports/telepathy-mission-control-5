@@ -170,6 +170,11 @@ account-storage
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
 
 
@@ -179,6 +184,11 @@ account-storage
 </para>
 
 @iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *, const gchar *:
@@ -240,6 +250,11 @@ account-storage
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *, const gchar *: 
 
 
@@ -249,6 +264,11 @@ account-storage
 </para>
 
 @iface: 
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *:
@@ -310,6 +330,11 @@ account-storage
 @ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
+@ const McpAccountStorage *, const McpAccountManager *:
 @ const McpAccountStorage *, const McpAccountManager *: 
 
 
@@ -319,6 +344,11 @@ account-storage
 </para>
 
 @iface: 
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
+@ const McpAccountStorage *, const McpAccountManager *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *:
 @ const McpAccountStorage *, const McpAccountManager *, const gchar *:
@@ -380,6 +410,11 @@ account-storage
 @ const McpAccountStorage *storage, const McpAccountManager *am:
 @ const McpAccountStorage *storage, const McpAccountManager *am:
 @ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
+@ const McpAccountStorage *storage, const McpAccountManager *am:
 @ const McpAccountStorage *storage, const McpAccountManager *am: 
 
 
@@ -389,6 +424,11 @@ account-storage
 </para>
 
 @iface: 
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
+@ const McpAccountStorage *, const gchar *, GValue *:
 @ const McpAccountStorage *, const gchar *, GValue *:
 @ const McpAccountStorage *, const gchar *, GValue *:
 @ const McpAccountStorage *, const gchar *, GValue *:
@@ -444,6 +484,11 @@ account-storage
 @ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *: 
 
 
@@ -453,6 +498,11 @@ account-storage
 </para>
 
 @iface: 
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
+@ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *:
 @ const McpAccountStorage *, const gchar *:

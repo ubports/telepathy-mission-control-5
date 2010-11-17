@@ -46,7 +46,7 @@
 
                     <a class="link" href="McAccount.html#McAccount-struct" title="McAccount">McAccount</a>;
                     <a class="link" href="McAccount.html#McAccountClass" title="McAccountClass">McAccountClass</a>;
-<a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         <a class="link" href="McAccount.html#mc-account-new" title="mc_account_new ()">mc_account_new</a>                      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
+<a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         <a class="link" href="McAccount.html#mc-account-new" title="mc_account_new ()">mc_account_new</a>                      (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#McAccountWhenReadyCb" title="McAccountWhenReadyCb ()">*McAccountWhenReadyCb</a>)             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
@@ -79,67 +79,67 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-get-nickname" title="mc_account_get_nickname ()">mc_account_get_nickname</a>             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="McAccount.html#mc-account-get-parameters" title="mc_account_get_parameters ()">mc_account_get_parameters</a>           (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McAccount.html#mc-account-get-automatic-presence" title="mc_account_get_automatic_presence ()">mc_account_get_automatic_presence</a>   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-get-connection-path" title="mc_account_get_connection_path ()">mc_account_get_connection_path</a>      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-get-connection-name" title="mc_account_get_connection_name ()">mc_account_get_connection_name</a>      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatus"><span class="returnvalue">TpConnectionStatus</span></a>  <a class="link" href="McAccount.html#mc-account-get-connection-status" title="mc_account_get_connection_status ()">mc_account_get_connection_status</a>    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatusReason"><span class="returnvalue">TpConnectionStatusReason</span></a>  <a class="link" href="McAccount.html#mc-account-get-connection-status-reason" title="mc_account_get_connection_status_reason ()">mc_account_get_connection_status_reason</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatus"><span class="returnvalue">TpConnectionStatus</span></a>  <a class="link" href="McAccount.html#mc-account-get-connection-status" title="mc_account_get_connection_status ()">mc_account_get_connection_status</a>    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatusReason"><span class="returnvalue">TpConnectionStatusReason</span></a>  <a class="link" href="McAccount.html#mc-account-get-connection-status-reason" title="mc_account_get_connection_status_reason ()">mc_account_get_connection_status_reason</a>
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McAccount.html#mc-account-get-current-presence" title="mc_account_get_current_presence ()">mc_account_get_current_presence</a>     (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McAccount.html#mc-account-get-requested-presence" title="mc_account_get_requested_presence ()">mc_account_get_requested_presence</a>   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-get-normalized-name" title="mc_account_get_normalized_name ()">mc_account_get_normalized_name</a>      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-display-name" title="mc_account_set_display_name ()">mc_account_set_display_name</a>        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-display-name" title="mc_account_set_display_name ()">mc_account_set_display_name</a>        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *display_name</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-icon" title="mc_account_set_icon ()">mc_account_set_icon</a>                (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-icon" title="mc_account_set_icon ()">mc_account_set_icon</a>                (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *icon</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-enabled" title="mc_account_set_enabled ()">mc_account_set_enabled</a>             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-enabled" title="mc_account_set_enabled ()">mc_account_set_enabled</a>             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-connect-automatically" title="mc_account_set_connect_automatically ()">mc_account_set_connect_automatically</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-connect-automatically" title="mc_account_set_connect_automatically ()">mc_account_set_connect_automatically</a>
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> connect</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-nickname" title="mc_account_set_nickname ()">mc_account_set_nickname</a>            (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-nickname" title="mc_account_set_nickname ()">mc_account_set_nickname</a>            (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *nickname</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-automatic-presence" title="mc_account_set_automatic_presence ()">mc_account_set_automatic_presence</a>  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-automatic-presence" title="mc_account_set_automatic_presence ()">mc_account_set_automatic_presence</a>  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-requested-presence" title="mc_account_set_requested_presence ()">mc_account_set_requested_presence</a>  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-set-requested-presence" title="mc_account_set_requested_presence ()">mc_account_set_requested_presence</a>  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
@@ -150,11 +150,11 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **avatar</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> *length</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **mime_type</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-avatar-set" title="mc_account_avatar_set ()">mc_account_avatar_set</a>              (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-avatar-set" title="mc_account_avatar_set ()">mc_account_avatar_set</a>              (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *avatar</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
@@ -163,16 +163,16 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-compat-get-profile" title="mc_account_compat_get_profile ()">mc_account_compat_get_profile</a>       (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McAccount.html#mc-account-compat-get-avatar-file" title="mc_account_compat_get_avatar_file ()">mc_account_compat_get_avatar_file</a>   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-compat-set-profile" title="mc_account_compat_set_profile ()">mc_account_compat_set_profile</a>      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-compat-set-profile" title="mc_account_compat_set_profile ()">mc_account_compat_set_profile</a>      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-compat-set-secondary-vcard-fields" title="mc_account_compat_set_secondary_vcard_fields ()">mc_account_compat_set_secondary_vcard_fields</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-compat-set-secondary-vcard-fields" title="mc_account_compat_set_secondary_vcard_fields ()">mc_account_compat_set_secondary_vcard_fields</a>
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> * const *fields</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
@@ -181,9 +181,9 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#McAccountWhenReadyCb" title="McAccountWhenReadyCb ()"><span class="type">McAccountWhenReadyCb</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="McAccount.html#mc-account-conditions-get" title="mc_account_conditions_get ()">mc_account_conditions_get</a>           (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-conditions-set" title="mc_account_conditions_set ()">mc_account_conditions_set</a>          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-account-conditions-set" title="mc_account_conditions_set ()">mc_account_conditions_set</a>          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *conditions</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
@@ -232,10 +232,10 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 
 
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#mc-cli-account-signal-callback-removed" title="mc_cli_account_signal_callback_removed ()">*mc_cli_account_signal_callback_removed</a>)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-connect-to-removed" title="mc_cli_account_connect_to_removed ()">mc_cli_account_connect_to_removed</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-connect-to-removed" title="mc_cli_account_connect_to_removed ()">mc_cli_account_connect_to_removed</a>
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-signal-callback-removed" title="mc_cli_account_signal_callback_removed ()"><span class="type">mc_cli_account_signal_callback_removed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -243,11 +243,11 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#mc-cli-account-signal-callback-account-property-changed" title="mc_cli_account_signal_callback_account_property_changed ()">*mc_cli_account_signal_callback_account_property_changed</a>)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *arg_Properties</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-connect-to-account-property-changed" title="mc_cli_account_connect_to_account_property_changed ()">mc_cli_account_connect_to_account_property_changed</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-connect-to-account-property-changed" title="mc_cli_account_connect_to_account_property_changed ()">mc_cli_account_connect_to_account_property_changed</a>
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-signal-callback-account-property-changed" title="mc_cli_account_signal_callback_account_property_changed ()"><span class="type">mc_cli_account_signal_callback_account_property_changed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -255,23 +255,23 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#mc-cli-account-callback-for-remove" title="mc_cli_account_callback_for_remove ()">*mc_cli_account_callback_for_remove</a>)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-cli-account-call-remove" title="mc_cli_account_call_remove ()">mc_cli_account_call_remove</a>         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-cli-account-call-remove" title="mc_cli_account_call_remove ()">mc_cli_account_call_remove</a>         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_ms</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-callback-for-remove" title="mc_cli_account_callback_for_remove ()"><span class="type">mc_cli_account_callback_for_remove</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#mc-cli-account-callback-for-update-parameters" title="mc_cli_account_callback_for_update_parameters ()">*mc_cli_account_callback_for_update_parameters</a>)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **out_Reconnect_Required</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-cli-account-call-update-parameters" title="mc_cli_account_call_update_parameters ()">mc_cli_account_call_update_parameters</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * <a class="link" href="McAccount.html#mc-cli-account-call-update-parameters" title="mc_cli_account_call_update_parameters ()">mc_cli_account_call_update_parameters</a>
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_ms</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *in_Set</code></em>,
@@ -281,10 +281,10 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="McAccount.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed" title="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()">*mc_cli_account_interface_avatar_signal_callback_avatar_changed</a>)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-interface-avatar-connect-to-avatar-changed" title="mc_cli_account_interface_avatar_connect_to_avatar_changed ()">mc_cli_account_interface_avatar_connect_to_avatar_changed</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * <a class="link" href="McAccount.html#mc-cli-account-interface-avatar-connect-to-avatar-changed" title="mc_cli_account_interface_avatar_connect_to_avatar_changed ()">mc_cli_account_interface_avatar_connect_to_avatar_changed</a>
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed" title="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()"><span class="type">mc_cli_account_interface_avatar_signal_callback_avatar_changed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -297,7 +297,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <a name="McAccount.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
-   +----<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy">TpProxy</a>
+   +----<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy">TpProxy</a>
          +----McAccount
 </pre>
 </div>
@@ -333,14 +333,14 @@ Account D-Bus API.
 </pre>
 <p>
 A proxy object for the Telepathy Account D-Bus API. This is a subclass of
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>.
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
-<td><p><span class="term"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> <em class="structfield"><code><a name="McAccount-struct.parent"></a>parent</code></em>;</span></p></td>
-<td>the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> for the account object.
+<td><p><span class="term"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> <em class="structfield"><code><a name="McAccount-struct.parent"></a>parent</code></em>;</span></p></td>
+<td>the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> for the account object.
 </td>
 </tr>
 <tr>
@@ -373,7 +373,7 @@ The class of a <a class="link" href="McAccount.html" title="McAccount"><span cla
 <hr>
 <div class="refsect2" title="mc_account_new ()">
 <a name="mc-account-new"></a><h3>mc_account_new ()</h3>
-<pre class="programlisting"><a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         mc_account_new                      (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
+<pre class="programlisting"><a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         mc_account_new                      (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -792,7 +792,7 @@ calling this function.
 <div class="refsect2" title="mc_account_get_automatic_presence ()">
 <a name="mc-account-get-automatic-presence"></a><h3>mc_account_get_automatic_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_automatic_presence   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);</pre>
 <p>
@@ -811,7 +811,7 @@ calling this function.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
 </td>
 </tr>
 <tr>
@@ -878,7 +878,7 @@ calling this function.
 <hr>
 <div class="refsect2" title="mc_account_get_connection_status ()">
 <a name="mc-account-get-connection-status"></a><h3>mc_account_get_connection_status ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatus"><span class="returnvalue">TpConnectionStatus</span></a>  mc_account_get_connection_status    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatus"><span class="returnvalue">TpConnectionStatus</span></a>  mc_account_get_connection_status    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
@@ -900,7 +900,7 @@ calling this function.
 <hr>
 <div class="refsect2" title="mc_account_get_connection_status_reason ()">
 <a name="mc-account-get-connection-status-reason"></a><h3>mc_account_get_connection_status_reason ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatusReason"><span class="returnvalue">TpConnectionStatusReason</span></a>  mc_account_get_connection_status_reason
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatusReason"><span class="returnvalue">TpConnectionStatusReason</span></a>  mc_account_get_connection_status_reason
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -924,7 +924,7 @@ calling this function.
 <div class="refsect2" title="mc_account_get_current_presence ()">
 <a name="mc-account-get-current-presence"></a><h3>mc_account_get_current_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_current_presence     (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);</pre>
 <p>
@@ -942,7 +942,7 @@ calling this function.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
 </td>
 </tr>
 <tr>
@@ -964,7 +964,7 @@ be not modified or free'd).
 <div class="refsect2" title="mc_account_get_requested_presence ()">
 <a name="mc-account-get-requested-presence"></a><h3>mc_account_get_requested_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_requested_presence   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **message</code></em>);</pre>
 <p>
@@ -982,7 +982,7 @@ calling this function.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
 </td>
 </tr>
 <tr>
@@ -1029,9 +1029,9 @@ calling this function.
 <hr>
 <div class="refsect2" title="mc_account_set_display_name ()">
 <a name="mc-account-set-display-name"></a><h3>mc_account_set_display_name ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_display_name        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_display_name        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *display_name</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1076,7 +1076,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1085,9 +1085,9 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_icon ()">
 <a name="mc-account-set-icon"></a><h3>mc_account_set_icon ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_icon                (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_icon                (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *icon</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1132,7 +1132,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1141,9 +1141,9 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_enabled ()">
 <a name="mc-account-set-enabled"></a><h3>mc_account_set_enabled ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_enabled             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_enabled             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1188,7 +1188,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1197,10 +1197,10 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_connect_automatically ()">
 <a name="mc-account-set-connect-automatically"></a><h3>mc_account_set_connect_automatically ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_connect_automatically
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_connect_automatically
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> connect</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1245,7 +1245,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1254,9 +1254,9 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_nickname ()">
 <a name="mc-account-set-nickname"></a><h3>mc_account_set_nickname ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_nickname            (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_nickname            (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *nickname</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1301,7 +1301,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1310,11 +1310,11 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_automatic_presence ()">
 <a name="mc-account-set-automatic-presence"></a><h3>mc_account_set_automatic_presence ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_automatic_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_automatic_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1369,7 +1369,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1378,11 +1378,11 @@ callback is NULL.
 <hr>
 <div class="refsect2" title="mc_account_set_requested_presence ()">
 <a name="mc-account-set-requested-presence"></a><h3>mc_account_set_requested_presence ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_requested_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_requested_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *status</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1437,7 +1437,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1520,11 +1520,11 @@ prior to calling this function.
 <hr>
 <div class="refsect2" title="mc_account_avatar_set ()">
 <a name="mc-account-avatar-set"></a><h3>mc_account_avatar_set ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_avatar_set              (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_avatar_set              (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *avatar</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gsize"><span class="type">gsize</span></a> len</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *mime_type</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1579,7 +1579,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -1665,9 +1665,9 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
 <hr>
 <div class="refsect2" title="mc_account_compat_set_profile ()">
 <a name="mc-account-compat-set-profile"></a><h3>mc_account_compat_set_profile ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_profile      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_profile      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *profile</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1717,10 +1717,10 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
 <hr>
 <div class="refsect2" title="mc_account_compat_set_secondary_vcard_fields ()">
 <a name="mc-account-compat-set-secondary-vcard-fields"></a><h3>mc_account_compat_set_secondary_vcard_fields ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_secondary_vcard_fields
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_secondary_vcard_fields
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> * const *fields</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1830,9 +1830,9 @@ destroyed.
 <hr>
 <div class="refsect2" title="mc_account_conditions_set ()">
 <a name="mc-account-conditions-set"></a><h3>mc_account_conditions_set ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_conditions_set          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_conditions_set          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *conditions</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy-dbus-core.html#tp-cli-dbus-properties-callback-for-set"><span class="type">tp_cli_dbus_properties_callback_for_set</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -1879,7 +1879,7 @@ callback is NULL.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
 </td>
 </tr>
 </tbody>
@@ -2330,7 +2330,7 @@ This only works if the request was created by this process.
 <div class="refsect2" title="mc_cli_account_signal_callback_removed ()">
 <a name="mc-cli-account-signal-callback-removed"></a><h3>mc_cli_account_signal_callback_removed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_signal_callback_removed)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
 <p>
@@ -2361,7 +2361,7 @@ Represents the signature of a callback for the signal Removed.
 <hr>
 <div class="refsect2" title="mc_cli_account_connect_to_removed ()">
 <a name="mc-cli-account-connect-to-removed"></a><h3>mc_cli_account_connect_to_removed ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_removed
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_removed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-signal-callback-removed" title="mc_cli_account_signal_callback_removed ()"><span class="type">mc_cli_account_signal_callback_removed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -2379,7 +2379,7 @@ This account has been removed.          &lt;tp:rationale&gt;           This is r
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
 </td>
 </tr>
 <tr>
@@ -2415,7 +2415,7 @@ This account has been removed.          &lt;tp:rationale&gt;           This is r
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
 or has become invalid.
@@ -2428,7 +2428,7 @@ or has become invalid.
 <div class="refsect2" title="mc_cli_account_signal_callback_account_property_changed ()">
 <a name="mc-cli-account-signal-callback-account-property-changed"></a><h3>mc_cli_account_signal_callback_account_property_changed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_signal_callback_account_property_changed)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *arg_Properties</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -2465,7 +2465,7 @@ Represents the signature of a callback for the signal AccountPropertyChanged.
 <hr>
 <div class="refsect2" title="mc_cli_account_connect_to_account_property_changed ()">
 <a name="mc-cli-account-connect-to-account-property-changed"></a><h3>mc_cli_account_connect_to_account_property_changed ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_account_property_changed
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_account_property_changed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-signal-callback-account-property-changed" title="mc_cli_account_signal_callback_account_property_changed ()"><span class="type">mc_cli_account_signal_callback_account_property_changed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -2483,7 +2483,7 @@ The values of one or more properties on this interface (that do not         spec
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
 </td>
 </tr>
 <tr>
@@ -2519,7 +2519,7 @@ The values of one or more properties on this interface (that do not         spec
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
 or has become invalid.
@@ -2532,7 +2532,7 @@ or has become invalid.
 <div class="refsect2" title="mc_cli_account_callback_for_remove ()">
 <a name="mc-cli-account-callback-for-remove"></a><h3>mc_cli_account_callback_for_remove ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_callback_for_remove)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
@@ -2570,7 +2570,7 @@ succeeds or fails.
 <hr>
 <div class="refsect2" title="mc_cli_account_call_remove ()">
 <a name="mc-cli-account-call-remove"></a><h3>mc_cli_account_call_remove ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_remove         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_remove         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_ms</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-callback-for-remove" title="mc_cli_account_callback_for_remove ()"><span class="type">mc_cli_account_callback_for_remove</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -2587,7 +2587,7 @@ Delete the account.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>
+<td>the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>
 </td>
 </tr>
 <tr>
@@ -2626,10 +2626,10 @@ Delete the account.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
  progress. It is borrowed from the object, and will become
  invalid when the callback is called, the call is
- cancelled or the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
+ cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
 </td>
 </tr>
 </tbody>
@@ -2639,7 +2639,7 @@ Delete the account.
 <div class="refsect2" title="mc_cli_account_callback_for_update_parameters ()">
 <a name="mc-cli-account-callback-for-update-parameters"></a><h3>mc_cli_account_callback_for_update_parameters ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_callback_for_update_parameters)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **out_Reconnect_Required</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -2683,7 +2683,7 @@ succeeds or fails.
 <hr>
 <div class="refsect2" title="mc_cli_account_call_update_parameters ()">
 <a name="mc-cli-account-call-update-parameters"></a><h3>mc_cli_account_call_update_parameters ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_update_parameters
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_update_parameters
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_ms</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *in_Set</code></em>,
@@ -2703,7 +2703,7 @@ Start a UpdateParameters method call.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>
+<td>the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a>
 </td>
 </tr>
 <tr>
@@ -2752,10 +2752,10 @@ Start a UpdateParameters method call.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
  progress. It is borrowed from the object, and will become
  invalid when the callback is called, the call is
- cancelled or the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
+ cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
 </td>
 </tr>
 </tbody>
@@ -2765,7 +2765,7 @@ Start a UpdateParameters method call.
 <div class="refsect2" title="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()">
 <a name="mc-cli-account-interface-avatar-signal-callback-avatar-changed"></a><h3>mc_cli_account_interface_avatar_signal_callback_avatar_changed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_interface_avatar_signal_callback_avatar_changed)
-                                                        (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
+                                                        (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
 <p>
@@ -2796,7 +2796,7 @@ Represents the signature of a callback for the signal AvatarChanged.
 <hr>
 <div class="refsect2" title="mc_cli_account_interface_avatar_connect_to_avatar_changed ()">
 <a name="mc-cli-account-interface-avatar-connect-to-avatar-changed"></a><h3>mc_cli_account_interface_avatar_connect_to_avatar_changed ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_interface_avatar_connect_to_avatar_changed
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_interface_avatar_connect_to_avatar_changed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#mc-cli-account-interface-avatar-signal-callback-avatar-changed" title="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()"><span class="type">mc_cli_account_interface_avatar_signal_callback_avatar_changed</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>,
@@ -2814,7 +2814,7 @@ Emitted when the Avatar property changes.          &lt;tp:rationale&gt;The avata
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
 </td>
 </tr>
 <tr>
@@ -2850,7 +2850,7 @@ Emitted when the Avatar property changes.          &lt;tp:rationale&gt;The avata
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
 or has become invalid.

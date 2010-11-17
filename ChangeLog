@@ -1,3 +1,247 @@
+commit 7df3310b088a0187b60c8ba1992ceac4a93026b1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-11-17 11:45:17 +0000
+
+    Version 5.6.1
+
+ NEWS         |    4 +++-
+ configure.ac |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 03937b7ef60e12468e3f661af943edb24ce8eecc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-11-17 10:56:51 +0000
+
+    Update NEWS
+
+ NEWS |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
+
+commit 0b9464ee78eb063e1ee8bf7b833a6bd378f1fa90
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-27 16:18:51 +0100
+
+    Use the new AG_SERVICE macro instead of hardiwring "IM" everywhere.
+
+ src/mcd-account-manager-sso.c |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
+
+commit 1798389710ce878298598c9ffc4b156abc708e00
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-27 16:18:13 +0100
+
+    Register for the IM service type specifically: no wakeups for non-IM changes
+
+ src/mcd-account-manager-sso.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+commit 41aeef1c314c60b12d394403d1552ed7bd964203
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:38:48 +0100
+
+    Implement the "list" operation in the libaccounts backend
+
+ test/account-store-libaccounts.c |   80 ++++++++++++++++++++++++++++++++++++++
+ test/account-store-libaccounts.h |    2 +
+ 2 files changed, 82 insertions(+), 0 deletions(-)
+
+commit d8179b677aeeee0394840f330275bb956a459e84
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:38:12 +0100
+
+    Obsolete functions no longer used by the libaccounts get/set implementations
+
+ test/account-store-libaccounts.c |   50 --------------------------------------
+ 1 files changed, 0 insertions(+), 50 deletions(-)
+
+commit 4f43ef635decd263783bcde5db7ac56e6e9a4297
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:37:03 +0100
+
+    Update the libaccounts "set" implementation to use the new helpers
+
+ test/account-store-libaccounts.c |   32 ++++++++++++++++----------------
+ 1 files changed, 16 insertions(+), 16 deletions(-)
+
+commit 3cd7559e500d1b5ac7b442ce61eef72337014feb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:36:34 +0100
+
+    Update libaccounts "get" implementation to use the new helper functions
+
+ test/account-store-libaccounts.c |   53 +++++++++++++++++++++++--------------
+ 1 files changed, 33 insertions(+), 20 deletions(-)
+
+commit 3c1fefe21ebc9603bc0a0b4ff56cae9a369d59ef
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:35:10 +0100
+
+    Helper function to save settings in the SSO
+
+ test/account-store-libaccounts.c |   34 ++++++++++++++++++++++++++++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
+
+commit 08e39a3aa4003b2a31c6a548610cf5fa32bf3b9d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:33:58 +0100
+
+    Helper functions to map the enabled flag to the enabled tri-state in SSO
+
+ test/account-store-libaccounts.c |   55 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 55 insertions(+), 0 deletions(-)
+
+commit 8f2a2ccc5fd7e860581ffcbe2709f975cbc90856
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:27:10 +0100
+
+    Implement the same AG <-> MC setting mapping functions as the SSO storage plugin
+
+ test/account-store-libaccounts.c |  115 +++++++++++++++++++++++++++++++++++---
+ 1 files changed, 107 insertions(+), 8 deletions(-)
+
+commit 6d6ab7387c99df31b071b7cce8d617ff46d87cf8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 15:24:40 +0100
+
+    Fix up g_log related helpers so they build (bad comparison, bad func signature)
+
+ test/account-store-libaccounts.c |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
+
+commit 4c9c8f48f1b3b86ea46c46055d4c2e5ef926cb5a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 14:19:06 +0100
+
+    Implement the "list" operation in the default account store tool backend
+
+ test/account-store-default.c |    6 ++++++
+ test/account-store-default.h |    2 ++
+ 2 files changed, 8 insertions(+), 0 deletions(-)
+
+commit deb56f64ff9dc03f682e09561dfaad14bd3083d4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 14:18:35 +0100
+
+    Implement the "list" operation in tha account store tool
+
+ test/account-store.c |   32 +++++++++++++++++++++++++-------
+ 1 files changed, 25 insertions(+), 7 deletions(-)
+
+commit 2fc6e063fc591f2eba6dc51678ad5c527d9d2e4c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-12 13:31:56 +0100
+
+    Missing includes
+
+ test/account-store-default.h     |    1 +
+ test/account-store-libaccounts.c |    1 +
+ 2 files changed, 2 insertions(+), 0 deletions(-)
+
+commit 16d4d59d32b4acd6d35d28fafc1cf4899d2fa27c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-10-11 14:27:51 +0100
+
+    Let ag parameters/account shadow the ag 'username'/mc 'param-account' mapping
+    
+    New convention introduced to meet the requirements of a libaccounts platform:
+    Normally the account parameter is mapped from the global 'username' setting.
+
+ src/mcd-account-manager-sso.c |   42 +++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 40 insertions(+), 2 deletions(-)
+
+commit fb5ea0159ec8a5d96a266530b401f788c0e293ca
+Merge: f03e38c 144d6e1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-10-07 16:33:17 +0100
+
+    Merge branch 'mc-tool-types' into telepathy-mission-control-5.6
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+commit 144d6e15d9cd5bd8a8c17ffc50a0ba5078319d98
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-08-03 18:09:42 +0100
+
+    mc-tool: support object path parameters
+
+ util/mc-tool.c |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
+
+commit fcc72fea419a1eb5abb4fcb173a0a57dbaeee87e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-08-03 17:02:16 +0100
+
+    mc-tool: make help consistent about supported types
+    
+    Also, make it a bit more readable, and avoid the lines wrapping.
+
+ util/mc-tool.c |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
+
+commit f03e38c057a3d38537bc585dabc78ed0dc8cda24
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-29 11:10:16 +0100
+
+    fd.o #30448: make type of mcp_account_storage_get_restrictions consistent with the header
+    
+    It seems we changed the implementation but not the header, and Solaris CC
+    is stricter about this than gcc. Since the header defines our API, it
+    seems better to fix this in the implementation for the moment.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=30448
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+
+ mission-control-plugins/account-storage.c |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
+
+commit 793cc900f08c0cc1efacc33d997c943fa1893086
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-29 10:55:37 +0100
+
+    mcd-manager.c: don't define _POSIX_C_SOURCE for strtok_r, which we don't use
+
+ src/mcd-manager.c |    1 -
+ 1 files changed, 0 insertions(+), 1 deletions(-)
+
+commit 5e8d727e37c31f487bce840c755f66d66fa259d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-29 10:55:18 +0100
+
+    fd.o #30447: don't use "return x()", where x returns void, in void functions
+    
+    Solaris CC doesn't allow this.
+    
+    [In fact, neither does ISO C99 --smcv]
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=30447
+
+ mission-control-plugins/account.c |    2 +-
+ src/mcd-account.c                 |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 760fe45393bda94cebc9192595e34eed906a3d89
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2010-09-20 13:46:12 +0100
+
+    Must include config.h when using AC_DEFINE'd macros
+
+ src/plugin-account.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+commit 6cf2e11f2019cdbf0c2068362444e23663d55132
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-16 17:33:13 +0100
+
+    Nano version 5.6.0+
+
+ NEWS         |    5 +++++
+ configure.ac |    2 +-
+ 2 files changed, 6 insertions(+), 1 deletions(-)
+
 commit 02023109462143bba05b169ecc1c690038c357c9
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2010-09-16 16:51:22 +0100

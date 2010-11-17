@@ -1,29 +1,31 @@
 #!/usr/bin/make -f
 
-DEB_DH_MAKESHLIBS_ARGS_libmission-control-plugins0 := -V
+%:
+	dh $@ --with autotools_dev
 
-include /usr/share/cdbs/1/rules/utils.mk
-include /usr/share/cdbs/1/class/autotools.mk
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/rules/simple-patchsys.mk
+override_dh_makeshlibs:
+	dh_makeshlibs -V
 
 # Having a static library for a plugin loader is pretty useless, so get rid
-# of it. We don't want the libtool stuff either, but we do want to list any
-# other missing files.
-common-binary-post-install-arch:: list-missing
-list-missing: remove-cruft
-remove-cruft:
+# of it. We don't want the libtool stuff either.
+override_dh_auto_install:
+	dh_auto_install
 	rm -f debian/tmp/usr/lib/libmission-control-plugins*.a
 	rm -f debian/tmp/usr/lib/libmission-control-plugins*.la
 
-DEB_DH_STRIP_ARGS := --dbg-package=telepathy-mission-control-5-dbg
+override_dh_strip:
+	dh_strip --dbg-package=telepathy-mission-control-5-dbg
 
-DEB_CONFIGURE_LIBEXECDIR := "\$${prefix}/lib/telepathy"
+# the regression tests are too race-prone to run on buildds
+override_dh_auto_test:
+	:
 
 # Explicitly disable old-style plugins, which has the side-effect of disabling
 # their associated documentation, making their libraries static, and disabling
 # their headers
-DEB_CONFIGURE_EXTRA_FLAGS := \
+override_dh_auto_configure:
+	dh_auto_configure -- \
+	--libexecdir=\$${prefix}/lib/telepathy \
 	--disable-Werror \
 	--disable-mcd-plugins \
 	--enable-gtk-doc \
@@ -32,22 +34,11 @@ DEB_CONFIGURE_EXTRA_FLAGS := \
 	--with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc
 
 # we symlink some of the doc directories together
-DEB_INSTALL_DOCS_ALL :=
-DEB_INSTALL_DOCS_telepathy-mission-control-5 := README NEWS AUTHORS
-DEB_INSTALL_DOCS_telepathy-mission-control-5-dbg := --link-doc=telepathy-mission-control-5
-DEB_INSTALL_DOCS_libmission-control-plugins-dev := --link-doc=libmission-control-plugins0
-
-debian/stamp-buildinfo: insist-on-symlinks
-insist-on-symlinks:
-	for p in libmission-control-plugins-dev; do \
-		install -d debian/$$p/usr/share/doc || exit $$?; \
-		ln -s libmission-control-plugins0 debian/$$p/usr/share/doc/$$p || exit $$?; \
-	done
-	for p in telepathy-mission-control-5-dbg; do \
-		install -d debian/$$p/usr/share/doc || exit $$?; \
-		ln -s telepathy-mission-control-5 debian/$$p/usr/share/doc/$$p || exit $$?; \
-	done
+override_dh_installdocs:
+	dh_installdocs -ptelepathy-mission-control-5-dbg \
+		--link-doc=telepathy-mission-control-5
+	dh_installdocs -plibmission-control-plugins-dev \
+		--link-doc=libmission-control-plugins0
+	dh_installdocs --remaining-packages
 
 export DPKG_GENSYMBOLS_CHECK_LEVEL = 4
-
-include $(CURDIR)/debian/update-patches.mk

@@ -50,15 +50,15 @@
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-find-channel-by-type" title="mcp_dispatch_operation_find_channel_by_type ()">mcp_dispatch_operation_find_channel_by_type</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="type">TpHandleType</span></a> handle_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="type">TpHandleType</span></a> handle_type</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> channel_type</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *ret_index</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **ret_dup_path</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> **ret_ref_immutable_properties</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> **ret_ref_channel</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-connection" title="mcp_dispatch_operation_ref_connection ()">mcp_dispatch_operation_ref_connection</a>
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> **ret_ref_channel</code></em>);
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-connection" title="mcp_dispatch_operation_ref_connection ()">mcp_dispatch_operation_ref_connection</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel" title="mcp_dispatch_operation_ref_nth_channel ()">mcp_dispatch_operation_ref_nth_channel</a>
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel" title="mcp_dispatch_operation_ref_nth_channel ()">mcp_dispatch_operation_ref_nth_channel</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-get-account-path" title="mcp_dispatch_operation_get_account_path ()">mcp_dispatch_operation_get_account_path</a>
@@ -82,7 +82,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <span class="returnvalue">void</span>                <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-leave-channels" title="mcp_dispatch_operation_leave_channels ()">mcp_dispatch_operation_leave_channels</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> wait_for_observers</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpChannelGroupChangeReason"><span class="type">TpChannelGroupChangeReason</span></a> reason</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpChannelGroupChangeReason"><span class="type">TpChannelGroupChangeReason</span></a> reason</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-close-channels" title="mcp_dispatch_operation_close_channels ()">mcp_dispatch_operation_close_channels</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -150,12 +150,12 @@ Only Mission Control should implement this interface.
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_dispatch_operation_find_channel_by_type
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="type">TpHandleType</span></a> handle_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="type">TpHandleType</span></a> handle_type</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> channel_type</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *ret_index</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **ret_dup_path</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> **ret_ref_immutable_properties</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> **ret_ref_channel</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> **ret_ref_channel</code></em>);</pre>
 <p>
 Attempt to find a channel matching the given handle type and channel type
 in the bundle. This is an easy way to test whether the bundle contains any
@@ -207,7 +207,7 @@ channels of interest to a particular plugin.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ret_ref_channel</code></em> :</span></p></td>
-<td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which is not
+<td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which is not
  guaranteed to be ready immediately, and must be released with
  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>
 </td>
@@ -225,11 +225,11 @@ channels of interest to a particular plugin.
 <hr>
 <div class="refsect2" title="mcp_dispatch_operation_ref_connection ()">
 <a name="mcp-dispatch-operation-ref-connection"></a><h3>mcp_dispatch_operation_ref_connection ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      mcp_dispatch_operation_ref_connection
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      mcp_dispatch_operation_ref_connection
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
 <p>
-Return a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a> object. It is not guaranteed to be ready immediately;
-use <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.html#tp-connection-call-when-ready"><code class="function">tp_connection_call_when_ready()</code></a>.
+Return a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a> object. It is not guaranteed to be ready immediately;
+use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#tp-connection-call-when-ready"><code class="function">tp_connection_call_when_ready()</code></a>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -241,7 +241,7 @@ use <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.ht
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a reference to a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a>, which must be released with
+<td> a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a>, which must be released with
  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller
 </td>
 </tr>
@@ -251,12 +251,12 @@ use <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-connection.ht
 <hr>
 <div class="refsect2" title="mcp_dispatch_operation_ref_nth_channel ()">
 <a name="mcp-dispatch-operation-ref-nth-channel"></a><h3>mcp_dispatch_operation_ref_nth_channel ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         mcp_dispatch_operation_ref_nth_channel
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         mcp_dispatch_operation_ref_nth_channel
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
 <p>
-Return a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> object. It is not guaranteed to be ready immediately;
-use <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#tp-channel-call-when-ready"><code class="function">tp_channel_call_when_ready()</code></a>.
+Return a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a> object. It is not guaranteed to be ready immediately;
+use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#tp-channel-call-when-ready"><code class="function">tp_channel_call_when_ready()</code></a>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -273,7 +273,7 @@ use <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a reference to a <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which must be released with
+<td> a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which must be released with
  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is too large
 </td>
 </tr>
@@ -455,7 +455,7 @@ Return the immutable properties of the <em class="parameter"><code>n</code></em>
 </p>
 <p>
 The keys of the hash table are strings and the values are in <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a>
-structures, using the same representation as dbus-glib, <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-asv.html#tp-asv-get-string"><code class="function">tp_asv_get_string()</code></a>
+structures, using the same representation as dbus-glib, <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-asv.html#tp-asv-get-string"><code class="function">tp_asv_get_string()</code></a>
 etc. Do not add or remove entries in this hash table.
 </p>
 <div class="variablelist"><table border="0">
@@ -543,7 +543,7 @@ Stop delaying the dispatch operation, allowing dispatching to proceed.
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_leave_channels
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> wait_for_observers</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpChannelGroupChangeReason"><span class="type">TpChannelGroupChangeReason</span></a> reason</code></em>,
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpChannelGroupChangeReason"><span class="type">TpChannelGroupChangeReason</span></a> reason</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
 <p>
 Leave all channels in this bundle by using RemoveMembersWithReason if the

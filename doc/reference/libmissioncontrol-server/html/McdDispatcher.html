@@ -51,7 +51,7 @@ Unstable, unless otherwise indicated
 #include &lt;mcd-dispatcher.h&gt;
 
                     <a class="link" href="McdDispatcher.html#McdDispatcher-struct" title="McdDispatcher">McdDispatcher</a>;
-<a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     <a class="link" href="McdDispatcher.html#mcd-dispatcher-new" title="mcd_dispatcher_new ()">mcd_dispatcher_new</a>                  (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus_daemon</code></em>,
+<a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     <a class="link" href="McdDispatcher.html#mcd-dispatcher-new" title="mcd_dispatcher_new ()">mcd_dispatcher_new</a>                  (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus_daemon</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a> *master</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage" title="mcd_dispatcher_get_channel_type_usage ()">mcd_dispatcher_get_channel_type_usage</a>
                                                         (<em class="parameter"><code><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a> *dispatcher</code></em>,
@@ -76,12 +76,12 @@ Unstable, unless otherwise indicated
 <a name="McdDispatcher.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 McdDispatcher implements
- <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcher">TpSvcChannelDispatcher</a>,  McSvcChannelDispatcherFuture,  <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcherInterfaceOperationList">TpSvcChannelDispatcherInterfaceOperationList</a> and  <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
+ <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcher">TpSvcChannelDispatcher</a>,  McSvcChannelDispatcherFuture,  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcherInterfaceOperationList">TpSvcChannelDispatcherInterfaceOperationList</a> and  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
 </div>
 <div class="refsect1" title="Properties">
 <a name="McdDispatcher.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
-  "<a class="link" href="McdDispatcher.html#McdDispatcher--dbus-daemon" title='The "dbus-daemon" property'>dbus-daemon</a>"              <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct
+  "<a class="link" href="McdDispatcher.html#McdDispatcher--dbus-daemon" title='The "dbus-daemon" property'>dbus-daemon</a>"              <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct
   "<a class="link" href="McdDispatcher.html#McdDispatcher--dispatch-operations" title='The "dispatch-operations" property'>dispatch-operations</a>"      <span class="type">GPtrArray_GValueArray_DBusGObjectPath+GHashTable_gchararray+GValue___*</span>  : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--interfaces" title='The "interfaces" property'>interfaces</a>"               <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--mcd-master" title='The "mcd-master" property'>mcd-master</a>"               <a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a>*            : Read / Write / Construct
@@ -104,7 +104,7 @@ FIXME
 <hr>
 <div class="refsect2" title="mcd_dispatcher_new ()">
 <a name="mcd-dispatcher-new"></a><h3>mcd_dispatcher_new ()</h3>
-<pre class="programlisting"><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     mcd_dispatcher_new                  (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus_daemon</code></em>,
+<pre class="programlisting"><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     mcd_dispatcher_new                  (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus_daemon</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a> *master</code></em>);</pre>
 <p>
 </p>
@@ -224,7 +224,7 @@ Convenience function to add a batch of filters at once.
 <a name="McdDispatcher.property-details"></a><h2>Property Details</h2>
 <div class="refsect2" title='The "dbus-daemon" property'>
 <a name="McdDispatcher--dbus-daemon"></a><h3>The <code class="literal">"dbus-daemon"</code> property</h3>
-<pre class="programlisting">  "dbus-daemon"              <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct</pre>
+<pre class="programlisting">  "dbus-daemon"              <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct</pre>
 <p>DBus daemon.</p>
 </div>
 <hr>

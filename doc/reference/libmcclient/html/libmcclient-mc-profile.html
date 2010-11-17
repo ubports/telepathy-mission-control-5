@@ -59,10 +59,10 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-domain" title="mc_profile_get_default_account_domain ()">mc_profile_get_default_account_domain</a>
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-avatar-mime-type" title="mc_profile_get_avatar_mime_type ()">mc_profile_get_avatar_mime_type</a>     (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
-const <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a> * <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-supported-presences" title="mc_profile_get_supported_presences ()">mc_profile_get_supported_presences</a>
+const <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a> * <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-supported-presences" title="mc_profile_get_supported_presences ()">mc_profile_get_supported_presences</a>
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="libmcclient-mc-profile.html#mc-profile-supports-presence" title="mc_profile_supports_presence ()">mc_profile_supports_presence</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-priority" title="mc_profile_get_priority ()">mc_profile_get_priority</a>             (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-default-account-name" title="mc_profile_get_default_account_name ()">mc_profile_get_default_account_name</a> (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="libmcclient-mc-profile.html#mc-profile-get-protocol-name" title="mc_profile_get_protocol_name ()">mc_profile_get_protocol_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);
@@ -76,7 +76,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *vcard_field</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-name" title="mc_profile_presence_get_name ()">mc_profile_presence_get_name</a>        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-type" title="mc_profile_presence_get_type ()">mc_profile_presence_get_type</a>  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-type" title="mc_profile_presence_get_type ()">mc_profile_presence_get_type</a>  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name" title="mc_profile_presence_get_icon_name ()">mc_profile_presence_get_icon_name</a>   (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);
@@ -486,7 +486,7 @@ Get the preferred MIME type for the avatar.
 <hr>
 <div class="refsect2" title="mc_profile_get_supported_presences ()">
 <a name="mc-profile-get-supported-presences"></a><h3>mc_profile_get_supported_presences ()</h3>
-<pre class="programlisting">const <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a> * mc_profile_get_supported_presences
+<pre class="programlisting">const <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a> * mc_profile_get_supported_presences
                                                         (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>);</pre>
 <p>
 Checks what presence states are supported by this profile.
@@ -512,7 +512,7 @@ It must not be freed.
 <div class="refsect2" title="mc_profile_supports_presence ()">
 <a name="mc-profile-supports-presence"></a><h3>mc_profile_supports_presence ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_profile_supports_presence        (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
-                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> presence</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -763,7 +763,7 @@ Get a mangle to transform a foreign address to a handle this profile understands
 <hr>
 <div class="refsect2" title="mc_profile_presence_get_type ()">
 <a name="mc-profile-presence-get-type"></a><h3>mc_profile_presence_get_type ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  mc_profile_presence_get_type  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="returnvalue">TpConnectionPresenceType</span></a>  mc_profile_presence_get_type  (<em class="parameter"><code><a class="link" href="libmcclient-mc-profile.html#McProfile"><span class="type">McProfile</span></a> *id</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *presence</code></em>);</pre>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
@@ -780,7 +780,7 @@ Get a mangle to transform a foreign address to a handle this profile understands
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> of <em class="parameter"><code>presence</code></em>.
+<td> the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> of <em class="parameter"><code>presence</code></em>.
 </td>
 </tr>
 </tbody>

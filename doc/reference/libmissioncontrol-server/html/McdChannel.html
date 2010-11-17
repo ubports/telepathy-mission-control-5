@@ -60,7 +60,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="returnvalue">GQuark</span></a>              <a class="link" href="McdChannel.html#mcd-channel-get-channel-type-quark" title="mcd_channel_get_channel_type_quark ()">mcd_channel_get_channel_type_quark</a>  (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a>*        <a class="link" href="McdChannel.html#mcd-channel-get-object-path" title="mcd_channel_get_object_path ()">mcd_channel_get_object_path</a>         (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="McdChannel.html#mcd-channel-get-handle" title="mcd_channel_get_handle ()">mcd_channel_get_handle</a>              (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
-<a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="returnvalue">TpHandleType</span></a>        <a class="link" href="McdChannel.html#mcd-channel-get-handle-type" title="mcd_channel_get_handle_type ()">mcd_channel_get_handle_type</a>         (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="returnvalue">TpHandleType</span></a>        <a class="link" href="McdChannel.html#mcd-channel-get-handle-type" title="mcd_channel_get_handle_type ()">mcd_channel_get_handle_type</a>         (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McdChannel.html#mcd-channel-get-name" title="mcd_channel_get_name ()">mcd_channel_get_name</a>                (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McdChannel.html#mcd-channel-is-requested" title="mcd_channel_is_requested ()">mcd_channel_is_requested</a>            (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
 <span class="returnvalue">McdAccount</span> *        <a class="link" href="McdChannel.html#mcd-channel-get-account" title="mcd_channel_get_account ()">mcd_channel_get_account</a>             (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);
@@ -78,7 +78,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <a name="McdChannel.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 McdChannel implements
- <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-channel-request.html#TpSvcChannelRequest">TpSvcChannelRequest</a>,  McSvcChannelRequestFuture and  <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
+ <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-request.html#TpSvcChannelRequest">TpSvcChannelRequest</a>,  McSvcChannelRequestFuture and  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
 </div>
 <div class="refsect1" title="Properties">
 <a name="McdChannel.properties"></a><h2>Properties</h2>
@@ -89,7 +89,7 @@ McdChannel implements
   "<a class="link" href="McdChannel.html#McdChannel--outgoing" title='The "outgoing" property'>outgoing</a>"                 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct Only
   "<a class="link" href="McdChannel.html#McdChannel--preferred-handler" title='The "preferred-handler" property'>preferred-handler</a>"        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read
   "<a class="link" href="McdChannel.html#McdChannel--requests" title='The "requests" property'>requests</a>"                 <span class="type">GPtrArray_GHashTable_gchararray+GValue__*</span>  : Read
-  "<a class="link" href="McdChannel.html#McdChannel--tp-channel" title='The "tp-channel" property'>tp-channel</a>"               <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>*            : Read / Write / Construct
+  "<a class="link" href="McdChannel.html#McdChannel--tp-channel" title='The "tp-channel" property'>tp-channel</a>"               <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>*            : Read / Write / Construct
   "<a class="link" href="McdChannel.html#McdChannel--user-action-time" title='The "user-action-time" property'>user-action-time</a>"         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"><span class="type">gint64</span></a>                : Read
 </pre>
 </div>
@@ -273,7 +273,7 @@ FIXME
 <hr>
 <div class="refsect2" title="mcd_channel_get_handle_type ()">
 <a name="mcd-channel-get-handle-type"></a><h3>mcd_channel_get_handle_type ()</h3>
-<pre class="programlisting"><a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="returnvalue">TpHandleType</span></a>        mcd_channel_get_handle_type         (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);</pre>
+<pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpHandleType"><span class="returnvalue">TpHandleType</span></a>        mcd_channel_get_handle_type         (<em class="parameter"><code><a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> *channel</code></em>);</pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -399,7 +399,7 @@ handle).
 <hr>
 <div class="refsect2" title='The "tp-channel" property'>
 <a name="McdChannel--tp-channel"></a><h3>The <code class="literal">"tp-channel"</code> property</h3>
-<pre class="programlisting">  "tp-channel"               <a href="/usr/share/gtk-doc/html/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>*            : Read / Write / Construct</pre>
+<pre class="programlisting">  "tp-channel"               <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>*            : Read / Write / Construct</pre>
 <p>Telepathy Channel.</p>
 </div>
 <hr>
