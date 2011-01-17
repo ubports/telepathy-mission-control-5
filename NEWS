@@ -1,3 +1,44 @@
+telepathy-mission-control 5.7.1 (2010-12-06)
+============================================
+
+The "Ack... I've been gritted" release.
+
+Enhancements:
+
+• mc-tool: Improved error message for nonexistent accounts
+
+• Removed obsolete mapping of TP_ERROR_NOT_AVAILABLE to
+  MC_CONTACT_DOES_NOT_SUPPORT_VOICE_ERROR
+
+Fixes:
+
+• fd.o #24779: CurrentPresence is Offline for online connections not
+  implementing SimplePresence (wjt)
+
+telepathy-mission-control 5.7.0 (2010-11-18)
+============================================
+
+The "Incursion into Transcarcharid Space" release, starting a new 
+development branch.
+
+Enhancements:
+
+• fd.o#31467: Account.Interface.Addressing interface (fledermaus, wjt)
+
+• fd.o #31263: implement stable Conn.I.PowerSaving, and optionally integrate
+  it with Maemo's MCE service (eeejay)
+
+• fd.o #30000: implement draft ChannelDispatcher.I.Hints and
+  ChannelRequest.I.Hints (smcv)
+
+Fixes:
+
+• fd.o#31678: AccountManager.AccountRemoved signal could be skipped (fledermaus)
+
+• fd.o#31680: g_error() on dbus name acquisition_progressition failure 
+  was interpreted as a core dump by automated test suites, resulting
+  in a lot of false alarms (fledermaus)
+
 telepathy-mission-control 5.6.1 (2010-11-17)
 ============================================
 

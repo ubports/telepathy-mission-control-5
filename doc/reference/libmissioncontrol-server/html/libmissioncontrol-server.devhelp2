@@ -32,6 +32,7 @@
     <keyword type="property" name="The &quot;account&quot; property" link="McdConnection.html#McdConnection--account"/>
     <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdConnection.html#McdConnection--dbus-daemon"/>
     <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdConnection.html#McdConnection--dispatcher"/>
+    <keyword type="property" name="The &quot;slacker&quot; property" link="McdConnection.html#McdConnection--slacker"/>
     <keyword type="property" name="The &quot;tp-connection&quot; property" link="McdConnection.html#McdConnection--tp-connection"/>
     <keyword type="property" name="The &quot;tp-manager&quot; property" link="McdConnection.html#McdConnection--tp-manager"/>
     <keyword type="signal" name="The &quot;connection-status-changed&quot; signal" link="McdConnection.html#McdConnection-connection-status-changed"/>

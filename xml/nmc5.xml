@@ -5,6 +5,7 @@
 <tp:copyright>Copyright (C) 2008 Nokia Corporation</tp:copyright>
 
 <xi:include href="Account.xml"/>
+<xi:include href="Account_Interface_Addressing.xml"/>
 <xi:include href="Account_Interface_Avatar.xml"/>
 <xi:include href="Account_Interface_ChannelRequests.xml"/>
 <xi:include href="Account_Interface_Compat.xml"/>
@@ -13,7 +14,6 @@
 <xi:include href="Account_Interface_Minimum_Presence.xml"/>
 <xi:include href="Account_Manager.xml"/>
 <xi:include href="Account_Manager_Interface_Query.xml"/>
-<xi:include href="Account_Manager_Interface_SSO.xml"/>
 
 <xi:include href="Client.xml"/>
 <xi:include href="Client_Approver.xml"/>
@@ -28,5 +28,6 @@
 
 <xi:include href="Connection_Interface_Contact_Capabilities_Draft1.xml"/>
 <xi:include href="Connection_Interface_Contact_Capabilities.xml"/>
+<xi:include href="Connection_Interface_Power_Saving.xml"/>
 
 </tp:spec>

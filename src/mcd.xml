@@ -4,18 +4,17 @@
 
 <tp:copyright>Copyright (C) 2008 Nokia Corporation</tp:copyright>
 
+<xi:include href="../xml/Account_Interface_Addressing.xml"/>
 <xi:include href="../xml/Account_Interface_ChannelRequests.xml"/>
 <xi:include href="../xml/Account_Interface_Compat.xml"/>
 <xi:include href="../xml/Account_Interface_Conditions.xml"/>
 <xi:include href="../xml/Account_Interface_Stats.xml"/>
 
-<xi:include href="../xml/Account_Manager_Interface_SSO.xml"/>
 <xi:include href="../xml/Account_Manager_Interface_Query.xml"/>
 
 <xi:include href="../xml/Connection_Interface_Contact_Capabilities_Draft1.xml"/>
 
-<xi:include href="../xml/Channel_Dispatcher_Future.xml"/>
-
-<xi:include href="../xml/Channel_Request_Future.xml"/>
+<xi:include href="dispatcher.xml"/>
+<xi:include href="request.xml"/>
 
 </tp:spec>

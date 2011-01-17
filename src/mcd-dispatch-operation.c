@@ -3,8 +3,8 @@
 /*
  * This file is part of mission-control
  *
- * Copyright (C) 2008-2009 Nokia Corporation.
- * Copyright (C) 2009 Collabora Ltd.
+ * Copyright (C) 2008-2010 Nokia Corporation.
+ * Copyright (C) 2009-2010 Collabora Ltd.
  *
  * Contact: Alberto Mardegan  <alberto.mardegan@nokia.com>
  *
@@ -371,6 +371,8 @@ static void mcd_dispatch_operation_set_channel_handled_by (
     McdDispatchOperation *self, McdChannel *channel, const gchar *unique_name,
     const gchar *well_known_name);
 static gboolean _mcd_dispatch_operation_handlers_can_bypass_approval (
+    McdDispatchOperation *self);
+static gboolean _mcd_dispatch_operation_handlers_can_bypass_observers (
     McdDispatchOperation *self);
 
 static void
@@ -851,8 +853,9 @@ dispatch_operation_handle_with (TpSvcChannelDispatchOperation *cdo,
     const gchar *handler_name,
     DBusGMethodInvocation *context)
 {
-    /* 0 is a special case for 'no user action' */
-    dispatch_operation_handle_with_time (cdo, handler_name, 0, context);
+    dispatch_operation_handle_with_time (cdo, handler_name,
+                                         TP_USER_ACTION_TIME_NOT_USER_ACTION,
+                                         context);
 }
 
 static void
@@ -1694,6 +1697,34 @@ _mcd_dispatch_operation_handlers_can_bypass_approval (
     return FALSE;
 }
 
+/* this is analogous to *_can_bypass_handlers() method above */
+static gboolean
+_mcd_dispatch_operation_handlers_can_bypass_observers (
+    McdDispatchOperation *self)
+{
+    gchar **iter;
+
+    for (iter = self->priv->possible_handlers;
+         iter != NULL && *iter != NULL;
+         iter++)
+    {
+        McdClientProxy *handler = _mcd_client_registry_lookup (
+            self->priv->client_registry, *iter);
+
+        if (handler != NULL)
+        {
+            gboolean bypass = _mcd_client_proxy_get_bypass_observers (
+                handler);
+
+            DEBUG ("%s has BypassObservers=%c", *iter, bypass ? 'T' : 'F');
+            return bypass;
+        }
+    }
+
+    return FALSE;
+}
+
+
 gboolean
 _mcd_dispatch_operation_has_channel (McdDispatchOperation *self,
                                      McdChannel *channel)
@@ -1806,12 +1837,23 @@ observe_channels_cb (TpClient *proxy, const GError *error,
     _mcd_dispatch_operation_dec_observers_pending (self);
 }
 
-/* The returned GPtrArray is allocated, but the contents are borrowed. */
-static GHashTable *
-collect_satisfied_requests (GList *channels)
+/*
+ * @paths_out: (out) (transfer container) (element-type utf8):
+ *  Requests_Satisfied
+ * @props_out: (out) (transfer container) (element-type utf8 GHashTable):
+ *  request-properties for Observer_Info or Handler_Info
+ */
+static void
+collect_satisfied_requests (const GList *channels,
+    GPtrArray **paths_out,
+    GHashTable **props_out)
 {
     const GList *c;
     GHashTable *set;
+    GHashTableIter it;
+    gpointer path, value;
+    GPtrArray *satisfied_requests;
+    GHashTable *request_properties;
 
     set = g_hash_table_new_full (g_str_hash, g_str_equal,
         g_free, g_object_unref);
@@ -1825,7 +1867,31 @@ collect_satisfied_requests (GList *channels)
         g_hash_table_unref (reqs);
     }
 
-    return set;
+    satisfied_requests = g_ptr_array_sized_new (g_hash_table_size (set));
+    request_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
+        NULL, (GDestroyNotify) g_hash_table_unref);
+
+    g_hash_table_iter_init (&it, set);
+
+    while (g_hash_table_iter_next (&it, &path, &value))
+    {
+        GHashTable *props;
+
+        g_ptr_array_add (satisfied_requests, path);
+        props = _mcd_request_dup_immutable_properties (value);
+        g_assert (props != NULL);
+        g_hash_table_insert (request_properties, path, props);
+    }
+
+    if (paths_out != NULL)
+        *paths_out = satisfied_requests;
+    else
+        g_ptr_array_unref (satisfied_requests);
+
+    if (props_out != NULL)
+        *props_out = request_properties;
+    else
+        g_hash_table_unref (request_properties);
 }
 
 static void
@@ -1847,9 +1913,6 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
         GList *observed = NULL;
         const gchar *account_path, *connection_path;
         GPtrArray *channels_array, *satisfied_requests;
-        GHashTable *reqs;
-        GHashTableIter it;
-        gpointer path, value;
         GHashTable *request_properties;
 
         if (!tp_proxy_has_interface_by_id (client,
@@ -1880,23 +1943,8 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
          * if the observed list is the same */
         channels_array = _mcd_tp_channel_details_build_from_list (observed);
 
-        reqs = collect_satisfied_requests (observed);
-
-        satisfied_requests = g_ptr_array_sized_new (g_hash_table_size (reqs));
-        request_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
-            g_free, (GDestroyNotify) g_hash_table_unref);
-
-        /* 'Requests_Satisfied' and 'request-properties' */
-        g_hash_table_iter_init (&it, reqs);
-        while (g_hash_table_iter_next (&it, &path, &value))
-        {
-            GHashTable *props;
-
-            g_ptr_array_add (satisfied_requests, path);
-
-            props = _mcd_channel_dup_request_properties (MCD_CHANNEL (value));
-            g_hash_table_insert (request_properties, g_strdup (path), props);
-        }
+        collect_satisfied_requests (observed, &satisfied_requests,
+                                    &request_properties);
 
         /* transfer ownership into observer_info */
         /* FIXME: use telepathy-glib type when available */
@@ -1923,12 +1971,11 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
 
         /* don't free the individual object paths, which are borrowed from the
          * McdChannel objects */
-        g_ptr_array_free (satisfied_requests, TRUE);
+        g_ptr_array_unref (satisfied_requests);
 
         _mcd_tp_channel_details_free (channels_array);
 
         g_list_free (observed);
-        g_hash_table_unref (reqs);
     }
 
     g_hash_table_destroy (observer_info);
@@ -2064,8 +2111,15 @@ _mcd_dispatch_operation_run_clients (McdDispatchOperation *self)
     {
         const GList *mini_plugins;
 
-        DEBUG ("Running observers");
-        _mcd_dispatch_operation_run_observers (self);
+        if (_mcd_dispatch_operation_handlers_can_bypass_observers (self))
+        {
+            DEBUG ("Bypassing observers");
+        }
+        else
+        {
+            DEBUG ("Running observers");
+            _mcd_dispatch_operation_run_observers (self);
+        }
 
         for (mini_plugins = mcp_list_objects ();
              mini_plugins != NULL;
@@ -2100,13 +2154,25 @@ static void
 mcd_dispatch_operation_handle_channels (McdDispatchOperation *self,
                                         McdClientProxy *handler)
 {
+    GHashTable *handler_info;
+    GHashTable *request_properties;
+
     g_assert (!self->priv->calling_handle_channels);
     self->priv->calling_handle_channels = TRUE;
 
+    handler_info = tp_asv_new (NULL, NULL);
+    collect_satisfied_requests (self->priv->channels, NULL,
+                                &request_properties);
+    tp_asv_take_boxed (handler_info, "request-properties",
+        MC_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP, request_properties);
+    request_properties = NULL;
+
     _mcd_client_proxy_handle_channels (handler,
         -1, self->priv->channels, self->priv->handle_with_time,
-        NULL, _mcd_dispatch_operation_handle_channels_cb,
+        handler_info, _mcd_dispatch_operation_handle_channels_cb,
         g_object_ref (self), g_object_unref, NULL);
+
+    g_hash_table_unref (handler_info);
 }
 
 static gboolean

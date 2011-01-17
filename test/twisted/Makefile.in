@@ -249,6 +249,8 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCE_CFLAGS = @MCE_CFLAGS@
+MCE_LIBS = @MCE_LIBS@
 MCP_ABI_VERSION = @MCP_ABI_VERSION@
 MCP_API_VERSION = @MCP_API_VERSION@
 MCP_LT_AGE = @MCP_LT_AGE@
@@ -347,8 +349,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 TWISTED_TESTS = 
 TWISTED_BASIC_TESTS = account/minimum-presence.py \
-	account-manager/account-basics.py account-manager/bad-cm.py \
-	account-manager/avatar.py \
+	account/addressing.py account-manager/account-basics.py \
+	account-manager/bad-cm.py account-manager/avatar.py \
 	account-manager/create-auto-connect.py \
 	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
@@ -366,8 +368,9 @@ TWISTED_BASIC_TESTS = account/minimum-presence.py \
 	capabilities/legacy-caps.py dispatcher/approver-fails.py \
 	dispatcher/already-has-channel.py \
 	dispatcher/already-has-obsolete.py \
-	dispatcher/bypass-approval.py dispatcher/cancel.py \
-	dispatcher/capture-bundle.py dispatcher/connect-for-request.py \
+	dispatcher/bypass-approval.py dispatcher/bypass-observers.py \
+	dispatcher/cancel.py dispatcher/capture-bundle.py \
+	dispatcher/connect-for-request.py \
 	dispatcher/create-handler-fails.py dispatcher/create-hints.py \
 	dispatcher/create-no-preferred-handler.py \
 	dispatcher/create-delayed-by-mini-plugin.py \
@@ -407,8 +410,12 @@ TWISTED_SLOW_TESTS = \
 TWISTED_SEPARATE_TESTS = account-manager/auto-connect.py \
 	account-manager/avatar-persist.py \
 	account-manager/avatar-refresh.py \
-	account-manager/make-valid.py crash-recovery/crash-recovery.py \
+	account-manager/device-idle.py account-manager/make-valid.py \
+	crash-recovery/crash-recovery.py \
 	dispatcher/create-at-startup.py $(TWISTED_SPECIAL_BUILD_TESTS)
+@HAVE_MCE_FALSE@HAVE_MCE_PYBOOL = False
+@HAVE_MCE_TRUE@HAVE_MCE_PYBOOL = True
+BUILT_SOURCES = config.py
 AM_CFLAGS = $(ERROR_CFLAGS)
 
 # A demo dispatcher plugin (new, minimal API)
@@ -487,11 +494,13 @@ CLEANFILES = \
 	mc-[1-9]*.log \
 	*.pyc \
 	*/*.pyc \
-	with-session-bus-*.dbus-monitor-logs
+	with-session-bus-*.dbus-monitor-logs \
+	config.py
 
 check_misc_sources = $(TESTS)
 SUBDIRS = tools
-all: all-recursive
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
 .SUFFIXES:
 .SUFFIXES: .c .lo .o .obj
@@ -885,11 +894,13 @@ distdir: $(DISTFILES)
 @WANT_TWISTED_TESTS_FALSE@check-local:
 check-am: all-am
 	$(MAKE) $(AM_MAKEFLAGS) check-TESTS check-local
-check: check-recursive
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-recursive
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS)
 installdirs: installdirs-recursive
 installdirs-am:
-install: install-recursive
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
 uninstall: uninstall-recursive
@@ -915,6 +926,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 @HAVE_SERVER_FALSE@installcheck-local:
 @WANT_TWISTED_TESTS_FALSE@installcheck-local:
 clean: clean-recursive
@@ -988,8 +1000,9 @@ ps-am:
 
 uninstall-am:
 
-.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) check-am \
-	ctags-recursive install-am install-strip tags-recursive
+.MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all check \
+	check-am ctags-recursive install install-am install-strip \
+	tags-recursive
 
 .PHONY: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) CTAGS GTAGS \
 	all all-am check check-TESTS check-am check-local clean \
@@ -1007,6 +1020,11 @@ uninstall-am:
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags tags-recursive uninstall uninstall-am
 
+
+config.py: Makefile
+	$(AM_V_GEN) { \
+		echo "HAVE_MCE = $(HAVE_MCE_PYBOOL)"; \
+	} > $@
 
 @WANT_TWISTED_TESTS_TRUE@check-local: check-twisted
 

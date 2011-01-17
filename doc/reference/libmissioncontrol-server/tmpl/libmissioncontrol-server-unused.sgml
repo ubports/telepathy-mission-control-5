@@ -38,12 +38,6 @@ mcd-service-gen
 stamp-mcd-enum-types
 
 
-<!-- ##### ARG McdChannel:request-metadata ##### -->
-<para>
-
-</para>
-
-
 <!-- ##### FUNCTION dbus_glib_marshal_mcd_service_BOOLEAN__POINTER_POINTER ##### -->
 <para>
 

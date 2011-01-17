@@ -121,6 +121,8 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCE_CFLAGS = @MCE_CFLAGS@
+MCE_LIBS = @MCE_LIBS@
 MCP_ABI_VERSION = @MCP_ABI_VERSION@
 MCP_API_VERSION = @MCP_API_VERSION@
 MCP_LT_AGE = @MCP_LT_AGE@
@@ -224,9 +226,9 @@ DROP_TPTYPE = sed -e 's@tp:type="[^"]*"@@g'
 SPECS = \
 	Account_Manager.xml \
 	Account_Manager_Interface_Query.xml \
-	Account_Manager_Interface_SSO.xml \
 	Account.xml \
 	Account_Interface_Avatar.xml \
+	Account_Interface_Addressing.xml \
 	Account_Interface_ChannelRequests.xml \
 	Account_Interface_Compat.xml \
 	Account_Interface_Conditions.xml \
@@ -234,17 +236,18 @@ SPECS = \
 	Account_Interface_Stats.xml \
 	Channel_Dispatch_Operation.xml \
 	Channel_Dispatcher.xml \
-	Channel_Dispatcher_Future.xml \
+	Channel_Dispatcher_Interface_Hints.xml \
 	Channel_Dispatcher_Interface_Operation_List.xml \
 	Channel_Request.xml \
-	Channel_Request_Future.xml \
+	Channel_Request_Interface_Hints.xml \
 	Client.xml \
 	Client_Approver.xml \
 	Client_Handler.xml \
 	Client_Interface_Requests.xml \
 	Client_Observer.xml \
         Connection_Interface_Contact_Capabilities.xml \
-        Connection_Interface_Contact_Capabilities_Draft1.xml
+        Connection_Interface_Contact_Capabilities_Draft1.xml \
+	Connection_Interface_Power_Saving.xml
 
 SPECS_GEN = ${SPECS:%.xml=_gen/introspect-%.xml}
 EXTRA_DIST = \

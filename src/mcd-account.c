@@ -48,6 +48,7 @@
 #include "mcd-account-conditions.h"
 #include "mcd-account-manager-priv.h"
 #include "mcd-account-presence.h"
+#include "mcd-account-addressing.h"
 #include "mcd-connection-plugin.h"
 #include "mcd-connection-priv.h"
 #include "mcd-misc.h"
@@ -101,6 +102,9 @@ static const McdInterfaceData account_interfaces[] = {
                         mc_svc_account_interface_minimum_presence_get_type,
                         minimum_presence,
                         MC_IFACE_ACCOUNT_INTERFACE_MINIMUM_PRESENCE),
+    MCD_IMPLEMENT_IFACE (mc_svc_account_interface_addressing_get_type,
+        account_addressing,
+        MC_IFACE_ACCOUNT_INTERFACE_ADDRESSING),
 
     { G_TYPE_INVALID, }
 };
@@ -2977,6 +2981,10 @@ mcd_account_init (McdAccount *account)
     priv->min_presence_status = NULL;
     priv->min_presence_message = NULL;
 
+    priv->curr_presence_type = TP_CONNECTION_PRESENCE_TYPE_OFFLINE;
+    priv->curr_presence_status = g_strdup ("offline");
+    priv->curr_presence_status = g_strdup ("");
+
     combine_presences (account);
 
     priv->always_on = FALSE;
@@ -3208,18 +3216,14 @@ mcd_account_request_presence (McdAccount *account,
 }
 
 static void
-on_conn_self_presence_changed (McdConnection *connection,
-                               TpConnectionPresenceType presence,
-                               const gchar *status,
-                               const gchar *message,
-                               gpointer user_data)
+mcd_account_update_self_presence (McdAccount *account,
+                                  TpConnectionPresenceType presence,
+                                  const gchar *status,
+                                  const gchar *message)
 {
-    McdAccount *account = MCD_ACCOUNT (user_data);
     McdAccountPrivate *priv = account->priv;
     gboolean changed = FALSE;
     GValue value = { 0 };
-    GType type;
-    GValueArray *va;
 
     if (priv->curr_presence_type != presence)
     {
@@ -3239,22 +3243,37 @@ on_conn_self_presence_changed (McdConnection *connection,
 	changed = TRUE;
     }
 
-    if (_mcd_connection_presence_info_is_ready (connection))
+    if (_mcd_connection_presence_info_is_ready (priv->connection))
     {
         _mcd_account_set_changing_presence (account, FALSE);
     }
 
     if (!changed) return;
 
-    type = TP_STRUCT_TYPE_SIMPLE_PRESENCE;
-    g_value_init (&value, type);
-    g_value_take_boxed (&value, dbus_g_type_specialized_construct (type));
-    va = (GValueArray *) g_value_get_boxed (&value);
-    g_value_set_uint (va->values, presence);
-    g_value_set_static_string (va->values + 1, status);
-    g_value_set_static_string (va->values + 2, message);
+    g_value_init (&value, TP_STRUCT_TYPE_SIMPLE_PRESENCE);
+    g_value_take_boxed (&value,
+                        tp_value_array_build (3,
+                                              G_TYPE_UINT, presence,
+                                              G_TYPE_STRING, status,
+                                              G_TYPE_STRING, message,
+                                              G_TYPE_INVALID));
     mcd_account_changed_property (account, "CurrentPresence", &value);
     g_value_unset (&value);
+}
+
+
+static void
+on_conn_self_presence_changed (McdConnection *connection,
+                               TpConnectionPresenceType presence,
+                               const gchar *status,
+                               const gchar *message,
+                               gpointer user_data)
+{
+    McdAccount *account = MCD_ACCOUNT (user_data);
+    McdAccountPrivate *priv = account->priv;
+
+    g_assert (priv->connection == connection);
+    mcd_account_update_self_presence (account, presence, status, message);
 }
 
 /* TODO: remove when the relative members will become public */
@@ -3355,6 +3374,25 @@ mcd_account_get_protocol_name (McdAccount *account)
     McdAccountPrivate *priv = account->priv;
 
     return priv->protocol_name;
+}
+
+/**
+ * mcd_account_get_cm:
+ * @account: an account
+ *
+ * Fetches the connection manager through which @account connects. If @account
+ * is not ready, or is invalid (perhaps because the connection manager is
+ * missing), this may be %NULL.
+ *
+ * Returns: the connection manager through which @account connects, or %NULL.
+ */
+TpConnectionManager *
+mcd_account_get_cm (McdAccount *account)
+{
+    g_return_val_if_fail (account != NULL, NULL);
+    g_return_val_if_fail (MCD_IS_ACCOUNT (account), NULL);
+
+    return mcd_manager_get_tp_proxy (account->priv->manager);
 }
 
 void
@@ -4080,6 +4118,21 @@ mcd_account_connection_ready_cb (McdAccount *account,
     }
 
     g_free (nickname);
+
+    if (!tp_proxy_has_interface_by_id (tp_connection,
+            TP_IFACE_QUARK_CONNECTION_INTERFACE_SIMPLE_PRESENCE))
+    {
+        /* This connection doesn't have SimplePresence, but it's online.
+         * TpConnection only emits connection-ready when the account is online
+         * and we've introspected it, so we know that if this interface isn't
+         * present now, it's not going to appear.
+         *
+         * So, the spec says that we should set CurrentPresence to Unset.
+         */
+        mcd_account_update_self_presence (account,
+            TP_CONNECTION_PRESENCE_TYPE_UNSET, "", "");
+    }
+
 }
 
 void

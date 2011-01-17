@@ -2,6 +2,7 @@ TWISTED_TESTS =
 
 TWISTED_BASIC_TESTS = \
 	account/minimum-presence.py \
+	account/addressing.py \
 	account-manager/account-basics.py \
 	account-manager/bad-cm.py \
 	account-manager/avatar.py \
@@ -28,6 +29,7 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/already-has-channel.py \
 	dispatcher/already-has-obsolete.py \
 	dispatcher/bypass-approval.py \
+	dispatcher/bypass-observers.py \
 	dispatcher/cancel.py \
 	dispatcher/capture-bundle.py \
 	dispatcher/connect-for-request.py \
@@ -82,11 +84,25 @@ TWISTED_SEPARATE_TESTS = \
 	account-manager/auto-connect.py \
 	account-manager/avatar-persist.py \
 	account-manager/avatar-refresh.py \
+	account-manager/device-idle.py \
 	account-manager/make-valid.py \
 	crash-recovery/crash-recovery.py \
 	dispatcher/create-at-startup.py
 
 TWISTED_SEPARATE_TESTS += $(TWISTED_SPECIAL_BUILD_TESTS)
+
+if HAVE_MCE
+HAVE_MCE_PYBOOL = True
+else
+HAVE_MCE_PYBOOL = False
+endif
+
+config.py: Makefile
+	$(AM_V_GEN) { \
+		echo "HAVE_MCE = $(HAVE_MCE_PYBOOL)"; \
+	} > $@
+
+BUILT_SOURCES = config.py
 
 AM_CFLAGS = $(ERROR_CFLAGS)
 
@@ -272,7 +288,8 @@ CLEANFILES = \
 	mc-[1-9]*.log \
 	*.pyc \
 	*/*.pyc \
-	with-session-bus-*.dbus-monitor-logs
+	with-session-bus-*.dbus-monitor-logs \
+	config.py
 
 check_misc_sources = $(TESTS)
 

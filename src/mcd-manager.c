@@ -39,6 +39,7 @@
 #include "mcd-manager.h"
 #include "mcd-manager-priv.h"
 #include "mcd-misc.h"
+#include "mcd-slacker.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -63,6 +64,8 @@ struct _McdManagerPrivate
     McdDispatcher *dispatcher;
 
     TpConnectionManager *tp_conn_mgr;
+
+    McdSlacker *slacker;
 
     guint is_disposed : 1;
     guint ready : 1;
@@ -147,6 +150,7 @@ _mcd_manager_dispose (GObject * object)
     tp_clear_object (&priv->dispatcher);
     tp_clear_object (&priv->tp_conn_mgr);
     tp_clear_object (&priv->dbus_daemon);
+    tp_clear_object (&priv->slacker);
 
     G_OBJECT_CLASS (mcd_manager_parent_class)->dispose (object);
 }
@@ -184,6 +188,8 @@ mcd_manager_setup (McdManager *manager)
 {
     McdManagerPrivate *priv = manager->priv;
     GError *error = NULL;
+
+    priv->slacker = mcd_slacker_new ();
 
     priv->tp_conn_mgr =
         tp_connection_manager_new (priv->dbus_daemon, priv->name,
@@ -293,6 +299,7 @@ create_connection (McdManager *manager, McdAccount *account)
                          "tp-manager", priv->tp_conn_mgr,
                          "dispatcher", priv->dispatcher,
                          "account", account,
+                         "slacker", priv->slacker,
                          NULL);
 }
 
@@ -417,41 +424,6 @@ mcd_manager_get_name (McdManager *manager)
 {
     McdManagerPrivate *priv = MCD_MANAGER_PRIV (manager);
     return priv->name;
-}
-
-/**
- * mcd_manager_get_parameters:
- * @manager: the #McdManager.
- * @protocol: the protocol name.
- *
- * Retrieve the array of the parameters supported by the protocol.
- *
- * Returns: a #GArray of #McProtocolParam elements.
- */
-const TpConnectionManagerParam *
-mcd_manager_get_parameters (McdManager *manager, const gchar *protocol)
-{
-    McdManagerPrivate *priv;
-    const TpConnectionManagerProtocol * const *protocols;
-    guint i;
-
-    g_return_val_if_fail (MCD_IS_MANAGER (manager), NULL);
-    g_return_val_if_fail (protocol != NULL, NULL);
-
-    priv = manager->priv;
-    if (G_UNLIKELY (!priv->tp_conn_mgr))
-        return NULL;
-
-    protocols = priv->tp_conn_mgr->protocols;
-    if (G_UNLIKELY (!protocols))
-        return NULL;
-
-    for (i = 0; protocols[i] != NULL; i++)
-    {
-        if (strcmp (protocols[i]->name, protocol) == 0)
-            return protocols[i]->params;
-    }
-    return NULL;
 }
 
 TpConnectionManagerProtocol *

@@ -28,6 +28,7 @@
 <ANCHOR id="McdConnection--account" href="libmissioncontrol-server/McdConnection.html#McdConnection--account">
 <ANCHOR id="McdConnection--dbus-daemon" href="libmissioncontrol-server/McdConnection.html#McdConnection--dbus-daemon">
 <ANCHOR id="McdConnection--dispatcher" href="libmissioncontrol-server/McdConnection.html#McdConnection--dispatcher">
+<ANCHOR id="McdConnection--slacker" href="libmissioncontrol-server/McdConnection.html#McdConnection--slacker">
 <ANCHOR id="McdConnection--tp-connection" href="libmissioncontrol-server/McdConnection.html#McdConnection--tp-connection">
 <ANCHOR id="McdConnection--tp-manager" href="libmissioncontrol-server/McdConnection.html#McdConnection--tp-manager">
 <ANCHOR id="McdConnection.signal-details" href="libmissioncontrol-server/McdConnection.html#McdConnection.signal-details">
@@ -64,7 +65,6 @@
 <ANCHOR id="McdChannel.stability-level" href="libmissioncontrol-server/McdChannel.html#McdChannel.stability-level">
 <ANCHOR id="McdChannel.synopsis" href="libmissioncontrol-server/McdChannel.html#McdChannel.synopsis">
 <ANCHOR id="McdChannel.object-hierarchy" href="libmissioncontrol-server/McdChannel.html#McdChannel.object-hierarchy">
-<ANCHOR id="McdChannel.implemented-interfaces" href="libmissioncontrol-server/McdChannel.html#McdChannel.implemented-interfaces">
 <ANCHOR id="McdChannel.properties" href="libmissioncontrol-server/McdChannel.html#McdChannel.properties">
 <ANCHOR id="McdChannel.signals" href="libmissioncontrol-server/McdChannel.html#McdChannel.signals">
 <ANCHOR id="McdChannel.description" href="libmissioncontrol-server/McdChannel.html#McdChannel.description">

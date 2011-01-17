@@ -63,6 +63,7 @@ CONN_IFACE_CONTACT_CAPS_DRAFT1 = CONN + '.Interface.ContactCapabilities.DRAFT'
 CONN_IFACE_CONTACT_CAPS = CONN + '.Interface.ContactCapabilities'
 CONN_IFACE_REQUESTS = CONN + '.Interface.Requests'
 CONN_IFACE_SIMPLE_PRESENCE = CONN + '.Interface.SimplePresence'
+CONN_IFACE_POWER_SAVING = CONN + '.Interface.PowerSaving'
 
 CONN_STATUS_CONNECTED = 0
 CONN_STATUS_CONNECTING = 1
@@ -167,6 +168,7 @@ CLIENT_IFACE_REQUESTS = CLIENT + '.Interface.Requests'
 
 ACCOUNT = tp_name_prefix + '.Account'
 ACCOUNT_IFACE_AVATAR = ACCOUNT + '.Interface.Avatar'
+ACCOUNT_IFACE_ADDRESSING = ACCOUNT + '.Interface.Addressing'
 ACCOUNT_IFACE_NOKIA_COMPAT = 'com.nokia.Account.Interface.Compat'
 ACCOUNT_IFACE_NOKIA_REQUESTS = 'com.nokia.Account.Interface.ChannelRequests'
 ACCOUNT_IFACE_NOKIA_CONDITIONS = 'com.nokia.Account.Interface.Conditions'
@@ -176,11 +178,11 @@ AM_IFACE_NOKIA_QUERY = 'com.nokia.AccountManager.Interface.Query'
 AM_PATH = tp_path_prefix + '/AccountManager'
 
 CR = tp_name_prefix + '.ChannelRequest'
-CR_FUTURE = CR + '.FUTURE'
+CR_IFACE_HINTS = CR + '.Interface.Hints.DRAFT'
 CDO = tp_name_prefix + '.ChannelDispatchOperation'
 
 CD = tp_name_prefix + '.ChannelDispatcher'
-CD_FUTURE = CD + '.FUTURE'
+CD_IFACE_HINTS = CD + '.Interface.Hints.DRAFT'
 CD_IFACE_OP_LIST = tp_name_prefix + '.ChannelDispatcher.Interface.OperationList'
 CD_PATH = tp_path_prefix + '/ChannelDispatcher'
 

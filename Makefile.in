@@ -41,8 +41,8 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/mission-control-plugins.pc.in \
 	$(srcdir)/mission-control.pc.in $(srcdir)/tools/lcov.am \
 	$(srcdir)/tools/telepathy.am $(top_srcdir)/configure AUTHORS \
-	COPYING ChangeLog INSTALL NEWS config.guess config.sub depcomp \
-	install-sh ltmain.sh missing
+	COPYING ChangeLog INSTALL NEWS compile config.guess config.sub \
+	depcomp install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
@@ -206,6 +206,8 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MANAGERS_DIR = @MANAGERS_DIR@
+MCE_CFLAGS = @MCE_CFLAGS@
+MCE_LIBS = @MCE_LIBS@
 MCP_ABI_VERSION = @MCP_ABI_VERSION@
 MCP_API_VERSION = @MCP_API_VERSION@
 MCP_LT_AGE = @MCP_LT_AGE@
@@ -323,6 +325,7 @@ DISTCHECK_CONFIGURE_FLAGS = \
 	--disable-gnome-keyring \
 	--disable-mcd-plugins
 
+CHANGELOG_RANGE = telepathy-mission-control-5.4.0..
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
 
@@ -679,6 +682,7 @@ distcheck: dist
 	test -d $(distdir)/_build || exit 0; \
 	dc_install_base=`$(am__cd) $(distdir)/_inst && pwd | sed -e 's,^[^:\\/]:[\\/],/,'` \
 	  && dc_destdir="$${TMPDIR-/tmp}/am-dc-$$$$/" \
+	  && $(MAKE) $(AM_MAKEFLAGS) distcheck-hook \
 	  && am__cwd=`pwd` \
 	  && $(am__cd) $(distdir)/_build \
 	  && ../configure --srcdir=.. --prefix="$$dc_install_base" \
@@ -884,19 +888,51 @@ lcov-check:
 dist-hook:
 	chmod u+w ${distdir}/ChangeLog
 	if test -d ${top_srcdir}/.git; then \
-		git log --stat > ${distdir}/ChangeLog || \
-		git log > ${distdir}/ChangeLog; \
+		git log --date=iso $(CHANGELOG_RANGE) > ${distdir}/ChangeLog; \
 	fi
 
-maintainer-upload-release: _maintainer-upload-release
+distcheck-hook:
+	@test "z$(CHECK_FOR_UNRELEASED)" = z || \
+	case @VERSION@ in \
+		*.*.*.*|*+) ;; \
+		*) \
+			if grep -r UNRELEASED $(CHECK_FOR_UNRELEASED); \
+			then \
+				echo "^^^ This is meant to be a release, but some files say UNRELEASED" >&2; \
+				exit 2; \
+			fi \
+			;; \
+	esac
 
-_maintainer-upload-release-check:
+_is-release-check:
 	@case @VERSION@ in \
 		(*.*.*.*|*+) \
-			echo "@VERSION@ is not a release" >&2; \
+			echo "Hey! @VERSION@ is not a release!" >&2; \
 			exit 2; \
 			;; \
 	esac
+	@if ! git diff --no-ext-diff --quiet --exit-code; then \
+		echo "Hey! Your tree is dirty! No release for you." >&2; \
+		exit 2; \
+	fi
+
+%.tar.gz.asc: %.tar.gz
+	$(AM_V_GEN)gpg --detach-sign --armor $@
+
+@PACKAGE@-@VERSION@.tar.gz: _is-release-check check distcheck
+
+maintainer-prepare-release: _is-release-check check distcheck release-mail
+	git tag -s @PACKAGE@-@VERSION@ -m @PACKAGE@' '@VERSION@
+	gpg --detach-sign --armor @PACKAGE@-@VERSION@.tar.gz
+
+release-mail: NEWS
+	$(AM_V_GEN)(python $(top_srcdir)/tools/make-release-mail.py \
+		@PACKAGE@ @VERSION@ $(top_srcdir)/NEWS > $@.tmp && \
+		mv $@.tmp $@)
+
+maintainer-upload-release: _maintainer-upload-release
+
+_maintainer-upload-release-check: _is-release-check
 	test -f @PACKAGE@-@VERSION@.tar.gz
 	test -f @PACKAGE@-@VERSION@.tar.gz.asc
 	gpg --verify @PACKAGE@-@VERSION@.tar.gz.asc
@@ -904,6 +940,12 @@ _maintainer-upload-release-check:
 _maintainer-upload-release: _maintainer-upload-release-check
 	rsync -vzP @PACKAGE@-@VERSION@.tar.gz telepathy.freedesktop.org:/srv/telepathy.freedesktop.org/www/releases/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz
 	rsync -vzP @PACKAGE@-@VERSION@.tar.gz.asc telepathy.freedesktop.org:/srv/telepathy.freedesktop.org/www/releases/@PACKAGE@/@PACKAGE@-@VERSION@.tar.gz.asc
+
+maintainer-make-release: maintainer-prepare-release maintainer-upload-release
+	@echo "Now:"
+	@echo " • bump the nano-version;"
+	@echo " • push the branch and tags upstream; and"
+	@echo " • send release-mail to <telepathy@lists.freedesktop.org>."
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

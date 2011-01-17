@@ -77,6 +77,7 @@ Unstable, unless otherwise indicated
   "<a class="link" href="McdConnection.html#McdConnection--account" title='The "account" property'>account</a>"                  <span class="type">McdAccount</span>*           : Read / Write / Construct Only
   "<a class="link" href="McdConnection.html#McdConnection--dbus-daemon" title='The "dbus-daemon" property'>dbus-daemon</a>"              <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a>*         : Read / Write / Construct Only
   "<a class="link" href="McdConnection.html#McdConnection--dispatcher" title='The "dispatcher" property'>dispatcher</a>"               <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a>*        : Read / Write / Construct Only
+  "<a class="link" href="McdConnection.html#McdConnection--slacker" title='The "slacker" property'>slacker</a>"                  <span class="type">McdSlacker</span>*           : Read / Write / Construct Only
   "<a class="link" href="McdConnection.html#McdConnection--tp-connection" title='The "tp-connection" property'>tp-connection</a>"            <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a>*         : Read
   "<a class="link" href="McdConnection.html#McdConnection--tp-manager" title='The "tp-manager" property'>tp-manager</a>"               <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection-manager.html#TpConnectionManager"><span class="type">TpConnectionManager</span></a>*  : Read / Write / Construct Only
 </pre>
@@ -229,6 +230,12 @@ FIXME
 <a name="McdConnection--dispatcher"></a><h3>The <code class="literal">"dispatcher"</code> property</h3>
 <pre class="programlisting">  "dispatcher"               <a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="type">McdDispatcher</span></a>*        : Read / Write / Construct Only</pre>
 <p>Dispatcher.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "slacker" property'>
+<a name="McdConnection--slacker"></a><h3>The <code class="literal">"slacker"</code> property</h3>
+<pre class="programlisting">  "slacker"                  <span class="type">McdSlacker</span>*           : Read / Write / Construct Only</pre>
+<p>Slacker object notifies us of user inactivity.</p>
 </div>
 <hr>
 <div class="refsect2" title='The "tp-connection" property'>

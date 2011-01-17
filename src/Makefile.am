@@ -46,34 +46,36 @@ endif
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
+	_gen/cli-Connection_Interface_Power_Saving.h \
 	_gen/enums.h \
 	_gen/interfaces.h \
+	_gen/svc-Account_Interface_Addressing.h \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_Stats.h \
 	_gen/svc-Account_Interface_Minimum_Presence.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
-	_gen/svc-Account_Manager_Interface_SSO.h \
-	_gen/svc-Channel_Dispatcher_Future.h \
-	_gen/svc-Channel_Request_Future.h
+	_gen/svc-dispatcher.h \
+	_gen/svc-request.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities-body.h \
+	_gen/cli-Connection_Interface_Power_Saving-body.h \
 	_gen/register-dbus-glib-marshallers-body.h \
 	_gen/signals-marshal.c \
 	_gen/signals-marshal.h \
 	_gen/signals-marshal.list \
+	_gen/svc-Account_Interface_Addressing.c \
 	_gen/svc-Account_Interface_ChannelRequests.c \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_Stats.c \
 	_gen/svc-Account_Interface_Minimum_Presence.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
-	_gen/svc-Account_Manager_Interface_SSO.c \
-	_gen/svc-Channel_Dispatcher_Future.c \
-	_gen/svc-Channel_Request_Future.c \
+	_gen/svc-dispatcher.c \
+	_gen/svc-request.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -141,6 +143,7 @@ endif # ! ENABLE_MCD_PLUGINS
 
 libmcd_convenience_la_SOURCES = \
 	mcd-account.c \
+	mcd-account-addressing.h \
 	mcd-account-compat.c \
 	mcd-account-conditions.c \
 	mcd-account-config.h \
@@ -148,6 +151,7 @@ libmcd_convenience_la_SOURCES = \
 	mcd-account-requests.c \
 	mcd-account-stats.c \
 	mcd-account-presence.c \
+	mcd-account-addressing.c \
 	mcd-account-manager.c \
 	mcd-account-manager-priv.h \
 	mcd-account-manager-query.c \
@@ -183,6 +187,8 @@ libmcd_convenience_la_SOURCES = \
 	mcd-channel.c \
 	mcd-channel-priv.h \
 	mcd-service.c \
+	mcd-slacker.c \
+	mcd-slacker.h \
 	mcd-proxy.c \
 	mcd-transport.c \
 	mcd-provisioning.c \
