@@ -12,7 +12,7 @@ Build-Depends: autotools-dev (>= 20100122-1~),
                libdbus-glib-1-dev (>= 0.82),
                libglib2.0-dev (>= 2.24),
                libgnome-keyring-dev,
-               libtelepathy-glib-dev (>= 0.11.13),
+               libtelepathy-glib-dev (>= 0.13.7),
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc

@@ -39,8 +39,6 @@ typedef struct _McdAccount McdAccount;
 typedef struct _McdAccountPrivate McdAccountPrivate;
 typedef struct _McdAccountClass McdAccountClass;
 
-typedef struct _McdAccountPresencePrivate McdAccountPresencePrivate;
-
 #include "mcd-connection.h"
 #include "mcd-account-manager.h"
 
@@ -48,7 +46,6 @@ struct _McdAccount
 {
     GObject parent;
     McdAccountPrivate *priv;
-    McdAccountPresencePrivate *presence_priv;
 };
 
 typedef enum
@@ -70,33 +67,20 @@ typedef void (*McdAccountDeleteCb) (McdAccount *account,
 typedef void (*McdAccountSetParameterCb) (McdAccount *account,
                                           const GError *error,
                                           gpointer user_data);
-typedef void (*McdAccountGetParameterCb) (McdAccount *account,
-                                          const GValue *value,
-                                          const GError *error,
-                                          gpointer user_data);
 
 struct _McdAccountClass
 {
     GObjectClass parent_class;
-    void (*get_parameter) (McdAccount *account, const gchar *name,
-                           McdAccountGetParameterCb callback,
-                           gpointer user_data);
-    void (*set_parameter) (McdAccount *account, const gchar *name,
-                           const GValue *value,
-                           McdAccountSetParameterCb callback,
-                           gpointer user_data);
-    void (*delete) (McdAccount *account, McdAccountDeleteCb callback,
-                    gpointer user_data);
-    void (*load) (McdAccount *account, McdAccountLoadCb callback,
-                  gpointer user_data);
+    /* Used to be get_parameter; set_parameter; delete; load. These are not
+     * implementeed in any known subclass of this class, so have been removed;
+     * these padding fields are to preserve ABI compatibility.
+     */
+    GCallback dummy[4];
     gboolean (*check_request) (McdAccount *account, GHashTable *request,
                                GError **error);
     void (*_mc_reserved6) (void);
     void (*_mc_reserved7) (void);
 };
-
-
-#define MC_ACCOUNT_DBUS_OBJECT_BASE "/org/freedesktop/Telepathy/Account/"
 
 GType mcd_account_get_type (void);
 McdAccount *mcd_account_new (McdAccountManager *account_manager,

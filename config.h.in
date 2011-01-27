@@ -6,6 +6,9 @@
 /* Directory for storing accounts */
 #undef ACCOUNTS_DIR
 
+/* Defined to the non-IM service type for hidden accounts, if any */
+#undef ACCOUNTS_GLIB_HIDDEN_SERVICE_TYPE
+
 /* Directory for channel handlers */
 #undef CHANDLERS_DIR
 

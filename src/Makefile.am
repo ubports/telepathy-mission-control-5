@@ -16,7 +16,6 @@ mc_headers = \
 	mcd-account.h \
 	mcd-account-compat.h \
 	mcd-account-conditions.h \
-	mcd-account-presence.h \
 	mcd-account-manager.h \
 	mcd-account-manager-default.h \
 	mcd-debug.h \
@@ -28,7 +27,6 @@ mc_headers = \
 	mcd-connection.h \
 	mcd-connection-plugin.h \
 	mcd-plugin.h \
-	mcd-presence-frame.h \
 	mcd-channel.h \
 	mcd-proxy.h \
 	mcd-dispatcher.h \
@@ -40,7 +38,16 @@ mc_headers = \
 	mcd-storage.h
 
 if ENABLE_LIBACCOUNTS_SSO
-mc_headers += mcd-account-manager-sso.h
+mc_headers += \
+	mcd-account-manager-sso.h \
+	$(NULL)
+
+if ENABLE_LIBACCOUNTS_GLIB_HIDDEN
+mc_headers += \
+	mcd-storage-ag-hidden.h \
+	$(NULL)
+endif
+
 endif
 
 mc_gen_headers = \
@@ -53,8 +60,9 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
+	_gen/svc-Account_Interface_Hidden.h \
 	_gen/svc-Account_Interface_Stats.h \
-	_gen/svc-Account_Interface_Minimum_Presence.h \
+	_gen/svc-Account_Manager_Interface_Hidden.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
 	_gen/svc-dispatcher.h \
 	_gen/svc-request.h
@@ -71,9 +79,10 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_ChannelRequests.c \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
+	_gen/svc-Account_Interface_Hidden.c \
 	_gen/svc-Account_Interface_Stats.c \
-	_gen/svc-Account_Interface_Minimum_Presence.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
+	_gen/svc-Account_Manager_Interface_Hidden.c \
 	_gen/svc-dispatcher.c \
 	_gen/svc-request.c \
 	mcd-enum-types.c \
@@ -150,7 +159,6 @@ libmcd_convenience_la_SOURCES = \
 	mcd-account-connection.c \
 	mcd-account-requests.c \
 	mcd-account-stats.c \
-	mcd-account-presence.c \
 	mcd-account-addressing.c \
 	mcd-account-manager.c \
 	mcd-account-manager-priv.h \
@@ -210,7 +218,16 @@ libmcd_convenience_la_SOURCES = \
 	$(mc_headers)
 
 if ENABLE_LIBACCOUNTS_SSO
-libmcd_convenience_la_SOURCES += mcd-account-manager-sso.c
+libmcd_convenience_la_SOURCES += \
+	mcd-account-manager-sso.c \
+	$(NULL)
+
+if ENABLE_LIBACCOUNTS_GLIB_HIDDEN
+libmcd_convenience_la_SOURCES += \
+	mcd-storage-ag-hidden.c \
+	$(NULL)
+endif
+
 endif
 
 %-signals-marshal.h: %-signals-marshal.list Makefile

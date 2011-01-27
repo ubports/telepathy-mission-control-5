@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (1:5.7.2-1) experimental; urgency=low
+
+  * New upstream release.
+  * debian/control: Up build-dep on tp-glib to >= 0.13.7.
+
+ -- Jonny Lamb <jonny@debian.org>  Thu, 27 Jan 2011 17:54:12 +0000
+
 telepathy-mission-control-5 (1:5.7.1-1) experimental; urgency=low
 
   * New upstream release.

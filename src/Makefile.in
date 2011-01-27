@@ -36,22 +36,36 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 @ENABLE_GNOME_KEYRING_TRUE@am__append_1 = $(GNOME_KEYRING_CFLAGS)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_2 = mcd-account-manager-sso.h
-@ENABLE_GNOME_KEYRING_TRUE@am__append_3 = $(GNOME_KEYRING_LIBS)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_4 = $(LIBACCOUNTS_SSO_LIBS)
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_5 = $(LIBACCOUNTS_SSO_CFLAGS)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_2 = \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-account-manager-sso.h \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
+
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_3 = \
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-storage-ag-hidden.h \
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
+
+@ENABLE_GNOME_KEYRING_TRUE@am__append_4 = $(GNOME_KEYRING_LIBS)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_5 = $(LIBACCOUNTS_SSO_LIBS)
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_6 = $(LIBACCOUNTS_SSO_CFLAGS)
 
 # the redundant quoting here is to prevent the libtool command line from
 # looking like an error message in an oddly named file
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_TRUE@am__append_6 = -version-info "10":"0":"4"
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_FALSE@am__append_7 = -release $(VERSION)
-@ENABLE_MCD_PLUGINS_TRUE@am__append_8 = \
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_TRUE@am__append_7 = -version-info "10":"0":"4"
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_FALSE@am__append_8 = -release $(VERSION)
+@ENABLE_MCD_PLUGINS_TRUE@am__append_9 = \
 @ENABLE_MCD_PLUGINS_TRUE@	-DMCD_DEFAULT_FILTER_PLUGIN_DIR=\"@pluginlibdir@\"
 
 # When this older plugin API is not enabled, libmissioncontrol-server.la is
 # just a copy of the convenience library
-@ENABLE_MCD_PLUGINS_FALSE@am__append_9 = libmissioncontrol-server.la
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_10 = mcd-account-manager-sso.c
+@ENABLE_MCD_PLUGINS_FALSE@am__append_10 = libmissioncontrol-server.la
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_11 = \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-account-manager-sso.c \
+@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
+
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_12 = \
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-storage-ag-hidden.c \
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
+
 subdir = src
 DIST_COMMON = $(am__mission_control_include_HEADERS_DIST) \
 	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -108,17 +122,16 @@ am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	mcd-account-addressing.h mcd-account-compat.c \
 	mcd-account-conditions.c mcd-account-config.h \
 	mcd-account-connection.c mcd-account-requests.c \
-	mcd-account-stats.c mcd-account-presence.c \
-	mcd-account-addressing.c mcd-account-manager.c \
-	mcd-account-manager-priv.h mcd-account-manager-query.c \
-	mcd-account-manager-default.c mcd-account-priv.h mcd-client.c \
-	mcd-client-priv.h channel-utils.c channel-utils.h \
-	client-registry.c client-registry.h mcd-dbusprop.c \
-	mcd-dbusprop.h mcd-debug.c mcd-dispatch-operation.c \
-	mcd-dispatch-operation-priv.h mcd-handler-map.c \
-	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
-	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
-	mcd-master.c mcd-master-priv.h mcd-manager.c \
+	mcd-account-stats.c mcd-account-addressing.c \
+	mcd-account-manager.c mcd-account-manager-priv.h \
+	mcd-account-manager-query.c mcd-account-manager-default.c \
+	mcd-account-priv.h mcd-client.c mcd-client-priv.h \
+	channel-utils.c channel-utils.h client-registry.c \
+	client-registry.h mcd-dbusprop.c mcd-dbusprop.h mcd-debug.c \
+	mcd-dispatch-operation.c mcd-dispatch-operation-priv.h \
+	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
+	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
+	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
 	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-slacker.c mcd-slacker.h \
@@ -129,42 +142,43 @@ am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	plugin-request.c plugin-request.h plugin-account.c \
 	plugin-account.h request.c request.h sp_timestamp.h \
 	mcd-account.h mcd-account-compat.h mcd-account-conditions.h \
-	mcd-account-presence.h mcd-account-manager.h \
-	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
-	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
+	mcd-account-manager.h mcd-account-manager-default.h \
+	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
+	mcd-controller.h mcd-manager.h mcd-connection.h \
+	mcd-connection-plugin.h mcd-plugin.h mcd-channel.h mcd-proxy.h \
 	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
 	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-account-manager-sso.h mcd-account-manager-sso.c
+	mcd-account-manager-sso.h mcd-storage-ag-hidden.h \
+	mcd-account-manager-sso.c mcd-storage-ag-hidden.c
 am__objects_1 =
-am__objects_2 = $(am__objects_1)
+am__objects_2 = $(am__objects_1) $(am__objects_1)
 @ENABLE_LIBACCOUNTS_SSO_TRUE@am__objects_3 =  \
 @ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-account-manager-sso.lo
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@am__objects_4 = mcd-storage-ag-hidden.lo
 am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
 	mcd-account-compat.lo mcd-account-conditions.lo \
 	mcd-account-connection.lo mcd-account-requests.lo \
-	mcd-account-stats.lo mcd-account-presence.lo \
-	mcd-account-addressing.lo mcd-account-manager.lo \
-	mcd-account-manager-query.lo mcd-account-manager-default.lo \
-	mcd-client.lo channel-utils.lo client-registry.lo \
-	mcd-dbusprop.lo mcd-debug.lo mcd-dispatch-operation.lo \
-	mcd-handler-map.lo mcd-misc.lo mcd-mission.lo mcd-operation.lo \
-	mcd-controller.lo mcd-master.lo mcd-manager.lo \
-	mcd-connection.lo mcd-dispatcher.lo mcd-channel.lo \
-	mcd-service.lo mcd-slacker.lo mcd-proxy.lo mcd-transport.lo \
-	mcd-provisioning.lo mcd-provisioning-factory.lo mcd-storage.lo \
+	mcd-account-stats.lo mcd-account-addressing.lo \
+	mcd-account-manager.lo mcd-account-manager-query.lo \
+	mcd-account-manager-default.lo mcd-client.lo channel-utils.lo \
+	client-registry.lo mcd-dbusprop.lo mcd-debug.lo \
+	mcd-dispatch-operation.lo mcd-handler-map.lo mcd-misc.lo \
+	mcd-mission.lo mcd-operation.lo mcd-controller.lo \
+	mcd-master.lo mcd-manager.lo mcd-connection.lo \
+	mcd-dispatcher.lo mcd-channel.lo mcd-service.lo mcd-slacker.lo \
+	mcd-proxy.lo mcd-transport.lo mcd-provisioning.lo \
+	mcd-provisioning-factory.lo mcd-storage.lo \
 	plugin-dispatch-operation.lo plugin-loader.lo \
 	plugin-request.lo plugin-account.lo request.lo \
-	$(am__objects_2) $(am__objects_3)
+	$(am__objects_2) $(am__objects_3) $(am__objects_4)
 nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
 	svc-Account_Interface_Addressing.lo \
 	svc-Account_Interface_ChannelRequests.lo \
 	svc-Account_Interface_Compat.lo \
 	svc-Account_Interface_Conditions.lo \
-	svc-Account_Interface_Stats.lo \
-	svc-Account_Interface_Minimum_Presence.lo \
-	svc-Account_Manager_Interface_Query.lo svc-dispatcher.lo \
+	svc-Account_Interface_Hidden.lo svc-Account_Interface_Stats.lo \
+	svc-Account_Manager_Interface_Query.lo \
+	svc-Account_Manager_Interface_Hidden.lo svc-dispatcher.lo \
 	svc-request.lo mcd-enum-types.lo mcd-signals-marshal.lo \
 	$(am__objects_1)
 libmcd_convenience_la_OBJECTS = $(am_libmcd_convenience_la_OBJECTS) \
@@ -219,14 +233,14 @@ DIST_SOURCES = $(am__libmcd_convenience_la_SOURCES_DIST) \
 	$(libmissioncontrol_server_la_SOURCES)
 am__mission_control_include_HEADERS_DIST = mcd-account.h \
 	mcd-account-compat.h mcd-account-conditions.h \
-	mcd-account-presence.h mcd-account-manager.h \
-	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
-	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-presence-frame.h mcd-channel.h mcd-proxy.h \
+	mcd-account-manager.h mcd-account-manager-default.h \
+	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
+	mcd-controller.h mcd-manager.h mcd-connection.h \
+	mcd-connection-plugin.h mcd-plugin.h mcd-channel.h mcd-proxy.h \
 	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
 	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-storage.h mcd-account-manager-sso.h
+	mcd-storage.h mcd-account-manager-sso.h \
+	mcd-storage-ag-hidden.h
 HEADERS = $(mission_control_include_HEADERS) \
 	$(nodist_geninclude_HEADERS)
 ETAGS = etags
@@ -318,8 +332,6 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
-PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
-PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -397,18 +409,17 @@ INCLUDES = $(TELEPATHY_CFLAGS) $(DBUS_CFLAGS) $(GLIB_CFLAGS) \
 	-DG_LOG_DOMAIN=\"mcd\" \
 	-DMCD_PLUGIN_LOADER_DIR=\"@libdir@/mission-control-plugins.@MCP_ABI_VERSION@\" \
 	-DMC_DISABLE_DEPRECATED -I$(top_srcdir) $(am__append_1) \
-	$(am__append_5) $(am__append_8)
+	$(am__append_6) $(am__append_9)
 AM_CFLAGS = $(ERROR_CFLAGS)
 mc_headers = mcd-account.h mcd-account-compat.h \
-	mcd-account-conditions.h mcd-account-presence.h \
-	mcd-account-manager.h mcd-account-manager-default.h \
-	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
-	mcd-controller.h mcd-manager.h mcd-connection.h \
-	mcd-connection-plugin.h mcd-plugin.h mcd-presence-frame.h \
+	mcd-account-conditions.h mcd-account-manager.h \
+	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
+	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
+	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
 	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
 	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
 	mcd-provisioning.h mcd-provisioning-factory.h mcd-storage.h \
-	$(am__append_2)
+	$(am__append_2) $(am__append_3)
 mc_gen_headers = \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
@@ -419,8 +430,9 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
+	_gen/svc-Account_Interface_Hidden.h \
 	_gen/svc-Account_Interface_Stats.h \
-	_gen/svc-Account_Interface_Minimum_Presence.h \
+	_gen/svc-Account_Manager_Interface_Hidden.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
 	_gen/svc-dispatcher.h \
 	_gen/svc-request.h
@@ -437,9 +449,10 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_ChannelRequests.c \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
+	_gen/svc-Account_Interface_Hidden.c \
 	_gen/svc-Account_Interface_Stats.c \
-	_gen/svc-Account_Interface_Minimum_Presence.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
+	_gen/svc-Account_Manager_Interface_Hidden.c \
 	_gen/svc-dispatcher.c \
 	_gen/svc-request.c \
 	mcd-enum-types.c \
@@ -457,9 +470,9 @@ CLEANFILES = $(BUILT_SOURCES)
 libmcd_convenience_la_LIBADD =  \
 	$(top_builddir)/libmcclient/libmcclient.la \
 	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
-	$(TELEPATHY_LIBS) $(DBUS_LIBS) $(GLIB_LIBS) $(am__append_3) \
-	$(am__append_4)
-noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_9)
+	$(TELEPATHY_LIBS) $(DBUS_LIBS) $(GLIB_LIBS) $(am__append_4) \
+	$(am__append_5)
+noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_10)
 
 # When this older plugin API is enabled, libmissioncontrol-server.la is a
 # shared library that wraps the convenience library
@@ -471,7 +484,7 @@ noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_9)
 @ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_LDFLAGS =  \
 @ENABLE_MCD_PLUGINS_TRUE@	-export-symbols-regex \
 @ENABLE_MCD_PLUGINS_TRUE@	'^((mc_)|(mcd_)|(mission_control_))' \
-@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_6) $(am__append_7)
+@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_7) $(am__append_8)
 @ENABLE_MCD_PLUGINS_TRUE@mission_control_includedir = $(includedir)/mission-control
 @ENABLE_MCD_PLUGINS_TRUE@mission_control_include_HEADERS = $(mc_headers)
 @ENABLE_MCD_PLUGINS_TRUE@genincludedir = $(mission_control_includedir)/_gen
@@ -480,16 +493,16 @@ libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-addressing.h \
 	mcd-account-compat.c mcd-account-conditions.c \
 	mcd-account-config.h mcd-account-connection.c \
 	mcd-account-requests.c mcd-account-stats.c \
-	mcd-account-presence.c mcd-account-addressing.c \
-	mcd-account-manager.c mcd-account-manager-priv.h \
-	mcd-account-manager-query.c mcd-account-manager-default.c \
-	mcd-account-priv.h mcd-client.c mcd-client-priv.h \
-	channel-utils.c channel-utils.h client-registry.c \
-	client-registry.h mcd-dbusprop.c mcd-dbusprop.h mcd-debug.c \
-	mcd-dispatch-operation.c mcd-dispatch-operation-priv.h \
-	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
-	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
-	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
+	mcd-account-addressing.c mcd-account-manager.c \
+	mcd-account-manager-priv.h mcd-account-manager-query.c \
+	mcd-account-manager-default.c mcd-account-priv.h mcd-client.c \
+	mcd-client-priv.h channel-utils.c channel-utils.h \
+	client-registry.c client-registry.h mcd-dbusprop.c \
+	mcd-dbusprop.h mcd-debug.c mcd-dispatch-operation.c \
+	mcd-dispatch-operation-priv.h mcd-handler-map.c \
+	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
+	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
+	mcd-master.c mcd-master-priv.h mcd-manager.c \
 	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-slacker.c mcd-slacker.h \
@@ -499,7 +512,7 @@ libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-addressing.h \
 	plugin-dispatch-operation.h plugin-loader.c plugin-loader.h \
 	plugin-request.c plugin-request.h plugin-account.c \
 	plugin-account.h request.c request.h sp_timestamp.h \
-	$(mc_headers) $(am__append_10)
+	$(mc_headers) $(am__append_11) $(am__append_12)
 EXTRA_DIST = \
 	mcd.xml \
 	client.xml \
@@ -608,7 +621,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager-query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager-sso.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-manager.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-presence.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-requests.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account-stats.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account.Plo@am__quote@
@@ -633,6 +645,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-signals-marshal.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-slacker.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-storage-ag-hidden.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-transport.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-account.Plo@am__quote@
@@ -645,8 +658,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_ChannelRequests.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Compat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Minimum_Presence.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Hidden.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Stats.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Hidden.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Query.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-dispatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-request.Plo@am__quote@
@@ -715,6 +729,14 @@ svc-Account_Interface_Conditions.lo: _gen/svc-Account_Interface_Conditions.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
 
+svc-Account_Interface_Hidden.lo: _gen/svc-Account_Interface_Hidden.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Hidden.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Hidden.Tpo -c -o svc-Account_Interface_Hidden.lo `test -f '_gen/svc-Account_Interface_Hidden.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Hidden.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_Hidden.Tpo $(DEPDIR)/svc-Account_Interface_Hidden.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Hidden.c' object='svc-Account_Interface_Hidden.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Hidden.lo `test -f '_gen/svc-Account_Interface_Hidden.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Hidden.c
+
 svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Stats.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Stats.Tpo -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_Stats.Tpo $(DEPDIR)/svc-Account_Interface_Stats.Plo
@@ -723,14 +745,6 @@ svc-Account_Interface_Stats.lo: _gen/svc-Account_Interface_Stats.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Stats.lo `test -f '_gen/svc-Account_Interface_Stats.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Stats.c
 
-svc-Account_Interface_Minimum_Presence.lo: _gen/svc-Account_Interface_Minimum_Presence.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Minimum_Presence.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Tpo -c -o svc-Account_Interface_Minimum_Presence.lo `test -f '_gen/svc-Account_Interface_Minimum_Presence.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Minimum_Presence.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Tpo $(DEPDIR)/svc-Account_Interface_Minimum_Presence.Plo
-@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Minimum_Presence.c' object='svc-Account_Interface_Minimum_Presence.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Minimum_Presence.lo `test -f '_gen/svc-Account_Interface_Minimum_Presence.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Minimum_Presence.c
-
 svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Query.lo -MD -MP -MF $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Manager_Interface_Query.Tpo $(DEPDIR)/svc-Account_Manager_Interface_Query.Plo
@@ -738,6 +752,14 @@ svc-Account_Manager_Interface_Query.lo: _gen/svc-Account_Manager_Interface_Query
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_Query.c' object='svc-Account_Manager_Interface_Query.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Manager_Interface_Query.lo `test -f '_gen/svc-Account_Manager_Interface_Query.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Query.c
+
+svc-Account_Manager_Interface_Hidden.lo: _gen/svc-Account_Manager_Interface_Hidden.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Manager_Interface_Hidden.lo -MD -MP -MF $(DEPDIR)/svc-Account_Manager_Interface_Hidden.Tpo -c -o svc-Account_Manager_Interface_Hidden.lo `test -f '_gen/svc-Account_Manager_Interface_Hidden.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Hidden.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Manager_Interface_Hidden.Tpo $(DEPDIR)/svc-Account_Manager_Interface_Hidden.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Manager_Interface_Hidden.c' object='svc-Account_Manager_Interface_Hidden.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Manager_Interface_Hidden.lo `test -f '_gen/svc-Account_Manager_Interface_Hidden.c' || echo '$(srcdir)/'`_gen/svc-Account_Manager_Interface_Hidden.c
 
 svc-dispatcher.lo: _gen/svc-dispatcher.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-dispatcher.lo -MD -MP -MF $(DEPDIR)/svc-dispatcher.Tpo -c -o svc-dispatcher.lo `test -f '_gen/svc-dispatcher.c' || echo '$(srcdir)/'`_gen/svc-dispatcher.c

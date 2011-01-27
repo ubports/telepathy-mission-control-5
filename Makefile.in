@@ -229,8 +229,6 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
-PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
-PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
@@ -315,7 +313,7 @@ SUBDIRS = \
     src \
     server \
     util \
-    test \
+    tests \
     doc
 
 pkgconfigdir = $(libdir)/pkgconfig
@@ -913,6 +911,10 @@ _is-release-check:
 	esac
 	@if ! git diff --no-ext-diff --quiet --exit-code; then \
 		echo "Hey! Your tree is dirty! No release for you." >&2; \
+		exit 2; \
+	fi
+	@if ! git diff --cached --no-ext-diff --quiet --exit-code; then \
+		echo "Hey! You have changes staged! No release for you." >&2; \
 		exit 2; \
 	fi
 

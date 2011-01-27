@@ -85,13 +85,10 @@
 #define MCD_DISPATCHER_PRIV(dispatcher) (MCD_DISPATCHER (dispatcher)->priv)
 
 static void dispatcher_iface_init (gpointer, gpointer);
-static void hints_iface_init (gpointer, gpointer);
 
 G_DEFINE_TYPE_WITH_CODE (McdDispatcher, mcd_dispatcher, MCD_TYPE_MISSION,
     G_IMPLEMENT_INTERFACE (TP_TYPE_SVC_CHANNEL_DISPATCHER,
                            dispatcher_iface_init);
-    G_IMPLEMENT_INTERFACE (MC_TYPE_SVC_CHANNEL_DISPATCHER_INTERFACE_HINTS,
-                           hints_iface_init);
     G_IMPLEMENT_INTERFACE (
         TP_TYPE_SVC_CHANNEL_DISPATCHER_INTERFACE_OPERATION_LIST,
         NULL);
@@ -845,19 +842,19 @@ mcd_dispatcher_constructed (GObject *object)
     dgc = TP_PROXY (priv->dbus_daemon)->dbus_connection;
 
     if (!tp_dbus_daemon_request_name (priv->dbus_daemon,
-                                      MCD_CHANNEL_DISPATCHER_BUS_NAME,
+                                      TP_CHANNEL_DISPATCHER_BUS_NAME,
                                       TRUE /* idempotent */, &error))
     {
         /* FIXME: put in proper error handling when MC gains the ability to
          * be the AM or the CD but not both */
         g_warning ("Failed registering '%s' service: %s",
-                   MCD_CHANNEL_DISPATCHER_BUS_NAME, error->message);
+                   TP_CHANNEL_DISPATCHER_BUS_NAME, error->message);
         g_error_free (error);
         exit (1);
     }
 
     dbus_g_connection_register_g_object (dgc,
-                                         MCD_CHANNEL_DISPATCHER_OBJECT_PATH,
+                                         TP_CHANNEL_DISPATCHER_OBJECT_PATH,
                                          object);
 }
 
@@ -1924,8 +1921,7 @@ dispatcher_ensure_channel (TpSvcChannelDispatcher *iface,
 }
 
 static void
-dispatcher_create_channel_with_hints (
-    McSvcChannelDispatcherInterfaceHints *iface,
+dispatcher_create_channel_with_hints (TpSvcChannelDispatcher *iface,
     const gchar *account_path,
     GHashTable *requested_properties,
     gint64 user_action_time,
@@ -1945,8 +1941,7 @@ dispatcher_create_channel_with_hints (
 }
 
 static void
-dispatcher_ensure_channel_with_hints (
-    McSvcChannelDispatcherInterfaceHints *iface,
+dispatcher_ensure_channel_with_hints (TpSvcChannelDispatcher *iface,
     const gchar *account_path,
     GHashTable *requested_properties,
     gint64 user_action_time,
@@ -1974,15 +1969,6 @@ dispatcher_iface_init (gpointer g_iface,
     g_iface, dispatcher_##x)
     IMPLEMENT (create_channel);
     IMPLEMENT (ensure_channel);
-#undef IMPLEMENT
-}
-
-static void
-hints_iface_init (gpointer g_iface,
-                   gpointer iface_data G_GNUC_UNUSED)
-{
-#define IMPLEMENT(x) mc_svc_channel_dispatcher_interface_hints_implement_##x (\
-    g_iface, dispatcher_##x)
     IMPLEMENT (create_channel_with_hints);
     IMPLEMENT (ensure_channel_with_hints);
 #undef IMPLEMENT

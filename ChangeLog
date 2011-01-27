@@ -1,3 +1,626 @@
+commit 4cca7b6ebb02353a0066a9180e9521724d0e0a8c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-19 15:27:55 +0000
+
+    Merge HEAD, branch 'master' into telepathy-mission-control-5.7
+
+commit 833f5e87182e5053381bdd1502fe93b49c4cd347
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-19 15:10:38 +0000
+
+    Prepare version 5.7.2
+
+commit c6114d74c265e77944968c46dd7afd0b09839ef7
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-19 15:10:21 +0000
+
+    Tests using the debug API must be in the special section to work in distcheck
+
+commit df58b39efd5db4c8cf2ad85a75377fde48191439
+Merge: b7b9ffc 730dceb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-18 16:54:29 +0000
+
+    Merge branch 'hidden-for-accounts-glib' of git+ssh://git.collabora.co.uk/git/user/wjt/telepathy-mission-control-wjt
+
+commit b7b9ffc40cd0feadb37d735af97232355d4472dc
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-11 18:54:31 +0000
+
+    Explanation of map had drifted away from same (in terms of location & accuracy)
+    
+    Updated text to reflect what's actualy going on now, relocated it so it is
+    next to the structure it explains.
+
+commit 90f793ae18e049aa93d1cd0a1afc6154ec19ac5c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-11 18:01:05 +0000
+
+    Commit delay now #defined and logged explicitly
+
+commit f698e3371d4dd5fd3922f26c4217d71fd4315ad4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-11 18:00:09 +0000
+
+    Add comment explaining _commit, remove obsolete FIXME comment
+
+commit d40546d1c6aa6cceae3330e614d95f67492681b2
+Author: Eitan Isaacson <eitan@monotonous.org>
+Date:   2011-01-01 19:12:10 -0800
+
+    Delay actual commit() in sso backend.
+
+commit 730dcebb085d9fc3be97a8a9a240c5f23983de2e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-11 16:47:01 +0000
+
+    Set a plugin name and description for ag hidden backend
+
+commit a4115f4dc452905c4cfdfbbc5b1b989f79558080
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-11 16:22:38 +0000
+
+    Add a configure flag for hidden accounts-glib backend
+    
+    This is a pretty niche use case; it's not worth building it unless
+    explicitly requested.
+
+commit 744fdc63357fe815c1894a9cd5cfafe75791bfb3
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-08 15:22:30 +0000
+
+    Set Hidden on accounts from hidden accounts-glib backend
+
+commit e929ec07702c77dc00e2e8962ea8e4865d33cc9d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-11 10:44:27 +0000
+
+    mc-tool: show Service (if present)
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 22f6152262224c5868e24c00200e6af9df4fc5d0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 20:05:58 +0000
+
+    Add an accounts-glib backend for hidden accounts.
+    
+    Currently this doesn't hide accounts; it just looks for accounts of a
+    different service type. But hey, this is a start.
+
+commit dc3b9deaf8a6f46e40297af555be40cfcee706ba
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-10 18:56:34 +0000
+
+    account-glib: Remove spurious newlines in DEBUG messages
+
+commit 0363a3de3c94a78f5ed9e8df20ca28f05324d5f3
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-08 22:18:38 +0000
+
+    accounts-glib: remove unused list of services.
+    
+    This was used in an earlier incarnation of this backend, but now is just
+    leaked.
+
+commit 60e1c9fe201e0ddca8bb0881f7cdd00bc8f753f6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-08 14:58:19 +0000
+
+    accounts-glib: expose _get implemenation for subclasses
+    
+    This is only needed because McpAccountStorageIface is hidden. See
+    <https://bugs.freedesktop.org//show_bug.cgi?id=32914>. This is a
+    workaround for now.
+
+commit 3373220c555262955684732e02716e688ccfd3b6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 21:49:08 +0000
+
+    accounts-glib: split up gargantuan _get implementation
+
+commit 43555b2311992a2668441c87f98c20411c34a02f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 20:03:18 +0000
+
+    Clean up loading account storage plugins.
+    
+    The duplication of g_list_insert_sorted() was getting me down.
+
+commit 2858bbac87eeaa96814996ead4cc64db3b75c4b8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 19:57:32 +0000
+
+    Correct MCD_ACCOUNT_MANAGER_SSO_CLASS() macro
+
+commit 508c59b67c7a19cb32108dc562ad9b16b52264a8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 19:18:06 +0000
+
+    accounts-glib: make service type parametrizable
+    
+    Rather than hard-coding the "IM" string everywhere, we now call a
+    private method which looks up the accounts-glib service type from a
+    field in the class structure. The default implementation is of course
+    "IM", but this will allow a subclass which looks for a different type of
+    accounts.
+
+commit 88df5c5e996b6886d3854a2c643d1f288e2f4f4d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 18:55:45 +0000
+
+    accounts-glib: List services in constructed, not init
+    
+    I'm about to replace the hard-coded AG_SERVICE constant with a field in
+    the class (so that a subclass can look for other services and set Hidden
+    to True for those accounts). However, as we discovered way back in
+    f7b7aa8e477abe03c1340c2b200ddcf9c9792c2c, when _init runs for class T,
+    G_OBJECT_TYPE() always returns T even if we're constructing a subclass.
+    So we're going to need to wait until constructed() to get at the desired
+    service name.
+
+commit 972883acdc5f11e247b807477199fd5cf029d4b4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 17:58:49 +0000
+
+    accounts-glib: declutter class_init
+
+commit 425a2bb4aa78a3184239e4b7e2d9f32c7ea7f9db
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 16:12:15 +0000
+
+    accounts-glib: make null termination clearer
+
+commit 9799ff9a74700115f8eb3c7bd08f71e0b0440971
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-31 00:34:55 +0000
+
+    Add a smoke test for Account[Manager].I.Hidden
+    
+    This doesn't really test all that much, but it's better than nothing.
+
+commit 183be5735a3f15c2543a0059e234a8c386c49427
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-31 00:32:39 +0000
+
+    Implement AccountManager.Interface.Hidden
+
+commit c2ffc90b046a03942bc137db6b0f33d117763060
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-30 22:39:47 +0000
+
+    Implement Account.Interface.Hidden
+
+commit 02e3aed21485b375fda2d1c632074592b13263a8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-01 19:47:01 +0000
+
+    Generate code for hidden account interfaces.
+
+commit 8e011b287da8f1b2319c8c947f636e87fda9f5c7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 14:34:58 +0000
+
+    mctest: improve error messages from post-test cleanup
+
+commit 1eac316750a070612a24249063ba992602acd03a
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-07 15:31:03 +0000
+
+    AM: Remove a stray paren from a debug message
+
+commit f5cef05a9d4b76c78045dcb6642964939e063698
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-06 19:07:05 +0000
+
+    tests: extract common mc-slaying and keyfile-reading code
+
+commit 4c99fea93bcc5a29f642fefad6b32329877117a5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-06 17:23:47 +0000
+
+    mctest: tidy up create_fakecm_account()
+    
+    I think it needs a better docstring: I keep forgetting what it returns.
+    Plus it's full of unnecessary comments and no-op code. So let's tidy it
+    up a bit.
+
+commit e90cfdcf5f8991457f631cecef227e0b0ae0af21
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-06 16:32:57 +0000
+
+    mctest: support passing properties to create_fakecm_account()
+
+commit 081fdd53678d5579f90c1f5d753274284b439063
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-10 19:03:33 +0000
+
+    account_check_parameters: assert callback is non-NULL
+    
+    This function was already actually assuming this in two of the three
+    places it calls the callback, so let's assume it properly.
+
+commit 4c79dba8a2fbdceb5460a6b124ca9a7790fa7731
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-10 18:56:45 +0000
+
+    Log why we're declaring accounts invalid.
+    
+    If the CM is flat-out missing, then we get debug output to that effect.
+    But in the cases where the CM exists but lacks the relevant protocol, or
+    the account is missing required parameters, no useful information was
+    given.
+
+commit 12be4b8cfc2f4fc9a46a03a3c3a1149f089cbab6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-06 11:11:26 +0000
+
+    Preliminary news for 5.7.2
+
+commit 50454504ed1036f383deebeafd4b675da741f75f
+Merge: 4e08c42 b30dfb1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-06 11:04:05 +0000
+
+    Merge branch 'misc'
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit b30dfb18026448d25c699ba77a484c0ab11e6451
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-05 18:06:39 +0000
+
+    Simplify mcd_account_set_string_val()
+    
+    Hey, there's already a function that sets a string and returns TRUE or
+    FALSE depending on whether or not it's actually changed.
+
+commit db50713152f6154b0a42c3f8ef23e25ff73987d7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-05 17:40:47 +0000
+
+    Storage: allow backends to implement only one of commit/commit_one
+    
+    This mostly reverts 0d914e13cc4a6e84cebb840c0be4d32abaacaddc, except
+    that it preserves the fix for the bug which could cause a NULL ->commit
+    implementation to be called. I do not believe this interdependency is
+    “irrational”: it reduces the boilerplate that backend implementations
+    need. Plus, this makes the implementation match the documentation again.
+    
+    This also improves the debugging messages logged by
+    mcp_account_storage_commit() and mcp_account_storage_commit_all().
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=32153>
+
+commit 53d38f675dd389f6d04fff5855094362c7e49aac
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-05 17:27:20 +0000
+
+    Account: ensure updated string properties are committed.
+    
+    Properties whose setters were implemented using
+    mcd_account_set_string_val() were actually not committed to disk
+    unless/until some later property whose implementation is correct was
+    updated.
+    
+    I noticed this in passing, not while checking out any particular bug.
+    However, I think it may be responsible for the issue where people's
+    aliases are re-set to their JID for no apparent reason. I don't really
+    have any evidence to back this up. I did tweak one of the storage tests
+    to expose this bug, though.
+    
+    I've checked a whole bunch of other properties, and I think the ones not
+    implemented using mcd_account_set_string_val() were all already okay.
+
+commit d80eb01daa3fda0b3153a8ab1fa382c0dc6fd38b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-31 00:54:49 +0000
+
+    Accounts-GLib backend: fix shadowing warnings
+    
+    acct() is a function defined in unistd.h, which something winds up
+    including in this file.
+    
+    Sometimes 'acct' was an AgAccount, and other times it was the
+    "cm/protocol/foo" identifier. I changed the former to 'account' and the
+    latter to 'account_suffix' where needed, as a first step towards
+    coherency.
+
+commit e01643fdc290a668e5a532da7f8eccd9bf0856ca
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-30 23:47:02 +0000
+
+    tests: improve assertion when forbidden events occur
+    
+    This makes the backtraces prettier; it doesn't have any functional
+    effect.
+
+commit 2730cf23367fb0d2198b402c2bf4cb98a82cef42
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-30 23:36:37 +0000
+
+    Tests: handle more exceptions during cleanup
+    
+    Previously, if a non-DBusException was thrown while the test harness
+    deletes any accounts left kicking around, the reactor would just hang;
+    killing it would make Automake think the test passed!
+    
+    This does a better job.
+
+commit ec6666d0b0edd70644498773f2cfa83ee21d57d9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-24 17:37:15 +0000
+
+    tests: simplify holding the name for fakecm
+
+commit 48b13f6fc212b50118a7672b196b14b2bd96298f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-24 16:03:15 +0000
+
+    mctest: use ProxyWrapper for Account/AM proxies
+    
+    ProxyWrapper's a nice class that deals better with multiple interfaces
+    on a remote object than bare python-dbus proxies do. So this reduces
+    some of the boilerplate in mctest.
+    
+    I didn't go around changing all the tests to use this, because life is
+    too short.
+
+commit 4e08c42659381c315feda5f3ba7250925c499869
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-22 16:10:40 +0000
+
+    tests: add a tests/README symlink
+    
+    I always get confused as to how to run the tests as I look for a
+    tests/README and it's not there.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 5b34520e25c014377a27f22d35b958ded994a2dd
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-22 15:54:58 +0000
+
+    tests: move from test/ to tests/
+    
+    So so annoying.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 1d9f17613ac2ce1dc3928ab0848d7b9b987b6330
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-22 11:04:25 +0000
+
+    create-with-properties: remove unsound signal expectation
+    
+    When this test creates a new account, it expects four events to occur:
+    
+    • A.AccountPropertyChanged, to say the new account is valid;
+    • AM.AccountValidityChanged, to say the new account is valid;
+    • CreateAccount returning successfully;
+    • RequestConnection on the fake CM, because ConnectAutomatically was
+      set to True and RequestedPresence was set to non-offline in
+      CreateAccount.
+    
+    However, if the account's not yet been announced by
+    AccountValidityChanged, MC has no reason to emit AccountPropertyChanged
+    on it. It happens that, in some cases, it does; but this depends on
+    whether or not MC has already introspected the fake CM by the time the
+    account is created. So the test is wrong to expect
+    AccountPropertyChanged. Instead, we check that Account.Valid is in sync
+    with what AccountValidityChanged said.
+    
+    This fixes an issue where this test would only pass if it was run after
+    account-manager/create-twice, but not if it was run individually.
+
+commit 9ad89fea078ea23178a99608fc18b753bd6f2005
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-22 11:01:31 +0000
+
+    create-twice.py: use a different 'account' parameter
+    
+    This test runs right before a test which passed or failed depending
+    on whether this test was run. The logs were made much harder to read by
+    them both creating accounts with very similar names.
+
+commit 4afb8eb6314395eae3e3c4a905062183c2dcc090
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-12-22 10:14:40 +0100
+
+    stop generating Hints interfaces
+
+commit c2f15753fd5d3f874f4ef2d06c43bdcfeb0b492e
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-12-22 09:59:16 +0100
+
+    SucceededWithChannel signal is now stable
+
+commit aa56027c9de02c8db28071548f2c96f059ac0fed
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-12-22 09:48:28 +0100
+
+    ChannelRequest's Hints property is now stable
+
+commit 15c262255cbe130ad731358b1182a5e3457d05bd
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-12-21 15:41:32 +0100
+
+    {Create,Ensure}ChannelWithHints is now stable
+
+commit cbffe9b899c1da6e7188685bc3bf5995a49eebce
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2010-12-21 15:36:23 +0100
+
+    depends on tp-glib having request hints stable API
+
+commit 2401aebf11aaf5cc4478dc80c2b5c958308df5ed
+Merge: e33f894 7f16c51
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-21 18:56:39 +0000
+
+    Merge branch 'remove-MinimumPresence'
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=29812>
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit e33f8946ac20e0a85a075e837b6318ac2974829e
+Merge: 359d1c5 cfe3684
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-21 18:56:03 +0000
+
+    Merge branch 'simplify-getting-parameters'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=32414>
+
+commit 359d1c553b7135dcceebf5c80d49a81dd3521362
+Merge: 4131664 9e4ddfb
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-21 14:13:26 +0000
+
+    Merge branch 'test-fixes'
+
+commit 9e4ddfb989f05fb7a4c6c8f5c435e4319c7abd0d
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-21 14:06:42 +0000
+
+    create-at-startup: don't expect ObserveChannels calls so close together
+    
+    Now that preparing the connection takes one more step, it can take
+    longer before ObserveChannels is called with the channel that just
+    appeared on connecting, so let's allow that to appear earlier.
+    
+    This only relaxes the test assumptions a little. Although it currently
+    fails on 0.13.9 and this fixes it, it'll still work on tp-glib <
+    0.13.9.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 95e56df4a2a0acc89c86fd85eb25ae0e7cdb603d
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-21 13:20:41 +0000
+
+    mctest: implement GetContactAttributes and GetAll on Contacts
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit e3e955d792db4328ff026a7c1c48c13dc8028826
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-21 13:20:30 +0000
+
+    mctest: implement HoldHandles
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 41baccd21db1ffc14d694b9d631b3385178894f6
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2010-12-21 13:19:56 +0000
+
+    mctest: implement GetAll on Connection
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 7f16c518a48a964f94d6b211bd224e7a29219910
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-01 18:48:15 +0000
+
+    Remove MinimumPresence implementation.
+    
+    I feel kind of bad doing this, but it turned out not to be needed. I
+    think it's better to take dead code out, rather than leaving it kicking
+    around to potentially complicate matters later.
+
+commit cfe36847c8afec4277ea042465917fc2d8e9631b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-03 00:44:44 +0000
+
+    McdDBusProp: remove get_async
+    
+    The only property that was implemented in an async fashion was
+    Account.Parameters. Since that's now synchronous, we can bin this code
+    for getting properties asynchronously.
+
+commit 94d62e8d68ec1d657b8af36f467b1520703632e5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-02 18:21:58 +0000
+
+    Make _mcd_account_dup_parameters() synchronous
+    
+    This is a really massive patch, and I'm very sorry.
+    
+    Previously _mcd_account_dup_parameters() took a callback parameter. This
+    was because mcd_account_get_parameter() took a callback parameter. The
+    latter used to actually be asychronous in the gnome-keyring case, but it
+    is not any more, thanks to the harmonious account backend API.
+    
+    So we can remove a *lot* of unnecessary complexity if we make the latter
+    return the parameter's value synchronously, and hence make the former
+    return a GHashTable synchronously. In particular, this means we can make
+    retrieving the Parameters D-Bus property synchronous, which means we can
+    port to TpDBusPropertiesMixin.
+    
+    I did try to split this patch up, but as you, dear reader, will be able
+    to see from what I ended up with, this code was all really entangled
+    with itself. This is the best I could do.
+
+commit 8cbdbdb68311f7df76e99b87257d256975fedb5c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-02 15:19:25 +0000
+
+    McdAccount: Remove un-overridden virtual methods
+    
+    No known subclass of McdAccount overrides get_parameter, set_parameter,
+    delete or load these days. People should be, and are, using the new
+    pluggable storage backends API. So it's safe to remove these methods
+    from the vtable. This will simplify refactoring their (default)
+    implementations.
+
+commit 08ba772275f1d5d87041e665afdad3216bf81df7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-15 14:35:02 +0000
+
+    Account.Service: remove unnecessary explicit fallback.
+    
+    dbus-glib treats a GValue containing a NULL string as equivalent to a
+    GValue containing "", at least in this context. Many other properties
+    rely on this behaviour; so let's just rely on it here too.
+
+commit 8bd702c5c15afc24e4ab64847650a512fac37858
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-15 16:51:14 +0000
+
+    Tests: correct name of Conditions.Condition property
+    
+    The property's actually called Condition, not Conditions. But because
+    McdDBusProp returns the same error for “unknown property” and “wrong
+    type”, the test passed.
+
+commit f4b1a6175634948e376bf9047d88d81d5b2b2fa4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-01 19:36:27 +0000
+
+    Remove redundant object path/bus name constants.
+    
+    These have been in tp-glib approximately forever.
+
+commit baeaade204481e7bd400d419ebc2ccb2084c5fed
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-01 19:19:47 +0000
+
+    Remove long-obsolete mcd-presence-frame.h
+
+commit 413166490899fa583a8193197e2b62310a3e5d37
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-12-10 17:39:47 +0000
+
+    Update telepathy.am from telepathy-glib
+
+commit cdb289c8d0f9cb96d90e287d526d408590b9e145
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2010-12-07 17:14:32 +0000
+
+    Start 5.7.2 development
+
 commit 52840f8f8aa13f1d91fe5eaad93cf888e52c1497
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
 Date:   2010-12-06 18:55:50 +0000

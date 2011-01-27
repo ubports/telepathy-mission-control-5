@@ -25,14 +25,20 @@
 #include "plugin-account.h"
 #include "config.h"
 
+#include <string.h>
+
 #include "mission-control-plugins/implementation.h"
 
 #include <telepathy-glib/util.h>
 
 /* these pseudo-plugins take care of the actual account storage/retrieval */
 #include "mcd-account-manager-default.h"
+
 #if ENABLE_LIBACCOUNTS_SSO
 #include "mcd-account-manager-sso.h"
+# ifdef ACCOUNTS_GLIB_HIDDEN_SERVICE_TYPE
+# include "mcd-storage-ag-hidden.h"
+# endif
 #endif
 
 static GList *stores = NULL;
@@ -228,7 +234,7 @@ unique_name (const McpAccountManager *ma,
   const gchar *base = NULL;
   gchar *esc_manager, *esc_protocol, *esc_base;
   guint i;
-  gsize base_len = sizeof (MC_ACCOUNT_DBUS_OBJECT_BASE) - 1;
+  gsize base_len = strlen (TP_ACCOUNT_OBJECT_PATH_BASE);
   DBusGConnection *connection = tp_proxy_get_dbus_connection (self->dbusd);
 
   base = tp_asv_get_string (params, "account");
@@ -242,8 +248,8 @@ unique_name (const McpAccountManager *ma,
 
   for (i = 0; i < G_MAXUINT; i++)
     {
-      gchar *path = g_strdup_printf ("%s%s/%s/%s%u",
-          MC_ACCOUNT_DBUS_OBJECT_BASE,
+      gchar *path = g_strdup_printf (
+          TP_ACCOUNT_OBJECT_PATH_BASE "%s/%s/%s%u",
           esc_manager, esc_protocol, esc_base, i);
 
       if (!g_key_file_has_group (self->keyfile, path + base_len) &&
@@ -275,12 +281,19 @@ account_storage_cmp (gconstpointer a, gconstpointer b)
 }
 
 static void
-add_libaccount_plugin_if_enabled (void)
+add_storage_plugin (McpAccountStorage *plugin)
+{
+  stores = g_list_insert_sorted (stores, plugin, account_storage_cmp);
+}
+
+static void
+add_libaccounts_plugins_if_enabled (void)
 {
 #if ENABLE_LIBACCOUNTS_SSO
-    McdAccountManagerSso *sso_plugin = mcd_account_manager_sso_new ();
-
-    stores = g_list_insert_sorted (stores, sso_plugin, account_storage_cmp);
+  add_storage_plugin (MCP_ACCOUNT_STORAGE (mcd_account_manager_sso_new ()));
+# ifdef ACCOUNTS_GLIB_HIDDEN_SERVICE_TYPE
+  add_storage_plugin (MCP_ACCOUNT_STORAGE (mcd_storage_ag_hidden_new ()));
+# endif
 #endif
 }
 
@@ -288,18 +301,14 @@ static void
 sort_and_cache_plugins ()
 {
   const GList *p;
-  McdAccountManagerDefault *default_plugin = NULL;
   static gboolean plugins_cached = FALSE;
 
   /* not guaranteed to have been called, but idempotent: */
   _mcd_plugin_loader_init ();
 
-  /* insert the default storage plugin into the sorted plugin list */
-  default_plugin = mcd_account_manager_default_new ();
-  stores = g_list_insert_sorted (stores, default_plugin, account_storage_cmp);
-
-  /* now poke the pseudo-plugins into the sorted GList of storage plugins */
-  add_libaccount_plugin_if_enabled ();
+  /* Add compiled-in plugins */
+  add_storage_plugin (MCP_ACCOUNT_STORAGE (mcd_account_manager_default_new ()));
+  add_libaccounts_plugins_if_enabled ();
 
   for (p = mcp_list_objects(); p != NULL; p = g_list_next (p))
     {
@@ -307,7 +316,7 @@ sort_and_cache_plugins ()
         {
           McpAccountStorage *plugin = g_object_ref (p->data);
 
-          stores = g_list_insert_sorted (stores, plugin, account_storage_cmp);
+          add_storage_plugin (plugin);
         }
     }
 

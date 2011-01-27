@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.0.beta42 immediately before a release.
 dnl Set the version number to e.g. 5.0.beta42+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.7.1])
+AC_INIT([telepathy-mission-control], [5.7.2])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -318,11 +318,24 @@ dnl the automake conditional
 AM_CONDITIONAL(ENABLE_LIBACCOUNTS_SSO, [test x$libaccounts_sso_enabled = xyes])
 dnl /libaccounts-glib SSO
 
+AC_ARG_WITH([accounts-glib-hidden-service-type],
+    [AS_HELP_STRING([--with-accounts-glib-hidden-service-type],
+      [mark accounts with the provided service type as hidden @<:@default=no@:>@])],
+    [],
+    [with_accounts_glib_hidden_service_type=no])
+AS_IF([ test "x$with_accounts_glib_hidden_service_type" != xno ],
+    [AC_DEFINE_UNQUOTED(ACCOUNTS_GLIB_HIDDEN_SERVICE_TYPE,
+        ["$with_accounts_glib_hidden_service_type"],
+        [Defined to the non-IM service type for hidden accounts, if any])])
+
+AM_CONDITIONAL(ENABLE_LIBACCOUNTS_GLIB_HIDDEN,
+    [test x$with_accounts_glib_hidden_service_type != xno])
+
 PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.82])
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.11.13])
+PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.13.7])
 AC_SUBST(TELEPATHY_LIBS)
 AC_SUBST(TELEPATHY_CFLAGS)
 
@@ -371,9 +384,9 @@ mission-control-plugins/Makefile \
 plugins/Makefile \
 server/Makefile \
 src/Makefile \
-test/Makefile \
-test/twisted/Makefile \
-test/twisted/tools/Makefile \
+tests/Makefile \
+tests/twisted/Makefile \
+tests/twisted/tools/Makefile \
 tools/Makefile \
 util/Makefile \
 xml/Makefile \
