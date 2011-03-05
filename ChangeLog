@@ -1,8 +1,553 @@
-commit 4cca7b6ebb02353a0066a9180e9521724d0e0a8c
+commit 69102beed05d7e2eec1d087b74c218f731f4bbd1
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
-Date:   2011-01-19 15:27:55 +0000
+Date:   2011-03-01 17:23:25 +0000
 
-    Merge HEAD, branch 'master' into telepathy-mission-control-5.7
+    Version 5.7.5
+
+commit ff0847e2dea8848c76d6f965014a1d1869d2d710
+Merge: 28c11af 28581cc
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-01 16:57:09 +0000
+
+    Merge branch 'master' of git+ssh://git.freedesktop.org/git/telepathy/telepathy-mission-control
+
+commit 28c11afb58a9809e648b6de8fadda6a9c2308773
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-01 16:31:21 +0000
+
+    update LIBS for gtk-doc scanner
+
+commit d5d40f83aa1e92cc374b3483259516187997f79f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-01 16:31:05 +0000
+
+    update LDADD for mission-control-5
+
+commit bb9e6d06935400dbe599a158cf1d4a6122f5bcc2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-01 16:30:44 +0000
+
+    update LDADD for mc-tool
+
+commit 28581cc816dd6082916db86d68200a439d64934a
+Merge: 6933fb3 4e69bef
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-03-01 15:45:33 +0000
+
+    Merge branch 'misc'
+    
+    Reviewed-by: Marco Barisione <marco.barisione@collabora.co.uk>
+
+commit 4e69beff3dd97487a6aff5b934a09c5123b82f22
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-03-01 15:13:04 +0000
+
+    mc-tool: remove support for þe olde profiles
+
+commit 41dec7ea5438f44068318fb4c69f28e5a13fa241
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-24 17:56:35 +0000
+
+    Be more robust against cataclysmic test failures
+    
+    Previously, if MC never claimed its bus names (because it was crashing
+    on startup, for instance), the exception in the test initialization code
+    wasn't caught. This means nothing would ever quit the Twisted mainloop,
+    and the (failed) test would sit there forever.
+    
+    This patch ensures that the test exits uncleanly if this happens.
+
+commit 6933fb3526029c61c3078177f8bc3cd3bb9e0358
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-24 20:10:17 +0000
+
+    Checking the wrong struct member before clearing - spurious g_critical
+
+commit 8fa0deffe7d07e2ffb1a19125f2a166c2d5830fc
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-24 14:13:08 +0000
+
+    Bump to 5.7.4+
+
+commit 5339401da8010e205f6688eb1bb74bdf4355fffc
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-23 23:29:41 +0000
+
+    Version 5.7.4
+
+commit b33885b5c94e0f6fc7c3773cc295747709ca61cf
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-23 23:32:56 +0000
+
+    Update telepathy.am to moan about gtk-doc.
+
+commit aa0797f88ca2662d39e865bd85f72b73a891a077
+Merge: bb001a6 c3be05c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-23 23:28:42 +0000
+
+    Merge branch 'external-password-storage-34416'
+    
+    Signed-off-by: Will Thompson <will.thompson@collabora.co.uk>
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=34416>
+
+commit c3be05c7c44f0645ff919f6832dc1f744c4b6c8b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-23 23:04:38 +0000
+
+    Depend on telepathy-glib 0.13.14.
+    
+    We need this for emitting and connecting to PropertiesChanged
+
+commit 84aa24868fb5b2fac5d683116006950667dead51
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-23 22:46:55 +0000
+
+    Preserve deleted account while calling Identify
+    
+    When an account is deleted, we'd expect that the McdAccount object will
+    die shortly afterwards. However, we need to ensure that RemoveAccount is
+    called on connection managers that implement AccountStorage. Previously,
+    the account object was used as the weak_object for the callback to
+    IdentifyAccount; this could mean that the callback would never fire, and
+    thus we'd never get around to calling RemoveAccount.
+    
+    So this patch holds a reference for that callback.
+
+commit 78221c62bf02313e76947d3f6872de7e4322a548
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-23 16:47:45 +1100
+
+    Emit PropertiesChanged for PasswordSaved signal
+
+commit 42c90a1d3e230919c10dda20d7d5fdf5e58074cd
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-23 16:40:59 +1100
+
+    Implement PasswordSaved
+
+commit 6eb2ab4e6c23c828db78d0c8d1dd933aa0baea87
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-23 15:47:46 +1100
+
+    Call CM.I.AS.RemoveAccount() when the account is deleted
+
+commit 54fa2a2190c7f8f57d12e63f488e4f425380866b
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 15:22:46 +1100
+
+    Implement ForgetPassword()
+
+commit acbf3a967441f1202fb4fa15858ad6a4e71baf04
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 15:22:24 +1100
+
+    Build client bindings for CM.I.AS
+
+commit 2e0e96d8a183cb0d18cf2754b94e91751f89d518
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 13:56:44 +1100
+
+    Hook up skeleton Acct.I.EPS in McdAccount
+    
+    Currently activates the interface when the CM.I.AS is present on the CM. Needs
+    the methods and properties implemented.
+
+commit 696c6f6ae82cb478247b9921b28a5e3b17579cbf
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 13:56:05 +1100
+
+    Add CM.I.AccountStorage.DRAFT from tp-spec
+
+commit 711ab5b25fe5d9108802cdc52ff02fcf8cf3f05f
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 13:41:58 +1100
+
+    Add Acct.I.ExternalPasswordStorage.DRAFT from tp-spec
+
+commit 7365dde12d91eade4039fdb28cb79c3e3e14dfa4
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-02-22 13:36:29 +1100
+
+    Make it possible to optionally implement interfaces on a MC object
+    
+    Defining an interface as MCD_IMPLEMENT_OPTIONAL_IFACE() indicates it should
+    not be included in an object's Interface property by default. Instead the
+    interface is activated by calling mcd_dbus_activate_optional_interface() on
+    an individual object instance.
+    
+    This makes it possible to implement interfaces such as
+    Acct.I.ExternalPasswordStorage only on accounts whose Connection Manager
+    supports it.
+
+commit bb001a6497ec414594ad5221eaad42a015a478b2
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-21 19:13:07 +0000
+
+    check_one_parameter_unset: fix conditional's indentation
+
+commit 9c8d9765ec0af9f82dbece22b4729a25bb8f320f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-21 17:25:43 +0000
+
+    UpdateParameters(): allow unsetting nonexistant parameters
+    
+    I missed the spec's decree that literally anything be permitted in the
+    list of parameters to unset, and since there was no test for this nuance
+    I made it regress. Here's a fix and a test.
+    
+    Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.co.uk>
+
+commit a11e1d23c3a292aba89ad8f7863bf3a5d2c14933
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-21 17:16:12 +0000
+
+    Here is some news.
+
+commit a4ca0e65fc908d499ff14582477fc9a99e65eda1
+Merge: 5df9ab2 718d297
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-21 16:14:17 +0000
+
+    Merge branch 'fd.o-34316-UpdateParameters-fixes'
+    
+    Reviewed-by: Danielle Madeley <danielle.madeley@collabora.co.uk>
+
+commit 718d297eabac88364ffc35ad076987b564dd5ef1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-21 15:52:12 +0000
+
+    UpdateParameters(): clarify releasing memory.
+    
+    On fd.o#34316, Danni sez:
+    
+    > It might be nice to have goto finally; and then error: then finally:
+    > so that all the memory is released in one location -- since my first
+    > question was whether or not the error path free'd @protocol.
+    
+    She's right, it's not clear. Nicolas suggested this even clearer
+    implementation. (It would be even even clearer and shorter if this
+    function returned a value rather than calling a callback
+    (synchronously), but oh well.)
+    
+    Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.co.uk>
+
+commit 63c636e2f5f3149c792ce048e380a0ee9f376c22
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 17:30:59 +0000
+
+    Update copyright for files touched by this branch
+
+commit 0774476cae8f4f0336dc6913307b3d66871e58c9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 17:23:28 +0000
+
+    UpdateParameters: break apart check_parameter_update()
+    
+    I had thought that the logic for setting and clearing parameters was
+    similar enough that combining them would be a net win, but it seems that
+    that was not the case. This patch rearranges check_one_parameter()
+    check_parameter_update() into check_one_parameter_update() for parameter
+    updates, and check_one_parameter_unset() for unset parameters. There is
+    a little duplication, but these are much easier to follow.
+    
+    Dear reviewer, I'm sorry for the many false starts in this branch. I
+    did try to rebase them out of existence, but…
+
+commit 5961487b0ec321b72e58ab9823ccd6f0a0097c95
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 16:42:52 +0000
+
+    UpdateParameters: check for setting parameters to their default
+    
+    A few patches ago, we made MC smarter about unsetting parameters which
+    have default values. Here, we make the symmetrical case work: explicitly
+    setting a previously-unset parameter to its default value should not
+    need a reconnect to take effect.
+    
+    I really don't like how complicated check_parameter_update() has become,
+    but this does actually seem to need to be this complicated to get every
+    case right. Perhaps check_one_parameter() should be split into 'set' and
+    'unset' cases.
+
+commit 43523d6c224129aaeb64f55ceed3c6719c3e2919
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 14:33:40 +0000
+
+    UpdateParameters: consolidate post-validation code
+
+commit bb8a5fdfc607f4d01688884dcd3886fa004cb61b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 13:38:38 +0000
+
+    UpdateParameters: clean up freeing Not_Yet array
+
+commit 6173858addc6fa15072776e780298779972cfa2c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 12:58:49 +0000
+
+    UpdateParameters: apply Unset parameters immediately, if possible.
+    
+    If a parameter in the Unset list was previously set to its default
+    value, there's no need to reconnect to apply the change. Also, if its
+    default value is different, but it's got the DBus_Property flag, we can
+    apply it to the running connection.
+    
+    Distressingly, fixing this does not actually make this code much
+    simpler.
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=34316>
+
+commit 0120affac05efd57f5eca2582a925df3ccec3f46
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 11:17:33 +0000
+
+    UpdateParameters: keep a{sv} of DBus_Property parameters
+    
+    This will make it easier to support unsetting DBus_Property parameters
+    with the Has_Default flag.
+
+commit c4a4b83959e537a66ca0845e73136d7985e5f29e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-18 10:18:57 +0000
+
+    UpdateParameters: Extract checking params to a function
+
+commit 192c653f1df8a44a18d3c03895009592dc5ab904
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 19:02:42 +0000
+
+    UpdateParameters: expunge SetParametersData completely.
+    
+    I left some FIXMEs in for places which leak (not a regression!) or don't
+    leak but look like they do. Clean-up comes next...
+
+commit af017acef7b4e4a296aa4b1ab3464d040626b75f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 18:47:14 +0000
+
+    UpdateParameters: move things out of SetParametersData
+    
+    This struct makes it much harder to see which functions actually use
+    which data, and I think we leak some of it on some code paths. So I'm
+    gonna get rid of it, piece by piece.
+
+commit 152022957ddf4b5bfdfbbd778e84f03b2522db88
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 18:27:01 +0000
+
+    UpdateParameters: Use a GQueue for DBus_Properties list
+    
+    I'm a GQueue addict, I know.
+
+commit 079546c39ca0d994320d415ca6f694afbf693e99
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 17:59:01 +0000
+
+    _mcd_account_set_parameters: remove stray 'return'
+
+commit 42c9023fd739142cd19500b7fa95e20f1bf85169
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 17:54:56 +0000
+
+    Test UpdateParameters with invalid parameters
+
+commit be6c320406c5574bfb58dc735d2885892539df6e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-02-17 17:39:50 +0000
+
+    UpdateParameters: linearize setting and unsetting params
+    
+    I love continuation passing style as much as the next guy, but this
+    doesn't add anything.
+
+commit 5df9ab23a8489a0ccd9e8563a4388c54cc677078
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-20 14:28:29 +0100
+
+    add redispatch-channels.py testing RedispatchChannels()
+
+commit bffe11ea92d8910c689f80a365f4343b5f52cab8
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-20 14:28:07 +0100
+
+    implement ChannelDispatcher.RedispatchChannels() (fdo #33271)
+
+commit 3124576fa649683e61718329d0c5ab3277405db3
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-20 14:27:36 +0100
+
+    expose mcd_connection_find_channel_by_path()
+
+commit 79b67507da3abec9a493f1f5780e2ab1535cfe30
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-20 12:18:48 +0100
+
+    factor out check_preferred_handler()
+
+commit 8c76ddb3661c73855a43f67da4eb023c2edbad23
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-19 14:49:40 +0100
+
+    generate ChannelDispatcher.Redispatch_Channels has a DRAFT
+
+commit c5e7ddbc3866fae72bf7a41ffe90fa0787862f13
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-01-20 10:01:53 +0100
+
+    mctest: silence the queue if we hit an error
+    
+    This a backport of the Gabble commit ee177cfb2a13a8374e2f1037e806b7bc58aa708b
+
+commit 1f7e0162173a0db91f7bda37eef45de84279cad9
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-15 16:02:53 +0000
+
+    version 5.7.3+
+
+commit 0b7bd4c8bbddd39b72d27423add2ba3adbacab58
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-15 16:02:15 +0000
+
+    'UNRELEASED' checks activated
+
+commit 181b72b62e7c908268d09ae7ed8388c820e28d04
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-15 15:00:34 +0000
+
+    Prepare version 5.7.3
+
+commit 9b5e028ed37d3b7ed6d95ffb02d1a9661ef12564
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-15 14:51:14 +0000
+
+    Update copyright notices, prefer AUTHORS to per-file Contact: entries
+
+commit c0d77221030db1c2959a5f4427d5e1471c1c1a45
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-11 14:53:43 +0000
+
+    Clear the emergency data (and emit a critical warning) when setting
+    
+    They should always be empty when they are set, but cope if they aren't
+
+commit 3ce692fb7a14eab86021de9b3fa8cf06055dec1a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-08 14:52:04 +0000
+
+    Use predefined dbus property constants instead of rolling our own.
+
+commit a3bf09f24da81e0a2e894c91f23b8bd753cfb881
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-08 14:40:15 +0000
+
+    Missing call to clear the emergency data in parse_services_list
+
+commit 5a78285c5134bb37585a4775388fadabd1693ebe
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-08 14:19:16 +0000
+
+    Rename _set_emergency_* to _take_emergency_* to indicate change of ownership
+
+commit 9d501e530d92ab5b39745fbe7c7eafd51c43b946
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-08 14:07:37 +0000
+
+    Change asserts in emergency data helpers to warnings
+
+commit 73d357732aa4088ff3c9a648d8c054b51a5208f3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-08 14:04:10 +0000
+
+    Added emergency number helper functions should follow same style as file
+
+commit 28ee310ee78e09efea8c47d9085f8f4791729410
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-03 20:06:02 +0000
+
+    Bypass request policy delays for urgent channel requests
+
+commit 87c96d3ea28780955ab78f9feb74c527cc709e40
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-03 20:05:09 +0000
+
+    Cache the request policy plugins the first time we need them
+
+commit 12cb4e4be79067edb7013683856936de45424a8a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:43:12 +0000
+
+    Use service point data to check if a connection is urgent (eg an emergency call)
+
+commit 1906a3c4228bc7182a89058ef71468612998cfb2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:37:32 +0000
+
+    Start watching a connection for service point data the first time it becomes connected
+
+commit 0f7484069b3cda5a362353067b0f46fd74a47ee9
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:35:49 +0000
+
+    Support watching for service point/emergency data and updating the connection
+
+commit bcd72e3363d246adc0b9c50e963813c4a0b7b9e0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:30:53 +0000
+
+    Helper function to set emergency handles data
+
+commit c03b89519ab8522f6c457290e6512d0a88a87025
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:30:06 +0000
+
+    Helper function to set emergency number data
+
+commit 9e9e3b49987778d7ed3df9757ca302c75cac2d22
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:29:16 +0000
+
+    helper function to clear current emergency number/handle data
+
+commit e42743b23c38e309c0c2f0c53b610bd596643b2b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-28 04:28:02 +0000
+
+    Add struct entries to hold emergeny number (service point) data and state
+
+commit 485607b16534ed9ea9b9bd643cbbf9fff2672557
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-14 19:02:45 +0000
+
+    Update libtelepathy-glib0 dependency for debug_sender updates
+
+commit 3321165f24740d0d2b5947e3353fc78ddc4e85ab
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-14 17:53:11 +0000
+
+    Be parsimonious with printf ops in the mcd_debug path.
+
+commit 52d53425d4dfb2c65ec4e640c42004318f19074f
+Author: Marco Barisione <marco@barisione.org>
+Date:   2011-01-28 14:56:39 +0000
+
+    McdAccountManager: don't leak if mcd_master_get_default() returns NULL
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=33651>
+
+commit 0d69567e4d0d94e6018c10f528b177195c75b958
+Author: Marco Barisione <marco@barisione.org>
+Date:   2011-01-27 19:02:27 +0000
+
+    Aegis plugin: fix a leak of DBus proxies
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=33612>
+
+commit fa4de0d15ea4f2184e76f935ff79708fcee11eb4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-01-19 17:55:24 +0000
+
+    version 5.7.2+
 
 commit 833f5e87182e5053381bdd1502fe93b49c4cd347
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>

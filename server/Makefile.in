@@ -61,7 +61,8 @@ mission_control_5_OBJECTS = $(am_mission_control_5_OBJECTS)
 am__DEPENDENCIES_1 =
 @HAVE_SERVER_TRUE@mission_control_5_DEPENDENCIES =  \
 @HAVE_SERVER_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-@HAVE_SERVER_TRUE@	$(top_builddir)/src/libmissioncontrol-server.la
+@HAVE_SERVER_TRUE@	$(top_builddir)/src/libmissioncontrol-server.la \
+@HAVE_SERVER_TRUE@	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la
 AM_V_lt = $(am__v_lt_$(V))
 am__v_lt_ = $(am__v_lt_$(AM_DEFAULT_VERBOSITY))
 am__v_lt_0 = --silent
@@ -307,7 +308,8 @@ AM_CFLAGS = $(ERROR_CFLAGS)
 @HAVE_SERVER_TRUE@mission_control_5_LDADD = \
 @HAVE_SERVER_TRUE@	$(GLIB_LIBS) \
 @HAVE_SERVER_TRUE@	$(TELEPATHY_LIBS) \
-@HAVE_SERVER_TRUE@	$(top_builddir)/src/libmissioncontrol-server.la
+@HAVE_SERVER_TRUE@	$(top_builddir)/src/libmissioncontrol-server.la \
+@HAVE_SERVER_TRUE@	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la
 
 all: all-am
 

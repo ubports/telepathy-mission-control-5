@@ -41,8 +41,8 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/mission-control-plugins.pc.in \
 	$(srcdir)/mission-control.pc.in $(srcdir)/tools/lcov.am \
 	$(srcdir)/tools/telepathy.am $(top_srcdir)/configure AUTHORS \
-	COPYING ChangeLog INSTALL NEWS compile config.guess config.sub \
-	depcomp install-sh ltmain.sh missing
+	COPYING ChangeLog INSTALL NEWS config.guess config.sub depcomp \
+	install-sh ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
@@ -303,6 +303,12 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 ACLOCAL_AMFLAGS = -I m4
+CHECK_FOR_UNRELEASED := \
+    $(srcdir)/NEWS \
+    $(wildcard $(srcdir)/src/*.[ch]) \
+    $(wildcard $(libmmclient)/src/*.[ch]) \
+    $(NULL)
+
 SUBDIRS = \
     m4 \
     tools \
@@ -917,13 +923,15 @@ _is-release-check:
 		echo "Hey! You have changes staged! No release for you." >&2; \
 		exit 2; \
 	fi
+@ENABLE_GTK_DOC_FALSE@	@echo "Hey! You need to pass --enable-gtk-doc to configure!"
+@ENABLE_GTK_DOC_FALSE@	@exit 2;
 
 %.tar.gz.asc: %.tar.gz
 	$(AM_V_GEN)gpg --detach-sign --armor $@
 
 @PACKAGE@-@VERSION@.tar.gz: _is-release-check check distcheck
 
-maintainer-prepare-release: _is-release-check check distcheck release-mail
+maintainer-prepare-release: _is-release-check all distcheck release-mail
 	git tag -s @PACKAGE@-@VERSION@ -m @PACKAGE@' '@VERSION@
 	gpg --detach-sign --armor @PACKAGE@-@VERSION@.tar.gz
 

@@ -132,7 +132,8 @@ am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	mcd-handler-map.c mcd-handler-map-priv.h mcd-misc.c mcd-misc.h \
 	mcd-mission.c mcd-mission-priv.h mcd-operation.c \
 	mcd-controller.c mcd-master.c mcd-master-priv.h mcd-manager.c \
-	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
+	mcd-manager-priv.h mcd-connection.c \
+	mcd-connection-service-points.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-slacker.c mcd-slacker.h \
 	mcd-proxy.c mcd-transport.c mcd-provisioning.c \
@@ -145,9 +146,10 @@ am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	mcd-account-manager.h mcd-account-manager-default.h \
 	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
 	mcd-controller.h mcd-manager.h mcd-connection.h \
-	mcd-connection-plugin.h mcd-plugin.h mcd-channel.h mcd-proxy.h \
-	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
-	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
+	mcd-connection-plugin.h mcd-connection-service-points.h \
+	mcd-plugin.h mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
+	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
+	mcd-provisioning.h mcd-provisioning-factory.h \
 	mcd-account-manager-sso.h mcd-storage-ag-hidden.h \
 	mcd-account-manager-sso.c mcd-storage-ag-hidden.c
 am__objects_1 =
@@ -165,8 +167,9 @@ am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
 	mcd-dispatch-operation.lo mcd-handler-map.lo mcd-misc.lo \
 	mcd-mission.lo mcd-operation.lo mcd-controller.lo \
 	mcd-master.lo mcd-manager.lo mcd-connection.lo \
-	mcd-dispatcher.lo mcd-channel.lo mcd-service.lo mcd-slacker.lo \
-	mcd-proxy.lo mcd-transport.lo mcd-provisioning.lo \
+	mcd-connection-service-points.lo mcd-dispatcher.lo \
+	mcd-channel.lo mcd-service.lo mcd-slacker.lo mcd-proxy.lo \
+	mcd-transport.lo mcd-provisioning.lo \
 	mcd-provisioning-factory.lo mcd-storage.lo \
 	plugin-dispatch-operation.lo plugin-loader.lo \
 	plugin-request.lo plugin-account.lo request.lo \
@@ -176,6 +179,7 @@ nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
 	svc-Account_Interface_ChannelRequests.lo \
 	svc-Account_Interface_Compat.lo \
 	svc-Account_Interface_Conditions.lo \
+	svc-Account_Interface_External_Password_Storage.lo \
 	svc-Account_Interface_Hidden.lo svc-Account_Interface_Stats.lo \
 	svc-Account_Manager_Interface_Query.lo \
 	svc-Account_Manager_Interface_Hidden.lo svc-dispatcher.lo \
@@ -236,11 +240,11 @@ am__mission_control_include_HEADERS_DIST = mcd-account.h \
 	mcd-account-manager.h mcd-account-manager-default.h \
 	mcd-debug.h mcd-mission.h mcd-operation.h mcd-master.h \
 	mcd-controller.h mcd-manager.h mcd-connection.h \
-	mcd-connection-plugin.h mcd-plugin.h mcd-channel.h mcd-proxy.h \
-	mcd-dispatcher.h mcd-dispatcher-context.h mcd-service.h \
-	mcd-transport.h mcd-provisioning.h mcd-provisioning-factory.h \
-	mcd-storage.h mcd-account-manager-sso.h \
-	mcd-storage-ag-hidden.h
+	mcd-connection-plugin.h mcd-connection-service-points.h \
+	mcd-plugin.h mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
+	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
+	mcd-provisioning.h mcd-provisioning-factory.h mcd-storage.h \
+	mcd-account-manager-sso.h mcd-storage-ag-hidden.h
 HEADERS = $(mission_control_include_HEADERS) \
 	$(nodist_geninclude_HEADERS)
 ETAGS = etags
@@ -415,12 +419,14 @@ mc_headers = mcd-account.h mcd-account-compat.h \
 	mcd-account-conditions.h mcd-account-manager.h \
 	mcd-account-manager-default.h mcd-debug.h mcd-mission.h \
 	mcd-operation.h mcd-master.h mcd-controller.h mcd-manager.h \
-	mcd-connection.h mcd-connection-plugin.h mcd-plugin.h \
-	mcd-channel.h mcd-proxy.h mcd-dispatcher.h \
-	mcd-dispatcher-context.h mcd-service.h mcd-transport.h \
-	mcd-provisioning.h mcd-provisioning-factory.h mcd-storage.h \
-	$(am__append_2) $(am__append_3)
+	mcd-connection.h mcd-connection-plugin.h \
+	mcd-connection-service-points.h mcd-plugin.h mcd-channel.h \
+	mcd-proxy.h mcd-dispatcher.h mcd-dispatcher-context.h \
+	mcd-service.h mcd-transport.h mcd-provisioning.h \
+	mcd-provisioning-factory.h mcd-storage.h $(am__append_2) \
+	$(am__append_3)
 mc_gen_headers = \
+	_gen/cli-Connection_Manager_Interface_Account_Storage.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities.h \
 	_gen/cli-Connection_Interface_Power_Saving.h \
@@ -430,6 +436,7 @@ mc_gen_headers = \
 	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
+	_gen/svc-Account_Interface_External_Password_Storage.h \
 	_gen/svc-Account_Interface_Hidden.h \
 	_gen/svc-Account_Interface_Stats.h \
 	_gen/svc-Account_Manager_Interface_Hidden.h \
@@ -438,6 +445,7 @@ mc_gen_headers = \
 	_gen/svc-request.h
 
 nodist_libmcd_convenience_la_SOURCES = \
+	_gen/cli-Connection_Manager_Interface_Account_Storage-body.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
 	_gen/cli-Connection_Interface_Contact_Capabilities-body.h \
 	_gen/cli-Connection_Interface_Power_Saving-body.h \
@@ -449,6 +457,7 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Interface_ChannelRequests.c \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
+	_gen/svc-Account_Interface_External_Password_Storage.c \
 	_gen/svc-Account_Interface_Hidden.c \
 	_gen/svc-Account_Interface_Stats.c \
 	_gen/svc-Account_Manager_Interface_Query.c \
@@ -503,7 +512,8 @@ libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-addressing.h \
 	mcd-handler-map-priv.h mcd-misc.c mcd-misc.h mcd-mission.c \
 	mcd-mission-priv.h mcd-operation.c mcd-controller.c \
 	mcd-master.c mcd-master-priv.h mcd-manager.c \
-	mcd-manager-priv.h mcd-connection.c mcd-connection-priv.h \
+	mcd-manager-priv.h mcd-connection.c \
+	mcd-connection-service-points.c mcd-connection-priv.h \
 	mcd-dispatcher.c mcd-dispatcher-priv.h mcd-channel.c \
 	mcd-channel-priv.h mcd-service.c mcd-slacker.c mcd-slacker.h \
 	mcd-proxy.c mcd-transport.c mcd-provisioning.c \
@@ -626,6 +636,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-account.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-channel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-client.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-connection-service-points.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-connection.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-controller.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcd-dbusprop.Plo@am__quote@
@@ -658,6 +669,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_ChannelRequests.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Compat.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_External_Password_Storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Hidden.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Stats.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Manager_Interface_Hidden.Plo@am__quote@
@@ -728,6 +740,14 @@ svc-Account_Interface_Conditions.lo: _gen/svc-Account_Interface_Conditions.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_Conditions.c' object='svc-Account_Interface_Conditions.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
+
+svc-Account_Interface_External_Password_Storage.lo: _gen/svc-Account_Interface_External_Password_Storage.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_External_Password_Storage.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_External_Password_Storage.Tpo -c -o svc-Account_Interface_External_Password_Storage.lo `test -f '_gen/svc-Account_Interface_External_Password_Storage.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_External_Password_Storage.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_External_Password_Storage.Tpo $(DEPDIR)/svc-Account_Interface_External_Password_Storage.Plo
+@am__fastdepCC_FALSE@	$(AM_V_CC) @AM_BACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='_gen/svc-Account_Interface_External_Password_Storage.c' object='svc-Account_Interface_External_Password_Storage.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_External_Password_Storage.lo `test -f '_gen/svc-Account_Interface_External_Password_Storage.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_External_Password_Storage.c
 
 svc-Account_Interface_Hidden.lo: _gen/svc-Account_Interface_Hidden.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Hidden.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Hidden.Tpo -c -o svc-Account_Interface_Hidden.lo `test -f '_gen/svc-Account_Interface_Hidden.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Hidden.c
