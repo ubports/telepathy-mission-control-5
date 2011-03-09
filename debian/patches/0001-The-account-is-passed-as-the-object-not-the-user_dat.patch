@@ -1,0 +1,22 @@
+From 2516da292a319d8a5464b513976635ebfd6104a9 Mon Sep 17 00:00:00 2001
+From: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date: Wed, 9 Mar 2011 19:44:37 +0000
+Subject: [PATCH] The account is passed as the object, not the user_data
+
+---
+ src/mcd-account.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/src/mcd-account.c b/src/mcd-account.c
+index fe50d40..06ea824 100644
+--- a/src/mcd-account.c
++++ b/src/mcd-account.c
+@@ -590,7 +590,7 @@ account_external_password_storage_properties_changed_cb (TpProxy *cm,
+     gpointer user_data,
+     GObject *self)
+ {
+-  McdAccount *account = MCD_ACCOUNT (user_data);
++  McdAccount *account = MCD_ACCOUNT (self);
+   TpProtocol *protocol = tp_connection_manager_get_protocol_object (
+       TP_CONNECTION_MANAGER (cm), account->priv->protocol_name);
+   GHashTable *params;
