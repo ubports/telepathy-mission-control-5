@@ -107,6 +107,7 @@
     <keyword type="property" name="The &quot;dispatch-operations&quot; property" link="McdDispatcher.html#McdDispatcher--dispatch-operations"/>
     <keyword type="property" name="The &quot;interfaces&quot; property" link="McdDispatcher.html#McdDispatcher--interfaces"/>
     <keyword type="property" name="The &quot;mcd-master&quot; property" link="McdDispatcher.html#McdDispatcher--mcd-master"/>
+    <keyword type="property" name="The &quot;supports-request-hints&quot; property" link="McdDispatcher.html#McdDispatcher--supports-request-hints"/>
     <keyword type="macro" name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC:CAPS"/>
     <keyword type="macro" name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN:CAPS"/>
     <keyword type="macro" name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT:CAPS"/>

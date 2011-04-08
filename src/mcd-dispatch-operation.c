@@ -3,10 +3,8 @@
 /*
  * This file is part of mission-control
  *
- * Copyright (C) 2008-2010 Nokia Corporation.
- * Copyright (C) 2009-2010 Collabora Ltd.
- *
- * Contact: Alberto Mardegan  <alberto.mardegan@nokia.com>
+ * Copyright © 2008-2011 Nokia Corporation.
+ * Copyright © 2009-2011 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -365,6 +363,14 @@ _mcd_dispatch_operation_get_cancelled (McdDispatchOperation *self)
     return self->priv->cancelled;
 }
 
+gboolean
+_mcd_dispatch_operation_is_internal (McdDispatchOperation *self)
+{
+    GStrv handlers = self->priv->possible_handlers;
+
+    return (handlers != NULL && !tp_strdiff (CDO_INTERNAL_HANDLER, *handlers));
+}
+
 static inline gboolean
 _mcd_dispatch_operation_is_approved (McdDispatchOperation *self)
 {
@@ -470,6 +476,30 @@ _mcd_dispatch_operation_check_client_locks (McdDispatchOperation *self)
     if (self->priv->observe_only)
     {
         DEBUG ("only observing");
+        return;
+    }
+
+    if (_mcd_dispatch_operation_is_internal (self))
+    {
+        guint i = 0;
+        GList *list = self->priv->channels;
+
+        DEBUG ("Invoking internal handlers for requests");
+        for (; list != NULL; list = g_list_next (list), i++)
+        {
+            McdChannel *channel = list->data;
+            McdRequest *request = _mcd_channel_get_request (channel);
+
+            if (request == NULL)
+                continue;
+
+            DEBUG ("Internal handler for request channel #%u", i);
+            _mcd_request_handle_internally (request, channel, TRUE);
+        }
+
+        /* The rest of this function deals with externally handled requests: *
+         * Since these requests were internal, we need not trouble ourselves *
+         * further (and infact would probably trigger errors if we tried)    */
         return;
     }
 
@@ -1697,6 +1727,10 @@ _mcd_dispatch_operation_handlers_can_bypass_approval (
 {
     gchar **iter;
 
+    /* special case: internally handled request, not subject to approval */
+    if (_mcd_dispatch_operation_is_internal (self))
+        return TRUE;
+
     for (iter = self->priv->possible_handlers;
          iter != NULL && *iter != NULL;
          iter++)
@@ -1722,7 +1756,8 @@ _mcd_dispatch_operation_handlers_can_bypass_approval (
     }
 
     /* If no handler still exists, we don't bypass approval, although if that
-     * happens we're basically doomed anyway. */
+     * happens we're basically doomed anyway. (unless this is an internal
+     * request, in which case we should be ok) */
     return FALSE;
 }
 

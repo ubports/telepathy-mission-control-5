@@ -1,8 +1,302 @@
-commit 8a9dccd5b91d0d87720fdd42e515cf9e782a001c
+commit 6a03fa23d1ce0060e5486b882d2ef0e35af44691
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
-Date:   2011-03-09 16:20:38 +0000
+Date:   2011-04-05 16:37:12 +0100
 
-    Prepare 5.7.7 release
+    Prepare version 5.7.9
+
+commit 8334d2fe4ec2b867200906a362a3dad0bbdb260b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 16:33:40 +0100
+
+    Merge HEAD, branch 'master' into telepathy-mission-control-5.7
+
+commit 691dcf70772574340b4532813da42c741fe8446a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 16:30:58 +0100
+
+    bogus const in declaration
+
+commit bd9ce873e74ecdfb347ededa94e1903fd1d7fc28
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 15:02:22 +0100
+
+    Nano version
+
+commit fa41a9cf0b4f336efeea3848bffbf26de5a66cc7
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 14:50:40 +0100
+
+    Prepare version 5.7.8
+
+commit 63bd914321360851f30b30eea51d903563b927e4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 19:20:05 +0100
+
+    Use tp_clear_object for GObjects rather than tp_clear_pointer
+
+commit 3fd08dd03d89e2e4d4923db84a598a09bc1ba571
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 19:18:25 +0100
+
+    Put the right value in the SEND_MESSAGE #define
+
+commit 1d22bf4561985c4f2e3a5f70757d537186aab59d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:35:53 +0100
+
+    Debugging & whitespace trivia
+
+commit 6060526c748a8829444e1d108dc6547b6c4622e7
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:35:26 +0100
+
+    Restart request if the channel owner closed it before we could send our message
+
+commit 46fd73820ee21652c815205d6e3d6f6538c538b6
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:34:28 +0100
+
+    Update the libcreds/cellular ACL to include the new message API call
+
+commit 409f6fa7427b51aed3ebbe9c349f5799de493928
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:33:24 +0100
+
+    Plug the send message API implementation into the ACL framework
+
+commit aabea2ce4023cbdd92c29e32235207c897b4031d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:30:31 +0100
+
+    Use the new message context allocators/dellocators
+
+commit c8e942ff87811a59e4e4ddafc1c2c61f23c903b1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-01 14:23:43 +0100
+
+    Helper to steal message ontext back from the ACL framework
+
+commit cd9aeb1e53c4026adcba4361fb238ebbf63c548e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-30 18:16:24 +0100
+
+    Helpers for dbus error return and message dbus-context setting/unsetting
+
+commit 3f7e0ca90a52edf6141f9beabf5b62d082d898e4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-30 18:11:01 +0100
+
+    Extend message context struct + allocator & free func so we can allow retries
+
+commit 02c76ce59f1bb8ef11630cd5f0c21d3cf79c9246
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-28 19:28:33 +0100
+
+    Force Account.Removed to be emitted when the account is, well, removed.
+
+commit 297c55b3e7d4c16cc2af8ee07f14879bd4f7c310
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-24 20:12:53 +0000
+
+    Squash some warnings
+
+commit 07a391599e392755170b23c15c6301178e6d3961
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-24 19:59:42 +0000
+
+    Dispatch internal operations after the observers have finished.
+
+commit 9cf8902965acc2d258e3c71448ce9ce05ed202b1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-24 19:52:15 +0000
+
+    Internal requests ARE subject to policy, and shouldn't be dispatched here
+
+commit 5ac48ff9079881f4796a70787bb222a3f06603c1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-24 19:51:17 +0000
+
+    Internal dispatch operations are NOT subject to approval
+
+commit 5dcb0986d3473033491fd06f944c9e3b64ec4f09
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-24 19:48:47 +0000
+
+    Tidy up the code used to set/check whether a dispatch operation is internal
+
+commit 1e23d9051b6f001e2ae77557783248ae1d7f5c33
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-22 20:28:26 +0000
+
+    The service properties shouldn't get deleted when the account is updated
+
+commit d1e2989bf0eae978f2eb20c1791d858d0720c059
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-22 17:28:06 +0000
+
+    Use clear-handler function in finalize instead of dupping the code
+
+commit ee4d8c3a42e918cbbf4d22b555dde6541c7116d6
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-22 17:27:31 +0000
+
+    Alter _mcd_request_handle_internally per review
+
+commit 757337b6c1db87aa1beedc287fb9e2fb17dc6c91
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:11:30 +0000
+
+    Copyright updates
+
+commit cb7e7dce7104f1503e854736f86f539d07507880
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:11:17 +0000
+
+    Implement the draft CD.Messages interface using the internal-request framework
+
+commit 66c6dcfbc51a541da10e07d306b6ba300fd9fc7e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:08:45 +0000
+
+    If a new channel results from an internal request, invoke its callback
+    
+    The usual approvers/observers logic is followed, to preserve as much
+    normal channel behaviour as possible.
+
+commit f5dc7b9af212d5a4e495ebd5c433ea9d12e4e2d4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:07:31 +0000
+
+    If a pre-existing channel results from an internal request, invoke its callback
+
+commit ae0c259b89424a6190ebd3e5df0b3de0d73257d3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:04:44 +0000
+
+    use tp_clear_pointer
+
+commit e210d32c340fef61c0f2477d67f03360cbdbfece
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:04:31 +0000
+
+    Allow requests to be blocked/unblocked on a per-account basis
+    
+    This allows internally generated requests which require external
+    interaction to be atomic from the point of view of the caller,
+    and prevents MC and "real" handlers from treadin on one-another's
+    toes.
+
+commit a53807c9d8dc3b0d4e745a5e01be2ed64bd65adb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 18:02:32 +0000
+
+    Allow MC to set callbacks for internally generated requests
+    
+    These requests will typically be handled by MC itself rather than being
+    dispatched to a "real" handler.
+
+commit f83fbe87848689edc028837de829b8f0748c9eaa
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-21 17:59:45 +0000
+
+    Draft messages interface for the channel dispatcher
+
+commit 71940213008b3c46ffb66af68ff4ae17c6fa72cd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-16 15:26:08 +0000
+
+    Use the new always dispatchable info to bypass checks where necessary
+
+commit 43a84a875c4ef570af89b2eb7acbdd302539a07b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-16 15:25:37 +0000
+
+    Expose the new always-dispatchable info to internal callers
+
+commit 7db085c8b25aec2f8a34d1896765be62f217f36a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-16 15:25:02 +0000
+
+    New flag for accounts to indicate their channels must always be dispatched
+
+commit 88d047f975a13eca5bc29e69b9cdd10a0845e217
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-10 17:54:04 +0000
+
+    Free creds handle when we are done with it
+
+commit 9e6b4103c02806d40f78cd67344237713af49f4e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 14:15:50 +0100
+
+    Merge HEAD, branch 'master' into telepathy-mission-control-5.7
+
+commit 29c120696de8118f56fef69284486c1ed6acf06e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 14:12:36 +0100
+
+    Merge HEAD, branch 'master' of git+ssh://git.freedesktop.org/git/telepathy/telepathy-mission-control
+
+commit d6f8af95d4645f212054f1500b6fc7d7feb2353a
+Author: Danielle Madeley <danielle.madeley@collabora.co.uk>
+Date:   2011-03-30 16:33:24 +1100
+
+    Remove reference to mc_cli_account_interface_stats_connect_to_stats_changed
+    
+    Makes MC master actually compilable!
+
+commit 054d9162eac73bc218277bb8d2723080ea629662
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-03-18 14:35:21 +0000
+
+    ChannelDispatcher: implement SupportsRequestHints
+
+commit 60cabc58f4a23a9494f875fc5bc8536f6da06f10
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-03-18 14:35:11 +0000
+
+    mctest: add a pretty ChannelDispatcher class
+
+commit 411f14de0bc018ae5f596257f20295413524f445
+Merge: 7e9c06d 33e3c15
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-03-10 08:45:17 +0000
+
+    Merge remote branch 'stefw/path-in-pc'
+
+commit 7e9c06d5ad6d512ea46ad27115731cf457434dc2
+Author: Sjoerd Simons <sjoerd.simons@collabora.co.uk>
+Date:   2011-03-09 19:44:37 +0000
+
+    The account is passed as the object, not the user_data
+
+commit ef9a69832487e9d44843f4d2b9e3b84a571c9c40
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-09 17:47:14 +0000
+
+    Update news for cull-stats-interface branch merge
+
+commit 117136db5ded4aaf456b04fbae84ae8d77c568ea
+Merge: dc44d1b e91e385
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-09 17:44:12 +0000
+
+    Merge branch 'cull-stats-interface'
+    
+    Conflicts:
+    	src/mcd.xml
+
+commit dc44d1b037fd4659a663cfbc98c2e153fe8fd3fc
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-09 17:08:32 +0000
+
+    Nano version bump
+
+commit c0d71ba28997b2747a41066cc587eadd6d63afae
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-03-09 17:06:27 +0000
+
+    Prepare version 5.7.7
 
 commit fd655e2cacf00ecb0db057c2f889a48a3e863850
 Merge: ee5e558 18cb568
@@ -29,6 +323,17 @@ Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
 Date:   2011-03-09 13:51:48 +0000
 
     Fall back to the secondary setting for account naming if username is unset.
+
+commit 33e3c159c928f9881866d8be79eb5224865f8d49
+Author: Stef Walter <stefw@collabora.co.uk>
+Date:   2011-03-09 12:58:07 +0100
+
+    Add missoncontrolpath variable to mission-control-plugins.pc
+    
+    This is for testing so plugins can lookup where the mission control
+    executable is.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=35140
 
 commit ee5e5587eedf191b586a9ca780ef67916b16744c
 Merge: 08fa4d7 1a2e1b9
@@ -516,6 +821,12 @@ Date:   2011-02-17 17:39:50 +0000
     
     I love continuation passing style as much as the next guy, but this
     doesn't add anything.
+
+commit e91e385dfb4578ba93d19648536eecd2e7a3a0fe
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-02-16 15:26:51 +0000
+
+    Delete the account stats interface, we don't need it any more
 
 commit 5df9ab23a8489a0ccd9e8563a4388c54cc677078
 Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>

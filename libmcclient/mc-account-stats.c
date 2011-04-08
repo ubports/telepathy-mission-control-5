@@ -67,10 +67,6 @@ _mc_account_stats_class_init (McAccountClass *klass)
 {
     klass->stats_channel_count_changed = channel_count_changed;
 
-    _mc_iface_add (MC_TYPE_ACCOUNT,
-		   MC_IFACE_QUARK_ACCOUNT_INTERFACE_STATS,
-		   &iface_description);
-
     /**
      * McAccount::channel-count-changed:
      * @account: the #McAccount.
@@ -142,12 +138,6 @@ on_stats_changed (TpProxy *proxy, GHashTable *properties, gpointer user_data,
 static void
 setup_props_monitor (TpProxy *proxy, GQuark interface)
 {
-    McAccount *account = MC_ACCOUNT (proxy);
-
-    mc_cli_account_interface_stats_connect_to_stats_changed (account,
-                                                             on_stats_changed,
-                                                             NULL, NULL,
-                                                             NULL, NULL);
 }
 
 /**

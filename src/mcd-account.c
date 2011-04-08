@@ -103,9 +103,6 @@ static const McdInterfaceData account_interfaces[] = {
     MCD_IMPLEMENT_IFACE (tp_svc_account_interface_storage_get_type,
                          account_storage,
                          TP_IFACE_ACCOUNT_INTERFACE_STORAGE),
-    MCD_IMPLEMENT_IFACE_WITH_INIT (mc_svc_account_interface_stats_get_type,
-                                   account_stats,
-                                   MC_IFACE_ACCOUNT_INTERFACE_STATS),
     MCD_IMPLEMENT_IFACE (mc_svc_account_interface_addressing_get_type,
         account_addressing,
         MC_IFACE_ACCOUNT_INTERFACE_ADDRESSING),
@@ -181,6 +178,7 @@ struct _McdAccountPrivate
     guint changing_presence : 1;
 
     gboolean hidden;
+    gboolean always_dispatch;
 
     /* These fields are used to cache the changed properties */
     gboolean properties_frozen;
@@ -590,7 +588,7 @@ account_external_password_storage_properties_changed_cb (TpProxy *cm,
     gpointer user_data,
     GObject *self)
 {
-  McdAccount *account = MCD_ACCOUNT (user_data);
+  McdAccount *account = MCD_ACCOUNT (self);
   TpProtocol *protocol = tp_connection_manager_get_protocol_object (
       TP_CONNECTION_MANAGER (cm), account->priv->protocol_name);
   GHashTable *params;
@@ -791,8 +789,19 @@ mcd_account_delete (McdAccount *account,
     }
 
     mcd_storage_commit (priv->storage, name);
+
     if (callback != NULL)
         callback (account, NULL, user_data);
+
+    /* If the account was not removed via the DBus Account interface code     *
+     * path and something is holding a ref to it so it does not get disposed, *
+     * then this signal may not get fired, so we make sure it _does_ here     */
+    if (!priv->removed)
+    {
+        DEBUG ("Forcing Account.Removed for %s", name);
+        priv->removed = TRUE;
+        tp_svc_account_emit_removed (account);
+    }
 }
 
 void
@@ -2713,6 +2722,10 @@ mcd_account_setup (McdAccount *account)
     priv->hidden =
       mcd_storage_get_boolean (storage, name, MC_ACCOUNTS_KEY_HIDDEN);
 
+    /* special case flag (for ring accounts, so far) */
+    priv->always_dispatch =
+      mcd_storage_get_boolean (storage, name, MC_ACCOUNTS_KEY_ALWAYS_DISPATCH);
+
     /* load the automatic presence */
     priv->auto_presence_type =
       mcd_storage_get_integer (storage, name,
@@ -3042,6 +3055,7 @@ mcd_account_init (McdAccount *account)
     priv->curr_presence_status = g_strdup ("");
 
     priv->always_on = FALSE;
+    priv->always_dispatch = FALSE;
     priv->enabled = FALSE;
     priv->connect_automatically = FALSE;
 
@@ -4320,6 +4334,14 @@ _mcd_account_get_always_on (McdAccount *self)
     g_return_val_if_fail (MCD_IS_ACCOUNT (self), FALSE);
 
     return self->priv->always_on;
+}
+
+gboolean
+_mcd_account_needs_dispatch (McdAccount *self)
+{
+    g_return_val_if_fail (MCD_IS_ACCOUNT (self), FALSE);
+
+    return self->priv->always_dispatch;
 }
 
 gboolean

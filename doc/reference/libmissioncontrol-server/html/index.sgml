@@ -169,6 +169,7 @@
 <ANCHOR id="McdDispatcher--dispatch-operations" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--dispatch-operations">
 <ANCHOR id="McdDispatcher--interfaces" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--interfaces">
 <ANCHOR id="McdDispatcher--mcd-master" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--mcd-master">
+<ANCHOR id="McdDispatcher--supports-request-hints" href="libmissioncontrol-server/McdDispatcher.html#McdDispatcher--supports-request-hints">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context.synopsis" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html#libmissioncontrol-server-mcd-dispatcher-context.synopsis">
 <ANCHOR id="libmissioncontrol-server-mcd-dispatcher-context.description" href="libmissioncontrol-server/libmissioncontrol-server-mcd-dispatcher-context.html#libmissioncontrol-server-mcd-dispatcher-context.description">

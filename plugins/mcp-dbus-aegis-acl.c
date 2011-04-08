@@ -27,6 +27,8 @@
 
 #define CREATE_CHANNEL TP_IFACE_CONNECTION_INTERFACE_REQUESTS ".CreateChannel"
 #define ENSURE_CHANNEL TP_IFACE_CONNECTION_INTERFACE_REQUESTS ".EnsureChannel"
+#define SEND_MESSAGE \
+  TP_IFACE_CHANNEL_DISPATCHER ".Interface.Messages.DRAFT.SendMessage"
 
 #define AEGIS_CALL_TOKEN "Cellular"
 
@@ -41,6 +43,14 @@
 static gboolean token_initialised = FALSE;
 static creds_value_t aegis_token = CREDS_BAD;
 static creds_type_t aegis_type = CREDS_BAD;
+
+static gchar *restricted[] =
+  {
+    CREATE_CHANNEL,
+    ENSURE_CHANNEL,
+    SEND_MESSAGE,
+    NULL
+  };
 
 static void dbus_acl_iface_init (McpDBusAclIface *,
     gpointer);
@@ -79,7 +89,22 @@ dbus_aegis_acl_class_init (DBusAegisAclClass *cls)
   aegis_type = creds_str2creds (AEGIS_CALL_TOKEN, &aegis_token);
 }
 
-static gboolean is_filtered (DBusAclType type,
+static gboolean
+method_is_filtered (const gchar *method)
+{
+  guint i;
+
+  for (i = 0; restricted[i] != NULL; i++)
+    {
+      if (!tp_strdiff (method, restricted[i]))
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+is_filtered (DBusAclType type,
     const gchar *name,
     const GHashTable *params)
 {
@@ -90,9 +115,8 @@ static gboolean is_filtered (DBusAclType type,
   if (type != DBUS_ACL_TYPE_METHOD)
     return FALSE;
 
-  /* only create/ensure channel concern us*/
-  if (!g_str_equal (name, CREATE_CHANNEL) &&
-      !g_str_equal (name, ENSURE_CHANNEL))
+  /* only create/ensure channel concern us (and send message, now): */
+  if (!method_is_filtered (name))
     return FALSE;
 
   /* must have at least the account-path to check */
@@ -128,6 +152,8 @@ pid_is_permitted (const McpDBusAcl *self, pid_t pid)
           pid, caller, aegis_type, aegis_token);
       ok = creds_have_p (caller, aegis_type, aegis_token);
       DEBUG ("  --> %s", ok ? "TRUE" : "FALSE");
+
+      creds_free (caller);
     }
 
   return ok;

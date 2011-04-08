@@ -16,7 +16,6 @@ SPECS = \
 	Account_Interface_Conditions.xml \
 	Account_Interface_External_Password_Storage.xml \
 	Account_Interface_Hidden.xml \
-	Account_Interface_Stats.xml \
 	Channel_Dispatch_Operation.xml \
 	Channel_Dispatcher.xml \
 	Channel_Dispatcher_Interface_Redispatch.xml \
@@ -30,6 +29,7 @@ SPECS = \
 	Connection_Manager_Interface_Account_Storage.xml \
         Connection_Interface_Contact_Capabilities.xml \
         Connection_Interface_Contact_Capabilities_Draft1.xml \
+        Channel_Dispatcher_Interface_Messages_DRAFT.xml \
 	Connection_Interface_Power_Saving.xml
 
 

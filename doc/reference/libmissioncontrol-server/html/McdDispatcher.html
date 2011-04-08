@@ -76,7 +76,7 @@ Unstable, unless otherwise indicated
 <a name="McdDispatcher.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
 <p>
 McdDispatcher implements
- <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcher">TpSvcChannelDispatcher</a>,  McSvcChannelDispatcherInterfaceRedispatch,  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcherInterfaceOperationList">TpSvcChannelDispatcherInterfaceOperationList</a> and  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
+ <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcher">TpSvcChannelDispatcher</a>,  McSvcChannelDispatcherInterfaceRedispatch,  McSvcChannelDispatcherInterfaceMessagesDraft,  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-channel-dispatcher.html#TpSvcChannelDispatcherInterfaceOperationList">TpSvcChannelDispatcherInterfaceOperationList</a> and  <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-svc-generic.html#TpSvcDBusProperties">TpSvcDBusProperties</a>.</p>
 </div>
 <div class="refsect1" title="Properties">
 <a name="McdDispatcher.properties"></a><h2>Properties</h2>
@@ -85,6 +85,7 @@ McdDispatcher implements
   "<a class="link" href="McdDispatcher.html#McdDispatcher--dispatch-operations" title='The "dispatch-operations" property'>dispatch-operations</a>"      <span class="type">GPtrArray_GValueArray_DBusGObjectPath+GHashTable_gchararray+GValue___*</span>  : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--interfaces" title='The "interfaces" property'>interfaces</a>"               <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="type">GStrv</span></a>*                : Read
   "<a class="link" href="McdDispatcher.html#McdDispatcher--mcd-master" title='The "mcd-master" property'>mcd-master</a>"               <a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a>*            : Read / Write / Construct
+  "<a class="link" href="McdDispatcher.html#McdDispatcher--supports-request-hints" title='The "supports-request-hints" property'>supports-request-hints</a>"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read
 </pre>
 </div>
 <div class="refsect1" title="Description">
@@ -244,6 +245,13 @@ Convenience function to add a batch of filters at once.
 <a name="McdDispatcher--mcd-master"></a><h3>The <code class="literal">"mcd-master"</code> property</h3>
 <pre class="programlisting">  "mcd-master"               <a class="link" href="McdMaster.html" title="McdMaster"><span class="type">McdMaster</span></a>*            : Read / Write / Construct</pre>
 <p>McdMaster.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "supports-request-hints" property'>
+<a name="McdDispatcher--supports-request-hints"></a><h3>The <code class="literal">"supports-request-hints"</code> property</h3>
+<pre class="programlisting">  "supports-request-hints"   <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read</pre>
+<p>Yes, we support CreateChannelWithHints etc.</p>
+<p>Default value: TRUE</p>
 </div>
 </div>
 </div>

@@ -107,6 +107,7 @@
     <function name="The &quot;dispatch-operations&quot; property" link="McdDispatcher.html#McdDispatcher--dispatch-operations"/>
     <function name="The &quot;interfaces&quot; property" link="McdDispatcher.html#McdDispatcher--interfaces"/>
     <function name="The &quot;mcd-master&quot; property" link="McdDispatcher.html#McdDispatcher--mcd-master"/>
+    <function name="The &quot;supports-request-hints&quot; property" link="McdDispatcher.html#McdDispatcher--supports-request-hints"/>
     <function name="MCD_PLUGIN_INIT_FUNC" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC:CAPS"/>
     <function name="MCD_FILTER_IN" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN:CAPS"/>
     <function name="MCD_FILTER_OUT" link="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-OUT:CAPS"/>

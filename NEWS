@@ -1,4 +1,43 @@
-telepathy-mission-control 5.7.6 (2011-03-09)
+telepathy-mission-control 5.7.9 (2011-04-05)
+============================================
+
+The “From Hell's Heart I Stab at const” release.
+
+Fixes:
+
+• Build failure due to warning/error promotion (fledermaus)
+
+telepathy-mission-control 5.7.8 (2011-04-05)
+============================================
+
+The “À la Recherche du Temps Perdu” release.
+
+Enhancements:
+
+• accounts can be flagged as "channels must always be dispatched"
+  needed for telephony class accounts, but available generally (fledermaus)
+
+• Draft ChannelDispatcher.Messages interface implemented
+  allows non-handlers to send messages to contacts (fledermaus)
+
+Fixes:
+
+• Segfault in the external password storage properties interface (sjoerd)
+
+• SSO account deletions explicitly force Account.Removed to be emitted
+  They used to assume object disposal would happen immediately, which
+  did not always happen (fledermaus)
+
+• The "Service" value for Maemo SSO accounts could be unset after
+  account creation, a side effect of changes in 5.7.7 (fledermaus)
+
+• Memory leak in one of the Maemo DBus ACL plugins (fledermaus)
+
+Obsolescence:
+
+• Dead interface com.nokia.Account.Interface.Stats dropped (fledermaus)
+
+telepathy-mission-control 5.7.7 (2011-03-09)
 ============================================
 
 The “Bulwer—Lytton Fiction Contest Entry” release.
