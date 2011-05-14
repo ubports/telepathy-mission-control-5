@@ -2175,19 +2175,10 @@ account_remove (TpSvcAccount *svc, DBusGMethodInvocation *context)
 void
 mcd_account_property_changed (McdAccount *account, const gchar *name)
 {
-    /* parameters are handled en bloc, but first make sure it's a valid name */
+    /* parameters are handled en bloc, reinvoke self with bloc key: */
     if (g_str_has_prefix (name, "param-"))
     {
-        const gchar *param = name + strlen ("param-");
-        GValue value = { 0, };
-
-        /* check to see if the parameter was/is a valid one. If it was real,
-         * kick off the en-bloc parameters update signal
-         */
-        if (mcd_account_get_parameter (account, param, &value, NULL))
-            mcd_account_property_changed (account, "Parameters");
-        else
-            DEBUG ("Unknown/unset parameter %s", name);
+        mcd_account_property_changed (account, "Parameters");
     }
     else
     {
@@ -2212,7 +2203,16 @@ mcd_account_property_changed (McdAccount *account, const gchar *name)
                 GValue value = { 0 };
 
                 prop->getprop (self, name, &value);
-                mcd_account_changed_property (account, prop->name, &value);
+
+                /* poke the value back into itself with the setter: this      *
+                 * extra round-trip may trigger extra actions like notifying  *
+                 * the connection manager of the change, even though our own  *
+                 * internal storage already has this value and needn't change */
+                if (prop->setprop != NULL)
+                  prop->setprop (self, prop->name, &value, NULL);
+                else
+                  mcd_account_changed_property (account, prop->name, &value);
+
                 g_value_unset (&value);
             }
             else

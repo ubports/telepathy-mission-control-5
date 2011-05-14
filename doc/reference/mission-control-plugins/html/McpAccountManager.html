@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>account</title>
+<title>McpAccountManager</title>
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch02.html" title="Account storage">
@@ -21,71 +21,84 @@
 <td><a accesskey="n" href="ch03.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
 </tr>
 <tr><td colspan="5" class="shortcuts">
-<a href="#mission-control-plugins-account.synopsis" class="shortcut">Top</a>
+<a href="#McpAccountManager.synopsis" class="shortcut">Top</a>
                    | 
-                  <a href="#mission-control-plugins-account.description" class="shortcut">Description</a>
+                  <a href="#McpAccountManager.description" class="shortcut">Description</a>
                    | 
-                  <a href="#mission-control-plugins-account.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                  <a href="#McpAccountManager.object-hierarchy" class="shortcut">Object Hierarchy</a>
                    | 
-                  <a href="#mission-control-plugins-account.prerequisites" class="shortcut">Prerequisites</a>
+                  <a href="#McpAccountManager.prerequisites" class="shortcut">Prerequisites</a>
 </td></tr>
 </table>
-<div class="refentry" title="account">
-<a name="mission-control-plugins-account"></a><div class="titlepage"></div>
+<div class="refentry" title="McpAccountManager">
+<a name="McpAccountManager"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
-<h2><span class="refentrytitle"><a name="mission-control-plugins-account.top_of_page"></a>account</span></h2>
-<p>account</p>
+<h2><span class="refentrytitle"><a name="McpAccountManager.top_of_page"></a>McpAccountManager</span></h2>
+<p>McpAccountManager — Object representing the account manager, implemented
+   by Mission Control</p>
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
 <div class="refsynopsisdiv" title="Synopsis">
-<a name="mission-control-plugins-account.synopsis"></a><h2>Synopsis</h2>
-<a name="McpAccountManager"></a><pre class="synopsis">                    <a class="link" href="mission-control-plugins-account.html#McpAccountManager-struct" title="McpAccountManager">McpAccountManager</a>;
-                    <a class="link" href="mission-control-plugins-account.html#McpAccountManagerIface" title="McpAccountManagerIface">McpAccountManagerIface</a>;
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-set-value" title="mcp_account_manager_set_value ()">mcp_account_manager_set_value</a>       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<a name="McpAccountManager.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">
+#include &lt;mission-control-plugins/mission-control-plugins.h&gt;
+
+                    <a class="link" href="McpAccountManager.html#McpAccountManager-struct" title="McpAccountManager">McpAccountManager</a>;
+                    <a class="link" href="McpAccountManager.html#McpAccountManagerIface" title="McpAccountManagerIface">McpAccountManagerIface</a>;
+<span class="returnvalue">void</span>                <a class="link" href="McpAccountManager.html#mcp-account-manager-set-value" title="mcp_account_manager_set_value ()">mcp_account_manager_set_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-get-value" title="mcp_account_manager_get_value ()">mcp_account_manager_get_value</a>       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-value" title="mcp_account_manager_get_value ()">mcp_account_manager_get_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-parameter-is-secret" title="mcp_account_manager_parameter_is_secret ()">mcp_account_manager_parameter_is_secret</a>
-                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McpAccountManager.html#mcp-account-manager-parameter-is-secret" title="mcp_account_manager_parameter_is_secret ()">mcp_account_manager_parameter_is_secret</a>
+                                                        (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-parameter-make-secret" title="mcp_account_manager_parameter_make_secret ()">mcp_account_manager_parameter_make_secret</a>
-                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="McpAccountManager.html#mcp-account-manager-parameter-make-secret" title="mcp_account_manager_parameter_make_secret ()">mcp_account_manager_parameter_make_secret</a>
+                                                        (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-get-unique-name" title="mcp_account_manager_get_unique_name ()">mcp_account_manager_get_unique_name</a> (<em class="parameter"><code><a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-unique-name" title="mcp_account_manager_get_unique_name ()">mcp_account_manager_get_unique_name</a> (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);
-<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               <a class="link" href="mission-control-plugins-account.html#mcp-account-manager-list-keys" title="mcp_account_manager_list_keys ()">mcp_account_manager_list_keys</a>       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               <a class="link" href="McpAccountManager.html#mcp-account-manager-list-keys" title="mcp_account_manager_list_keys ()">mcp_account_manager_list_keys</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
 </pre>
 </div>
 <div class="refsect1" title="Object Hierarchy">
-<a name="mission-control-plugins-account.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<a name="McpAccountManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   GInterface
    +----McpAccountManager
 </pre>
 </div>
 <div class="refsect1" title="Prerequisites">
-<a name="mission-control-plugins-account.prerequisites"></a><h2>Prerequisites</h2>
+<a name="McpAccountManager.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 McpAccountManager requires
  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
 </div>
 <div class="refsect1" title="Description">
-<a name="mission-control-plugins-account.description"></a><h2>Description</h2>
+<a name="McpAccountManager.description"></a><h2>Description</h2>
 <p>
+This object represents the Telepathy AccountManager.
+</p>
+<p>
+Most virtual methods on the McpAccountStorageIface interface receive an
+object provided by Mission Control that implements this interface.
+It can be used to manipulate Mission Control's in-memory cache of accounts.
+</p>
+<p>
+Only Mission Control should implement this interface.
 </p>
 </div>
 <div class="refsect1" title="Details">
-<a name="mission-control-plugins-account.details"></a><h2>Details</h2>
+<a name="McpAccountManager.details"></a><h2>Details</h2>
 <div class="refsect2" title="McpAccountManager">
 <a name="McpAccountManager-struct"></a><h3>McpAccountManager</h3>
 <pre class="programlisting">typedef struct _McpAccountManager McpAccountManager;</pre>
@@ -102,7 +115,7 @@ McpAccountManager requires
 <hr>
 <div class="refsect2" title="mcp_account_manager_set_value ()">
 <a name="mcp-account-manager-set-value"></a><h3>mcp_account_manager_set_value ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_manager_set_value       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_manager_set_value       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
@@ -137,7 +150,7 @@ McpAccountManager requires
 <hr>
 <div class="refsect2" title="mcp_account_manager_get_value ()">
 <a name="mcp-account-manager-get-value"></a><h3>mcp_account_manager_get_value ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_value       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_value       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
 <p>
@@ -149,7 +162,7 @@ the <span class="type">McdAccountManager</span>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
-<td>an <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> instance
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance
 </td>
 </tr>
 <tr>
@@ -174,7 +187,7 @@ the <span class="type">McdAccountManager</span>.
 <div class="refsect2" title="mcp_account_manager_parameter_is_secret ()">
 <a name="mcp-account-manager-parameter-is-secret"></a><h3>mcp_account_manager_parameter_is_secret ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_manager_parameter_is_secret
-                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
 <p>
@@ -189,7 +202,7 @@ indicate that fact.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
-<td>an <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> instance
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance
 </td>
 </tr>
 <tr>
@@ -214,19 +227,19 @@ indicate that fact.
 <div class="refsect2" title="mcp_account_manager_parameter_make_secret ()">
 <a name="mcp-account-manager-parameter-make-secret"></a><h3>mcp_account_manager_parameter_make_secret ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_manager_parameter_make_secret
-                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
 <p>
 Flag an account setting as secret for the lifetime of this
-<a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> and its corresponding <span class="type">McdAccountManager</span>
+<a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> and its corresponding <span class="type">McdAccountManager</span>
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
-<td>an <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> instance
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance
 </td>
 </tr>
 <tr>
@@ -245,7 +258,7 @@ Flag an account setting as secret for the lifetime of this
 <hr>
 <div class="refsect2" title="mcp_account_manager_get_unique_name ()">
 <a name="mcp-account-manager-get-unique-name"></a><h3>mcp_account_manager_get_unique_name ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_unique_name (<em class="parameter"><code><a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_unique_name (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);</pre>
@@ -261,7 +274,7 @@ in the back-end that the plugin in question provides an interface to).
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
-<td>an <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> instance
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance
 </td>
 </tr>
 <tr>
@@ -291,7 +304,7 @@ once the caller is done with it.
 <hr>
 <div class="refsect2" title="mcp_account_manager_list_keys ()">
 <a name="mcp-account-manager-list-keys"></a><h3>mcp_account_manager_list_keys ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               mcp_account_manager_list_keys       (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-account.html#McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               mcp_account_manager_list_keys       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
 </p>
@@ -316,6 +329,10 @@ once the caller is done with it.
 </tbody>
 </table></div>
 </div>
+</div>
+<div class="refsect1" title="See Also">
+<a name="McpAccountManager.see-also"></a><h2>See Also</h2>
+<a class="link" href="McpAccountStorage.html" title="McpAccountStorage"><span class="type">McpAccountStorage</span></a>
 </div>
 </div>
 <div class="footer">

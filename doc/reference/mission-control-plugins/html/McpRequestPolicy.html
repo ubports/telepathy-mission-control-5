@@ -46,6 +46,8 @@
 
                     <a class="link" href="McpRequestPolicy.html#McpRequestPolicy-struct" title="McpRequestPolicy">McpRequestPolicy</a>;
                     <a class="link" href="McpRequestPolicy.html#McpRequestPolicyIface" title="McpRequestPolicyIface">McpRequestPolicyIface</a>;
+<span class="returnvalue">void</span>                (<a class="link" href="McpRequestPolicy.html#McpRequestPolicyCb" title="McpRequestPolicyCb ()">*McpRequestPolicyCb</a>)               (<em class="parameter"><code><a class="link" href="McpRequestPolicy.html" title="McpRequestPolicy"><span class="type">McpRequestPolicy</span></a> *policy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *request</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()">mcp_request_policy_check</a>            (<em class="parameter"><code><a class="link" href="McpRequestPolicy.html" title="McpRequestPolicy"><span class="type">McpRequestPolicy</span></a> *policy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *request</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McpRequestPolicy.html#mcp-request-policy-iface-implement-check" title="mcp_request_policy_iface_implement_check ()">mcp_request_policy_iface_implement_check</a>
@@ -81,15 +83,12 @@ To do so, the plugin must implement a <a href="http://library.gnome.org/devel/go
 <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>.
 </p>
 <p>
-The contents of the <a class="link" href="McpRequestPolicy.html#McpRequestPolicyIface" title="McpRequestPolicyIface"><span class="type">McpRequestPolicyIface</span></a> struct are not public, so to
-provide an implementation of the check method,
-plugins should call <a class="link" href="McpRequestPolicy.html#mcp-request-policy-iface-implement-check" title="mcp_request_policy_iface_implement_check ()"><code class="function">mcp_request_policy_iface_implement_check()</code></a> from the
-interface initialization function, like this:
+An implementation of this plugin might look like this:
 </p>
 <p>
 </p>
 <div class="example">
-<a name="id533696"></a><p class="title"><b>Example 2. </b></p>
+<a name="id428130"></a><p class="title"><b>Example 2. </b></p>
 <div class="example-contents">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -106,8 +105,7 @@ interface initialization function, like this:
 10
 11
 12
-13
-14</pre></td>
+13</pre></td>
         <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="symbol">(</span>MyPlugin<span class="symbol">,</span> my_plugin<span class="symbol">,</span>
    G_TYPE_OBJECT<span class="symbol">,</span>
    <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="symbol">(...);</span>
@@ -119,8 +117,7 @@ interface initialization function, like this:
 <span class="function">request_policy_iface_init</span> <span class="symbol">(</span>McpRequestPolicyIface <span class="symbol">*</span>iface<span class="symbol">,</span>
     gpointer unused G_GNUC_UNUSED<span class="symbol">)</span>
 <span class="symbol">{</span>
-  <span class="function"><a href="McpRequestPolicy.html#mcp-request-policy-iface-implement-check">mcp_request_policy_iface_implement_check</a></span> <span class="symbol">(</span>iface<span class="symbol">,</span>
-      my_plugin_check_request<span class="symbol">);</span>
+  iface<span class="symbol">-&gt;</span>check <span class="symbol">=</span> my_plugin_check_request<span class="symbol">;</span>
 <span class="symbol">}</span></pre></td>
       </tr>
     </tbody>
@@ -146,9 +143,52 @@ may be useful to combine this interface with <a class="link" href="McpDispatchOp
 <hr>
 <div class="refsect2" title="McpRequestPolicyIface">
 <a name="McpRequestPolicyIface"></a><h3>McpRequestPolicyIface</h3>
-<pre class="programlisting">typedef struct _McpRequestPolicyIface McpRequestPolicyIface;</pre>
+<pre class="programlisting">typedef struct {
+    GTypeInterface parent;
+
+    McpRequestPolicyCb check;
+} McpRequestPolicyIface;
+</pre>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.parent"></a>parent</code></em>;</span></p></td>
+<td>the parent type
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="McpRequestPolicy.html#McpRequestPolicyCb" title="McpRequestPolicyCb ()"><span class="type">McpRequestPolicyCb</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.check"></a>check</code></em>;</span></p></td>
+<td>an implementation of <a class="link" href="McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()"><code class="function">mcp_request_policy_check()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+ to do nothing
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="McpRequestPolicyCb ()">
+<a name="McpRequestPolicyCb"></a><h3>McpRequestPolicyCb ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                (*McpRequestPolicyCb)               (<em class="parameter"><code><a class="link" href="McpRequestPolicy.html" title="McpRequestPolicy"><span class="type">McpRequestPolicy</span></a> *policy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *request</code></em>);</pre>
 <p>
+Signature of an implementation of <a class="link" href="McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()"><code class="function">mcp_request_policy_check()</code></a>.
 </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
+<td>an implementation of this interface, provided by a plugin
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
+<td>an object representing a channel request
+</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2" title="mcp_request_policy_check ()">
@@ -189,6 +229,10 @@ have been notified.
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_request_policy_iface_implement_check
                                                         (<em class="parameter"><code><a class="link" href="McpRequestPolicy.html#McpRequestPolicyIface" title="McpRequestPolicyIface"><span class="type">McpRequestPolicyIface</span></a> *iface</code></em>,
                                                          <em class="parameter"><code><span class="type">void</span> (implMcpRequestPolicy *, McpRequest *) ()</code></em>);</pre>
+<p>
+This function is no longer needed, since <a class="link" href="McpRequestPolicy.html#McpRequestPolicyIface" title="McpRequestPolicyIface"><span class="type">McpRequestPolicyIface</span></a> is now
+public API. Use "iface-&gt;check = impl" instead.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody><tr>

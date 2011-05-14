@@ -1,8 +1,14 @@
 <SECTION>
 <FILE>dispatch-operation-policy</FILE>
+<TITLE>McpDispatchOperationPolicy</TITLE>
 McpDispatchOperationPolicy
 McpDispatchOperationPolicyIface
+McpDispatchOperationPolicyCb
 mcp_dispatch_operation_policy_check
+McpDispatchOperationPolicyHandlerIsSuitableAsync
+McpDispatchOperationPolicyFinisher
+mcp_dispatch_operation_policy_handler_is_suitable_async
+mcp_dispatch_operation_policy_handler_is_suitable_finish
 mcp_dispatch_operation_policy_iface_implement_check
 <SUBSECTION Standard>
 MCP_DISPATCH_OPERATION_POLICY
@@ -65,8 +71,10 @@ MCP_REQUEST_GET_IFACE
 
 <SECTION>
 <FILE>request-policy</FILE>
+<TITLE>McpRequestPolicy</TITLE>
 McpRequestPolicy
 McpRequestPolicyIface
+McpRequestPolicyCb
 mcp_request_policy_check
 mcp_request_policy_iface_implement_check
 <SUBSECTION Standard>
@@ -97,12 +105,23 @@ MCP_ACCOUNT_MANAGER_GET_IFACE
 
 <SECTION>
 <FILE>account-storage</FILE>
+<TITLE>McpAccountStorage</TITLE>
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING
 McpAccountStorage
 McpAccountStorageIface
+McpAccountStorageGetFunc
+McpAccountStorageSetFunc
+McpAccountStorageDeleteFunc
+McpAccountStorageListFunc
+McpAccountStorageCommitFunc
+McpAccountStorageCommitOneFunc
+McpAccountStorageReadyFunc
+McpAccountStorageGetIdentifierFunc
+McpAccountStorageGetAdditionalInfoFunc
+McpAccountStorageGetRestrictionsFunc
 mcp_account_storage_iface_set_priority
 mcp_account_storage_iface_set_name
 mcp_account_storage_iface_set_desc
@@ -141,6 +160,7 @@ MCP_ACCOUNT_STORAGE_GET_IFACE
 
 <SECTION>
 <FILE>dbus-acl</FILE>
+<TITLE>McpDBusAcl</TITLE>
 McpDBusAcl
 McpDBusAclIface
 DBusAclAuthorised

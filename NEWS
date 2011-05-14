@@ -1,3 +1,51 @@
+telepathy-mission-control 5.7.11 (2011-05-11)
+============================================
+
+The “Then you admit confirming not denying you ever said that?” release.
+
+Enhancements:
+
+• fd.o #36845: dispatch operation policy plugins can implement
+  handler_is_suitable_async(), to say whether a Handler is acceptable for
+  a particular dispatch operation (fledermaus, smcv)
+
+• All members of McpDBusAclIface may be NULL (the name defaults to the GObject
+  class name, and NULL as a check allows everything) (smcv)
+
+• The McpDispatchOperationPolicyIface struct is directly visible to plugins,
+  removing the need to call mcp_dispatch_operation_policy_iface_implement_check
+  (smcv)
+
+• The implementation vtable of MCP plugin classes is no longer concealed, and
+  maybe assigned to directly by implementations instead of using the _implement
+  methods (wjt, smcv)
+
+• More/better documentation for the MCP plugin classes (smcv)
+
+Fixes:
+
+• If enabled, the Aegis plugin is now statically linked into the MC executable
+  rather than being a loadable module (fledermaus)
+
+• Account plugins are no longer added to the cached list repeatedly (smcv)
+
+telepathy-mission-control 5.7.10 (2011-05-06)
+============================================
+
+The “Save the Alot” release.
+
+Enhancements:
+
+• Use the new arg0namespace matching to watch only interesting
+  DBus name-owner-changed signals if DBus is new enough to allow
+  this (fledermaus)
+
+Fixes:
+
+• Setting changes originating in storage backends (eg libaccounts)
+  were not necessarily propagated to CMs if they were not parameters
+  (fledermaus)
+
 telepathy-mission-control 5.7.9 (2011-04-05)
 ============================================
 

@@ -31,6 +31,17 @@ request-policy
 
 </para>
 
+@parent: 
+@check: 
+
+<!-- ##### USER_FUNCTION McpRequestPolicyCb ##### -->
+<para>
+
+</para>
+
+@policy: 
+@request: 
+
 
 <!-- ##### FUNCTION mcp_request_policy_check ##### -->
 <para>
@@ -47,6 +58,9 @@ request-policy
 </para>
 
 @iface: 
+@McpRequestPolicy *, McpRequest *:
+@McpRequestPolicy *, McpRequest *:
+@McpRequestPolicy *, McpRequest *:
 @McpRequestPolicy *, McpRequest *:
 @McpRequestPolicy *, McpRequest *:
 @McpRequestPolicy *, McpRequest *: 

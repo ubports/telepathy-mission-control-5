@@ -7,7 +7,7 @@
     </sub>
     <sub name="Account storage" link="ch02.html">
       <sub name="McpAccountStorage" link="McpAccountStorage.html"/>
-      <sub name="account" link="mission-control-plugins-account.html"/>
+      <sub name="McpAccountManager" link="McpAccountManager.html"/>
     </sub>
     <sub name="Channel requests" link="ch03.html">
       <sub name="McpRequestPolicy" link="McpRequestPolicy.html"/>
@@ -19,6 +19,7 @@
     </sub>
     <sub name="Object Hierarchy" link="object-tree.html"/>
     <sub name="API Index" link="api-index-full.html"/>
+    <sub name="Annotation Glossary" link="annotation-glossary.html"/>
   </chapters>
   <functions>
     <function name="mcp_plugin_ref_nth_object ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object"/>
@@ -33,6 +34,16 @@
     <function name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING" link="McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS"/>
     <function name="McpAccountStorage" link="McpAccountStorage.html#McpAccountStorage-struct"/>
     <function name="McpAccountStorageIface" link="McpAccountStorage.html#McpAccountStorageIface"/>
+    <function name="McpAccountStorageGetFunc ()" link="McpAccountStorage.html#McpAccountStorageGetFunc"/>
+    <function name="McpAccountStorageSetFunc ()" link="McpAccountStorage.html#McpAccountStorageSetFunc"/>
+    <function name="McpAccountStorageDeleteFunc ()" link="McpAccountStorage.html#McpAccountStorageDeleteFunc"/>
+    <function name="McpAccountStorageListFunc ()" link="McpAccountStorage.html#McpAccountStorageListFunc"/>
+    <function name="McpAccountStorageCommitFunc ()" link="McpAccountStorage.html#McpAccountStorageCommitFunc"/>
+    <function name="McpAccountStorageCommitOneFunc ()" link="McpAccountStorage.html#McpAccountStorageCommitOneFunc"/>
+    <function name="McpAccountStorageReadyFunc ()" link="McpAccountStorage.html#McpAccountStorageReadyFunc"/>
+    <function name="McpAccountStorageGetIdentifierFunc ()" link="McpAccountStorage.html#McpAccountStorageGetIdentifierFunc"/>
+    <function name="McpAccountStorageGetAdditionalInfoFunc ()" link="McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc"/>
+    <function name="McpAccountStorageGetRestrictionsFunc ()" link="McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc"/>
     <function name="mcp_account_storage_iface_set_priority ()" link="McpAccountStorage.html#mcp-account-storage-iface-set-priority"/>
     <function name="mcp_account_storage_iface_set_name ()" link="McpAccountStorage.html#mcp-account-storage-iface-set-name"/>
     <function name="mcp_account_storage_iface_set_desc ()" link="McpAccountStorage.html#mcp-account-storage-iface-set-desc"/>
@@ -66,16 +77,17 @@
     <function name="The &quot;created&quot; signal" link="McpAccountStorage.html#McpAccountStorage-created"/>
     <function name="The &quot;deleted&quot; signal" link="McpAccountStorage.html#McpAccountStorage-deleted"/>
     <function name="The &quot;toggled&quot; signal" link="McpAccountStorage.html#McpAccountStorage-toggled"/>
-    <function name="McpAccountManager" link="mission-control-plugins-account.html#McpAccountManager-struct"/>
-    <function name="McpAccountManagerIface" link="mission-control-plugins-account.html#McpAccountManagerIface"/>
-    <function name="mcp_account_manager_set_value ()" link="mission-control-plugins-account.html#mcp-account-manager-set-value"/>
-    <function name="mcp_account_manager_get_value ()" link="mission-control-plugins-account.html#mcp-account-manager-get-value"/>
-    <function name="mcp_account_manager_parameter_is_secret ()" link="mission-control-plugins-account.html#mcp-account-manager-parameter-is-secret"/>
-    <function name="mcp_account_manager_parameter_make_secret ()" link="mission-control-plugins-account.html#mcp-account-manager-parameter-make-secret"/>
-    <function name="mcp_account_manager_get_unique_name ()" link="mission-control-plugins-account.html#mcp-account-manager-get-unique-name"/>
-    <function name="mcp_account_manager_list_keys ()" link="mission-control-plugins-account.html#mcp-account-manager-list-keys"/>
+    <function name="McpAccountManager" link="McpAccountManager.html#McpAccountManager-struct"/>
+    <function name="McpAccountManagerIface" link="McpAccountManager.html#McpAccountManagerIface"/>
+    <function name="mcp_account_manager_set_value ()" link="McpAccountManager.html#mcp-account-manager-set-value"/>
+    <function name="mcp_account_manager_get_value ()" link="McpAccountManager.html#mcp-account-manager-get-value"/>
+    <function name="mcp_account_manager_parameter_is_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-is-secret"/>
+    <function name="mcp_account_manager_parameter_make_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-make-secret"/>
+    <function name="mcp_account_manager_get_unique_name ()" link="McpAccountManager.html#mcp-account-manager-get-unique-name"/>
+    <function name="mcp_account_manager_list_keys ()" link="McpAccountManager.html#mcp-account-manager-list-keys"/>
     <function name="McpRequestPolicy" link="McpRequestPolicy.html#McpRequestPolicy-struct"/>
     <function name="McpRequestPolicyIface" link="McpRequestPolicy.html#McpRequestPolicyIface"/>
+    <function name="McpRequestPolicyCb ()" link="McpRequestPolicy.html#McpRequestPolicyCb"/>
     <function name="mcp_request_policy_check ()" link="McpRequestPolicy.html#mcp-request-policy-check"/>
     <function name="mcp_request_policy_iface_implement_check ()" link="McpRequestPolicy.html#mcp-request-policy-iface-implement-check"/>
     <function name="McpRequest" link="McpRequest.html#McpRequest-struct"/>
@@ -93,7 +105,12 @@
     <function name="mcp_request_end_delay ()" link="McpRequest.html#mcp-request-end-delay"/>
     <function name="McpDispatchOperationPolicy" link="McpDispatchOperationPolicy.html#McpDispatchOperationPolicy-struct"/>
     <function name="McpDispatchOperationPolicyIface" link="McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface"/>
+    <function name="McpDispatchOperationPolicyCb ()" link="McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb"/>
     <function name="mcp_dispatch_operation_policy_check ()" link="McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check"/>
+    <function name="McpDispatchOperationPolicyHandlerIsSuitableAsync ()" link="McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync"/>
+    <function name="McpDispatchOperationPolicyFinisher ()" link="McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher"/>
+    <function name="mcp_dispatch_operation_policy_handler_is_suitable_async ()" link="McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async"/>
+    <function name="mcp_dispatch_operation_policy_handler_is_suitable_finish ()" link="McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-finish"/>
     <function name="mcp_dispatch_operation_policy_iface_implement_check ()" link="McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-iface-implement-check"/>
     <function name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
     <function name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>

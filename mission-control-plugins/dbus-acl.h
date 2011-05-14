@@ -48,6 +48,8 @@ typedef struct _McpDBusAclIface McpDBusAclIface;
 
 GType mcp_dbus_acl_get_type (void) G_GNUC_CONST;
 
+/* FIXME: when we break API, rename all types to start with Mcp */
+
 typedef void (*DBusAclAuthorised) (DBusGMethodInvocation *call, gpointer data);
 
 typedef enum {
@@ -112,9 +114,20 @@ void mcp_dbus_acl_iface_implement_authorised (McpDBusAclIface *iface,
 void mcp_dbus_acl_iface_implement_authorised_async (McpDBusAclIface *iface,
     DBusAclAsyncAuthoriser method);
 
-const gchar *mcp_dbus_acl_name (const McpDBusAcl *storage);
+const gchar *mcp_dbus_acl_name (const McpDBusAcl *acl);
 
-const gchar *mcp_dbus_acl_description (const McpDBusAcl *storage);
+const gchar *mcp_dbus_acl_description (const McpDBusAcl *acl);
+
+struct _McpDBusAclIface
+{
+  GTypeInterface parent;
+
+  const gchar *name;
+  const gchar *desc;
+
+  DBusAclAuthoriser authorised;
+  DBusAclAsyncAuthoriser authorised_async;
+};
 
 G_END_DECLS
 

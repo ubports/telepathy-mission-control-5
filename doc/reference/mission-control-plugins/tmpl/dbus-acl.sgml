@@ -31,6 +31,11 @@ dbus-acl
 
 </para>
 
+@parent: 
+@name: 
+@desc: 
+@authorised: 
+@authorised_async: 
 
 <!-- ##### USER_FUNCTION DBusAclAuthorised ##### -->
 <para>
@@ -168,7 +173,7 @@ dbus-acl
 
 </para>
 
-@storage: 
+@acl: 
 @Returns: 
 
 
@@ -177,7 +182,7 @@ dbus-acl
 
 </para>
 
-@storage: 
+@acl: 
 @Returns: 
 
 

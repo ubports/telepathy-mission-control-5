@@ -1,3 +1,488 @@
+commit ab65263abdb9270d27177ed04ef919deb5b542a6
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-11 15:55:21 +0100
+
+    Prepare version 5.7.11
+
+commit 88b5baf1db86614acff4ec8fca94667c7a55b49f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:58:22 +0100
+
+    McpAccountManager: add brief documentation
+
+commit f43ca7dae697528d26941874236c9f9dc7f8c36b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:57:56 +0100
+
+    McpDBusAclIface: note some API-breaking changes for later
+
+commit f0e6772fea09f90f180dec328828b8128b889db6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:57:23 +0100
+
+    McpDBusAclIface: make the vtable public and improve documentation
+
+commit 2d0564737c9efd42e05749aadbbc0c451109d115
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:55:59 +0100
+
+    McpRequestPolicyIface: make the vtable public
+
+commit 44f3db606ec3f2d9e73fd53ad4a4609cee93eb3b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:53:17 +0100
+
+    mcp: change all @include lines to the mission-control-plugins.h meta-header
+    
+    You're not meant to include the sub-headers directly.
+
+commit 344347320a75465ae35dc8ffdf715299ce5b14af
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-11 10:43:17 +0000
+
+    Publicise McpAccountStorageIface
+    
+    All the existing fill-in-the-vtable functions still exist, of course.
+    
+    This struct is undocumented. But so were all the _implement_ functions,
+    so that's okay then, or something.
+
+commit 58254dfccd39293e9c041a2276b260481053eda8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-10 19:28:59 +0000
+
+    Storage: improve grouping in the header
+
+commit 4a7c8e9486b75dc23cbc1cd2812a65ee8b3fe7de
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-01-10 19:27:25 +0000
+
+    Storage: Add typedefs for method signatures
+
+commit 68e48c0950397f15d0d7fb647a0175e5018efa2f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 11:14:32 +0100
+
+    tests/account-store-default: if secret is not found, return NULL, not uninitialized
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit a819a505f597097fd2aba2e83b456e6280847140
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:25:16 +0100
+
+    NEWS for builtin-aegis-acls
+
+commit a4eb1c2b1403a84f593c3e5bad4622ff89f54496
+Merge: e9d5be6 a079918
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:12:57 +0100
+
+    Merge branch 'builtin-aegis-acls'
+    
+    Reviewed-by: Vivek Dasmohapatra <vivek@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=36845
+
+commit a07991817ceb17c5a48e674ef14bf112b247638b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-11 10:12:05 +0100
+
+    Fix caller_creds_are_enough() debug output so it will actually terminate
+
+commit 1d224057ae7c1be1c438070db3469b1047921603
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 15:15:51 +0100
+
+    put Claim attempts through the handler suitability check, too
+    
+    These get a NULL TpClient, since it's non-obvious.
+
+commit 9ac3c5f4c5c4147734f0529bd43bdf1e13dd3f60
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 15:02:46 +0100
+
+    include Handler's unique name in suitability checks if available
+
+commit e9d5be63b54acfd7515dbf527238e97b17fbf8b2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-06 15:09:51 +0100
+
+    Nano version
+
+commit bb27105b6c79721ce266582abb920c9642744cdb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 14:58:22 +0100
+
+    Add a test for handler-suitability checking
+
+commit 7a54c4538058c35f77e11c3999a03a35fb53fea8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 12:45:41 +0100
+
+    Add a no-op plugin to check that NULL pointers are OK
+
+commit b3ad0c11e2b3977c655116a8c2dc28221df17bee
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 12:45:06 +0100
+
+    McpDBusAcl: make it OK to not set a name or description
+
+commit 035973d3593c40db2535f1f6323d14e9863d92fa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 12:35:29 +0100
+
+    mcp_dbus_acl_authorised_async_step: skip plugins not implementing authorised_async
+
+commit e041b7aa87f4a925a6fd8f9aab47e2cc5ae3356c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 12:33:12 +0100
+
+    mcp_dbus_acl_authorised: if a plugin doesn't implement authorised(), assume TRUE
+
+commit 67eacd530568185c61499a67ba35f5c3562f4659
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-06 14:46:16 +0100
+
+    Prepare version 5.7.10
+
+commit 29296083a036d84f6a39f0c543a56913ecd16d76
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 12:16:35 +0100
+
+    make Handler suitability-checking asynchronous
+    
+    In the general case, when we do the check the Handler won't be running
+    yet, so we can't check its group ID, Aegis credentials or any other
+    process parameters; so plugins may need to be able to activate it and
+    wait for it to start, and MC should be able to do other work in the
+    meantime.
+
+commit a17f762c4fd03256a962636c4c2019b7fa26e7c2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-06 12:14:38 +0100
+
+    Make an extra round trip to re-store the value, as this will trigger any important side effects like propagating values to the CM
+
+commit 4ee6a19dcc186400d0d4b7a49ccbf9b70918561f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-21 15:47:06 +0100
+
+    Deleted parameters aren't stored, so there's no meaningful test to be done here
+
+commit 69c388ba4df48f46a73296ffb54a17db93a8f1a0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-06 10:40:58 +0100
+
+    mcd_dispatch_operation_handle_channels: move the handler check here
+    
+    When we make it asynchronous, it'll have to be in a context where we can
+    call callbacks for the result. Also, this removes some duplication.
+
+commit d6fcf20ef7a39504a819fa8f43b2c38905a40f1c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 18:47:50 +0100
+
+    pid_is_permitted(): remove
+
+commit ea3fad6237fff58362cd6b2c0cb97bd44b48d1a6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 18:45:24 +0100
+
+    Use GetConnectionCredentials() when checking credentials asynchronously
+    
+    Again, this avoids a time of check / time of use vulnerability.
+
+commit d2f40c4995911d3583794297f6a76b4570453c44
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 18:44:39 +0100
+
+    Use GetConnectionCredentials() when checking credentials synchronously
+    
+    This avoids a time of check / time of use vulnerability.
+    
+    Also, don't crash if the D-Bus call fails.
+
+commit ebef3a3d1fedf07edd75cf8cdf924df6e8958444
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 18:02:50 +0100
+
+    Remove McpDBusChannelAcl
+
+commit 7b857fe79d268b0ff8cf919c8785a5a686f3c351
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 18:00:45 +0100
+
+    AegisAcl: implement McpDispatchOperationPolicy, not McpDBusChannelAcl
+
+commit 698dbc6a8a55d3732c7b52ef00f38c9a24c79889
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 17:56:47 +0100
+
+    McpDispatchOperationPolicyIface: add handler_is_suitable()
+
+commit 08a09215bfd734bb797661822000d4dce36e1b23
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 17:44:49 +0100
+
+    McpDispatchOperationPolicyIface: make the GInterface into public API
+    
+    We can stay compatible as long as we don't change or reorder methods:
+    adding methods to the end of a GInterface is considered to be a
+    compatible change.
+
+commit 53bbd7de157f869d36edc40f73a317467e88df29
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 17:13:20 +0100
+
+    Revert "Util to prepare a GPtrArray of TpChannel for the new DBus handler ACL framework"
+    
+    This reverts commit cbd280e9d768df7e4e1c69b0c0b49648a0219a10.
+    
+    Now that we're using McpDispatchOperation, this function isn't needed.
+
+commit c895b0414278dc79d749cd5a13974ff6d6d4b80a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 17:13:00 +0100
+
+    mcp_dbus_channel_acl_authorised: redo API in terms of McpDispatchOperation
+    
+    This vastly simplifies both the caller (McdDispatchOperation) and the
+    plugin.
+
+commit 8f2a8cbc424d6ac6bb0b55d3a973b568aaf9ccf4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:48:01 +0100
+
+    Move channel ACL traversal to McdDispatchOperation
+    
+    This is a helper for MC itself and isn't needed by plugins, so it
+    shouldn't be in the mission-control-plugins library.
+
+commit bf612767b4a5500f8271d689353d4bb661eb45c0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:46:25 +0100
+
+    Flatten AegisChannelAcl into AegisAcl, which now implements both interfaces
+    
+    This means we don't need any extra glue to hook it into MC as a
+    pseudo-plugin.
+
+commit c4bec580469f1a6b43cfbf6058a09849eb367c51
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:38:34 +0100
+
+    aegis_acl_class_init: only initialize once
+
+commit f82a9d29645bddfe6e5d5bdebfa9527c1744192f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:35:35 +0100
+
+    AegisAcl: remove unused struct members
+
+commit f3a03b48f1529a4f84eafec62bcb459fd597d626
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:34:27 +0100
+
+    AegisAcl: hide the concrete type completely
+
+commit 190f905a44edac89bb0ce6a60fb19ac11a38c7f3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:33:49 +0100
+
+    AegisAcl: move struct contents and Aegis internals into the .c file
+
+commit a1004d8a10fe0caa153a595e5648dda8d916534a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 16:27:53 +0100
+
+    Move mcp-dbus-aegis-acl plugin back to plugins and load it via plugin-loader
+
+commit ddc03c7002412e9c5e144b665fed249842cd338a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 14:34:50 +0100
+
+    _mcd_manager_constructor: remove unused variable spotted by gcc-4.6
+
+commit 77df7a3165cd881eedba2296f116b495c5a626c6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 14:34:12 +0100
+
+    plugin-account: sort_and_cache_plugins: only initialize once
+    
+    A potential bug spotted by gcc-4.6, which warns about this unused variable.
+
+commit b2500c50db739e21ebbde25b94e6384c1cc8e477
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 14:33:08 +0100
+
+    _mcd_dispatch_operation_try_next_handler: don't leak error if Aegis rejects a handler
+
+commit 1915c72985971988737653698d86acc753057a10
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 14:18:55 +0100
+
+    dbus-acl: if config.h is #include'd, it should be the very first thing
+
+commit d515f38253b6f3b96873773441ad47d8d45413ab
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-05 14:15:23 +0100
+
+    Revert "Filter reinvocation of handlers through the DBus Aegis ACL as well"
+    
+    This reverts commit a0b6d02c66dc8592455b151d38a3291db545f9a0.
+    
+    The handler is already handling the channels here, so this can only be a
+    problem if you already got it wrong; there's no transfer of responsibility.
+
+commit 02fbeb602b7406d5746afbe6e5bbc94dfd10e066
+Merge: b7ff6fe 631b061
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-04 19:53:40 +0100
+
+    Merge branch 'telepathy-mission-control-5.7'
+
+commit 631b061c3a431acef9ff16d5b9fa326f08741e6a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-04 19:29:22 +0100
+
+    Unused variables
+
+commit b7ff6fe1c3e29d5d74e707fd5fc0ac980d7f0650
+Merge: fdc70e2 3441183
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-04 16:36:49 +0100
+
+    Merge branch 'telepathy-mission-control-5.7'
+    
+    Conflicts:
+    	NEWS
+
+commit 3441183e9e2b1d5c2d0919a922d87252c1278f77
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-04 16:33:36 +0100
+
+    Update NEWS
+
+commit c1b3639c61820d47e5f721983a20f37a3cd735b8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-03 15:08:51 +0100
+
+    Make DEBUG macros in builtin-plugins dependent on ENABLE_DEBUG from config.h
+
+commit d1dd3023db239021b72bf18f9dd2867c6caf57c3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:38:58 +0100
+
+    Misleadingly named argument in header file
+
+commit aa26a5f7c3446904434a4a2510fa81c024502779
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:38:38 +0100
+
+    Clean up the debugging in the DBus access ACL framework a bit
+
+commit a0b6d02c66dc8592455b151d38a3291db545f9a0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:37:56 +0100
+
+    Filter reinvocation of handlers through the DBus Aegis ACL as well
+
+commit db0e652698ae50b14eda3b182e9c5998c6e455c4
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:37:28 +0100
+
+    Filter dispatch operations through the DBus Channel/Handler Aegis ACL
+
+commit 17b541a74a2d61062f3f89bd0cd60736ae414613
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:36:10 +0100
+
+    Implement the Aegis DBus Channel/Handler policy as an ACL plugin
+
+commit cbd280e9d768df7e4e1c69b0c0b49648a0219a10
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:34:45 +0100
+
+    Util to prepare a GPtrArray of TpChannel for the new DBus handler ACL framework
+
+commit be065542c28939643f106f9d5f74fd14e37bcd60
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:34:14 +0100
+
+    Implement the DBus Channel/Handler ACL framework
+
+commit 0125537aca079598f37afb7b18cc59c47aeb809c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-20 19:32:01 +0100
+
+    Resurrect the DBus access ACL plugin as a builtin pseudo-plugin
+
+commit 142ab4040e5569494a3835bdc29622fc469224f2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-18 18:48:26 +0100
+
+    Remove the old external Aegis ACL plugin
+
+commit cfc09eb5b54fa10485d52db90924cc37a0a7d757
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-21 12:56:27 +0100
+
+    Simplify filter-add error checking
+
+commit 94de2830461dd828eff5df31e8bf4e60f78ccf2d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-21 12:45:36 +0100
+
+    People mght be interested in an invalid signal, so don't claim it
+
+commit d830cae86f8979bad772e8217b247a3a25c0dfbd
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-21 12:43:26 +0100
+
+    Use utility function to check if it's the right signal
+
+commit 9aca7421037b878ce572e4ddc8f2f6200fb463df
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-21 12:38:37 +0100
+
+    Don't ref the registry when adding it as the filter data
+
+commit b01dd79df9032460822c3c2eebf3b3cee6cc7103
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-14 19:26:27 +0100
+
+    Remove unused callback
+
+commit 90aff1c8afafd4defa2a4059bb36f61307b691fc
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-14 18:43:19 +0100
+
+    Fall back to universal name-owner-changed matching if the new approach fails
+
+commit 6c4c4f775808717aedcac74f6784e60ce2ecfcb3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-14 18:30:59 +0100
+
+    Remove FIXME now that we have done so
+
+commit fbf0571b85096aa5ee09c0e43c28d79cbeab1411
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-14 01:09:38 +0100
+
+    Copyright update
+
+commit 580cb1ad9d9cbdbf426796fb87e81e881bd0926a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-14 00:24:23 +0100
+
+    Use an arg0namespace match and a filter instead of all nameownerchanged signals
+
+commit fdc70e2e68b40a0d6616428f5b861ef247fadafa
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-05 17:11:33 +0100
+
+    Nano version
+
 commit 6a03fa23d1ce0060e5486b882d2ef0e35af44691
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
 Date:   2011-04-05 16:37:12 +0100

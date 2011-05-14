@@ -23,7 +23,7 @@
  * @title: McpDBusAcl
  * @short_description: DBus ACLs, implemented by plugins
  * @see_also:
- * @include: mission-control-plugins/dbus-acl.h
+ * @include: mission-control-plugins/mission-control-plugins.h
  *
  * Plugins may implement #McpDBusAcl in order to provide checks on whether
  * a DBus method call or property get/set operation should be allowed.
@@ -32,31 +32,30 @@
  * #McpDBusAcl, then return an instance of that subclass from
  * mcp_plugin_ref_nth_object().
  *
- * The contents of the #McpDBusAcl struct are not public,
- * so to provide an implementation of the virtual methods,
- * plugins should call mcp_dbus_acl_iface_implement_*()
- * from the interface initialization function, like this:
+ * An implementation of this interface might look like this:
  *
  * <example><programlisting>
  * G_DEFINE_TYPE_WITH_CODE (APlugin, a_plugin,
  *    G_TYPE_OBJECT,
  *    G_IMPLEMENT_INTERFACE (...);
- *    G_IMPLEMENT_INTERFACE (MCP_TYPE_DBUS_ACL, dbus_acl_iface_init));
+ *    G_IMPLEMENT_INTERFACE (MCP_TYPE_DBUS_ACL, dbus_acl_iface_init);
+ *    G_IMPLEMENT_INTERFACE (...))
  * /<!-- -->* ... *<!-- -->/
  * static void
  * dbus_acl_iface_init (McpDBusAclIface *iface,
  *     gpointer unused G_GNUC_UNUSED)
  * {
- *   mcp_dbus_acl_iface_set_name (iface, PLUGIN_NAME);
- *   mcp_dbus_acl_iface_set_desc (iface, PLUGIN_DESCRIPTION);
- *   mcp_dbus_acl_iface_implement_authorised       (iface, _authorised);
- *   mcp_dbus_acl_iface_implement_authorised_async (iface, _authorised_async);
- * /<!-- -->* ... *<!-- -->/
+ *   iface-&gt;name = "APlugin";
+ *   iface-&gt;desc = "A plugin that checks some conditions";
+ *   iface-&gt;authorised = _authorised;
+ *   iface-&gt;authorised_async = _authorised_async;
  * }
  * </programlisting></example>
  *
  * A single object can implement more than one interface.
  */
+
+#include "config.h"
 
 #include <mission-control-plugins/mission-control-plugins.h>
 #include <mission-control-plugins/mcp-signals-marshal.h>
@@ -66,8 +65,8 @@
 #ifdef ENABLE_DEBUG
 
 #define DEBUG(_p, _format, ...) \
-  g_debug ("%s: %s: " _format, G_STRFUNC, \
-      (_p != NULL) ? mcp_dbus_acl_name (_p) : "NULL", ##__VA_ARGS__)
+  g_debug ("dbus-acl: %s: %s: " _format, G_STRFUNC, \
+      (_p != NULL) ? mcp_dbus_acl_name (_p) : "-", ##__VA_ARGS__)
 
 #else  /* ENABLE_DEBUG */
 
@@ -75,16 +74,15 @@
 
 #endif /* ENABLE_DEBUG */
 
-struct _McpDBusAclIface
-{
-  GTypeInterface parent;
-
-  const gchar *name;
-  const gchar *desc;
-
-  DBusAclAuthoriser authorised;
-  DBusAclAsyncAuthoriser authorised_async;
-};
+/**
+ * McpDBusAclIface:
+ * @parent: the parent type
+ * @name: the name of the plugin, or %NULL to use the GObject class name
+ * @desc: the description of the plugin, or %NULL
+ * @authorised: an implementation of part of mcp_dbus_acl_authorised()
+ * @authorised_async: an implementation of part of
+ *    mcp_dbus_acl_authorised_async()
+ */
 
 GType
 mcp_dbus_acl_get_type (void)
@@ -173,6 +171,8 @@ auth_data_free (DBusAclAuthData *data)
  * @name: the plugin's name (used in debugging and some return values)
  *
  * Sets the name of the plugin. Intended for use by the plugin implementor.
+ *
+ * This is no longer necessary: just use "iface->name = name".
  **/
 void
 mcp_dbus_acl_iface_set_name (McpDBusAclIface *iface,
@@ -187,6 +187,8 @@ mcp_dbus_acl_iface_set_name (McpDBusAclIface *iface,
  * @desc: the plugin's description
  *
  * Sets the plugin's description. Intended for use by the plugin implementor.
+ *
+ * This is no longer necessary: just use "iface->desc = desc".
  **/
 void
 mcp_dbus_acl_iface_set_desc (McpDBusAclIface *iface,
@@ -195,6 +197,15 @@ mcp_dbus_acl_iface_set_desc (McpDBusAclIface *iface,
   iface->desc = desc;
 }
 
+/**
+ * mcp_dbus_acl_iface_implement_authorised:
+ * @iface: an instance implementing McpDBusAclIface
+ * @method: the plugin's description
+ *
+ * Implements this plugin's part of the mcp_dbus_acl_authorised() method.
+ *
+ * This is no longer necessary: just use "iface->authorised = method".
+ **/
 void
 mcp_dbus_acl_iface_implement_authorised (McpDBusAclIface *iface,
     DBusAclAuthoriser method)
@@ -202,6 +213,15 @@ mcp_dbus_acl_iface_implement_authorised (McpDBusAclIface *iface,
   iface->authorised = method;
 }
 
+/**
+ * mcp_dbus_acl_iface_implement_authorised_async:
+ * @iface: an instance implementing McpDBusAclIface
+ * @method: the plugin's description
+ *
+ * Implements this plugin's part of the mcp_dbus_acl_authorised_async() method.
+ *
+ * This is no longer necessary: just use "iface->authorised_async = method".
+ **/
 void
 mcp_dbus_acl_iface_implement_authorised_async (McpDBusAclIface *iface,
     DBusAclAsyncAuthoriser method)
@@ -209,6 +229,9 @@ mcp_dbus_acl_iface_implement_authorised_async (McpDBusAclIface *iface,
   iface->authorised_async = method;
 }
 
+/* FIXME: when we break ABI, this should move to src/ under a different name,
+ * and mcp_dbus_acl_authorised() should be a trivial wrapper around
+ * iface->authorised() */
 /**
  * mcp_dbus_acl_authorised:
  * @dbus: a #TpDBusDaemon instance
@@ -245,7 +268,8 @@ mcp_dbus_acl_authorised (const TpDBusDaemon *dbus,
 
       DEBUG (plugin, "checking ACL for %s", name);
 
-      permitted = iface->authorised (plugin, dbus, context, type, name, params);
+      if (iface->authorised != NULL)
+        permitted = iface->authorised (plugin, dbus, context, type, name, params);
 
       if (!permitted)
         break;
@@ -282,31 +306,33 @@ mcp_dbus_acl_authorised_async_step (DBusAclAuthData *ad,
 {
   if (permitted)
     {
-      if (ad->next_acl != NULL && ad->next_acl->data != NULL)
+      while (ad->next_acl != NULL && ad->next_acl->data != NULL)
         {
           McpDBusAcl *plugin = MCP_DBUS_ACL (ad->next_acl->data);
           McpDBusAclIface *iface = MCP_DBUS_ACL_GET_IFACE (plugin);
 
           if (ad->acl != NULL)
-            DEBUG (ad->acl, ":A: passed ACL for %s", ad->name);
+            DEBUG (ad->acl, "passed ACL for %s", ad->name);
 
           /* take the next plugin off the next_acl list */
           ad->next_acl = g_list_next (ad->next_acl);
           ad->acl = plugin;
 
-          /* kick off the next async authoriser in the chain */
-          iface->authorised_async (plugin, ad);
+          if (iface->authorised_async != NULL)
+            {
+              /* kick off the next async authoriser in the chain */
+              iface->authorised_async (plugin, ad);
 
-          /* don't clean up, the next async acl will call us when it's done: */
-          return;
+              /* don't clean up, the next async acl will call us when it's
+               * done: */
+              return;
+            }
         }
-      else /* reached the end of the plugin list: call actual handler */
-        {
-          if (ad->acl != NULL)
-            DEBUG (ad->acl, ":B: passed ACL for %s", ad->name);
 
-          ad->handler (ad->context, ad->data);
-        }
+      if (ad->acl != NULL)
+        DEBUG (ad->acl, "passed final ACL for %s", ad->name);
+
+      ad->handler (ad->context, ad->data);
     }
   else
     {
@@ -324,6 +350,9 @@ mcp_dbus_acl_authorised_async_step (DBusAclAuthData *ad,
   auth_data_free (ad);    /* done with internal bookkeeping */
 }
 
+/* FIXME: when we break ABI, this should move to src/ under a different name,
+ * and mcp_dbus_acl_authorised_async() should be a trivial wrapper around
+ * iface->authorised_async(); it should also use GIO-style asynchronicity */
 /**
  * mcp_dbus_acl_authorised_async:
  * @dbus: a #TpDBusDaemon instance
@@ -374,6 +403,9 @@ mcp_dbus_acl_authorised_async (TpDBusDaemon *dbus,
   ad->handler = handler;
   ad->next_acl = acls;
 
+  DEBUG (NULL, "DBus access ACL verification: %u rules for %s",
+      g_list_length (acls),
+      name);
   mcp_dbus_acl_authorised_async_step (ad, TRUE);
 }
 
@@ -385,6 +417,9 @@ mcp_dbus_acl_name (const McpDBusAcl *self)
 
   g_return_val_if_fail (iface != NULL, FALSE);
 
+  if (iface->name == NULL)
+    return G_OBJECT_TYPE_NAME (self);
+
   return iface->name;
 }
 
@@ -394,6 +429,9 @@ mcp_dbus_acl_description (const McpDBusAcl *self)
   McpDBusAclIface *iface = MCP_DBUS_ACL_GET_IFACE (self);
 
   g_return_val_if_fail (iface != NULL, FALSE);
+
+  if (iface->desc == NULL)
+    return "(no description)";
 
   return iface->desc;
 }

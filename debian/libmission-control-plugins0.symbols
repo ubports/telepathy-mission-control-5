@@ -60,6 +60,8 @@ libmission-control-plugins.so.0 libmission-control-plugins0 #MINVER#
  mcp_dispatch_operation_leave_channels@Base 5.5.0~
  mcp_dispatch_operation_policy_check@Base 5.5.0~
  mcp_dispatch_operation_policy_get_type@Base 5.5.0~
+ mcp_dispatch_operation_policy_handler_is_suitable_async@Base 1:5.7.11
+ mcp_dispatch_operation_policy_handler_is_suitable_finish@Base 1:5.7.11
  mcp_dispatch_operation_policy_iface_implement_check@Base 5.5.0~
  mcp_dispatch_operation_ref_connection@Base 5.5.0~
  mcp_dispatch_operation_ref_nth_channel@Base 5.5.0~

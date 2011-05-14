@@ -47,22 +47,23 @@ host_triplet = @host@
 @ENABLE_GNOME_KEYRING_TRUE@am__append_4 = $(GNOME_KEYRING_LIBS)
 @ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_5 = $(LIBACCOUNTS_SSO_LIBS)
 @ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_6 = $(LIBACCOUNTS_SSO_CFLAGS)
+@ENABLE_AEGIS_TRUE@am__append_7 = $(top_builddir)/plugins/libmcp-aegis.la
 
 # the redundant quoting here is to prevent the libtool command line from
 # looking like an error message in an oddly named file
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_TRUE@am__append_7 = -version-info "10":"0":"4"
-@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_FALSE@am__append_8 = -release $(VERSION)
-@ENABLE_MCD_PLUGINS_TRUE@am__append_9 = \
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_TRUE@am__append_8 = -version-info "10":"0":"4"
+@ENABLE_MCD_PLUGINS_TRUE@@ENABLE_MC_SERVER_SO6_FALSE@am__append_9 = -release $(VERSION)
+@ENABLE_MCD_PLUGINS_TRUE@am__append_10 = \
 @ENABLE_MCD_PLUGINS_TRUE@	-DMCD_DEFAULT_FILTER_PLUGIN_DIR=\"@pluginlibdir@\"
 
 # When this older plugin API is not enabled, libmissioncontrol-server.la is
 # just a copy of the convenience library
-@ENABLE_MCD_PLUGINS_FALSE@am__append_10 = libmissioncontrol-server.la
-@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_11 = \
+@ENABLE_MCD_PLUGINS_FALSE@am__append_11 = libmissioncontrol-server.la
+@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_12 = \
 @ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-account-manager-sso.c \
 @ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
 
-@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_12 = \
+@ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@am__append_13 = \
 @ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	mcd-storage-ag-hidden.c \
 @ENABLE_LIBACCOUNTS_GLIB_HIDDEN_TRUE@@ENABLE_LIBACCOUNTS_SSO_TRUE@	$(NULL)
 
@@ -117,7 +118,7 @@ libmcd_convenience_la_DEPENDENCIES =  \
 	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_2) \
-	$(am__DEPENDENCIES_3)
+	$(am__DEPENDENCIES_3) $(am__append_7)
 am__libmcd_convenience_la_SOURCES_DIST = mcd-account.c \
 	mcd-account-addressing.h mcd-account-compat.c \
 	mcd-account-conditions.c mcd-account-config.h \
@@ -412,7 +413,7 @@ INCLUDES = $(TELEPATHY_CFLAGS) $(DBUS_CFLAGS) $(GLIB_CFLAGS) \
 	-DG_LOG_DOMAIN=\"mcd\" \
 	-DMCD_PLUGIN_LOADER_DIR=\"@libdir@/mission-control-plugins.@MCP_ABI_VERSION@\" \
 	-DMC_DISABLE_DEPRECATED -I$(top_srcdir) $(am__append_1) \
-	$(am__append_6) $(am__append_9)
+	$(am__append_6) $(am__append_10)
 AM_CFLAGS = $(ERROR_CFLAGS)
 mc_headers = mcd-account.h mcd-account-compat.h \
 	mcd-account-conditions.h mcd-account-manager.h \
@@ -477,8 +478,8 @@ libmcd_convenience_la_LIBADD =  \
 	$(top_builddir)/libmcclient/libmcclient.la \
 	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
 	$(TELEPATHY_LIBS) $(DBUS_LIBS) $(GLIB_LIBS) $(am__append_4) \
-	$(am__append_5)
-noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_10)
+	$(am__append_5) $(am__append_7)
+noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_11)
 
 # When this older plugin API is enabled, libmissioncontrol-server.la is a
 # shared library that wraps the convenience library
@@ -490,7 +491,7 @@ noinst_LTLIBRARIES = libmcd-convenience.la $(am__append_10)
 @ENABLE_MCD_PLUGINS_TRUE@libmissioncontrol_server_la_LDFLAGS =  \
 @ENABLE_MCD_PLUGINS_TRUE@	-export-symbols-regex \
 @ENABLE_MCD_PLUGINS_TRUE@	'^((mc_)|(mcd_)|(mission_control_))' \
-@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_7) $(am__append_8)
+@ENABLE_MCD_PLUGINS_TRUE@	$(am__append_8) $(am__append_9)
 @ENABLE_MCD_PLUGINS_TRUE@mission_control_includedir = $(includedir)/mission-control
 @ENABLE_MCD_PLUGINS_TRUE@mission_control_include_HEADERS = $(mc_headers)
 @ENABLE_MCD_PLUGINS_TRUE@genincludedir = $(mission_control_includedir)/_gen
@@ -518,7 +519,7 @@ libmcd_convenience_la_SOURCES = mcd-account.c mcd-account-addressing.h \
 	plugin-dispatch-operation.h plugin-loader.c plugin-loader.h \
 	plugin-request.c plugin-request.h plugin-account.c \
 	plugin-account.h request.c request.h sp_timestamp.h \
-	$(mc_headers) $(am__append_11) $(am__append_12)
+	$(mc_headers) $(am__append_12) $(am__append_13)
 EXTRA_DIST = \
 	mcd.xml \
 	client.xml \
