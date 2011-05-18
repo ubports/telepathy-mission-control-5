@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdManager.html" title="McdManager">
 <link rel="next" href="McdProxy.html" title="McdProxy">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -32,7 +32,7 @@
                   <a href="#McdMission.signals" class="shortcut">Signals</a>
 </td></tr>
 </table>
-<div class="refentry" title="McdMission">
+<div class="refentry">
 <a name="McdMission"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -41,16 +41,16 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="McdMission.stability-level"></a><h2>Stability Level</h2>
 Unstable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="McdMission.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;mcd-mission.h&gt;
 
-                    <a class="link" href="McdMission.html#McdMission-struct" title="McdMission">McdMission</a>;
+struct              <a class="link" href="McdMission.html#McdMission-struct" title="struct McdMission">McdMission</a>;
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McdMission.html#mcd-mission-is-connected" title="mcd_mission_is_connected ()">mcd_mission_is_connected</a>            (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);
 <a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *        <a class="link" href="McdMission.html#mcd-mission-get-parent" title="mcd_mission_get_parent ()">mcd_mission_get_parent</a>              (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdMission.html#mcd-mission-abort" title="mcd_mission_abort ()">mcd_mission_abort</a>                   (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);
@@ -58,7 +58,7 @@ Unstable, unless otherwise indicated
 <span class="returnvalue">void</span>                <a class="link" href="McdMission.html#mcd-mission-disconnect" title="mcd_mission_disconnect ()">mcd_mission_disconnect</a>              (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Object Hierarchy">
+<div class="refsect1">
 <a name="McdMission.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
@@ -68,22 +68,22 @@ Unstable, unless otherwise indicated
          +----<a class="link" href="McdDispatcher.html" title="McdDispatcher">McdDispatcher</a>
 </pre>
 </div>
-<div class="refsect1" title="Properties">
+<div class="refsect1">
 <a name="McdMission.properties"></a><h2>Properties</h2>
 <pre class="synopsis">
   "<a class="link" href="McdMission.html#McdMission--parent" title='The "parent" property'>parent</a>"                   <a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a>*           : Read / Write
 </pre>
 </div>
-<div class="refsect1" title="Signals">
+<div class="refsect1">
 <a name="McdMission.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="McdMission.html#McdMission-abort" title='The "abort" signal'>abort</a>"                                          : Run First
-  "<a class="link" href="McdMission.html#McdMission-connected" title='The "connected" signal'>connected</a>"                                      : Run First
-  "<a class="link" href="McdMission.html#McdMission-disconnected" title='The "disconnected" signal'>disconnected</a>"                                   : Run First
-  "<a class="link" href="McdMission.html#McdMission-parent-set" title='The "parent-set" signal'>parent-set</a>"                                     : Run First
+  "<a class="link" href="McdMission.html#McdMission-abort" title='The "abort" signal'>abort</a>"                                          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="McdMission.html#McdMission-connected" title='The "connected" signal'>connected</a>"                                      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="McdMission.html#McdMission-disconnected" title='The "disconnected" signal'>disconnected</a>"                                   : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="McdMission.html#McdMission-parent-set" title='The "parent-set" signal'>parent-set</a>"                                     : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="McdMission.description"></a><h2>Description</h2>
 <p>
 It is the base class for every object in mission-control. It defines
@@ -106,118 +106,64 @@ Concrete derived classes should override the sate  methods to implement
 object specific state managements.
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="McdMission.details"></a><h2>Details</h2>
-<div class="refsect2" title="McdMission">
-<a name="McdMission-struct"></a><h3>McdMission</h3>
-<pre class="programlisting">typedef struct _McdMission McdMission;</pre>
+<div class="refsect2">
+<a name="McdMission-struct"></a><h3>struct McdMission</h3>
+<pre class="programlisting">struct McdMission;</pre>
 <p>
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mcd_mission_is_connected ()">
+<div class="refsect2">
 <a name="mcd-mission-is-connected"></a><h3>mcd_mission_is_connected ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcd_mission_is_connected            (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_mission_get_parent ()">
+<div class="refsect2">
 <a name="mcd-mission-get-parent"></a><h3>mcd_mission_get_parent ()</h3>
 <pre class="programlisting"><a class="link" href="McdMission.html" title="McdMission"><span class="returnvalue">McdMission</span></a> *        mcd_mission_get_parent              (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_mission_abort ()">
+<div class="refsect2">
 <a name="mcd-mission-abort"></a><h3>mcd_mission_abort ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_mission_abort                   (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_mission_connect ()">
+<div class="refsect2">
 <a name="mcd-mission-connect"></a><h3>mcd_mission_connect ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_mission_connect                 (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_mission_disconnect ()">
+<div class="refsect2">
 <a name="mcd-mission-disconnect"></a><h3>mcd_mission_disconnect ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_mission_disconnect              (<em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 </div>
-<div class="refsect1" title="Property Details">
+<div class="refsect1">
 <a name="McdMission.property-details"></a><h2>Property Details</h2>
-<div class="refsect2" title='The "parent" property'>
+<div class="refsect2">
 <a name="McdMission--parent"></a><h3>The <code class="literal">"parent"</code> property</h3>
 <pre class="programlisting">  "parent"                   <a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a>*           : Read / Write</pre>
 <p>Parent mission.</p>
 </div>
 </div>
-<div class="refsect1" title="Signal Details">
+<div class="refsect1">
 <a name="McdMission.signal-details"></a><h2>Signal Details</h2>
-<div class="refsect2" title='The "abort" signal'>
+<div class="refsect2">
 <a name="McdMission-abort"></a><h3>The <code class="literal">"abort"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mcdmission,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -225,8 +171,7 @@ object specific state managements.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -236,10 +181,10 @@ object specific state managements.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "connected" signal'>
+<div class="refsect2">
 <a name="McdMission-connected"></a><h3>The <code class="literal">"connected"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mcdmission,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -247,8 +192,7 @@ object specific state managements.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -258,10 +202,10 @@ object specific state managements.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "disconnected" signal'>
+<div class="refsect2">
 <a name="McdMission-disconnected"></a><h3>The <code class="literal">"disconnected"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mcdmission,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -269,8 +213,7 @@ object specific state managements.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -280,10 +223,10 @@ object specific state managements.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "parent-set" signal'>
+<div class="refsect2">
 <a name="McdMission-parent-set"></a><h3>The <code class="literal">"parent-set"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mcdmission,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)       : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -291,8 +234,7 @@ object specific state managements.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdmission</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -305,6 +247,6 @@ object specific state managements.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

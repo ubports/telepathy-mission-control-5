@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (1:5.9.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control: Update glib and tp-glib build-dep versions for new
+    release.
+
+ -- Jonny Lamb <jonny@debian.org>  Wed, 18 May 2011 14:05:17 +0100
+
 telepathy-mission-control-5 (1:5.7.11-1) unstable; urgency=low
 
   * New upstream release

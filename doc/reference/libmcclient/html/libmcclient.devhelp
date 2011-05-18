@@ -18,6 +18,8 @@
     <function name="mc_account_manager_new ()" link="McAccountManager.html#mc-account-manager-new"/>
     <function name="McAccountManagerWhenReadyCb ()" link="McAccountManager.html#McAccountManagerWhenReadyCb"/>
     <function name="mc_account_manager_call_when_ready ()" link="McAccountManager.html#mc-account-manager-call-when-ready"/>
+    <function name="mc_account_manager_get_valid_accounts ()" link="McAccountManager.html#mc-account-manager-get-valid-accounts"/>
+    <function name="mc_account_manager_get_invalid_accounts ()" link="McAccountManager.html#mc-account-manager-get-invalid-accounts"/>
     <function name="McAccountManagerWhenReadyObjectCb ()" link="McAccountManager.html#McAccountManagerWhenReadyObjectCb"/>
     <function name="mc_account_manager_call_when_iface_ready ()" link="McAccountManager.html#mc-account-manager-call-when-iface-ready"/>
     <function name="mc_account_manager_call_when_ready_with_accounts ()" link="McAccountManager.html#mc-account-manager-call-when-ready-with-accounts"/>
@@ -34,7 +36,7 @@
     <function name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="McAccountManager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
     <function name="The &quot;account-created&quot; signal" link="McAccountManager.html#McAccountManager-account-created"/>
     <function name="The &quot;account-ready&quot; signal" link="McAccountManager.html#McAccountManager-account-ready"/>
-    <function name="McAccount" link="McAccount.html#McAccount-struct"/>
+    <function name="struct McAccount" link="McAccount.html#McAccount-struct"/>
     <function name="McAccountClass" link="McAccount.html#McAccountClass"/>
     <function name="mc_account_new ()" link="McAccount.html#mc-account-new"/>
     <function name="McAccountWhenReadyCb ()" link="McAccount.html#McAccountWhenReadyCb"/>
@@ -133,6 +135,7 @@
     <function name="mc_profile_get_capabilities ()" link="libmcclient-mc-profile.html#mc-profile-get-capabilities"/>
     <function name="mc_profile_get_default_setting ()" link="libmcclient-mc-profile.html#mc-profile-get-default-setting"/>
     <function name="mc_profile_get_vcard_mangle ()" link="libmcclient-mc-profile.html#mc-profile-get-vcard-mangle"/>
+    <function name="mc_profile_presences_list ()" link="libmcclient-mc-profile.html#mc-profile-presences-list"/>
     <function name="mc_profile_presence_get_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-name"/>
     <function name="mc_profile_presence_get_type ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-type"/>
     <function name="mc_profile_presence_get_icon_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name"/>

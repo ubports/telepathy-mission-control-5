@@ -9,6 +9,8 @@
 <ANCHOR id="mc-account-manager-new" href="libmcclient/McAccountManager.html#mc-account-manager-new">
 <ANCHOR id="McAccountManagerWhenReadyCb" href="libmcclient/McAccountManager.html#McAccountManagerWhenReadyCb">
 <ANCHOR id="mc-account-manager-call-when-ready" href="libmcclient/McAccountManager.html#mc-account-manager-call-when-ready">
+<ANCHOR id="mc-account-manager-get-valid-accounts" href="libmcclient/McAccountManager.html#mc-account-manager-get-valid-accounts">
+<ANCHOR id="mc-account-manager-get-invalid-accounts" href="libmcclient/McAccountManager.html#mc-account-manager-get-invalid-accounts">
 <ANCHOR id="McAccountManagerWhenReadyObjectCb" href="libmcclient/McAccountManager.html#McAccountManagerWhenReadyObjectCb">
 <ANCHOR id="mc-account-manager-call-when-iface-ready" href="libmcclient/McAccountManager.html#mc-account-manager-call-when-iface-ready">
 <ANCHOR id="mc-account-manager-call-when-ready-with-accounts" href="libmcclient/McAccountManager.html#mc-account-manager-call-when-ready-with-accounts">
@@ -139,6 +141,7 @@
 <ANCHOR id="mc-profile-get-capabilities" href="libmcclient/libmcclient-mc-profile.html#mc-profile-get-capabilities">
 <ANCHOR id="mc-profile-get-default-setting" href="libmcclient/libmcclient-mc-profile.html#mc-profile-get-default-setting">
 <ANCHOR id="mc-profile-get-vcard-mangle" href="libmcclient/libmcclient-mc-profile.html#mc-profile-get-vcard-mangle">
+<ANCHOR id="mc-profile-presences-list" href="libmcclient/libmcclient-mc-profile.html#mc-profile-presences-list">
 <ANCHOR id="mc-profile-presence-get-name" href="libmcclient/libmcclient-mc-profile.html#mc-profile-presence-get-name">
 <ANCHOR id="mc-profile-presence-get-type" href="libmcclient/libmcclient-mc-profile.html#mc-profile-presence-get-type">
 <ANCHOR id="mc-profile-presence-get-icon-name" href="libmcclient/libmcclient-mc-profile.html#mc-profile-presence-get-icon-name">

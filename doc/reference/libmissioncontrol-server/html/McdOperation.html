@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdConnection.html" title="McdConnection">
 <link rel="next" href="McdService.html" title="McdService">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -30,7 +30,7 @@
                   <a href="#McdOperation.signals" class="shortcut">Signals</a>
 </td></tr>
 </table>
-<div class="refentry" title="McdOperation">
+<div class="refentry">
 <a name="McdOperation"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -39,16 +39,16 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="McdOperation.stability-level"></a><h2>Stability Level</h2>
 Unstable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="McdOperation.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;mcd-operation.h&gt;
 
-                    <a class="link" href="McdOperation.html#McdOperation-struct" title="McdOperation">McdOperation</a>;
+struct              <a class="link" href="McdOperation.html#McdOperation-struct" title="struct McdOperation">McdOperation</a>;
 <a class="link" href="McdOperation.html" title="McdOperation"><span class="returnvalue">McdOperation</span></a> *      <a class="link" href="McdOperation.html#mcd-operation-new" title="mcd_operation_new ()">mcd_operation_new</a>                   (<em class="parameter"><code><span class="type">void</span></code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdOperation.html#mcd-operation-take-mission" title="mcd_operation_take_mission ()">mcd_operation_take_mission</a>          (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);
@@ -60,7 +60,7 @@ Unstable, unless otherwise indicated
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       <a class="link" href="McdOperation.html#mcd-operation-get-missions" title="mcd_operation_get_missions ()">mcd_operation_get_missions</a>          (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Object Hierarchy">
+<div class="refsect1">
 <a name="McdOperation.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
@@ -72,14 +72,14 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
                +----<a class="link" href="McdProxy.html" title="McdProxy">McdProxy</a>
 </pre>
 </div>
-<div class="refsect1" title="Signals">
+<div class="refsect1">
 <a name="McdOperation.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="McdOperation.html#McdOperation-mission-removed" title='The "mission-removed" signal'>mission-removed</a>"                                : Run First
-  "<a class="link" href="McdOperation.html#McdOperation-mission-taken" title='The "mission-taken" signal'>mission-taken</a>"                                  : Run First
+  "<a class="link" href="McdOperation.html#McdOperation-mission-removed" title='The "mission-removed" signal'>mission-removed</a>"                                : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
+  "<a class="link" href="McdOperation.html#McdOperation-mission-taken" title='The "mission-taken" signal'>mission-taken</a>"                                  : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a>
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="McdOperation.description"></a><h2>Description</h2>
 <p>
 This is a simple container class that can hold a list of mission objects
@@ -89,134 +89,61 @@ also managed by this class and parent-child relationship is correctly
 established.
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="McdOperation.details"></a><h2>Details</h2>
-<div class="refsect2" title="McdOperation">
-<a name="McdOperation-struct"></a><h3>McdOperation</h3>
-<pre class="programlisting">typedef struct _McdOperation McdOperation;</pre>
+<div class="refsect2">
+<a name="McdOperation-struct"></a><h3>struct McdOperation</h3>
+<pre class="programlisting">struct McdOperation;</pre>
 <p>
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mcd_operation_new ()">
+<div class="refsect2">
 <a name="mcd-operation-new"></a><h3>mcd_operation_new ()</h3>
 <pre class="programlisting"><a class="link" href="McdOperation.html" title="McdOperation"><span class="returnvalue">McdOperation</span></a> *      mcd_operation_new                   (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_operation_take_mission ()">
+<div class="refsect2">
 <a name="mcd-operation-take-mission"></a><h3>mcd_operation_take_mission ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_operation_take_mission          (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>operation</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_operation_remove_mission ()">
+<div class="refsect2">
 <a name="mcd-operation-remove-mission"></a><h3>mcd_operation_remove_mission ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_operation_remove_mission        (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McdMission.html" title="McdMission"><span class="type">McdMission</span></a> *mission</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>operation</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mission</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_operation_foreach ()">
+<div class="refsect2">
 <a name="mcd-operation-foreach"></a><h3>mcd_operation_foreach ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_operation_foreach               (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GFunc"><span class="type">GFunc</span></a> func</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>operation</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>func</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_operation_get_missions ()">
+<div class="refsect2">
 <a name="mcd-operation-get-missions"></a><h3>mcd_operation_get_missions ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       mcd_operation_get_missions          (<em class="parameter"><code><a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *operation</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>operation</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 </div>
-<div class="refsect1" title="Signal Details">
+<div class="refsect1">
 <a name="McdOperation.signal-details"></a><h2>Signal Details</h2>
-<div class="refsect2" title='The "mission-removed" signal'>
+<div class="refsect2">
 <a name="McdOperation-mission-removed"></a><h3>The <code class="literal">"mission-removed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *mcdoperation,
                                                         <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>      *arg1,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)         : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -224,13 +151,7 @@ established.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdoperation</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -240,11 +161,11 @@ established.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "mission-taken" signal'>
+<div class="refsect2">
 <a name="McdOperation-mission-taken"></a><h3>The <code class="literal">"mission-taken"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McdOperation.html" title="McdOperation"><span class="type">McdOperation</span></a> *mcdoperation,
                                                         <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>      *arg1,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)         : Run First</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>      user_data)         : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-FIRST:CAPS"><code class="literal">Run First</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -252,13 +173,7 @@ established.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcdoperation</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -271,6 +186,6 @@ established.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

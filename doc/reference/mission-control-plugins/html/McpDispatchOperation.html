@@ -6,15 +6,15 @@
 <meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch04.html" title="Channel dispatch operations">
-<link rel="prev" href="McpDispatchOperationPolicy.html" title="McpDispatchOperationPolicy">
+<link rel="prev" href="mission-control-plugins-McpDispatchOperationPolicy.html" title="McpDispatchOperationPolicy">
 <link rel="next" href="object-tree.html" title="Object Hierarchy">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
 <table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
 <tr valign="middle">
-<td><a accesskey="p" href="McpDispatchOperationPolicy.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="p" href="mission-control-plugins-McpDispatchOperationPolicy.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
 <td><a accesskey="u" href="ch04.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
 <td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
 <th width="100%" align="center">Mission Control Plugins Reference Manual</th>
@@ -30,7 +30,7 @@
                   <a href="#McpDispatchOperation.prerequisites" class="shortcut">Prerequisites</a>
 </td></tr>
 </table>
-<div class="refentry" title="McpDispatchOperation">
+<div class="refentry">
 <a name="McpDispatchOperation"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -39,14 +39,11 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="McpDispatchOperation.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;mission-control-plugins/mission-control-plugins.h&gt;
 
-                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperation-struct" title="McpDispatchOperation">McpDispatchOperation</a>;
-                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperationIface" title="McpDispatchOperationIface">McpDispatchOperationIface</a>;
-                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperationDelay" title="McpDispatchOperationDelay">McpDispatchOperationDelay</a>;
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-find-channel-by-type" title="mcp_dispatch_operation_find_channel_by_type ()">mcp_dispatch_operation_find_channel_by_type</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
@@ -90,22 +87,25 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
 <span class="returnvalue">void</span>                <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels" title="mcp_dispatch_operation_destroy_channels ()">mcp_dispatch_operation_destroy_channels</a>
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> wait_for_observers</code></em>);
+                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperationDelay" title="McpDispatchOperationDelay">McpDispatchOperationDelay</a>;
+                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperationIface" title="McpDispatchOperationIface">McpDispatchOperationIface</a>;
+                    <a class="link" href="McpDispatchOperation.html#McpDispatchOperation-struct" title="McpDispatchOperation">McpDispatchOperation</a>;
 </pre>
 </div>
-<div class="refsect1" title="Object Hierarchy">
+<div class="refsect1">
 <a name="McpDispatchOperation.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   GInterface
    +----McpDispatchOperation
 </pre>
 </div>
-<div class="refsect1" title="Prerequisites">
+<div class="refsect1">
 <a name="McpDispatchOperation.prerequisites"></a><h2>Prerequisites</h2>
 <p>
 McpDispatchOperation requires
  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>.</p>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="McpDispatchOperation.description"></a><h2>Description</h2>
 <p>
 This object represents a Telepathy ChannelDispatchOperation object, as used
@@ -122,30 +122,9 @@ plugin is ready to continue, or close the channels in various ways.
 Only Mission Control should implement this interface.
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="McpDispatchOperation.details"></a><h2>Details</h2>
-<div class="refsect2" title="McpDispatchOperation">
-<a name="McpDispatchOperation-struct"></a><h3>McpDispatchOperation</h3>
-<pre class="programlisting">typedef struct _McpDispatchOperation McpDispatchOperation;</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2" title="McpDispatchOperationIface">
-<a name="McpDispatchOperationIface"></a><h3>McpDispatchOperationIface</h3>
-<pre class="programlisting">typedef struct _McpDispatchOperationIface McpDispatchOperationIface;</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2" title="McpDispatchOperationDelay">
-<a name="McpDispatchOperationDelay"></a><h3>McpDispatchOperationDelay</h3>
-<pre class="programlisting">typedef struct _McpDispatchOperationDelay McpDispatchOperationDelay;</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2" title="mcp_dispatch_operation_find_channel_by_type ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-find-channel-by-type"></a><h3>mcp_dispatch_operation_find_channel_by_type ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_dispatch_operation_find_channel_by_type
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -166,64 +145,59 @@ channels of interest to a particular plugin.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>start_from</code></em> :</span></p></td>
-<td>index at which to start searching, usually 0
-</td>
+<td>index at which to start searching, usually 0</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>handle_type</code></em> :</span></p></td>
-<td>the handle type to match
-</td>
+<td>the handle type to match</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>channel_type</code></em> :</span></p></td>
-<td>the channel type to match
-</td>
+<td>the channel type to match</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ret_index</code></em> :</span></p></td>
 <td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return the index of the first matching
- channel, suitable for use with
- <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-get-nth-channel-path" title="mcp_dispatch_operation_get_nth_channel_path ()"><code class="function">mcp_dispatch_operation_get_nth_channel_path()</code></a> etc.
-</td>
+channel, suitable for use with
+<a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-get-nth-channel-path" title="mcp_dispatch_operation_get_nth_channel_path ()"><code class="function">mcp_dispatch_operation_get_nth_channel_path()</code></a> etc.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ret_dup_path</code></em> :</span></p></td>
 <td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return the object path of the first
- matching channel, which must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>
+matching channel, which must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ret_ref_immutable_properties</code></em> :</span></p></td>
 <td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return a reference to
- immutable properties, as if via
- <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel-properties" title="mcp_dispatch_operation_ref_nth_channel_properties ()"><code class="function">mcp_dispatch_operation_ref_nth_channel_properties()</code></a>, which must be
- released with <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#g-hash-table-unref"><code class="function">g_hash_table_unref()</code></a>
+immutable properties, as if via
+<a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel-properties" title="mcp_dispatch_operation_ref_nth_channel_properties ()"><code class="function">mcp_dispatch_operation_ref_nth_channel_properties()</code></a>, which must be
+released with <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#g-hash-table-unref"><code class="function">g_hash_table_unref()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>ret_ref_channel</code></em> :</span></p></td>
 <td>if not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to return a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which is not
- guaranteed to be ready immediately, and must be released with
- <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>
+guaranteed to be ready immediately, and must be released with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a matching channel was found, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> (without touching
- <em class="parameter"><code>ret_index</code></em>, <em class="parameter"><code>ret_dup_path</code></em>, <em class="parameter"><code>ret_ref_immutable_properties</code></em> or
- <em class="parameter"><code>ret_ref_channel</code></em>) if not
-</td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a matching channel was found, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> (without touching
+<em class="parameter"><code>ret_index</code></em>, <em class="parameter"><code>ret_dup_path</code></em>, <em class="parameter"><code>ret_ref_immutable_properties</code></em> or
+<em class="parameter"><code>ret_ref_channel</code></em>) if not</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_ref_connection ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-ref-connection"></a><h3>mcp_dispatch_operation_ref_connection ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      mcp_dispatch_operation_ref_connection
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
@@ -236,20 +210,18 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a>, which must be released with
- <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller
-</td>
+<td>a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="type">TpConnection</span></a>, which must be released with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_ref_nth_channel ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-ref-nth-channel"></a><h3>mcp_dispatch_operation_ref_nth_channel ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         mcp_dispatch_operation_ref_nth_channel
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -263,25 +235,22 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
-<td>index of the channel to inspect
-</td>
+<td>index of the channel to inspect</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which must be released with
- <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is too large
-</td>
+<td>a reference to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="type">TpChannel</span></a>, which must be released with
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> by the caller, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is too large</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_account_path ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-account-path"></a><h3>mcp_dispatch_operation_get_account_path ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_dispatch_operation_get_account_path
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
@@ -293,21 +262,19 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the D-Bus object path of the Account with which the channels are
- associated. The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is
- only valid as long as a reference to <em class="parameter"><code>self</code></em> is held.
-</td>
+<td>the D-Bus object path of the Account with which the channels are
+associated. The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is
+only valid as long as a reference to <em class="parameter"><code>self</code></em> is held.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_connection_path ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-connection-path"></a><h3>mcp_dispatch_operation_get_connection_path ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_dispatch_operation_get_connection_path
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
@@ -319,21 +286,19 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the D-Bus object path of the Connection with which the channels are
- associated. The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is
- only valid as long as a reference to <em class="parameter"><code>self</code></em> is held.
-</td>
+<td>the D-Bus object path of the Connection with which the channels are
+associated. The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is
+only valid as long as a reference to <em class="parameter"><code>self</code></em> is held.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_protocol ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-protocol"></a><h3>mcp_dispatch_operation_get_protocol ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_dispatch_operation_get_protocol (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
 <p>
@@ -344,22 +309,20 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the Telepathy identifier for the protocol, such as 'jabber' or
- 'icq' (the Protocol type in telepathy-spec). The string is owned by <em class="parameter"><code>self</code></em>
- and must not be freed; it is only valid as long as a reference to <em class="parameter"><code>self</code></em>
- is held.
-</td>
+<td>the Telepathy identifier for the protocol, such as 'jabber' or
+'icq' (the Protocol type in telepathy-spec). The string is owned by <em class="parameter"><code>self</code></em>
+and must not be freed; it is only valid as long as a reference to <em class="parameter"><code>self</code></em>
+is held.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_cm_name ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-cm-name"></a><h3>mcp_dispatch_operation_get_cm_name ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_dispatch_operation_get_cm_name  (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
 <p>
@@ -370,22 +333,20 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the short name of the Telepathy connection manager, such as
- 'gabble' or 'haze' (the Connection_Manager_Name type in telepathy-spec).
- The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is only valid as
- long as a reference to <em class="parameter"><code>self</code></em> is held.
-</td>
+<td>the short name of the Telepathy connection manager, such as
+'gabble' or 'haze' (the Connection_Manager_Name type in telepathy-spec).
+The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is only valid as
+long as a reference to <em class="parameter"><code>self</code></em> is held.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_n_channels ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-n-channels"></a><h3>mcp_dispatch_operation_get_n_channels ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mcp_dispatch_operation_get_n_channels
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
@@ -397,19 +358,17 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the number of channels in this dispatch operation.
-</td>
+<td>the number of channels in this dispatch operation.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_get_nth_channel_path ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-get-nth-channel-path"></a><h3>mcp_dispatch_operation_get_nth_channel_path ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_dispatch_operation_get_nth_channel_path
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -422,28 +381,25 @@ use <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
-<td>index of the channel to inspect
-</td>
+<td>index of the channel to inspect</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the D-Bus object path of the <em class="parameter"><code>n</code></em>'th channel (starting from 0), or
- <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is greater than or equal to
- <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-get-n-channels" title="mcp_dispatch_operation_get_n_channels ()"><code class="function">mcp_dispatch_operation_get_n_channels()</code></a>.
- The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is only valid as
- long as a reference to <em class="parameter"><code>self</code></em> is held.
-</td>
+<td>the D-Bus object path of the <em class="parameter"><code>n</code></em>'th channel (starting from 0), or
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is greater than or equal to
+<a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-get-n-channels" title="mcp_dispatch_operation_get_n_channels ()"><code class="function">mcp_dispatch_operation_get_n_channels()</code></a>.
+The string is owned by <em class="parameter"><code>self</code></em> and must not be freed; it is only valid as
+long as a reference to <em class="parameter"><code>self</code></em> is held.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_ref_nth_channel_properties ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-ref-nth-channel-properties"></a><h3>mcp_dispatch_operation_ref_nth_channel_properties ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mcp_dispatch_operation_ref_nth_channel_properties
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -463,25 +419,22 @@ etc. Do not add or remove entries in this hash table.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
-<td>index of the channel to inspect
-</td>
+<td>index of the channel to inspect</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a reference to a hash table, which must be released with
- <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#g-hash-table-unref"><code class="function">g_hash_table_unref()</code></a> by the caller
-</td>
+<td>a reference to a hash table, which must be released with
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#g-hash-table-unref"><code class="function">g_hash_table_unref()</code></a> by the caller</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_start_delay ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-start-delay"></a><h3>mcp_dispatch_operation_start_delay ()</h3>
 <pre class="programlisting"><a class="link" href="McpDispatchOperation.html#McpDispatchOperationDelay" title="McpDispatchOperationDelay"><span class="returnvalue">McpDispatchOperationDelay</span></a> * mcp_dispatch_operation_start_delay
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>);</pre>
@@ -501,19 +454,17 @@ can delay the dispatch operation indefinitely.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a token which can be used to end the delay
-</td>
+<td>a token which can be used to end the delay</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_end_delay ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-end-delay"></a><h3>mcp_dispatch_operation_end_delay ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_end_delay    (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpDispatchOperation.html#McpDispatchOperationDelay" title="McpDispatchOperationDelay"><span class="type">McpDispatchOperationDelay</span></a> *delay</code></em>);</pre>
@@ -525,20 +476,18 @@ Stop delaying the dispatch operation, allowing dispatching to proceed.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>delay</code></em> :</span></p></td>
 <td>a token obtained by calling <a class="link" href="McpDispatchOperation.html#mcp-dispatch-operation-start-delay" title="mcp_dispatch_operation_start_delay ()"><code class="function">mcp_dispatch_operation_start_delay()</code></a>
- on <em class="parameter"><code>self</code></em> previously
-</td>
+on <em class="parameter"><code>self</code></em> previously</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_leave_channels ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-leave-channels"></a><h3>mcp_dispatch_operation_leave_channels ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_leave_channels
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -554,31 +503,27 @@ channel has the Group interface, or Close if not.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>wait_for_observers</code></em> :</span></p></td>
 <td>if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>, leave the channels immediately; if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
- (usually recommended), wait for Observers to reply first
-</td>
+(usually recommended), wait for Observers to reply first</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reason</code></em> :</span></p></td>
-<td>the reason code to give
-</td>
+<td>the reason code to give</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
 <td>a human-readable message provided by the user, or either the
- empty string or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if no message has been provided
-</td>
+empty string or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if no message has been provided</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_close_channels ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-close-channels"></a><h3>mcp_dispatch_operation_close_channels ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_close_channels
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -591,20 +536,18 @@ Close all channels in this bundle by using the Close D-Bus method.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>wait_for_observers</code></em> :</span></p></td>
 <td>if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>, close the channels immediately; if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
- (usually recommended), wait for Observers to reply first
-</td>
+(usually recommended), wait for Observers to reply first</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcp_dispatch_operation_destroy_channels ()">
+<div class="refsect2">
 <a name="mcp-dispatch-operation-destroy-channels"></a><h3>mcp_dispatch_operation_destroy_channels ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_destroy_channels
                                                         (<em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *self</code></em>,
@@ -618,26 +561,45 @@ method if implemented, or the Close D-Bus method if not.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
-<td>a dispatch operation
-</td>
+<td>a dispatch operation</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>wait_for_observers</code></em> :</span></p></td>
 <td>if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>, close the channels immediately; if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
- (usually recommended), wait for Observers to reply first
-</td>
+(usually recommended), wait for Observers to reply first</td>
 </tr>
 </tbody>
 </table></div>
 </div>
+<hr>
+<div class="refsect2">
+<a name="McpDispatchOperationDelay"></a><h3>McpDispatchOperationDelay</h3>
+<pre class="programlisting">typedef struct _McpDispatchOperationDelay McpDispatchOperationDelay;</pre>
+<p>
+</p>
 </div>
-<div class="refsect1" title="See Also">
+<hr>
+<div class="refsect2">
+<a name="McpDispatchOperationIface"></a><h3>McpDispatchOperationIface</h3>
+<pre class="programlisting">typedef struct _McpDispatchOperationIface McpDispatchOperationIface;</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="McpDispatchOperation-struct"></a><h3>McpDispatchOperation</h3>
+<pre class="programlisting">typedef struct _McpDispatchOperation McpDispatchOperation;</pre>
+<p>
+</p>
+</div>
+</div>
+<div class="refsect1">
 <a name="McpDispatchOperation.see-also"></a><h2>See Also</h2>
-<a class="link" href="McpDispatchOperationPolicy.html" title="McpDispatchOperationPolicy"><span class="type">McpDispatchOperationPolicy</span></a>
+<span class="type">McpDispatchOperationPolicy</span>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

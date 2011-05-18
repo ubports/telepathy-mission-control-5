@@ -19,12 +19,12 @@
     </sub>
   </chapters>
   <functions>
-    <function name="McdMaster" link="McdMaster.html#McdMaster-struct"/>
+    <function name="struct McdMaster" link="McdMaster.html#McdMaster-struct"/>
     <function name="The &quot;account-manager&quot; property" link="McdMaster.html#McdMaster--account-manager"/>
     <function name="The &quot;dbus-connection&quot; property" link="McdMaster.html#McdMaster--dbus-connection"/>
     <function name="The &quot;dbus-daemon&quot; property" link="McdMaster.html#McdMaster--dbus-daemon"/>
     <function name="The &quot;dispatcher&quot; property" link="McdMaster.html#McdMaster--dispatcher"/>
-    <function name="McdConnection" link="McdConnection.html#McdConnection-struct"/>
+    <function name="struct McdConnection" link="McdConnection.html#McdConnection-struct"/>
     <function name="mcd_connection_get_account ()" link="McdConnection.html#mcd-connection-get-account"/>
     <function name="mcd_connection_request_channel ()" link="McdConnection.html#mcd-connection-request-channel"/>
     <function name="mcd_connection_cancel_channel_request ()" link="McdConnection.html#mcd-connection-cancel-channel-request"/>
@@ -39,7 +39,7 @@
     <function name="The &quot;ready&quot; signal" link="McdConnection.html#McdConnection-ready"/>
     <function name="The &quot;self-nickname-changed&quot; signal" link="McdConnection.html#McdConnection-self-nickname-changed"/>
     <function name="The &quot;self-presence-changed&quot; signal" link="McdConnection.html#McdConnection-self-presence-changed"/>
-    <function name="McdOperation" link="McdOperation.html#McdOperation-struct"/>
+    <function name="struct McdOperation" link="McdOperation.html#McdOperation-struct"/>
     <function name="mcd_operation_new ()" link="McdOperation.html#mcd-operation-new"/>
     <function name="mcd_operation_take_mission ()" link="McdOperation.html#mcd-operation-take-mission"/>
     <function name="mcd_operation_remove_mission ()" link="McdOperation.html#mcd-operation-remove-mission"/>
@@ -50,7 +50,7 @@
     <function name="McdService" link="McdService.html#McdService-struct"/>
     <function name="mcd_service_new ()" link="McdService.html#mcd-service-new"/>
     <function name="mcd_service_run ()" link="McdService.html#mcd-service-run"/>
-    <function name="McdChannel" link="McdChannel.html#McdChannel-struct"/>
+    <function name="struct McdChannel" link="McdChannel.html#McdChannel-struct"/>
     <function name="enum McdChannelStatus" link="McdChannel.html#McdChannelStatus"/>
     <function name="mcd_channel_get_status ()" link="McdChannel.html#mcd-channel-get-status"/>
     <function name="mcd_channel_get_members_accepted ()" link="McdChannel.html#mcd-channel-get-members-accepted"/>
@@ -72,14 +72,14 @@
     <function name="The &quot;user-action-time&quot; property" link="McdChannel.html#McdChannel--user-action-time"/>
     <function name="The &quot;members-accepted&quot; signal" link="McdChannel.html#McdChannel-members-accepted"/>
     <function name="The &quot;status-changed&quot; signal" link="McdChannel.html#McdChannel-status-changed"/>
-    <function name="McdManager" link="McdManager.html#McdManager-struct"/>
+    <function name="struct McdManager" link="McdManager.html#McdManager-struct"/>
     <function name="mcd_manager_new ()" link="McdManager.html#mcd-manager-new"/>
     <function name="mcd_manager_cancel_channel_request ()" link="McdManager.html#mcd-manager-cancel-channel-request"/>
     <function name="mcd_manager_get_connection ()" link="McdManager.html#mcd-manager-get-connection"/>
     <function name="The &quot;dbus-daemon&quot; property" link="McdManager.html#McdManager--dbus-daemon"/>
     <function name="The &quot;dispatcher&quot; property" link="McdManager.html#McdManager--dispatcher"/>
     <function name="The &quot;name&quot; property" link="McdManager.html#McdManager--name"/>
-    <function name="McdMission" link="McdMission.html#McdMission-struct"/>
+    <function name="struct McdMission" link="McdMission.html#McdMission-struct"/>
     <function name="mcd_mission_is_connected ()" link="McdMission.html#mcd-mission-is-connected"/>
     <function name="mcd_mission_get_parent ()" link="McdMission.html#mcd-mission-get-parent"/>
     <function name="mcd_mission_abort ()" link="McdMission.html#mcd-mission-abort"/>
@@ -90,15 +90,15 @@
     <function name="The &quot;connected&quot; signal" link="McdMission.html#McdMission-connected"/>
     <function name="The &quot;disconnected&quot; signal" link="McdMission.html#McdMission-disconnected"/>
     <function name="The &quot;parent-set&quot; signal" link="McdMission.html#McdMission-parent-set"/>
-    <function name="McdProxy" link="McdProxy.html#McdProxy-struct"/>
+    <function name="struct McdProxy" link="McdProxy.html#McdProxy-struct"/>
     <function name="mcd_proxy_new ()" link="McdProxy.html#mcd-proxy-new"/>
     <function name="mcd_proxy_get_proxy_object ()" link="McdProxy.html#mcd-proxy-get-proxy-object"/>
     <function name="The &quot;proxy-object&quot; property" link="McdProxy.html#McdProxy--proxy-object"/>
-    <function name="McdController" link="McdController.html#McdController-struct"/>
+    <function name="struct McdController" link="McdController.html#McdController-struct"/>
     <function name="mcd_controller_new ()" link="McdController.html#mcd-controller-new"/>
     <function name="mcd_controller_shutdown ()" link="McdController.html#mcd-controller-shutdown"/>
     <function name="mcd_controller_cancel_shutdown ()" link="McdController.html#mcd-controller-cancel-shutdown"/>
-    <function name="McdDispatcher" link="McdDispatcher.html#McdDispatcher-struct"/>
+    <function name="struct McdDispatcher" link="McdDispatcher.html#McdDispatcher-struct"/>
     <function name="mcd_dispatcher_new ()" link="McdDispatcher.html#mcd-dispatcher-new"/>
     <function name="mcd_dispatcher_get_channel_type_usage ()" link="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage"/>
     <function name="mcd_dispatcher_add_filter ()" link="McdDispatcher.html#mcd-dispatcher-add-filter"/>

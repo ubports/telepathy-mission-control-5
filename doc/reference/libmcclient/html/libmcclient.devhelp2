@@ -18,6 +18,8 @@
     <keyword type="function" name="mc_account_manager_new ()" link="McAccountManager.html#mc-account-manager-new"/>
     <keyword type="function" name="McAccountManagerWhenReadyCb ()" link="McAccountManager.html#McAccountManagerWhenReadyCb"/>
     <keyword type="function" name="mc_account_manager_call_when_ready ()" link="McAccountManager.html#mc-account-manager-call-when-ready"/>
+    <keyword type="function" name="mc_account_manager_get_valid_accounts ()" link="McAccountManager.html#mc-account-manager-get-valid-accounts"/>
+    <keyword type="function" name="mc_account_manager_get_invalid_accounts ()" link="McAccountManager.html#mc-account-manager-get-invalid-accounts"/>
     <keyword type="function" name="McAccountManagerWhenReadyObjectCb ()" link="McAccountManager.html#McAccountManagerWhenReadyObjectCb"/>
     <keyword type="function" name="mc_account_manager_call_when_iface_ready ()" link="McAccountManager.html#mc-account-manager-call-when-iface-ready"/>
     <keyword type="function" name="mc_account_manager_call_when_ready_with_accounts ()" link="McAccountManager.html#mc-account-manager-call-when-ready-with-accounts"/>
@@ -34,7 +36,7 @@
     <keyword type="function" name="mc_cli_account_manager_interface_query_call_find_accounts ()" link="McAccountManager.html#mc-cli-account-manager-interface-query-call-find-accounts"/>
     <keyword type="signal" name="The &quot;account-created&quot; signal" link="McAccountManager.html#McAccountManager-account-created"/>
     <keyword type="signal" name="The &quot;account-ready&quot; signal" link="McAccountManager.html#McAccountManager-account-ready"/>
-    <keyword type="struct" name="McAccount" link="McAccount.html#McAccount-struct"/>
+    <keyword type="struct" name="struct McAccount" link="McAccount.html#McAccount-struct"/>
     <keyword type="struct" name="McAccountClass" link="McAccount.html#McAccountClass"/>
     <keyword type="function" name="mc_account_new ()" link="McAccount.html#mc-account-new"/>
     <keyword type="function" name="McAccountWhenReadyCb ()" link="McAccount.html#McAccountWhenReadyCb"/>
@@ -133,6 +135,7 @@
     <keyword type="function" name="mc_profile_get_capabilities ()" link="libmcclient-mc-profile.html#mc-profile-get-capabilities"/>
     <keyword type="function" name="mc_profile_get_default_setting ()" link="libmcclient-mc-profile.html#mc-profile-get-default-setting"/>
     <keyword type="function" name="mc_profile_get_vcard_mangle ()" link="libmcclient-mc-profile.html#mc-profile-get-vcard-mangle"/>
+    <keyword type="function" name="mc_profile_presences_list ()" link="libmcclient-mc-profile.html#mc-profile-presences-list"/>
     <keyword type="function" name="mc_profile_presence_get_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-name"/>
     <keyword type="function" name="mc_profile_presence_get_type ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-type"/>
     <keyword type="function" name="mc_profile_presence_get_icon_name ()" link="libmcclient-mc-profile.html#mc-profile-presence-get-icon-name"/>

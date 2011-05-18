@@ -1,3 +1,141 @@
+commit cc9acec9c7e8fcbeb92271783f43e8311b7a3176
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 12:50:07 +0100
+
+    version 5.9.0
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit f64b04c3eb487e7df44836c2572260efcf9cc1dd
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 11:10:27 +0100
+
+    tests: when creating multiple simulated connections use different object paths
+    
+    This was causing test failures when testing using a better tp-glib.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 6c6ecf5152af67885f947bed5d9a00ad5da151f7
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 11:07:33 +0100
+
+    dispatcher/already-has-channel.py: don't test for calls done by tp-glib
+    
+    We previously checked makes sure GetInterfaces was called but this is
+    actually a call that tp-glib does. Newer versions of tp-glib don't do
+    this as they call GetAll on the connection beforehand so this test
+    failed.
+    
+    We don't really need this q.expect.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit db2a49fc4270a43dead300b9c5faa8100a9a277a
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-17 10:34:24 +0100
+
+    service-points: don't depend on there being any interfaces
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit c167d23e3a9da532e98a99351c996b1fc2e99730
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-17 10:44:08 +0100
+
+    Nano version "almost 5.9"
+
+commit 8176880328f8a7107117ccc4fe5279910796c2bd
+Merge: 9b03ad0 c12764d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-17 10:41:42 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+    
+    Commit c12764d3b "Don't warn about deprecated declarations" rejected,
+    since this is the development branch.
+
+commit c12764d3b42f40736f315c320b929f756405bf80
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2010-09-16 16:49:57 +0100
+
+    Don't warn about deprecated declarations
+    
+    The usual stable-branch change, to be rejected when merging to master.
+
+commit 9b03ad06401983c5126be107fac5c1c2f91df41b
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-16 08:54:14 +0200
+
+    clean up indentation
+    
+    It's supposed to be 4 spaces identated.
+
+commit e8eb58e1890e05f242b059dcbcee633b96157df6
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-12 14:06:03 +0200
+
+    Implement new version of DelegateChannels()
+
+commit d86266ef7539e4ecaeb77fcb0a88e6dd289a1602
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-11 16:19:58 +0200
+
+    bump glib dep to 2.28
+    
+    We need it for g_list_free_full().
+
+commit 09f403c21aa2d598d8f1c1a6c375b91be57a950f
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-11 13:27:57 +0200
+
+    Use non-fatal assertions for more subtile checks
+
+commit 9ef991c4d33b985ce61aca0a98304c637a0abba7
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-10 10:56:58 +0200
+
+    stop generating DelegateChannels and PresentChannel
+
+commit 6dcd8266c6d91be75ac76d49614d609f9e0e1ab0
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-10 11:13:03 +0200
+
+    DelegateChannels and PresentChannel are now stable
+
+commit b88dac1b0f0f95a05210a9a7f7dac442730b76a4
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-17 11:12:00 +0200
+
+    Bump tp-glib to 0.15.0
+    
+    We need it for CD.RedispatchChannels() and PresentChannel() generated code.
+
+commit e5a15f51ef6473f5fa90eb5d7c86b8bba8b835a6
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-10 10:40:07 +0200
+
+    Implement CD.PresentChannel()
+
+commit 97df23d0640470efff1a4959999b7aae5bec7d49
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-05-10 10:10:56 +0200
+
+    Update to latest DelegateChannels WIP API
+    
+    Changes:
+    - RedispatchChannels has been renamed to DelegateChannels()
+    - It's now documented when we should raise NotCapable but our implementation
+    was already doing it.
+    - The Account argument has been removed
+    - The Hints argument has been removed
+
+commit e90b58ca31a394bbdf94726288e66a643f709905
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-11 16:03:03 +0100
+
+    Start 5.7.12 development
+
 commit ab65263abdb9270d27177ed04ef919deb5b542a6
 Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
 Date:   2011-05-11 15:55:21 +0100

@@ -19,12 +19,12 @@
     </sub>
   </chapters>
   <functions>
-    <keyword type="struct" name="McdMaster" link="McdMaster.html#McdMaster-struct"/>
+    <keyword type="struct" name="struct McdMaster" link="McdMaster.html#McdMaster-struct"/>
     <keyword type="property" name="The &quot;account-manager&quot; property" link="McdMaster.html#McdMaster--account-manager"/>
     <keyword type="property" name="The &quot;dbus-connection&quot; property" link="McdMaster.html#McdMaster--dbus-connection"/>
     <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdMaster.html#McdMaster--dbus-daemon"/>
     <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdMaster.html#McdMaster--dispatcher"/>
-    <keyword type="struct" name="McdConnection" link="McdConnection.html#McdConnection-struct"/>
+    <keyword type="struct" name="struct McdConnection" link="McdConnection.html#McdConnection-struct"/>
     <keyword type="function" name="mcd_connection_get_account ()" link="McdConnection.html#mcd-connection-get-account"/>
     <keyword type="function" name="mcd_connection_request_channel ()" link="McdConnection.html#mcd-connection-request-channel"/>
     <keyword type="function" name="mcd_connection_cancel_channel_request ()" link="McdConnection.html#mcd-connection-cancel-channel-request"/>
@@ -39,7 +39,7 @@
     <keyword type="signal" name="The &quot;ready&quot; signal" link="McdConnection.html#McdConnection-ready"/>
     <keyword type="signal" name="The &quot;self-nickname-changed&quot; signal" link="McdConnection.html#McdConnection-self-nickname-changed"/>
     <keyword type="signal" name="The &quot;self-presence-changed&quot; signal" link="McdConnection.html#McdConnection-self-presence-changed"/>
-    <keyword type="struct" name="McdOperation" link="McdOperation.html#McdOperation-struct"/>
+    <keyword type="struct" name="struct McdOperation" link="McdOperation.html#McdOperation-struct"/>
     <keyword type="function" name="mcd_operation_new ()" link="McdOperation.html#mcd-operation-new"/>
     <keyword type="function" name="mcd_operation_take_mission ()" link="McdOperation.html#mcd-operation-take-mission"/>
     <keyword type="function" name="mcd_operation_remove_mission ()" link="McdOperation.html#mcd-operation-remove-mission"/>
@@ -50,7 +50,7 @@
     <keyword type="struct" name="McdService" link="McdService.html#McdService-struct"/>
     <keyword type="function" name="mcd_service_new ()" link="McdService.html#mcd-service-new"/>
     <keyword type="function" name="mcd_service_run ()" link="McdService.html#mcd-service-run"/>
-    <keyword type="struct" name="McdChannel" link="McdChannel.html#McdChannel-struct"/>
+    <keyword type="struct" name="struct McdChannel" link="McdChannel.html#McdChannel-struct"/>
     <keyword type="enum" name="enum McdChannelStatus" link="McdChannel.html#McdChannelStatus"/>
     <keyword type="function" name="mcd_channel_get_status ()" link="McdChannel.html#mcd-channel-get-status"/>
     <keyword type="function" name="mcd_channel_get_members_accepted ()" link="McdChannel.html#mcd-channel-get-members-accepted"/>
@@ -72,14 +72,14 @@
     <keyword type="property" name="The &quot;user-action-time&quot; property" link="McdChannel.html#McdChannel--user-action-time"/>
     <keyword type="signal" name="The &quot;members-accepted&quot; signal" link="McdChannel.html#McdChannel-members-accepted"/>
     <keyword type="signal" name="The &quot;status-changed&quot; signal" link="McdChannel.html#McdChannel-status-changed"/>
-    <keyword type="struct" name="McdManager" link="McdManager.html#McdManager-struct"/>
+    <keyword type="struct" name="struct McdManager" link="McdManager.html#McdManager-struct"/>
     <keyword type="function" name="mcd_manager_new ()" link="McdManager.html#mcd-manager-new"/>
     <keyword type="function" name="mcd_manager_cancel_channel_request ()" link="McdManager.html#mcd-manager-cancel-channel-request"/>
     <keyword type="function" name="mcd_manager_get_connection ()" link="McdManager.html#mcd-manager-get-connection"/>
     <keyword type="property" name="The &quot;dbus-daemon&quot; property" link="McdManager.html#McdManager--dbus-daemon"/>
     <keyword type="property" name="The &quot;dispatcher&quot; property" link="McdManager.html#McdManager--dispatcher"/>
     <keyword type="property" name="The &quot;name&quot; property" link="McdManager.html#McdManager--name"/>
-    <keyword type="struct" name="McdMission" link="McdMission.html#McdMission-struct"/>
+    <keyword type="struct" name="struct McdMission" link="McdMission.html#McdMission-struct"/>
     <keyword type="function" name="mcd_mission_is_connected ()" link="McdMission.html#mcd-mission-is-connected"/>
     <keyword type="function" name="mcd_mission_get_parent ()" link="McdMission.html#mcd-mission-get-parent"/>
     <keyword type="function" name="mcd_mission_abort ()" link="McdMission.html#mcd-mission-abort"/>
@@ -90,15 +90,15 @@
     <keyword type="signal" name="The &quot;connected&quot; signal" link="McdMission.html#McdMission-connected"/>
     <keyword type="signal" name="The &quot;disconnected&quot; signal" link="McdMission.html#McdMission-disconnected"/>
     <keyword type="signal" name="The &quot;parent-set&quot; signal" link="McdMission.html#McdMission-parent-set"/>
-    <keyword type="struct" name="McdProxy" link="McdProxy.html#McdProxy-struct"/>
+    <keyword type="struct" name="struct McdProxy" link="McdProxy.html#McdProxy-struct"/>
     <keyword type="function" name="mcd_proxy_new ()" link="McdProxy.html#mcd-proxy-new"/>
     <keyword type="function" name="mcd_proxy_get_proxy_object ()" link="McdProxy.html#mcd-proxy-get-proxy-object"/>
     <keyword type="property" name="The &quot;proxy-object&quot; property" link="McdProxy.html#McdProxy--proxy-object"/>
-    <keyword type="struct" name="McdController" link="McdController.html#McdController-struct"/>
+    <keyword type="struct" name="struct McdController" link="McdController.html#McdController-struct"/>
     <keyword type="function" name="mcd_controller_new ()" link="McdController.html#mcd-controller-new"/>
     <keyword type="function" name="mcd_controller_shutdown ()" link="McdController.html#mcd-controller-shutdown"/>
     <keyword type="function" name="mcd_controller_cancel_shutdown ()" link="McdController.html#mcd-controller-cancel-shutdown"/>
-    <keyword type="struct" name="McdDispatcher" link="McdDispatcher.html#McdDispatcher-struct"/>
+    <keyword type="struct" name="struct McdDispatcher" link="McdDispatcher.html#McdDispatcher-struct"/>
     <keyword type="function" name="mcd_dispatcher_new ()" link="McdDispatcher.html#mcd-dispatcher-new"/>
     <keyword type="function" name="mcd_dispatcher_get_channel_type_usage ()" link="McdDispatcher.html#mcd-dispatcher-get-channel-type-usage"/>
     <keyword type="function" name="mcd_dispatcher_add_filter ()" link="McdDispatcher.html#mcd-dispatcher-add-filter"/>

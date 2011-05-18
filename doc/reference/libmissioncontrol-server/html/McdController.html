@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdProxy.html" title="McdProxy">
 <link rel="next" href="McdDispatcher.html" title="McdDispatcher">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -28,7 +28,7 @@
                   <a href="#McdController.object-hierarchy" class="shortcut">Object Hierarchy</a>
 </td></tr>
 </table>
-<div class="refentry" title="McdController">
+<div class="refentry">
 <a name="McdController"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -37,23 +37,23 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="McdController.stability-level"></a><h2>Stability Level</h2>
 Unstable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="McdController.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;mcd-controller.h&gt;
 
-                    <a class="link" href="McdController.html#McdController-struct" title="McdController">McdController</a>;
+struct              <a class="link" href="McdController.html#McdController-struct" title="struct McdController">McdController</a>;
 <a class="link" href="McdController.html" title="McdController"><span class="returnvalue">McdController</span></a> *     <a class="link" href="McdController.html#mcd-controller-new" title="mcd_controller_new ()">mcd_controller_new</a>                  (<em class="parameter"><code><span class="type">void</span></code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdController.html#mcd-controller-shutdown" title="mcd_controller_shutdown ()">mcd_controller_shutdown</a>             (<em class="parameter"><code><a class="link" href="McdController.html" title="McdController"><span class="type">McdController</span></a> *controller</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *reason</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McdController.html#mcd-controller-cancel-shutdown" title="mcd_controller_cancel_shutdown ()">mcd_controller_cancel_shutdown</a>      (<em class="parameter"><code><a class="link" href="McdController.html" title="McdController"><span class="type">McdController</span></a> *controller</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Object Hierarchy">
+<div class="refsect1">
 <a name="McdController.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
@@ -63,7 +63,7 @@ Unstable, unless otherwise indicated
                      +----<a class="link" href="McdMaster.html" title="McdMaster">McdMaster</a>
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="McdController.description"></a><h2>Description</h2>
 <p>
 This class implements the logic to control mission-control based on all
@@ -71,71 +71,40 @@ external device events and states. It also controls mission-control
 life-cycle based on such events.
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="McdController.details"></a><h2>Details</h2>
-<div class="refsect2" title="McdController">
-<a name="McdController-struct"></a><h3>McdController</h3>
-<pre class="programlisting">typedef struct _McdController McdController;</pre>
+<div class="refsect2">
+<a name="McdController-struct"></a><h3>struct McdController</h3>
+<pre class="programlisting">struct McdController;</pre>
 <p>
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mcd_controller_new ()">
+<div class="refsect2">
 <a name="mcd-controller-new"></a><h3>mcd_controller_new ()</h3>
 <pre class="programlisting"><a class="link" href="McdController.html" title="McdController"><span class="returnvalue">McdController</span></a> *     mcd_controller_new                  (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_controller_shutdown ()">
+<div class="refsect2">
 <a name="mcd-controller-shutdown"></a><h3>mcd_controller_shutdown ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_controller_shutdown             (<em class="parameter"><code><a class="link" href="McdController.html" title="McdController"><span class="type">McdController</span></a> *controller</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *reason</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>controller</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>reason</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_controller_cancel_shutdown ()">
+<div class="refsect2">
 <a name="mcd-controller-cancel-shutdown"></a><h3>mcd_controller_cancel_shutdown ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_controller_cancel_shutdown      (<em class="parameter"><code><a class="link" href="McdController.html" title="McdController"><span class="type">McdController</span></a> *controller</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>controller</code></em> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

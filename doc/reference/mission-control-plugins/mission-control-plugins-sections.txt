@@ -1,28 +1,5 @@
 <SECTION>
-<FILE>dispatch-operation-policy</FILE>
-<TITLE>McpDispatchOperationPolicy</TITLE>
-McpDispatchOperationPolicy
-McpDispatchOperationPolicyIface
-McpDispatchOperationPolicyCb
-mcp_dispatch_operation_policy_check
-McpDispatchOperationPolicyHandlerIsSuitableAsync
-McpDispatchOperationPolicyFinisher
-mcp_dispatch_operation_policy_handler_is_suitable_async
-mcp_dispatch_operation_policy_handler_is_suitable_finish
-mcp_dispatch_operation_policy_iface_implement_check
-<SUBSECTION Standard>
-MCP_DISPATCH_OPERATION_POLICY
-MCP_IS_DISPATCH_OPERATION_POLICY
-MCP_TYPE_DISPATCH_OPERATION_POLICY
-mcp_dispatch_operation_policy_get_type
-MCP_DISPATCH_OPERATION_POLICY_GET_IFACE
-</SECTION>
-
-<SECTION>
 <FILE>dispatch-operation</FILE>
-McpDispatchOperation
-McpDispatchOperationIface
-McpDispatchOperationDelay
 mcp_dispatch_operation_find_channel_by_type
 mcp_dispatch_operation_ref_connection
 mcp_dispatch_operation_ref_nth_channel
@@ -38,6 +15,9 @@ mcp_dispatch_operation_end_delay
 mcp_dispatch_operation_leave_channels
 mcp_dispatch_operation_close_channels
 mcp_dispatch_operation_destroy_channels
+McpDispatchOperationDelay
+McpDispatchOperationIface
+McpDispatchOperation
 <SUBSECTION Standard>
 MCP_DISPATCH_OPERATION
 MCP_IS_DISPATCH_OPERATION
@@ -47,10 +27,52 @@ MCP_DISPATCH_OPERATION_GET_IFACE
 </SECTION>
 
 <SECTION>
+<FILE>dbus-acl</FILE>
+<TITLE>McpDBusAcl</TITLE>
+DBusAclAuthorised
+DBusAclType
+DBusAclAuthData
+DBusAclAuthoriser
+DBusAclAsyncAuthoriser
+mcp_dbus_acl_authorised_async_step
+mcp_dbus_acl_authorised_async
+mcp_dbus_acl_authorised
+mcp_dbus_acl_iface_set_name
+mcp_dbus_acl_iface_set_desc
+mcp_dbus_acl_iface_implement_authorised
+mcp_dbus_acl_iface_implement_authorised_async
+mcp_dbus_acl_name
+mcp_dbus_acl_description
+McpDBusAclIface
+<SUBSECTION Standard>
+MCP_DBUS_ACL
+MCP_IS_DBUS_ACL
+MCP_TYPE_DBUS_ACL
+mcp_dbus_acl_get_type
+MCP_DBUS_ACL_GET_IFACE
+</SECTION>
+
+<SECTION>
+<FILE>dispatch-operation-policy</FILE>
+<TITLE>McpDispatchOperationPolicy</TITLE>
+McpDispatchOperationPolicyCb
+mcp_dispatch_operation_policy_check
+McpDispatchOperationPolicyHandlerIsSuitableAsync
+McpDispatchOperationPolicyFinisher
+mcp_dispatch_operation_policy_handler_is_suitable_async
+mcp_dispatch_operation_policy_handler_is_suitable_finish
+mcp_dispatch_operation_policy_iface_implement_check
+McpDispatchOperationPolicyIface
+<SUBSECTION Standard>
+MCP_DISPATCH_OPERATION_POLICY
+MCP_IS_DISPATCH_OPERATION_POLICY
+MCP_TYPE_DISPATCH_OPERATION_POLICY
+mcp_dispatch_operation_policy_get_type
+MCP_DISPATCH_OPERATION_POLICY_GET_IFACE
+</SECTION>
+
+<SECTION>
 <FILE>request</FILE>
-McpRequest
-McpRequestIface
-McpRequestDelay
 mcp_request_find_request_by_type
 mcp_request_get_account_path
 mcp_request_get_protocol
@@ -61,6 +83,9 @@ mcp_request_ref_nth_request
 mcp_request_deny
 mcp_request_start_delay
 mcp_request_end_delay
+McpRequest
+McpRequestDelay
+McpRequestIface
 <SUBSECTION Standard>
 MCP_REQUEST
 MCP_IS_REQUEST
@@ -72,11 +97,10 @@ MCP_REQUEST_GET_IFACE
 <SECTION>
 <FILE>request-policy</FILE>
 <TITLE>McpRequestPolicy</TITLE>
-McpRequestPolicy
-McpRequestPolicyIface
 McpRequestPolicyCb
 mcp_request_policy_check
 mcp_request_policy_iface_implement_check
+McpRequestPolicyIface
 <SUBSECTION Standard>
 MCP_REQUEST_POLICY
 MCP_IS_REQUEST_POLICY
@@ -86,32 +110,12 @@ MCP_REQUEST_POLICY_GET_IFACE
 </SECTION>
 
 <SECTION>
-<FILE>account</FILE>
-McpAccountManager
-McpAccountManagerIface
-mcp_account_manager_set_value
-mcp_account_manager_get_value
-mcp_account_manager_parameter_is_secret
-mcp_account_manager_parameter_make_secret
-mcp_account_manager_get_unique_name
-mcp_account_manager_list_keys
-<SUBSECTION Standard>
-MCP_ACCOUNT_MANAGER
-MCP_IS_ACCOUNT_MANAGER
-MCP_TYPE_ACCOUNT_MANAGER
-mcp_account_manager_get_type
-MCP_ACCOUNT_MANAGER_GET_IFACE
-</SECTION>
-
-<SECTION>
 <FILE>account-storage</FILE>
 <TITLE>McpAccountStorage</TITLE>
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL
 MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING
-McpAccountStorage
-McpAccountStorageIface
 McpAccountStorageGetFunc
 McpAccountStorageSetFunc
 McpAccountStorageDeleteFunc
@@ -122,6 +126,7 @@ McpAccountStorageReadyFunc
 McpAccountStorageGetIdentifierFunc
 McpAccountStorageGetAdditionalInfoFunc
 McpAccountStorageGetRestrictionsFunc
+McpAccountStorageIface
 mcp_account_storage_iface_set_priority
 mcp_account_storage_iface_set_name
 mcp_account_storage_iface_set_desc
@@ -159,30 +164,21 @@ MCP_ACCOUNT_STORAGE_GET_IFACE
 </SECTION>
 
 <SECTION>
-<FILE>dbus-acl</FILE>
-<TITLE>McpDBusAcl</TITLE>
-McpDBusAcl
-McpDBusAclIface
-DBusAclAuthorised
-DBusAclType
-DBusAclAuthData
-DBusAclAuthoriser
-DBusAclAsyncAuthoriser
-mcp_dbus_acl_authorised_async_step
-mcp_dbus_acl_authorised_async
-mcp_dbus_acl_authorised
-mcp_dbus_acl_iface_set_name
-mcp_dbus_acl_iface_set_desc
-mcp_dbus_acl_iface_implement_authorised
-mcp_dbus_acl_iface_implement_authorised_async
-mcp_dbus_acl_name
-mcp_dbus_acl_description
+<FILE>account</FILE>
+mcp_account_manager_set_value
+mcp_account_manager_get_value
+mcp_account_manager_parameter_is_secret
+mcp_account_manager_parameter_make_secret
+mcp_account_manager_get_unique_name
+mcp_account_manager_list_keys
+McpAccountManager
+McpAccountManagerIface
 <SUBSECTION Standard>
-MCP_DBUS_ACL
-MCP_IS_DBUS_ACL
-MCP_TYPE_DBUS_ACL
-mcp_dbus_acl_get_type
-MCP_DBUS_ACL_GET_IFACE
+MCP_ACCOUNT_MANAGER
+MCP_IS_ACCOUNT_MANAGER
+MCP_TYPE_ACCOUNT_MANAGER
+mcp_account_manager_get_type
+MCP_ACCOUNT_MANAGER_GET_IFACE
 </SECTION>
 
 <SECTION>

@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="libmissioncontrol-server-mcd-dispatcher-context.html" title="mcd-dispatcher-context">
 <link rel="next" href="libmissioncontrol-server-mcd-enum-types.html" title="mcd-enum-types">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,7 +26,7 @@
                   <a href="#libmissioncontrol-server-Debugging.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="Debugging">
+<div class="refentry">
 <a name="libmissioncontrol-server-Debugging"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -35,11 +35,11 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsect1" title="Stability Level">
+<div class="refsect1">
 <a name="libmissioncontrol-server-Debugging.stability-level"></a><h2>Stability Level</h2>
 Unstable, unless otherwise indicated
 </div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="libmissioncontrol-server-Debugging.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;mcd-debug.h&gt;
@@ -54,102 +54,49 @@ Unstable, unless otherwise indicated
 <span class="returnvalue">void</span>                <a class="link" href="libmissioncontrol-server-Debugging.html#mcd-debug-print-tree" title="mcd_debug_print_tree ()">mcd_debug_print_tree</a>                (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> obj</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="libmissioncontrol-server-Debugging.description"></a><h2>Description</h2>
 <p>
 FIXME
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="libmissioncontrol-server-Debugging.details"></a><h2>Details</h2>
-<div class="refsect2" title="mcd_debug_init ()">
+<div class="refsect2">
 <a name="mcd-debug-init"></a><h3>mcd_debug_init ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_debug_init                      (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mcd_debug_ref ()">
+<div class="refsect2">
 <a name="mcd-debug-ref"></a><h3>mcd_debug_ref ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="returnvalue">gpointer</span></a>            mcd_debug_ref                       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> obj</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> linenum</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>obj</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>linenum</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_debug_unref ()">
+<div class="refsect2">
 <a name="mcd-debug-unref"></a><h3>mcd_debug_unref ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_debug_unref                     (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> obj</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *filename</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> linenum</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>obj</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>filename</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>linenum</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_debug_print_tree ()">
+<div class="refsect2">
 <a name="mcd-debug-print-tree"></a><h3>mcd_debug_print_tree ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_debug_print_tree                (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> obj</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>obj</code></em> :</span></p></td>
-<td>
-</td>
-</tr></tbody>
-</table></div>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

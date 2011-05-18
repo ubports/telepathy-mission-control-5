@@ -8,7 +8,7 @@
 <link rel="up" href="ch-account.html" title="The Account object proxy">
 <link rel="prev" href="ch-account.html" title="The Account object proxy">
 <link rel="next" href="ch-profile.html" title="Utility class to access account profiles">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -30,7 +30,7 @@
                   <a href="#McAccount.signals" class="shortcut">Signals</a>
 </td></tr>
 </table>
-<div class="refentry" title="McAccount">
+<div class="refentry">
 <a name="McAccount"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -39,12 +39,12 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="McAccount.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">
 #include &lt;libmcclient/mc-account.h&gt;
 
-                    <a class="link" href="McAccount.html#McAccount-struct" title="McAccount">McAccount</a>;
+struct              <a class="link" href="McAccount.html#McAccount-struct" title="struct McAccount">McAccount</a>;
                     <a class="link" href="McAccount.html#McAccountClass" title="McAccountClass">McAccountClass</a>;
 <a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         <a class="link" href="McAccount.html#mc-account-new" title="mc_account_new ()">mc_account_new</a>                      (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);
@@ -293,7 +293,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Object Hierarchy">
+<div class="refsect1">
 <a name="McAccount.object-hierarchy"></a><h2>Object Hierarchy</h2>
 <pre class="synopsis">
   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
@@ -301,35 +301,35 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
          +----McAccount
 </pre>
 </div>
-<div class="refsect1" title="Signals">
+<div class="refsect1">
 <a name="McAccount.signals"></a><h2>Signals</h2>
 <pre class="synopsis">
-  "<a class="link" href="McAccount.html#McAccount-avatar-changed" title='The "avatar-changed" signal'>avatar-changed</a>"                                 : Run Last / Has Details
-  "<a class="link" href="McAccount.html#McAccount-channel-count-changed" title='The "channel-count-changed" signal'>channel-count-changed</a>"                          : Run Last
-  "<a class="link" href="McAccount.html#McAccount-connection-status-changed" title='The "connection-status-changed" signal'>connection-status-changed</a>"                      : Run Last
-  "<a class="link" href="McAccount.html#McAccount-flag-changed" title='The "flag-changed" signal'>flag-changed</a>"                                   : Run Last / Has Details
-  "<a class="link" href="McAccount.html#McAccount-parameters-changed" title='The "parameters-changed" signal'>parameters-changed</a>"                             : Run Last / Has Details
-  "<a class="link" href="McAccount.html#McAccount-presence-changed" title='The "presence-changed" signal'>presence-changed</a>"                               : Run Last / Has Details
-  "<a class="link" href="McAccount.html#McAccount-string-changed" title='The "string-changed" signal'>string-changed</a>"                                 : Run Last / Has Details
+  "<a class="link" href="McAccount.html#McAccount-avatar-changed" title='The "avatar-changed" signal'>avatar-changed</a>"                                 : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
+  "<a class="link" href="McAccount.html#McAccount-channel-count-changed" title='The "channel-count-changed" signal'>channel-count-changed</a>"                          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="McAccount.html#McAccount-connection-status-changed" title='The "connection-status-changed" signal'>connection-status-changed</a>"                      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a>
+  "<a class="link" href="McAccount.html#McAccount-flag-changed" title='The "flag-changed" signal'>flag-changed</a>"                                   : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
+  "<a class="link" href="McAccount.html#McAccount-parameters-changed" title='The "parameters-changed" signal'>parameters-changed</a>"                             : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
+  "<a class="link" href="McAccount.html#McAccount-presence-changed" title='The "presence-changed" signal'>presence-changed</a>"                               : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
+  "<a class="link" href="McAccount.html#McAccount-string-changed" title='The "string-changed" signal'>string-changed</a>"                                 : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a>
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="McAccount.description"></a><h2>Description</h2>
 <p>
 This module provides a client-side proxy object for the Telepathy
 Account D-Bus API.
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="McAccount.details"></a><h2>Details</h2>
-<div class="refsect2" title="McAccount">
-<a name="McAccount-struct"></a><h3>McAccount</h3>
-<pre class="programlisting">typedef struct {
+<div class="refsect2">
+<a name="McAccount-struct"></a><h3>struct McAccount</h3>
+<pre class="programlisting">struct McAccount {
     TpProxy parent;
     gchar *name;
     gchar *manager_name;
     gchar *protocol_name;
-} McAccount;
+};
 </pre>
 <p>
 A proxy object for the Telepathy Account D-Bus API. This is a subclass of
@@ -340,30 +340,26 @@ A proxy object for the Telepathy Account D-Bus API. This is a subclass of
 <tbody>
 <tr>
 <td><p><span class="term"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> <em class="structfield"><code><a name="McAccount-struct.parent"></a>parent</code></em>;</span></p></td>
-<td>the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> for the account object.
-</td>
+<td>the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> for the account object.</td>
 </tr>
 <tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="McAccount-struct.name"></a>name</code></em>;</span></p></td>
 <td>the name of the account; currently it's the variable part of the
-D-Bus object path. (read-only)
-</td>
+D-Bus object path. (read-only)</td>
 </tr>
 <tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="McAccount-struct.manager-name"></a>manager_name</code></em>;</span></p></td>
-<td>the name of the Telepathy manager. (read-only)
-</td>
+<td>the name of the Telepathy manager. (read-only)</td>
 </tr>
 <tr>
 <td><p><span class="term"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *<em class="structfield"><code><a name="McAccount-struct.protocol-name"></a>protocol_name</code></em>;</span></p></td>
-<td>the name of the protocol. (read-only)
-</td>
+<td>the name of the protocol. (read-only)</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="McAccountClass">
+<div class="refsect2">
 <a name="McAccountClass"></a><h3>McAccountClass</h3>
 <pre class="programlisting">typedef struct _McAccountClass McAccountClass;</pre>
 <p>
@@ -371,7 +367,7 @@ The class of a <a class="link" href="McAccount.html" title="McAccount"><span cla
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_new ()">
+<div class="refsect2">
 <a name="mc-account-new"></a><h3>mc_account_new ()</h3>
 <pre class="programlisting"><a class="link" href="McAccount.html" title="McAccount"><span class="returnvalue">McAccount</span></a> *         mc_account_new                      (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-dbus.html#TpDBusDaemon"><span class="type">TpDBusDaemon</span></a> *dbus</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>);</pre>
@@ -385,19 +381,17 @@ The class of a <a class="link" href="McAccount.html" title="McAccount"><span cla
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object_path</code></em> :</span></p></td>
-<td>the path of the D-Bus account object.
-</td>
+<td>the path of the D-Bus account object.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a new <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> object.
-</td>
+<td>a new <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> object.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="McAccountWhenReadyCb ()">
+<div class="refsect2">
 <a name="McAccountWhenReadyCb"></a><h3>McAccountWhenReadyCb ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*McAccountWhenReadyCb)             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
@@ -407,26 +401,23 @@ The class of a <a class="link" href="McAccount.html" title="McAccount"><span cla
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the interface is ready for use, or the error with which it
-was invalidated if it is now invalid.
-</td>
+was invalidated if it is now invalid.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>the user data that was passed to <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a>.
-</td>
+<td>the user data that was passed to <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_call_when_ready ()">
+<div class="refsect2">
 <a name="mc-account-call-when-ready"></a><h3>mc_account_call_when_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_call_when_ready          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#McAccountWhenReadyCb" title="McAccountWhenReadyCb ()"><span class="type">McAccountWhenReadyCb</span></a> callback</code></em>,
@@ -442,25 +433,22 @@ ready.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interface becomes ready or invalidated, whichever
-happens first.
-</td>
+happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="McAccountWhenReadyObjectCb ()">
+<div class="refsect2">
 <a name="McAccountWhenReadyObjectCb"></a><h3>McAccountWhenReadyObjectCb ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*McAccountWhenReadyObjectCb)       (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> *error</code></em>,
@@ -471,33 +459,29 @@ happens first.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the interface is ready for use, or the error with which it
-was invalidated if it is now invalid.
-</td>
+was invalidated if it is now invalid.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
 <td>the user data that was passed to
-<a class="link" href="McAccount.html#mc-account-call-when-iface-ready" title="mc_account_call_when_iface_ready ()"><code class="function">mc_account_call_when_iface_ready()</code></a> or <a class="link" href="McAccount.html#mc-account-call-when-all-ready" title="mc_account_call_when_all_ready ()"><code class="function">mc_account_call_when_all_ready()</code></a>.
-</td>
+<a class="link" href="McAccount.html#mc-account-call-when-iface-ready" title="mc_account_call_when_iface_ready ()"><code class="function">mc_account_call_when_iface_ready()</code></a> or <a class="link" href="McAccount.html#mc-account-call-when-all-ready" title="mc_account_call_when_all_ready ()"><code class="function">mc_account_call_when_all_ready()</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> that was passed to
-<a class="link" href="McAccount.html#mc-account-call-when-iface-ready" title="mc_account_call_when_iface_ready ()"><code class="function">mc_account_call_when_iface_ready()</code></a> or <a class="link" href="McAccount.html#mc-account-call-when-all-ready" title="mc_account_call_when_all_ready ()"><code class="function">mc_account_call_when_all_ready()</code></a>.
-</td>
+<a class="link" href="McAccount.html#mc-account-call-when-iface-ready" title="mc_account_call_when_iface_ready ()"><code class="function">mc_account_call_when_iface_ready()</code></a> or <a class="link" href="McAccount.html#mc-account-call-when-all-ready" title="mc_account_call_when_all_ready ()"><code class="function">mc_account_call_when_all_ready()</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_call_when_iface_ready ()">
+<div class="refsect2">
 <a name="mc-account-call-when-iface-ready"></a><h3>mc_account_call_when_iface_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_call_when_iface_ready    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> interface</code></em>,
@@ -516,30 +500,25 @@ properties are ready.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>interface</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> representing the interface to process.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> representing the interface to process.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interface becomes ready or invalidated, whichever
-happens first.
-</td>
+happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the call has
-succeeded, failed or been cancelled.
-</td>
+succeeded, failed or been cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
@@ -552,7 +531,7 @@ it is destroyed, this call will automatically be cancelled. Must be <a href="htt
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_call_when_all_ready ()">
+<div class="refsect2">
 <a name="mc-account-call-when-all-ready"></a><h3>mc_account_call_when_all_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_call_when_all_ready      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#McAccountWhenReadyObjectCb" title="McAccountWhenReadyObjectCb ()"><span class="type">McAccountWhenReadyObjectCb</span></a> callback</code></em>,
@@ -573,25 +552,21 @@ the first interface that failed.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interfaces becomes ready or invalidated,
-whichever happens first.
-</td>
+whichever happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the call has
-succeeded, failed or been cancelled.
-</td>
+succeeded, failed or been cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
@@ -603,14 +578,13 @@ it is destroyed, this call will automatically be cancelled. Must be <a href="htt
 <tr>
 <td><p><span class="term"><em class="parameter"><code>...</code></em> :</span></p></td>
 <td>a list of <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> types representing the interfaces to process,
-followed by <code class="literal">0</code>.
-</td>
+followed by <code class="literal">0</code>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_display_name ()">
+<div class="refsect2">
 <a name="mc-account-get-display-name"></a><h3>mc_account_get_display_name ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_display_name         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -618,21 +592,19 @@ followed by <code class="literal">0</code>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the account display name.
+<td>a constant string representing the account display name.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_icon ()">
+<div class="refsect2">
 <a name="mc-account-get-icon"></a><h3>mc_account_get_icon ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_icon                 (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -640,21 +612,19 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the account icon name.
+<td>a constant string representing the account icon name.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_is_valid ()">
+<div class="refsect2">
 <a name="mc-account-is-valid"></a><h3>mc_account_is_valid ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_account_is_valid                 (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -662,21 +632,20 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account is valid, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account is valid, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_is_enabled ()">
+<div class="refsect2">
 <a name="mc-account-is-enabled"></a><h3>mc_account_is_enabled ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_account_is_enabled               (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -684,21 +653,20 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account is enabled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account is enabled, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_has_been_online ()">
+<div class="refsect2">
 <a name="mc-account-has-been-online"></a><h3>mc_account_has_been_online ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_account_has_been_online          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -706,21 +674,20 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account has ever been online, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account has ever been online, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_connects_automatically ()">
+<div class="refsect2">
 <a name="mc-account-connects-automatically"></a><h3>mc_account_connects_automatically ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mc_account_connects_automatically   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -728,22 +695,21 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account automatically connects when possible, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account automatically connects when possible, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>
 otherwise.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_nickname ()">
+<div class="refsect2">
 <a name="mc-account-get-nickname"></a><h3>mc_account_get_nickname ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_nickname             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -751,21 +717,19 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the nickname (alias) of <em class="parameter"><code>account</code></em>.
+<td>the nickname (alias) of <em class="parameter"><code>account</code></em>.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_parameters ()">
+<div class="refsect2">
 <a name="mc-account-get-parameters"></a><h3>mc_account_get_parameters ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mc_account_get_parameters           (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -773,23 +737,21 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> (do not destroy or modify it) listing the
+<td>a constant <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> (do not destroy or modify it) listing the
 account parameters. The keys in the hash table are strings representing the
 parameter names, and the values are stored in <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> types.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_automatic_presence ()">
+<div class="refsect2">
 <a name="mc-account-get-automatic-presence"></a><h3>mc_account_get_automatic_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_automatic_presence   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
@@ -806,31 +768,27 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
-</td>
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
 <td>pointer that will receive the presence status string (to be not
-modified or free'd).
-</td>
+modified or free'd).</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
 <td>pointer that will receive the presence status message string (to
-be not modified or free'd).
-</td>
+be not modified or free'd).</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_connection_path ()">
+<div class="refsect2">
 <a name="mc-account-get-connection-path"></a><h3>mc_account_get_connection_path ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_connection_path      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -838,22 +796,20 @@ be not modified or free'd).
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the D-Bus path of the Telepathy
+<td>a constant string representing the D-Bus path of the Telepathy
 connection object, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the account is disconnected.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_connection_name ()">
+<div class="refsect2">
 <a name="mc-account-get-connection-name"></a><h3>mc_account_get_connection_name ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_connection_name      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <p>
@@ -861,22 +817,14 @@ calling this function.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody>
-<tr>
+<tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
+</tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_connection_status ()">
+<div class="refsect2">
 <a name="mc-account-get-connection-status"></a><h3>mc_account_get_connection_status ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatus"><span class="returnvalue">TpConnectionStatus</span></a>  mc_account_get_connection_status    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -884,21 +832,19 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the connection status of the Telepathy connection object.
+<td>the connection status of the Telepathy connection object.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_connection_status_reason ()">
+<div class="refsect2">
 <a name="mc-account-get-connection-status-reason"></a><h3>mc_account_get_connection_status_reason ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionStatusReason"><span class="returnvalue">TpConnectionStatusReason</span></a>  mc_account_get_connection_status_reason
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
@@ -907,21 +853,19 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the connection status reason of the Telepathy connection object.
+<td>the connection status reason of the Telepathy connection object.
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_current_presence ()">
+<div class="refsect2">
 <a name="mc-account-get-current-presence"></a><h3>mc_account_get_current_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_current_presence     (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
@@ -937,31 +881,27 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
-</td>
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
 <td>pointer that will receive the presence status string (to be not
-modified or free'd).
-</td>
+modified or free'd).</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
 <td>pointer that will receive the presence status message string (to
-be not modified or free'd).
-</td>
+be not modified or free'd).</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_requested_presence ()">
+<div class="refsect2">
 <a name="mc-account-get-requested-presence"></a><h3>mc_account_get_requested_presence ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_get_requested_presence   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> *type</code></em>,
@@ -977,31 +917,27 @@ calling this function.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.
-</td>
+<td>pointer to a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> to receive the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
 <td>pointer that will receive the presence status string (to be not
-modified or free'd).
-</td>
+modified or free'd).</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
 <td>pointer that will receive the presence status message string (to
-be not modified or free'd).
-</td>
+be not modified or free'd).</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_get_normalized_name ()">
+<div class="refsect2">
 <a name="mc-account-get-normalized-name"></a><h3>mc_account_get_normalized_name ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_get_normalized_name      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -1009,25 +945,22 @@ be not modified or free'd).
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the normalized name of <em class="parameter"><code>account</code></em>.
+<td>a constant string representing the normalized name of <em class="parameter"><code>account</code></em>.
 This is the value returned from Telepathy when inspecting the self handle,
 and will be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the account never went online.
 connection object, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the account is disconnected.
-
 <a class="link" href="McAccount.html#mc-account-call-when-ready" title="mc_account_call_when_ready ()"><code class="function">mc_account_call_when_ready()</code></a> must have been successfully invoked prior to
-calling this function.
-</td>
+calling this function.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_display_name ()">
+<div class="refsect2">
 <a name="mc-account-set-display-name"></a><h3>mc_account_set_display_name ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_display_name        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *display_name</code></em>,
@@ -1043,47 +976,40 @@ Set the display name of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>display_name</code></em> :</span></p></td>
-<td>display name to be set.
-</td>
+<td>display name to be set.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_icon ()">
+<div class="refsect2">
 <a name="mc-account-set-icon"></a><h3>mc_account_set_icon ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_icon                (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *icon</code></em>,
@@ -1099,47 +1025,40 @@ Set the icon of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>icon</code></em> :</span></p></td>
-<td>icon name to be set.
-</td>
+<td>icon name to be set.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_enabled ()">
+<div class="refsect2">
 <a name="mc-account-set-enabled"></a><h3>mc_account_set_enabled ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_enabled             (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>,
@@ -1155,47 +1074,40 @@ Enables or disables <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>enabled</code></em> :</span></p></td>
-<td>whether the <em class="parameter"><code>account</code></em> must be enabled.
-</td>
+<td>whether the <em class="parameter"><code>account</code></em> must be enabled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_connect_automatically ()">
+<div class="refsect2">
 <a name="mc-account-set-connect-automatically"></a><h3>mc_account_set_connect_automatically ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_connect_automatically
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
@@ -1212,47 +1124,40 @@ Enables or disables automatic connection for <em class="parameter"><code>account
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>connect</code></em> :</span></p></td>
-<td>whether the <em class="parameter"><code>account</code></em> must connect automatically.
-</td>
+<td>whether the <em class="parameter"><code>account</code></em> must connect automatically.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_nickname ()">
+<div class="refsect2">
 <a name="mc-account-set-nickname"></a><h3>mc_account_set_nickname ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_nickname            (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *nickname</code></em>,
@@ -1268,47 +1173,40 @@ Set the nickname (alias) of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>nickname</code></em> :</span></p></td>
-<td>nickname to be set.
-</td>
+<td>nickname to be set.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_automatic_presence ()">
+<div class="refsect2">
 <a name="mc-account-set-automatic-presence"></a><h3>mc_account_set_automatic_presence ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_automatic_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
@@ -1326,57 +1224,48 @@ Set the automatic presence of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>the presence type.
-</td>
+<td>the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
-<td>the presence status string.
-</td>
+<td>the presence status string.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
-<td>the presence status message.
-</td>
+<td>the presence status message.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_set_requested_presence ()">
+<div class="refsect2">
 <a name="mc-account-set-requested-presence"></a><h3>mc_account_set_requested_presence ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_set_requested_presence  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-enums.html#TpConnectionPresenceType"><span class="type">TpConnectionPresenceType</span></a> type</code></em>,
@@ -1394,57 +1283,48 @@ Set the requested presence of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>the presence type.
-</td>
+<td>the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
-<td>the presence status string.
-</td>
+<td>the presence status string.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
-<td>the presence status message.
-</td>
+<td>the presence status message.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_avatar_call_when_ready ()">
+<div class="refsect2">
 <a name="mc-account-avatar-call-when-ready"></a><h3>mc_account_avatar_call_when_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_avatar_call_when_ready   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#McAccountWhenReadyCb" title="McAccountWhenReadyCb ()"><span class="type">McAccountWhenReadyCb</span></a> callback</code></em>,
@@ -1460,25 +1340,22 @@ ready.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interface becomes ready or invalidated, whichever
-happens first.
-</td>
+happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_avatar_get ()">
+<div class="refsect2">
 <a name="mc-account-avatar-get"></a><h3>mc_account_avatar_get ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_avatar_get               (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> **avatar</code></em>,
@@ -1493,32 +1370,14 @@ prior to calling this function.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody>
-<tr>
+<tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>avatar</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>length</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mime_type</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
+</tr></tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_avatar_set ()">
+<div class="refsect2">
 <a name="mc-account-avatar-set"></a><h3>mc_account_avatar_set ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_avatar_set              (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *avatar</code></em>,
@@ -1529,64 +1388,43 @@ prior to calling this function.
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> destroy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
 <p>
-Set the avatar for <em class="parameter"><code>account</code></em>.
+Set the secondary VCard fields for <em class="parameter"><code>account</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>avatar</code></em> :</span></p></td>
-<td>avatar data to be set.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>len</code></em> :</span></p></td>
-<td>size of the avatar data.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mime_type</code></em> :</span></p></td>
-<td>MIME type of the avatar data.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_compat_call_when_ready ()">
+<div class="refsect2">
 <a name="mc-account-compat-call-when-ready"></a><h3>mc_account_compat_call_when_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_compat_call_when_ready   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McAccount.html#McAccountWhenReadyCb" title="McAccountWhenReadyCb ()"><span class="type">McAccountWhenReadyCb</span></a> callback</code></em>,
@@ -1602,25 +1440,22 @@ ready.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interface becomes ready or invalidated, whichever
-happens first.
-</td>
+happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_compat_get_profile ()">
+<div class="refsect2">
 <a name="mc-account-compat-get-profile"></a><h3>mc_account_compat_get_profile ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_compat_get_profile       (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <p>
@@ -1631,19 +1466,17 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the name of the profile.
-</td>
+<td>a constant string representing the name of the profile.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_compat_get_avatar_file ()">
+<div class="refsect2">
 <a name="mc-account-compat-get-avatar-file"></a><h3>mc_account_compat_get_avatar_file ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_compat_get_avatar_file   (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -1651,19 +1484,17 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a constant string representing the filename of the avatar.
-</td>
+<td>a constant string representing the filename of the avatar.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_compat_set_profile ()">
+<div class="refsect2">
 <a name="mc-account-compat-set-profile"></a><h3>mc_account_compat_set_profile ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_profile      (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *profile</code></em>,
@@ -1673,49 +1504,9 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>profile</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_compat_set_secondary_vcard_fields ()">
+<div class="refsect2">
 <a name="mc-account-compat-set-secondary-vcard-fields"></a><h3>mc_account_compat_set_secondary_vcard_fields ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_compat_set_secondary_vcard_fields
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
@@ -1726,49 +1517,9 @@ Retrieves the profile name of <em class="parameter"><code>account</code></em>.
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> *weak_object</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>fields</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_conditions_call_when_ready ()">
+<div class="refsect2">
 <a name="mc-account-conditions-call-when-ready"></a><h3>mc_account_conditions_call_when_ready ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_conditions_call_when_ready
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
@@ -1785,25 +1536,22 @@ properties are ready.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the interface becomes ready or invalidated, whichever
-happens first.
-</td>
+happens first.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_conditions_get ()">
+<div class="refsect2">
 <a name="mc-account-conditions-get"></a><h3>mc_account_conditions_get ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mc_account_conditions_get           (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>);</pre>
 <p>
@@ -1814,21 +1562,19 @@ Retrieves the account conditions.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> containing the account conditions, where both keys
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> containing the account conditions, where both keys
 and values are NULL-terminated strings. It must not be modified or
-destroyed.
-</td>
+destroyed.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_conditions_set ()">
+<div class="refsect2">
 <a name="mc-account-conditions-set"></a><h3>mc_account_conditions_set ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_account_conditions_set          (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *conditions</code></em>,
@@ -1846,47 +1592,40 @@ modified by this method.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>conditions</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the conditions to set.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the conditions to set.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>callback to be invoked when the operation completes, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data for <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data for <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Datasets.html#GDestroyNotify"><span class="type">GDestroyNotify</span></a> function for <em class="parameter"><code>user_data</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>if not NULL, a GObject which will be weakly referenced; if it
 is destroyed, this call will automatically be cancelled. Must be NULL if
-callback is NULL.
-</td>
+callback is NULL.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> for the underlying D-Bus call.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="McAccountChannelrequestData">
+<div class="refsect2">
 <a name="McAccountChannelrequestData"></a><h3>McAccountChannelrequestData</h3>
 <pre class="programlisting">typedef struct {
     guint32 _mask;
@@ -1900,7 +1639,7 @@ callback is NULL.
 </p>
 </div>
 <hr>
-<div class="refsect2" title="enum McAccountChannelrequestEvent">
+<div class="refsect2">
 <a name="McAccountChannelrequestEvent"></a><h3>enum McAccountChannelrequestEvent</h3>
 <pre class="programlisting">typedef enum
 {
@@ -1913,7 +1652,7 @@ callback is NULL.
 </p>
 </div>
 <hr>
-<div class="refsect2" title="McAccountChannelrequestCb ()">
+<div class="refsect2">
 <a name="McAccountChannelrequestCb"></a><h3>McAccountChannelrequestCb ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*McAccountChannelrequestCb)        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> request_id</code></em>,
@@ -1934,34 +1673,29 @@ occur.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>request_id</code></em> :</span></p></td>
-<td>unique identifier of the channel request.
-</td>
+<td>unique identifier of the channel request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>event</code></em> :</span></p></td>
-<td>one <a class="link" href="McAccount.html#McAccountChannelrequestEvent" title="enum McAccountChannelrequestEvent"><span class="type">McAccountChannelrequestEvent</span></a>.
-</td>
+<td>one <a class="link" href="McAccount.html#McAccountChannelrequestEvent" title="enum McAccountChannelrequestEvent"><span class="type">McAccountChannelrequestEvent</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>the user data that was passed when registering the callback.
-</td>
+<td>the user data that was passed when registering the callback.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> that was passed when registering the callback.
-</td>
+<td>the <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> that was passed when registering the callback.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="enum McAccountChannelrequestFlags">
+<div class="refsect2">
 <a name="McAccountChannelrequestFlags"></a><h3>enum McAccountChannelrequestFlags</h3>
 <pre class="programlisting">typedef enum
 {
@@ -1979,7 +1713,7 @@ occur.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest"></a><h3>mc_account_channelrequest ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mc_account_channelrequest           (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McAccount.html#McAccountChannelrequestData" title="McAccountChannelrequestData"><span class="type">McAccountChannelrequestData</span></a> *req_data</code></em>,
@@ -2001,62 +1735,52 @@ functions is that this one takes the requested properties in the form of a
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>req_data</code></em> :</span></p></td>
 <td>a <a class="link" href="McAccount.html#McAccountChannelrequestData" title="McAccountChannelrequestData"><span class="type">McAccountChannelrequestData</span></a> struct with the requested fields
-set.
-</td>
+set.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_action_time</code></em> :</span></p></td>
-<td>the time at which user action occurred, or <code class="literal">0</code>.
-</td>
+<td>the time at which user action occurred, or <code class="literal">0</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
-<td>well-known name of the preferred handler, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>well-known name of the preferred handler, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>a combination of <a class="link" href="McAccount.html#McAccountChannelrequestFlags" title="enum McAccountChannelrequestFlags"><span class="type">McAccountChannelrequestFlags</span></a>.
-</td>
+<td>a combination of <a class="link" href="McAccount.html#McAccountChannelrequestFlags" title="enum McAccountChannelrequestFlags"><span class="type">McAccountChannelrequestFlags</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>called when something happens to the request.
-</td>
+<td>called when something happens to the request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the request has
-succeeded, failed or been cancelled.
-</td>
+succeeded, failed or been cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; if
-it is destroyed, this call will automatically be cancelled.
-</td>
+it is destroyed, this call will automatically be cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the unique ID of the channel request.
-</td>
+<td>the unique ID of the channel request.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_ht ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-ht"></a><h3>mc_account_channelrequest_ht ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mc_account_channelrequest_ht        (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *properties</code></em>,
@@ -2093,61 +1817,51 @@ if you want it to be cancelled, you need to call
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>properties</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the requested channel properties.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the requested channel properties.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_action_time</code></em> :</span></p></td>
-<td>the time at which user action occurred, or <code class="literal">0</code>.
-</td>
+<td>the time at which user action occurred, or <code class="literal">0</code>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>handler</code></em> :</span></p></td>
-<td>well-known name of the preferred handler, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>well-known name of the preferred handler, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
-<td>a combination of <a class="link" href="McAccount.html#McAccountChannelrequestFlags" title="enum McAccountChannelrequestFlags"><span class="type">McAccountChannelrequestFlags</span></a>.
-</td>
+<td>a combination of <a class="link" href="McAccount.html#McAccountChannelrequestFlags" title="enum McAccountChannelrequestFlags"><span class="type">McAccountChannelrequestFlags</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>called when something happens to the request.
-</td>
+<td>called when something happens to the request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the request has
-succeeded, failed or been cancelled.
-</td>
+succeeded, failed or been cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; if
-it is destroyed, this call will automatically be cancelled.
-</td>
+it is destroyed, this call will automatically be cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the unique ID of the channel request.
-</td>
+<td>the unique ID of the channel request.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_add ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-add"></a><h3>mc_account_channelrequest_add ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mc_account_channelrequest_add       (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *object_path</code></em>,
@@ -2165,52 +1879,44 @@ described by <em class="parameter"><code>object_path</code></em> and <em class="
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object_path</code></em> :</span></p></td>
-<td>the D-Bus object path of a channel request.
-</td>
+<td>the D-Bus object path of a channel request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>properties</code></em> :</span></p></td>
-<td>a D-Bus a{sv} of properties.
-</td>
+<td>a D-Bus a{sv} of properties.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
-<td>called when something happens to the request.
-</td>
+<td>called when something happens to the request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user data to be passed to <em class="parameter"><code>callback</code></em>.
-</td>
+<td>user data to be passed to <em class="parameter"><code>callback</code></em>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the request has
-succeeded, failed or been cancelled.
-</td>
+succeeded, failed or been cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; if
-it is destroyed, this call will automatically be cancelled.
-</td>
+it is destroyed, this call will automatically be cancelled.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the unique ID of the channel request, or <code class="literal">0</code> if the request was
-already being monitored by another callback.
-</td>
+<td>the unique ID of the channel request, or <code class="literal">0</code> if the request was
+already being monitored by another callback.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_cancel ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-cancel"></a><h3>mc_account_channelrequest_cancel ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mc_account_channelrequest_cancel    (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> request_id</code></em>);</pre>
@@ -2222,19 +1928,17 @@ Cancel the channel request identified by <em class="parameter"><code>request_id<
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>request_id</code></em> :</span></p></td>
-<td>the ID of the request to be cancelled.
-</td>
+<td>the ID of the request to be cancelled.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_get_error ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-get-error"></a><h3>mc_account_channelrequest_get_error ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="returnvalue">GError</span></a> *      mc_account_channelrequest_get_error (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> request_id</code></em>);</pre>
@@ -2247,24 +1951,21 @@ Get the last error which occurred on the channel request identified by
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>request_id</code></em> :</span></p></td>
-<td>the ID of the channel request.
-</td>
+<td>the ID of the channel request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> (not to be freed), or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> (not to be freed), or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_get_path ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-get-path"></a><h3>mc_account_channelrequest_get_path ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mc_account_channelrequest_get_path  (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> request_id</code></em>);</pre>
@@ -2279,24 +1980,21 @@ org.freedesktop.Telepathy.Client.Handler interface.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>request_id</code></em> :</span></p></td>
-<td>the ID of the channel request.
-</td>
+<td>the ID of the channel request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the object path of the channel request.
-</td>
+<td>the object path of the channel request.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_account_channelrequest_get_from_path ()">
+<div class="refsect2">
 <a name="mc-account-channelrequest-get-from-path"></a><h3>mc_account_channelrequest_get_from_path ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mc_account_channelrequest_get_from_path
                                                         (<em class="parameter"><code><a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account</code></em>,
@@ -2310,24 +2008,21 @@ This only works if the request was created by this process.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>object_path</code></em> :</span></p></td>
-<td>the D-Bus object path of a channel request.
-</td>
+<td>the D-Bus object path of a channel request.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the unique ID of the channel request, or <code class="literal">0</code>.
-</td>
+<td>the unique ID of the channel request, or <code class="literal">0</code>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_signal_callback_removed ()">
+<div class="refsect2">
 <a name="mc-cli-account-signal-callback-removed"></a><h3>mc_cli_account_signal_callback_removed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_signal_callback_removed)
                                                         (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
@@ -2342,24 +2037,21 @@ Represents the signature of a callback for the signal Removed.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
 <td>The proxy on which <a class="link" href="McAccount.html#mc-cli-account-connect-to-removed" title="mc_cli_account_connect_to_removed ()"><code class="function">mc_cli_account_connect_to_removed()</code></a>
- was called
-</td>
+was called</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data
-</td>
+<td>User-supplied data</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>User-supplied weakly referenced object
-</td>
+<td>User-supplied weakly referenced object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_connect_to_removed ()">
+<div class="refsect2">
 <a name="mc-cli-account-connect-to-removed"></a><h3>mc_cli_account_connect_to_removed ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_removed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
@@ -2379,53 +2071,47 @@ This account has been removed.          &lt;tp:rationale&gt;           This is r
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
-</td>
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>Callback to be called when the signal is
-  received
-</td>
+received</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data for the callback
-</td>
+<td>User-supplied data for the callback</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>Destructor for the user-supplied data, which
-  will be called when this signal is disconnected, or
-  before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+will be called when this signal is disconnected, or
+before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; 
-  if it is destroyed, this callback will automatically be
-  disconnected
-</td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced;
+if it is destroyed, this callback will automatically be
+disconnected</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to raise an error if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is
-  returned
-</td>
+returned</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
-or has become invalid.
-</td>
+or has become invalid.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_signal_callback_account_property_changed ()">
+<div class="refsect2">
 <a name="mc-cli-account-signal-callback-account-property-changed"></a><h3>mc_cli_account_signal_callback_account_property_changed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_signal_callback_account_property_changed)
                                                         (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
@@ -2441,29 +2127,25 @@ Represents the signature of a callback for the signal AccountPropertyChanged.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
 <td>The proxy on which <a class="link" href="McAccount.html#mc-cli-account-connect-to-account-property-changed" title="mc_cli_account_connect_to_account_property_changed ()"><code class="function">mc_cli_account_connect_to_account_property_changed()</code></a>
- was called
-</td>
+was called</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>arg_Properties</code></em> :</span></p></td>
-<td>A map from property names in this namespace (e.g.           &lt;tp:member-ref&gt;Nickname&lt;/tp:member-ref&gt;) to           values. Properties whose values have not changed SHOULD be           omitted, but this need not be done.
-</td>
+<td>A map from property names in this namespace (e.g.           &lt;tp:member-ref&gt;Nickname&lt;/tp:member-ref&gt;) to           values. Properties whose values have not changed SHOULD be           omitted, but this need not be done.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data
-</td>
+<td>User-supplied data</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>User-supplied weakly referenced object
-</td>
+<td>User-supplied weakly referenced object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_connect_to_account_property_changed ()">
+<div class="refsect2">
 <a name="mc-cli-account-connect-to-account-property-changed"></a><h3>mc_cli_account_connect_to_account_property_changed ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_connect_to_account_property_changed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
@@ -2483,53 +2165,47 @@ The values of one or more properties on this interface (that do not         spec
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
-</td>
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>Callback to be called when the signal is
-  received
-</td>
+received</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data for the callback
-</td>
+<td>User-supplied data for the callback</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>Destructor for the user-supplied data, which
-  will be called when this signal is disconnected, or
-  before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+will be called when this signal is disconnected, or
+before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; 
-  if it is destroyed, this callback will automatically be
-  disconnected
-</td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced;
+if it is destroyed, this callback will automatically be
+disconnected</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to raise an error if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is
-  returned
-</td>
+returned</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
-or has become invalid.
-</td>
+or has become invalid.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_callback_for_remove ()">
+<div class="refsect2">
 <a name="mc-cli-account-callback-for-remove"></a><h3>mc_cli_account_callback_for_remove ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_callback_for_remove)
                                                         (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
@@ -2545,30 +2221,26 @@ succeeds or fails.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>the proxy on which the call was made
-</td>
+<td>the proxy on which the call was made</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on success, or an error on failure
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on success, or an error on failure</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user-supplied data
-</td>
+<td>user-supplied data</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>user-supplied object
-</td>
+<td>user-supplied object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_call_remove ()">
+<div class="refsect2">
 <a name="mc-cli-account-call-remove"></a><h3>mc_cli_account_call_remove ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_remove         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> timeout_ms</code></em>,
@@ -2593,50 +2265,47 @@ Delete the account.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>timeout_ms</code></em> :</span></p></td>
 <td>the timeout in milliseconds, or -1 to use the
-  default
-</td>
+default</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the method call succeeds or fails;
-  may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to make a "fire and forget" call with no 
-  reply tracking
-</td>
+may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to make a "fire and forget" call with no
+reply tracking</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
 <td>user-supplied data passed to the callback;
-  must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the
-  call has succeeded, failed or been cancelled;
-  must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+call has succeeded, failed or been cancelled;
+must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be 
-  weakly referenced; if it is destroyed, this call 
-  will automatically be cancelled. Must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if 
-  <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be
+weakly referenced; if it is destroyed, this call
+will automatically be cancelled. Must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+<em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
- progress. It is borrowed from the object, and will become
- invalid when the callback is called, the call is
- cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
+progress. It is borrowed from the object, and will become
+invalid when the callback is called, the call is
+cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_callback_for_update_parameters ()">
+<div class="refsect2">
 <a name="mc-cli-account-callback-for-update-parameters"></a><h3>mc_cli_account_callback_for_update_parameters ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_callback_for_update_parameters)
                                                         (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
@@ -2653,35 +2322,30 @@ succeeds or fails.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>the proxy on which the call was made
-</td>
+<td>the proxy on which the call was made</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>out_Reconnect_Required</code></em> :</span></p></td>
-<td>Used to return an 'out' argument if <em class="parameter"><code>error</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>: A list of the names of parameters with changes that will not take           effect until the account is reconnected (this may be empty, e.g. if           all the parameters are D-Bus properties or parameters for which the           account manager has specific support). User interfaces that           require &amp;quot;instant apply&amp;quot; semantics MAY call           &lt;tp:member-ref&gt;Reconnect&lt;/tp:member-ref&gt; in response to receiving           a non-empty list.
-</td>
+<td>Used to return an 'out' argument if <em class="parameter"><code>error</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>: A list of the names of parameters with changes that will not take           effect until the account is reconnected (this may be empty, e.g. if           all the parameters are D-Bus properties or parameters for which the           account manager has specific support). User interfaces that           require &amp;quot;instant apply&amp;quot; semantics MAY call           &lt;tp:member-ref&gt;Reconnect&lt;/tp:member-ref&gt; in response to receiving           a non-empty list.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on success, or an error on failure
-</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> on success, or an error on failure</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>user-supplied data
-</td>
+<td>user-supplied data</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>user-supplied object
-</td>
+<td>user-supplied object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_call_update_parameters ()">
+<div class="refsect2">
 <a name="mc-cli-account-call-update-parameters"></a><h3>mc_cli_account_call_update_parameters ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="returnvalue">TpProxyPendingCall</span></a> * mc_cli_account_call_update_parameters
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
@@ -2709,60 +2373,55 @@ Start a UpdateParameters method call.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>timeout_ms</code></em> :</span></p></td>
 <td>the timeout in milliseconds, or -1 to use the
-  default
-</td>
+default</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>in_Set</code></em> :</span></p></td>
-<td>Used to pass an 'in' argument: A mapping from parameter names to their values. These parameters           should be stored for future use.
-</td>
+<td>Used to pass an 'in' argument: A mapping from parameter names to their values. These parameters           should be stored for future use.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>in_Unset</code></em> :</span></p></td>
-<td>Used to pass an 'in' argument: A list of the names of parameters to be removed from the set of           stored values, allowing the default values to be used.           If the given parameters were not, in fact, stored, or even if they           do not exist at all, the account manager MUST accept this without           error.
-</td>
+<td>Used to pass an 'in' argument: A list of the names of parameters to be removed from the set of           stored values, allowing the default values to be used.           If the given parameters were not, in fact, stored, or even if they           do not exist at all, the account manager MUST accept this without           error.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>called when the method call succeeds or fails;
-  may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to make a "fire and forget" call with no 
-  reply tracking
-</td>
+may be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to make a "fire and forget" call with no
+reply tracking</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
 <td>user-supplied data passed to the callback;
-  must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>called with the user_data as argument, after the
-  call has succeeded, failed or been cancelled;
-  must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+call has succeeded, failed or been cancelled;
+must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be 
-  weakly referenced; if it is destroyed, this call 
-  will automatically be cancelled. Must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if 
-  <em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+<td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be
+weakly referenced; if it is destroyed, this call
+will automatically be cancelled. Must be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
+<em class="parameter"><code>callback</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
- progress. It is borrowed from the object, and will become
- invalid when the callback is called, the call is
- cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.
-</td>
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxyPendingCall"><span class="type">TpProxyPendingCall</span></a> representing the call in
+progress. It is borrowed from the object, and will become
+invalid when the callback is called, the call is
+cancelled or the <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> becomes invalid.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_interface_avatar_signal_callback_avatar_changed ()">
+<div class="refsect2">
 <a name="mc-cli-account-interface-avatar-signal-callback-avatar-changed"></a><h3>mc_cli_account_interface_avatar_signal_callback_avatar_changed ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*mc_cli_account_interface_avatar_signal_callback_avatar_changed)
                                                         (<em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> *proxy</code></em>,
@@ -2777,24 +2436,21 @@ Represents the signature of a callback for the signal AvatarChanged.
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
 <td>The proxy on which <a class="link" href="McAccount.html#mc-cli-account-interface-avatar-connect-to-avatar-changed" title="mc_cli_account_interface_avatar_connect_to_avatar_changed ()"><code class="function">mc_cli_account_interface_avatar_connect_to_avatar_changed()</code></a>
- was called
-</td>
+was called</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data
-</td>
+<td>User-supplied data</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>User-supplied weakly referenced object
-</td>
+<td>User-supplied weakly referenced object</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mc_cli_account_interface_avatar_connect_to_avatar_changed ()">
+<div class="refsect2">
 <a name="mc-cli-account-interface-avatar-connect-to-avatar-changed"></a><h3>mc_cli_account_interface_avatar_connect_to_avatar_changed ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="returnvalue">TpProxySignalConnection</span></a> * mc_cli_account_interface_avatar_connect_to_avatar_changed
                                                         (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> proxy</code></em>,
@@ -2814,60 +2470,54 @@ Emitted when the Avatar property changes.          &lt;tp:rationale&gt;The avata
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>proxy</code></em> :</span></p></td>
-<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass
-</td>
+<td>A <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxy"><span class="type">TpProxy</span></a> or subclass</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>callback</code></em> :</span></p></td>
 <td>Callback to be called when the signal is
-  received
-</td>
+received</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>User-supplied data for the callback
-</td>
+<td>User-supplied data for the callback</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>destroy</code></em> :</span></p></td>
 <td>Destructor for the user-supplied data, which
-  will be called when this signal is disconnected, or
-  before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+will be called when this signal is disconnected, or
+before this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>weak_object</code></em> :</span></p></td>
-<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced; 
-  if it is destroyed, this callback will automatically be
-  disconnected
-</td>
+<td>A <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> which will be weakly referenced;
+if it is destroyed, this callback will automatically be
+disconnected</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
 <td>If not <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, used to raise an error if <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is
-  returned
-</td>
+returned</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
+<td>a <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-proxy.html#TpProxySignalConnection"><span class="type">TpProxySignalConnection</span></a> containing all of the
 above, which can be used to disconnect the signal; or
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if the proxy does not have the desired interface
-or has become invalid.
-</td>
+or has become invalid.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 </div>
-<div class="refsect1" title="Signal Details">
+<div class="refsect1">
 <a name="McAccount.signal-details"></a><h2>Signal Details</h2>
-<div class="refsect2" title='The "avatar-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-avatar-changed"></a><h3>The <code class="literal">"avatar-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>      *account,
                                                         <span class="type">GArray_guchar_</span> *avatar,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>          *mime_type,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last / Has Details</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when the avatar changes.
 This signal will be emitted only once
@@ -2878,18 +2528,15 @@ This signal will be emitted only once
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>avatar</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="type">GArray</span></a> of bytes, carrying the avatar data.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Arrays.html#GArray"><span class="type">GArray</span></a> of bytes, carrying the avatar data.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mime_type</code></em> :</span></p></td>
-<td>the MIME type of the avatar data.
-</td>
+<td>the MIME type of the avatar data.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -2899,11 +2546,11 @@ This signal will be emitted only once
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "channel-count-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-channel-count-changed"></a><h3>The <code class="literal">"channel-count-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>  *account,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *channel_count,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)          : Run Last</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)          : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
 <p>
 Emitted when the stats changes.
 The McAccount member data are updated in the signal closure, so use
@@ -2914,13 +2561,11 @@ The McAccount member data are updated in the signal closure, so use
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>channel_count</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the new channel counters.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> with the new channel counters.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -2930,12 +2575,12 @@ The McAccount member data are updated in the signal closure, so use
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "connection-status-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-connection-status-changed"></a><h3>The <code class="literal">"connection-status-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *mcaccount,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      arg1,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      arg2,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : Run Last</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS"><code class="literal">Run Last</code></a></pre>
 <p>
 </p>
 <div class="variablelist"><table border="0">
@@ -2943,18 +2588,7 @@ The McAccount member data are updated in the signal closure, so use
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>mcaccount</code></em> :</span></p></td>
-<td>the object which received the signal.
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>arg2</code></em> :</span></p></td>
-<td>
-</td>
+<td>the object which received the signal.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -2964,12 +2598,12 @@ The McAccount member data are updated in the signal closure, so use
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "flag-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-flag-changed"></a><h3>The <code class="literal">"flag-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      detail,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>   value,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : Run Last / Has Details</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when a boolean property changes (such as valid, enabled).
 </p>
@@ -2982,18 +2616,15 @@ been successfully invoked.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>detail</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> specifying which flag has changed.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> specifying which flag has changed.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>the new vaule for the boolean property.
-</td>
+<td>the new vaule for the boolean property.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -3003,12 +2634,12 @@ been successfully invoked.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "parameters-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-parameters-changed"></a><h3>The <code class="literal">"parameters-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>  *account,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *old,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *new,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)      : Run Last / Has Details</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>    user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when the account parameters change. Don't modify the passed-in
 hash tables.
@@ -3022,18 +2653,15 @@ been successfully invoked.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>old</code></em> :</span></p></td>
-<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> of the old account parameters.
-</td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> of the old account parameters.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>new</code></em> :</span></p></td>
-<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> of the new account parameters.
-</td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> of the new account parameters.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -3043,14 +2671,14 @@ been successfully invoked.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "presence-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-presence-changed"></a><h3>The <code class="literal">"presence-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      detail,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      type,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>     *status,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>     *message,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : Run Last / Has Details</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when the current, requested or automatic presence changes.
 </p>
@@ -3063,28 +2691,23 @@ been successfully invoked.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>detail</code></em> :</span></p></td>
-<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> specifying which presence has changed.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> specifying which presence has changed.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>the presence type.
-</td>
+<td>the presence type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
-<td>the presence status string.
-</td>
+<td>the presence status string.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>message</code></em> :</span></p></td>
-<td>the presence status message.
-</td>
+<td>the presence status message.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -3094,12 +2717,12 @@ been successfully invoked.
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title='The "string-changed" signal'>
+<div class="refsect2">
 <a name="McAccount-string-changed"></a><h3>The <code class="literal">"string-changed"</code> signal</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a> *account,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>      status,
                                                         <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>     *reason,
-                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : Run Last / Has Details</pre>
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>   user_data)      : <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Signals.html#G-SIGNAL-DETAILED:CAPS"><code class="literal">Has Details</code></a></pre>
 <p>
 Emitted when the connection status changes.
 </p>
@@ -3112,18 +2735,15 @@ been successfully invoked.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.
-</td>
+<td>the <a class="link" href="McAccount.html" title="McAccount"><span class="type">McAccount</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>status</code></em> :</span></p></td>
-<td>the connection status.
-</td>
+<td>the connection status.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>reason</code></em> :</span></p></td>
-<td>the connection status reason.
-</td>
+<td>the connection status reason.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
@@ -3136,6 +2756,6 @@ been successfully invoked.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>

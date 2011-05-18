@@ -8,7 +8,7 @@
 <link rel="up" href="ch01.html" title="libmissioncontrol-server">
 <link rel="prev" href="McdDispatcher.html" title="McdDispatcher">
 <link rel="next" href="libmissioncontrol-server-Debugging.html" title="Debugging">
-<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -26,7 +26,7 @@
                   <a href="#libmissioncontrol-server-mcd-dispatcher-context.description" class="shortcut">Description</a>
 </td></tr>
 </table>
-<div class="refentry" title="mcd-dispatcher-context">
+<div class="refentry">
 <a name="libmissioncontrol-server-mcd-dispatcher-context"></a><div class="titlepage"></div>
 <div class="refnamediv"><table width="100%"><tr>
 <td valign="top">
@@ -35,7 +35,7 @@
 </td>
 <td valign="top" align="right"></td>
 </tr></table></div>
-<div class="refsynopsisdiv" title="Synopsis">
+<div class="refsynopsisdiv">
 <a name="libmissioncontrol-server-mcd-dispatcher-context.synopsis"></a><h2>Synopsis</h2>
 <pre class="synopsis">#define             <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-PLUGIN-INIT-FUNC:CAPS" title="MCD_PLUGIN_INIT_FUNC">MCD_PLUGIN_INIT_FUNC</a>
 #define             <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-IN:CAPS" title="MCD_FILTER_IN">MCD_FILTER_IN</a>
@@ -49,7 +49,7 @@
 #define             <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-NOTICE:CAPS" title="MCD_FILTER_PRIORITY_NOTICE">MCD_FILTER_PRIORITY_NOTICE</a>
 #define             <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#MCD-FILTER-PRIORITY-LOW:CAPS" title="MCD_FILTER_PRIORITY_LOW">MCD_FILTER_PRIORITY_LOW</a>
                     <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdFilter" title="McdFilter">McdFilter</a>;
-<a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a>*      <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-dispatcher" title="mcd_dispatcher_context_get_dispatcher ()">mcd_dispatcher_context_get_dispatcher</a>
+<a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-dispatcher" title="mcd_dispatcher_context_get_dispatcher ()">mcd_dispatcher_context_get_dispatcher</a>
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);
 <a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#mcd-dispatcher-context-get-channel-object" title="mcd_dispatcher_context_get_channel_object ()">mcd_dispatcher_context_get_channel_object</a>
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);
@@ -66,14 +66,14 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> result</code></em>);
 </pre>
 </div>
-<div class="refsect1" title="Description">
+<div class="refsect1">
 <a name="libmissioncontrol-server-mcd-dispatcher-context.description"></a><h2>Description</h2>
 <p>
 </p>
 </div>
-<div class="refsect1" title="Details">
+<div class="refsect1">
 <a name="libmissioncontrol-server-mcd-dispatcher-context.details"></a><h2>Details</h2>
-<div class="refsect2" title="MCD_PLUGIN_INIT_FUNC">
+<div class="refsect2">
 <a name="MCD-PLUGIN-INIT-FUNC:CAPS"></a><h3>MCD_PLUGIN_INIT_FUNC</h3>
 <pre class="programlisting">#define MCD_PLUGIN_INIT_FUNC  "mcd_plugin_init"
 </pre>
@@ -81,7 +81,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_IN">
+<div class="refsect2">
 <a name="MCD-FILTER-IN:CAPS"></a><h3>MCD_FILTER_IN</h3>
 <pre class="programlisting">#define MCD_FILTER_IN  1&lt;&lt;0
 </pre>
@@ -89,7 +89,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_OUT">
+<div class="refsect2">
 <a name="MCD-FILTER-OUT:CAPS"></a><h3>MCD_FILTER_OUT</h3>
 <pre class="programlisting">#define MCD_FILTER_OUT 1&lt;&lt;1
 </pre>
@@ -97,37 +97,22 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="McdDispatcherContext">
+<div class="refsect2">
 <a name="McdDispatcherContext"></a><h3>McdDispatcherContext</h3>
 <pre class="programlisting">typedef struct _McdDispatcherContext McdDispatcherContext;</pre>
 <p>
 </p>
 </div>
 <hr>
-<div class="refsect2" title="McdFilterFunc ()">
+<div class="refsect2">
 <a name="McdFilterFunc"></a><h3>McdFilterFunc ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                (*McdFilterFunc)                    (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_PRIORITY_CRITICAL">
+<div class="refsect2">
 <a name="MCD-FILTER-PRIORITY-CRITICAL:CAPS"></a><h3>MCD_FILTER_PRIORITY_CRITICAL</h3>
 <pre class="programlisting">#define MCD_FILTER_PRIORITY_CRITICAL 10000
 </pre>
@@ -135,7 +120,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_PRIORITY_SYSTEM">
+<div class="refsect2">
 <a name="MCD-FILTER-PRIORITY-SYSTEM:CAPS"></a><h3>MCD_FILTER_PRIORITY_SYSTEM</h3>
 <pre class="programlisting">#define MCD_FILTER_PRIORITY_SYSTEM   20000
 </pre>
@@ -143,7 +128,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_PRIORITY_USER">
+<div class="refsect2">
 <a name="MCD-FILTER-PRIORITY-USER:CAPS"></a><h3>MCD_FILTER_PRIORITY_USER</h3>
 <pre class="programlisting">#define MCD_FILTER_PRIORITY_USER     30000
 </pre>
@@ -151,7 +136,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_PRIORITY_NOTICE">
+<div class="refsect2">
 <a name="MCD-FILTER-PRIORITY-NOTICE:CAPS"></a><h3>MCD_FILTER_PRIORITY_NOTICE</h3>
 <pre class="programlisting">#define MCD_FILTER_PRIORITY_NOTICE   40000
 </pre>
@@ -159,7 +144,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="MCD_FILTER_PRIORITY_LOW">
+<div class="refsect2">
 <a name="MCD-FILTER-PRIORITY-LOW:CAPS"></a><h3>MCD_FILTER_PRIORITY_LOW</h3>
 <pre class="programlisting">#define MCD_FILTER_PRIORITY_LOW	     50000
 </pre>
@@ -167,7 +152,7 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="McdFilter">
+<div class="refsect2">
 <a name="McdFilter"></a><h3>McdFilter</h3>
 <pre class="programlisting">typedef struct {
     McdFilterFunc func;
@@ -179,98 +164,38 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 </p>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_dispatcher ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-dispatcher"></a><h3>mcd_dispatcher_context_get_dispatcher ()</h3>
-<pre class="programlisting"><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a>*      mcd_dispatcher_context_get_dispatcher
+<pre class="programlisting"><a class="link" href="McdDispatcher.html" title="McdDispatcher"><span class="returnvalue">McdDispatcher</span></a> *     mcd_dispatcher_context_get_dispatcher
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_channel_object ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-channel-object"></a><h3>mcd_dispatcher_context_get_channel_object ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-channel.html#TpChannel"><span class="returnvalue">TpChannel</span></a> *         mcd_dispatcher_context_get_channel_object
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_connection_object ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-connection-object"></a><h3>mcd_dispatcher_context_get_connection_object ()</h3>
 <pre class="programlisting"><a href="http://telepathy.freedesktop.org/doc/telepathy-glib/telepathy-glib-connection.html#TpConnection"><span class="returnvalue">TpConnection</span></a> *      mcd_dispatcher_context_get_connection_object
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_channel ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-channel"></a><h3>mcd_dispatcher_context_get_channel ()</h3>
 <pre class="programlisting"><a class="link" href="McdChannel.html" title="McdChannel"><span class="returnvalue">McdChannel</span></a> *        mcd_dispatcher_context_get_channel  (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>);</pre>
 <p>
 </p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-</td>
-</tr>
-</tbody>
-</table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_channels ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-channels"></a><h3>mcd_dispatcher_context_get_channels ()</h3>
 <pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       mcd_dispatcher_context_get_channels (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *context</code></em>);</pre>
 <div class="variablelist"><table border="0">
@@ -278,19 +203,17 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
-<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.
-</td>
+<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> elements.
-</td>
+<td>a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> elements.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_channel_by_type ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-channel-by-type"></a><h3>mcd_dispatcher_context_get_channel_by_type ()</h3>
 <pre class="programlisting"><a class="link" href="McdChannel.html" title="McdChannel"><span class="returnvalue">McdChannel</span></a> *        mcd_dispatcher_context_get_channel_by_type
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *context</code></em>,
@@ -300,24 +223,21 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
-<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.
-</td>
+<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>type</code></em> :</span></p></td>
-<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> representing the channel type.
-</td>
+<td>the <a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> representing the channel type.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the first <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> of the requested type, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</td>
+<td>the first <a class="link" href="McdChannel.html" title="McdChannel"><span class="type">McdChannel</span></a> of the requested type, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_get_connection ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-get-connection"></a><h3>mcd_dispatcher_context_get_connection ()</h3>
 <pre class="programlisting"><a class="link" href="McdConnection.html" title="McdConnection"><span class="returnvalue">McdConnection</span></a> *     mcd_dispatcher_context_get_connection
                                                         (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *context</code></em>);</pre>
@@ -326,19 +246,17 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-L
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>context</code></em> :</span></p></td>
-<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.
-</td>
+<td>the <a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a>.</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td> the <a class="link" href="McdConnection.html" title="McdConnection"><span class="type">McdConnection</span></a>.
-</td>
+<td>the <a class="link" href="McdConnection.html" title="McdConnection"><span class="type">McdConnection</span></a>.</td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <hr>
-<div class="refsect2" title="mcd_dispatcher_context_process ()">
+<div class="refsect2">
 <a name="mcd-dispatcher-context-process"></a><h3>mcd_dispatcher_context_process ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcd_dispatcher_context_process      (<em class="parameter"><code><a class="link" href="libmissioncontrol-server-mcd-dispatcher-context.html#McdDispatcherContext" title="McdDispatcherContext"><span class="type">McdDispatcherContext</span></a> *ctx</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> result</code></em>);</pre>
@@ -358,25 +276,17 @@ code.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>ctx</code></em> :</span></p></td>
-<td>
-</td>
-</tr>
-<tr>
+<tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if the channels are to be destroyed
-</td>
-</tr>
-</tbody>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if the channels are to be destroyed</td>
+</tr></tbody>
 </table></div>
 </div>
 </div>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.15</div>
+          Generated by GTK-Doc V1.17</div>
 </body>
 </html>
