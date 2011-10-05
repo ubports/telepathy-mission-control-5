@@ -49,9 +49,6 @@
 #include "plugin-dispatch-operation.h"
 #include "plugin-loader.h"
 
-#include <libmcclient/mc-errors.h>
-#include "libmcclient/mc-gtypes.h"
-
 #define MCD_DISPATCH_OPERATION_PRIV(operation) (MCD_DISPATCH_OPERATION (operation)->priv)
 
 static void
@@ -156,6 +153,7 @@ approval_free (Approval *approval)
     /* we should have replied to the method call by now */
     g_assert (approval->context == NULL);
 
+    g_free (approval->client_bus_name);
     g_slice_free (Approval, approval);
 }
 
@@ -501,12 +499,28 @@ _mcd_dispatch_operation_check_client_locks (McdDispatchOperation *self)
                 continue;
 
             DEBUG ("Internal handler for request channel #%u", i);
+            _mcd_handler_map_set_channel_handled_internally (
+                self->priv->handler_map,
+                mcd_channel_get_tp_channel (channel),
+                _mcd_dispatch_operation_get_account_path (self));
             _mcd_request_handle_internally (request, channel, TRUE);
         }
 
         /* The rest of this function deals with externally handled requests: *
          * Since these requests were internal, we need not trouble ourselves *
          * further (and infact would probably trigger errors if we tried)    */
+        return;
+    }
+
+    /* If there are no potential handlers, the story ends here: we don't
+     * want to run approvers in this case */
+    if (self->priv->possible_handlers == NULL)
+    {
+        GError incapable = { TP_ERRORS, TP_ERROR_NOT_CAPABLE,
+            "No possible handlers, giving up" };
+
+        DEBUG ("%s", incapable.message);
+        _mcd_dispatch_operation_close_as_undispatchable (self, &incapable);
         return;
     }
 
@@ -550,6 +564,7 @@ _mcd_dispatch_operation_check_client_locks (McdDispatchOperation *self)
             g_source_remove (approver_event_id);
         }
 
+        approval_free (approval);
         return;
     }
     else if (approval != NULL && approval->type == APPROVAL_TYPE_HANDLE_WITH)
@@ -843,6 +858,7 @@ _mcd_dispatch_operation_finish (McdDispatchOperation *operation,
                          * it's OK to not distinguish */
                         tp_svc_channel_dispatch_operation_return_from_handle_with (
                             approval->context);
+                        approval->context = NULL;
                     }
                     else
                     {
@@ -851,6 +867,7 @@ _mcd_dispatch_operation_finish (McdDispatchOperation *operation,
                                successful_handler);
                         dbus_g_method_return_error (approval->context,
                                                     priv->result);
+                        approval->context = NULL;
                     }
                 }
                 else
@@ -862,13 +879,18 @@ _mcd_dispatch_operation_finish (McdDispatchOperation *operation,
                            g_quark_to_string (priv->result->domain),
                            priv->result->code, priv->result->message);
                     dbus_g_method_return_error (approval->context, priv->result);
+                    approval->context = NULL;
                 }
 
                 break;
 
             default:
-                {} /* do nothing */
+                {   /* there shouldn't be a dbus context for these: */
+                    g_assert (approval->context == NULL);
+                }
         }
+
+        approval_free (approval);
     }
 
     if (mcd_dispatch_operation_may_signal_finished (operation))
@@ -1058,12 +1080,6 @@ mcd_dispatch_operation_constructor (GType type, guint n_params,
 
     if (!priv->client_registry || !priv->handler_map)
         goto error;
-
-    if (priv->possible_handlers == NULL && !priv->observe_only)
-    {
-        g_critical ("!observe_only => possible_handlers must not be NULL");
-        goto error;
-    }
 
     if (priv->needs_approval && priv->observe_only)
     {
@@ -1433,9 +1449,6 @@ _mcd_dispatch_operation_new (McdClientRegistry *client_registry,
                              const gchar * const *possible_handlers)
 {
     gpointer *obj;
-
-    /* possible-handlers is only allowed to be NULL if we're only observing */
-    g_return_val_if_fail (possible_handlers != NULL || observe_only, NULL);
 
     /* If we're only observing, then the channels were requested "behind MC's
      * back", so they can't need approval (i.e. observe_only implies
@@ -1808,8 +1821,13 @@ _mcd_dispatch_operation_handlers_can_bypass_approval (
     if (_mcd_dispatch_operation_is_internal (self))
         return TRUE;
 
+    /* special case: we don't have any handlers at all, so we don't want
+     * approval - we're just going to fail */
+    if (self->priv->possible_handlers == NULL)
+        return TRUE;
+
     for (iter = self->priv->possible_handlers;
-         iter != NULL && *iter != NULL;
+         *iter != NULL;
          iter++)
     {
         McdClientProxy *handler = _mcd_client_registry_lookup (
@@ -2009,8 +2027,10 @@ collect_satisfied_requests (const GList *channels,
     }
 
     satisfied_requests = g_ptr_array_sized_new (g_hash_table_size (set));
+    g_ptr_array_set_free_func (satisfied_requests, g_free);
+
     request_properties = g_hash_table_new_full (g_str_hash, g_str_equal,
-        NULL, (GDestroyNotify) g_hash_table_unref);
+        g_free, (GDestroyNotify) g_hash_table_unref);
 
     g_hash_table_iter_init (&it, set);
 
@@ -2018,11 +2038,13 @@ collect_satisfied_requests (const GList *channels,
     {
         GHashTable *props;
 
-        g_ptr_array_add (satisfied_requests, path);
+        g_ptr_array_add (satisfied_requests, g_strdup (path));
         props = _mcd_request_dup_immutable_properties (value);
         g_assert (props != NULL);
-        g_hash_table_insert (request_properties, path, props);
+        g_hash_table_insert (request_properties, g_strdup (path), props);
     }
+
+    g_hash_table_unref (set);
 
     if (paths_out != NULL)
         *paths_out = satisfied_requests;
@@ -2088,9 +2110,8 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
                                     &request_properties);
 
         /* transfer ownership into observer_info */
-        /* FIXME: use telepathy-glib type when available */
         tp_asv_take_boxed (observer_info, "request-properties",
-            MC_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP,
+            TP_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP,
             request_properties);
         request_properties = NULL;
 
@@ -2110,8 +2131,6 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
             observe_channels_cb,
             g_object_ref (self), g_object_unref, NULL);
 
-        /* don't free the individual object paths, which are borrowed from the
-         * McdChannel objects */
         g_ptr_array_unref (satisfied_requests);
 
         _mcd_tp_channel_details_free (channels_array);
@@ -2320,7 +2339,7 @@ mcd_dispatch_operation_handle_channels (McdDispatchOperation *self)
     collect_satisfied_requests (self->priv->channels, NULL,
                                 &request_properties);
     tp_asv_take_boxed (handler_info, "request-properties",
-        MC_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP, request_properties);
+        TP_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP, request_properties);
     request_properties = NULL;
 
     _mcd_client_proxy_handle_channels (self->priv->trying_handler,
@@ -2498,7 +2517,7 @@ _mcd_dispatch_operation_close_as_undispatchable (McdDispatchOperation *self,
     for (list = channels; list != NULL; list = list->next)
     {
         McdChannel *channel = MCD_CHANNEL (list->data);
-        GError e = { MC_ERROR, MC_CHANNEL_REQUEST_GENERIC_ERROR,
+        GError e = { TP_ERROR, TP_ERROR_NOT_AVAILABLE,
             "Handler no longer available" };
 
         mcd_channel_take_error (channel, g_error_copy (&e));
@@ -2603,4 +2622,12 @@ _mcd_dispatch_operation_destroy_channels (McdDispatchOperation *self)
     }
 
     _mcd_dispatch_operation_forget_channels (self);
+}
+
+/* This should really be called ..._has_invoked_observers_if_needed,
+ * but that name would be ridiculous. */
+gboolean
+_mcd_dispatch_operation_has_invoked_observers (McdDispatchOperation *self)
+{
+    return self->priv->invoked_observers_if_needed;
 }

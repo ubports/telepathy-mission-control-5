@@ -78,8 +78,9 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmission_control_plugins_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am_libmission_control_plugins_la_OBJECTS = account.lo \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+am_libmission_control_plugins_la_OBJECTS = debug.lo account.lo \
 	account-storage.lo dbus-acl.lo dispatch-operation.lo \
 	dispatch-operation-policy.lo loader.lo request.lo \
 	request-policy.lo
@@ -141,7 +142,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -163,6 +165,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -171,6 +175,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -190,7 +196,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -200,6 +205,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -217,7 +224,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -230,6 +236,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -294,6 +302,7 @@ INCLUDES = \
 	$(TELEPATHY_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
+	$(GIO_CFLAGS) \
 	-I$(top_srcdir) \
 	-I$(top_builddir) \
 	-DG_LOG_DOMAIN=\"mc-plugins\" \
@@ -311,6 +320,7 @@ plugins_include_HEADERS = \
 	account.h \
 	account-storage.h \
 	dbus-acl.h \
+	debug.h \
 	dispatch-operation.h \
 	dispatch-operation-policy.h \
 	loader.h \
@@ -325,7 +335,8 @@ libmission_control_plugins_la_LDFLAGS = \
 libmission_control_plugins_la_LIBADD = \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
-	$(GLIB_LIBS)
+	$(GLIB_LIBS) \
+	$(GIO_LIBS)
 
 nodist_libmission_control_plugins_la_SOURCES = \
 	mcp-signals-marshal.c \
@@ -333,6 +344,8 @@ nodist_libmission_control_plugins_la_SOURCES = \
 
 libmission_control_plugins_la_SOURCES = \
 	debug-internal.h \
+	debug.h \
+	debug.c \
 	account.c \
 	account-storage.c \
 	dbus-acl.c \
@@ -423,6 +436,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbus-acl.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/debug.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dispatch-operation-policy.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dispatch-operation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loader.Plo@am__quote@
@@ -689,11 +703,11 @@ uninstall-am: uninstall-libLTLIBRARIES \
 
 
 %-signals-marshal.h: %-signals-marshal.list Makefile
-	glib-genmarshal --header --prefix=_$(subst -,_,$(notdir $*))_marshal $< \
+	$(AM_V_GEN)glib-genmarshal --header --prefix=_$(subst -,_,$(notdir $*))_marshal $< \
 	  > $*-signals-marshal.h
 
 %-signals-marshal.c: %-signals-marshal.list Makefile
-	{ echo '#include "$(notdir $*)-signals-marshal.h"' && \
+	$(AM_V_GEN){ echo '#include "$(notdir $*)-signals-marshal.h"' && \
 	  glib-genmarshal --body --prefix=_$(subst -,_,$(notdir $*))_marshal $<; } \
 	    > $*-signals-marshal.c
 

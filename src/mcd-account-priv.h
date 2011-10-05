@@ -28,7 +28,6 @@
 #define __MCD_ACCOUNT_PRIV_H__
 
 #include "mcd-account.h"
-#include "mcd-account-compat.h"
 #include "mcd-account-config.h"
 #include "mcd-channel.h"
 #include "mcd-dbusprop.h"
@@ -39,7 +38,6 @@
 
 /* auto-generated stubs */
 #include "_gen/svc-Account_Interface_Addressing.h"
-#include "_gen/svc-Account_Interface_ChannelRequests.h"
 #include "_gen/svc-Account_Interface_Compat.h"
 #include "_gen/svc-Account_Interface_Conditions.h"
 #include "_gen/svc-Account_Interface_External_Password_Storage.h"
@@ -108,18 +106,8 @@ typedef void (*McdOnlineRequestCb) (McdAccount *account, gpointer userdata,
 void _mcd_account_online_request (McdAccount *account,
                                   McdOnlineRequestCb callback,
                                   gpointer userdata);
-void _mcd_account_connect_with_auto_presence (McdAccount *account);
-G_GNUC_INTERNAL
-void _mcd_account_online_request_completed (McdAccount *account,
-                                            GError *error);
-
-typedef struct {
-    McdOnlineRequestCb callback;
-    gpointer user_data;
-} McdOnlineRequestData;
-
-G_GNUC_INTERNAL
-GList *_mcd_account_get_online_requests (McdAccount *account);
+void _mcd_account_connect_with_auto_presence (McdAccount *account,
+                                              gboolean user_initiated);
 
 G_GNUC_INTERNAL McdStorage *_mcd_account_get_storage (McdAccount *account);
 
@@ -140,7 +128,8 @@ extern const McdDBusProp account_compat_properties[];
 void account_compat_iface_init (McSvcAccountInterfaceCompatClass *iface,
 				     gpointer iface_data);
 
-G_GNUC_INTERNAL void _mcd_account_connection_begin (McdAccount *account);
+G_GNUC_INTERNAL void _mcd_account_connection_begin (McdAccount *account,
+                                                    gboolean user_initiated);
 G_GNUC_INTERNAL void _mcd_account_connection_class_init (McdAccountClass *klass);
 G_GNUC_INTERNAL McdTransport *_mcd_account_connection_get_transport
     (McdAccount *account);
@@ -153,9 +142,6 @@ G_GNUC_INTERNAL McdChannel *_mcd_account_create_request (
     const gchar *preferred_handler, GHashTable *request_metadata,
     gboolean use_existing,
     McdRequest **request_out, GError **error);
-
-void account_channelrequests_iface_init
-    (McSvcAccountInterfaceChannelRequestsClass *iface, gpointer iface_data);
 
 typedef struct _McdAccountConnectionContext McdAccountConnectionContext;
 
@@ -194,11 +180,6 @@ G_GNUC_INTERNAL gboolean _mcd_account_set_enabled (McdAccount *account,
                                                    gboolean enabled,
                                                    gboolean write_out,
                                                    GError **error);
-
-G_GNUC_INTERNAL void _mcd_account_get_requested_presence (McdAccount *account,
-                                                          TpConnectionPresenceType *presence,
-                                                          const gchar **status,
-                                                          const gchar **message);
 
 G_GNUC_INTERNAL gboolean _mcd_account_presence_type_is_settable (
         TpConnectionPresenceType type);

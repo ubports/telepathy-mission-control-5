@@ -46,6 +46,7 @@ libmission-control-plugins.so.0 libmission-control-plugins0 #MINVER#
  mcp_dbus_acl_iface_set_desc@Base 1:5.5.3~
  mcp_dbus_acl_iface_set_name@Base 1:5.5.3~
  mcp_dbus_acl_name@Base 1:5.5.3~
+ mcp_debug_init@Base 1:5.9.3
  mcp_dispatch_operation_close_channels@Base 5.5.0~
  mcp_dispatch_operation_destroy_channels@Base 5.5.0~
  mcp_dispatch_operation_end_delay@Base 5.5.0~
@@ -67,6 +68,7 @@ libmission-control-plugins.so.0 libmission-control-plugins0 #MINVER#
  mcp_dispatch_operation_ref_nth_channel@Base 5.5.0~
  mcp_dispatch_operation_ref_nth_channel_properties@Base 5.5.0~
  mcp_dispatch_operation_start_delay@Base 5.5.0~
+ mcp_is_debugging@Base 1:5.9.3
  mcp_list_objects@Base 5.5.0~
  mcp_read_dir@Base 5.5.0~
  mcp_request_deny@Base 5.5.0~

@@ -37,7 +37,6 @@
 #include "plugin-loader.h"
 #include "plugin-request.h"
 #include "_gen/interfaces.h"
-#include "_gen/svc-request.h"
 
 enum {
     PROP_0,
@@ -277,6 +276,15 @@ _mcd_request_dispose (GObject *object)
 
   DEBUG ("%p", object);
 
+  /* shouldn't ever actually get this far with a blocked account, *
+   * but we have to clear the lock if we do or we'll deadlock     */
+  if (_mcd_request_is_internal (self) && self->account != NULL)
+    {
+      const gchar *path = mcd_account_get_object_path (self->account);
+      _mcd_request_unblock_account (path);
+      g_warning ("internal request disposed without being handled or failed");
+    }
+
   tp_clear_object (&self->account);
   tp_clear_object (&self->clients);
   tp_clear_object (&self->predicted_handler);
@@ -455,6 +463,7 @@ _mcd_request_handle_internally (McdRequest *self,
 {
   if (self->internal_handler != NULL)
     {
+      DEBUG ("Handling request %p, channel %p internally", self, channel);
       self->internal_handler (self, channel, self->internal_handler_data,
           close_after);
 

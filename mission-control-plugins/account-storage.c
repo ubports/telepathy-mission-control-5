@@ -78,17 +78,20 @@
 #include <mission-control-plugins/mission-control-plugins.h>
 #include <mission-control-plugins/mcp-signals-marshal.h>
 #include <mission-control-plugins/implementation.h>
+#include <mission-control-plugins/debug-internal.h>
 #include <glib.h>
+
+#define MCP_DEBUG_TYPE  MCP_DEBUG_ACCOUNT_STORAGE
 
 #ifdef ENABLE_DEBUG
 
-#define DEBUG(_p, _format, ...) \
-  g_debug ("%s: %s: " _format, G_STRFUNC, \
-      (_p != NULL) ? mcp_account_storage_name (_p) : "NULL", ##__VA_ARGS__)
+#define SDEBUG(_p, _format, ...) \
+  DEBUG("%s: " _format, \
+        (_p != NULL) ? mcp_account_storage_name (_p) : "NULL", ##__VA_ARGS__)
 
 #else  /* ENABLE_DEBUG */
 
-#define DEBUG(_p, _format, ...) do {} while (0);
+#define SDEBUG(_p, _format, ...) do {} while (0);
 
 #endif /* ENABLE_DEBUG */
 
@@ -331,7 +334,7 @@ mcp_account_storage_iface_implement_get_restrictions (
  * mcp_account_storage_priority:
  * @storage: an #McpAccountStorage instance
  *
- * Returns a #gint indicating the priority of the plugin.
+ * Gets the priority for this plugin.
  *
  * Priorities currently run from MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT
  * (the default storage plugin priority) upwards.
@@ -358,6 +361,8 @@ mcp_account_storage_iface_implement_get_restrictions (
  * to lowest, with the first plugin that claims a setting being assigned
  * ownership, and all lower priority plugins being asked to delete the
  * setting in question.
+ *
+ * Returns: the priority of this plugin
  **/
 gint
 mcp_account_storage_priority (const McpAccountStorage *storage)
@@ -386,7 +391,7 @@ mcp_account_storage_priority (const McpAccountStorage *storage)
  * into the account manager via @am. The return value in this case should
  * be %TRUE if any settings were found.
  *
- * Returns: a #gboolean - %TRUE if a value was found and %FALSE otherwise
+ * Returns: %TRUE if a value was found and %FALSE otherwise
  */
 gboolean
 mcp_account_storage_get (const McpAccountStorage *storage,
@@ -396,7 +401,7 @@ mcp_account_storage_get (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_val_if_fail (iface != NULL, FALSE);
 
   return iface->get (storage, am, account, key);
@@ -417,21 +422,21 @@ mcp_account_storage_get (const McpAccountStorage *storage,
  * The plugin is not expected to write to its long term storage
  * at this point.
  *
- * Returns: a #gboolean - %TRUE if the setting was claimed, %FALSE otherwise
+ * Returns: %TRUE if the setting was claimed, %FALSE otherwise
  */
 gboolean
 mcp_account_storage_set (const McpAccountStorage *storage,
     const McpAccountManager *am,
     const gchar *account,
     const gchar *key,
-    const gchar *val)
+    const gchar *value)
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_val_if_fail (iface != NULL, FALSE);
 
-  return iface->set (storage, am, account, key, val);
+  return iface->set (storage, am, account, key, value);
 }
 
 /**
@@ -452,7 +457,7 @@ mcp_account_storage_set (const McpAccountStorage *storage,
  * The plugin is not expected to update its long term storage at
  * this point.
  *
- * Returns: a #gboolean - %TRUE if the setting or settings are not
+ * Returns: %TRUE if the setting or settings are not
  * the plugin's cache after this operation, %FALSE otherwise.
  * This is very unlikely to ever be %FALSE, as a plugin is always
  * expected to be able to manipulate its own cache.
@@ -465,7 +470,7 @@ mcp_account_storage_delete (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_val_if_fail (iface != NULL, FALSE);
 
   return iface->delete (storage, am, account, key);
@@ -488,8 +493,9 @@ mcp_account_storage_delete (const McpAccountStorage *storage,
  * implemented but @commit is not, @commit_one will be called with
  * @account_name = %NULL to commit all accounts.
  *
- * Returns: a gboolean - normally %TRUE, %FALSE if there was a problem
- * that was immediately obvious.
+ * Returns: %TRUE if the commit process was started (but not necessarily
+ * completed) successfully; %FALSE if there was a problem that was immediately
+ * obvious.
  */
 gboolean
 mcp_account_storage_commit (const McpAccountStorage *storage,
@@ -497,7 +503,7 @@ mcp_account_storage_commit (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "committing all accounts");
+  SDEBUG (storage, "committing all accounts");
   g_return_val_if_fail (iface != NULL, FALSE);
 
   if (iface->commit != NULL)
@@ -510,7 +516,7 @@ mcp_account_storage_commit (const McpAccountStorage *storage,
     }
   else
     {
-      DEBUG (storage,
+      SDEBUG (storage,
           "neither commit nor commit_one is implemented; cannot save accounts");
       return FALSE;
     }
@@ -527,8 +533,9 @@ mcp_account_storage_commit (const McpAccountStorage *storage,
  * account. This is optional to implement; the default implementation
  * is to call @commit.
  *
- * Returns: a gboolean - normally %TRUE, %FALSE if there was a problem
- * that was immediately obvious.
+ * Returns: %TRUE if the commit process was started (but not necessarily
+ * completed) successfully; %FALSE if there was a problem that was immediately
+ * obvious.
  */
 gboolean
 mcp_account_storage_commit_one (const McpAccountStorage *storage,
@@ -537,7 +544,7 @@ mcp_account_storage_commit_one (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "called for %s", account ? account : "<all accounts>");
+  SDEBUG (storage, "called for %s", account ? account : "<all accounts>");
   g_return_val_if_fail (iface != NULL, FALSE);
 
   if (iface->commit_one != NULL)
@@ -555,9 +562,10 @@ mcp_account_storage_commit_one (const McpAccountStorage *storage,
  * This method is called only at initialisation time, before the dbus name
  * has been claimed, and is the only one permitted to block.
  *
- * Returns: a #GList of #gchar* (the unique account names) that the plugin
- * has settings for. The #GList (and its contents) should be freed when the
- * caller is done with them.
+ * Returns: (element-type utf8) (transfer full): a list of account names that
+ * the plugin has settings for. The account names should be freed with
+ * g_free(), and the list with g_list_free(), when the caller is done with
+ * them.
  **/
 GList *
 mcp_account_storage_list (const McpAccountStorage *storage,
@@ -565,7 +573,7 @@ mcp_account_storage_list (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_val_if_fail (iface != NULL, NULL);
 
   return iface->list (storage, am);
@@ -574,6 +582,7 @@ mcp_account_storage_list (const McpAccountStorage *storage,
 /**
  * mcp_account_storage_ready:
  * @storage: an #McpAccountStorage instance
+ * @am: an #McpAccountManager instance
  *
  * Informs the plugin that it is now permitted to create new accounts,
  * ie it can now fire its "created", "altered", "toggled" and "deleted"
@@ -611,7 +620,7 @@ mcp_account_storage_get_identifier (const McpAccountStorage *storage,
 {
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_if_fail (iface != NULL);
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (!G_IS_VALUE (identifier));
@@ -635,8 +644,8 @@ mcp_account_storage_get_identifier (const McpAccountStorage *storage,
  * Return additional storage-specific information about this account, which is
  * made available on D-Bus but not otherwise interpreted by Mission Control.
  *
- * Returns: a caller owned #GHashTable mapping with string keys and #GValue
- * values.
+ * Returns: a mapping from strings to #GValue<!-- -->s, which must be freed by
+ * the caller.
  */
 GHashTable *
 mcp_account_storage_get_additional_info (const McpAccountStorage *storage,
@@ -645,7 +654,7 @@ mcp_account_storage_get_additional_info (const McpAccountStorage *storage,
   McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
   GHashTable *ret = NULL;
 
-  DEBUG (storage, "");
+  SDEBUG (storage, "");
   g_return_val_if_fail (iface != NULL, FALSE);
 
   if (iface->get_additional_info != NULL)
@@ -684,7 +693,7 @@ mcp_account_storage_get_restrictions (const McpAccountStorage *storage,
  * mcp_account_storage_name:
  * @storage: an #McpAccountStorage instance
  *
- * Returns: a const #gchar* : the plugin's name (for logging etc)
+ * Returns: the plugin's name (for logging etc)
  */
 const gchar *
 mcp_account_storage_name (const McpAccountStorage *storage)
@@ -700,7 +709,7 @@ mcp_account_storage_name (const McpAccountStorage *storage)
  * mcp_account_storage_description:
  * @storage: an #McpAccountStorage instance
  *
- * Returns: a const #gchar* : the plugin's description (for logging etc)
+ * Returns: the plugin's description (for logging etc)
  */
 const gchar *
 mcp_account_storage_description (const McpAccountStorage *storage)
@@ -716,8 +725,7 @@ mcp_account_storage_description (const McpAccountStorage *storage)
  * mcp_account_storage_provider:
  * @storage: an #McpAccountStorage instance
  *
- * Returns: a const #gchar* : the plugin's provider, a DBus namespaced name for
- * this plugin.
+ * Returns: a DBus namespaced name for this plugin.
  */
 const gchar *
 mcp_account_storage_provider (const McpAccountStorage *storage)

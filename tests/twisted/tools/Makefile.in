@@ -72,7 +72,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -94,6 +95,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -102,6 +105,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -121,7 +126,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -131,6 +135,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -148,7 +154,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -161,6 +166,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -433,19 +440,19 @@ uninstall-am:
 	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am
 
 exec-with-log.sh: exec-with-log.sh.in Makefile
-	sed -e "s|[@]abs_top_srcdir[@]|@abs_top_srcdir@|g" \
+	$(AM_V_GEN)sed -e "s|[@]abs_top_srcdir[@]|@abs_top_srcdir@|g" \
 		-e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" \
 		$< > $@
-	chmod +x $@
+	$(AM_V_at)chmod +x $@
 
 %.conf: %.conf.in
-	sed -e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" $< > $@
+	$(AM_V_GEN)sed -e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" $< > $@
 
 # We don't use the full filename for the .in because > 99 character filenames
 # in tarballs are non-portable (and automake 1.8 doesn't let us build
 # non-archaic tarballs)
 org.freedesktop.Telepathy.%.service: %.service.in
-	sed \
+	$(AM_V_GEN)sed \
 		-e "s|[@]abs_top_srcdir[@]|@abs_top_srcdir@|g" \
 		-e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" \
 		$< > $@

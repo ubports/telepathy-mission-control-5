@@ -2,6 +2,7 @@ INCLUDES = \
 	$(TELEPATHY_CFLAGS) \
 	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
+	$(GIO_CFLAGS) \
 	-I$(top_srcdir) \
 	-I$(top_builddir) \
 	-DG_LOG_DOMAIN=\"mc-plugins\" \
@@ -22,6 +23,7 @@ plugins_include_HEADERS = \
 	account.h \
 	account-storage.h \
 	dbus-acl.h \
+	debug.h \
 	dispatch-operation.h \
 	dispatch-operation-policy.h \
 	loader.h \
@@ -36,7 +38,8 @@ libmission_control_plugins_la_LDFLAGS = \
 libmission_control_plugins_la_LIBADD = \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
-	$(GLIB_LIBS)
+	$(GLIB_LIBS) \
+	$(GIO_LIBS)
 
 nodist_libmission_control_plugins_la_SOURCES = \
 	mcp-signals-marshal.c \
@@ -44,6 +47,8 @@ nodist_libmission_control_plugins_la_SOURCES = \
 
 libmission_control_plugins_la_SOURCES = \
 	debug-internal.h \
+	debug.h \
+	debug.c \
 	account.c \
 	account-storage.c \
 	dbus-acl.c \
@@ -59,10 +64,10 @@ BUILT_SOURCES = $(nodist_libmission_control_plugins_la_SOURCES)
 CLEANFILES = $(BUILT_SOURCES)
 
 %-signals-marshal.h: %-signals-marshal.list Makefile
-	glib-genmarshal --header --prefix=_$(subst -,_,$(notdir $*))_marshal $< \
+	$(AM_V_GEN)glib-genmarshal --header --prefix=_$(subst -,_,$(notdir $*))_marshal $< \
 	  > $*-signals-marshal.h
 
 %-signals-marshal.c: %-signals-marshal.list Makefile
-	{ echo '#include "$(notdir $*)-signals-marshal.h"' && \
+	$(AM_V_GEN){ echo '#include "$(notdir $*)-signals-marshal.h"' && \
 	  glib-genmarshal --body --prefix=_$(subst -,_,$(notdir $*))_marshal $<; } \
 	    > $*-signals-marshal.c

@@ -72,7 +72,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -94,6 +95,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -102,6 +105,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -121,7 +126,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -131,6 +135,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -148,7 +154,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -161,6 +166,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -226,31 +233,15 @@ XSLTFLAGS = --nonet --novalid
 DROP_NAMESPACE = sed -e 's@xmlns:tp="http://telepathy\.freedesktop\.org/wiki/DbusSpec.extensions-v0"@@g'
 DROP_TPTYPE = sed -e 's@tp:type="[^"]*"@@g'
 SPECS = \
-	Account_Manager.xml \
 	Account_Manager_Interface_Hidden.xml \
 	Account_Manager_Interface_Query.xml \
-	Account.xml \
-	Account_Interface_Avatar.xml \
 	Account_Interface_Addressing.xml \
-	Account_Interface_ChannelRequests.xml \
 	Account_Interface_Compat.xml \
 	Account_Interface_Conditions.xml \
 	Account_Interface_External_Password_Storage.xml \
 	Account_Interface_Hidden.xml \
-	Channel_Dispatch_Operation.xml \
-	Channel_Dispatcher.xml \
-	Channel_Dispatcher_Interface_Operation_List.xml \
-	Channel_Request.xml \
-	Client.xml \
-	Client_Approver.xml \
-	Client_Handler.xml \
-	Client_Interface_Requests.xml \
-	Client_Observer.xml \
 	Connection_Manager_Interface_Account_Storage.xml \
-        Connection_Interface_Contact_Capabilities.xml \
-        Connection_Interface_Contact_Capabilities_Draft1.xml \
-        Channel_Dispatcher_Interface_Messages_DRAFT.xml \
-	Connection_Interface_Power_Saving.xml
+	Channel_Dispatcher_Interface_Messages_DRAFT.xml
 
 SPECS_GEN = ${SPECS:%.xml=_gen/introspect-%.xml}
 EXTRA_DIST = \
@@ -449,8 +440,8 @@ uninstall-am:
 all-local: $(SPECS_GEN)
 
 _gen/introspect-%.xml: %.xml $(tools_dir)/spec-to-introspect.xsl
-	$(mkdir_p) _gen
-	$(XSLTPROC) $(XSLTFLAGS) $(tools_dir)/spec-to-introspect.xsl $< \
+	$(AM_V_at)$(mkdir_p) _gen
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTFLAGS) $(tools_dir)/spec-to-introspect.xsl $< \
 		| $(DROP_NAMESPACE) > $@
 
 clean-local:

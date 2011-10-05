@@ -401,15 +401,30 @@ _set (const McpAccountStorage *self,
     const gchar *val)
 {
   McdAccountManagerDefault *amd = MCD_ACCOUNT_MANAGER_DEFAULT (self);
+#if ENABLE_GNOME_KEYRING
+  gboolean secret;
+#endif
 
   amd->save = TRUE;
 
 #if ENABLE_GNOME_KEYRING
   /* if we have a keyring, secrets are segregated */
-  if (mcp_account_manager_parameter_is_secret (am, account, key))
-    g_key_file_set_value (amd->secrets, account, key, val);
+  secret = mcp_account_manager_parameter_is_secret (am, account, key);
+
+  if (val != NULL)
+    {
+      if (secret)
+        g_key_file_set_value (amd->secrets, account, key, val);
+      else
+        g_key_file_set_value (amd->keyfile, account, key, val);
+    }
   else
-    g_key_file_set_value (amd->keyfile, account, key, val);
+    {
+      if (secret)
+        g_key_file_remove_key (amd->secrets, account, key, NULL);
+      else
+        g_key_file_remove_key (amd->keyfile, account, key, NULL);
+    }
 
   /* if we removed the account before, it now exists again, so... */
   g_hash_table_remove (amd->removed_accounts, account);
@@ -418,7 +433,10 @@ _set (const McpAccountStorage *self,
   g_key_file_remove_key (amd->removed, account, key, NULL);
 #else
 
-  g_key_file_set_value (amd->keyfile, account, key, val);
+  if (val != NULL)
+    g_key_file_set_value (amd->keyfile, account, key, val);
+  else
+    g_key_file_remove_key (amd->keyfile, account, key, NULL);
 
 #endif
 
@@ -522,10 +540,9 @@ _delete (const McpAccountStorage *self,
       gboolean save = FALSE;
 
 #if ENABLE_GNOME_KEYRING
-      if (mcp_account_manager_parameter_is_secret (am, account, key))
-        save = g_key_file_remove_key (amd->secrets, account, key, NULL);
-      else
-        save = g_key_file_remove_key (amd->keyfile, account, key, NULL);
+      save = g_key_file_remove_key (amd->secrets, account, key, NULL);
+      if (g_key_file_remove_key (amd->keyfile, account, key, NULL))
+        save = TRUE;
 #else
       save = g_key_file_remove_key (amd->keyfile, account, key, NULL);
 #endif

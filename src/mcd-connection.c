@@ -55,10 +55,6 @@
 #include <telepathy-glib/proxy-subclass.h>
 #include <telepathy-glib/util.h>
 
-#include <libmcclient/mc-errors.h>
-#include <libmcclient/mc-gtypes.h>
-#include <libmcclient/mc-interfaces.h>
-
 #include "mcd-account-priv.h"
 #include "mcd-channel-priv.h"
 #include "mcd-connection-priv.h"
@@ -70,12 +66,6 @@
 #include "sp_timestamp.h"
 
 #include "mcd-signals-marshal.h"
-#include "_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h"
-#include "_gen/cli-Connection_Interface_Contact_Capabilities.h"
-#include "_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h"
-#include "_gen/cli-Connection_Interface_Contact_Capabilities-body.h"
-#include "_gen/cli-Connection_Interface_Power_Saving.h"
-#include "_gen/cli-Connection_Interface_Power_Saving-body.h"
 
 #define INITIAL_RECONNECTION_TIME   3 /* seconds */
 #define RECONNECTION_MULTIPLIER     3
@@ -96,9 +86,6 @@ struct _McdConnectionPrivate
 
     /* Account */
     McdAccount *account;
-
-    /* Associated profile */
-    /* McProfile *profile; */
 
     /* Telepathy connection manager */
     TpConnectionManager *tp_conn_mgr;
@@ -124,7 +111,6 @@ struct _McdConnectionPrivate
     guint has_avatars_if : 1;
     guint has_alias_if : 1;
     guint has_capabilities_if : 1;
-    guint has_contact_capabilities_draft1_if : 1;
     guint has_contact_capabilities_if : 1;
     guint has_power_saving_if : 1;
 
@@ -295,7 +281,8 @@ _mcd_connection_attempt (McdConnection *connection)
     if (mcd_account_get_connection_status (connection->priv->account) ==
         TP_CONNECTION_STATUS_DISCONNECTED)
     {
-        _mcd_account_connection_begin (connection->priv->account);
+        /* not user-initiated */
+        _mcd_account_connection_begin (connection->priv->account, FALSE);
     }
     else
     {
@@ -422,7 +409,7 @@ presence_get_statuses_cb (TpProxy *proxy, const GValue *v_statuses,
     }
 
     /* Now the presence info is ready. We can set the presence */
-    _mcd_account_get_requested_presence (priv->account, &presence,
+    mcd_account_get_requested_presence (priv->account, &presence,
                                          &status, &message);
     if (priv->connected)
     {
@@ -652,31 +639,6 @@ _mcd_connection_setup_capabilities (McdConnection *connection)
     for (i = 0; i < capabilities->len; i++)
 	g_boxed_free (type, g_ptr_array_index (capabilities, i));
     g_ptr_array_free (capabilities, TRUE);
-}
-
-static void
-_mcd_connection_setup_contact_capabilities (McdConnection *connection)
-{
-    McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (connection);
-    GPtrArray *contact_capabilities;
-
-    if (!priv->has_contact_capabilities_draft1_if)
-    {
-        DEBUG ("connection does not support contact capabilities interface");
-	priv->got_contact_capabilities = TRUE;
-	return;
-    }
-    contact_capabilities = _mcd_dispatcher_get_channel_enhanced_capabilities
-      (priv->dispatcher);
-
-    DEBUG ("advertising capabilities");
-
-    mc_cli_connection_interface_contact_capabilities_draft1_call_set_self_capabilities
-      (priv->tp_conn, -1, contact_capabilities, NULL, NULL, NULL, NULL);
-    DEBUG ("SetSelfCapabilities: Called.");
-
-    /* free the connection capabilities (FIXME) */
-    g_ptr_array_free (contact_capabilities, TRUE);
 }
 
 static void
@@ -1080,7 +1042,7 @@ _mcd_connection_setup_power_saving (McdConnection *connection)
   DEBUG ("is %sactive", mcd_slacker_is_inactive (priv->slacker) ? "in" : "");
 
   if (mcd_slacker_is_inactive (priv->slacker))
-    mc_cli_connection_interface_power_saving_call_set_power_saving (priv->tp_conn, -1,
+    tp_cli_connection_interface_power_saving_call_set_power_saving (priv->tp_conn, -1,
         TRUE, NULL, NULL, NULL, NULL);
 }
 
@@ -1630,21 +1592,16 @@ on_connection_ready (TpConnection *tp_conn, const GError *error,
 						       TP_IFACE_QUARK_CONNECTION_INTERFACE_ALIASING);
     priv->has_capabilities_if = tp_proxy_has_interface_by_id (tp_conn,
 							      TP_IFACE_QUARK_CONNECTION_INTERFACE_CAPABILITIES);
-    priv->has_contact_capabilities_draft1_if = tp_proxy_has_interface_by_id (tp_conn,
-        MC_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES_DRAFT1);
     priv->has_contact_capabilities_if = tp_proxy_has_interface_by_id (tp_conn,
         TP_IFACE_QUARK_CONNECTION_INTERFACE_CONTACT_CAPABILITIES);
     priv->has_power_saving_if = tp_proxy_has_interface_by_id (tp_conn,
-        MC_IFACE_QUARK_CONNECTION_INTERFACE_POWER_SAVING);
+        TP_IFACE_QUARK_CONNECTION_INTERFACE_POWER_SAVING);
 
     if (priv->has_presence_if)
 	_mcd_connection_setup_presence (connection);
 
     if (priv->has_capabilities_if)
 	_mcd_connection_setup_capabilities (connection);
-
-    if (priv->has_contact_capabilities_draft1_if)
-	_mcd_connection_setup_contact_capabilities (connection);
 
     if (priv->has_avatars_if)
 	_mcd_connection_setup_avatar (connection);
@@ -2062,7 +2019,7 @@ on_inactivity_changed (McdSlacker *slacker,
       priv->has_power_saving_if ? "has" : "doesn't");
 
   if (priv->has_power_saving_if)
-    mc_cli_connection_interface_power_saving_call_set_power_saving (priv->tp_conn, -1,
+    tp_cli_connection_interface_power_saving_call_set_power_saving (priv->tp_conn, -1,
         inactive, NULL, NULL, NULL, NULL);
 }
 
@@ -2361,22 +2318,6 @@ _mcd_connection_request_channel (McdConnection *connection, McdChannel *channel)
 }
 
 static void
-mcd_connection_add_signals (TpProxy *self,
-                            guint quark,
-                            DBusGProxy *proxy,
-                            gpointer data)
-{
-    mc_cli_Connection_Interface_Contact_Capabilities_Draft1_add_signals (self,
-                                                                         quark,
-                                                                         proxy,
-                                                                         data);
-    mc_cli_Connection_Interface_Contact_Capabilities_add_signals (self, quark,
-                                                                  proxy, data);
-    mc_cli_Connection_Interface_Power_Saving_add_signals (self, quark,
-        proxy, data);
-}
-
-static void
 mcd_connection_class_init (McdConnectionClass * klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -2394,8 +2335,6 @@ mcd_connection_class_init (McdConnectionClass * klass)
     _mcd_ext_register_dbus_glib_marshallers ();
 
     tp_connection_init_known_interfaces ();
-    tp_proxy_or_subclass_hook_on_interface_add (TP_TYPE_CONNECTION,
-                                                mcd_connection_add_signals);
 
     /* Properties */
     g_object_class_install_property
@@ -2680,6 +2619,7 @@ void
 _mcd_connection_connect (McdConnection *connection, GHashTable *params)
 {
     McdConnectionPrivate *priv;
+    TpConnectionStatus status = TP_CONNECTION_STATUS_DISCONNECTED;
 
     g_return_if_fail (MCD_IS_CONNECTION (connection));
     g_return_if_fail (params != NULL);
@@ -2696,8 +2636,15 @@ _mcd_connection_connect (McdConnection *connection, GHashTable *params)
 	priv->reconnect_timer = 0;
     }
 
-    if (mcd_account_get_connection_status (priv->account) ==
-        TP_CONNECTION_STATUS_DISCONNECTED)
+    /* the account's status can be CONNECTING _before_ we get here, because
+     * for the account that includes things like trying to bring up an IAP
+     * via an McdTransport plugin. So we have to use the actual status of
+     * the connection (or DISCONNECTED if we havan't got one yet) */
+    if (priv->tp_conn != NULL)
+        status = tp_connection_get_status (priv->tp_conn, NULL);
+
+    if (status == TP_CONNECTION_STATUS_DISCONNECTED ||
+        status == TP_UNKNOWN_CONNECTION_STATUS)
     {
         _mcd_connection_connect_with_params (connection, params);
     }
@@ -2853,7 +2800,10 @@ _mcd_connection_presence_info_is_ready (McdConnection *self)
 
 static void clear_emergency_handles (McdConnectionPrivate *priv)
 {
-  guint n_handles = tp_intset_size (priv->emergency.handles);
+  guint n_handles = 0;
+
+  if (priv->emergency.handles != NULL)
+    n_handles = tp_intset_size (priv->emergency.handles);
 
   /* trawl through the handles and unref them */
   if (n_handles > 0)

@@ -79,7 +79,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -101,6 +102,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -109,6 +112,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -128,7 +133,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -138,6 +142,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -155,7 +161,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -168,6 +173,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -228,6 +235,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+
+# We require automake 1.9 at least.
 AUTOMAKE_OPTIONS = 1.9
 
 # This is a blank Makefile.am for using gtk-doc.
@@ -238,14 +247,17 @@ AUTOMAKE_OPTIONS = 1.9
 # The name of the module, e.g. 'glib'.
 DOC_MODULE = mission-control-plugins
 
+# Uncomment for versioned docs and specify the version of the module, e.g. '2'.
+#DOC_MODULE_VERSION=2
+
 # The top-level SGML file. You can change this if you want to.
 DOC_MAIN_SGML_FILE = $(DOC_MODULE)-docs.sgml
 
-# The directory containing the source code. Relative to $(srcdir).
-# gtk-doc will search all .c & .h files beneath here for inline comments
-# documenting the functions and macros.
-# e.g. DOC_SOURCE_DIR=../../../gtk
-DOC_SOURCE_DIR = ../../../mission-control-plugins
+# Directories containing the source code, relative to $(srcdir).
+# gtk-doc will search all .c and .h files beneath these paths
+# for inline comments documenting functions and macros.
+# e.g. DOC_SOURCE_DIR=../../../gtk ../../../gdk
+DOC_SOURCE_DIR = $(abs_top_srcdir)/mission-control-plugins $(abs_top_builddir)/mission-control-plugins
 
 # Extra options to pass to gtkdoc-scangobj. Not normally needed.
 SCANGOBJ_OPTIONS = 
@@ -255,12 +267,15 @@ SCANGOBJ_OPTIONS =
 SCAN_OPTIONS = --rebuild-types --rebuild-sections
 
 # Extra options to supply to gtkdoc-mkdb.
-# e.g. MKDB_OPTIONS=--sgml-mode --output-format=xml
+# e.g. MKDB_OPTIONS=--xml-mode --output-format=xml
 MKDB_OPTIONS = --sgml-mode --output-format=xml
 
 # Extra options to supply to gtkdoc-mktmpl
 # e.g. MKTMPL_OPTIONS=--only-section-tmpl
 MKTMPL_OPTIONS = 
+
+# Extra options to supply to gtkdoc-mkhtml
+MKHTML_OPTIONS = 
 
 # Extra options to supply to gtkdoc-fixref. Not normally needed.
 # e.g. FIXXREF_OPTIONS=--extra-dir=../gdk-pixbuf/html --extra-dir=../gdk/html
@@ -272,8 +287,12 @@ FIXXREF_OPTIONS =
 HFILE_GLOB = $(top_srcdir)/mission-control-plugins/*.h
 CFILE_GLOB = $(top_srcdir)/mission-control-plugins/*.c
 
-# Header files to ignore when scanning.
-# e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h
+# Extra header to include when scanning, which are not under DOC_SOURCE_DIR
+# e.g. EXTRA_HFILES=$(top_srcdir}/contrib/extra.h
+EXTRA_HFILES = 
+
+# Header files or dirs to ignore when scanning. Use base file/dir names
+# e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h private_code
 IGNORE_HFILES = implementation.h debug-internal.h
 
 # Images to copy into HTML directory.
@@ -292,9 +311,9 @@ expand_content_files =
 # CFLAGS and LDFLAGS for compiling gtkdoc-scangobj with your library.
 # Only needed if you are using gtkdoc-scangobj to dynamically query widget
 # signals and properties.
-# e.g. INCLUDES=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
+# e.g. GTKDOC_CFLAGS=-I$(top_srcdir) -I$(top_builddir) $(GTK_DEBUG_FLAGS)
 # e.g. GTKDOC_LIBS=$(top_builddir)/gtk/$(gtktargetlib)
-INCLUDES = \
+GTKDOC_CFLAGS = \
     -I$(top_srcdir) \
     $(TELEPATHY_CFLAGS) \
     $(DBUS_CFLAGS) \
@@ -306,10 +325,10 @@ GTKDOC_LIBS = \
     $(DBUS_LIBS) \
     $(GLIB_LIBS)
 
-@GTK_DOC_USE_LIBTOOL_FALSE@GTKDOC_CC = $(CC) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-@GTK_DOC_USE_LIBTOOL_TRUE@GTKDOC_CC = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
-@GTK_DOC_USE_LIBTOOL_FALSE@GTKDOC_LD = $(CC) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
-@GTK_DOC_USE_LIBTOOL_TRUE@GTKDOC_LD = $(LIBTOOL) --tag=CC --mode=link $(CC) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
+@GTK_DOC_USE_LIBTOOL_FALSE@GTKDOC_CC = $(CC) $(INCLUDES) $(GTKDOC_DEPS_CFLAGS) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+@GTK_DOC_USE_LIBTOOL_TRUE@GTKDOC_CC = $(LIBTOOL) --tag=CC --mode=compile $(CC) $(INCLUDES) $(GTKDOC_DEPS_CFLAGS) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+@GTK_DOC_USE_LIBTOOL_FALSE@GTKDOC_LD = $(CC) $(GTKDOC_DEPS_LIBS) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
+@GTK_DOC_USE_LIBTOOL_TRUE@GTKDOC_LD = $(LIBTOOL) --tag=CC --mode=link $(CC) $(GTKDOC_DEPS_LIBS) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS)
 @GTK_DOC_USE_LIBTOOL_FALSE@GTKDOC_RUN = 
 @GTK_DOC_USE_LIBTOOL_TRUE@GTKDOC_RUN = $(LIBTOOL) --mode=execute
 
@@ -327,11 +346,12 @@ SETUP_FILES = \
 	$(DOC_MODULE)-overrides.txt
 
 EXTRA_DIST = \
+	$(HTML_IMAGES)			\
 	$(SETUP_FILES)
 
-DOC_STAMPS = setup-build.stamp scan-build.stamp tmpl-build.stamp sgml-build.stamp \
+DOC_STAMPS = setup-build.stamp scan-build.stamp sgml-build.stamp \
 	html-build.stamp pdf-build.stamp \
-	setup.stamp tmpl.stamp sgml.stamp html.stamp pdf.stamp
+	sgml.stamp html.stamp pdf.stamp
 
 SCANOBJ_FILES = \
 	$(DOC_MODULE).args 	 \
@@ -559,36 +579,40 @@ $(REPORT_FILES): sgml-build.stamp
 
 setup-build.stamp:
 	-@if test "$(abs_srcdir)" != "$(abs_builddir)" ; then \
-	   echo 'gtk-doc: Preparing build'; \
-	   files=`echo $(SETUP_FILES) $(expand_content_files) $(DOC_MODULE).types`; \
-	   if test "x$$files" != "x" ; then \
-	       for file in $$files ; do \
-	           test -f $(abs_srcdir)/$$file && \
-	               cp -p $(abs_srcdir)/$$file $(abs_builddir)/; \
-	       done \
-	   fi; \
-	   test -f $(abs_srcdir)/tmpl && \
-	       cp -rp $(abs_srcdir)/tmpl $(abs_builddir)/; \
+	    echo '  DOC   Preparing build'; \
+	    files=`echo $(SETUP_FILES) $(expand_content_files) $(DOC_MODULE).types`; \
+	    if test "x$$files" != "x" ; then \
+	        for file in $$files ; do \
+	            test -f $(abs_srcdir)/$$file && \
+	                cp -pu $(abs_srcdir)/$$file $(abs_builddir)/ || true; \
+	        done; \
+	    fi; \
 	fi
 	@touch setup-build.stamp
-
-setup.stamp: setup-build.stamp
-	@true
 
 #### scan ####
 
 scan-build.stamp: $(HFILE_GLOB) $(CFILE_GLOB)
-	@echo 'gtk-doc: Scanning header files'
+	@echo '  DOC   Scanning header files'
 	@_source_dir='' ; \
 	for i in $(DOC_SOURCE_DIR) ; do \
 	    _source_dir="$${_source_dir} --source-dir=$$i" ; \
 	done ; \
 	gtkdoc-scan --module=$(DOC_MODULE) --ignore-headers="$(IGNORE_HFILES)" $${_source_dir} $(SCAN_OPTIONS) $(EXTRA_HFILES)
 	@if grep -l '^..*$$' $(DOC_MODULE).types > /dev/null 2>&1 ; then \
-	    CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)" RUN="$(GTKDOC_RUN)" CFLAGS="$(GTKDOC_CFLAGS) $(CFLAGS)" LDFLAGS="$(GTKDOC_LIBS) $(LDFLAGS)" gtkdoc-scangobj $(SCANGOBJ_OPTIONS) --module=$(DOC_MODULE) ; \
+	    echo "  DOC   Introspecting gobjects"; \
+	    scanobj_options=""; \
+	    gtkdoc-scangobj 2>&1 --help | grep  >/dev/null "\-\-verbose"; \
+	    if test "$(?)" = "0"; then \
+	        if test "x$(V)" = "x1"; then \
+	            scanobj_options="--verbose"; \
+	        fi; \
+	    fi; \
+	    CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)" RUN="$(GTKDOC_RUN)" CFLAGS="$(GTKDOC_CFLAGS) $(CFLAGS)" LDFLAGS="$(GTKDOC_LIBS) $(LDFLAGS)" \
+	    gtkdoc-scangobj $(SCANGOBJ_OPTIONS) $$scanobj_options --module=$(DOC_MODULE); \
 	else \
 	    for i in $(SCANOBJ_FILES) ; do \
-               test -f $$i || touch $$i ; \
+	        test -f $$i || touch $$i ; \
 	    done \
 	fi
 	@touch scan-build.stamp
@@ -596,29 +620,10 @@ scan-build.stamp: $(HFILE_GLOB) $(CFILE_GLOB)
 $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt: scan-build.stamp
 	@true
 
-#### templates ####
-
-tmpl-build.stamp: setup.stamp $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt
-	@echo 'gtk-doc: Rebuilding template files'
-	@gtkdoc-mktmpl --module=$(DOC_MODULE) $(MKTMPL_OPTIONS)
-	@if test "$(abs_srcdir)" != "$(abs_builddir)" ; then \
-	  if test -w $(abs_srcdir) ; then \
-	    cp -rp $(abs_builddir)/tmpl $(abs_srcdir)/; \
-	  fi \
-	fi
-	@touch tmpl-build.stamp
-
-tmpl.stamp: tmpl-build.stamp
-	@true
-
-$(srcdir)/tmpl/*.sgml:
-	@true
-
 #### xml ####
 
-sgml-build.stamp: tmpl.stamp $(DOC_MODULE)-sections.txt $(srcdir)/tmpl/*.sgml $(expand_content_files)
-	@echo 'gtk-doc: Building XML'
-	@-chmod -R u+w $(srcdir)
+sgml-build.stamp: setup-build.stamp $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt $(expand_content_files)
+	@echo '  DOC   Building XML'
 	@_source_dir='' ; \
 	for i in $(DOC_SOURCE_DIR) ; do \
 	    _source_dir="$${_source_dir} --source-dir=$$i" ; \
@@ -632,13 +637,19 @@ sgml.stamp: sgml-build.stamp
 #### html ####
 
 html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
-	@echo 'gtk-doc: Building HTML'
+	@echo '  DOC   Building HTML'
 	@rm -rf html
 	@mkdir html
 	@mkhtml_options=""; \
+	gtkdoc-mkhtml 2>&1 --help | grep  >/dev/null "\-\-verbose"; \
+	if test "$(?)" = "0"; then \
+	  if test "x$(V)" = "x1"; then \
+	    mkhtml_options="$$mkhtml_options --verbose"; \
+	  fi; \
+	fi; \
 	gtkdoc-mkhtml 2>&1 --help | grep  >/dev/null "\-\-path"; \
 	if test "$(?)" = "0"; then \
-	  mkhtml_options=--path="$(abs_srcdir)"; \
+	  mkhtml_options="$$mkhtml_options --path=\"$(abs_srcdir)\""; \
 	fi; \
 	cd html && gtkdoc-mkhtml $$mkhtml_options $(MKHTML_OPTIONS) $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
 	-@test "x$(HTML_IMAGES)" = "x" || \
@@ -650,49 +661,54 @@ html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
 	    cp $(abs_builddir)/$$file $(abs_builddir)/html; \
 	  fi; \
 	done;
-	@echo 'gtk-doc: Fixing cross-references'
+	@echo '  DOC   Fixing cross-references'
 	@gtkdoc-fixxref --module=$(DOC_MODULE) --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
 	@touch html-build.stamp
 
 #### pdf ####
 
 pdf-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
-	@echo 'gtk-doc: Building PDF'
-	@rm -rf $(DOC_MODULE).pdf
-	@mkpdf_imgdirs=""; \
+	@echo '  DOC   Building PDF'
+	@rm -f $(DOC_MODULE).pdf
+	@mkpdf_options=""; \
+	gtkdoc-mkpdf 2>&1 --help | grep  >/dev/null "\-\-verbose"; \
+	if test "$(?)" = "0"; then \
+	  if test "x$(V)" = "x1"; then \
+	    mkpdf_options="$$mkpdf_options --verbose"; \
+	  fi; \
+	fi; \
 	if test "x$(HTML_IMAGES)" != "x"; then \
 	  for img in $(HTML_IMAGES); do \
 	    part=`dirname $$img`; \
-	    echo $$mkpdf_imgdirs | grep >/dev/null "\-\-imgdir=$$part "; \
+	    echo $$mkpdf_options | grep >/dev/null "\-\-imgdir=$$part "; \
 	    if test $$? != 0; then \
-	      mkpdf_imgdirs="$$mkpdf_imgdirs --imgdir=$$part"; \
+	      mkpdf_options="$$mkpdf_options --imgdir=$$part"; \
 	    fi; \
 	  done; \
 	fi; \
-	gtkdoc-mkpdf --path="$(abs_srcdir)" $$mkpdf_imgdirs $(DOC_MODULE) $(DOC_MAIN_SGML_FILE) $(MKPDF_OPTIONS)
+	gtkdoc-mkpdf --path="$(abs_srcdir)" $$mkpdf_options $(DOC_MODULE) $(DOC_MAIN_SGML_FILE) $(MKPDF_OPTIONS)
 	@touch pdf-build.stamp
 
 ##############
 
 clean-local:
-	rm -f *~ *.bak
-	rm -rf .libs
+	@rm -f *~ *.bak
+	@rm -rf .libs
 
 distclean-local:
-	rm -rf xml html $(REPORT_FILES) $(DOC_MODULE).pdf \
+	@rm -rf xml html $(REPORT_FILES) $(DOC_MODULE).pdf \
 	    $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
-	if test "$(abs_srcdir)" != "$(abs_builddir)" ; then \
+	@if test "$(abs_srcdir)" != "$(abs_builddir)" ; then \
 	    rm -f $(SETUP_FILES) $(expand_content_files) $(DOC_MODULE).types; \
-	    rm -rf tmpl; \
 	fi
 
 maintainer-clean-local: clean
-	rm -rf xml html
+	@rm -rf xml html
 
 install-data-local:
-	@installfiles=`echo $(srcdir)/html/*`; \
-	if test "$$installfiles" = '$(srcdir)/html/*'; \
-	then echo '-- Nothing to install' ; \
+	@installfiles=`echo $(builddir)/html/*`; \
+	if test "$$installfiles" = '$(builddir)/html/*'; \
+	then echo 1>&2 'Nothing to install' ; \
 	else \
 	  if test -n "$(DOC_MODULE_VERSION)"; then \
 	    installdir="$(DESTDIR)$(TARGET_DIR)-$(DOC_MODULE_VERSION)"; \
@@ -701,14 +717,12 @@ install-data-local:
 	  fi; \
 	  $(mkinstalldirs) $${installdir} ; \
 	  for i in $$installfiles; do \
-	    echo '-- Installing '$$i ; \
+	    echo ' $(INSTALL_DATA) '$$i ; \
 	    $(INSTALL_DATA) $$i $${installdir}; \
 	  done; \
 	  if test -n "$(DOC_MODULE_VERSION)"; then \
 	    mv -f $${installdir}/$(DOC_MODULE).devhelp2 \
 	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp2; \
-	    mv -f $${installdir}/$(DOC_MODULE).devhelp \
-	      $${installdir}/$(DOC_MODULE)-$(DOC_MODULE_VERSION).devhelp; \
 	  fi; \
 	  $(GTKDOC_REBASE) --relative --dest-dir=$(DESTDIR) --html-dir=$${installdir}; \
 	fi
@@ -730,19 +744,26 @@ uninstall-local:
 @ENABLE_GTK_DOC_FALSE@	@false
 
 dist-hook: dist-check-gtkdoc dist-hook-local
-	mkdir $(distdir)/tmpl
-	mkdir $(distdir)/html
-	-cp $(build)/tmpl/*.sgml $(distdir)/tmpl
-	cp $(builddir)/html/* $(distdir)/html
-	-cp $(builddir)/$(DOC_MODULE).pdf $(distdir)/
-	-cp $(build)/$(DOC_MODULE).types $(distdir)/
-	-cp $(build)/$(DOC_MODULE)-sections.txt $(distdir)/
-	cd $(distdir) && rm -f $(DISTCLEANFILES)
-	$(GTKDOC_REBASE) --online --relative --html-dir=$(distdir)/html
+	@mkdir $(distdir)/html
+	@cp ./html/* $(distdir)/html
+	@-cp ./$(DOC_MODULE).pdf $(distdir)/
+	@-cp ./$(DOC_MODULE).types $(distdir)/
+	@-cp ./$(DOC_MODULE)-sections.txt $(distdir)/
+	@cd $(distdir) && rm -f $(DISTCLEANFILES)
+	@$(GTKDOC_REBASE) --online --relative --html-dir=$(distdir)/html
 
 .PHONY : dist-hook-local docs
 
 # This includes the standard gtk-doc make rules, copied by gtkdocize.
+
+# Other files to distribute
+# e.g. EXTRA_DIST += version.xml.in
+#EXTRA_DIST += 
+
+# Files not to distribute
+# for --rebuild-types in $(SCAN_OPTIONS), e.g. $(DOC_MODULE).types
+# for --rebuild-sections in $(SCAN_OPTIONS) e.g. $(DOC_MODULE)-sections.txt
+#DISTCLEANFILES +=
 
 clean-local: clean-mcp
 
@@ -754,28 +775,28 @@ clean-mcp:
 @ENABLE_GTK_DOC_TRUE@	@err=0; \
 @ENABLE_GTK_DOC_TRUE@	echo "Checking for undocumented symbols..."; \
 @ENABLE_GTK_DOC_TRUE@	if grep '^0 symbols incomplete' \
-@ENABLE_GTK_DOC_TRUE@		$(srcdir)/$(DOC_MODULE)-undocumented.txt && \
+@ENABLE_GTK_DOC_TRUE@		$(DOC_MODULE)-undocumented.txt && \
 @ENABLE_GTK_DOC_TRUE@		grep '^0 not documented' \
-@ENABLE_GTK_DOC_TRUE@		$(srcdir)/$(DOC_MODULE)-undocumented.txt; then\
+@ENABLE_GTK_DOC_TRUE@		$(DOC_MODULE)-undocumented.txt; then\
 @ENABLE_GTK_DOC_TRUE@		:; \
 @ENABLE_GTK_DOC_TRUE@	else \
-@ENABLE_GTK_DOC_TRUE@		cat $(srcdir)/$(DOC_MODULE)-undocumented.txt; \
+@ENABLE_GTK_DOC_TRUE@		cat $(DOC_MODULE)-undocumented.txt; \
 @ENABLE_GTK_DOC_TRUE@		err=1; \
 @ENABLE_GTK_DOC_TRUE@	fi; \
 @ENABLE_GTK_DOC_TRUE@	echo "Checking for unused symbols..."; \
-@ENABLE_GTK_DOC_TRUE@	if grep . $(srcdir)/$(DOC_MODULE)-unused.txt; then\
+@ENABLE_GTK_DOC_TRUE@	if grep . $(DOC_MODULE)-unused.txt; then\
 @ENABLE_GTK_DOC_TRUE@		echo "^^^ Unused symbols" >&2; \
 @ENABLE_GTK_DOC_TRUE@		err=1; \
 @ENABLE_GTK_DOC_TRUE@	fi; \
 @ENABLE_GTK_DOC_TRUE@	echo "Checking for undeclared symbols..."; \
-@ENABLE_GTK_DOC_TRUE@	if test -e $(srcdir)/$(DOC_MODULE)-undeclared.txt &&\
-@ENABLE_GTK_DOC_TRUE@		grep . $(srcdir)/$(DOC_MODULE)-undeclared.txt; then\
+@ENABLE_GTK_DOC_TRUE@	if test -e $(DOC_MODULE)-undeclared.txt &&\
+@ENABLE_GTK_DOC_TRUE@		grep . $(DOC_MODULE)-undeclared.txt; then\
 @ENABLE_GTK_DOC_TRUE@		echo "^^^ Undeclared symbols" >&2; \
 @ENABLE_GTK_DOC_TRUE@		err=1; \
 @ENABLE_GTK_DOC_TRUE@	fi; \
-@ENABLE_GTK_DOC_TRUE@	sed -n -e 's,<FILE>\(.*\)</FILE>,\1,p' $(srcdir)/$(DOC_MODULE)-sections.txt |\
+@ENABLE_GTK_DOC_TRUE@	sed -n -e 's,<FILE>\(.*\)</FILE>,\1,p' $(DOC_MODULE)-sections.txt |\
 @ENABLE_GTK_DOC_TRUE@	while read file; do \
-@ENABLE_GTK_DOC_TRUE@		if grep -F "xml/$$file.xml" $(srcdir)/$(DOC_MODULE)-docs.sgml \
+@ENABLE_GTK_DOC_TRUE@		if grep -F "xml/$$file.xml" $(DOC_MODULE)-docs.sgml \
 @ENABLE_GTK_DOC_TRUE@			>/dev/null;\
 @ENABLE_GTK_DOC_TRUE@		then \
 @ENABLE_GTK_DOC_TRUE@		:; \

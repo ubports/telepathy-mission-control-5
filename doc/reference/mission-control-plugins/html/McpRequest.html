@@ -8,7 +8,7 @@
 <link rel="up" href="ch03.html" title="Channel requests">
 <link rel="prev" href="mission-control-plugins-McpRequestPolicy.html" title="McpRequestPolicy">
 <link rel="next" href="ch04.html" title="Channel dispatch operations">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -44,28 +44,28 @@
 <pre class="synopsis">
 #include &lt;mission-control-plugins/mission-control-plugins.h&gt;
 
+                    <a class="link" href="McpRequest.html#McpRequest-struct" title="McpRequest">McpRequest</a>;
+                    <a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay">McpRequestDelay</a>;
+                    <a class="link" href="McpRequest.html#McpRequestIface" title="McpRequestIface">McpRequestIface</a>;
+<span class="returnvalue">void</span>                <a class="link" href="McpRequest.html#mcp-request-deny" title="mcp_request_deny ()">mcp_request_deny</a>                    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> domain</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> code</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="McpRequest.html#mcp-request-end-delay" title="mcp_request_end_delay ()">mcp_request_end_delay</a>               (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="type">McpRequestDelay</span></a> *delay</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McpRequest.html#mcp-request-find-request-by-type" title="mcp_request_find_request_by_type ()">mcp_request_find_request_by_type</a>    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> channel_type</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *ret_index</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> **ret_ref_requested_properties</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McpRequest.html#mcp-request-get-account-path" title="mcp_request_get_account_path ()">mcp_request_get_account_path</a>        (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McpRequest.html#mcp-request-get-protocol" title="mcp_request_get_protocol ()">mcp_request_get_protocol</a>            (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
 const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McpRequest.html#mcp-request-get-cm-name" title="mcp_request_get_cm_name ()">mcp_request_get_cm_name</a>             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>              <a class="link" href="McpRequest.html#mcp-request-get-user-action-time" title="mcp_request_get_user_action_time ()">mcp_request_get_user_action_time</a>    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="McpRequest.html#mcp-request-get-n-requests" title="mcp_request_get_n_requests ()">mcp_request_get_n_requests</a>          (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="McpRequest.html#mcp-request-get-protocol" title="mcp_request_get_protocol ()">mcp_request_get_protocol</a>            (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>              <a class="link" href="McpRequest.html#mcp-request-get-user-action-time" title="mcp_request_get_user_action_time ()">mcp_request_get_user_action_time</a>    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="McpRequest.html#mcp-request-ref-nth-request" title="mcp_request_ref_nth_request ()">mcp_request_ref_nth_request</a>         (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="McpRequest.html#mcp-request-deny" title="mcp_request_deny ()">mcp_request_deny</a>                    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> domain</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> code</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);
 <a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="returnvalue">McpRequestDelay</span></a> *   <a class="link" href="McpRequest.html#mcp-request-start-delay" title="mcp_request_start_delay ()">mcp_request_start_delay</a>             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="McpRequest.html#mcp-request-end-delay" title="mcp_request_end_delay ()">mcp_request_end_delay</a>               (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="type">McpRequestDelay</span></a> *delay</code></em>);
-                    <a class="link" href="McpRequest.html#McpRequest-struct" title="McpRequest">McpRequest</a>;
-                    <a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay">McpRequestDelay</a>;
-                    <a class="link" href="McpRequest.html#McpRequestIface" title="McpRequestIface">McpRequestIface</a>;
 </pre>
 </div>
 <div class="refsect1">
@@ -87,57 +87,18 @@ McpRequest requires
 <div class="refsect1">
 <a name="McpRequest.details"></a><h2>Details</h2>
 <div class="refsect2">
-<a name="mcp-request-find-request-by-type"></a><h3>mcp_request_find_request_by_type ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_request_find_request_by_type    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> channel_type</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *ret_index</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> **ret_ref_requested_properties</code></em>);</pre>
-<p>
-</p>
+<a name="McpRequest-struct"></a><h3>McpRequest</h3>
+<pre class="programlisting">typedef struct _McpRequest McpRequest;</pre>
 </div>
 <hr>
 <div class="refsect2">
-<a name="mcp-request-get-account-path"></a><h3>mcp_request_get_account_path ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_account_path        (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
+<a name="McpRequestDelay"></a><h3>McpRequestDelay</h3>
+<pre class="programlisting">typedef struct _McpRequestDelay McpRequestDelay;</pre>
 </div>
 <hr>
 <div class="refsect2">
-<a name="mcp-request-get-protocol"></a><h3>mcp_request_get_protocol ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_protocol            (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-request-get-cm-name"></a><h3>mcp_request_get_cm_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_cm_name             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-request-get-user-action-time"></a><h3>mcp_request_get_user_action_time ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>              mcp_request_get_user_action_time    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-request-get-n-requests"></a><h3>mcp_request_get_n_requests ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mcp_request_get_n_requests          (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-request-ref-nth-request"></a><h3>mcp_request_ref_nth_request ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mcp_request_ref_nth_request         (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
-<p>
-</p>
+<a name="McpRequestIface"></a><h3>McpRequestIface</h3>
+<pre class="programlisting">typedef struct _McpRequestIface McpRequestIface;</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -146,44 +107,57 @@ McpRequest requires
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> domain</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> code</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *message</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-request-start-delay"></a><h3>mcp_request_start_delay ()</h3>
-<pre class="programlisting"><a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="returnvalue">McpRequestDelay</span></a> *   mcp_request_start_delay             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
-<p>
-</p>
 </div>
 <hr>
 <div class="refsect2">
 <a name="mcp-request-end-delay"></a><h3>mcp_request_end_delay ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_request_end_delay               (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="type">McpRequestDelay</span></a> *delay</code></em>);</pre>
-<p>
-</p>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpRequest-struct"></a><h3>McpRequest</h3>
-<pre class="programlisting">typedef struct _McpRequest McpRequest;</pre>
-<p>
-</p>
+<a name="mcp-request-find-request-by-type"></a><h3>mcp_request_find_request_by_type ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_request_find_request_by_type    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> start_from</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Quarks.html#GQuark"><span class="type">GQuark</span></a> channel_type</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> *ret_index</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> **ret_ref_requested_properties</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpRequestDelay"></a><h3>McpRequestDelay</h3>
-<pre class="programlisting">typedef struct _McpRequestDelay McpRequestDelay;</pre>
-<p>
-</p>
+<a name="mcp-request-get-account-path"></a><h3>mcp_request_get_account_path ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_account_path        (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpRequestIface"></a><h3>McpRequestIface</h3>
-<pre class="programlisting">typedef struct _McpRequestIface McpRequestIface;</pre>
-<p>
-</p>
+<a name="mcp-request-get-cm-name"></a><h3>mcp_request_get_cm_name ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_cm_name             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-request-get-n-requests"></a><h3>mcp_request_get_n_requests ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mcp_request_get_n_requests          (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-request-get-protocol"></a><h3>mcp_request_get_protocol ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_request_get_protocol            (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-request-get-user-action-time"></a><h3>mcp_request_get_user_action_time ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint64"><span class="returnvalue">gint64</span></a>              mcp_request_get_user_action_time    (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-request-ref-nth-request"></a><h3>mcp_request_ref_nth_request ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mcp_request_ref_nth_request         (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-request-start-delay"></a><h3>mcp_request_start_delay ()</h3>
+<pre class="programlisting"><a class="link" href="McpRequest.html#McpRequestDelay" title="McpRequestDelay"><span class="returnvalue">McpRequestDelay</span></a> *   mcp_request_start_delay             (<em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *self</code></em>);</pre>
 </div>
 </div>
 <div class="refsect1">
@@ -193,6 +167,6 @@ McpRequest requires
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.17.1</div>
 </body>
 </html>

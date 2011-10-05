@@ -1,3 +1,100 @@
+telepathy-mission-control 5.9.3 (2011-10-04)
+============================================
+
+The “HELLO / YES, THIS IS DOG” release.
+
+Dependencies:
+
+• MC now has optional dependencies on nm-glib and upower-glib.
+
+Enhancements:
+
+• Mission Control can now use either Network Manager or ConnMan (or
+  neither; the choice is controlled by a configure flag) to monitor the
+  network connection going up and down, and bring IM accounts on and
+  offline accordingly (whether due to ConnectAutomatically being True,
+  or RequestedConnection being non-offline). (fd.o#38978, wjt)
+
+  This appears to interact fine with Empathy, which also monitors the
+  network state (using fundamentally the same code); in future, we
+  intend that MC should be the sole party responsible for monitoring
+  network state.
+
+• Mission Control now listens for notifications from upower that the
+  machine is about to suspend, and tears down active connections. This
+  should help avoid the user appearing to be online for a few minutes
+  after they suspend their machine, until the server notices that
+  they've gone. (fd.o#28370, wjt)
+
+Fixes:
+
+• The regression tests now work with D-Bus ≥ 1.5.6. (fd.o#41090, smcv)
+
+• An obscure assertion failure in the client bus name monitoring code is
+  fixed, we hope! (fd.o#39767, wjt)
+
+• MC no longer crashes when recovering from a client crashing if that client
+  was an Observer or Approver which had claimed the channel. (xclaesse)
+
+
+telepathy-mission-control 5.9.2 (2011-08-31)
+============================================
+
+The “unique versioning strategy” release.
+
+Changes:
+
+• The Compat.Profile property on accounts has been removed; as has
+  libmcclient, which used it but which is no longer widely used.
+
+• Documentation for the old extension API, libmissioncontrol-server, is
+  no longer built. Please use the mission-control-plugins API instead!
+
+Fixes:
+
+• fd.o #37861: Memory leak in collect_satisfied_requests in
+  mcd-dispatch-operation.c (fledermaus).
+
+• fd.o #40562: Connection attempts aborted by McdTransport plugins did
+  not trigger a status change signal - now they do (fledermaus)
+
+• fd.o #29022: Dispatch channels with no (known) handlers to observers
+  anyway (smcv)
+
+• fd.o #40551: Memory leaks in the approval mechanism plugged
+  (fledermaus)
+
+• mission-control-plugins now explicitly links to GIO. (Frédéric Péters)
+
+• mc-tool now parses 'bool:foo=true' as setting 'foo' to True, as
+  opposed to setting 'foo' to False! (wjt)
+
+• fd.o#39796: always fully remove secret parameters when they are
+  un-set. (cassidy)
+
+Enhancements:
+
+• fd.o#40337: improve error reporting when creating an account fails.
+  (wjt)
+
+telepathy-mission-control 5.9.1 (2011-07-21)
+============================================
+
+Fixes:
+
+• fd.o #34025: when an Observer with Recover=TRUE catches up on channels,
+  don't miss out channels that have run their observers but have not
+  completed dispatching, mainly those waiting for approvers (smcv)
+
+• Fix various memory leaks (fledermaus)
+
+• If a storage plugin changes our nickname, propagate it to the CM (fledermaus)
+
+• The McdTransport framework should have considered "no plugins" to be 
+  equivalent to "procced", not "abort" (fledermaus)
+
+• Some files were missing G_END_DECLS, which broke C++ includes (fledermaus)
+
 telepathy-mission-control 5.9.0 (2011-05-18)
 ============================================
 
@@ -15,6 +112,25 @@ Enhancements:
 Fixes:
 
 • fd.o#36483: All tests now pass, even with newer tp-glib. (jonny)
+
+• Implementation of the draft ChannelDispatcher.Messages interface did 
+  not correctly handle all internal requests which should have been
+  dispatched to an existing channel (fledermaus)
+
+• The transport plugin infrastructure considered "no connected transports"
+  to be the same as "we have an alternative transport available & ready":
+  This could result in unwanted attempts to bring up the network on 
+  platforms which used the transport plugin mechanism (fledermaus)
+
+• The Aegis ACL plugin needs to activate inactive handlers if they are
+  not runnng, as you cannot check the aegis credentials of a DBus name
+  alone, a PID or DBus connection is required (fledermaus)
+
+Enhancements:
+
+• Centralised debug control for MCP plugins via MCP_DEBUG environment
+  variable (and macro + flags so out-of-tree plugins can take advantage
+  of same) (fledermaus)
 
 telepathy-mission-control 5.7.11 (2011-05-11)
 ============================================

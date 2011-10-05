@@ -1,5 +1,6 @@
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
+	$(DBUS_CFLAGS) \
 	$(GLIB_CFLAGS) \
 	$(TELEPATHY_CFLAGS) 
 
@@ -13,7 +14,6 @@ AM_CFLAGS = $(ERROR_CFLAGS)
 bin_PROGRAMS = mc-tool mc-wait-for-name
 
 mc_tool_SOURCES = mc-tool.c
-mc_tool_LDADD = $(LDADD) $(top_builddir)/libmcclient/libmcclient.la
 
 mc_wait_for_name_SOURCES = wait-for-name.c
 
@@ -26,4 +26,4 @@ EXTRA_DIST = \
 CLEANFILES = $(man1_MANS)
 
 mc-wait-for-name.1: mc-wait-for-name.1.in Makefile
-	sed -e 's![@]bindir[@]!@bindir@!g' < $< > $@
+	$(AM_V_GEN)sed -e 's![@]bindir[@]!@bindir@!g' < $< > $@

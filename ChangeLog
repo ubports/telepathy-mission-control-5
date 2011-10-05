@@ -1,3 +1,1733 @@
+commit 4110ebd94c33dcc53b867c6c85434903583b6e66
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 17:51:30 +0100
+
+    Version 5.9.3
+
+commit 097abc38aa684f62002570885798c633a3992ef0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 16:48:11 +0100
+
+    NEWS for 5.9.3
+
+commit 99fab96fa358f69e688865a81c3afb79508394cc
+Merge: b78d26c c23ca1a
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 16:19:21 +0100
+
+    Merge branch 'upower'
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=28370>
+
+commit c23ca1a9ca5275e708326e5db5f762c52479845e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 16:16:01 +0100
+
+    Connectivity: move upower-specific code inside ifdef
+    
+    connectivity_monitor_set_awake() is only called by the code paths that
+    listen to signals from upower, so passing --disable-upower to configure
+    triggered a defined-but-not-used warning for it.
+
+commit b78d26c3319809e391a6bcda2d2cb7f454084b90
+Merge: 25799ee 33f85c6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 15:28:33 +0100
+
+    Merge branch 'telepathy-mission-control-5.8+'
+
+commit 33f85c6ed8818cef4db8e9b1caffe53ad4811456
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 14:43:05 +0100
+
+    NEWS for 5.8.2
+
+commit 904027787d6ae857e70f29b49f4d131a92e6500e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-03 16:53:10 +0100
+
+    McdClient: don't allow unique_name to become NULL
+    
+    _mcd_client_registry_found_name() is called in three situations:
+    
+    • the initial call to ListNames() has returned;
+    • the initial call to ListActivatableNames() has returned; and
+    • NameOwnerChanged has been emitted for a client-shaped well-known name.
+    
+    In the first two cases, unique_name_if_known is NULL; in the first case,
+    activatable is FALSE.
+    
+    I don't really understand what business the McdClientRegistry has
+    telling the McdClient what its unique name is even when it's non-NULL,
+    but passing NULL to _mcd_client_proxy_set_active() made McdClient
+    violate an internal invariant. The first action McdClient takes is to
+    discover the client's unique name, if any; if the client is not running,
+    unique_name is set to "" (not NULL). Other parts of the McdClient
+    internals assume (and assert) that unique_name is not NULL by the time
+    they run.
+    
+    I *believe* that the client registry need not ever call
+    _mcd_client_proxy_set_active(), but I am loathe to make that change
+    without fully understanding the code and writing some tests.
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=39767>
+    Reviewed-by: Xavier Claessens <xclaesse@gmail.com>
+
+commit c9907c9e7141acdda3cdf326db387f9c4c1b4abe
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-28 17:57:20 +0100
+
+    Connectivity: refactor signalling state changes
+    
+    As Guillaume pointed out on
+    <https://bugs.freedesktop.org/show_bug.cgi?id=28370#c5>, previously
+    McdConnectivityMonitor would signal ::state-change even if the state
+    hasn't changed in some cases.
+    
+    This patch reduces duplication and fixes that case.
+
+commit 7ffc20512ac6a81e9465622ec692a622bf7ebf8d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 18:08:57 +0100
+
+    Master: Always bind connection to a transport
+    
+    Previously, when a connection was brought online in response to
+    an event other than a transport becoming connected, it would always be
+    bound to a transport (if any transport plugins are loaded, obviously),
+    regardless of whether the dictionary o' conditions was empty or not.
+    However, when a transport coming online caused a connection to be
+    brought up, that connection would not be bound to the transport that
+    caused it to come online if the conditions were empty (which they
+    generally are).
+    
+    For reasons I can't quite fathom, this actually doesn't seem to have
+    affected anything: it could be because monitor_state_changed_cb in
+    McdKludgeTransport also binds waiting connections to the transport that
+    came online. But this seems like a sensible change for sanity and
+    consistency reasons.
+
+commit 9da0c6c713c9cba1ddef33d599888fce16b79482
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 12:24:36 +0100
+
+    Connectivity: go offline when laptop suspends.
+    
+    Woop woop.
+
+commit 17246cccff176888eae16b8ce673e2c5f0da440f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 12:07:32 +0100
+
+    configure: optionally depend on upower-glib
+
+commit 25799ee8f5b02a8893d7bc5c8007e58b9d444bdd
+Merge: 66b2835 38d76aa
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-28 11:33:09 +0100
+
+    Merge branch 'fd.o-38978-connectivity'
+    
+    Fixes: <http://bugs.freedesktop.org/show_bug.cgi?id=38978>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 38d76aa0c45d66828c1935b0b7573e7739af45b1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-28 11:28:54 +0100
+
+    fakeconnectivity: use constant for NM interface
+
+commit bf06f43306c6717905e5ca9cf16e6f96e2bb95fe
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 17:38:08 +0100
+
+    KludgeTransport: debug when connections get queued
+
+commit 928fbad1c14cde84758b45dd392eb1e20c150fa0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 17:16:31 +0100
+
+    Account: reconnect if RequestedPresence is not offline
+    
+    Previously, when a network connection came back up, only accounts with
+    ConnectAutomatically set would be re-connected. But if RequestedPresence
+    is something online-flavoured, I think it makes sense to bring such
+    accounts back online, too: if the user has asked to be online, a network
+    blip shouldn't affect that.
+
+commit ca9833b3d208fa4f4f3af333ebca54178c5c62da
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 17:15:46 +0100
+
+    am/connectivity: extract BillyIdle
+
+commit 855af5f3bb9f70aaa59768dbeaf50edf68198675
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 16:53:49 +0100
+
+    Account: when reconnecting, use RequestedPresence if possible
+    
+    Previously, if an account was taken offline due to the internet
+    connection disappearing, when it was brought back up the
+    AutomaticPresence would be used, trampling on whatever the user had put
+    into RequestedPresence.
+    
+    I guess this was deliberate … but it doesn't seem like very useful
+    behaviour. If I've explicitly set my presence to ('available', 'you can
+    talk to me now'), despite my AutomaticPresence being ('busy', 'probably
+    doing something else'), I don't see why a network connection blip should
+    cause my lovingly-written presence to be discarded.
+
+commit 68d883e4d7488bd2c692c8bc85e5b8f77950ba01
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-27 16:37:44 +0100
+
+    am/connectivity: check for SetPresence call
+    
+    I'd like to be sure that setting RequestedPresence before the network
+    connection comes up causes that presence to be applied when it does, as
+    opposed to just that the account be brought online.
+
+commit fd8b6fe898130d6de44501e83629f188a3f3391a
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 20:22:00 +0100
+
+    Account: add would_like_to_connect method.
+    
+    This consolidates logic previously duplicated between two code paths.
+
+commit 4ae0e4fc7cf2d4ffffec1efe8858b95202995333
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 19:56:28 +0100
+
+    Account: unduplicate get_requested_presence method
+    
+    _mcd_account_get_requested_presence() is literally identical to
+    mcd_account_get_requested_presence() except the underscore (okay, and
+    that the arguments are indented using spaces, not tabs).
+    
+    Whichever idiot was responsible for introducing the underscored version
+    removed by this patch should be hunted down and shot on sight.
+
+commit 9d8bd36fa860a5599733c44763fb3aac5fc72b92
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 18:54:12 +0100
+
+    Account: refactor re-requesting RequestedPresence.
+
+commit d8ed34e08ef5ae4ce87d317663e3467ac76fdabb
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 18:46:36 +0100
+
+    Account: remove _get_online_requests.
+    
+    This isn't called anywhere. And since this was the only way that
+    McdOnlineRequestData structures could escape mcd-account.c, we can now
+    hide that definition, too.
+
+commit 2d5b1ed417986250417af6a4eb3852e7837ed57b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 18:44:23 +0100
+
+    Account: static-ify _online_request_completed
+    
+    This is not called from outside mcd-account.c.
+
+commit df7537103a342b8bd42a69f21010f3fa448e8618
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 16:48:03 +0100
+
+    KludgeTransport: explain the one-element list o' transports
+    
+    'one' was not a useful name for this variable, in retrospect.
+
+commit 0bde9e5973fe306e428ec604d85aaafb0c1a9bd5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-20 11:29:08 +0100
+
+    Add a connectivity test
+    
+    This test does not run if neither NM nor ConnMan support is available.
+    It also only runs against the test-specific MC daemon, since it depends
+    on a backdoor method for synchronisation.
+
+commit dea44b07c708a391a2b6d0935aba1a7789c59f49
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-20 11:26:01 +0100
+
+    mctest: split up enable_fakecm_account()
+    
+    This patch splits out the second half of enable_fakecm_account(),
+    starting at the point where it expects a RequestConnection call, into a
+    new function, expect_fakecm_connection(). enable_fakecm_account() calls
+    it, so its behaviour does not change. But the connectivity-monitoring
+    tests will want to expect a call to RequestConnection() and let that
+    part of the standard check run to completion, so will be able to use the
+    freshly-split-out function.
+
+commit b4cd6e18b0d247ff69c3513e9492d885b954de89
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 19:10:10 +0100
+
+    Master: instantiate an McdKludgeTransport
+
+commit 101f02c4a73944512984d62c54f2ff18c3c2a2eb
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 19:30:01 +0100
+
+    KludgeTransport: track McdConnectivityMonitor state
+
+commit 7e0434a6d0c9c87241432a9b2fcd5993389a29fa
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 18:54:23 +0100
+
+    Add stub McdTransportPlugin implementation
+    
+    McdKludgeTransport will implement McdTransportPlugin using
+    McdConnectivityMonitor. Currently it's a no-op though.
+
+commit 90fb7c9e5f8d81b669d4a01c1a9ec1886170b965
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-22 18:13:45 +0100
+
+    mctest: resuscitate MC asynchronously
+    
+    Shortly, MC will start making blocking calls on the test suite's fake NM
+    implementation (via nm-glib).
+    
+    Calling bus.get_object service-activated MC as a side-effect of making a
+    blocking call to Introspect() on it, so it deadlocked. I think it's
+    clearer to explicitly, asynchronously activate it, and wait for it to
+    claim its names; which also avoids the deadlock.
+
+commit 95a3fdd9a18b638d3e20df0df5976c2bf41c150d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-22 18:46:39 +0100
+
+    account-manager/create-with-properties: modernize and asyncify
+    
+    For some reason, the blocking call to Introspect here reliably
+    deadlocked against the blocking call MC will, in a couple of patches'
+    time, make to (the fake) Network Manager service implemented by the test
+    suite. Removing it just made the GetAll() call deadlock instead. If I
+    render that asynchronous, the deadlock goes away.
+    
+    I am not overly happy with having to do this kind of ad-hoc kludging of
+    the test suite to make it run, but we're working around a library bug
+    and I have no interest in delaying the NM integration while I fix
+    nm-glib.
+
+commit 8af66a228e79470cde692d3aeaf43e70168f1b86
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-16 11:33:28 +0100
+
+    tests: add fake implementations of MC and NM
+
+commit dc460ae72ec2c29f42cf375e7e3366105998d132
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-19 18:21:39 +0100
+
+    test service: add a “process idle queue” method
+
+commit d29269cb97cc9d804ca55999487e530c38a12ec6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-15 15:58:33 +0100
+
+    Add a test app for McdConnectivityMonitor
+
+commit 796c6e95ecab316f927092391affe35d6b01e99f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 16:24:55 +0100
+
+    Import EmpathyConnectivity as McdConnectivityMonitor
+    
+    I'll wrap this up in the hateful McdTransport[Plugin] API forthwith.
+
+commit 66b28358c295e994c5a3711b6d1e04edb53d423f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-26 12:19:23 +0100
+
+    mc-tool: add missing entry for reconnect to help
+
+commit 49c678c5169caea64728206a2f63496cd9e37c36
+Merge: a669b92 c6939ce
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 17:01:34 +0100
+
+    Merge branch 'mc-tool'
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=41154>
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c6939cec58fe158574f4206a780dffdf74264db4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 15:19:41 +0100
+
+    mc-tool: add a 'reconnect' command
+
+commit af96bbe41f468f6301819b455713359d25efb5d7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 15:00:03 +0100
+
+    mc-tool add: use tp_account_manager_create_account_async
+
+commit 871eb58541a95c2f9c015350b4f63aca64c4b785
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 14:40:24 +0100
+
+    mc-tool remove: use tp_account_remove_async
+
+commit eda38779c2c3107256a8ef5c5fc32d04e664363f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 14:38:27 +0100
+
+    mc-tool: improve 'update' output.
+    
+    Previously, mc-tool update didn't tell the user whether a reconnection
+    would be required to apply parameter updates. This patch makes it do so,
+    and also makes its implementation use
+    tp_account_update_parameters_async().
+
+commit ab3f0fcf0f700b3ad5c5d905188a3bb8c27994e0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 14:28:54 +0100
+
+    mc-tool: set AutomaticPresence using tp-glib method
+
+commit 4bb6ce89cbc9a0dcb429a2bd42ee2c42d0a5c368
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 14:25:39 +0100
+
+    mc-tool: always show *some* value for ConnectAutomatically
+    
+    Previously, if an account had ConnectAutomatically: True, then mc-tool
+    show would say:
+    
+        Connects: automatically
+    
+    But if the property was False, mc-tool show would not mention it. This
+    patch makes the command produce:
+    
+        Connects: only when requested
+    
+    in the latter case.
+
+commit bce94d7b182c05bfde407a6f5cdbb2effdc119a7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 14:24:41 +0100
+
+    mc-tool: use accessors from tp-glib 0.13.8
+    
+    In some historic version of telepathy-glib, TpAccount did not have
+    accessors for AutomaticPresence or NormalizedName. Since we depend on
+    telepathy-glib 0.15.0, and these accessors were added in 0.13.8, we can
+    now just use them.
+
+commit d854d0ecff853a63654229cf59bc2dc129fc45a2
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 14:48:05 +0100
+
+    configure: check for NM or ConnMan
+    
+    This is baically cargo-culted right out of Empathy.
+
+commit cc659f64994f71957345b6c9fab1bdb612c30f32
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 18:22:38 +0100
+
+    McdTransport: add guards to vfunc wrappers
+    
+    Most of these functions are mandatory-to-implement; check_conditions is,
+    in practice, optional.
+
+commit 2981787353f9862c076cf1c72484c4d5ea234999
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-22 16:54:50 +0100
+
+    Master: poison singleton pointer when disposed
+    
+    Previously, when the 'default' instance of McdMaster (i.e., the
+    singleton) was disposed, the 'default_master' variable was left pointing
+    to it. This is basically fine in practice, since the McdMaster is meant
+    to survive for the lifetime of the connection. But I hit a weird crash
+    (caused by the test suite's version of MC waiting 5 seconds after the
+    McdMaster is destroyed before closing, which interacts badly with the
+    reconnection timeout being less than 5 seconds) and it would have been
+    much clearer what was happening if 'default_master' had held a known-bad
+    address rather than a possibly-valid pointer to a freed object.
+    
+    This doesn't change the behaviour of the code in any significant way:
+    we'll still crash in this situation. But as far as I can tell the bug is
+    harmless.
+
+commit 4695c8fe269d04eff269522dc6a0f67795a07dac
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-16 11:13:22 +0100
+
+    tests: replace make_mc with class MC
+    
+    This will make it easier to glue things onto the side of the proxy for
+    MC.
+
+commit a669b92559e7017b6381c44959fc077acc72b11f
+Merge: 42cef84 c8b1014
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 11:28:08 +0100
+
+    Merge branch 'uncontroversial'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 42cef84969d9f0ac32a90cccaaddc57e221d9950
+Merge: d3f1153 746c698
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-23 11:27:52 +0100
+
+    Merge branch 'telepathy-mission-control-5.8+'
+
+commit 746c6982d06a124b05b439f11d92ae24fa252a40
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-09-21 19:24:13 +0100
+
+    Make the regression tests work with D-Bus >= 1.5.6
+    
+    The tests rely on being able to eavesdrop. Since D-Bus 1.5.6, normal
+    match rules do not eavesdrop, even if allowed: you have to specifically
+    ask for it.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=41090
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit c8b1014ebc4ae7ad7fed8810e5ed0a05ebd7d5d9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-19 18:24:50 +0100
+
+    tests: make sync_dbus more reliable
+    
+    This is taken from Gabble.
+
+commit 6417d165242ffeb1899108baee3d38709cc8a5e7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-16 10:50:11 +0100
+
+    mctest: remove unused event_func arg from make_mc
+
+commit 6362eedfdc4907592d299bac2fe88cd936b62b94
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-16 10:44:38 +0100
+
+    mctest: remove references to parameters
+    
+    This is cargo-culted from CM tests which actually have connection
+    parameters.
+
+commit 5461261e185cab9784923683720149490107e0a5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-19 11:01:30 +0100
+
+    with-session-bus: print log file names
+
+commit 4aea67ec672ffbec19d7280bc6cd6b70cccd5607
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-15 16:22:10 +0100
+
+    tests: update with-session-bus.sh
+    
+    This gives us --also-for-system, which will be useful for testing NM
+    integration.
+
+commit 1e0f118d843d16874969e8d4b8a380a7bdf2bec3
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-21 19:19:07 +0100
+
+    tests: run Python with unbuffered output
+
+commit 04008b50c4528bea1956c6bf3cd081f7fa9d6b9d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-21 19:18:17 +0100
+
+    plugin loader: add a missing space to DEBUG output
+
+commit ad37acd51910ddfd172f469ce131d1a8fce08ac1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-14 14:35:20 +0100
+
+    configure: add summary
+
+commit d3f11533b226e0ecb0ba4e095732aae882089581
+Author: Derek Foreman <derek.foreman@collabora.co.uk>
+Date:   2011-08-30 08:09:43 -0500
+
+    add gio to the glib dependency check
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 560e18839b1d81da82091e18846a2c5206990da0
+Author: Derek Foreman <derek.foreman@collabora.co.uk>
+Date:   2011-05-16 13:58:37 -0400
+
+    add -uninstalled.pc.in file
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 9175ec5cc754e2f71482750e382407e44846a4cc
+Author: Derek Foreman <derek.foreman@collabora.co.uk>
+Date:   2011-05-16 13:56:46 -0400
+
+    Make debug statement more useful
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 5bb11128eea9daa08491be2feed7f45718deef42
+Author: Xavier Claessens <xclaesse@gmail.com>
+Date:   2011-09-20 12:32:05 +0200
+
+    Add unit tests for the case an approver Claim() a CDO
+
+commit 8e06e3e0e110f5e29af3abf3bdc1febdf49c4980
+Author: Xavier Claessens <xclaesse@gmail.com>
+Date:   2011-09-20 13:15:13 +0200
+
+    Unit tests: SimulatedClient with wants_recovery=true fails to prepare
+
+commit 0bae7095a9e1a10e531d311e993fc1c67438cfd2
+Author: Xavier Claessens <xclaesse@gmail.com>
+Date:   2011-08-22 13:34:21 +0200
+
+    Avoid crash in client recovery if we don't know the handler well-known-name
+    
+    In the case an Observer/Approver Claims the channel, we don't get the
+    handler well known name for that process. In that case we need to
+    fallback to lookup all possible handlers on the same process and
+    pick the first one that match.
+
+commit 34e8ab1f4b4e35647baab7d2b0ef2cd9fd1fdcc1
+Merge: 2c9d469 1931d4f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 13:17:36 +0100
+
+    Merge branch 'fd.o-40129-set-a-proper-error-if-CM-crashes'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 1931d4f2c71f0574a93cac848e2a1e0b40d6588c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 12:32:50 +0100
+
+    Test that MC sets reasonable errors when CM crashes
+    
+    This was intended to be a regression test for
+    <https://bugs.freedesktop.org/show_bug.cgi?id=40129>, but it turned out
+    that MC is already pretty well-behaved.
+
+commit ca1f8bfff656a0de8f002eee9d0056bbb93301b1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 12:30:26 +0100
+
+    OCD: sort tests in Makefile.am
+
+commit 57175d04e0b70a112de89e9d85e0e753915780e1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 11:54:34 +0100
+
+    mctest: allow running FakeCM on a separate bus connection
+    
+    This was possible before, but not exactly straightforward: you had to
+    clone the guts of create_fakecm_account(). By adding an optional
+    parameter to create_fakecm_account(), and a method to
+    SimulatedConnection to drop its bus name, it becomes pretty easy to run
+    the fake CM on a separate bus, and hence simulate it crashing.
+
+commit cb19851532bb95ef18e162fc055dbed8c4d579d9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 11:53:38 +0100
+
+    servicetest: Implement Event.__str__
+    
+    This is stolen from Gabble.
+
+commit d9a6c491c2973b3e248de76615e83779ea820586
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-13 11:09:24 +0100
+
+    am/recover-from-disconnect: miscellaneous pruning
+    
+    • 'dbus' was imported twice;
+    • 'dbus.service' and various symbols were imported but never used;
+    • a BusName was claimed twice;
+    • dbus.Interface objects were created unnecessarily;
+    • dbus_interface='' was explicitly specified unnecessarily.
+
+commit 65fc610a6840258422809fc72f9b22dc34b56504
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-12 18:02:41 +0100
+
+    with-session-bus.sh: retain newline when forking dbus-monitor
+
+commit edfd9b291e81bb935054c5ab7102a1b2120d0333
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-16 17:25:17 +0100
+
+    Tests: remove stale FIXMEs about closing channels
+    
+    Since 5dfe2f0, Mission Control has not called Close() on channels when
+    you disconnect. The test for this incorrect behaviour was commented out
+    at some point, with a FIXME that the behaviour should be changed.
+    
+    Well, now the behaviour has been changed. So I replaced one with an
+    assertion that Close() is not called, and the other I just removed
+    (since that test doesn't actually have any channels).
+
+commit 2c9d469ec6646a39bd964866b434e0eaafab2b24
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-12 17:15:10 +0100
+
+    mcp: fix a bunch of doc warnings
+
+commit 9af88add93e4978056e5ad30741fec790386744c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-12 16:50:41 +0100
+
+    configure: remove unused ACCOUNTS_DIR and MANAGERS_DIR
+
+commit 1271aaa387c51c312ae2dd6bd0d7ba51ce6864cb
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-12 16:48:36 +0100
+
+    Remove unused CHANDLERS_DIR
+    
+    I really hated Friends.
+
+commit 3c9f0062919c91887930a197e7240d1e113e7c40
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 17:39:18 +0100
+
+    Bump version to 5.9.2+
+
+commit 36fec818dd30409637c38eec2b8774d48161408b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 11:21:06 +0100
+
+    Version 5.9.2
+
+commit d6d0a8302d3974945daf7a020acf5ec4bccba441
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 11:20:36 +0100
+
+    NEWS for 5.9.2
+
+commit a22988411e1f6601980a0cd9a9ecce93e29f7c6b
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-09-01 14:25:44 +0200
+
+    mcd-account: use proper gboolean rather than 1 bit to store boolean properties
+    
+    It doesn't make sense to not use the boolean type provided by our framework
+    and using 1 bit variable introduces weird corner case when being casted with
+    gboolean.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=40545
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+
+commit 4b52bb815739b5e73d028aebde9d22e81dac85dd
+Merge: ba3094e 2394a97
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 17:09:13 +0100
+
+    Merge branch 'doc-cleanup'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 2394a9782e2739b0fce36349e8e1db957ff0f91e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 16:47:37 +0100
+
+    configure: remove obsolete OUT_OF_TREE_BUILD check
+    
+    The gtk-doc stuff doesn't use this any more.
+
+commit 047a42ee82fa0d664d510f0ccbd13a802a98ca90
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 16:38:37 +0100
+
+    Stop building docs for libmissioncontrol-server
+    
+    I'm hitting a weird issue in gtk-doc where the handwritten .types file
+    is overwritten with a generated one during distcheck (but not during
+    normal out-of-tree builds). Given that we have a newer plugin API we're
+    keener on, let's just stop building documentation for the old one. (Most
+    distros do not distribute libmissioncontrol-server as a library anyway.)
+    
+    The mission-control-plugins documentation doesn't hit this issue because
+    it doesn't have a handwritten .types file. Instead, it relies on gtk-doc
+    generating it, and uses IGNORE_HFILES to filter out internal headers.
+    This seems more maintainable, so if anyone wants to resurrect this old
+    documentation, I'd do it that way.
+
+commit 6de9a91e02906b1cb8536010a71175e0dafb43e6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 14:34:55 +0100
+
+    docs: remove legacy templates
+    
+    These were all content-free anyway. Removing them, and using --flavour
+    no-tmpl, makes the build neater and faster.
+
+commit ba3094edb045a74e6bdd7288db47d05aa9c11233
+Merge: 9cdb15e 5bb6130
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-07 12:55:06 +0100
+
+    Merge branch 'telepathy-mission-control-5.8+'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit 9cdb15ef0de942be523f3138c9447dc4ff71f4e9
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:23:01 +0100
+
+    Update NEWS with fixes merged from stable branch
+
+commit e8bacd5739c0a12084c0fc1df13155629bdd68d6
+Merge: 1e87b2f c2aa017
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:21:41 +0100
+
+    Merge branch 'early-connecting-status-semi-hack'
+    
+    Conflicts:
+    	NEWS
+
+commit 1e87b2f7f5c34ef40b3af87fc29b6a89e7ea7b21
+Merge: e116686 b29f2a8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:20:28 +0100
+
+    Merge branch 'memory-leak'
+    
+    Conflicts:
+    	NEWS
+
+commit e116686b7e33474265795025374023e5ceeb4913
+Merge: 6152792 f393396
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:18:06 +0100
+
+    Merge branch '58-recovery-position'
+
+commit 5bb613053dead289ac11f0330dd99bf5fcf5af39
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:05:28 +0100
+
+    Nano version
+
+commit 89585a13ec547b18ca70519b4e3a0e53238b2a2b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 19:03:40 +0100
+
+    Update doc-comment in configure.ac
+
+commit 5b161bf7b0747858e48fc7adf375cb61ee0df0ad
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 16:31:58 +0100
+
+    Version 5.8.1
+
+commit aa85d5b6de865651e8834e173a3873fbec6a0372
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 16:24:21 +0100
+
+    Update NEWS
+
+commit c2aa017899facac77648ddbf57cfd50c869a02c0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-08-18 18:35:16 +0100
+
+    Set connection status to 'CONNECTING' as soon as we start trying to connect
+
+commit 5008b9578d0d815b87ae6145f122a8cf37671524
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-08-18 18:35:00 +0100
+
+    Don't throw a hissy-fit if the account is CONNECTING but the connection is not
+
+commit 91036eb72b06fe28a0a95b7b575cc0593ce76dd0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 15:14:56 +0100
+
+    Update NEWS
+
+commit b29f2a8554a0a303fd7dca0ce6aae620423882ad
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-01 18:12:15 +0100
+
+    API does not guarantee that the GValue remains unset on failed value retrieval
+
+commit fcaeb1ff9cade6b7451304076d383a01e3559f09
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-01 16:05:32 +0100
+
+    Approval contexts must be NULLed out or the free function will assert()
+
+commit 1e6d4cd9d48c5896f79dbea3bdf6ee64fcef1ad9
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-08-30 14:11:46 +0100
+
+    Approval struct free function did not free a string member
+
+commit 49a2f9434acc3f7649ae0129248cc0f16466ba4f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-08-30 13:53:44 +0100
+
+    Approval removed from GQueue should be freed
+
+commit fe5bc872a72a71900ea7116f793c37c9896c0ee6
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-08-30 13:48:22 +0100
+
+    Approval structs should be freed after removing them from the tracking GQueue
+
+commit 74a3b8ed4ed361602a555d8994f66626588e2873
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-09-06 15:08:21 +0100
+
+    Log fix introduced by 58-recovery-position in NEWS
+
+commit f3933967a7a1573ccaac8c6a52814e388cf7cb98
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 18:16:26 +0100
+
+    undispatchable test: assert that observers are invoked, but approvers are not
+    
+    Also assert that MC doesn't close the channel as undispatchable until
+    the Observer has had a look at it.
+
+commit 372ad259fdd87182f4d3bcadd053c4fafc443016
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 18:14:24 +0100
+
+    fd.o #29022: if a channel can't be handled, dispatch it anyway, to run observers
+    
+    Arguably, we should have some way that approvers can opt-in to being told
+    about undispatchable channels that they might want to Claim, but that
+    requires spec, whereas we can fix this straight away.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=29022
+
+commit 99d9669a46659ea42635aa5013e6a07e6c21e64b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 17:30:25 +0100
+
+    McdHandlerMap: add brief documentation
+
+commit adf270a5a0382b0345fa7ee43904409c3157c96e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 17:30:12 +0100
+
+    fd.o #34025 (ish): if we handle a channel internally, record that fact
+    
+    This means we'll include it in the set of handled channels when we invoke
+    Observers with Recover=TRUE.
+    
+    We don't do this when calling _mcd_request_handle_internally (., ., FALSE)
+    since we're not really behaving like a Handler in that case - more like
+    an Observer or something.
+
+commit 6152792b0fc8ebd5daf3be1b743950f8b0698730
+Merge: 1e95507 98785b8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-01 13:17:17 +0100
+
+    Merge branch 'gtk-doc'
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 1e95507c3b45c8c3196850fc78db5a130ddcbc33
+Merge: 1c24940 755fc0f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-09-01 13:16:58 +0100
+
+    Merge branch 'bin-mcclient'
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=24913>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 98785b8fa89cf2f03526de4af44e735af476976c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 17:15:05 +0100
+
+    Depend on gtk-doc ≥ 1.17
+
+commit b39cdb342b78e0e40b9e92af4a6135bf5a05c18f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 17:14:21 +0100
+
+    docs: fix out-of-tree doc checks with gtk-doc 1.17
+    
+    gtk-doc 1.17 runs in the builddir, not the sourcedir. So these files end
+    up in the builddir, which is where we're running.
+    
+    Unfortunately this breaks doc checks with gtk-doc ≤ 1.16, which I can't
+    find the strength to care about.
+    
+    (This is akin to 3ab0d76 in tp-glib.)
+
+commit e0bc7368527fa5d2509a251d33e4d5e3dcf6dc34
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 17:12:59 +0100
+
+    docs: sync Makefiles with tp-glib's
+    
+    This shouldn't change any behaviour. It just adds some defaults and
+    comments from tp-glib's copy (which in turn are synced with the sample
+    file shipped by gtk-doc) to make diffing the two easier.
+
+commit 8fbf0cfbee2ff547ad1a9cc331ad07243cfb2fdd
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 17:06:23 +0100
+
+    docs: use GTKDOC_CFLAGS not INCLUDES
+    
+    Going by the examples provided by gtk-doc, this is preferred.  It's been
+    supported approximately forever.
+    
+    This is based on 019e84e6 in tp-glib.
+
+commit 99a3539a3c5bd1c0bc79062bc00e3520d91a392d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 17:00:28 +0100
+
+    docs: correctly scan source dirs
+    
+    This is taken from e3dcc31 in tp-glib. gtk-doc 1.17 now runs in the
+    build dir, not in the source dir, so using relative paths here stopped
+    working.
+
+commit a5ecb8ddb9cc1d7f2431425efe27cef6a2f239ec
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 16:24:53 +0100
+
+    Silent-rules-ify some code generation
+
+commit 755fc0fed40b967c99ffb60c1bad06828c589325
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:59:14 +0100
+
+    Remove stale code-gen for stable interfaces.
+
+commit 773b790254aa89b914aeac8d144be2afa8916b4b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:53:03 +0100
+
+    Remove Account.Interface.ChannelRequests
+    
+    This is a predecessor to the current channel-requesting API, and is
+    obsolete.
+
+commit 7cdacf5f4950af85714a838e2aba4256b2238918
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:57:44 +0100
+
+    Remove libmcclient
+    
+    This entails doing a little more code generation for the daemon: some
+    bits depended on generated code from libmcclient, and there was an error
+    enum used in exactly one place. But broadly speaking this just deletes a
+    tonne of code and documentation.
+
+commit 7e0173a046b381856992faef292ade59cef31cad
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:45:51 +0100
+
+    Remove local copies of ContactCaps and PowerSaving
+    
+    These have been in tp-glib for ages.
+
+commit 576fdc7e1657e42f4411123124d7b8dd651e883d
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:37:41 +0100
+
+    Remove Compat.Profile support
+
+commit b614b7a40260f2c3baf9f4835b25bc6ca06993b6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:26:47 +0100
+
+    Use D-Bus GType constants from tp-glib
+
+commit f6bb84c370ca350757f27ec486713376186f89a4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:24:56 +0100
+
+    tests: don't test Compat.Profile property.
+    
+    This is slated for removal.
+
+commit 2c82847081b8c28ff18adc1ab3c6a49de2b6b151
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 14:18:15 +0100
+
+    tests: stop using non-standard channel request API
+    
+    I would like to remove this API. It was only used by libmcclient, which
+    I would also like to remove. :)
+    
+    Most of these tests don't actually use the non-standard API: they just
+    reference the interface for no good reason.
+
+commit 09c862d4fcf8b15a9fd92b5112d5dc7cdf6e8929
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 13:33:45 +0100
+
+    tests: move all of make_mc to mctest
+    
+    I have no idea why part of it was in servicetest.
+
+commit 1c24940a5f2e38ba4027b6b48a2166deeab91219
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 15:35:34 +0100
+
+    NEWS for 37861
+    
+    (Before I forget.)
+
+commit ebe91108748249950d3aeb363e8bfc5e0428c222
+Merge: fc84cd8 52e9df5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 15:31:46 +0100
+
+    Merge branch 'telepathy-mission-control-5.8+'
+    
+    Now master is a superset of all known releases. ;)
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit fc84cd8e9eb88478d3da7b663fc649c560ac4f0e
+Merge: 547b3ba b8d92d6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-31 11:06:46 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 547b3ba96d7f8f5fbdc09c3ecae5ce8badf21791
+Merge: dd98690 8dbecc0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-25 12:46:23 +0100
+
+    Merge branch '40337-invalid-account-error-reporting'
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=40337>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 8dbecc0ae4083ac8c83507084c36ad2ca536f499
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-25 12:30:02 +0100
+
+    bad-cm: break 'password's type.
+    
+    Jonny pointed out that, given that the method name contains "account",
+    it's perhaps not the right parameter to check is in the error message
+    returned when an incorrect type is passed.
+
+commit a01b090c4b289a50ba022852a3a93f1bfd8727b9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-25 12:17:42 +0100
+
+    account-manager/bad-cm: clean up test.
+    
+    This reduces duplication and modernizes the test a bit.
+
+commit d771a4cff23130c34471fce3eb7236dc851e55ae
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-25 12:09:54 +0100
+
+    Test invalid or ill-typed parameters for new accounts
+
+commit 4aad882bcec0a476adbbeab47dee4833c3e053a3
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-25 11:13:08 +0100
+
+    Include CM name when protocol doesn't exist
+    
+    This is not really ideal—the real error is that the CM doesn't exist but
+    due to the current design of this part of MC, it's actually not easy to
+    determine that.
+    
+    So at least including the name of the CM might make the error more
+    obvious.
+
+commit 7ee4434e8049c170f9ee9766bd9b26913fc6e0cd
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-24 18:42:47 +0100
+
+    AccountManager: use _mcd_account_set_parameters error verbatim
+
+commit 5a37fb49c80cb89c27925a410d4a1056e88bba3e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-24 18:41:13 +0100
+
+    Account: use NotImplemented for nonexistant cm/protocols
+    
+    The spec is actually pretty clear on this point.
+
+commit 289c02177b461bb1fb2f4487e5eed59d9c177db4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-24 17:53:02 +0100
+
+    mcd_account_check_validity: report a GError for invalid accounts
+    
+    This corrects the specific case of poor error reporting mentioned on
+    <https://bugs.freedesktop.org/show_bug.cgi?id=40337>, where MC
+    previously said “The supplied CM parameters were not valid” but now
+    actually says which one.
+    
+    There are a couple of other account-creation cases (namely “CM doesn't
+    exist” and “CM doesn't have that protocol”) which don't give the correct
+    errors. And the test doesn't test the “Protocol doesn't have one of the
+    specified parameters” case.
+
+commit fc543c3ee4ae0235876a7f22deaad0e19b2b1242
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-24 17:40:58 +0100
+
+    Account: internally track validity as a GError
+
+commit 976a3f1cebe4d2b8e4e22398a130ef4a181db8d9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-24 17:21:11 +0100
+
+    mcd_account_check_parameters: give callback a GError
+
+commit c130b10a7c5d3453cbad163f68b968b538f356f9
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-23 18:51:31 +0100
+
+    McdAccount: use mcd_account_is_valid internally too
+    
+    This will make it simpler to change how validity is represented (from a
+    boolean to a GError).
+
+commit dd9869068914125e80956531446eb297fa128784
+Author: Frédéric Péters <fpeters@0d.be>
+Date:   2011-08-21 11:08:36 +0200
+
+    mission-control-plugins: Link against gio
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit bcc9373ff79d996767bca3efe1b4cafef0b9a525
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-07-25 16:01:43 +0100
+
+    Remove ContactCaps.DRAFT1 support
+    
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=24911>
+    Reviewed-by: Xavier Claessens <xclaesse@gmail.com>
+
+commit c64e52dc46a040b69b37100525bbf4698cca854f
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-08-03 14:28:47 +0200
+
+    Avoid a warning when trying to store a NULL value
+    
+    e17b83fec8f01ca6977cb4fe259a83634aa90b26 only fixed the !ENABLE_GNOME_KEYRING
+    case.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=39796
+
+commit 5999d678c2156e04b9c1db3cf1a406adb467810c
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-08-03 12:52:08 +0200
+
+    account-manager-default: always delete secret keys from both locations
+    
+    This ensures that the key is actually removed even it has been tagged as
+    secret after is removal.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=39796
+
+commit f2a78001ab99b7a8109121873bf14095b4c6fe19
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-01 16:10:13 +0100
+
+    mc-tool: allow localized strings for booleans
+
+commit 7a37f1c767ace97a1dafa258198ca6ca0c9c1830
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-08-01 16:02:09 +0100
+
+    mc-tool: make bool parsing sane.
+    
+    Previously, mc-tool update acct bool:foo=true would set foo to False!
+    Particularly ridiculous given that mc-tool show produces 'true' and
+    'false', not '1' and '0'.
+    
+    I'm *sure* I've fixed this before.
+
+commit 52e9df56a40d027e0972158a600c1b7695820113
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-22 14:52:06 +0100
+
+    Nano version
+
+commit 597ed3fd7605bce7b06f6d127c1a90b7fc14f8de
+Merge: cb92278 149523e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-22 13:25:16 +0100
+
+    Merge branch 'unconditional-accounts-skip-too-many-transport-checks' into telepathy-mission-control-5.8+
+
+commit cb92278fc5f001e5330e6d0e6deb410379ff809c
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:37:52 +0100
+
+    Update NEWS for Aegis ACL plugin
+
+commit 1191b793e3c445cc836194c63c2d52b8dc42e56b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:36:12 +0100
+
+    The Aegis ACL plugin must activate handlers to check their credentials
+
+commit aae2f108921f4a8eedd861f76e8650c128e2d0cc
+Merge: 2607198 07e875a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-22 12:24:34 +0100
+
+    Merge branch 'cdo-satisfied-requests-hash-leak' into telepathy-mission-control-5.8+
+    
+    Conflicts:
+    	NEWS
+
+commit 260719888571da3c2e0ebcdc9fc5f45f298c02cb
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-22 12:18:04 +0100
+
+    Version 5.8.0
+
+commit a6bb447eabb95bf91d5f0121ce0e8cdfa6eabead
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-19 15:29:56 +0100
+
+    Fix unbalanced *_DECL macros
+
+commit a29cf172aca42414af59e634a78833e947886d25
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-19 15:24:48 +0100
+
+    Checks for unbalanced G_BEGIN/END_DECLS macros
+
+commit b8d92d6bef16a176fb2403957a645aa9510579c5
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-21 14:47:01 +0100
+
+    Nano version
+
+commit 3f847e56997ada402bba06344d8de81e13812eac
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-21 14:31:32 +0100
+
+    Version 5.9.1
+
+commit ffeee1fe4c6572d54f052608d30163f71ff05562
+Merge: 0d2d371 b7e44e6
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-21 13:02:43 +0100
+
+    Merge branch 'unbalanced-header-macros' into telepathy-mission-control-5.8
+
+commit 0d2d3718faf22255a575b44c6184435cd16b4027
+Merge: da359cb 149523e
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-21 13:02:21 +0100
+
+    Merge branch 'unconditional-accounts-skip-too-many-transport-checks' into telepathy-mission-control-5.8
+
+commit 149523e89c42cea1cb61c1baa682c623a44e4893
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-20 18:36:55 +0100
+
+    If there are no transport plugins, the decision always has to be "Yes"
+
+commit da359cb5b2c3d640c58bd5d777186561244cddf8
+Merge: cebbd25 894f722
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-20 17:07:14 +0100
+
+    Merge branch 'telepathy-mission-control-5.8' of git+ssh://git.freedesktop.org/git/telepathy/telepathy-mission-control into telepathy-mission-control-5.8
+
+commit b7e44e64922a59795a2720939261b9e8bdc5057b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-19 15:29:56 +0100
+
+    Fix unbalanced *_DECL macros
+
+commit 3e753cbb5b442c1a1dfce84c816cef3df8e6afc0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-07-19 15:24:48 +0100
+
+    Checks for unbalanced G_BEGIN/END_DECLS macros
+
+commit 894f722b50712ed9ac2f241691fcecdee560fa3f
+Author: Vincent Penquerc'h <vincent.penquerch@collabora.co.uk>
+Date:   2011-07-18 09:46:37 +0000
+
+    Let cc find dbus, dbus-glib headers
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=39324
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit cebbd25840976d134c373b901df27ad3e76db8c0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:37:52 +0100
+
+    Update NEWS for Aegis ACL plugin
+
+commit 78f3189898d07bb7aa9702bc149066a455f0066a
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:36:12 +0100
+
+    The Aegis ACL plugin must activate handlers to check their credentials
+
+commit 6153c0bf1fbe9132059597ec3b5ac9fe0446d7c1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:33:28 +0100
+
+    Update NEWS
+
+commit 8876752c9274e1fd885e1a51f24c22369a6ec94b
+Merge: 98c15e8 575e87f
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-24 16:27:58 +0100
+
+    Merge branch 'unconditional-accounts-skip-too-many-transport-checks' into telepathy-mission-control-5.8
+
+commit 07e875ab4a41add247b4127470be6e45a3530e82
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-08 18:40:25 +0100
+
+    Unref wrapper not required if we set the free func
+
+commit 575e87ff463a2b654bd7c921a6c900b1f9da9006
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-08 18:16:32 +0100
+
+    Accounts flagged as always-dispatch don't need a transport.
+
+commit feed5e78989b49983bb9231e5340ec021fc09dc8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-02 19:11:06 +0100
+
+    The 'set' GHashTable in collect_satisfied_requests was leaked
+
+commit 993f3648b2d11598901e92e81606dea6fcc50adc
+Merge: 80cca13 98c15e8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-01 18:03:20 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 98c15e812a24112a8276fa4a62e208a5f008d135
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-01 18:01:42 +0100
+
+    Update NEWS
+
+commit 0cfe51094842b0b05d70e83b83f9cf677bc7e7ac
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-06-01 17:37:10 +0100
+
+    Minor header include cleanup
+
+commit 792507ee78a5a2b44bcd98b407c4d2b34bf4a986
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-27 12:24:03 +0100
+
+    Hook up the built-in plugins to the new plugin debug infrastructure
+
+commit fd85965e16c3c31bd7370c730d120c0b37d2da21
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-27 11:46:32 +0100
+
+    plugin debug header should be included via the main plugin header
+
+commit 5a8b31db634408f9fc93fd551a2fe04e4cc1c661
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-26 16:59:30 +0100
+
+    Initialise new plugin debug at the same time as reguar daemon debugging
+
+commit 3fc48b4258f44812722772873c647a90759d31d1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-26 16:58:29 +0100
+
+    Expose new header file to out-of-tree plugins
+
+commit c7929ee79943f8c0408207c37895d4bc03aed094
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-26 16:58:01 +0100
+
+    define MCP_DEBUG for plugins to use
+
+commit cb25b3900d439e8a998e948c588d16a7888027a1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-19 21:26:58 +0100
+
+    Use the new environment-driven debug control mechanism in MCP
+
+commit eaae4ff6dab43a52584487eec5d8d39b74209db5
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-30 11:10:08 +0100
+
+    New debug control for mission-control-plugins
+
+commit b2b8407b4c41b1bc2074882c199984bf77ade554
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-31 19:35:04 +0100
+
+    _mcd_master_account_replace_transport would accept "no connection" as a successful replacement if no account conditions were specified, forcing unwanted reconnections
+
+commit e17b83fec8f01ca6977cb4fe259a83634aa90b26
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-19 15:26:13 +0100
+
+    Call g_key_file_remove... rather than ...set_value when new value is NULL
+
+commit 34a28b406627f4452807b27ee87760b7b93d4bad
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-19 15:25:43 +0100
+
+    Don't call tp_intset_size on unset intset
+
+commit 80cca13c3f19829b646c68a3b2eebf25ab9ae732
+Merge: 478a087 9a0990b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-24 19:09:25 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 9a0990b433fe9a90b1373c8aacaa5501d905f817
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-24 18:50:31 +0100
+
+    Update NEWS
+
+commit 0c3f44720632f76c5b4f90799314fb45fdd54c41
+Merge: 964891e 232cc60
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-24 18:44:33 +0100
+
+    Merge branch 'cd-message-api-fixes' into telepathy-mission-control-5.8
+
+commit 232cc604d7827c51456534976cf8c69446b3418b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-20 20:33:58 +0100
+
+    Catch the case where there's a hole in our logic and an internal request hasn't been cleaned up properly
+
+commit 0285a8ce6940868d91b86c9de23b141a85ff47a1
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-20 20:32:05 +0100
+
+    Log the actual call to internal request handling
+
+commit 761b4310d351396c14d27e08b78e4badf58c8387
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-20 20:30:26 +0100
+
+    If we're failing an internal request, clear the handler immediately
+
+commit 0c7cb7baad42bf7be3415403bb6610680e3c2c36
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-20 20:29:30 +0100
+
+    Internal requests should be handled in _both_ paths through _add_channel_request
+
+commit 478a087af9805219dad7c5288516f5f4c3891306
+Merge: 272c1d1 964891e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-20 13:52:10 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 964891e770dd1ca66c7c9a51ae03cc71dba8fe1a
+Merge: a0cd220 12230d1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-20 13:52:02 +0100
+
+    Merge branch '58-user-initiated' into telepathy-mission-control-5.8
+
+commit 272c1d13fdb704b2c5e6da849355b5453eca035c
+Merge: e4ccbd3 a0cd220
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-20 12:17:58 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+    
+    Conflicts:
+    	NEWS
+
+commit a0cd22059631972a7d89aa0bc8644544e122cf35
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-20 12:15:49 +0100
+
+    NEWS
+
+commit 615aae42cf533e02feb08eeabcad2f6ae16ea6ac
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-05-06 17:22:25 +0100
+
+    We need to propagate nickname changes that occurred "behind our back" too
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit e6cd84b0d147f24fc7e2dbcec99e6b494af3c032
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-08 13:02:36 +0100
+
+    Storage has stabilised after the Big Rewrite: turn off debug by default
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c4a70827351fc7e658c60d13e1b258aaa2fdfee0
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-08 12:59:30 +0100
+
+    The param hash is reffed by the ACL framework, we can drop our ref to it
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit f44ca2fc586c08d72e09a03f287567b85f7a05a8
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-08 12:58:51 +0100
+
+    Don't leak copies of the new stored setting values on update
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit da98340c7262c56ab9e38f9159783db746c1bd0b
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-08 12:55:55 +0100
+
+    Don't leak the initial "offline" account status name
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 2656c26edc53ac75a9e3fb1da19b5f4f6135bcf3
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-04-08 12:55:15 +0100
+
+    Don't leak the key list when accounts are updated by libaccounts/SSO
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 12230d1e93a5c428618a0815146ba00138f2cbb2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:04:41 +0100
+
+    Add mcd_account_connection_is_user_initiated
+
+commit dc5ea0a5e8072cd6abcaa4b636f4395db54e26ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:01:45 +0100
+
+    _mcd_account_connection_begin: take a flag for user-initiatedness
+
+commit 03a86b79018b2c7ac0b8d1e7a2bf7ae54249da06
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:01:22 +0100
+
+    mcd_account_request_presence_int: take a flag for user-initiatedness
+
+commit 82ff5c401a7e57ec62fea591c071a0644be1828f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:21:58 +0100
+
+    mcd_account_request_presence_int: emit RequestedPresence directly
+
+commit 7517ff1489872b68e35f8536f552377726c5b190
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:13:25 +0100
+
+    _mcd_account_connect_with_auto_presence: take a parameter for user-initiated or not
+
+commit e4ccbd3a80d4ea8cf2d527b54c662b4c41dad21a
+Merge: a43df07 2cdf0bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 16:39:47 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 2cdf0bd3efa2550c91f41f3fd2426365942e2878
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 13:38:45 +0100
+
+    update autogenerated gtk-doc goo
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 7d4041666674515fd601faaa20e804aeab98cb92
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 13:21:34 +0100
+
+    Regression test for passing unapproved channels to recovering observers
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=34025
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit dcc858d02c6c3671028d9e677b5d0a6bb36e0321
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-19 13:38:20 +0100
+
+    fd.o #34025: call ObserveChannels for channels waiting in CDOs when recovering
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=34025
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit a43df074d4bd9355420a200707be626ad71266dd
+Merge: ad0753f 7209f39
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2011-05-18 19:26:30 +0100
+
+    Merge branch 'telepathy-mission-control-5.8'
+
+commit 7209f3901a41ea0abacfb201aeef90a7abb0e76a
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 11:10:27 +0100
+
+    tests: when creating multiple simulated connections use different object paths
+    
+    This was causing test failures when testing using a better tp-glib.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 3f771dceff1cfd03f21f3cc44eb326f3299d2270
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 11:07:33 +0100
+
+    dispatcher/already-has-channel.py: don't test for calls done by tp-glib
+    
+    We previously checked makes sure GetInterfaces was called but this is
+    actually a call that tp-glib does. Newer versions of tp-glib don't do
+    this as they call GetAll on the connection beforehand so this test
+    failed.
+    
+    We don't really need this q.expect.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit ad0753f240b4064c41fd7914449da4ae1638292a
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-18 13:47:09 +0100
+
+    start on 5.9.1
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
 commit cc9acec9c7e8fcbeb92271783f43e8311b7a3176
 Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
 Date:   2011-05-18 12:50:07 +0100
@@ -32,6 +1762,14 @@ Date:   2011-05-18 11:07:33 +0100
     Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
 
 commit db2a49fc4270a43dead300b9c5faa8100a9a277a
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-05-17 10:34:24 +0100
+
+    service-points: don't depend on there being any interfaces
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 7133b0e580815d6c25321bf213f5c61b75300e32
 Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
 Date:   2011-05-17 10:34:24 +0100
 

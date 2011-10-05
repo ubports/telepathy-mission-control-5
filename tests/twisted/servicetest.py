@@ -42,6 +42,9 @@ class Event:
         self.__dict__.update(kw)
         self.type = type
 
+    def __str__(self):
+        return '\n'.join([ str(type(self)) ] + format_event(self))
+
 def format_event(event):
     ret = ['- type %s' % event.type]
 
@@ -311,7 +314,14 @@ class IteratingEventQueue(BaseEventQueue):
             bus.add_message_filter(self._dbus_dev_null)
             return
 
-        bus.add_match_string("")    # eavesdrop, like dbus-monitor does
+        try:
+            # for dbus > 1.5
+            bus.add_match_string("eavesdrop=true")
+        except dbus.DBusException:
+            pass
+
+        # for dbus 1.4
+        bus.add_match_string("")
 
         bus.add_message_filter(self._dbus_filter_bound_method)
 
@@ -460,9 +470,14 @@ def call_async(test, proxy, method, *args, **kw):
     method_proxy(*args, **kw)
 
 def sync_dbus(bus, q, proxy):
-    # Dummy D-Bus method call
-    call_async(q, dbus.Interface(proxy, dbus.PEER_IFACE), "Ping")
-    event = q.expect('dbus-return', method='Ping')
+    # Dummy D-Bus method call. We can't use DBus.Peer.Ping() because libdbus
+    # replies to that message immediately, rather than handing it up to
+    # dbus-glib and thence the application, which means that Ping()ing the
+    # application doesn't ensure that it's processed all D-Bus messages prior
+    # to our ping.
+    call_async(q, dbus.Interface(proxy, 'org.freedesktop.Telepathy.Tests'),
+        'DummySyncDBus')
+    q.expect('dbus-error', method='DummySyncDBus')
 
 class ProxyWrapper:
     def __init__(self, object, default, others):
@@ -483,17 +498,6 @@ class ProxyWrapper:
             return getattr(self.object, name)
 
         return getattr(self.default_interface, name)
-
-def make_mc(bus, event_func, params):
-    mc = bus.get_object(
-        tp_name_prefix + '.MissionControl5',
-        tp_path_prefix + '/MissionControl5',
-        follow_name_owner_changes=True)
-    assert mc is not None
-
-    return mc
-
-
 
 def wrap_channel(chan, type_, extra=None):
     interfaces = {

@@ -1,7 +1,7 @@
-dnl Set the version number to e.g. 5.0.beta42 immediately before a release.
-dnl Set the version number to e.g. 5.0.beta42+ immediately after (this will
+dnl Set the version number to e.g. 5.x.y immediately before a release.
+dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.9.0])
+AC_INIT([telepathy-mission-control], [5.9.3])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -117,26 +117,6 @@ if test "x$enable_coverage" = "xyes"; then
        CFLAGS="$CFLAGS -g -fprofile-arcs -ftest-coverage"
 fi
 
-AC_ARG_WITH(profiles_dir, AS_HELP_STRING([--with-profiles-dir=<path>],[Directory for storing profiles]))
-if test -z "$with_profiles_dir" ; then
-    PROFILES_DIR="mission-control/profiles"
-else
-    PROFILES_DIR=$with_profiles_dir
-fi
-AC_SUBST(PROFILES_DIR)
-AC_DEFINE_UNQUOTED(PROFILES_DIR,"$PROFILES_DIR", [Directory for storing profiles])
-
-
-AC_ARG_WITH(managers_dir, AS_HELP_STRING([--with-managers-dir=<path>],[Directory for storing managers]))
-if test -z "$with_managers_dir" ; then
-    MANAGERS_DIR="telepathy/managers"
-else
-    MANAGERS_DIR=$with_managers_dir
-fi
-AC_SUBST(MANAGERS_DIR)
-AC_DEFINE_UNQUOTED(MANAGERS_DIR,"$MANAGERS_DIR", [Directory for storing managers])
-
-
 AC_ARG_WITH(accounts_dir, AS_HELP_STRING([--with-accounts-dir=<path>],[Directory for storing accounts]))
 if test -z "$with_accounts_dir" ; then
     ACCOUNTS_DIR="~/.mission-control/accounts"
@@ -156,16 +136,6 @@ fi
 AC_SUBST(ACCOUNTS_CACHE_DIR)
 AC_DEFINE_UNQUOTED(ACCOUNTS_CACHE_DIR,"$ACCOUNTS_CACHE_DIR", [Directory for account/connection mapping for crash recovery])
 
-
-AC_ARG_WITH(chandlers_dir, AS_HELP_STRING([--with-chandlers-dir=<path>],[Directory for channel handlers]))
-if test -z "$with_chandlers_dir" ; then
-    CHANDLERS_DIR="telepathy/managers"
-else
-    CHANDLERS_DIR=$with_chandlers_dir
-fi
-AC_SUBST(CHANDLERS_DIR)
-AC_DEFINE_UNQUOTED(CHANDLERS_DIR,"$CHANDLERS_DIR", [Directory for channel handlers])
-
 server_enabled="yes"
 AC_MSG_CHECKING(whether to build the daemon)
 AC_ARG_ENABLE(server,
@@ -180,21 +150,6 @@ AC_ARG_ENABLE(server,
 	]
 )
 AM_CONDITIONAL(HAVE_SERVER, [test x$server_enabled = xyes])
-
-ENABLE_MC_CLIENT_SO6="no"
-AC_MSG_CHECKING(whether to pretend libmcclient is stable)
-AC_ARG_ENABLE(mcclient-so6,
-	[  --enable-mcclient-so6    pretend libmcclient is ABI-stable],
-	[
-		AC_MSG_RESULT(${enableval})
-		ENABLE_MC_CLIENT_SO6="${enableval}"
-	],
-	[
-		AC_MSG_RESULT(no)
-		ENABLE_MC_CLIENT_SO6="no"
-	]
-)
-AM_CONDITIONAL(ENABLE_MC_CLIENT_SO6, [test "x$ENABLE_MC_CLIENT_SO6" = xyes])
 
 ENABLE_MC_SERVER_SO6="no"
 AC_MSG_CHECKING(whether to pretend libmissioncontrol-server is stable)
@@ -340,9 +295,13 @@ AC_SUBST(TELEPATHY_LIBS)
 AC_SUBST(TELEPATHY_CFLAGS)
 
 PKG_CHECK_MODULES([GLIB],
-	[glib-2.0 >= 2.28, gobject-2.0, gmodule-no-export-2.0])
+	[glib-2.0 >= 2.28, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
+
+PKG_CHECK_MODULES([GIO], [gio-2.0 >= 2.28])
+AC_SUBST(GIO_LIBS)
+AC_SUBST(GIO_CFLAGS)
 
 dnl Check for MCE, a Maemo service used to determine when the device is idle.
 PKG_CHECK_MODULES([MCE], mce >= 1.5, [HAVE_MCE=yes], [HAVE_MCE=no])
@@ -351,9 +310,85 @@ if test x"$HAVE_MCE" = xyes; then
   AC_DEFINE([HAVE_MCE], [1], [Define if mce is available])
 fi
 
-dnl docs/Makefile.am needs to know whether it's an out of tree build
-dnl (srcdir != builddir)
-AM_CONDITIONAL([OUT_OF_TREE_BUILD], [test "z$ac_srcdir" != z.])
+# -----------------------------------------------------------
+# Connectivity integration
+# -----------------------------------------------------------
+AC_ARG_WITH(connectivity,
+              AS_HELP_STRING([--with-connectivity=@<:@nm/connman/auto/no@:>@],
+                             [build with connectivity support]), ,
+                             with_connectivity=auto)
+
+if test "x$with_connectivity" = "xno"; then
+   have_nm=no
+   have_connman=no
+
+elif test "x$with_connectivity" = "xconnman"; then
+   have_nm=no
+
+   PKG_CHECK_MODULES(CONNMAN,
+   [
+      dbus-glib-1
+   ], have_connman="yes", have_connman="no")
+
+   if test "x$have_connman" = "xyes"; then
+      AC_DEFINE(HAVE_CONNMAN, 1, [Define if you have connman dependencies])
+   fi
+
+else
+   have_connman=no
+
+   PKG_CHECK_MODULES(NETWORK_MANAGER,
+   [
+      libnm-glib >= 0.7.0
+   ], have_nm="yes", have_nm="no")
+
+   if test "x$have_nm" = "xyes"; then
+      AC_DEFINE(HAVE_NM, 1, [Define if you have libnm-glib])
+   fi
+fi
+
+if test "x$with_connectivity" = "xconnman" -a "x$have_connman" != "xyes"; then
+   AC_MSG_ERROR([Couldn't find connman dependencies:
+
+$CONNMAN_PKG_ERRORS])
+fi
+
+if test "x$with_connectivity" = "xnm" -a "x$have_nm" != "xyes"; then
+   AC_MSG_ERROR([Couldn't find Network Manager dependencies:
+
+$NETWORK_MANAGER_PKG_ERRORS])
+fi
+
+AM_CONDITIONAL(HAVE_NM, test "x$have_nm" = "xyes")
+AM_CONDITIONAL(HAVE_CONNMAN, test "x$have_connman" = "xyes")
+
+# -----------------------------------------------------------
+# Suspend/resume tracking goop
+# -----------------------------------------------------------
+
+AC_ARG_ENABLE([upower],
+    [AS_HELP_STRING([--enable-upower],
+        [monitor device suspending and resuming using upower-glib @<:@default=auto@:>@])],
+    [],
+    [enable_upower=auto])
+
+if test "x$enable_upower" != xno; then
+    PKG_CHECK_MODULES([UPOWER_GLIB], [upower-glib],
+        [AC_DEFINE([HAVE_UPOWER], [1], [Define to use upower-glib])
+         have_upower=yes
+        ],
+        [if test "x$enable_upower" == xyes; then
+            AC_MSG_ERROR([$UPOWER_GLIB_PKG_ERRORS])
+         else
+            have_upower=no
+         fi
+        ])
+else
+    have_upower=no
+fi
+
+AC_SUBST([UPOWER_GLIB_CFLAGS])
+AC_SUBST([UPOWER_GLIB_LIBS])
 
 dnl ***************************************************************************
 dnl Check for marshal and enum generators
@@ -363,7 +398,7 @@ AC_SUBST(GLIB_GENMARSHAL)
 GLIB_MKENUMS="`$PKG_CONFIG --variable=glib_mkenums glib-2.0`"
 AC_SUBST(GLIB_MKENUMS)
 
-GTK_DOC_CHECK([1.3])
+GTK_DOC_CHECK([1.17],[--flavour no-tmpl])
 
 pluginlibdir=$libdir/mission-control
 AC_SUBST(pluginlibdir)
@@ -372,14 +407,11 @@ AC_OUTPUT([
 Makefile \
 doc/Makefile \
 doc/reference/Makefile \
-doc/reference/libmcclient/Makefile \
-doc/reference/libmissioncontrol-server/Makefile \
 doc/reference/mission-control-plugins/Makefile \
-libmcclient.pc \
-libmcclient/Makefile \
 m4/Makefile \
 mission-control.pc \
 mission-control-plugins.pc \
+mission-control-plugins-uninstalled.pc \
 mission-control-plugins/Makefile \
 plugins/Makefile \
 server/Makefile \
@@ -391,3 +423,29 @@ tools/Makefile \
 util/Makefile \
 xml/Makefile \
 ])
+
+echo "
+Configure summary:
+
+        Compiler.....................:  ${CC}
+        Compiler Flags...............:  ${CFLAGS} ${ERROR_CFLAGS}
+        Linker Flags.................:  ${LDFLAGS}
+        Prefix.......................:  ${prefix}
+        Enable debug.................:  ${enable_debug}
+        Python tests.................:  ${mc_want_twisted_tests}
+
+    Options:
+        Account storage directory....:  ${ACCOUNTS_DIR}
+        Crash recovery directory.....:  ${ACCOUNTS_CACHE_DIR:-\$XDG_CACHE_HOME}
+
+    Features:
+        Plugin API documentation.....:  ${enable_gtk_doc}
+        Gnome Keyring................:  ${keyring_enabled}
+        Network Manager integration..:  ${have_nm}
+        ConnMan integration..........:  ${have_connman}
+        Suspend tracking with UPower.:  ${have_upower}
+        Aegis........................:  ${aegis_enabled}
+        libaccounts-glib backend.....:  ${libaccounts_sso_enabled}
+        Hidden accounts-glib accounts:  ${with_accounts_glib_hidden_service_type}
+        Nokia Mode Control Entity....:  ${HAVE_MCE}
+"

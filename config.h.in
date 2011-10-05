@@ -9,9 +9,6 @@
 /* Defined to the non-IM service type for hidden accounts, if any */
 #undef ACCOUNTS_GLIB_HIDDEN_SERVICE_TYPE
 
-/* Directory for channel handlers */
-#undef CHANDLERS_DIR
-
 /* Define if Aegis is supported */
 #undef ENABLE_AEGIS
 
@@ -24,6 +21,9 @@
 /* Define if MCD plugins should be enabled */
 #undef ENABLE_MCD_PLUGINS
 
+/* Define if you have connman dependencies */
+#undef HAVE_CONNMAN
+
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #undef HAVE_DLFCN_H
 
@@ -35,6 +35,9 @@
 
 /* Define to 1 if you have the <memory.h> header file. */
 #undef HAVE_MEMORY_H
+
+/* Define if you have libnm-glib */
+#undef HAVE_NM
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #undef HAVE_STDINT_H
@@ -63,12 +66,12 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to use upower-glib */
+#undef HAVE_UPOWER
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR
-
-/* Directory for storing managers */
-#undef MANAGERS_DIR
 
 /* Name of package */
 #undef PACKAGE
@@ -90,9 +93,6 @@
 
 /* Define to the version of this package. */
 #undef PACKAGE_VERSION
-
-/* Directory for storing profiles */
-#undef PROFILES_DIR
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS

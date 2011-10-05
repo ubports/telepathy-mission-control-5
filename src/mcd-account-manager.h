@@ -66,15 +66,6 @@ struct _McdAccountManagerClass
     void (*_mc_reserved7) (void);
 };
 
-typedef enum
-{
-  MCD_ACCOUNT_MANAGER_ERROR_SET_PARAMETER,
-} McdAccountManagerError;
-
-GQuark mcd_account_manager_error_quark (void);
-
-#define MCD_ACCOUNT_MANAGER_ERROR (mcd_account_manager_error_quark ())
-
 GType mcd_account_manager_get_type (void);
 McdAccountManager *mcd_account_manager_new (TpDBusDaemon *dbus_daemon);
 
@@ -98,5 +89,7 @@ McdAccount *mcd_account_manager_lookup_account_by_path (McdAccountManager *accou
 						       	const gchar *object_path);
 
 McdStorage *mcd_account_manager_get_storage (McdAccountManager *manager);
+
+G_END_DECLS
 
 #endif

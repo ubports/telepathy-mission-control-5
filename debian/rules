@@ -31,7 +31,9 @@ override_dh_auto_configure:
 	--enable-gtk-doc \
 	--enable-server \
 	--enable-gnome-keyring \
-	--with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc
+	--with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc \
+	--with-connectivity=nm \
+	--enable-upower
 
 # we symlink some of the doc directories together
 override_dh_installdocs:

@@ -1,0 +1,7 @@
+mcp_account_manager_get_type
+mcp_account_storage_get_type
+mcp_dbus_acl_get_type
+mcp_dispatch_operation_get_type
+mcp_dispatch_operation_policy_get_type
+mcp_request_get_type
+mcp_request_policy_get_type

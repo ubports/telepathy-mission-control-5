@@ -22,22 +22,15 @@ import dbus.service
 
 from servicetest import EventPattern, tp_name_prefix, tp_path_prefix, \
         call_async
-from mctest import exec_test, create_fakecm_account, get_account_manager
+from mctest import exec_test, create_fakecm_account, AccountManager
 import constants as cs
 
 def test(q, bus, mc):
-    # Get the AccountManager interface
-    account_manager = get_account_manager(bus)
-    account_manager_iface = dbus.Interface(account_manager, cs.AM)
-
-    # Introspect AccountManager for debugging purpose
-    account_manager_introspected = account_manager.Introspect(
-            dbus_interface=cs.INTROSPECTABLE_IFACE)
-    #print account_manager_introspected
+    account_manager = AccountManager(bus)
 
     # Check AccountManager has D-Bus property interface
-    properties = account_manager.GetAll(cs.AM,
-            dbus_interface=cs.PROPERTIES_IFACE)
+    call_async(q, account_manager.Properties, 'GetAll', cs.AM)
+    properties, = q.expect('dbus-return', method='GetAll').value
     assert properties is not None
     assert properties.get('ValidAccounts') == [], \
         properties.get('ValidAccounts')
@@ -55,7 +48,6 @@ def test(q, bus, mc):
     assert (cs.ACCOUNT + '.Nickname') in supported
     assert (cs.ACCOUNT + '.ConnectAutomatically') in supported
     assert (cs.ACCOUNT_IFACE_AVATAR + '.Avatar') in supported
-    assert (cs.ACCOUNT_IFACE_NOKIA_COMPAT + '.Profile') in supported
     assert (cs.ACCOUNT_IFACE_NOKIA_COMPAT + '.SecondaryVCardFields') in supported
     assert (cs.ACCOUNT_IFACE_NOKIA_CONDITIONS + '.Condition') in supported
 
@@ -66,8 +58,6 @@ def test(q, bus, mc):
 
     cm_name_ref = dbus.service.BusName(cs.tp_name_prefix +
             '.ConnectionManager.fakecm', bus=bus)
-    account_manager = bus.get_object(cs.AM, cs.AM_PATH)
-    am_iface = dbus.Interface(account_manager, cs.AM)
 
     creation_properties = dbus.Dictionary({
         cs.ACCOUNT + '.Enabled': True,
@@ -82,14 +72,13 @@ def test(q, bus, mc):
         cs.ACCOUNT + '.ConnectAutomatically': True,
         cs.ACCOUNT_IFACE_AVATAR + '.Avatar': (dbus.ByteArray('foo'),
             'image/jpeg'),
-        cs.ACCOUNT_IFACE_NOKIA_COMPAT + '.Profile': 'openarena',
         cs.ACCOUNT_IFACE_NOKIA_COMPAT + '.SecondaryVCardFields':
             dbus.Array(['x-ioquake3', 'x-quake3'], signature='s'),
         cs.ACCOUNT_IFACE_NOKIA_CONDITIONS + '.Condition':
             dbus.Dictionary({ 'has-quad-damage': ':y' }, signature='ss'),
         }, signature='sv')
 
-    call_async(q, am_iface, 'CreateAccount',
+    call_async(q, account_manager, 'CreateAccount',
             'fakecm',
             'fakeprotocol',
             'fakeaccount',
@@ -139,7 +128,6 @@ def test(q, bus, mc):
             'image/jpeg')
 
     properties = account_props.GetAll(cs.ACCOUNT_IFACE_NOKIA_COMPAT)
-    assert properties.get('Profile') == 'openarena'
     assert sorted(properties.get('SecondaryVCardFields')) == \
             ['x-ioquake3', 'x-quake3']
 
@@ -152,7 +140,7 @@ def test(q, bus, mc):
 
     creation_properties2 = creation_properties.copy()
     creation_properties2[cs.ACCOUNT + '.NonExistent'] = 'foo'
-    call_async(q, am_iface, 'CreateAccount',
+    call_async(q, account_manager, 'CreateAccount',
             'fakecm',
             'fakeprotocol',
             'fakeaccount',
@@ -162,7 +150,7 @@ def test(q, bus, mc):
 
     params2 = params.copy()
     params2['fake_param'] = 'foo'
-    call_async(q, am_iface, 'CreateAccount',
+    call_async(q, account_manager, 'CreateAccount',
             'fakecm',
             'fakeprotocol',
             'fakeaccount',

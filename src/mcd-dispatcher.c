@@ -60,7 +60,6 @@
 #include "mcd-misc.h"
 #include "plugin-loader.h"
 
-#include "libmcclient/mc-gtypes.h"
 #include "_gen/svc-dispatcher.h"
 
 #include <telepathy-glib/defs.h>
@@ -72,8 +71,6 @@
 #include <telepathy-glib/svc-channel-dispatcher.h>
 #include <telepathy-glib/svc-generic.h>
 #include <telepathy-glib/util.h>
-
-#include <libmcclient/mc-errors.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -412,7 +409,6 @@ _mcd_dispatcher_enter_state_machine (McdDispatcher *dispatcher,
     g_return_if_fail (channels != NULL);
     g_return_if_fail (MCD_IS_CHANNEL (channels->data));
     g_return_if_fail (requested || !only_observe);
-    g_return_if_fail (possible_handlers != NULL || only_observe);
 
     account = mcd_channel_get_account (channels->data);
     if (G_UNLIKELY (!account))
@@ -657,14 +653,98 @@ mcd_dispatcher_client_gone_cb (McdClientProxy *client,
     mcd_dispatcher_discard_client (self, client);
 }
 
+/*
+ * @channel: a non-null TpChannel which has already been dispatched
+ * @request: (allow-none): if not NULL, a request that resulted in
+ *     @channel
+ *
+ * Return a Handler to which @channel could be re-dispatched,
+ * for instance as a result of a re-request or a PresentChannel call.
+ *
+ * If @channel was dispatched to a Handler, return that Handler.
+ * Otherwise, if it was Claimed by a process, and that process
+ * has a Handler to which the channel could have been dispatched,
+ * return that Handler. Otherwise return NULL.
+ */
+static McdClientProxy *
+_mcd_dispatcher_lookup_handler (McdDispatcher *self,
+                                TpChannel *channel,
+                                McdRequest *request)
+{
+    McdClientProxy *handler = NULL;
+    const gchar *object_path;
+    const gchar *unique_name;
+    const gchar *well_known_name;
+
+    object_path = tp_proxy_get_object_path (channel);
+
+    unique_name = _mcd_handler_map_get_handler (self->priv->handler_map,
+                                                object_path,
+                                                &well_known_name);
+
+    if (unique_name == NULL)
+    {
+        DEBUG ("No process is handling channel %s", object_path);
+        return NULL;
+    }
+
+    if (well_known_name != NULL)
+    {
+        /* We know which Handler well-known name was responsible: use it if it
+         * still exists */
+        DEBUG ("Channel %s is handler by %s", object_path, well_known_name);
+        handler = _mcd_client_registry_lookup (self->priv->clients,
+                                               well_known_name);
+    }
+
+    if (handler == NULL)
+    {
+        GList *possible_handlers;
+        GList *channels;
+
+        /* Failing that, maybe the Handler it was dispatched to was temporary;
+         * try to pick another Handler that can deal with it, on the same
+         * unique name (i.e. in the same process).
+         * It can also happen in the case an Observer/Approver Claimed the
+         * channel; in that case we did not get its handler well known name.
+         */
+        channels = g_list_prepend (NULL, channel);
+        possible_handlers = _mcd_client_registry_list_possible_handlers (
+                self->priv->clients,
+                request != NULL ? _mcd_request_get_preferred_handler (request) : NULL,
+                request != NULL ? _mcd_request_get_properties (request) : NULL,
+                channels, unique_name);
+
+        if (possible_handlers != NULL)
+        {
+            DEBUG ("Pick first possible handler for channel %s", object_path);
+            handler = possible_handlers->data;
+        }
+        else
+        {
+            /* The process is still running (otherwise it wouldn't be in the
+             * handler map), but none of its well-known names is still
+             * interested in channels of that sort. Oh well, not our problem.
+             */
+            DEBUG ("process %s no longer interested in channel %s",
+                   unique_name, object_path);
+        }
+
+        g_list_free (channels);
+        g_list_free (possible_handlers);
+    }
+
+    return handler;
+}
+
 static void
 mcd_dispatcher_client_needs_recovery_cb (McdClientProxy *client,
                                          McdDispatcher *self)
 {
-    GList *channels =
+    const GList *channels =
         _mcd_handler_map_get_handled_channels (self->priv->handler_map);
     const GList *observer_filters;
-    GList *list;
+    const GList *list;
 
     DEBUG ("called");
 
@@ -675,19 +755,14 @@ mcd_dispatcher_client_needs_recovery_cb (McdClientProxy *client,
         TpChannel *channel = list->data;
         const gchar *object_path = tp_proxy_get_object_path (channel);
         GHashTable *properties;
-        const gchar *hname;
+        McdClientProxy *handler;
 
-        if (_mcd_handler_map_get_handler (self->priv->handler_map,
-              object_path, &hname))
+        /* FIXME: This is not exactly the right behaviour, see fd.o#40305 */
+        handler = _mcd_dispatcher_lookup_handler (self, channel, NULL);
+        if (handler && _mcd_client_proxy_get_bypass_observers (handler))
         {
-            McdClientProxy *handler =
-                _mcd_client_registry_lookup (self->priv->clients, hname);
-
-            if (_mcd_client_proxy_get_bypass_observers (handler))
-            {
-              DEBUG ("skipping unobservable channel %s", object_path);
-              continue;
-            }
+            DEBUG ("skipping unobservable channel %s", object_path);
+            continue;
         }
 
         properties = tp_channel_borrow_immutable_properties (channel);
@@ -701,7 +776,33 @@ mcd_dispatcher_client_needs_recovery_cb (McdClientProxy *client,
 
             _mcd_client_recover_observer (client, channel, account_path);
         }
+    }
 
+    /* we also need to think about channels that are still being dispatched,
+     * but have got far enough that this client wouldn't otherwise see them */
+    for (list = self->priv->operations; list != NULL; list = list->next)
+    {
+        McdDispatchOperation *op = list->data;
+
+        if (_mcd_dispatch_operation_has_invoked_observers (op))
+        {
+            for (channels = _mcd_dispatch_operation_peek_channels (op);
+                 channels != NULL;
+                 channels = channels->next)
+            {
+                McdChannel *mcd_channel = channels->data;
+                GHashTable *properties =
+                    _mcd_channel_get_immutable_properties (mcd_channel);
+
+                if (_mcd_client_match_filters (properties, observer_filters,
+                        FALSE))
+                {
+                    _mcd_client_recover_observer (client,
+                        mcd_channel_get_tp_channel (mcd_channel),
+                        _mcd_dispatch_operation_get_account_path (op));
+                }
+            }
+        }
     }
 }
 
@@ -1405,9 +1506,8 @@ _mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
     {
         if (channels->next == NULL)
         {
-            DEBUG ("One channel, which cannot be handled");
-            _mcd_channel_undispatchable (channels->data);
-            g_list_free (channels);
+            DEBUG ("One channel, which cannot be handled - making a CDO "
+                   "anyway, to get Observers run");
         }
         else
         {
@@ -1421,6 +1521,8 @@ _mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
                 _mcd_dispatcher_take_channels (dispatcher, list, requested,
                                                FALSE);
             }
+
+            return;
         }
     }
     else
@@ -1428,15 +1530,15 @@ _mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
         DEBUG ("%s handler(s) found, dispatching %u channels",
                internal_request ? "internal" : "possible",
                g_list_length (channels));
-
-        for (list = channels; list != NULL; list = list->next)
-            _mcd_channel_set_status (MCD_CHANNEL (list->data),
-                                     MCD_CHANNEL_STATUS_DISPATCHING);
-
-        _mcd_dispatcher_enter_state_machine (dispatcher, channels,
-            (const gchar * const *) possible_handlers, requested, FALSE);
-        g_list_free (channels);
     }
+
+    for (list = channels; list != NULL; list = list->next)
+        _mcd_channel_set_status (MCD_CHANNEL (list->data),
+                                 MCD_CHANNEL_STATUS_DISPATCHING);
+
+    _mcd_dispatcher_enter_state_machine (dispatcher, channels,
+        (const gchar * const *) possible_handlers, requested, FALSE);
+    g_list_free (channels);
 
     g_strfreev (possible_handlers);
 }
@@ -1534,18 +1636,14 @@ _mcd_dispatcher_reinvoke_handler (McdDispatcher *dispatcher,
                                   McdChannel *request)
 {
     GList *request_as_list;
-    const gchar *handler_unique;
-    const gchar *well_known_name = NULL;
-    GStrv possible_handlers = NULL;
     McdClientProxy *handler = NULL;
     McdRequest *real_request = _mcd_channel_get_request (request);
-    GList *tp_channels = g_list_append (NULL,
-        mcd_channel_get_tp_channel (request));
+    TpChannel *tp_channel = mcd_channel_get_tp_channel (request);
     GHashTable *handler_info;
     GHashTable *request_properties;
 
     g_assert (real_request != NULL);
-    g_assert (tp_channels->data != NULL);
+    g_assert (tp_channel != NULL);
 
     request_as_list = g_list_append (NULL, request);
 
@@ -1557,55 +1655,17 @@ _mcd_dispatcher_reinvoke_handler (McdDispatcher *dispatcher,
 
     handler_info = tp_asv_new (NULL, NULL);
     /* hand over ownership of request_properties */
-    /* FIXME: use telepathy-glib version when available */
     tp_asv_take_boxed (handler_info, "request-properties",
-                       MC_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP,
+                       TP_HASH_TYPE_OBJECT_IMMUTABLE_PROPERTIES_MAP,
                        request_properties);
     request_properties = NULL;
 
-    /* the unique name (process) of the current handler */
-    handler_unique = _mcd_handler_map_get_handler (
-        dispatcher->priv->handler_map,
-        tp_proxy_get_object_path (tp_channels->data), &well_known_name);
-
-    if (well_known_name != NULL)
-    {
-        /* We know which Handler well-known name was responsible: if it
-         * still exists, we want to call HandleChannels on it */
-        handler = _mcd_client_registry_lookup (dispatcher->priv->clients,
-                                               well_known_name);
-    }
-
+    handler = _mcd_dispatcher_lookup_handler (dispatcher,
+            tp_channel, real_request);
     if (handler == NULL)
     {
-        /* Failing that, maybe the Handler it was dispatched to was temporary;
-         * try to pick another Handler that can deal with it, on the same
-         * unique name (i.e. in the same process) */
-        possible_handlers = mcd_dispatcher_dup_possible_handlers (dispatcher,
-            real_request, tp_channels, handler_unique);
-
-        if (possible_handlers == NULL || possible_handlers[0] == NULL)
-        {
-            /* The process is still running (otherwise it wouldn't be in the
-             * handler map), but none of its well-known names is still
-             * interested in channels of that sort. Oh well, not our problem.
-             */
-            DEBUG ("process %s no longer interested in this channel, not "
-                   "reinvoking", handler_unique);
-            mcd_dispatcher_finish_reinvocation (request);
-            goto finally;
-        }
-
-        handler = _mcd_client_registry_lookup (dispatcher->priv->clients,
-                                               possible_handlers[0]);
-
-        if (handler == NULL)
-        {
-            DEBUG ("Handler %s does not exist in client registry, not "
-                   "reinvoking", possible_handlers[0]);
-            mcd_dispatcher_finish_reinvocation (request);
-            goto finally;
-        }
+        mcd_dispatcher_finish_reinvocation (request);
+        goto finally;
     }
 
     /* This is deliberately not the same call as for normal dispatching,
@@ -1622,8 +1682,6 @@ _mcd_dispatcher_reinvoke_handler (McdDispatcher *dispatcher,
 finally:
     g_hash_table_unref (handler_info);
     g_list_free (request_as_list);
-    g_list_free (tp_channels);
-    g_strfreev (possible_handlers);
 }
 
 static McdDispatchOperation *
@@ -1648,6 +1706,8 @@ _mcd_dispatcher_add_channel_request (McdDispatcher *dispatcher,
                                      McdChannel *channel, McdChannel *request)
 {
     McdChannelStatus status;
+    McdRequest *origin = _mcd_channel_get_request (request);
+    gboolean internal = _mcd_request_is_internal (origin);
 
     status = mcd_channel_get_status (channel);
 
@@ -1655,29 +1715,32 @@ _mcd_dispatcher_add_channel_request (McdDispatcher *dispatcher,
      * is not, @request must mirror the status of @channel */
     if (status == MCD_CHANNEL_STATUS_DISPATCHED)
     {
-        McdRequest *origin = _mcd_channel_get_request (request);
-        DEBUG ("reinvoking handler on channel %p", channel);
+        DEBUG ("reinvoking handler on channel %p", request);
 
         /* copy the object path and the immutable properties from the
          * existing channel */
         _mcd_channel_copy_details (request, channel);
 
-        DEBUG ("checking if ensured channel should be handled internaly");
-        if (_mcd_request_is_internal (origin))
+        if (internal)
           _mcd_request_handle_internally (origin, request, FALSE);
         else
           _mcd_dispatcher_reinvoke_handler (dispatcher, request);
     }
     else
     {
-        const gchar *preferred_handler =
-            _mcd_channel_get_request_preferred_handler (request);
-
+        DEBUG ("non-reinvoked handling of channel %p", request);
         _mcd_channel_set_request_proxy (request, channel);
-        if (status == MCD_CHANNEL_STATUS_DISPATCHING)
+
+        if (internal)
+        {
+            _mcd_request_handle_internally (origin, request, FALSE);
+        }
+        else if (status == MCD_CHANNEL_STATUS_DISPATCHING)
         {
             McdDispatchOperation *op = find_operation_from_channel (dispatcher,
                                                                     channel);
+            const gchar *preferred_handler =
+              _mcd_channel_get_request_preferred_handler (request);
 
             g_return_if_fail (op != NULL);
 
@@ -1930,6 +1993,7 @@ dispatcher_channel_request_acl_start (McdDispatcher *dispatcher,
                                    crd,
                                    dispatcher_channel_request_acl_cleanup);
 
+    g_hash_table_unref (params);
 }
 
 static void
@@ -2247,7 +2311,7 @@ send_message_got_channel (McdRequest *request,
 
             _mcd_request_unblock_account (message->account_path);
             message_context_return_error (message, error);
-            message_context_free (message);
+            _mcd_request_clear_internal_handler (request);
             g_error_free (error);
         }
     }
@@ -2776,7 +2840,6 @@ dispatcher_present_channel (
     McdAccount *account;
     McdConnection *conn;
     McdChannel *mcd_channel;
-    const gchar *handler = NULL;
     GError *error = NULL;
     McdClientProxy *client;
     GList *channels = NULL;
@@ -2801,20 +2864,22 @@ dispatcher_present_channel (
     conn = mcd_account_get_connection (account);
     g_return_if_fail (conn != NULL);
 
-    _mcd_handler_map_get_handler (self->priv->handler_map, channel_path,
-        &handler);
-    if (handler == NULL)
+    mcd_channel = mcd_connection_find_channel_by_path (conn, channel_path);
+    g_return_if_fail (mcd_channel != NULL);
+
+    /* We take mcd_channel's request to base the search for a suitable Handler
+     * on the handler that was preferred by the request that initially created
+     * the Channel, if any.
+     * Actually not, because of fd.o#41031 */
+    client = _mcd_dispatcher_lookup_handler (self,
+            mcd_channel_get_tp_channel (mcd_channel),
+            _mcd_channel_get_request (mcd_channel));
+    if (client == NULL)
       {
         g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
             "Channel %s is currently not handled", channel_path);
         goto error;
       }
-
-    client = _mcd_client_registry_lookup (self->priv->clients, handler);
-    g_return_if_fail (client != NULL);
-
-    mcd_channel = mcd_connection_find_channel_by_path (conn, channel_path);
-    g_return_if_fail (mcd_channel != NULL);
 
     channels = g_list_append (channels, mcd_channel);
 

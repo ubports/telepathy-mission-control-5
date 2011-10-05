@@ -8,7 +8,7 @@
 <link rel="up" href="ch02.html" title="Account storage">
 <link rel="prev" href="mission-control-plugins-McpAccountStorage.html" title="McpAccountStorage">
 <link rel="next" href="ch03.html" title="Channel requests">
-<meta name="generator" content="GTK-Doc V1.17 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -45,13 +45,17 @@
 <pre class="synopsis">
 #include &lt;mission-control-plugins/mission-control-plugins.h&gt;
 
-<span class="returnvalue">void</span>                <a class="link" href="McpAccountManager.html#mcp-account-manager-set-value" title="mcp_account_manager_set_value ()">mcp_account_manager_set_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+                    <a class="link" href="McpAccountManager.html#McpAccountManager-struct" title="McpAccountManager">McpAccountManager</a>;
+                    <a class="link" href="McpAccountManager.html#McpAccountManagerIface" title="McpAccountManagerIface">McpAccountManagerIface</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-unique-name" title="mcp_account_manager_get_unique_name ()">mcp_account_manager_get_unique_name</a> (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-value" title="mcp_account_manager_get_value ()">mcp_account_manager_get_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
+<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               <a class="link" href="McpAccountManager.html#mcp-account-manager-list-keys" title="mcp_account_manager_list_keys ()">mcp_account_manager_list_keys</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="McpAccountManager.html#mcp-account-manager-parameter-is-secret" title="mcp_account_manager_parameter_is_secret ()">mcp_account_manager_parameter_is_secret</a>
                                                         (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
@@ -60,14 +64,10 @@
                                                         (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-unique-name" title="mcp_account_manager_get_unique_name ()">mcp_account_manager_get_unique_name</a> (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);
-<a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               <a class="link" href="McpAccountManager.html#mcp-account-manager-list-keys" title="mcp_account_manager_list_keys ()">mcp_account_manager_list_keys</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-                    <a class="link" href="McpAccountManager.html#McpAccountManager-struct" title="McpAccountManager">McpAccountManager</a>;
-                    <a class="link" href="McpAccountManager.html#McpAccountManagerIface" title="McpAccountManagerIface">McpAccountManagerIface</a>;
+<span class="returnvalue">void</span>                <a class="link" href="McpAccountManager.html#mcp-account-manager-set-value" title="mcp_account_manager_set_value ()">mcp_account_manager_set_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -100,13 +100,54 @@ Only Mission Control should implement this interface.
 <div class="refsect1">
 <a name="McpAccountManager.details"></a><h2>Details</h2>
 <div class="refsect2">
-<a name="mcp-account-manager-set-value"></a><h3>mcp_account_manager_set_value ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_manager_set_value       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
+<a name="McpAccountManager-struct"></a><h3>McpAccountManager</h3>
+<pre class="programlisting">typedef struct _McpAccountManager McpAccountManager;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="McpAccountManagerIface"></a><h3>McpAccountManagerIface</h3>
+<pre class="programlisting">typedef struct _McpAccountManagerIface McpAccountManagerIface;</pre>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-account-manager-get-unique-name"></a><h3>mcp_account_manager_get_unique_name ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_unique_name (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);</pre>
 <p>
+Generate and return the canonical unique name of this [new] account.
+Should not be called for accounts which have already had a name
+assigned: Intended for use when a plugin encounters an account which
+MC has not previously seen before (ie one created by a 3rd party
+in the back-end that the plugin in question provides an interface to).
 </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>the name of the manager</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>protocol</code></em> :</span></p></td>
+<td>the name of the protocol</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>params</code></em> :</span></p></td>
+<td>A gchar * / GValue * hash table of account parameters.</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>the newly allocated account name, which should be freed
+once the caller is done with it.</td>
+</tr>
+</tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -139,6 +180,12 @@ the <span class="type">McdAccountManager</span>.
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-account-manager-list-keys"></a><h3>mcp_account_manager_list_keys ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               mcp_account_manager_list_keys       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
@@ -207,66 +254,11 @@ Flag an account setting as secret for the lifetime of this
 </div>
 <hr>
 <div class="refsect2">
-<a name="mcp-account-manager-get-unique-name"></a><h3>mcp_account_manager_get_unique_name ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_manager_get_unique_name (<em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>);</pre>
-<p>
-Generate and return the canonical unique name of this [new] account.
-Should not be called for accounts which have already had a name
-assigned: Intended for use when a plugin encounters an account which
-MC has not previously seen before (ie one created by a 3rd party
-in the back-end that the plugin in question provides an interface to).
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>mcpa</code></em> :</span></p></td>
-<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
-<td>the name of the manager</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>protocol</code></em> :</span></p></td>
-<td>the name of the protocol</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>params</code></em> :</span></p></td>
-<td>A gchar * / GValue * hash table of account parameters.</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the newly allocated account name, which should be freed
-once the caller is done with it.</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-manager-list-keys"></a><h3>mcp_account_manager_list_keys ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Boxed-Types.html#GStrv"><span class="returnvalue">GStrv</span></a>               mcp_account_manager_list_keys       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountManager-struct"></a><h3>McpAccountManager</h3>
-<pre class="programlisting">typedef struct _McpAccountManager McpAccountManager;</pre>
-<p>
-</p>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountManagerIface"></a><h3>McpAccountManagerIface</h3>
-<pre class="programlisting">typedef struct _McpAccountManagerIface McpAccountManagerIface;</pre>
-<p>
-</p>
+<a name="mcp-account-manager-set-value"></a><h3>mcp_account_manager_set_value ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_manager_set_value       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);</pre>
 </div>
 </div>
 <div class="refsect1">
@@ -276,6 +268,6 @@ once the caller is done with it.</td>
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17</div>
+          Generated by GTK-Doc V1.17.1</div>
 </body>
 </html>

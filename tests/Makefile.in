@@ -60,7 +60,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__EXEEXT_1 = test-value-is-same$(EXEEXT)
 @ENABLE_GNOME_KEYRING_TRUE@am__EXEEXT_2 = keyring-command$(EXEEXT)
-am__EXEEXT_3 = account-store$(EXEEXT) $(am__EXEEXT_2)
+am__EXEEXT_3 = account-store$(EXEEXT) tease-the-minotaur$(EXEEXT) \
+	$(am__EXEEXT_2)
 PROGRAMS = $(noinst_PROGRAMS)
 am__account_store_SOURCES_DIST = account-store.c \
 	account-store-default.c account-store-default.h \
@@ -85,6 +86,10 @@ keyring_command_OBJECTS = $(am_keyring_command_OBJECTS)
 @ENABLE_GNOME_KEYRING_TRUE@keyring_command_DEPENDENCIES =  \
 @ENABLE_GNOME_KEYRING_TRUE@	$(am__DEPENDENCIES_1) \
 @ENABLE_GNOME_KEYRING_TRUE@	$(am__DEPENDENCIES_1)
+am_tease_the_minotaur_OBJECTS = tease-the-minotaur.$(OBJEXT)
+tease_the_minotaur_OBJECTS = $(am_tease_the_minotaur_OBJECTS)
+tease_the_minotaur_DEPENDENCIES =  \
+	$(top_builddir)/src/libmcd-convenience.la
 am_test_value_is_same_OBJECTS = value-is-same.$(OBJEXT)
 test_value_is_same_OBJECTS = $(am_test_value_is_same_OBJECTS)
 test_value_is_same_DEPENDENCIES =  \
@@ -116,10 +121,10 @@ AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(account_store_SOURCES) $(keyring_command_SOURCES) \
-	$(test_value_is_same_SOURCES)
+	$(tease_the_minotaur_SOURCES) $(test_value_is_same_SOURCES)
 DIST_SOURCES = $(am__account_store_SOURCES_DIST) \
 	$(am__keyring_command_SOURCES_DIST) \
-	$(test_value_is_same_SOURCES)
+	$(tease_the_minotaur_SOURCES) $(test_value_is_same_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
 	html-recursive info-recursive install-data-recursive \
 	install-dvi-recursive install-exec-recursive \
@@ -177,7 +182,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -199,6 +205,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -207,6 +215,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -226,7 +236,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -236,6 +245,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -253,7 +264,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -266,6 +276,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -333,12 +345,15 @@ INCLUDES = $(DBUS_CFLAGS) $(TELEPATHY_CFLAGS) -I$(top_srcdir) \
 AM_CFLAGS = $(ERROR_CFLAGS)
 SUBDIRS = . twisted
 TEST_EXECUTABLES = test-value-is-same
-NON_TEST_EXECUTABLES = account-store $(am__append_2)
+NON_TEST_EXECUTABLES = account-store tease-the-minotaur \
+	$(am__append_2)
 
 # This test needs linking against the convenience library, so it can use
 # MC internals.
 test_value_is_same_SOURCES = value-is-same.c
 test_value_is_same_LDADD = $(top_builddir)/src/libmcd-convenience.la
+tease_the_minotaur_SOURCES = tease-the-minotaur.c
+tease_the_minotaur_LDADD = $(top_builddir)/src/libmcd-convenience.la
 account_store_LDADD = $(GLIB_LIBS) $(am__append_3) $(am__append_5)
 account_store_SOURCES = account-store.c account-store-default.c \
 	account-store-default.h $(am__append_4)
@@ -393,6 +408,9 @@ account-store$(EXEEXT): $(account_store_OBJECTS) $(account_store_DEPENDENCIES)
 keyring-command$(EXEEXT): $(keyring_command_OBJECTS) $(keyring_command_DEPENDENCIES) 
 	@rm -f keyring-command$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(keyring_command_OBJECTS) $(keyring_command_LDADD) $(LIBS)
+tease-the-minotaur$(EXEEXT): $(tease_the_minotaur_OBJECTS) $(tease_the_minotaur_DEPENDENCIES) 
+	@rm -f tease-the-minotaur$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(tease_the_minotaur_OBJECTS) $(tease_the_minotaur_LDADD) $(LIBS)
 test-value-is-same$(EXEEXT): $(test_value_is_same_OBJECTS) $(test_value_is_same_DEPENDENCIES) 
 	@rm -f test-value-is-same$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(test_value_is_same_OBJECTS) $(test_value_is_same_LDADD) $(LIBS)
@@ -407,6 +425,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-store-libaccounts.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/account-store.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/keyring-command.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/tease-the-minotaur.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/value-is-same.Po@am__quote@
 
 .c.o:

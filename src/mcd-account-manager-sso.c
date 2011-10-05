@@ -519,6 +519,9 @@ static void _sso_updated (AgAccount *account,
         g_signal_emit_by_name (mcpa, "altered-one", name, deleted_key);
     }
 
+  g_hash_table_unref (unseen);
+  g_strfreev (keys);
+
   if (params_updated)
     g_signal_emit_by_name (mcpa, "altered-one", name, "Parameters");
 
@@ -881,6 +884,10 @@ _ag_accountid_to_mc_key (McdAccountManagerSso *sso,
       gchar *uid = g_value_dup_string (&value);
       g_value_unset (&value);
       return uid;
+    }
+  else
+    {
+      g_value_unset (&value);
     }
 
   if (!create)

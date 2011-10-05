@@ -94,7 +94,7 @@ const gchar *mcd_account_get_object_path (McdAccount *account);
 gboolean mcd_account_is_valid (McdAccount *account);
 
 typedef void (*McdAccountCheckValidityCb) (McdAccount *account,
-                                           gboolean valid,
+                                           const GError *invalid_reason,
                                            gpointer user_data);
 void mcd_account_check_validity (McdAccount *account,
                                  McdAccountCheckValidityCb callback,
@@ -119,6 +119,7 @@ void mcd_account_get_requested_presence (McdAccount *account,
 					 const gchar **message);
 
 gboolean mcd_account_get_connect_automatically (McdAccount *account);
+gboolean mcd_account_would_like_to_connect (McdAccount *account);
 void mcd_account_get_automatic_presence (McdAccount *account,
 					 TpConnectionPresenceType *presence,
 					 const gchar **status,
@@ -140,4 +141,7 @@ gboolean mcd_account_parameter_is_secret (McdAccount *self,
                                               const gchar *name);
 
 void mcd_account_property_changed (McdAccount *account, const gchar *name);
+
+G_END_DECLS
+
 #endif

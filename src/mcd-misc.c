@@ -33,7 +33,6 @@
 #include <unistd.h>
 #include <telepathy-glib/errors.h>
 #include <telepathy-glib/util.h>
-#include <libmcclient/mc-errors.h>
 
 #include "mcd-debug.h"
 
@@ -71,11 +70,6 @@ _mcd_build_error_string (const GError *error)
     {
         klass = g_type_class_ref (TP_TYPE_ERROR);
         prefix = TP_ERROR_PREFIX;
-    }
-    else if (error->domain == MC_ERROR)
-    {
-        klass = g_type_class_ref (MC_TYPE_ERROR);
-        prefix = MC_ERROR_PREFIX;
     }
     else
         return NULL;
@@ -225,7 +219,7 @@ _mcd_chmod_private (const gchar *filename)
 
     if (ret < 0)
     {
-        DEBUG ("g_stat: %s", g_strerror (errno));
+        DEBUG ("g_stat(%s): %s", filename, g_strerror (errno));
         return ret;
     }
 

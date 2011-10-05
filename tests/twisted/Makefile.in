@@ -200,7 +200,8 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CHANDLERS_DIR = @CHANDLERS_DIR@
+CONNMAN_CFLAGS = @CONNMAN_CFLAGS@
+CONNMAN_LIBS = @CONNMAN_LIBS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
@@ -222,6 +223,8 @@ EGREP = @EGREP@
 ERROR_CFLAGS = @ERROR_CFLAGS@
 EXEEXT = @EXEEXT@
 FGREP = @FGREP@
+GIO_CFLAGS = @GIO_CFLAGS@
+GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
@@ -230,6 +233,8 @@ GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
 GTKDOC_CHECK = @GTKDOC_CHECK@
+GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
+GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
 GTKDOC_MKPDF = @GTKDOC_MKPDF@
 GTKDOC_REBASE = @GTKDOC_REBASE@
 HTML_DIR = @HTML_DIR@
@@ -249,7 +254,6 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
-MANAGERS_DIR = @MANAGERS_DIR@
 MANIFEST_TOOL = @MANIFEST_TOOL@
 MCE_CFLAGS = @MCE_CFLAGS@
 MCE_LIBS = @MCE_LIBS@
@@ -259,6 +263,8 @@ MCP_LT_AGE = @MCP_LT_AGE@
 MCP_LT_CURRENT = @MCP_LT_CURRENT@
 MCP_LT_REVISION = @MCP_LT_REVISION@
 MKDIR_P = @MKDIR_P@
+NETWORK_MANAGER_CFLAGS = @NETWORK_MANAGER_CFLAGS@
+NETWORK_MANAGER_LIBS = @NETWORK_MANAGER_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -276,7 +282,6 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
-PROFILES_DIR = @PROFILES_DIR@
 PYTHON = @PYTHON@
 PYTHON_EXEC_PREFIX = @PYTHON_EXEC_PREFIX@
 PYTHON_PLATFORM = @PYTHON_PLATFORM@
@@ -289,6 +294,8 @@ SHELL = @SHELL@
 STRIP = @STRIP@
 TELEPATHY_CFLAGS = @TELEPATHY_CFLAGS@
 TELEPATHY_LIBS = @TELEPATHY_LIBS@
+UPOWER_GLIB_CFLAGS = @UPOWER_GLIB_CFLAGS@
+UPOWER_GLIB_LIBS = @UPOWER_GLIB_LIBS@
 VERSION = @VERSION@
 XSLTPROC = @XSLTPROC@
 abs_builddir = @abs_builddir@
@@ -350,32 +357,31 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 TWISTED_TESTS = 
-TWISTED_BASIC_TESTS = account/addressing.py \
-	account-manager/account-basics.py account-manager/bad-cm.py \
-	account-manager/avatar.py \
+TWISTED_BASIC_TESTS = account-manager/account-basics.py \
+	account-manager/avatar.py account-manager/bad-cm.py \
+	account-manager/crashy-cm.py \
 	account-manager/create-auto-connect.py \
 	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
-	account-manager/enable.py \
 	account-manager/enable-auto-connect.py \
-	account-manager/nickname.py account-manager/service.py \
+	account-manager/enable.py account-manager/nickname.py \
 	account-manager/param-types.py account-manager/presence.py \
 	account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
-	account-manager/request-online.py \
+	account-manager/request-online.py account-manager/service.py \
 	account-manager/update-parameters.py \
 	account-requests/cancel.py account-requests/create-text.py \
 	account-requests/delete-account-during-request.py \
-	capabilities/draft-1.py capabilities/contact-caps.py \
-	capabilities/legacy-caps.py dispatcher/approver-fails.py \
-	dispatcher/already-has-channel.py \
+	account/addressing.py capabilities/contact-caps.py \
+	capabilities/legacy-caps.py dispatcher/already-has-channel.py \
 	dispatcher/already-has-obsolete.py \
-	dispatcher/bypass-approval.py dispatcher/bypass-observers.py \
-	dispatcher/cancel.py dispatcher/capture-bundle.py \
+	dispatcher/approver-fails.py dispatcher/bypass-approval.py \
+	dispatcher/bypass-observers.py dispatcher/cancel.py \
+	dispatcher/capture-bundle.py dispatcher/cdo-claim.py \
 	dispatcher/connect-for-request.py \
+	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-handler-fails.py dispatcher/create-hints.py \
 	dispatcher/create-no-preferred-handler.py \
-	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
@@ -395,8 +401,8 @@ TWISTED_BASIC_TESTS = account/addressing.py \
 	dispatcher/recover-from-disconnect.py \
 	dispatcher/redispatch-channels.py \
 	dispatcher/request-disabled-account.py \
-	dispatcher/respawn-observers.py \
 	dispatcher/respawn-activatable-observers.py \
+	dispatcher/respawn-observers.py \
 	dispatcher/some-delay-approvers.py \
 	dispatcher/undispatchable.py dispatcher/vanishing-client.py \
 	$(am__append_1)
@@ -407,8 +413,9 @@ TWISTED_BASIC_TESTS = account/addressing.py \
 # For simplicity, these are also separate tests: at least
 # account-storage/*.py need their own instances.
 TWISTED_SPECIAL_BUILD_TESTS = \
-	account-manager/hidden.py \
 	account-manager/auto-away.py \
+	account-manager/connectivity.py \
+	account-manager/hidden.py \
 	account-storage/default-keyring-storage.py \
 	account-storage/diverted-storage.py
 
@@ -423,6 +430,9 @@ TWISTED_SEPARATE_TESTS = account-manager/auto-connect.py \
 	dispatcher/create-at-startup.py $(TWISTED_SPECIAL_BUILD_TESTS)
 @HAVE_MCE_FALSE@HAVE_MCE_PYBOOL = False
 @HAVE_MCE_TRUE@HAVE_MCE_PYBOOL = True
+@HAVE_CONNMAN_FALSE@@HAVE_NM_FALSE@HAVE_CONNECTIVITY_PYBOOL = False
+@HAVE_CONNMAN_TRUE@@HAVE_NM_FALSE@HAVE_CONNECTIVITY_PYBOOL = True
+@HAVE_NM_TRUE@HAVE_CONNECTIVITY_PYBOOL = True
 BUILT_SOURCES = config.py
 AM_CFLAGS = $(ERROR_CFLAGS)
 
@@ -453,7 +463,6 @@ TMPSUFFIX = foo
 BASIC_TESTS_ENVIRONMENT = PYTHONPATH=@abs_top_srcdir@/tests/twisted:@abs_top_builddir@/tests/twisted \
 	MC_DEBUG=all \
 	MC_FILTER_PLUGIN_DIR=@abs_top_builddir@/tests/twisted/.libs \
-	MC_CHANDLERS_DIR=@abs_top_srcdir@/tests/twisted/chandlers \
 	MC_ACCOUNT_DIR=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CONFIG_HOME=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CONFIG_DIRS=@abs_top_srcdir@/tests/twisted \
@@ -466,11 +475,12 @@ BASIC_TESTS_ENVIRONMENT = PYTHONPATH=@abs_top_srcdir@/tests/twisted:@abs_top_bui
 	G_DEBUG=fatal_criticals $(am__append_4) $(am__append_5)
 WITH_SESSION_BUS = \
 	sh $(srcdir)/tools/with-session-bus.sh \
+	--also-for-system \
 	--config-file=tools/tmp-session-bus.conf --
 
 COMBINED_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
-	$(PYTHON)
+	$(PYTHON) -u
 
 SEPARATE_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
@@ -483,7 +493,6 @@ EXTRA_DIST = \
 	$(TWISTED_BASIC_TESTS) \
 	$(TWISTED_SEPARATE_TESTS) \
 	accounts/README \
-	chandlers/README \
 	telepathy/clients/README \
 	telepathy/clients/AbiWord.client \
 	telepathy/clients/Logger.client \
@@ -493,6 +502,7 @@ EXTRA_DIST = \
 	constants.py \
         fakeclient.py \
         fakecm.py \
+	fakeconnectivity.py \
 	mctest.py \
 	servicetest.py
 
@@ -1032,6 +1042,7 @@ uninstall-am:
 config.py: Makefile
 	$(AM_V_GEN) { \
 		echo "HAVE_MCE = $(HAVE_MCE_PYBOOL)"; \
+		echo "HAVE_CONNECTIVITY = $(HAVE_CONNECTIVITY_PYBOOL)"; \
 	} > $@
 
 @WANT_TWISTED_TESTS_TRUE@check-local: check-twisted

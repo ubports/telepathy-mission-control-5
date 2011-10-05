@@ -22,105 +22,105 @@
     <sub name="Annotation Glossary" link="annotation-glossary.html"/>
   </chapters>
   <functions>
-    <keyword type="function" name="mcp_plugin_ref_nth_object ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object"/>
     <keyword type="macro" name="MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL" link="mission-control-plugins-Plugin-loader-and-global-functions.html#MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS"/>
-    <keyword type="function" name="mcp_set_debug ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-set-debug"/>
     <keyword type="function" name="mcp_add_object ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-add-object"/>
-    <keyword type="function" name="mcp_read_dir ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-read-dir"/>
     <keyword type="function" name="mcp_list_objects ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-list-objects"/>
-    <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS"/>
+    <keyword type="function" name="mcp_plugin_ref_nth_object ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object"/>
+    <keyword type="function" name="mcp_read_dir ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-read-dir"/>
+    <keyword type="function" name="mcp_set_debug ()" link="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-set-debug"/>
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-DEFAULT:CAPS"/>
-    <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS"/>
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS"/>
-    <keyword type="function" name="McpAccountStorageGetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc"/>
-    <keyword type="function" name="McpAccountStorageSetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc"/>
-    <keyword type="function" name="McpAccountStorageDeleteFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc"/>
-    <keyword type="function" name="McpAccountStorageListFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc"/>
+    <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS"/>
+    <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS"/>
     <keyword type="function" name="McpAccountStorageCommitFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc"/>
     <keyword type="function" name="McpAccountStorageCommitOneFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc"/>
-    <keyword type="function" name="McpAccountStorageReadyFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc"/>
-    <keyword type="function" name="McpAccountStorageGetIdentifierFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc"/>
+    <keyword type="function" name="McpAccountStorageDeleteFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc"/>
     <keyword type="function" name="McpAccountStorageGetAdditionalInfoFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc"/>
+    <keyword type="function" name="McpAccountStorageGetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc"/>
+    <keyword type="function" name="McpAccountStorageGetIdentifierFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc"/>
     <keyword type="function" name="McpAccountStorageGetRestrictionsFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc"/>
     <keyword type="struct" name="struct McpAccountStorageIface" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_desc ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_provider ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions"/>
-    <keyword type="function" name="mcp_account_storage_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority"/>
-    <keyword type="function" name="mcp_account_storage_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get"/>
-    <keyword type="function" name="mcp_account_storage_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set"/>
-    <keyword type="function" name="mcp_account_storage_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-delete"/>
-    <keyword type="function" name="mcp_account_storage_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready"/>
+    <keyword type="function" name="McpAccountStorageListFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc"/>
+    <keyword type="function" name="McpAccountStorageReadyFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc"/>
+    <keyword type="function" name="McpAccountStorageSetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc"/>
     <keyword type="function" name="mcp_account_storage_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit"/>
     <keyword type="function" name="mcp_account_storage_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one"/>
-    <keyword type="function" name="mcp_account_storage_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list"/>
-    <keyword type="function" name="mcp_account_storage_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier"/>
-    <keyword type="function" name="mcp_account_storage_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info"/>
-    <keyword type="function" name="mcp_account_storage_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions"/>
-    <keyword type="function" name="mcp_account_storage_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name"/>
+    <keyword type="function" name="mcp_account_storage_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-delete"/>
     <keyword type="function" name="mcp_account_storage_description ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-description"/>
+    <keyword type="function" name="mcp_account_storage_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get"/>
+    <keyword type="function" name="mcp_account_storage_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info"/>
+    <keyword type="function" name="mcp_account_storage_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier"/>
+    <keyword type="function" name="mcp_account_storage_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set"/>
+    <keyword type="function" name="mcp_account_storage_iface_set_desc ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc"/>
+    <keyword type="function" name="mcp_account_storage_iface_set_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name"/>
+    <keyword type="function" name="mcp_account_storage_iface_set_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority"/>
+    <keyword type="function" name="mcp_account_storage_iface_set_provider ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider"/>
+    <keyword type="function" name="mcp_account_storage_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list"/>
+    <keyword type="function" name="mcp_account_storage_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name"/>
+    <keyword type="function" name="mcp_account_storage_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority"/>
     <keyword type="function" name="mcp_account_storage_provider ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-provider"/>
-    <keyword type="function" name="mcp_account_manager_set_value ()" link="McpAccountManager.html#mcp-account-manager-set-value"/>
-    <keyword type="function" name="mcp_account_manager_get_value ()" link="McpAccountManager.html#mcp-account-manager-get-value"/>
-    <keyword type="function" name="mcp_account_manager_parameter_is_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-is-secret"/>
-    <keyword type="function" name="mcp_account_manager_parameter_make_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-make-secret"/>
-    <keyword type="function" name="mcp_account_manager_get_unique_name ()" link="McpAccountManager.html#mcp-account-manager-get-unique-name"/>
-    <keyword type="function" name="mcp_account_manager_list_keys ()" link="McpAccountManager.html#mcp-account-manager-list-keys"/>
+    <keyword type="function" name="mcp_account_storage_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready"/>
+    <keyword type="function" name="mcp_account_storage_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set"/>
     <keyword type="struct" name="McpAccountManager" link="McpAccountManager.html#McpAccountManager-struct"/>
     <keyword type="struct" name="McpAccountManagerIface" link="McpAccountManager.html#McpAccountManagerIface"/>
+    <keyword type="function" name="mcp_account_manager_get_unique_name ()" link="McpAccountManager.html#mcp-account-manager-get-unique-name"/>
+    <keyword type="function" name="mcp_account_manager_get_value ()" link="McpAccountManager.html#mcp-account-manager-get-value"/>
+    <keyword type="function" name="mcp_account_manager_list_keys ()" link="McpAccountManager.html#mcp-account-manager-list-keys"/>
+    <keyword type="function" name="mcp_account_manager_parameter_is_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-is-secret"/>
+    <keyword type="function" name="mcp_account_manager_parameter_make_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-make-secret"/>
+    <keyword type="function" name="mcp_account_manager_set_value ()" link="McpAccountManager.html#mcp-account-manager-set-value"/>
     <keyword type="function" name="McpRequestPolicyCb ()" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb"/>
+    <keyword type="struct" name="struct McpRequestPolicyIface" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface"/>
     <keyword type="function" name="mcp_request_policy_check ()" link="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check"/>
     <keyword type="function" name="mcp_request_policy_iface_implement_check ()" link="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-iface-implement-check"/>
-    <keyword type="struct" name="struct McpRequestPolicyIface" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface"/>
-    <keyword type="function" name="mcp_request_find_request_by_type ()" link="McpRequest.html#mcp-request-find-request-by-type"/>
-    <keyword type="function" name="mcp_request_get_account_path ()" link="McpRequest.html#mcp-request-get-account-path"/>
-    <keyword type="function" name="mcp_request_get_protocol ()" link="McpRequest.html#mcp-request-get-protocol"/>
-    <keyword type="function" name="mcp_request_get_cm_name ()" link="McpRequest.html#mcp-request-get-cm-name"/>
-    <keyword type="function" name="mcp_request_get_user_action_time ()" link="McpRequest.html#mcp-request-get-user-action-time"/>
-    <keyword type="function" name="mcp_request_get_n_requests ()" link="McpRequest.html#mcp-request-get-n-requests"/>
-    <keyword type="function" name="mcp_request_ref_nth_request ()" link="McpRequest.html#mcp-request-ref-nth-request"/>
-    <keyword type="function" name="mcp_request_deny ()" link="McpRequest.html#mcp-request-deny"/>
-    <keyword type="function" name="mcp_request_start_delay ()" link="McpRequest.html#mcp-request-start-delay"/>
-    <keyword type="function" name="mcp_request_end_delay ()" link="McpRequest.html#mcp-request-end-delay"/>
     <keyword type="struct" name="McpRequest" link="McpRequest.html#McpRequest-struct"/>
     <keyword type="struct" name="McpRequestDelay" link="McpRequest.html#McpRequestDelay"/>
     <keyword type="struct" name="McpRequestIface" link="McpRequest.html#McpRequestIface"/>
+    <keyword type="function" name="mcp_request_deny ()" link="McpRequest.html#mcp-request-deny"/>
+    <keyword type="function" name="mcp_request_end_delay ()" link="McpRequest.html#mcp-request-end-delay"/>
+    <keyword type="function" name="mcp_request_find_request_by_type ()" link="McpRequest.html#mcp-request-find-request-by-type"/>
+    <keyword type="function" name="mcp_request_get_account_path ()" link="McpRequest.html#mcp-request-get-account-path"/>
+    <keyword type="function" name="mcp_request_get_cm_name ()" link="McpRequest.html#mcp-request-get-cm-name"/>
+    <keyword type="function" name="mcp_request_get_n_requests ()" link="McpRequest.html#mcp-request-get-n-requests"/>
+    <keyword type="function" name="mcp_request_get_protocol ()" link="McpRequest.html#mcp-request-get-protocol"/>
+    <keyword type="function" name="mcp_request_get_user_action_time ()" link="McpRequest.html#mcp-request-get-user-action-time"/>
+    <keyword type="function" name="mcp_request_ref_nth_request ()" link="McpRequest.html#mcp-request-ref-nth-request"/>
+    <keyword type="function" name="mcp_request_start_delay ()" link="McpRequest.html#mcp-request-start-delay"/>
     <keyword type="function" name="McpDispatchOperationPolicyCb ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb"/>
-    <keyword type="function" name="mcp_dispatch_operation_policy_check ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check"/>
-    <keyword type="function" name="McpDispatchOperationPolicyHandlerIsSuitableAsync ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync"/>
     <keyword type="function" name="McpDispatchOperationPolicyFinisher ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher"/>
+    <keyword type="function" name="McpDispatchOperationPolicyHandlerIsSuitableAsync ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync"/>
+    <keyword type="struct" name="struct McpDispatchOperationPolicyIface" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface"/>
+    <keyword type="function" name="mcp_dispatch_operation_policy_check ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check"/>
     <keyword type="function" name="mcp_dispatch_operation_policy_handler_is_suitable_async ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async"/>
     <keyword type="function" name="mcp_dispatch_operation_policy_handler_is_suitable_finish ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-finish"/>
     <keyword type="function" name="mcp_dispatch_operation_policy_iface_implement_check ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-iface-implement-check"/>
-    <keyword type="struct" name="struct McpDispatchOperationPolicyIface" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface"/>
-    <keyword type="function" name="mcp_dispatch_operation_find_channel_by_type ()" link="McpDispatchOperation.html#mcp-dispatch-operation-find-channel-by-type"/>
-    <keyword type="function" name="mcp_dispatch_operation_ref_connection ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-connection"/>
-    <keyword type="function" name="mcp_dispatch_operation_ref_nth_channel ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_account_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-account-path"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_connection_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-connection-path"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_protocol ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-protocol"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_cm_name ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-cm-name"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_n_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-n-channels"/>
-    <keyword type="function" name="mcp_dispatch_operation_get_nth_channel_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-nth-channel-path"/>
-    <keyword type="function" name="mcp_dispatch_operation_ref_nth_channel_properties ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel-properties"/>
-    <keyword type="function" name="mcp_dispatch_operation_start_delay ()" link="McpDispatchOperation.html#mcp-dispatch-operation-start-delay"/>
-    <keyword type="function" name="mcp_dispatch_operation_end_delay ()" link="McpDispatchOperation.html#mcp-dispatch-operation-end-delay"/>
-    <keyword type="function" name="mcp_dispatch_operation_leave_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-leave-channels"/>
-    <keyword type="function" name="mcp_dispatch_operation_close_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-close-channels"/>
-    <keyword type="function" name="mcp_dispatch_operation_destroy_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels"/>
+    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
     <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
     <keyword type="struct" name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>
-    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
+    <keyword type="function" name="mcp_dispatch_operation_close_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-close-channels"/>
+    <keyword type="function" name="mcp_dispatch_operation_destroy_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels"/>
+    <keyword type="function" name="mcp_dispatch_operation_end_delay ()" link="McpDispatchOperation.html#mcp-dispatch-operation-end-delay"/>
+    <keyword type="function" name="mcp_dispatch_operation_find_channel_by_type ()" link="McpDispatchOperation.html#mcp-dispatch-operation-find-channel-by-type"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_account_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-account-path"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_cm_name ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-cm-name"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_connection_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-connection-path"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_n_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-n-channels"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_nth_channel_path ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-nth-channel-path"/>
+    <keyword type="function" name="mcp_dispatch_operation_get_protocol ()" link="McpDispatchOperation.html#mcp-dispatch-operation-get-protocol"/>
+    <keyword type="function" name="mcp_dispatch_operation_leave_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-leave-channels"/>
+    <keyword type="function" name="mcp_dispatch_operation_ref_connection ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-connection"/>
+    <keyword type="function" name="mcp_dispatch_operation_ref_nth_channel ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel"/>
+    <keyword type="function" name="mcp_dispatch_operation_ref_nth_channel_properties ()" link="McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel-properties"/>
+    <keyword type="function" name="mcp_dispatch_operation_start_delay ()" link="McpDispatchOperation.html#mcp-dispatch-operation-start-delay"/>
   </functions>
 </book>

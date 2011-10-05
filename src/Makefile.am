@@ -2,6 +2,9 @@ INCLUDES = \
 	   $(TELEPATHY_CFLAGS) \
 	   $(DBUS_CFLAGS) \
 	   $(GLIB_CFLAGS) \
+	   $(NETWORK_MANAGER_CFLAGS) \
+	   $(CONNMAN_CFLAGS) \
+	   $(UPOWER_GLIB_CFLAGS) \
 	   -DG_LOG_DOMAIN=\"mcd\" \
 	   -DMCD_PLUGIN_LOADER_DIR=\"@libdir@/mission-control-plugins.@MCP_ABI_VERSION@\" \
 	   -DMC_DISABLE_DEPRECATED -I$(top_srcdir)
@@ -14,7 +17,6 @@ endif
 
 mc_headers = \
 	mcd-account.h \
-	mcd-account-compat.h \
 	mcd-account-conditions.h \
 	mcd-account-manager.h \
 	mcd-account-manager-default.h \
@@ -53,33 +55,27 @@ endif
 
 mc_gen_headers = \
 	_gen/cli-Connection_Manager_Interface_Account_Storage.h \
-	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1.h \
-	_gen/cli-Connection_Interface_Contact_Capabilities.h \
-	_gen/cli-Connection_Interface_Power_Saving.h \
 	_gen/enums.h \
+	_gen/gtypes.h \
 	_gen/interfaces.h \
 	_gen/svc-Account_Interface_Addressing.h \
-	_gen/svc-Account_Interface_ChannelRequests.h \
 	_gen/svc-Account_Interface_Compat.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_External_Password_Storage.h \
 	_gen/svc-Account_Interface_Hidden.h \
 	_gen/svc-Account_Manager_Interface_Hidden.h \
 	_gen/svc-Account_Manager_Interface_Query.h \
-	_gen/svc-dispatcher.h \
-	_gen/svc-request.h
+	_gen/svc-dispatcher.h
 
 nodist_libmcd_convenience_la_SOURCES = \
 	_gen/cli-Connection_Manager_Interface_Account_Storage-body.h \
-	_gen/cli-Connection_Interface_Contact_Capabilities_Draft1-body.h \
-	_gen/cli-Connection_Interface_Contact_Capabilities-body.h \
-	_gen/cli-Connection_Interface_Power_Saving-body.h \
+	_gen/gtypes-body.h \
+	_gen/interfaces-body.h \
 	_gen/register-dbus-glib-marshallers-body.h \
 	_gen/signals-marshal.c \
 	_gen/signals-marshal.h \
 	_gen/signals-marshal.list \
 	_gen/svc-Account_Interface_Addressing.c \
-	_gen/svc-Account_Interface_ChannelRequests.c \
 	_gen/svc-Account_Interface_Compat.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_External_Password_Storage.c \
@@ -87,7 +83,6 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/svc-Account_Manager_Interface_Query.c \
 	_gen/svc-Account_Manager_Interface_Hidden.c \
 	_gen/svc-dispatcher.c \
-	_gen/svc-request.c \
 	mcd-enum-types.c \
 	mcd-enum-types.h \
 	mcd-signals-marshal.c \
@@ -102,11 +97,14 @@ BUILT_SOURCES = \
 CLEANFILES = $(BUILT_SOURCES)
 
 libmcd_convenience_la_LIBADD = \
-	$(top_builddir)/libmcclient/libmcclient.la \
 	$(top_builddir)/mission-control-plugins/libmission-control-plugins.la \
 	$(TELEPATHY_LIBS) \
 	$(DBUS_LIBS) \
-	$(GLIB_LIBS)
+	$(GLIB_LIBS) \
+	$(NETWORK_MANAGER_LIBS) \
+	$(CONNMAN_LIBS) \
+	$(UPOWER_GLIB_LIBS) \
+	$(NULL)
 
 if ENABLE_GNOME_KEYRING
 libmcd_convenience_la_LIBADD += $(GNOME_KEYRING_LIBS)
@@ -177,6 +175,11 @@ libmcd_convenience_la_SOURCES = \
 	channel-utils.h \
 	client-registry.c \
 	client-registry.h \
+	connectivity-monitor.c \
+	connectivity-monitor.h \
+	gtypes.c \
+	kludge-transport.c \
+	kludge-transport.h \
 	mcd-dbusprop.c \
 	mcd-dbusprop.h \
 	mcd-debug.c \
@@ -238,17 +241,17 @@ endif
 endif
 
 %-signals-marshal.h: %-signals-marshal.list Makefile
-	glib-genmarshal --header --prefix=_$(subst -,_,$*)_marshal $< > $*-signals-marshal.h
+	$(AM_V_GEN)glib-genmarshal --header --prefix=_$(subst -,_,$*)_marshal $< > $*-signals-marshal.h
 
 %-signals-marshal.c: %-signals-marshal.list Makefile
-	{ echo '#include "$*-signals-marshal.h"' && \
+	$(AM_V_GEN){ echo '#include "$*-signals-marshal.h"' && \
 	glib-genmarshal --body --prefix=_$(subst -,_,$*)_marshal $<; } \
 	> $*-signals-marshal.c
 
 mcd-enum-types.h: stamp-mcd-enum-types.h
-	@true
+	$(AM_V_GEN)true
 stamp-mcd-enum-types.h: Makefile $(mc_headers) mcd-enum-types.c
-	( cd $(srcdir) && glib-mkenums \
+	$(AM_V_GEN)( cd $(srcdir) && glib-mkenums \
 		--fhead "#ifndef __MCD_ENUM_TYPES_H__\n#define __MCD_ENUM_TYPES_H__\n\n#include \"mcd-mission.h\"\n#include \"mcd-channel.h\"\n#include \"mcd-provisioning.h\"\n#include \"mcd-transport.h\"\n\nG_BEGIN_DECLS\n" \
 		--fprod "/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define MCD_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
@@ -259,7 +262,7 @@ stamp-mcd-enum-types.h: Makefile $(mc_headers) mcd-enum-types.c
 	&& echo timestamp > $(@F)
 
 mcd-enum-types.c: Makefile $(mc_headers)
-	( cd $(srcdir) && glib-mkenums \
+	$(AM_V_GEN)( cd $(srcdir) && glib-mkenums \
 		--fhead "#include \"mcd-enum-types.h\"\n#define g_intern_static_string(s) (s)\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
 		--ftail "\n#define __MCD_ENUM_TYPES_C__\n" \
@@ -272,11 +275,8 @@ mcd-enum-types.c: Makefile $(mc_headers)
 
 EXTRA_DIST = \
 	mcd.xml \
-	client.xml \
 	dispatcher.xml \
-	dispatch-operation.xml \
 	mcd-signals-marshal.list \
-	request.xml \
 	stamp-mcd-enum-types.h
 
 # ---- telepathy-glib-style code generation ----
@@ -284,36 +284,36 @@ EXTRA_DIST = \
 tools_dir = $(top_srcdir)/tools
 
 _gen/mcd.xml: mcd.xml $(wildcard $(top_srcdir)/xml/*.xml)
-	$(mkdir_p) _gen
-	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
+	$(AM_V_at)$(mkdir_p) _gen
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
 _gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml)
-	$(mkdir_p) _gen
-	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
+	$(AM_V_at)$(mkdir_p) _gen
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
 # Generated files which can be done for all "classes" at once
 
 _gen/signals-marshal.list: _gen/mcd.xml \
 	$(tools_dir)/glib-signals-marshal-gen.py
-	$(PYTHON) $(tools_dir)/glib-signals-marshal-gen.py $< > $@
+	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-signals-marshal-gen.py $< > $@
 
 _gen/signals-marshal.h: _gen/signals-marshal.list Makefile.am
-	$(GLIB_GENMARSHAL) --header --prefix=_mcd_ext_marshal $< > $@
+	$(AM_V_GEN)$(GLIB_GENMARSHAL) --header --prefix=_mcd_ext_marshal $< > $@
 
 _gen/signals-marshal.c: _gen/signals-marshal.list Makefile.am
-	{ echo '#include "_gen/signals-marshal.h"' && \
+	$(AM_V_GEN){ echo '#include "_gen/signals-marshal.h"' && \
 	$(GLIB_GENMARSHAL) --body --prefix=_mcd_ext_marshal $<; } \
 	> $@
 
 _gen/register-dbus-glib-marshallers-body.h: _gen/mcd.xml \
 	$(tools_dir)/glib-client-marshaller-gen.py Makefile.am
-	$(PYTHON) $(tools_dir)/glib-client-marshaller-gen.py $< \
+	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-client-marshaller-gen.py $< \
 		_mcd_ext > $@
 
 _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
-	$(XSLTPROC) $(XSLTPROCFLAGS) \
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) \
 		--stringparam mixed-case-prefix mc \
 		$(tools_dir)/c-constants-generator.xsl \
 		$< > $@
@@ -321,28 +321,43 @@ _gen/enums.h: _gen/mcd.xml $(tools_dir)/c-constants-generator.xsl
 _gen/interfaces.h: _gen/mcd.xml \
 	$(tools_dir)/glib-interfaces-generator.xsl \
 	$(tools_dir)/c-interfaces-generator.xsl
-	$(XSLTPROC) $(XSLTPROCFLAGS) \
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) \
 		--stringparam mixed-case-prefix mc \
 		$(tools_dir)/glib-interfaces-generator.xsl \
 		$< > $@
+
+_gen/interfaces-body.h: _gen/mcd.xml \
+	$(tools_dir)/glib-interfaces-body-generator.xsl \
+	$(tools_dir)/c-interfaces-generator.xsl
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) \
+		--stringparam mixed-case-prefix mc \
+		$(tools_dir)/glib-interfaces-body-generator.xsl \
+		$< > $@
+
+_gen/gtypes.h _gen/gtypes-body.h: _gen/mcd.xml \
+	$(top_srcdir)/tools/glib-gtypes-generator.py
+	$(AM_V_GEN)$(PYTHON) $(top_srcdir)/tools/glib-gtypes-generator.py \
+		$< _gen/gtypes mc
+
+
 
 # Generated files which must be generated per "class".
 # (Currently the only "class" is nmc4, but the new API will need "classes"
 # like account, account-manager, ...)
 
 _gen/%.xml: $(top_srcdir)/xml/%.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
-	$(mkdir_p) _gen
-	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
+	$(AM_V_at)$(mkdir_p) _gen
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
 _gen/%.xml: %.xml $(wildcard $(top_srcdir)/xml/*.xml) Makefile.am
-	$(mkdir_p) _gen
-	$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
+	$(AM_V_at)$(mkdir_p) _gen
+	$(AM_V_GEN)$(XSLTPROC) $(XSLTPROCFLAGS) --xinclude $(tools_dir)/identity.xsl \
 		$< > $@
 
 _gen/cli-%-body.h _gen/cli-%.h: _gen/%.xml \
 	$(tools_dir)/glib-client-gen.py Makefile.am
-	$(PYTHON) $(tools_dir)/glib-client-gen.py \
+	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-client-gen.py \
 		--group=`echo $* | tr x- x_` \
 		--iface-quark-prefix=MC_IFACE_QUARK \
 		--tp-proxy-api=0.7.6 \
@@ -350,7 +365,7 @@ _gen/cli-%-body.h _gen/cli-%.h: _gen/%.xml \
 
 _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 	$(tools_dir)/glib-ginterface-gen.py Makefile.am
-	$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
+	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-$* \
 		--signal-marshal-prefix=_mcd_ext \
 		--include='<telepathy-glib/dbus.h>' \
@@ -358,3 +373,7 @@ _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \
 		--allow-unstable \
 		$< Mc_Svc_
+
+include ../tools/header-checks.am
+
+check-local: header-decl-macro-check

@@ -1,41 +1,42 @@
 TWISTED_TESTS =
 
 TWISTED_BASIC_TESTS = \
-	account/addressing.py \
 	account-manager/account-basics.py \
-	account-manager/bad-cm.py \
 	account-manager/avatar.py \
+	account-manager/bad-cm.py \
+	account-manager/crashy-cm.py \
 	account-manager/create-auto-connect.py \
 	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
-	account-manager/enable.py \
 	account-manager/enable-auto-connect.py \
+	account-manager/enable.py \
 	account-manager/nickname.py \
-	account-manager/service.py \
 	account-manager/param-types.py \
 	account-manager/presence.py \
 	account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
 	account-manager/request-online.py \
+	account-manager/service.py \
 	account-manager/update-parameters.py \
 	account-requests/cancel.py \
 	account-requests/create-text.py \
 	account-requests/delete-account-during-request.py \
-	capabilities/draft-1.py \
+	account/addressing.py \
 	capabilities/contact-caps.py \
 	capabilities/legacy-caps.py \
-	dispatcher/approver-fails.py \
 	dispatcher/already-has-channel.py \
 	dispatcher/already-has-obsolete.py \
+	dispatcher/approver-fails.py \
 	dispatcher/bypass-approval.py \
 	dispatcher/bypass-observers.py \
 	dispatcher/cancel.py \
 	dispatcher/capture-bundle.py \
+	dispatcher/cdo-claim.py \
 	dispatcher/connect-for-request.py \
+	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-handler-fails.py \
 	dispatcher/create-hints.py \
 	dispatcher/create-no-preferred-handler.py \
-	dispatcher/create-delayed-by-mini-plugin.py \
 	dispatcher/create-rejected-by-mini-plugin.py \
 	dispatcher/create-text.py \
 	dispatcher/created-behind-our-back.py \
@@ -58,8 +59,8 @@ TWISTED_BASIC_TESTS = \
 	dispatcher/recover-from-disconnect.py \
 	dispatcher/redispatch-channels.py \
 	dispatcher/request-disabled-account.py \
-	dispatcher/respawn-observers.py \
 	dispatcher/respawn-activatable-observers.py \
+	dispatcher/respawn-observers.py \
 	dispatcher/some-delay-approvers.py \
 	dispatcher/undispatchable.py \
 	dispatcher/vanishing-client.py
@@ -77,8 +78,9 @@ endif
 # For simplicity, these are also separate tests: at least
 # account-storage/*.py need their own instances.
 TWISTED_SPECIAL_BUILD_TESTS = \
-	account-manager/hidden.py \
 	account-manager/auto-away.py \
+	account-manager/connectivity.py \
+	account-manager/hidden.py \
 	account-storage/default-keyring-storage.py \
 	account-storage/diverted-storage.py
 
@@ -102,9 +104,20 @@ else
 HAVE_MCE_PYBOOL = False
 endif
 
+if HAVE_NM
+HAVE_CONNECTIVITY_PYBOOL = True
+else
+if HAVE_CONNMAN
+HAVE_CONNECTIVITY_PYBOOL = True
+else
+HAVE_CONNECTIVITY_PYBOOL = False
+endif
+endif
+
 config.py: Makefile
 	$(AM_V_GEN) { \
 		echo "HAVE_MCE = $(HAVE_MCE_PYBOOL)"; \
+		echo "HAVE_CONNECTIVITY = $(HAVE_CONNECTIVITY_PYBOOL)"; \
 	} > $@
 
 BUILT_SOURCES = config.py
@@ -160,7 +173,6 @@ BASIC_TESTS_ENVIRONMENT = \
 	PYTHONPATH=@abs_top_srcdir@/tests/twisted:@abs_top_builddir@/tests/twisted \
 	MC_DEBUG=all \
 	MC_FILTER_PLUGIN_DIR=@abs_top_builddir@/tests/twisted/.libs \
-	MC_CHANDLERS_DIR=@abs_top_srcdir@/tests/twisted/chandlers \
 	MC_ACCOUNT_DIR=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CONFIG_HOME=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
 	XDG_CONFIG_DIRS=@abs_top_srcdir@/tests/twisted \
@@ -184,11 +196,12 @@ endif
 
 WITH_SESSION_BUS = \
 	sh $(srcdir)/tools/with-session-bus.sh \
+	--also-for-system \
 	--config-file=tools/tmp-session-bus.conf --
 
 COMBINED_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
-	$(PYTHON)
+	$(PYTHON) -u
 
 SEPARATE_TESTS_ENVIRONMENT = \
 	$(BASIC_TESTS_ENVIRONMENT) \
@@ -274,7 +287,6 @@ EXTRA_DIST = \
 	$(TWISTED_BASIC_TESTS) \
 	$(TWISTED_SEPARATE_TESTS) \
 	accounts/README \
-	chandlers/README \
 	telepathy/clients/README \
 	telepathy/clients/AbiWord.client \
 	telepathy/clients/Logger.client \
@@ -284,6 +296,7 @@ EXTRA_DIST = \
 	constants.py \
         fakeclient.py \
         fakecm.py \
+	fakeconnectivity.py \
 	mctest.py \
 	servicetest.py
 
