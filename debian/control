@@ -4,7 +4,8 @@ Priority: optional
 Maintainer: Debian Telepathy maintainers <pkg-telepathy-maintainers@lists.alioth.debian.org>
 Uploaders: Simon McVittie <smcv@debian.org>,
            Jonny Lamb <jonny@debian.org>,
-           Sjoerd Simons <sjoerd@debian.org>
+           Sjoerd Simons <sjoerd@debian.org>,
+           Laurent Bigonville <bigon@debian.org>
 Build-Depends: autotools-dev (>= 20100122-1~),
                debhelper (>= 8),
                gtk-doc-tools,
@@ -14,7 +15,7 @@ Build-Depends: autotools-dev (>= 20100122-1~),
                libgnome-keyring-dev,
                libtelepathy-glib-dev (>= 0.15),
                libupower-glib-dev,
-               libnm-glib-dev,
+               libnm-glib-dev [linux-any],
                pkg-config (>= 0.21),
                python (>= 2.5),
                xsltproc
