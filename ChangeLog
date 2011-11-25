@@ -1,3 +1,199 @@
+commit 0daca95dab021325bd20bd3a9da4f2e67cc005e5
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-08 10:00:46 +0000
+
+    Version 5.10.1
+
+commit 627b82fe813d7852aaefa829cf6359f21fd3da62
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-08 10:00:29 +0000
+
+    NEWS for 5.10.1
+
+commit 9822ad7c68969ad43c338f16216581256e321de8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-08 09:49:52 +0000
+
+    Remove stray <enum/> from GSettings schema
+    
+    I forgot to remove this when duplicating the one key I wanted to steal
+    from Empathy, and ioni reported that it clashes with the same enum
+    definition provided by Empathy. (I'm not 100% sure why—I'd've assumed
+    they'd be namespaced by the GSettings schema, not the DConf path—but
+    hey.)
+
+commit 3eba6fcbc7e9418f7da101a7a58ff7154e905f48
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-07 17:24:56 +0000
+
+    Bump version to 5.10.0+
+
+commit 2ddc68024e66584543aa5c08662b3fbb35109a61
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-07 17:20:36 +0000
+
+    Version 5.10.0
+
+commit cf9cf54669685e7127de1e0e555281caa43ba819
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-07 17:16:13 +0000
+
+    NEWS for 5.10.0
+
+commit b89a27403d632725504c21c6079b936f9c1c6c9c
+Merge: b1970f4 6ea034a
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-04 18:44:40 +0000
+
+    Merge branch 'gsettings'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=42068>
+
+commit 6ea034ad022068c581cdbf675a5be54e30d2e2f0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-04 18:20:34 +0000
+
+    exec-with-log.sh.in: export POSIX_ME_HARDER=1
+
+commit 52f223eb1740fe1dd3059a9c71c90de7785180c0
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 17:14:27 +0000
+
+    ConnectivityMonitor: fix debug message
+
+commit dbeb5860f634ed6ebaa2a76ca7e37be7623ea4a1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 16:54:20 +0000
+
+    .gitignore: ignore connectivity monitor test tool
+
+commit a4bb333ef99e7c64a6b4b63a080c57c5beb1aac7
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 16:52:10 +0000
+
+    Bind use-conn GSettings key to ConnectivityMonitor
+    
+    This GSettings key does the same thing as the Empathy one it's an alias
+    for does: if use-conn is False, the network state from NM/ConnMan is
+    ignored, and MC will allow you to try to sign in even if there is
+    supposedly no network connection! It's pretty great.
+    
+    (When I first committed this, it didn't work. Now it does. I don't know
+    why.)
+
+commit db2ac21ee35f785cb21d7b1e782eb34c9753c4f4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 15:33:02 +0000
+
+    Add a GSettings schema with use-conn key
+    
+    When the NM/ConnMan code lived in Empathy, there was a GSettings key
+    which could be flipped to false to make Empathy always assume it had a
+    network connection.
+    
+    This schema provides one GSettings key,
+    im.telepathy.MissionControl.FromEmpathy use-conn, which happens to use
+    the same dconf path as the Empathy key uses. This should make the two
+    GSettings keys aliases for the same underlying value in dconf; we get a
+    migration path for free.
+
+commit b1970f4371d3efdf4a385cd6b4eebb6731fadd1c
+Author: Alban Crequy <alban.crequy@collabora.co.uk>
+Date:   2011-10-10 16:43:10 +0100
+
+    tests: add --enable-installed-tests
+    
+    This configure option makes it possible to install the twisted tests in
+    /usr/share/telepathy-mission-control-tests and run them without the sources.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=41927
+
+commit 41c5b207f8482182834d7ea05d677316538f358b
+Author: Alban Crequy <alban.crequy@collabora.co.uk>
+Date:   2011-11-01 17:25:31 +0000
+
+    update-parameters.py: fix the cache directory
+    
+    Use $XDG_CACHE_HOME instead of $MC_ACCOUNT_DIR to find the file
+    mcp-test-diverted-account-plugin.conf because the test-only plugin
+    mcp-account-diversion uses g_get_user_cache_dir().
+    
+    This is a no-op because both variables have the same value, as defined in
+    tests/twisted/Makefile.am:
+    
+    BASIC_TESTS_ENVIRONMENT = \
+    	MC_ACCOUNT_DIR=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
+    	XDG_CACHE_HOME=@abs_top_builddir@/tests/twisted/tmp-$(TMPSUFFIX) \
+    
+    However, this was not semantically correct, and the two directories could be
+    different in the future, with installed tests for example.
+
+commit 34b03f910bd8b889f0f71edfa9668b74d8ad8ba6
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-21 22:42:45 +0100
+
+    .gitignore: remove obsolete libmcclient references
+    
+    libmcclient is gone forever, so let's not ignore detritus from it.
+
+commit be2e5c2d899d9542b567983e809caf371ba9be6c
+Merge: cc746ed 82f1d4b
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 11:53:28 +0000
+
+    Merge branch 'ChangingPresence'
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Fixes: <https://bugs.freedesktop.org/show_bug.cgi?id=42548>
+
+commit 82f1d4b02a32131b48ea9e461865415070ab7b72
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 10:29:09 +0000
+
+    Account: only set ChangingPresence if we actually are
+    
+    Previously, ChangingPresence could become True on accounts which were
+    not Enabled, which makes no sense: we're not changing our presence in
+    that case. It happened if you requested an offline presence on a
+    disabled account whose current RequestedPresence is something online; or
+    if you disabled an Enabled account whose RequestedPresence (and
+    CurrentPresence) was offline.
+    
+    Here we change the implementation of setting RequestedPresence to only
+    set ChangingPresence to True if it actually takes some action. There are
+    situations where the presence has "changed" (maybe you changed the
+    message associated with being offline) but no change actually needs to
+    be applied.
+
+commit f2e91a1e1305ef78a49dbcc81f2b94a938afd5e1
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 10:28:55 +0000
+
+    account-manager/presence: modernize
+
+commit 33ec45d180708ec8c0be8309e91a29f313f4d2f3
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-03 09:46:28 +0000
+
+    mc-tool: show ChangingPresence
+
+commit cc746edd95fdc1802cd656eca664a7089de61745
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2011-10-07 11:34:52 +0100
+
+    connectivity-monitor: fix build with UPower but no NM or ConnMan
+    
+    http://bugs.debian.org/644589
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 85a8950dff6ddf53bb78c780e003561c111a26f8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-10-04 18:03:36 +0100
+
+    Bump version to 5.9.3+
+
 commit 4110ebd94c33dcc53b867c6c85434903583b6e66
 Author: Will Thompson <will.thompson@collabora.co.uk>
 Date:   2011-10-04 17:51:30 +0100

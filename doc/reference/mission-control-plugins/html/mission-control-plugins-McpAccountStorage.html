@@ -8,7 +8,7 @@
 <link rel="up" href="ch02.html" title="Account storage">
 <link rel="prev" href="ch02.html" title="Account storage">
 <link rel="next" href="McpAccountManager.html" title="McpAccountManager">
-<meta name="generator" content="GTK-Doc V1.17.1 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -174,7 +174,7 @@ from the interface initialization function, like this:
 <p>
 </p>
 <div class="example">
-<a name="idp7519344"></a><p class="title"><b>Example 1. </b></p>
+<a name="idp7520384"></a><p class="title"><b>Example 1. </b></p>
 <div class="example-contents">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -209,36 +209,36 @@ from the interface initialization function, like this:
 28
 29
 30</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">APlugin</span><span class="symbol">,</span><span class="normal"> a_plugin</span><span class="symbol">,</span>
-<span class="normal">   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-OBJECT:CAPS">G_TYPE_OBJECT</a></span><span class="symbol">,</span>
-<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(...);</span>
-<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">MCP_TYPE_ACCOUNT_STORAGE</span><span class="symbol">,</span>
-<span class="normal">     account_storage_iface_init</span><span class="symbol">));</span>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>APlugin<span class="gtkdoc opt">,</span> a_plugin<span class="gtkdoc opt">,</span>
+   G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_ACCOUNT_STORAGE<span class="gtkdoc opt">,</span>
+     account_storage_iface_init<span class="gtkdoc opt">));</span>
 <span class="comment">/* ... */</span>
-<span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
-<span class="function">account_storage_iface_init</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">McpAccountStorageIface</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">iface</span><span class="symbol">,</span>
-<span class="normal">    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer">gpointer</a> </span><span class="usertype">unused</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Miscellaneous-Macros.html#G-GNUC-UNUSED:CAPS">G_GNUC_UNUSED</a></span><span class="symbol">)</span>
-<span class="cbracket">{</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority">mcp_account_storage_iface_set_priority</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> </span><span class="number">0</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name">mcp_account_storage_iface_set_name</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"foo"</span><span class="symbol">)</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc">mcp_account_storage_iface_set_desc</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"The FOO storage backend"</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider">mcp_account_storage_iface_set_provider</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span>
-<span class="normal">    </span><span class="string">"org.freedesktop.Telepathy.MissionControl5.FooStorage"</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get">mcp_account_storage_iface_implement_get</a></span><span class="normal">    </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_getval</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set">mcp_account_storage_iface_implement_set</a></span><span class="normal">    </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_setval</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete">mcp_account_storage_iface_implement_delete</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_delete</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit">mcp_account_storage_iface_implement_commit</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_commit</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one">mcp_account_storage_iface_implement_commit_one</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_commit_one</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list">mcp_account_storage_iface_implement_list</a></span><span class="normal">   </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_list</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready">mcp_account_storage_iface_implement_ready</a></span><span class="normal">  </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span><span class="normal"> _plugin_ready</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier">mcp_account_storage_iface_implement_get_identifier</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span>
-<span class="normal">    _plugin_get_identifier</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info">mcp_account_storage_iface_implement_get_additional_info</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span>
-<span class="normal">    _plugin_get_additional_info</span><span class="symbol">);</span>
-<span class="normal">  </span><span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions">mcp_account_storage_iface_implement_get_restrictions</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">iface</span><span class="symbol">,</span>
-<span class="normal">    _plugin_get_restrictions</span><span class="symbol">);</span>
+<span class="gtkdoc kwb">static void</span>
+<span class="function">account_storage_iface_init</span> <span class="gtkdoc opt">(</span>McpAccountStorageIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">,</span>
+    gpointer unused G_GNUC_UNUSED<span class="gtkdoc opt">)</span>
+<span class="gtkdoc opt">{</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority">mcp_account_storage_iface_set_priority</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="number">0</span><span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name">mcp_account_storage_iface_set_name</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="string">&quot;foo&quot;</span><span class="gtkdoc opt">)</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc">mcp_account_storage_iface_set_desc</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="string">&quot;The FOO storage backend&quot;</span><span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider">mcp_account_storage_iface_set_provider</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
+    <span class="string">&quot;org.freedesktop.Telepathy.MissionControl5.FooStorage&quot;</span><span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get">mcp_account_storage_iface_implement_get</a></span>    <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_getval<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set">mcp_account_storage_iface_implement_set</a></span>    <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_setval<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete">mcp_account_storage_iface_implement_delete</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_delete<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit">mcp_account_storage_iface_implement_commit</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_commit<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one">mcp_account_storage_iface_implement_commit_one</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_commit_one<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list">mcp_account_storage_iface_implement_list</a></span>   <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_list<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready">mcp_account_storage_iface_implement_ready</a></span>  <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_ready<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier">mcp_account_storage_iface_implement_get_identifier</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
+    _plugin_get_identifier<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info">mcp_account_storage_iface_implement_get_additional_info</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
+    _plugin_get_additional_info<span class="gtkdoc opt">);</span>
+  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions">mcp_account_storage_iface_implement_get_restrictions</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
+    _plugin_get_restrictions<span class="gtkdoc opt">);</span>
 <span class="comment">/* ... */</span>
-<span class="cbracket">}</span></pre></td>
+<span class="gtkdoc opt">}</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -944,6 +944,6 @@ at this point.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.17.1</div>
+          Generated by GTK-Doc V1.18</div>
 </body>
 </html>

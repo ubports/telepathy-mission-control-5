@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.9.3])
+AC_INIT([telepathy-mission-control], [5.10.1])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -116,6 +116,20 @@ AC_ARG_ENABLE(coverage,       [  --enable-coverage         compile with coverage
 if test "x$enable_coverage" = "xyes"; then
        CFLAGS="$CFLAGS -g -fprofile-arcs -ftest-coverage"
 fi
+
+AC_ARG_ENABLE([installed-tests],
+  AC_HELP_STRING([--enable-installed-tests],
+    [make tests installable]),
+    [installed_tests=$enableval], [installed_tests=no])
+
+if test x$installed_tests = xyes; then
+  AC_DEFINE(ENABLE_INSTALLED_TESTS, [],
+      [Make tests installable])
+fi
+AM_CONDITIONAL([ENABLE_INSTALLED_TESTS], [test "x$installed_tests" = xyes])
+
+mctestsdir=${libdir}/telepathy-mission-control-tests
+AC_SUBST(mctestsdir)
 
 AC_ARG_WITH(accounts_dir, AS_HELP_STRING([--with-accounts-dir=<path>],[Directory for storing accounts]))
 if test -z "$with_accounts_dir" ; then
@@ -399,12 +413,14 @@ GLIB_MKENUMS="`$PKG_CONFIG --variable=glib_mkenums glib-2.0`"
 AC_SUBST(GLIB_MKENUMS)
 
 GTK_DOC_CHECK([1.17],[--flavour no-tmpl])
+GLIB_GSETTINGS
 
 pluginlibdir=$libdir/mission-control
 AC_SUBST(pluginlibdir)
 
 AC_OUTPUT([
 Makefile \
+data/Makefile \
 doc/Makefile \
 doc/reference/Makefile \
 doc/reference/mission-control-plugins/Makefile \
@@ -433,6 +449,7 @@ Configure summary:
         Prefix.......................:  ${prefix}
         Enable debug.................:  ${enable_debug}
         Python tests.................:  ${mc_want_twisted_tests}
+        Install unit tests...........:  ${installed_tests}
 
     Options:
         Account storage directory....:  ${ACCOUNTS_DIR}

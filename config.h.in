@@ -15,6 +15,9 @@
 /* Define whether gnome-keyring support is enabled */
 #undef ENABLE_GNOME_KEYRING
 
+/* Make tests installable */
+#undef ENABLE_INSTALLED_TESTS
+
 /* Define if libaccounts SSO support is required */
 #undef ENABLE_LIBACCOUNTS_SSO
 

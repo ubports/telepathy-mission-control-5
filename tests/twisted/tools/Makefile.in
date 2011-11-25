@@ -14,6 +14,8 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -34,7 +36,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = tests/twisted/tools
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(am__nobase_dist_twistedtests_SCRIPTS_DIST) \
+	$(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
 	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
@@ -49,6 +52,32 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
+am__nobase_dist_twistedtests_SCRIPTS_DIST = with-session-bus.sh
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__installdirs = "$(DESTDIR)$(twistedtestsdir)" \
+	"$(DESTDIR)$(twistedtestsdir)" "$(DESTDIR)$(twistedtestsdir)"
+SCRIPTS = $(nobase_dist_twistedtests_SCRIPTS) \
+	$(nobase_nodist_twistedtests_SCRIPTS)
 AM_V_GEN = $(am__v_GEN_$(V))
 am__v_GEN_ = $(am__v_GEN_$(AM_DEFAULT_VERBOSITY))
 am__v_GEN_0 = @echo "  GEN   " $@;
@@ -57,6 +86,7 @@ am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 SOURCES =
 DIST_SOURCES =
+DATA = $(nobase_nodist_twistedtests_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
@@ -98,12 +128,14 @@ FGREP = @FGREP@
 GIO_CFLAGS = @GIO_CFLAGS@
 GIO_LIBS = @GIO_LIBS@
 GLIB_CFLAGS = @GLIB_CFLAGS@
+GLIB_COMPILE_SCHEMAS = @GLIB_COMPILE_SCHEMAS@
 GLIB_GENMARSHAL = @GLIB_GENMARSHAL@
 GLIB_LIBS = @GLIB_LIBS@
 GLIB_MKENUMS = @GLIB_MKENUMS@
 GNOME_KEYRING_CFLAGS = @GNOME_KEYRING_CFLAGS@
 GNOME_KEYRING_LIBS = @GNOME_KEYRING_LIBS@
 GREP = @GREP@
+GSETTINGS_DISABLE_SCHEMAS_COMPILE = @GSETTINGS_DISABLE_SCHEMAS_COMPILE@
 GTKDOC_CHECK = @GTKDOC_CHECK@
 GTKDOC_DEPS_CFLAGS = @GTKDOC_DEPS_CFLAGS@
 GTKDOC_DEPS_LIBS = @GTKDOC_DEPS_LIBS@
@@ -195,6 +227,7 @@ datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+gsettingsschemadir = @gsettingsschemadir@
 host = @host@
 host_alias = @host_alias@
 host_cpu = @host_cpu@
@@ -209,6 +242,7 @@ libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
+mctestsdir = @mctestsdir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
 pdfdir = @pdfdir@
@@ -228,22 +262,57 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+@ENABLE_INSTALLED_TESTS_TRUE@twistedtestsdir = @mctestsdir@/twisted/tools
+@ENABLE_INSTALLED_TESTS_TRUE@nobase_nodist_twistedtests_SCRIPTS = \
+@ENABLE_INSTALLED_TESTS_TRUE@	run-mc.sh \
+@ENABLE_INSTALLED_TESTS_TRUE@	fake-startup.sh \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(NULL)
+
+@ENABLE_INSTALLED_TESTS_TRUE@nobase_dist_twistedtests_SCRIPTS = \
+@ENABLE_INSTALLED_TESTS_TRUE@	with-session-bus.sh \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(NULL)
+
+@ENABLE_INSTALLED_TESTS_TRUE@nobase_nodist_twistedtests_DATA = \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(installed_conf_files) \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(installed_service_files) \
+@ENABLE_INSTALLED_TESTS_TRUE@	$(NULL)
+
 
 # D-Bus service file for testing
-service_in_files = MissionControl5.service.in Client.AbiWord.service.in Client.Logger.service.in
-service_files = $(patsubst %.in,org.freedesktop.Telepathy.%, $(service_in_files))
+uninstalled_service_in_files = \
+	servicedir-uninstalled/MissionControl5.service.in \
+	servicedir-uninstalled/Client.AbiWord.service.in \
+	servicedir-uninstalled/Client.Logger.service.in
+
+uninstalled_service_files = $(patsubst servicedir-uninstalled/%.in,servicedir-uninstalled/org.freedesktop.Telepathy.%, $(uninstalled_service_in_files))
+installed_service_in_files = \
+	servicedir-installed/MissionControl5.service.in \
+	servicedir-installed/Client.AbiWord.service.in \
+	servicedir-installed/Client.Logger.service.in
+
+installed_service_files = $(patsubst servicedir-installed/%.in,servicedir-installed/org.freedesktop.Telepathy.%, $(installed_service_in_files))
 
 # D-Bus config file for testing
-conf_in_files = tmp-session-bus.conf.in
-conf_files = $(conf_in_files:.conf.in=.conf)
-BUILT_SOURCES = $(service_files) $(conf_files) exec-with-log.sh
+uninstalled_conf_in_files = servicedir-uninstalled/tmp-session-bus.conf.in
+uninstalled_conf_files = $(uninstalled_conf_in_files:.conf.in=.conf)
+installed_conf_in_files = servicedir-installed/tmp-session-bus.conf.in
+installed_conf_files = $(installed_conf_in_files:.conf.in=.conf)
+BUILT_SOURCES = \
+	$(uninstalled_service_files) $(uninstalled_conf_files) \
+	$(installed_service_files) $(installed_conf_files) \
+	exec-with-log.sh
+
 EXTRA_DIST = \
-	$(service_in_files) \
-	$(conf_in_files) \
+	$(uninstalled_service_in_files) \
+	$(uninstalled_conf_in_files) \
+	$(installed_service_in_files) \
+	$(installed_conf_in_files) \
 	exec-with-log.sh.in \
 	fake-startup.sh \
 	valgrind.supp \
-	with-session-bus.sh
+	with-session-bus.sh \
+	run-mc.sh.in \
+	$(NULL)
 
 CLEANFILES = \
     $(BUILT_SOURCES) \
@@ -284,12 +353,117 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
+install-nobase_dist_twistedtestsSCRIPTS: $(nobase_dist_twistedtests_SCRIPTS)
+	@$(NORMAL_INSTALL)
+	test -z "$(twistedtestsdir)" || $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)"
+	@list='$(nobase_dist_twistedtests_SCRIPTS)'; test -n "$(twistedtestsdir)" || list=; \
+	$(am__nobase_strip_setup); \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n' \
+	    -e "s|$$srcdirstrip/||" -e 'h;s|[^/]*$$||; s|^$$|.|' \
+	    -e 'p;x;s,.*/,,;$(transform)' | sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1; } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) { files[d] = files[d] " " $$1; \
+	      if (++n[d] == $(am__install_max)) { \
+		print "f", d, files[d]; n[d] = 0; files[d] = "" } } \
+	    else { print "f", d "/" $$4, $$1 } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	  case $$type in \
+	  d) echo " $(MKDIR_P) '$(DESTDIR)$(twistedtestsdir)/$$dir'"; \
+	     $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)/$$dir" || exit $$?;; \
+	  f) \
+	     if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	     test -z "$$files" || { \
+	       echo " $(INSTALL_SCRIPT) $$files '$(DESTDIR)$(twistedtestsdir)$$dir'"; \
+	       $(INSTALL_SCRIPT) $$files "$(DESTDIR)$(twistedtestsdir)$$dir" || exit $$?; \
+	     } \
+	  ;; esac \
+	; done
+
+uninstall-nobase_dist_twistedtestsSCRIPTS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_dist_twistedtests_SCRIPTS)'; test -n "$(twistedtestsdir)" || exit 0; \
+	$(am__nobase_strip_setup); \
+	files=`$(am__nobase_strip) \
+	       -e 'h;s,.*/,,;$(transform);x;s|[^/]*$$||;G;s,\n,,'`; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(twistedtestsdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(twistedtestsdir)" && rm -f $$files
+install-nobase_nodist_twistedtestsSCRIPTS: $(nobase_nodist_twistedtests_SCRIPTS)
+	@$(NORMAL_INSTALL)
+	test -z "$(twistedtestsdir)" || $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)"
+	@list='$(nobase_nodist_twistedtests_SCRIPTS)'; test -n "$(twistedtestsdir)" || list=; \
+	$(am__nobase_strip_setup); \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  if test -f "$$d$$p"; then echo "$$d$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n' \
+	    -e "s|$$srcdirstrip/||" -e 'h;s|[^/]*$$||; s|^$$|.|' \
+	    -e 'p;x;s,.*/,,;$(transform)' | sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1; } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) { files[d] = files[d] " " $$1; \
+	      if (++n[d] == $(am__install_max)) { \
+		print "f", d, files[d]; n[d] = 0; files[d] = "" } } \
+	    else { print "f", d "/" $$4, $$1 } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	  case $$type in \
+	  d) echo " $(MKDIR_P) '$(DESTDIR)$(twistedtestsdir)/$$dir'"; \
+	     $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)/$$dir" || exit $$?;; \
+	  f) \
+	     if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	     test -z "$$files" || { \
+	       echo " $(INSTALL_SCRIPT) $$files '$(DESTDIR)$(twistedtestsdir)$$dir'"; \
+	       $(INSTALL_SCRIPT) $$files "$(DESTDIR)$(twistedtestsdir)$$dir" || exit $$?; \
+	     } \
+	  ;; esac \
+	; done
+
+uninstall-nobase_nodist_twistedtestsSCRIPTS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_nodist_twistedtests_SCRIPTS)'; test -n "$(twistedtestsdir)" || exit 0; \
+	$(am__nobase_strip_setup); \
+	files=`$(am__nobase_strip) \
+	       -e 'h;s,.*/,,;$(transform);x;s|[^/]*$$||;G;s,\n,,'`; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(twistedtestsdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(twistedtestsdir)" && rm -f $$files
 
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-nobase_nodist_twistedtestsDATA: $(nobase_nodist_twistedtests_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(twistedtestsdir)" || $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)"
+	@list='$(nobase_nodist_twistedtests_DATA)'; test -n "$(twistedtestsdir)" || list=; \
+	$(am__nobase_list) | while read dir files; do \
+	  xfiles=; for file in $$files; do \
+	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
+	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
+	  test -z "$$xfiles" || { \
+	    test "x$$dir" = x. || { \
+	      echo "$(MKDIR_P) '$(DESTDIR)$(twistedtestsdir)/$$dir'"; \
+	      $(MKDIR_P) "$(DESTDIR)$(twistedtestsdir)/$$dir"; }; \
+	    echo " $(INSTALL_DATA) $$xfiles '$(DESTDIR)$(twistedtestsdir)/$$dir'"; \
+	    $(INSTALL_DATA) $$xfiles "$(DESTDIR)$(twistedtestsdir)/$$dir" || exit $$?; }; \
+	done
+
+uninstall-nobase_nodist_twistedtestsDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_nodist_twistedtests_DATA)'; test -n "$(twistedtestsdir)" || list=; \
+	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
+	test -n "$$files" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(twistedtestsdir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(twistedtestsdir)" && rm -f $$files
 tags: TAGS
 TAGS:
 
@@ -330,8 +504,11 @@ distdir: $(DISTFILES)
 check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
-all-am: Makefile
+all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
+	for dir in "$(DESTDIR)$(twistedtestsdir)" "$(DESTDIR)$(twistedtestsdir)" "$(DESTDIR)$(twistedtestsdir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
@@ -380,7 +557,9 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-nobase_dist_twistedtestsSCRIPTS \
+	install-nobase_nodist_twistedtestsDATA \
+	install-nobase_nodist_twistedtestsSCRIPTS
 
 install-dvi: install-dvi-am
 
@@ -424,7 +603,9 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-nobase_dist_twistedtestsSCRIPTS \
+	uninstall-nobase_nodist_twistedtestsDATA \
+	uninstall-nobase_nodist_twistedtestsSCRIPTS
 
 .MAKE: all check install install-am install-strip
 
@@ -433,11 +614,18 @@ uninstall-am:
 	dvi-am html html-am info info-am install install-am \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
+	install-info install-info-am install-man \
+	install-nobase_dist_twistedtestsSCRIPTS \
+	install-nobase_nodist_twistedtestsDATA \
+	install-nobase_nodist_twistedtestsSCRIPTS install-pdf \
 	install-pdf-am install-ps install-ps-am install-strip \
 	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am
+	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am \
+	uninstall-nobase_dist_twistedtestsSCRIPTS \
+	uninstall-nobase_nodist_twistedtestsDATA \
+	uninstall-nobase_nodist_twistedtestsSCRIPTS
+
 
 exec-with-log.sh: exec-with-log.sh.in Makefile
 	$(AM_V_GEN)sed -e "s|[@]abs_top_srcdir[@]|@abs_top_srcdir@|g" \
@@ -445,16 +633,35 @@ exec-with-log.sh: exec-with-log.sh.in Makefile
 		$< > $@
 	$(AM_V_at)chmod +x $@
 
-%.conf: %.conf.in
+run-mc.sh: run-mc.sh.in Makefile
+	$(AM_V_GEN)sed \
+		-e "s|[@]mctestsdir[@]|@mctestsdir@|g" \
+		-e "s|[@]libexecdir[@]|$(libexecdir)|g" \
+		$< > $@
+	@chmod +x $@
+
+servicedir-uninstalled/%.conf: servicedir-uninstalled/%.conf.in Makefile
+	$(AM_V_at)$(mkdir_p) servicedir-uninstalled
 	$(AM_V_GEN)sed -e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" $< > $@
+
+servicedir-installed/%.conf: servicedir-installed/%.conf.in Makefile
+	$(AM_V_at)$(mkdir_p) servicedir-installed
+	$(AM_V_GEN)sed -e "s|[@]mctestsdir[@]|@mctestsdir@|g" $< > $@
 
 # We don't use the full filename for the .in because > 99 character filenames
 # in tarballs are non-portable (and automake 1.8 doesn't let us build
 # non-archaic tarballs)
-org.freedesktop.Telepathy.%.service: %.service.in
+servicedir-uninstalled/org.freedesktop.Telepathy.%.service: servicedir-uninstalled/%.service.in Makefile
+	$(AM_V_at)$(mkdir_p) servicedir-uninstalled
 	$(AM_V_GEN)sed \
 		-e "s|[@]abs_top_srcdir[@]|@abs_top_srcdir@|g" \
 		-e "s|[@]abs_top_builddir[@]|@abs_top_builddir@|g" \
+		$< > $@
+
+servicedir-installed/org.freedesktop.Telepathy.%.service: servicedir-installed/%.service.in Makefile
+	$(AM_V_at)$(mkdir_p) servicedir-installed
+	$(AM_V_GEN)sed \
+		-e "s|[@]mctestsdir[@]|@mctestsdir@|g" \
 		$< > $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

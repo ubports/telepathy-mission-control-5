@@ -14,6 +14,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -33,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = m4
+subdir = data
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/gtk-doc.m4 \
@@ -57,6 +58,7 @@ am__v_at_ = $(am__v_at_$(AM_DEFAULT_VERBOSITY))
 am__v_at_0 = @
 SOURCES =
 DIST_SOURCES =
+DATA = $(noinst_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACCOUNTS_CACHE_DIR = @ACCOUNTS_CACHE_DIR@
 ACCOUNTS_DIR = @ACCOUNTS_DIR@
@@ -232,12 +234,18 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = \
-    as-compiler-flag.m4 \
-    tp-compiler-flag.m4 \
-    tp-compiler-warnings.m4 \
-    gtk-doc.m4
+gsettings_SCHEMAS = \
+	im.telepathy.MissionControl.FromEmpathy.gschema.xml \
+	$(NULL)
 
+
+# We build our own schema cache here for the benefit of the test suite
+noinst_DATA = gschemas.compiled
+EXTRA_DIST = \
+	$(gsettings_SCHEMAS) \
+	$(NULL)
+
+CLEANFILES = $(noinst_DATA)
 all: all-am
 
 .SUFFIXES:
@@ -250,9 +258,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu m4/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu data/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu m4/Makefile
+	  $(AUTOMAKE) --gnu data/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -316,7 +324,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(DATA)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -335,6 +343,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -422,6 +431,9 @@ uninstall-am:
 	maintainer-clean-generic mostlyclean mostlyclean-generic \
 	mostlyclean-libtool pdf pdf-am ps ps-am uninstall uninstall-am
 
+@GSETTINGS_RULES@
+gschemas.compiled: $(gsettings_SCHEMAS)
+	$(AM_V_GEN)$(GLIB_COMPILE_SCHEMAS) --targetdir=$(builddir) $(srcdir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

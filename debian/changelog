@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (1:5.10.1-1) unstable; urgency=low
+
+  * New upstream release
+  * d/p/0001-fix-build-with-UPower-but-no-NM-or-ConnMan.patch:
+    + Removed, merged upstream
+
+ -- Sjoerd Simons <sjoerd@debian.org>  Fri, 25 Nov 2011 20:48:14 +0100
+
 telepathy-mission-control-5 (1:5.9.3-3) unstable; urgency=low
 
   * d/p/0001-fix-build-with-UPower-but-no-NM-or-ConnMan.patch: Fix FTBFS when
