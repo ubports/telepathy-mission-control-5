@@ -1,3 +1,4 @@
+debian/tmp/usr/share/glib-2.0
 debian/tmp/usr/bin/mc-tool
 debian/tmp/usr/bin/mc-wait-for-name
 debian/tmp/usr/lib/telepathy/mission-control-5

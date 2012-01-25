@@ -1,3 +1,12 @@
+telepathy-mission-control-5 (1:5.10.1-2) unstable; urgency=low
+
+  * debian/control: Update Vcs-* fields
+  * debian/telepathy-mission-control-5.install: Install GSettings schema file
+    (Closes: #657057)
+  * debian/rules: List files that are not installed in packages
+
+ -- Laurent Bigonville <bigon@debian.org>  Wed, 25 Jan 2012 18:16:30 +0100
+
 telepathy-mission-control-5 (1:5.10.1-1) unstable; urgency=low
 
   * New upstream release

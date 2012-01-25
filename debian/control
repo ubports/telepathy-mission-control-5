@@ -20,8 +20,8 @@ Build-Depends: autotools-dev (>= 20100122-1~),
                python (>= 2.5),
                xsltproc
 Standards-Version: 3.9.2
-Vcs-Git: git://git.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git
-Vcs-Browser: http://git.debian.org/?p=pkg-telepathy/telepathy-mission-control-5.git
+Vcs-Git: git://anonscm.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-telepathy/telepathy-mission-control-5.git;a=summary
 Homepage: http://telepathy.freedesktop.org/wiki/
 
 Package: telepathy-mission-control-5
