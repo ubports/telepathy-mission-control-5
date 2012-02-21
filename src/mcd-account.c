@@ -4,7 +4,7 @@
  * This file is part of mission-control
  *
  * Copyright © 2008–2010 Nokia Corporation.
- * Copyright © 2009–2011 Collabora Ltd.
+ * Copyright © 2009–2012 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -29,7 +29,6 @@
 #include <string.h>
 
 #include <dbus/dbus.h>
-#include <glib/gi18n.h>
 #include <glib/gstdio.h>
 #include <telepathy-glib/gtypes.h>
 #include <telepathy-glib/interfaces.h>
@@ -141,6 +140,7 @@ struct _McdAccountPrivate
     McdAccountConnectionContext *connection_context;
     GKeyFile *keyfile;		/* configuration file */
     McpAccountStorage *storage_plugin;
+    GPtrArray *supersedes;
 
     /* connection status */
     TpConnectionStatus conn_status;
@@ -423,7 +423,7 @@ static GType mc_param_type (const TpConnectionManagerParam *param);
  *
  * Returns: %TRUE if the parameter could be retrieved; %FALSE otherwise
  */
-static gboolean
+gboolean
 mcd_account_get_parameter (McdAccount *account, const gchar *name,
                            GValue *parameter,
                            GError **error)
@@ -542,7 +542,7 @@ account_external_password_storage_get_accounts_cb (TpProxy *cm,
       props,
       NULL);
 
-  g_hash_table_destroy (props);
+  g_hash_table_unref (props);
 }
 
 static void
@@ -1397,6 +1397,15 @@ get_parameters (TpSvcDBusProperties *self, const gchar *name,
     McdAccount *account = MCD_ACCOUNT (self);
     GHashTable *params = _mcd_account_dup_parameters (account);
 
+    if (params == NULL)
+    {
+        if (mcd_account_is_valid (account))
+            g_warning ("%s is supposedly valid, but _dup_parameters() failed!",
+                mcd_account_get_unique_name (account));
+
+        params = tp_asv_new (NULL, NULL);
+    }
+
     g_value_init (value, TP_HASH_TYPE_STRING_VARIANT_MAP);
     g_value_take_boxed (value, params);
 }
@@ -1781,6 +1790,49 @@ get_normalized_name (TpSvcDBusProperties *self,
     mcd_account_get_string_val (account, name, value);
 }
 
+static gboolean
+set_supersedes (TpSvcDBusProperties *svc,
+    const gchar *name,
+    const GValue *value,
+    GError **error)
+{
+  McdAccount *self = MCD_ACCOUNT (svc);
+
+  if (!G_VALUE_HOLDS (value, TP_ARRAY_TYPE_OBJECT_PATH_LIST))
+    {
+      g_set_error (error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+          "Unexpected type for Supersedes: wanted 'ao', got %s",
+          G_VALUE_TYPE_NAME (value));
+      return FALSE;
+    }
+
+  if (self->priv->supersedes != NULL)
+    g_ptr_array_unref (self->priv->supersedes);
+
+  self->priv->supersedes = g_value_dup_boxed (value);
+  mcd_account_changed_property (self, name, value);
+
+  mcd_storage_set_value (self->priv->storage, self->priv->unique_name,
+      MC_ACCOUNTS_KEY_SUPERSEDES, value, FALSE);
+  mcd_storage_commit (self->priv->storage, self->priv->unique_name);
+
+  return TRUE;
+}
+
+static void
+get_supersedes (TpSvcDBusProperties *svc,
+    const gchar *name,
+    GValue *value)
+{
+  McdAccount *self = MCD_ACCOUNT (svc);
+
+  if (self->priv->supersedes == NULL)
+    self->priv->supersedes = g_ptr_array_new ();
+
+  g_value_init (value, TP_ARRAY_TYPE_OBJECT_PATH_LIST);
+  g_value_set_boxed (value, self->priv->supersedes);
+}
+
 static McpAccountStorage *
 get_storage_plugin (McdAccount *account)
 {
@@ -1899,6 +1951,7 @@ static const McdDBusProp account_properties[] = {
     { "ChangingPresence", NULL, get_changing_presence },
     { "NormalizedName", NULL, get_normalized_name },
     { "HasBeenOnline", NULL, get_has_been_online },
+    { "Supersedes", set_supersedes, get_supersedes },
     { 0 },
 };
 
@@ -2731,6 +2784,7 @@ mcd_account_setup (McdAccount *account)
     McdAccountPrivate *priv = account->priv;
     McdStorage *storage = priv->storage;
     const gchar *name = mcd_account_get_unique_name (account);
+    GValue *value;
 
     priv->manager_name =
       mcd_storage_dup_string (storage, name, MC_ACCOUNTS_KEY_MANAGER);
@@ -2796,6 +2850,23 @@ mcd_account_setup (McdAccount *account)
     priv->auto_presence_message =
       mcd_storage_dup_string (storage, name,
                               MC_ACCOUNTS_KEY_AUTO_PRESENCE_MESSAGE);
+
+    value = mcd_storage_dup_value (storage, name,
+                                   MC_ACCOUNTS_KEY_SUPERSEDES,
+                                   TP_ARRAY_TYPE_OBJECT_PATH_LIST, NULL);
+
+    if (priv->supersedes != NULL)
+        g_ptr_array_unref (priv->supersedes);
+
+    if (value == NULL)
+    {
+        priv->supersedes = g_ptr_array_new ();
+    }
+    else
+    {
+        priv->supersedes = g_value_dup_boxed (value);
+        tp_g_value_slice_free (value);
+    }
 
     /* check the manager */
     if (!priv->manager && !load_manager (account))
@@ -2898,7 +2969,7 @@ _mcd_account_finalize (GObject *object)
     DEBUG ("%p (%s)", object, priv->unique_name);
 
     if (priv->changed_properties)
-	g_hash_table_destroy (priv->changed_properties);
+	g_hash_table_unref (priv->changed_properties);
     if (priv->properties_source != 0)
 	g_source_remove (priv->properties_source);
 
@@ -3228,6 +3299,14 @@ _mcd_account_dup_parameters (McdAccount *account)
     priv = account->priv;
 
     DEBUG ("called");
+
+    /* FIXME: this is ridiculous. MC stores the parameters for the account, so
+     * it should be able to expose them on D-Bus even if the CM is uninstalled.
+     * It shouldn't need to iterate across the parameters supported by the CM.
+     * But it does, because MC doesn't store the types of parameters. So it
+     * needs the CM (or .manager file) to be around to tell it whether "true"
+     * is a string or a boolean…
+     */
     if (!priv->manager && !load_manager (account))
     {
         DEBUG ("unable to load manager for account %s", priv->unique_name);
@@ -3666,6 +3745,12 @@ _mcd_account_get_avatar (McdAccount *account, GArray **avatar,
 	}
     }
     g_free (filename);
+}
+
+GPtrArray *
+_mcd_account_get_supersedes (McdAccount *self)
+{
+  return self->priv->supersedes;
 }
 
 static void
@@ -4193,7 +4278,7 @@ mcd_account_connection_ready_cb (McdAccount *account,
                                             mcd_account_self_handle_inspected_cb,
                                             NULL, NULL,
                                             (GObject *) account);
-    g_array_free (self_handle_array, TRUE);
+    g_array_unref (self_handle_array);
 
     /* FIXME: ideally, on protocols with server-stored nicknames, this should
      * only be done if the local Nickname has been changed since last time we
@@ -4441,4 +4526,28 @@ _mcd_account_set_changing_presence (McdAccount *self, gboolean value)
                                   &changing_presence);
 
     g_value_unset (&changing_presence);
+}
+
+gchar *
+mcd_account_dup_display_name (McdAccount *self)
+{
+    const gchar *name = mcd_account_get_unique_name (self);
+
+    return mcd_storage_dup_string (self->priv->storage, name, "DisplayName");
+}
+
+gchar *
+mcd_account_dup_icon (McdAccount *self)
+{
+    const gchar *name = mcd_account_get_unique_name (self);
+
+    return mcd_storage_dup_string (self->priv->storage, name, "Icon");
+}
+
+gchar *
+mcd_account_dup_nickname (McdAccount *self)
+{
+    const gchar *name = mcd_account_get_unique_name (self);
+
+    return mcd_storage_dup_string (self->priv->storage, name, "Nickname");
 }

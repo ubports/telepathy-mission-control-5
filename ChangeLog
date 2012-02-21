@@ -1,3 +1,273 @@
+commit 5027888083a46c97f75a99cdf165195afed929db
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-21 19:44:31 +0000
+
+    Update telepathy.am from telepathy-glib 0.17.5 to fix out-of-tree releases
+
+commit 8c8b9e690c94ba4b5a2f461799bc2e97b2104bce
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-21 19:41:39 +0000
+
+    Prepare 5.11.0
+
+commit b4e4a0f52f75cabb8d6d60618e2decf72e7961e3
+Merge: 16ac32e 349fa2e
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-02-21 15:08:36 +0000
+
+    Merge branch 'telepathy-mission-control-5.10'
+
+commit 349fa2e017d7c7caa5a9a4987979fdae64f10d87
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-02-21 11:02:42 +0000
+
+    Account: don't crash on Get('Parameters') if _dup_parameters fails
+    
+    If the connection manager is not installed, or is installed but doesn't
+    have the protocol for the account, then _mcd_account_dup_parameters()
+    returns %NULL. (As the comment I've added says, I think this is
+    ridiculous—it's fall-out from MC not storing the types of parameters.)
+    
+    As a result, Get('Parameters') or GetAll() would crash, because
+    dbus-glib would try to serialize a NULL GHashTable and blow up. (See
+    <https://bugs.freedesktop.org/show_bug.cgi?id=44939>.) So with this
+    patch, we handle NULL as "no parameters" for the sake of D-Bus
+    properties. (Because this situation should only arise if the account is
+    invalid, we also warn if _dup_parameters() returns NULL for valid
+    accounts.)
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 16ac32eb79765d65b46d71b35d5ddbbf9987ec7f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-20 18:41:23 +0000
+
+    Depend on a new enough telepathy-glib for Supersedes
+
+commit 8618ecef8930ad39a8bfe8b37a9c854945b9dcb8
+Merge: 572d39f c0dba4b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-20 18:40:53 +0000
+
+    Merge branch 'butterfly-migration-42814'
+
+commit c0dba4b307cbc965bec3a325373e11a706dda7fe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-14 13:23:11 +0000
+
+    Set the Supersedes property on migrated Butterfly accounts
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42814
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit d9a702e8c7dfd80c0f7064824e4bf9498c420cf3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-14 12:08:44 +0000
+
+    Test the Supersedes property
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42814
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 4ee0376efd35ce0e06d14633e386c511938e26a3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-14 12:07:04 +0000
+
+    Account.Supersedes: add
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42814
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 696ae3716947119ad8f6778f8fb6d3ad684d1bb1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-14 12:06:33 +0000
+
+    McdStorage: add support for 'ao' type
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42814
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 572d39fb51e5d1aecdbaa2329686f5b818ce9897
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-02-02 11:27:20 +0100
+
+    Display a string representation of McdTransportStatus in debug message
+    
+    This will make my life much easier when trying to debug issues from users'
+    logs.
+
+commit 9a32c79b81e4b5a847fcf34641e398f7c6089bfc
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2012-02-01 15:36:25 +0000
+
+    Produce DLL files when compiled for windows When we cross-compile telepathy-mission-control for windows with the current flags we end up with a static library and it creates link issues in libraries and applications which uses teleapthy-glib on windows. to solve this -no-undefined LDFLAG is introduced in this commit. This ensures all the symbols are defined when we compile for windows.
+    
+    see: http://www.gnu.org/software/libtool/manual/libtool.html for
+    more details about -no-undefined flag
+
+commit 3dcdbc3d14457d4096000f1426129062cb76e313
+Author: Will Thompson <will@willthompson.co.uk>
+Date:   2012-02-01 10:48:33 +0000
+
+    mc-tool: add a 'summary' command.
+
+commit c02db9192bf6233e09252b3d0d189744ea91acb1
+Author: Will Thompson <will@willthompson.co.uk>
+Date:   2012-02-01 11:00:09 +0000
+
+    mc-tool: sort lists of account identifiers.
+
+commit 35053f8fdeddd79c92d7f6ddb9e0ac96a6c0c3f6
+Author: Will Thompson <will@willthompson.co.uk>
+Date:   2012-02-01 10:16:37 +0000
+
+    mc-tool: use tp_account_get_path_suffix()
+
+commit 573700ecb680cc3753a362774214f93373df6936
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-01-27 15:39:46 +0100
+
+    mc-tool: display Addressing.URISchemes
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=45308
+
+commit 39ff98afd91df7c91851a1cedbb9f735dae4e668
+Merge: 1820917 1282e4c
+Author: Mikhail Zabaluev <mikhail.zabaluev@nokia.com>
+Date:   2012-01-19 13:24:13 +0100
+
+    Merge branch 'optionalize-gsettings'
+    
+    Reviewed-By: Simon McVittie (fd.o #43791)
+
+commit 1282e4c7b8d7e2c3bde3201dacd81dbeb4ca8b1d
+Author: Mikhail Zabaluev <mikhail.zabaluev@nokia.com>
+Date:   2012-01-13 14:13:15 +0100
+
+    Make the usage of "use-conn" GSetting a configure option
+
+commit 18209172f6ff643247c1fe1f09aa20b14ab2f932
+Author: Siraj Razick <siraj.razick@collabora.co.uk>
+Date:   2011-12-22 19:11:23 -0500
+
+    Changes need to cross compile MC for windows
+    
+    we need to include io.h to make unmask work when cross compiling
+
+commit 2b1944ad4085bc10a324dcea19ba19c901bbe578
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-12-19 15:13:11 +0000
+
+    In the [unlikely] event the id key has the wrong type, don't leak the GValue
+
+commit bcdbbe60367d67a602aed52a95e53e0725881e2d
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2011-10-20 01:40:27 +0100
+
+    AgManager::enabled-event doesn't have the AgAccount::enabled multi-trigger bug
+
+commit 58ff362a133ec6625f23e89b175f3bc8374218f2
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2011-11-14 17:19:51 -0300
+
+    Support building for Android, modified from an original patch by Derek Foreman
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42508
+
+commit 652eb046e351d5939998efd97b0b053098ef6ac3
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2011-11-02 15:55:15 -0300
+
+    Build on systems without gettext
+    
+    Modified from an original patch by Derek Foreman
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42508
+
+commit ee2090321ca1530ada26c5431b9ba3dacfd4ea07
+Author: Xavier Claessens <xclaesse@gmail.com>
+Date:   2011-11-16 16:07:25 +0100
+
+    Use _unref instead of _free _destroy when possible.unref
+    
+    Replace g_(ptr_)array_free (foo, TRUE) and g_hash_table_destroy
+    with respectively g_(ptr_)array_unref (foo) and g_hash_table_unref.
+    
+    I used this command to generate this patch:
+    for f in `find -name "*.c"`; do sed -i $f -re 's/g_ptr_array_free \(([^ ,]+), TRUE\)/g_ptr_array_unref \(\1\)/'; done
+    
+    See Danielle's blog for explanation of possible bug _free can do:
+    http://blogs.gnome.org/danni/2011/11/16/mistakes-with-g_value_set_boxed/
+
+commit 778fa378b0923a43134508de5b36abaed028f2c1
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-14 14:15:47 +0100
+
+    lock accounts while migrating
+
+commit 83aa8ae7eb6a4b2aa8647f6e5581607e40f4ff4a
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-11 16:12:28 +0100
+
+    migrate Butterfly accounts to Haze
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42814
+
+commit f052f2424a1a010f95739a59f19b71c4278c8231
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-11 16:00:15 +0100
+
+    add mcd_account_dup_icon() and mcd_account_dup_nickname()
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42814
+
+commit 1298e52994e0bba55437e7f876c2c6d84a49379d
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-11 15:41:29 +0100
+
+    export mcd_account_get_parameter()
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42814
+
+commit 5353886fab93ed2efdcd2e2d0f83c64941e43a94
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-11 14:51:05 +0100
+
+    add mcd_account_dup_display_name()
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=42814
+
+commit 3e39bb0e14bcbbefcb98839e730d86864165f28b
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2011-11-11 13:45:23 +0100
+
+    value-is-same: stop testing G_TYPE_CHAR
+    
+    g_value_set_char() has been deprecated in GLib and, as said in the FIXME, we
+    don't need to test this as it's not supported by D-Bus.
+
+commit 09206a0eee8ddecbd795155a7e9d8936f4b7e469
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-10 12:53:54 +0000
+
+    Put request paths under /org/fd/T/CD
+
+commit 4c3e8544f70c9b949934d741655e0874a1cc86c6
+Merge: 8158b3d 18e4870
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-08 10:14:25 +0000
+
+    Merge branch 'telepathy-mission-control-5.10'
+    
+    Conflicts:
+    	configure.ac
+
+commit 18e48707de894057f30936ca86cddd304da4e48f
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-08 10:14:03 +0000
+
+    Bump version to 5.10.1+
+
 commit 0daca95dab021325bd20bd3a9da4f2e67cc005e5
 Author: Will Thompson <will.thompson@collabora.co.uk>
 Date:   2011-11-08 10:00:46 +0000
@@ -21,6 +291,12 @@ Date:   2011-11-08 09:49:52 +0000
     definition provided by Empathy. (I'm not 100% sure why—I'd've assumed
     they'd be namespaced by the GSettings schema, not the DConf path—but
     hey.)
+
+commit 8158b3db0272bd604fd17de6b870994877628b65
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2011-11-07 17:25:12 +0000
+
+    And again to 5.10.999+ for the unstable branch.
 
 commit 3eba6fcbc7e9418f7da101a7a58ff7154e905f48
 Author: Will Thompson <will.thompson@collabora.co.uk>

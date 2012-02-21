@@ -31,7 +31,6 @@
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include <glib/gi18n.h>
 #include <glib/gstdio.h>
 
 #include <telepathy-glib/defs.h>
@@ -2138,7 +2137,7 @@ _mcd_dispatch_operation_run_observers (McdDispatchOperation *self)
         g_list_free (observed);
     }
 
-    g_hash_table_destroy (observer_info);
+    g_hash_table_unref (observer_info);
 }
 
 static void

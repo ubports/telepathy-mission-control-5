@@ -12,6 +12,9 @@
 /* Define if Aegis is supported */
 #undef ENABLE_AEGIS
 
+/* Define to use the "use-conn" GSetting */
+#undef ENABLE_CONN_SETTING
+
 /* Define whether gnome-keyring support is enabled */
 #undef ENABLE_GNOME_KEYRING
 

@@ -57,13 +57,16 @@
 #include <sys/types.h>
 #endif
 
-#include <glib/gi18n.h>
 #include <gmodule.h>
 #include <string.h>
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <telepathy-glib/telepathy-glib.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
 
 #include "kludge-transport.h"
 #include "mcd-master.h"
@@ -219,13 +222,32 @@ mcd_master_connect_automatic_accounts (McdMaster *master)
     }
 }
 
+static const gchar *
+mcd_transport_status_to_string (McdTransportStatus status)
+{
+    switch (status)
+    {
+        case MCD_TRANSPORT_STATUS_CONNECTED:
+            return "connected";
+        case MCD_TRANSPORT_STATUS_CONNECTING:
+            return "connecting";
+        case MCD_TRANSPORT_STATUS_DISCONNECTED:
+            return "disconnected";
+        case MCD_TRANSPORT_STATUS_DISCONNECTING:
+            return "disconnecting";
+    }
+
+    return "invalid";
+}
+
 static void
 on_transport_status_changed (McdTransportPlugin *plugin,
 			     McdTransport *transport,
 			     McdTransportStatus status, McdMaster *master)
 {
-    DEBUG ("Transport %s changed status to %u",
-           mcd_transport_get_name (plugin, transport), status);
+    DEBUG ("Transport %s changed status to %u (%s)",
+           mcd_transport_get_name (plugin, transport), status,
+           mcd_transport_status_to_string (status));
 
     if (status == MCD_TRANSPORT_STATUS_CONNECTED)
 	mcd_master_transport_connected (master, plugin, transport);
@@ -250,7 +272,7 @@ mcd_master_unload_mcd_plugins (McdMaster *master)
 	module = g_ptr_array_index (priv->mcd_plugins, i);
 	g_module_close (module);
     }
-    g_ptr_array_free (priv->mcd_plugins, TRUE);
+    g_ptr_array_unref (priv->mcd_plugins);
     priv->mcd_plugins = NULL;
 }
 
@@ -405,7 +427,7 @@ _mcd_master_dispose (GObject * object)
 						  object);
 	    g_object_unref (plugin);
 	}
-	g_ptr_array_free (priv->transport_plugins, TRUE);
+	g_ptr_array_unref (priv->transport_plugins);
 	priv->transport_plugins = NULL;
     }
 

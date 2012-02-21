@@ -33,7 +33,7 @@ plugins_include_HEADERS = \
 
 libmission_control_plugins_la_LDFLAGS = \
 	-export-symbols-regex "^(mcp_)" \
-	-version-info "@MCP_LT_CURRENT@":"@MCP_LT_REVISION@":"@MCP_LT_AGE@"
+	-no-undefined -version-info "@MCP_LT_CURRENT@":"@MCP_LT_REVISION@":"@MCP_LT_AGE@"
 
 libmission_control_plugins_la_LIBADD = \
 	$(TELEPATHY_LIBS) \
@@ -60,6 +60,17 @@ libmission_control_plugins_la_SOURCES = \
 	request-policy.c
 
 BUILT_SOURCES = $(nodist_libmission_control_plugins_la_SOURCES)
+
+Android.mk: Makefile.am $(BUILT_SOURCES)
+	androgenizer -:PROJECT telepathy-mission-control \
+	 -:SHARED libmission-control-plugins \
+	 -:TAGS eng debug \
+	 -:REL_TOP $(top_srcdir) -:ABS_TOP $(abs_top_srcdir) \
+	 -:SOURCES $(BUILT_SOURCES) $(libmission_control_plugins_la_SOURCES) \
+	 -:CFLAGS $(DEFAULT_INCLUDES) $(DEFS) $(CFLAGS) $(AM_CFLAGS) \
+	 -:CPPFLAGS $(CPPFLAGS) $(AM_CPPFLAGS) $(INCLUDES) \
+	 -:LDFLAGS $(libmission_control_plugins_la_LIBADD) \
+	> $@
 
 CLEANFILES = $(BUILT_SOURCES)
 

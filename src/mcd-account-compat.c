@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <glib/gstdio.h>
-#include <glib/gi18n.h>
 #include <config.h>
 
 #include <dbus/dbus-glib-lowlevel.h>
@@ -61,7 +60,7 @@ emit_compat_property_changed (McdAccount *account, const gchar *key,
 
     mc_svc_account_interface_compat_emit_compat_property_changed (account,
                                                                   properties);
-    g_hash_table_destroy (properties);
+    g_hash_table_unref (properties);
 }
 
 static void

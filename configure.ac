@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.10.1])
+AC_INIT([telepathy-mission-control], [5.11.0])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -46,7 +46,7 @@ AC_SUBST([MCP_API_VERSION])
 # else if library source has changed since last release
 #     increment revision
 MCP_LT_CURRENT=3
-MCP_LT_REVISION=0
+MCP_LT_REVISION=1
 MCP_LT_AGE=3
 AC_SUBST([MCP_LT_CURRENT])
 AC_SUBST([MCP_LT_REVISION])
@@ -304,7 +304,7 @@ PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.82])
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.15.0])
+PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.17.5])
 AC_SUBST(TELEPATHY_LIBS)
 AC_SUBST(TELEPATHY_CFLAGS)
 
@@ -375,6 +375,16 @@ fi
 
 AM_CONDITIONAL(HAVE_NM, test "x$have_nm" = "xyes")
 AM_CONDITIONAL(HAVE_CONNMAN, test "x$have_connman" = "xyes")
+
+AC_ARG_ENABLE([conn-setting],
+    [AS_HELP_STRING([--enable-conn-setting],
+         [use a GSetting to control automatic connectivity @<:@default=yes@:>@])],
+    [],
+    [enable_conn_setting=yes])
+if test x"$enable_conn_setting" = xyes; then
+  AC_DEFINE([ENABLE_CONN_SETTING], [1], [Define to use the "use-conn" GSetting])
+fi
+AM_CONDITIONAL([ENABLE_CONN_SETTING], [test x"$enable_conn_setting" = xyes])
 
 # -----------------------------------------------------------
 # Suspend/resume tracking goop
@@ -460,6 +470,7 @@ Configure summary:
         Gnome Keyring................:  ${keyring_enabled}
         Network Manager integration..:  ${have_nm}
         ConnMan integration..........:  ${have_connman}
+        Connectivity GSetting........:  ${enable_conn_setting}
         Suspend tracking with UPower.:  ${have_upower}
         Aegis........................:  ${aegis_enabled}
         libaccounts-glib backend.....:  ${libaccounts_sso_enabled}

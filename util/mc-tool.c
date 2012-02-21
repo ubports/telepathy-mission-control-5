@@ -42,6 +42,7 @@ show_help (gchar * err)
 
     printf ("Usage:\n"
 	    "    %1$s list\n"
+	    "    %1$s summary\n"
 	    "    %1$s add <manager>/<protocol> <display name> [<param> ...]\n"
 	    "    %1$s update <account name> [<param>|clear:key] ...\n"
 	    "    %1$s display <account name> <display name>\n"
@@ -133,14 +134,6 @@ static char *ensure_prefix (char const *string)
     if (g_str_has_prefix (string, TP_ACCOUNT_OBJECT_PATH_BASE))
 	return g_strdup (string);
     return g_strdup_printf ("%s%s", TP_ACCOUNT_OBJECT_PATH_BASE, string);
-}
-
-static const char *skip_prefix (char const *string)
-{
-    const char *prefixed = strip_prefix (string, TP_ACCOUNT_OBJECT_PATH_BASE);
-    if (prefixed != NULL)
-	return prefixed;
-    return string;
 }
 
 static void
@@ -321,6 +314,23 @@ show_presence (gchar const *what, struct presence *presence)
     presence->type, presence->message);
 }
 
+static int
+show_uri_schemes (const gchar * const *schemes)
+{
+  int result;
+  gchar *tmp;
+
+  if (schemes == NULL || schemes[0] == NULL)
+    tmp = g_strdup ("");
+  else
+    tmp = g_strjoinv (", ", (gchar **) schemes);
+
+  result = printf ("%12s: %s\n", "URIScheme", tmp);
+
+  g_free (tmp);
+  return result;
+}
+
 static void
 free_presence (struct presence *presence)
 {
@@ -495,12 +505,25 @@ getter_by_name(char *name)
 
 /* ====================================================================== */
 
+static gint
+compare_accounts (gconstpointer a,
+                  gconstpointer b)
+{
+    return strcmp (tp_account_get_path_suffix (TP_ACCOUNT (a)),
+                   tp_account_get_path_suffix (TP_ACCOUNT (b)));
+}
+
+static GList *
+get_valid_accounts_sorted (TpAccountManager *manager)
+{
+    return g_list_sort (tp_account_manager_get_valid_accounts (manager),
+                        compare_accounts);
+}
+
 static gboolean
 command_list (TpAccountManager *manager)
 {
-    GList *accounts;
-
-    accounts = tp_account_manager_get_valid_accounts (manager);
+    GList *accounts = get_valid_accounts_sorted (manager);
 
     if (accounts != NULL) {
 	GList *ptr;
@@ -508,7 +531,7 @@ command_list (TpAccountManager *manager)
 	command.common.ret = 0;
 
 	for (ptr = accounts; ptr != NULL; ptr = ptr->next) {
-	    puts (skip_prefix (tp_proxy_get_object_path (ptr->data)));
+	    puts (tp_account_get_path_suffix (ptr->data));
 	}
 
 	g_list_free (accounts);
@@ -517,6 +540,48 @@ command_list (TpAccountManager *manager)
     return FALSE;                 /* stop mainloop */
 }
 
+static gboolean
+command_summary (TpAccountManager *manager)
+{
+    GList *accounts, *l;
+    guint longest_account = 0;
+
+    accounts = tp_account_manager_get_valid_accounts (manager);
+    if (accounts == NULL) {
+        return FALSE;
+    }
+    command.common.ret = 0;
+
+    for (l = accounts; l != NULL; l = l->next) {
+        TpAccount *account = TP_ACCOUNT (l->data);
+
+        longest_account = MAX (longest_account,
+            strlen (tp_account_get_path_suffix (account)));
+    }
+
+    /* The -6 is so we can line up the "Enabled" header to have the ticks and
+     * crosses below the 7th and final character. We're only guaranteed
+     * longest_account ≥ 5 in theory (a/b/c is the shortest legal suffix) but
+     * in practice it's always going to be ≥ 7.
+     */
+    g_return_val_if_fail (longest_account >= 7, FALSE);
+    printf ("%-*s %s %s\n", longest_account - 6, "Account", "Enabled", "Requested");
+    printf ("%-*s %s %s\n", longest_account - 6, "=======", "=======", "=========");
+
+    for (l = accounts; l != NULL; l = l->next) {
+        TpAccount *account = TP_ACCOUNT (l->data);
+        gchar *status;
+
+        tp_account_get_requested_presence (account, &status, NULL);
+        printf ("%-*s %s %s\n",
+            longest_account, tp_account_get_path_suffix (account),
+            tp_account_is_enabled (account) ? "✓" : "☐",
+            status);
+    }
+
+    g_list_free (accounts);
+    return FALSE; /* stop mainloop */
+}
 
 static void
 callback_for_create_account (GObject *source,
@@ -531,7 +596,7 @@ callback_for_create_account (GObject *source,
 
     if (account != NULL) {
 	command.common.ret = 0;
-	puts (skip_prefix (tp_proxy_get_object_path (account)));
+	puts (tp_account_get_path_suffix (account));
     }
     else {
 	fprintf (stderr, "%s %s: %s\n", app_name, command.common.name,
@@ -574,7 +639,7 @@ callback_for_update_parameters (GObject *source,
             printf ("  %s\n", r);
             printf ("run:\n");
             printf ("  %s reconnect %s\n", app_name,
-                    skip_prefix (command.common.account));
+                    tp_account_get_path_suffix (account));
             g_free (r);
             g_strfreev (reconnect_required);
         }
@@ -620,15 +685,13 @@ command_remove (TpAccount *account)
 static gboolean
 command_show (TpAccount *account)
 {
-    gchar const *name;
     const GHashTable *parameters;
     GHashTableIter i[1];
     gpointer keyp, valuep;
     struct presence automatic, current, requested;
+    const gchar * const *schemes;
 
-    name = skip_prefix (command.common.account);
-
-    show ("Account", name);
+    show ("Account", tp_account_get_path_suffix (account));
     show ("Display Name", tp_account_get_display_name (account));
     show ("Normalized", tp_account_get_normalized_name (account));
     show ("Enabled", tp_account_is_enabled (account) ? "enabled" : "disabled");
@@ -662,6 +725,11 @@ command_show (TpAccount *account)
 
     show ("Changing",
         tp_account_get_changing_presence (account) ? "yes" : "no");
+
+    puts ("");
+    puts ("Addressing:");
+    schemes = tp_account_get_uri_schemes (account);
+    show_uri_schemes (schemes);
 
     puts ("");
     parameters = tp_account_get_parameters (account);
@@ -698,7 +766,7 @@ command_connection (TpAccount *account)
     }
     else {
 	fprintf(stderr, "%s: no connection\n",
-		skip_prefix (command.common.account));
+		tp_account_get_path_suffix (account));
     }
 
     return FALSE;
@@ -952,6 +1020,14 @@ parse (int argc, char **argv)
 
 	command.ready.manager = command_list;
     }
+    else if (strcmp (argv[1], "summary") == 0)
+    {
+        /* List accounts */
+        if (argc != 2)
+            show_help ("Invalid summary command.");
+
+        command.ready.manager = command_summary;
+    }
     else if (strcmp  (argv[1], "remove") == 0
 	     || strcmp (argv[1], "delete") == 0)
     {
@@ -1202,20 +1278,21 @@ void manager_ready (GObject *manager,
 }
 
 static
-void account_ready (GObject *account,
+void account_ready (GObject *source,
 		    GAsyncResult *res,
 		    gpointer user_data)
 {
+    TpAccount *account = TP_ACCOUNT (source);
     GError *error = NULL;
 
     if (!tp_proxy_prepare_finish (account, res, &error)) {
         fprintf (stderr, "%s: couldn't load account '%s': %s\n", app_name,
-            skip_prefix (command.common.account), error->message);
+            tp_account_get_path_suffix (account), error->message);
         fprintf (stderr, "Try '%s list' to list known accounts.\n", app_name);
         g_error_free (error);
     }
     else {
-        if (command.ready.account (TP_ACCOUNT (account)))
+        if (command.ready.account (account))
             return;
     }
 
@@ -1250,6 +1327,8 @@ main (int argc, char **argv)
         tp_proxy_prepare_async (am, NULL, manager_ready, NULL);
     }
     else {
+	const GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, TP_ACCOUNT_FEATURE_ADDRESSING, 0 };
+
 	command.common.account = ensure_prefix (command.common.account);
 	a = tp_account_new (dbus, command.common.account, &error);
 
@@ -1261,7 +1340,7 @@ main (int argc, char **argv)
 	    goto out;
 	}
 
-	tp_proxy_prepare_async (a, NULL, account_ready, NULL);
+	tp_proxy_prepare_async (a, features, account_ready, NULL);
     }
 
     main_loop = g_main_loop_new (NULL, FALSE);

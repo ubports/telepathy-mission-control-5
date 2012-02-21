@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (1:5.11.0-1) experimental; urgency=low
+
+  * New upstream development release
+    - require telepathy-glib 0.17.5
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 21 Feb 2012 20:26:56 +0000
+
 telepathy-mission-control-5 (1:5.10.1-2) unstable; urgency=low
 
   * debian/control: Update Vcs-* fields
