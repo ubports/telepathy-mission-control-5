@@ -714,7 +714,7 @@ Android.mk: Makefile.am
 	 -:CFLAGS $(DEFS) $(CFLAGS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	  $(AM_CFLAGS) \
 	 -:CPPFLAGS $(CPPFLAGS) $(AM_CPPFLAGS) \
-	 -:LDFLAGS $(mc_tool_LDADD) \
+	 -:LDFLAGS $(LDADD) \
 	> $@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

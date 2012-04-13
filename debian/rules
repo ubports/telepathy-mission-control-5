@@ -1,29 +1,41 @@
 #!/usr/bin/make -f
 
+include /usr/share/dpkg/default.mk
+
 CONFIGURE_FLAGS = --libexecdir=\$${prefix}/lib/telepathy \
                   --disable-Werror \
-                  --disable-mcd-plugins \
                   --enable-gtk-doc \
                   --enable-server \
                   --enable-gnome-keyring \
                   --with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc \
                   --enable-upower
 
+# We specifically do not want multiarch: only one version of MC can be
+# installed anyway, the plugin directory is based on the ${libdir}, and
+# empathy/experimental ships a plugin in the non-multiarch location
+CONFIGURE_FLAGS += --libdir=\$${prefix}/lib
+
+# Having a static library for a plugin loader is pretty useless, so get rid
+# of it.
+CONFIGURE_FLAGS += --enable-shared --disable-static
+
+# Explicitly disable old-style plugins, which has the side-effect of disabling
+# their associated documentation, making their libraries static, and disabling
+# their headers
+CONFIGURE_FLAGS += --disable-mcd-plugins
+
 ifeq ($(DEB_BUILD_ARCH_OS),linux)
 CONFIGURE_FLAGS += --with-connectivity=nm
 endif
 
 %:
-	dh $@ --with autotools_dev
+	dh $@ --with autotools_dev --parallel
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V
 
-# Having a static library for a plugin loader is pretty useless, so get rid
-# of it. We don't want the libtool stuff either.
 override_dh_auto_install:
 	dh_auto_install
-	rm -f debian/tmp/usr/lib/libmission-control-plugins*.a
 	rm -f debian/tmp/usr/lib/libmission-control-plugins*.la
 
 override_dh_strip:
@@ -33,9 +45,6 @@ override_dh_strip:
 override_dh_auto_test:
 	:
 
-# Explicitly disable old-style plugins, which has the side-effect of disabling
-# their associated documentation, making their libraries static, and disabling
-# their headers
 override_dh_auto_configure:
 	dh_auto_configure -- ${CONFIGURE_FLAGS}
 

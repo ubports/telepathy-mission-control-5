@@ -1,3 +1,22 @@
+telepathy-mission-control-5 (1:5.12.0-1) experimental; urgency=low
+
+  * New upstream release
+    - running this version will automatically migrate telepathy-butterfly
+      MSN accounts to telepathy-haze, as required by Empathy 3.4
+    - requires GLib 2.30
+  * Enable parallel builds
+  * Don't bother building static libraries which we're not going to install
+  * Use debhelper 9 for compressed debug info
+    - specifically don't use multiarch paths, since that would require
+      the gnome-online-accounts plugin in Empathy to undergo a transition,
+      and only one architecture's version of MC can be installed anyway
+  * Install upstream man pages with .install file, not .manpages file,
+    since that stops dh_install claiming they're not installed
+  * Standards-Version: 3.9.3
+  * Use default.mk to get the dpkg-recommended build flags
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 13 Apr 2012 15:45:26 +0100
+
 telepathy-mission-control-5 (1:5.11.0-1) experimental; urgency=low
 
   * New upstream development release

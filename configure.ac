@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.11.0])
+AC_INIT([telepathy-mission-control], [5.12.0])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -309,7 +309,7 @@ AC_SUBST(TELEPATHY_LIBS)
 AC_SUBST(TELEPATHY_CFLAGS)
 
 PKG_CHECK_MODULES([GLIB],
-	[glib-2.0 >= 2.28, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
+	[glib-2.0 >= 2.30, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
 

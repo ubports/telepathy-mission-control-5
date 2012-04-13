@@ -1,3 +1,71 @@
+commit aeba9f785227e07bf26b14822b1b288041297910
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-02 18:22:56 -0400
+
+    version 5.12.0
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit f185df41b7f514ce28bb121ec4abdc5dc422b7a0
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-02 18:07:14 -0400
+
+    update NEWS for 5.12.0
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 154f2b42310090f947988df8fd44ee34a6cbb18a
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-02 18:48:21 -0400
+
+    fakeconnectivity: implement GetAll and GetDevices for NM
+    
+    This is needed for newer libnm-glib. We should start using
+    nm_client_new_async().
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 853fefbb9663a5d6003cdefbc16c19c67d5bfcc7
+Author: Alban Crequy <alban.crequy@collabora.co.uk>
+Date:   2012-03-16 15:32:51 +0000
+
+    Add mcd_service_stop() and stop the McdService when SIGINT is sent
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=47054
+
+commit 72498e161d71b6751d825888a684f62c304a9434
+Author: Alban Crequy <alban.crequy@collabora.co.uk>
+Date:   2012-03-26 13:33:22 +0100
+
+    Update dependency on GLib 2.30
+    
+    GLib 2.30 is necessary for g_unix_open_pipe().
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=47054
+
+commit 370e642d6dc6983fee0ef1fcbedd96ef3a2b3b64
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2012-03-22 18:05:04 -0300
+
+    On Android, use pkg-config --static
+    
+    This makes it output the complete dependency chain for each
+    library, e.g. libffi for GObject. This is necessary because Android
+    toolchains don't follow shared library interdependencies like
+    normal GNU toolchains.
+
+commit dcebc508f40abd0eaceb57039e5789638b5297b1
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2012-03-22 18:04:31 -0300
+
+    Use the correct LD_FLAGS variable for the Android target
+
+commit 90ac4892d9f15756e8fc1266a7b24b65da48a5ef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-02-21 21:11:10 +0000
+
+    Development version
+
 commit 5027888083a46c97f75a99cdf165195afed929db
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2012-02-21 19:44:31 +0000

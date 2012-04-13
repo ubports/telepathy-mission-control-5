@@ -6,7 +6,7 @@
 
 G_BEGIN_DECLS
 
-/* VOID:STRING,BOOLEAN (/home/smcv/Collabora/telepathy/mc/mission-control-plugins/mcp-signals-marshal.list:1) */
+/* VOID:STRING,BOOLEAN (mcp-signals-marshal.list:1) */
 extern void _mcp_marshal_VOID__STRING_BOOLEAN (GClosure     *closure,
                                                GValue       *return_value,
                                                guint         n_param_values,
@@ -14,7 +14,7 @@ extern void _mcp_marshal_VOID__STRING_BOOLEAN (GClosure     *closure,
                                                gpointer      invocation_hint,
                                                gpointer      marshal_data);
 
-/* VOID:STRING,STRING (/home/smcv/Collabora/telepathy/mc/mission-control-plugins/mcp-signals-marshal.list:2) */
+/* VOID:STRING,STRING (mcp-signals-marshal.list:2) */
 extern void _mcp_marshal_VOID__STRING_STRING (GClosure     *closure,
                                               GValue       *return_value,
                                               guint         n_param_values,
