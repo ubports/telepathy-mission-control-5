@@ -30,6 +30,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmission-control-plugins0 (= ${binary:Version})
+Suggests: telepathy-haze
 Conflicts: telepathy-mission-control
 Description: management daemon for Telepathy real-time communication framework
  Telepathy Mission Control 5 is an account manager and channel dispatcher for
