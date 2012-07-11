@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>McpRequestPolicy</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch03.html" title="Channel requests">
 <link rel="prev" href="ch03.html" title="Channel requests">
@@ -70,42 +70,22 @@ An implementation of this plugin might look like this:
 <p>
 </p>
 <div class="example">
-<a name="idp10246528"></a><p class="title"><b>Example 2. </b></p>
-<div class="example-contents">
-  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
-    <tbody>
-      <tr>
-        <td class="listing_lines" align="right"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>MyPlugin<span class="gtkdoc opt">,</span> my_plugin<span class="gtkdoc opt">,</span>
-   G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_REQUEST_POLICY<span class="gtkdoc opt">,</span>
-     request_policy_iface_init<span class="gtkdoc opt">);</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...))</span>
-<span class="comment">/* ... */</span>
-<span class="gtkdoc kwb">static void</span>
-<span class="function">request_policy_iface_init</span> <span class="gtkdoc opt">(</span>McpRequestPolicyIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">,</span>
-    gpointer unused G_GNUC_UNUSED<span class="gtkdoc opt">)</span>
-<span class="gtkdoc opt">{</span>
-  iface<span class="gtkdoc opt">-&gt;</span>check <span class="gtkdoc opt">=</span> my_plugin_check_request<span class="gtkdoc opt">;</span>
-<span class="gtkdoc opt">}</span></pre></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
+<a name="idp7231808"></a><p class="title"><b>Example 2. </b></p>
+<div class="example-contents"><pre class="programlisting">
+G_DEFINE_TYPE_WITH_CODE (MyPlugin, my_plugin,
+   G_TYPE_OBJECT,
+   G_IMPLEMENT_INTERFACE (...);
+   G_IMPLEMENT_INTERFACE (MCP_TYPE_REQUEST_POLICY,
+     request_policy_iface_init);
+   G_IMPLEMENT_INTERFACE (...))
+/* ... */
+static void
+request_policy_iface_init (McpRequestPolicyIface *iface,
+    gpointer unused G_GNUC_UNUSED)
+{
+  iface-&gt;check = my_plugin_check_request;
+}
+</pre></div>
 </div>
 <p><br class="example-break">
 </p>

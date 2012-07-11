@@ -2584,6 +2584,13 @@ delegate_channels_cb (TpClient *client,
     DelegateChannelsCtx *ctx = to_delegate->ctx;
     McdClientProxy *clt_proxy = MCD_CLIENT_PROXY (client);
 
+    /* If the delegation succeeded, the channel has a new handler. If
+     * the delegation failed, the channel still has the old
+     * handler. Either way, the channel still has a handler, so it has
+     * been successfully dispatched (from 'handler invoked'). */
+    _mcd_channel_set_status (to_delegate->channel,
+        MCD_CHANNEL_STATUS_DISPATCHED);
+
     if (error != NULL)
       {
         DEBUG ("Handler refused delegated channels");
@@ -2615,6 +2622,9 @@ try_delegating (ChannelToDelegate *to_delegate)
     McdClientProxy *client;
     GList *channels = NULL;
 
+    DEBUG ("%s",
+        mcd_channel_get_object_path (to_delegate->channel));
+
     if (g_queue_get_length (to_delegate->handlers) == 0)
       {
         GValueArray *v;
@@ -2641,13 +2651,17 @@ try_delegating (ChannelToDelegate *to_delegate)
             g_strdup (mcd_channel_get_object_path (to_delegate->channel)),
             v);
 
+        DEBUG ("...but failed to delegate it: %s",
+            mcd_channel_get_object_path (to_delegate->channel),
+            to_delegate->error->message);
+
         delegation_done (to_delegate);
         return;
       }
 
     client = g_queue_pop_head (to_delegate->handlers);
 
-    DEBUG ("Try delegating channels to %s", _mcd_client_proxy_get_unique_name (
+    DEBUG ("...trying client %s", _mcd_client_proxy_get_unique_name (
         client));
 
     channels = g_list_prepend (channels, to_delegate->channel);
@@ -2720,6 +2734,8 @@ dispatcher_delegate_channels (
     McdAccountManager *am;
     guint i;
     GList *l;
+
+    DEBUG ("called");
 
     if (!check_preferred_handler (preferred_handler, &error))
         goto error;
@@ -2812,10 +2828,17 @@ error:
 static void
 present_handle_channels_cb (TpClient *client,
     const GError *error,
-    gpointer user_data G_GNUC_UNUSED,
+    gpointer user_data,
     GObject *weak_object)
 {
     DBusGMethodInvocation *context = user_data;
+    McdChannel *mcd_channel = MCD_CHANNEL (weak_object);
+
+    /* Whether presenting the channel succeeded or failed, the
+     * channel's handler hasn't been altered, so it must be set back
+     * to the dispatched state (from 'handler invoked'). */
+    _mcd_channel_set_status (mcd_channel,
+        MCD_CHANNEL_STATUS_DISPATCHED);
 
     if (error != NULL)
       {
@@ -2884,7 +2907,7 @@ dispatcher_present_channel (
 
     _mcd_client_proxy_handle_channels (client, -1, channels,
         user_action_time, NULL, present_handle_channels_cb,
-        context, NULL, NULL);
+        context, NULL, G_OBJECT (mcd_channel));
 
     g_list_free (channels);
     return;

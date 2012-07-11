@@ -1,3 +1,85 @@
+commit e824493e533f7c4ea9ae9066fb29b3298d9a8aa8
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-11 12:49:04 +0200
+
+    Prepare 5.12.1 release
+
+commit 57d7c6360f04d8bc65320c42a5d8929fa3e3bc25
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-11 12:14:11 +0200
+
+    Copy telepathy.am from telepathy-glib
+    
+    It make sure "make -j3 maintainer-foo" works
+
+commit 0daa22ca3858138aee10f8bf46a07fd15c1fcf49
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-09 12:35:01 +0200
+
+    McdAccountManagerDefault: Fix a possible double free
+    
+    If the account is already in the hashtable, g_hash_table_insert()
+    will set @removed as value, but free it since the key already in
+    the table is kept.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=51842
+
+commit 150c89d45c6b7d5a2d10bc36cff5689ea1ca72d8
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-04-05 17:10:18 +0100
+
+    dispatch test: make sure Ensure-ing channels after delegation/presenting works
+
+commit 54f4fd22c09a342bb58da978b5a055e45f968897
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-07-06 16:50:08 +0100
+
+    dispatcher: set channel state back to DISPATCHED after delegating & presenting
+    
+    _mcd_client_proxy_handle_channels sets the McdChannel state to
+    HANDLER_INVOKED, but when we were calling this in both delegate and
+    present operations, the state was not being set back to the DISPATCHED
+    state afterwards.
+    
+    The state being wrong meant that dispatching a channel after if had
+    been delegated or presented would not happen, as MC thought we were
+    still waiting for a handler response.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit c8ae24ffd03297d097b553997eda3807f1505748
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-07-06 16:49:55 +0100
+
+    dispatcher: add more debug output when delegating channels
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 3d35096f9ccc69b8c3067ed85102694eda4a2855
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-04-05 16:56:35 +0100
+
+    Modernize dispatcher/redispatch-channels.py a little
+
+commit 88642511bb9c6f66d2fe4aae1550893eb0d781b2
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-03 11:13:55 -0400
+
+    stop using deprecated tp-glib functions
+    
+    tp_*_call_when_ready were replaced by tp_proxy_prepare_async a while
+    ago.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit edd10ce2948b29859006ca1e149e68097a3bd21b
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-02 18:58:07 -0400
+
+    start working on version 5.12.1
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
 commit aeba9f785227e07bf26b14822b1b288041297910
 Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
 Date:   2012-04-02 18:22:56 -0400
