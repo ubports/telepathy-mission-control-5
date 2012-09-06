@@ -34,6 +34,7 @@
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS"/>
     <keyword type="function" name="McpAccountStorageCommitFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc"/>
     <keyword type="function" name="McpAccountStorageCommitOneFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc"/>
+    <keyword type="function" name="McpAccountStorageCreate ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate"/>
     <keyword type="function" name="McpAccountStorageDeleteFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc"/>
     <keyword type="function" name="McpAccountStorageGetAdditionalInfoFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc"/>
     <keyword type="function" name="McpAccountStorageGetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc"/>
@@ -45,14 +46,22 @@
     <keyword type="function" name="McpAccountStorageSetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc"/>
     <keyword type="function" name="mcp_account_storage_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit"/>
     <keyword type="function" name="mcp_account_storage_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one"/>
+    <keyword type="function" name="mcp_account_storage_create ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-create"/>
     <keyword type="function" name="mcp_account_storage_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-delete"/>
     <keyword type="function" name="mcp_account_storage_description ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-description"/>
+    <keyword type="function" name="mcp_account_storage_emit_altered ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered"/>
+    <keyword type="function" name="mcp_account_storage_emit_altered_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered-one"/>
+    <keyword type="function" name="mcp_account_storage_emit_created ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-created"/>
+    <keyword type="function" name="mcp_account_storage_emit_deleted ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-deleted"/>
+    <keyword type="function" name="mcp_account_storage_emit_reconnect ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-reconnect"/>
+    <keyword type="function" name="mcp_account_storage_emit_toggled ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-toggled"/>
     <keyword type="function" name="mcp_account_storage_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get"/>
     <keyword type="function" name="mcp_account_storage_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info"/>
     <keyword type="function" name="mcp_account_storage_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier"/>
     <keyword type="function" name="mcp_account_storage_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions"/>
     <keyword type="function" name="mcp_account_storage_iface_implement_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit"/>
     <keyword type="function" name="mcp_account_storage_iface_implement_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one"/>
+    <keyword type="function" name="mcp_account_storage_iface_implement_create ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-create"/>
     <keyword type="function" name="mcp_account_storage_iface_implement_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete"/>
     <keyword type="function" name="mcp_account_storage_iface_implement_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get"/>
     <keyword type="function" name="mcp_account_storage_iface_implement_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info"/>

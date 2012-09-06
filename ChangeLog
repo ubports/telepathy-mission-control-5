@@ -1,8 +1,776 @@
+commit 329a390d283e44c2955e87600428fb7cd86b97bf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 18:23:15 +0100
+
+    prepare release
+
+commit 8453cbb099abd8f3ab3992559750297cea7c7ce0
+Merge: 2667fa0 dd0eb39
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 18:11:50 +0100
+
+    Merge branch 'telepathy-mission-control-5.12'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit dd0eb39c5da72f5f0fae9bfc28072b001044b7bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 18:05:24 +0100
+
+    tools/Makefile.am: be careful not to create empty files in the builddir
+    
+    "make distcheck" in an already-out-of-tree build turns out not to
+    work because of this.
+    
+    This corresponds to commit beb2d971 in telepathy-glib.
+
+commit 073c5898443755d64752d92b2ac0c1f94581f3e9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 18:00:05 +0100
+
+    post-release version bump
+
+commit e37277d17d9c7cbbb519e9e881d1582727b3acb2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 16:59:40 +0100
+
+    Prepare release
+
+commit 5e1bbe8f891af4d86cb9dfd2f0b36fdfbbb7b2ef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 16:40:37 +0100
+
+    Butterfly account migration: migrate the password too, if stored
+    
+    Otherwise the upgrade from Debian 6 to 7 forgets MSN passwords, which
+    is not the end of the world, but seems less nice than it could be.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 3ae49c706e93d06131cabf5b4a0421869948ec62
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 16:43:19 +0100
+
+    Migrate from Butterfly to Haze even if Butterfly is no longer installed
+    
+    Mission Control has a bug/design flaw/whatever in which it doesn't
+    know the types of parameters without looking at the corresponding
+    connection manager, which doesn't work if that connection manager has
+    been uninstalled. This turns out to be bad for the upgrade from
+    Debian 6 to Debian 7, which upgrades MC to a version that will
+    perform the migration from Butterfly to Haze, but also uninstalls
+    Butterfly...
+    
+    Since we know what the type of 'account' is, with a bit of refactoring
+    we can tell McdAccount that we know it's a string, get its value
+    anyway, and get on with our lives.
+    
+    Bug-Debian: http://bugs.debian.org/686835
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 1ce1e32bc7f83b5dfc3b75407e896c7bd7e6cbdb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:50:41 +0100
+
+    Default account backend: when deleting passwords, delete the same thing we will look for
+    
+    Deleting secrets with param="param-password" isn't a whole lot of use
+    when we save, and look up, param="password".
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Cherry-picked-from: 1d9e8f5cfb9e7b426a99ae6e16c35c1101d55a91
+
+commit bd56ee0e36a681ee50d3e02d4f158bbc5df462f1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:12:06 +0100
+
+    Default account backend: when deleting from the keyring, remove from secrets
+    
+    Otherwise we'd just delete it, then (because it's still in secrets)
+    re-commit it!
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Cherry-picked-from: 16e4507c5001f6f45158ef3d0b46998fa8c1ca2a
+
+commit efc15381535a2d94eeec2b19651302768f65d0ad
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 16:03:08 +0100
+
+    _keyring_commit: perform deletions for keys in removed, not in secrets
+    
+    'removed' is essentially a set of (account, key) tuples that should
+    be deleted. What we were doing was:
+    
+        foreach account in removed
+            foreach key in secrets[account]
+                delete (account, key)
+    
+    which makes little sense - if we have param-password and
+    param-proxy-password and we want to unset Parameters['password'],
+    the current implementation would delete both. This commit changes it to:
+    
+        foreach account in removed
+            foreach key in removed[account]
+                delete (account, key)
+    
+    which has the advantage of actually making sense.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Cherry-picked-from: d4ca35cffea9d0093e127e0be633501d22ded35f
+
+commit dbba880903def15bc7bb5fdb9d05ee310f1a5bfe
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:09:21 +0100
+
+    Default account backend: when deleting, always delete from both places
+    
+    Our tracking of whether something is "secret" (in the gnome-keyring) is
+    pretty shaky, and in particular, we can forget that things are meant
+    to be "secret" sometimes (we lose that information when deleting
+    parameters).
+    
+    Happily, when we're deleting things, it doesn't actually matter: the
+    right thing to do is clearly to delete from both locations, regardless
+    of where we think it ought to be.
+    
+    Similarly, when we're setting a property to a new value, it's appropriate
+    to delete it from both locations, then put it in the right location
+    (only).
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Cherry-picked-from: 5b4954d2c959c4ba7f6c67b7d8e16eaa5ab272dd
+
+commit 2667fa042934116d06a828767860964f52363943
+Merge: 80e392f a5fb89b
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-09-06 11:19:21 +0200
+
+    Merge branch 'telepathy-mission-control-5.12'
+
+commit a5fb89bad8b6fc7498cb7056faea1fdaa44de986
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-09-04 13:51:20 +0200
+
+    mcd_connectivity_monitor_is_online: check if we are awake as well
+    
+    To be considered as online, we have to be connected to the network *and* not
+    in the proccess of sleeping.
+    
+    Fix a race where an account we just disconnected because we are going to sleep
+    is put back online because the monitor was considering us online again.
+
+commit 80e392f2253fd9624b7a3862c6faeaf698905118
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-09-05 12:07:56 +0200
+
+    McpAccountStorage: add signal to request an account reconnection
+
+commit 81c21ac1e2755dd63ecca892d0dbc65f9c4aa8c6
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-09-05 12:10:12 +0200
+
+    McdAccount: factor out code to reconnect
+
+commit 23b91753f3460a0e4b52a1b9c4cec98603ff9c5c
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-09-05 12:02:20 +0200
+
+    McpAccountStorage: add functions to emit interface' signals
+
+commit 87001e5b9f5ce3124167766d61fa9993e1fad3f4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-31 15:27:44 +0100
+
+    NEWS
+
+commit 2e3360a39c4a9202d3ba473292f90ef5a821b10c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 19:32:19 +0100
+
+    Default account backend: test that *all* passwords are deleted
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 825f59e988c8435c5de0899abe45081440991f7b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 17:16:55 +0100
+
+    Test deletion of passwords from accounts
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 455d7be6901945117761e697c9e561b4c0165ee7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:51:19 +0100
+
+    account-store-default: load the same names that MC would
+    
+    This tool was previously not deleting "param-".
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 1d9e8f5cfb9e7b426a99ae6e16c35c1101d55a91
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:50:41 +0100
+
+    Default account backend: when deleting passwords, delete the same thing we will look for
+    
+    Deleting secrets with param="param-password" isn't a whole lot of use
+    when we save, and look up, param="password".
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 16e4507c5001f6f45158ef3d0b46998fa8c1ca2a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:12:06 +0100
+
+    Default account backend: when deleting from the keyring, remove from secrets
+    
+    Otherwise we'd just delete it, then (because it's still in secrets)
+    re-commit it!
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit d4ca35cffea9d0093e127e0be633501d22ded35f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 16:03:08 +0100
+
+    _keyring_commit: perform deletions for keys in removed, not in secrets
+    
+    'removed' is essentially a set of (account, key) tuples that should
+    be deleted. What we were doing was:
+    
+        foreach account in removed
+            foreach key in secrets[account]
+                delete (account, key)
+    
+    which makes little sense - if we have param-password and
+    param-proxy-password and we want to unset Parameters['password'],
+    the current implementation would delete both. This commit changes it to:
+    
+        foreach account in removed
+            foreach key in removed[account]
+                delete (account, key)
+    
+    which has the advantage of actually making sense.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 5b4954d2c959c4ba7f6c67b7d8e16eaa5ab272dd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 18:09:21 +0100
+
+    Default account backend: when deleting, always delete from both places
+    
+    Our tracking of whether something is "secret" (in the gnome-keyring) is
+    pretty shaky, and in particular, we can forget that things are meant
+    to be "secret" sometimes (we lose that information when deleting
+    parameters).
+    
+    Happily, when we're deleting things, it doesn't actually matter: the
+    right thing to do is clearly to delete from both locations, regardless
+    of where we think it ought to be.
+    
+    Similarly, when we're setting a property to a new value, it's appropriate
+    to delete it from both locations, then put it in the right location
+    (only).
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit c21e2b09bf4cdda6fb05d64f9198f6db7b776c76
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 16:53:36 +0100
+
+    Make the gnome-keyring test work again, with modern gnome-keyring
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+
+commit 548801efb1852a1b0be04992f248adc60123a973
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-06-15 18:15:46 +0100
+
+    gitignore: updated
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 1e6577380a651ba28388a4a0d806e64065e48c56
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-28 16:14:34 +0100
+
+    NEWS
+
+commit 676be2e38d43dc5dd5cc5507c4bccea159b4d735
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 19:04:16 +0100
+
+    plugin-account.c: rename to mcd-storage.c
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54151
+
+commit 019ebd806da9f0b83a1ab2ef60bc03e9e0da5af0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 19:01:35 +0100
+
+    McdStorage, McdPluginAccountManager: squash into one class
+    
+    The Storage name stays, to make the diff more readable. The header
+    is mcd-storage.h but the implementation is still plugin-account.c,
+    for the same reason.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54151
+
+commit 61066078763c94ef9ce7d674b7b2e19efe6d709e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 18:02:51 +0100
+
+    McdStorage: remove _mcd_storage_store_connections
+    
+    I'm not sure why this was in McdStorage at all. It's a bit of a layering
+    violation: AccountManager has a Storage, so Storage shouldn't call into
+    AccountManager. We can fix the layering violation by adding a signal
+    to McdAccount.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54151
+
+commit 6d6fe1b3903e1df4714a0fc217f75e9ea1120c19
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 17:05:45 +0100
+
+    McdPluginAccountManager: fold interface methods into their implementations
+    
+    Nothing except McdPluginAccountManager implements McdStorage, and nothing
+    ever will or should, so we can squash the two together.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54151
+
+commit 448148d83cb488c9909290a8f1ea04e8c490e968
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 16:37:12 +0100
+
+    McdMaster: fail to build if umask() is missing
+    
+    We ought to be able to rely on umask() for files created since 5.2.2,
+    at least on Unix.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54151
+
+commit 70062e7a10ff62b3e0852001ab93a4bd9375714d
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-08-28 11:18:10 +0200
+
+    mc-tool: Display account's supersedes
+
+commit b5e82890de690905cabe24203ecd46ae41075998
+Merge: a3cb554 47f3cb5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 11:50:59 +0100
+
+    Merge branch 'telepathy-mission-control-5.12', rejecting stable-only changes
+
+commit 47f3cb54fcda485e3fbfc9b297dd556a504273b7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 11:49:45 +0100
+
+    NEWS
+
+commit 249a3a81704d7af6426cc58732097056ca482c19
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 11:48:04 +0100
+
+    Revert "stop using deprecated tp-glib functions"
+    
+    This wasn't really an appropriate change for a stable branch: it
+    introduced code churn without actually fixing a bug. We should
+    ignore deprecation warnings instead.
+    
+    This reverts commit 88642511bb9c6f66d2fe4aae1550893eb0d781b2.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Acked-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit df7276a652ac3f69e330f1fb8d126c229041ace0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 10:50:08 +0100
+
+    Don't warn on deprecated declarations, this is a stable branch.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 131248f8e1aec7b47e47e96d33122f4bfbcb66f2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-14 16:41:45 +0100
+
+    Disable the connectivity GSetting on Android
+    
+    There's no immediately obvious way to install GSettings schemas there.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=53497
+
+commit a3cb554fd61cd91aec453052356570602e802475
+Merge: af504f1 09c0b67
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-08 10:36:49 +0100
+
+    Merge branch 'telepathy-mission-control-5.12'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit 09c0b67148873c65d36afd322712a8a6db7eb7a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-08 10:32:58 +0100
+
+    NEWS
+
+commit ad4b94ecd7768bd952cdcba51fd7039f564e6765
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-07 19:48:09 +0100
+
+    Avoid race between Mission Control's two names by having one wait for the other
+    
+    If you do:
+    
+    dbus-send --dest=org.freedesktop.Telepathy.MissionControl5 \
+      --type=method_call --print-reply / org.freedesktop.DBus.Peer.Ping & \
+    dbus-send --dest=org.freedesktop.Telepathy.AccountManager \
+    --type=method_call --print-reply / org.freedesktop.DBus.Peer.Ping
+    
+    then one or both of the calls will fail because the executable claims
+    one of its bus names, but can't get the other, and exits 1.
+    
+    By making one wait for the other, we get the desired behaviour.
+    I've made activating MissionControl5 wait for AccountManager because
+    in MC's current implementation AccountManager is taken last.
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=53220
+
+commit af504f1f7db73c71e35f3c3701bfe9e428d02b72
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-08-07 10:36:28 +0200
+
+    mc-tool: don't display empty 'Addressing' section
+    
+    The general behaviour is to only display relevant fields.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=53202
+
+commit e845663d154a94d76131dd3ab3534037a3bb516e
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-08-07 10:24:05 +0200
+
+    mc-tool: add 'dump' command
+    
+    Useful to quickly check all the accounts in one shot.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=53202
+
+commit 548451d9e4ef003dd64714d31850f04911eb7277
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-08-07 10:16:50 +0200
+
+    mc-tool: display Account.Storage settings
+    
+    Don't display StorageSpecificInformation as it requires an extra async call to
+    be retrieved and it's not that useful anyway.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=53202
+
+commit af6c1ad94a7a677506f10778d426106d8538b428
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-31 11:47:53 +0100
+
+    NEWS (also mention removal of obsolete features in 5.13.0)
+
+commit ddd21ba082fd5a90e93052463d00927853a8ecea
+Merge: ee34e40 694be3e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-30 15:41:00 +0100
+
+    Merge branch 'one-channel-should-be-enough-for-anyone'
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit ee34e40100294702f9bcde300056f659de4e3ed8
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-23 14:02:13 +0200
+
+    Post-release version bump
+
+commit 56a82e1c202ace036885b4a4b04feb64b14fde99
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-23 13:53:43 +0200
+
+    Prepare 5.13.0 release
+
+commit fd24dd6521bf9a9bebfcbf0241b3b8129bc90e61
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-19 10:38:20 +0200
+
+    McdAccountStorage: fix altered-one signal
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52231
+
+commit 149a95692b98dbeb84f1ce4a6a11447e015f0598
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-19 10:38:20 +0200
+
+    McdAccountStorage: fix altered-one signal
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52231
+
+commit 366068c784c7875516a817d480c3ecf244398680
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-17 16:51:41 +0200
+
+    CreateAccount: make possible to select a desired storage
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52231
+
+commit 694be3e53cb8523f86afb73f3ecc0f089610375a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 14:03:51 +0100
+
+    McdDispatchOperation: only have one lost_channel, too
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 080860028665d9d76bede9c8f96e315af365fb5f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 13:46:52 +0100
+
+    McdDispatchOperation: store one McdChannel, not a list
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit d8da0aa2b9144d26da3926a6cf8f6f154cd5729c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-15 20:06:36 -0400
+
+    McdDispatchOperation: collect_satisfied_requests: only take one channel
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 01e04709772936a6791330b49c02167b0ea7fafa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 13:33:08 +0100
+
+    Replace iteration over channels with check for having a channel
+    
+    Now that there can only be one channel, we don't need to iterate.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 60ee7341921191f2de4ec587eb098fe55488a869
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 13:27:19 +0100
+
+    _mcd_dispatch_operation_new: only take one channel
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 80ea4690cef4b6e2e4509df7fc9040b66ff93faf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 12:13:30 +0100
+
+    _mcd_dispatch_operation_dup_channels: turn into dup_channel, singular
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit b8427349b001b799b9b0dfd63686cc80c2625722
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 12:12:59 +0100
+
+    McdDispatchOperation: use internal list instead of dup_channels()
+    
+    Now that there can only be at most one channel in the list, it's
+    pretty easy to do directly.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 4877199bfb9ac256dc50893adc6462c288c1a36a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 12:04:35 +0100
+
+    _mcd_dispatch_operation_peek_channel: adapt from old _peek_channels
+    
+    Now that the CDO can contain at most one channel, there's no need to
+    return a list.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 89aeb1f75cbdb787e2e4df6433fd41f62d6660d8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 13:15:26 +0100
+
+    McdDispatchOperation: change channels property to channel (singular)
+    
+    For now, the variable that implements this property is still a list
+    of length 1.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 95eabd3a26fac84405bd79f1dc109f50ed0fba06
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-15 17:12:37 -0400
+
+    McdDispatchOperation: remove untrue comment
+    
+    I dimly remember that _mcd_dispatch_operation_new once had
+    (transfer container) or possibly even (transfer full) semantics for the
+    list of channels, but I also dimly remember removing it. The
+    implementation certainly has (transfer none) semantics, and its one
+    caller behaves as such too.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 26817f3a31da1cc1eed75e296c6ec8f769ebb3bc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 13:04:01 +0100
+
+    _mcd_dispatcher_enter_state_machine: only take one channel
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit b015e6c79f59bbb8cc78405dc06aa0e9ee27ed80
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-15 11:41:29 +0100
+
+    _mcd_client_registry_list_possible_handlers: only take one channel
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit a30524b98da9403099dc303602b432d1b384237e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 11:51:38 +0100
+
+    mcd_dispatcher_dup_possible_handlers: only take one TpChannel
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 7b0ebf426f26d9790217f5b14808e2ace1f15de9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 12:43:51 +0100
+
+    _mcd_dispatcher_take_channels: make singular, rename to ...add_channel
+    
+    It was previously (transfer container), now it's (transfer none).
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit 97106c13aa76b29e46a965cf57cfbdf76ea3e767
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-07-20 12:35:57 +0100
+
+    McdConnection: dispatch each channel from NewChannels separately
+    
+    This loses information - you can no longer tell the channels are
+    related - but in practice nobody handles Text and Tube channels as a
+    unit anyway, and signalling them together is now deprecated.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit b7e524b85b37f913431856514310a9e7749fddac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-14 17:06:00 +0100
+
+    McdConnection: remove virtual methods
+    
+    Now that embedding and old-style plugins have been abolished, nothing
+    can override them.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52305
+
+commit c133c5b86a67a70594c6327578f4c7956b0112f0
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-19 11:17:09 +0200
+
+    Do not change RequestedPresence when disabling the account
+    
+    We can keep RequestedPresence to online, in which case the account
+    will go back online when account gets enabled.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=52259
+
+commit cae1b270732bab16cb3324e912fc2956baa784bc
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-12 11:12:30 +0200
+
+    Fix missing includes to build with recent libaccounts-glib
+
+commit c39128f213943b1f6f074a0b617ba7592fc8e846
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-12 11:11:54 +0200
+
+    Add missing config.h include to ignore tp-glib 0.20 deprecations
+
+commit dadff3e6147d914522afbde3c47023a5a9d10bf8
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-12 11:10:52 +0200
+
+    Do not ignore return valud of write()
+
+commit 329c70f9f63eb25dadeb145225a83d25cecb7eec
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-11 13:03:05 +0200
+
+    start working on version 5.12.2
+
 commit e824493e533f7c4ea9ae9066fb29b3298d9a8aa8
 Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
 Date:   2012-07-11 12:49:04 +0200
 
     Prepare 5.12.1 release
+
+commit ac021dcd68cff4cc101c06b3f8abe246c21c6c15
+Merge: eff02cf 57d7c63
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-11 12:15:52 +0200
+
+    Merge branch 'telepathy-mission-control-5.12'
 
 commit 57d7c6360f04d8bc65320c42a5d8929fa3e3bc25
 Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
@@ -13,6 +781,18 @@ Date:   2012-07-11 12:14:11 +0200
     It make sure "make -j3 maintainer-foo" works
 
 commit 0daa22ca3858138aee10f8bf46a07fd15c1fcf49
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2012-07-09 12:35:01 +0200
+
+    McdAccountManagerDefault: Fix a possible double free
+    
+    If the account is already in the hashtable, g_hash_table_insert()
+    will set @removed as value, but free it since the key already in
+    the table is kept.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=51842
+
+commit eff02cf76254af6b9169badcfe76cd7890a0df6b
 Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
 Date:   2012-07-09 12:35:01 +0200
 
@@ -61,6 +841,530 @@ Date:   2012-04-05 16:56:35 +0100
 
     Modernize dispatcher/redispatch-channels.py a little
 
+commit 6e8be05e1c1b5856575bb7d8404d4429824e4981
+Merge: ebc338e d8c0bf7
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-07-09 18:10:39 +0100
+
+    Merge branch 'present-delegate-broken'
+
+commit d8c0bf71670b61a900e788413a9673d01f6ce06c
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-04-05 17:10:18 +0100
+
+    dispatch test: make sure Ensure-ing channels after delegation/presenting works
+
+commit 6397152f8dbec113d46c5cbd2d6d9b936c31481b
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-07-06 16:50:08 +0100
+
+    dispatcher: set channel state back to DISPATCHED after delegating & presenting
+    
+    _mcd_client_proxy_handle_channels sets the McdChannel state to
+    HANDLER_INVOKED, but when we were calling this in both delegate and
+    present operations, the state was not being set back to the DISPATCHED
+    state afterwards.
+    
+    The state being wrong meant that dispatching a channel after if had
+    been delegated or presented would not happen, as MC thought we were
+    still waiting for a handler response.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit f037c639b5a14f94a1ca3fd9f3dcb92e455aabb5
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-07-06 16:49:55 +0100
+
+    dispatcher: add more debug output when delegating channels
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit a01a0267e3f90a45b497664758bde0c0cd794ef4
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2012-04-05 16:56:35 +0100
+
+    Modernize dispatcher/redispatch-channels.py a little
+
+commit ebc338e2a5bc441879895be28c1c822f3a192157
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-06-22 09:19:21 +0200
+
+    use a DEBUG instead of warning if dbus_bus_add_match failed
+    
+    Also, make the message more explicit to one can check is D-Bus version if he's
+    wondering why it failed.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=51282
+
+commit 08a7e21ad3d6664e7c2603906d76ca6222d1ac79
+Author: Alvaro Soliverez <alvaro.soliverez@collabora.co.uk>
+Date:   2012-05-17 18:01:19 -0300
+
+    Android: adjust library name to fit latest changes
+
+commit 2c71a0c2c7a157e017b923cb2e0ed8e08a941b4f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 16:37:31 +0100
+
+    Use telepathy-glib meta-headers
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit c5c011b0dc60508790b0410b37f2b6307d9d13d0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 16:30:59 +0100
+
+    Require telepathy-glib 0.19.0
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 48747e5c606d8b641ecff7eb77da163c9730e13e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 16:06:27 +0100
+
+    McdConnection: don't bother refcounting handles, they're immortal
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 7519795ea2a12f45ba8a03b6e9c70407563e97ec
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 15:57:54 +0100
+
+    mcd_account_connection_ready_cb: use self-contact for normalized name
+    
+    This saves us a pointless round-trip: the normalized name is part
+    of CORE now.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 336ee3384c5e92003cbf58386db2c3aff3aabdc5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 15:34:17 +0100
+
+    McdClientProxy, McdClientRegistry: remove now-unused string pool
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 3109731e32597d38a358263c7382ad09fcfff667
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 15:32:43 +0100
+
+    McdClientProxy: store capability tokens as a strv, not a handle set
+    
+    There aren't *that* many of them, and handles are immortal now.
+    If g_strdupv'ing the capability tokens ends up taking too much memory,
+    we should write a generic refcounted string pool instead (but I doubt
+    it will, in any case).
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 42f20c1472f0073b320b860e1f868817cb6c3bb5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 15:20:02 +0100
+
+    _mcd_client_proxy_add_cap_tokens: switch from "add" to "set" semantics
+    
+    In both the cases where it's called (when we get a reply to GetAll,
+    and when we've parsed a .client file), we actually want to take the
+    new set, not union it with an existing set.
+    
+    Also, this will be easier to deal with when we stop (ab)using handles
+    for this.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49753
+
+commit 96b49d683e449841ae4dc0a09aae6223db1a2a90
+Merge: 91f8540 3382019
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-10 15:07:37 +0100
+
+    Merge branch 'deprecations'
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=24762
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=24899
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=24914
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=49648
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 3382019e8ba7772848fa30448ca2addf5346aeef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 15:30:41 +0100
+
+    McdDispatcher: don't be a McdMission
+    
+    The dispatcher subscribes to the master's abort signal rather than
+    implementing any of the McdMission virtual methods, so nothing in
+    McdMission is actually doing anything for it.
+    
+    This means we can get rid of McdProxy, so, do.
+
+commit 896e81dfee45830c8ab553c7324d8b2190b9775e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 15:02:43 +0100
+
+    McdMission: remove placeholders for old signals, methods
+    
+    We're not supporting out-of-tree plugins any more.
+
+commit 17bef3f25da89629e9a8ca880a0833d6504986cf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 15:00:05 +0100
+
+    McdMission: remove parent-set signal and parent property, unused
+
+commit 147b36b2a4c087b230e2fcb735aa5631da045c90
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:48:07 +0100
+
+    mcd_transport_plugin_get_name: remove, unused
+    
+    You can just use g_type_name() anyway.
+
+commit 15d14bf15c3619a9d4ffa3adc5c80a2c6177d543
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:35:17 +0100
+
+    Flatten McdPlugin into McdMaster
+    
+    This older plugin API exposes enough MC internals that there's no point
+    trying to support it out-of-tree.
+
+commit e92a53b0529ecfdbcdcbc8d9db830919b547abbd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:29:17 +0100
+
+    mcd_master_get_dispatcher, mcd_plugin_get_dispatcher: remove
+
+commit 46b86f8fd7584c5f8dbfc247fea25d32c27d4733
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:26:36 +0100
+
+    mcd_manager_create_connection: don't be virtual, no subclass exists
+
+commit f4fe5fcdcfab0d00c63f4a2f3349ae8612bb9d5d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:23:02 +0100
+
+    mcd_manager_get_dispatcher: remove, unused
+
+commit c420774c0fd30ea25220951145d5c23af25ebf57
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:22:54 +0100
+
+    mcd_manager_get_connection: remove, unused
+
+commit ecfcf42a1ef35e45cd617301cd36deb0aeb7e77c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:14:07 +0100
+
+    McdDispatcherContext: remove
+
+commit 52a0fc268cc12fe4aa2c3b5c9ae05bf31f11722d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:12:00 +0100
+
+    inline McdDispatcherContext's methods
+
+commit 1f3fa4e2322daef9e965e2159c4ebd0b9ae2a9dd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:08:25 +0100
+
+    Inline what's left of mcd_dispatcher_context_proceed into its only caller
+
+commit 76f016bdad63f0ea68bc11e64be54e01b61004b3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:05:04 +0100
+
+    Remove the concept of old-style filters altogether
+
+commit a22bf24e9189c98a87baef9b7288a37795424d66
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:01:39 +0100
+
+    McdDispatcher: remove the ability to add old-style filters
+
+commit 1884b434805173e2d8b4eb6e6f6dc3f0f0b25129
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:59:24 +0100
+
+    Remove remaining McdDispatcherContext getters, which are now unused
+
+commit 0a1e2de74466b78f2e99ee4c82e21dfbe4be3715
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:58:31 +0100
+
+    Remove various unused getters from McdDispatcherContext
+
+commit c76a8013952a1fa0c85aa80777d765f51fe3f23b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:56:47 +0100
+
+    mcd_dispatcher_context_get_channel_by_type: remove, unused
+    
+    This also means we can drop mcd_channel_get_channel_type_quark.
+
+commit a9f3580a8738260a2db4ebf7237adb389a5521f7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:54:58 +0100
+
+    mcd_dispatcher_context_forget_all and friends: remove, unused
+
+commit 5a3a0b3d417423a5fb588b36c65f0c7709556de9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:54:03 +0100
+
+    mcd_dispatcher_context_proceed: make private
+    
+    Ideally it should be inlined into its only caller, but this will do for
+    now.
+
+commit 8fbc9bb3fc7f0714342dff2fd637824f88c653ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:52:25 +0100
+
+    mcd_dispatcher_context_process: remove
+
+commit 33987d0226e04381a1bda79bdfeadfc815943e53
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:47:12 +0100
+
+    Remove McdController and inline its shutdown method into McdMaster
+
+commit d78e084fbfaaeafc4085284febbc0925cd4b25aa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:34:38 +0100
+
+    McdChannel: remove more unused accessors
+
+commit 2f243467c66a466123cbfa1aa183fd3425bae2f9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:32:49 +0100
+
+    mcd_channel_get_name: remove, unused
+
+commit a70fc835f8bfaa3addab1106ff90e2b78b5dc737
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:30:02 +0100
+
+    mcd_channel_get_inviter: remove
+
+commit 3b1f2acfbba23112148e367dd2216f6570b308d0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:29:15 +0100
+
+    McdChannel: stop tracking group members
+    
+    All it does now is to emit DEBUG() messages.
+
+commit 6c4526da85db2e963a602776f34de659362d90aa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:28:07 +0100
+
+    mcd_channel_get_members_accepted and members-accepted signal: remove
+
+commit c91020a26d451d44096eea463e393a1b3101e3f1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:25:47 +0100
+
+    mcd_channel_is_missed: remove, unused
+
+commit e18c550af9c5c5b16017f458e1080a2736db7160
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:23:36 +0100
+
+    mcd_connection_cancel_channel_request: remove, unused
+
+commit 25e12a0978aceccff2ce2a2bea6437404a627e44
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:22:06 +0100
+
+    Account, AccountManager: remove various unused methods
+
+commit b647c66404e33db2a9dd473124bb7d566ffeb845
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2009-12-18 14:34:05 +0000
+
+    mcd_manager_cancel_channel_request: remove
+    
+    Nothing calls it any more.
+
+commit cb8783c25ac8228ae5248bfa8bc8596fa6968879
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:08:45 +0100
+
+    Remove unused support for a magical auto-away flag set by embedders
+    
+    Less code, fewer bugs. Also, people should have stopped embedding MC by
+    now, and an earlier patch in this series made it impossible.
+
+commit 0deffb0262f2c33b582df25e06c931f0693ded3e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:05:22 +0100
+
+    mcd_dispatcher_get_channel_type_usage: remove
+    
+    Nothing in-tree calls it, and the modern way to do this would be a MCP
+    plugin that's a pseudo-observer.
+
+commit e7aea65314998512931f7988bea3babc0a548776
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:03:59 +0100
+
+    mcd_debug_ref, mcd_debug_unref: remove
+    
+    They're officially deprecated and everything!
+
+commit a307cc9bbac1a7943b44a46813df0986731759a2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:40:52 +0100
+
+    McdProvisioning: remove, unused
+
+commit e9495b13221eeecfafe9813c69e14f8734ac604c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:39:51 +0100
+
+    McdProvisioningFactory: remove, unused
+
+commit 182dae7a10bea7307a16a52d9d1216bf9e38457c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 12:46:51 +0100
+
+    Remove deprecated support for old-style (mcd) plugins
+    
+    Only in-tree code can use mcd_* functions now.
+
+commit 524c5a6e0cf654e092e54870470656bdeba3c408
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 16:59:39 +0100
+
+    Remove support for the non-standard Query interface
+
+commit cf819e45d2b0cb5d0f2868a28dea84223692d152
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:12:54 +0100
+
+    Remove non-standard Compat interface
+
+commit 31b5eec29cf8e8a0d8ea503d4cc70055d003acfc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 16:54:10 +0100
+
+    Remove support for archaic Capabilities interface
+    
+    No, not ContactCapabilities, Capabilities...
+
+commit ab92d3f1f2775854fbe801023a04df6839d639ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:16:29 +0100
+
+    _mcd_dispatcher_get_channel_enhanced_capabilities: remove, unused
+    
+    This was left over from ContactCapabilities.DRAFT1.
+
+commit 959d95db540a3a02ddb3e6fdb88f7b256301bd10
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:36:20 +0100
+
+    _mcd_file_set_contents: remove, unused
+
+commit 8256dd642f79c8a35a1ae4f4aa5e9f5f17e1f54d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:31:55 +0100
+
+    _mcd_connection_channel_is_urgent: remove, unused
+
+commit b58ba958bdeb7d872ed51eaf74288755b784b8cd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 14:20:21 +0100
+
+    _mcd_dispatcher_get_client_registry: remove, unused
+
+commit b5ed6bd05b4482dadae245bb6c36ffbed00aee88
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 13:03:41 +0100
+
+    Consistently include config.h in every .c file
+    
+    This is best-practice, and in particular it stops us from accidentally
+    redefining GLIB_VERSION_MIN_REQUIRED, GLIB_VERSION_MAX_ALLOWED by
+    including glib.h before (something that includes) config.h.
+
+commit 4850e3cd729f7a0c8c98e5c1452824abb7c776eb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 12:54:21 +0100
+
+    Use the GObject 2.30 generic marshaller
+
+commit 4536ccdd1c187df466a9321ad234293f0563fe19
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-08 12:52:59 +0100
+
+    Drop separate GIO check, we now include it in GLIB_LIBS
+    
+    Also use GLib 2.32 deprecation/availability checking.
+
+commit e0d36e4bb93119d5c23cc437a2fefd40675af034
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-07 19:22:34 +0100
+
+    Use TpIntset instead of long-deprecated alias TpIntSet
+
+commit c3d77d670607907451811fe658198ccaffddd7d0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-07 19:21:45 +0100
+
+    Use TP_ERROR instead of long-deprecated TP_ERRORS
+
+commit 91f8540057fc4778ce0cc64ae8a86eaa02287168
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-05-07 19:29:57 +0100
+
+    Set G_MESSAGES_DEBUG during testing
+    
+    The same as Gabble commit cbfa9d06.
+
+commit eb71e5aa43b11bb615cec0df0ff15558bcc9f3f8
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-05-07 09:36:39 +0200
+
+    _storage_dup_value: add the account to the error debug message
+    
+    I'm trying to track a bug and having this would have been useful.
+
+commit 45b935c3a47e0dee9965dca00a9acdfc4b5011fa
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2012-05-02 18:45:38 +0100
+
+    Update news for fd.o#48646 fix
+
+commit ef2fb6a8e6decde7d225a17e8e894140f0dbefb2
+Author: Vivek Dasmohapatra <vivek@collabora.co.uk>
+Date:   2012-04-13 14:12:53 +0100
+
+    GValue was unset in a code path that needed it to stay set
+
+commit 11ca259567fc7e01bfd88620c1003994af9f8ff1
+Merge: 791b4b0 8864251
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-03 11:15:25 -0400
+
+    Merge branch 'telepathy-mission-control-5.12'
+
 commit 88642511bb9c6f66d2fe4aae1550893eb0d781b2
 Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
 Date:   2012-04-03 11:13:55 -0400
@@ -69,6 +1373,14 @@ Date:   2012-04-03 11:13:55 -0400
     
     tp_*_call_when_ready were replaced by tp_proxy_prepare_async a while
     ago.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 791b4b0dd45aec82447dc3c0ef4f31f90286015c
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-04-02 18:59:27 -0400
+
+    start on version 5.13.0
     
     Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
 

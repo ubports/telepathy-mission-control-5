@@ -35,6 +35,8 @@
  * FIXME
  */
 
+#include "config.h"
+
 #include <dlfcn.h>
 #include <glib.h>
 #include <glib/gprintf.h>
@@ -44,7 +46,6 @@
 #include "mission-control-plugins/mission-control-plugins.h"
 
 #include "client-registry.h"
-#include "mcd-signals-marshal.h"
 #include "mcd-account-priv.h"
 #include "mcd-client-priv.h"
 #include "mcd-connection.h"
@@ -52,7 +53,6 @@
 #include "mcd-channel.h"
 #include "mcd-master.h"
 #include "mcd-channel-priv.h"
-#include "mcd-dispatcher-context.h"
 #include "mcd-dispatcher-priv.h"
 #include "mcd-dispatch-operation-priv.h"
 #include "mcd-handler-map-priv.h"
@@ -61,15 +61,10 @@
 
 #include "_gen/svc-dispatcher.h"
 
-#include <telepathy-glib/defs.h>
-#include <telepathy-glib/gtypes.h>
-#include <telepathy-glib/handle-repo.h>
-#include <telepathy-glib/handle-repo-dynamic.h>
-#include <telepathy-glib/interfaces.h>
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
+
 #include <telepathy-glib/proxy-subclass.h>
-#include <telepathy-glib/svc-channel-dispatcher.h>
-#include <telepathy-glib/svc-generic.h>
-#include <telepathy-glib/util.h>
 
 #include <stdlib.h>
 #include <string.h>
@@ -86,7 +81,7 @@ static void dispatcher_iface_init (gpointer, gpointer);
 static void messages_iface_init (gpointer, gpointer);
 
 
-G_DEFINE_TYPE_WITH_CODE (McdDispatcher, mcd_dispatcher, MCD_TYPE_MISSION,
+G_DEFINE_TYPE_WITH_CODE (McdDispatcher, mcd_dispatcher, G_TYPE_OBJECT,
     G_IMPLEMENT_INTERFACE (TP_TYPE_SVC_CHANNEL_DISPATCHER,
                            dispatcher_iface_init);
     G_IMPLEMENT_INTERFACE (MC_TYPE_SVC_CHANNEL_DISPATCHER_INTERFACE_MESSAGES_DRAFT,
@@ -96,21 +91,6 @@ G_DEFINE_TYPE_WITH_CODE (McdDispatcher, mcd_dispatcher, MCD_TYPE_MISSION,
         NULL);
     G_IMPLEMENT_INTERFACE (TP_TYPE_SVC_DBUS_PROPERTIES,
                            tp_dbus_properties_mixin_iface_init))
-
-struct _McdDispatcherContext
-{
-    gint ref_count;
-
-    McdDispatcher *dispatcher;
-
-    McdDispatchOperation *operation;
-
-    /* State-machine internal data fields: */
-    GList *chain;
-
-    /* Next function in chain */
-    guint next_func_index;
-};
 
 typedef struct
 {
@@ -140,9 +120,6 @@ struct _McdDispatcherPrivate
     GList *operations;
 
     TpDBusDaemon *dbus_daemon;
-
-    /* list of McdFilter elements */
-    GList *filters;
 
     /* hash table containing clients
      * char *bus_name -> McdClientProxy */
@@ -181,111 +158,13 @@ enum
     PROP_DISPATCH_OPERATIONS,
 };
 
-static void mcd_dispatcher_context_unref (McdDispatcherContext * ctx,
-                                          const gchar *tag);
 static void on_operation_finished (McdDispatchOperation *operation,
                                    McdDispatcher *self);
-
-
-static inline void
-mcd_dispatcher_context_ref (McdDispatcherContext *context,
-                            const gchar *tag)
-{
-    g_return_if_fail (context != NULL);
-    DEBUG ("%s on %p (ref = %d)", tag, context, context->ref_count);
-    context->ref_count++;
-}
-
-static GList *
-chain_add_filter (GList *chain,
-		  McdFilterFunc filter,
-		  guint priority,
-                  gpointer user_data)
-{
-    GList *elem;
-    McdFilter *filter_data;
-
-    filter_data = g_slice_new (McdFilter);
-    filter_data->func = filter;
-    filter_data->priority = priority;
-    filter_data->user_data = user_data;
-    for (elem = chain; elem; elem = elem->next)
-	if (((McdFilter *)elem->data)->priority >= priority) break;
-
-    return g_list_insert_before (chain, elem, filter_data);
-}
-
-/* Returns # of times particular channel type  has been used */
-gint
-mcd_dispatcher_get_channel_type_usage (McdDispatcher * dispatcher,
-				       GQuark chan_type_quark)
-{
-    const GList *managers, *connections, *channels;
-    McdDispatcherPrivate *priv = dispatcher->priv;
-    gint usage_counter = 0;
-
-    managers = mcd_operation_get_missions (MCD_OPERATION (priv->master));
-    while (managers)
-    {
-        connections =
-            mcd_operation_get_missions (MCD_OPERATION (managers->data));
-        while (connections)
-        {
-            channels =
-                mcd_operation_get_missions (MCD_OPERATION (connections->data));
-            while (channels)
-            {
-                McdChannel *channel = MCD_CHANNEL (channels->data);
-                McdChannelStatus status;
-
-                status = mcd_channel_get_status (channel);
-                if ((status == MCD_CHANNEL_STATUS_DISPATCHING ||
-                     status == MCD_CHANNEL_STATUS_HANDLER_INVOKED ||
-                     status == MCD_CHANNEL_STATUS_DISPATCHED) &&
-                    mcd_channel_get_channel_type_quark (channel) ==
-                    chan_type_quark)
-                {
-                    DEBUG ("Channel %p is active", channel);
-                    usage_counter++;
-                }
-                channels = channels->next;
-            }
-            connections = connections->next;
-        }
-	managers = managers->next;
-    }
-
-    return usage_counter;
-}
 
 static void
 on_master_abort (McdMaster *master, McdDispatcherPrivate *priv)
 {
     tp_clear_object (&priv->master);
-}
-
-/* return TRUE if the two channel classes are equals
- */
-static gboolean
-channel_classes_equals (GHashTable *channel_class1, GHashTable *channel_class2)
-{
-    GHashTableIter iter;
-    gchar *property_name;
-    GValue *property_value;
-
-    if (g_hash_table_size (channel_class1) !=
-        g_hash_table_size (channel_class2))
-        return FALSE;
-
-    g_hash_table_iter_init (&iter, channel_class1);
-    while (g_hash_table_iter_next (&iter, (gpointer *) &property_name,
-                                   (gpointer *) &property_value))
-    {
-        if (!_mcd_client_match_property (channel_class2, property_name,
-                                         property_value))
-            return FALSE;
-    }
-    return TRUE;
 }
 
 static GStrv
@@ -299,14 +178,14 @@ mcd_dispatcher_dup_internal_handlers (void)
 static GStrv
 mcd_dispatcher_dup_possible_handlers (McdDispatcher *self,
                                       McdRequest *request,
-                                      const GList *channels,
+                                      TpChannel *channel,
                                       const gchar *must_have_unique_name)
 {
     GList *handlers = _mcd_client_registry_list_possible_handlers (
         self->priv->clients,
         request != NULL ? _mcd_request_get_preferred_handler (request) : NULL,
         request != NULL ? _mcd_request_get_properties (request) : NULL,
-        channels, must_have_unique_name);
+        channel, must_have_unique_name);
     guint n_handlers = g_list_length (handlers);
     guint i;
     GStrv ret;
@@ -327,42 +206,6 @@ mcd_dispatcher_dup_possible_handlers (McdDispatcher *self,
     g_list_free (handlers);
 
     return ret;
-}
-
-/*
- * _mcd_dispatcher_context_abort:
- *
- * Abort processing of all the channels in the @context, as if they could not
- * be dispatched.
- *
- * This should only be invoked because filter plugins want to terminate a
- * channel.
- */
-static void
-_mcd_dispatcher_context_abort (McdDispatcherContext *context,
-                               const GError *error)
-{
-    GList *list;
-
-    g_return_if_fail (context);
-
-    /* make a temporary copy, which is destroyed during the loop - otherwise
-     * we'll be trying to iterate over the list at the same time
-     * that mcd_mission_abort results in modifying it, which would be bad */
-    list = _mcd_dispatch_operation_dup_channels (context->operation);
-
-    while (list != NULL)
-    {
-        McdChannel *channel = MCD_CHANNEL (list->data);
-
-        if (mcd_channel_get_error (channel) == NULL)
-            mcd_channel_take_error (channel, g_error_copy (error));
-
-        _mcd_channel_undispatchable (channel);
-
-        g_object_unref (channel);
-        list = g_list_delete_link (list, list);
-    }
 }
 
 static void
@@ -395,21 +238,20 @@ on_operation_finished (McdDispatchOperation *operation,
 
 static void
 _mcd_dispatcher_enter_state_machine (McdDispatcher *dispatcher,
-                                     GList *channels,
+                                     McdChannel *channel,
                                      const gchar * const *possible_handlers,
                                      gboolean requested,
                                      gboolean only_observe)
 {
-    McdDispatcherContext *context;
+    McdDispatchOperation *operation;
     McdDispatcherPrivate *priv;
     McdAccount *account;
 
     g_return_if_fail (MCD_IS_DISPATCHER (dispatcher));
-    g_return_if_fail (channels != NULL);
-    g_return_if_fail (MCD_IS_CHANNEL (channels->data));
+    g_return_if_fail (MCD_IS_CHANNEL (channel));
     g_return_if_fail (requested || !only_observe);
 
-    account = mcd_channel_get_account (channels->data);
+    account = mcd_channel_get_account (channel);
     if (G_UNLIKELY (!account))
     {
         g_warning ("%s called with no account", G_STRFUNC);
@@ -418,26 +260,13 @@ _mcd_dispatcher_enter_state_machine (McdDispatcher *dispatcher,
 
     priv = dispatcher->priv;
 
-    /* Preparing and filling the context */
-    context = g_new0 (McdDispatcherContext, 1);
-    DEBUG ("CTXREF11 on %p", context);
-    context->ref_count = 1;
-    context->dispatcher = dispatcher;
-    context->chain = priv->filters;
+    DEBUG ("new dispatch operation for %s channel %p: %s",
+           requested ? "requested" : "unrequested",
+           channel,
+           mcd_channel_get_object_path (channel));
 
-    DEBUG ("new dispatcher context %p for %s channel %p (%s): %s",
-           context, requested ? "requested" : "unrequested",
-           channels->data,
-           channels->next == NULL ? "only" : "and more",
-           mcd_channel_get_object_path (channels->data));
-
-    /* FIXME: what should we do when the channels are a mixture of Requested
-     * and unRequested? At the moment we act as though they're all Requested;
-     * perhaps we should act as though they're all unRequested, or split up the
-     * bundle? */
-
-    context->operation = _mcd_dispatch_operation_new (priv->clients,
-        priv->handler_map, !requested, only_observe, channels,
+    operation = _mcd_dispatch_operation_new (priv->clients,
+        priv->handler_map, !requested, only_observe, channel,
         (const gchar * const *) possible_handlers);
 
     if (!requested)
@@ -446,25 +275,45 @@ _mcd_dispatcher_enter_state_machine (McdDispatcher *dispatcher,
         {
             tp_svc_channel_dispatcher_interface_operation_list_emit_new_dispatch_operation (
                 dispatcher,
-                _mcd_dispatch_operation_get_path (context->operation),
-                _mcd_dispatch_operation_get_properties (context->operation));
+                _mcd_dispatch_operation_get_path (operation),
+                _mcd_dispatch_operation_get_properties (operation));
         }
 
         priv->operations = g_list_prepend (priv->operations,
-                                           g_object_ref (context->operation));
+                                           g_object_ref (operation));
 
-        g_signal_connect (context->operation, "finished",
+        g_signal_connect (operation, "finished",
                           G_CALLBACK (on_operation_finished), dispatcher);
     }
 
-    DEBUG ("entering state machine for context %p", context);
+    if (_mcd_dispatch_operation_get_cancelled (operation))
+    {
+        GError error = { TP_ERROR, TP_ERROR_CANCELLED,
+            "Channel request cancelled" };
+        McdChannel *cancelled;
 
-    sp_timestamp ("invoke internal filters");
+        cancelled = _mcd_dispatch_operation_dup_channel (operation);
 
-    mcd_dispatcher_context_ref (context, "CTXREF01");
-    mcd_dispatcher_context_proceed (context);
+        if (cancelled != NULL)
+        {
+            if (mcd_channel_get_error (cancelled) == NULL)
+                mcd_channel_take_error (cancelled, g_error_copy (&error));
 
-    mcd_dispatcher_context_unref (context, "CTXREF11");
+            _mcd_channel_undispatchable (cancelled);
+
+            g_object_unref (cancelled);
+        }
+    }
+    else if (_mcd_dispatch_operation_peek_channel (operation) == NULL)
+    {
+        DEBUG ("No channels left");
+    }
+    else
+    {
+        _mcd_dispatch_operation_run_clients (operation);
+    }
+
+    g_object_unref (operation);
 }
 
 static void
@@ -568,22 +417,6 @@ _mcd_dispatcher_get_property (GObject * obj, guint prop_id,
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, prop_id, pspec);
 	break;
     }
-}
-
-static void
-_mcd_dispatcher_finalize (GObject * object)
-{
-    McdDispatcherPrivate *priv = MCD_DISPATCHER_PRIV (object);
-
-    if (priv->filters)
-    {
-        GList *list;
-        for (list = priv->filters; list != NULL; list = list->next)
-            g_slice_free (McdFilter, list->data);
-        g_list_free (priv->filters);
-    }
-
-    G_OBJECT_CLASS (mcd_dispatcher_parent_class)->finalize (object);
 }
 
 static void
@@ -699,7 +532,6 @@ _mcd_dispatcher_lookup_handler (McdDispatcher *self,
     if (handler == NULL)
     {
         GList *possible_handlers;
-        GList *channels;
 
         /* Failing that, maybe the Handler it was dispatched to was temporary;
          * try to pick another Handler that can deal with it, on the same
@@ -707,12 +539,11 @@ _mcd_dispatcher_lookup_handler (McdDispatcher *self,
          * It can also happen in the case an Observer/Approver Claimed the
          * channel; in that case we did not get its handler well known name.
          */
-        channels = g_list_prepend (NULL, channel);
         possible_handlers = _mcd_client_registry_list_possible_handlers (
                 self->priv->clients,
                 request != NULL ? _mcd_request_get_preferred_handler (request) : NULL,
                 request != NULL ? _mcd_request_get_properties (request) : NULL,
-                channels, unique_name);
+                channel, unique_name);
 
         if (possible_handlers != NULL)
         {
@@ -729,7 +560,6 @@ _mcd_dispatcher_lookup_handler (McdDispatcher *self,
                    unique_name, object_path);
         }
 
-        g_list_free (channels);
         g_list_free (possible_handlers);
     }
 
@@ -785,11 +615,11 @@ mcd_dispatcher_client_needs_recovery_cb (McdClientProxy *client,
 
         if (_mcd_dispatch_operation_has_invoked_observers (op))
         {
-            for (channels = _mcd_dispatch_operation_peek_channels (op);
-                 channels != NULL;
-                 channels = channels->next)
+            McdChannel *mcd_channel =
+                _mcd_dispatch_operation_peek_channel (op);
+
+            if (mcd_channel != NULL)
             {
-                McdChannel *mcd_channel = channels->data;
                 GHashTable *properties =
                     _mcd_channel_get_immutable_properties (mcd_channel);
 
@@ -1009,7 +839,6 @@ mcd_dispatcher_class_init (McdDispatcherClass * klass)
     object_class->constructed = mcd_dispatcher_constructed;
     object_class->set_property = _mcd_dispatcher_set_property;
     object_class->get_property = _mcd_dispatcher_get_property;
-    object_class->finalize = _mcd_dispatcher_finalize;
     object_class->dispose = _mcd_dispatcher_dispose;
 
     /* Properties */
@@ -1050,26 +879,6 @@ mcd_dispatcher_class_init (McdDispatcherClass * klass)
 }
 
 static void
-_build_channel_capabilities (const gchar *channel_type, guint type_flags,
-			     GPtrArray *capabilities)
-{
-    GValue cap = {0,};
-    GType cap_type;
-
-    cap_type = dbus_g_type_get_struct ("GValueArray", G_TYPE_STRING,
-				       G_TYPE_UINT, G_TYPE_INVALID);
-    g_value_init (&cap, cap_type);
-    g_value_take_boxed (&cap, dbus_g_type_specialized_construct (cap_type));
-
-    dbus_g_type_struct_set (&cap,
-			    0, channel_type,
-			    1, type_flags,
-			    G_MAXUINT);
-
-    g_ptr_array_add (capabilities, g_value_get_boxed (&cap));
-}
-
-static void
 mcd_dispatcher_init (McdDispatcher * dispatcher)
 {
     McdDispatcherPrivate *priv;
@@ -1097,366 +906,32 @@ mcd_dispatcher_new (TpDBusDaemon *dbus_daemon, McdMaster *master)
     return obj;
 }
 
-/**
- * mcd_dispatcher_context_proceed:
- * @context: a #McdDispatcherContext
- *
- * Must be called by plugin filters exactly once per invocation of the filter
- * function, to proceed with processing of the @context. This does nothing
- * if @context has already finished.
- */
-void
-mcd_dispatcher_context_proceed (McdDispatcherContext *context)
-{
-    GError error = { TP_ERRORS, 0, NULL };
-    McdFilter *filter;
-
-    if (_mcd_dispatch_operation_get_cancelled (context->operation))
-    {
-        error.code = TP_ERROR_CANCELLED;
-        error.message = "Channel request cancelled";
-        _mcd_dispatcher_context_abort (context, &error);
-        goto no_more;
-    }
-
-    if (_mcd_dispatch_operation_peek_channels (context->operation) == NULL)
-    {
-        DEBUG ("No channels left");
-        goto no_more;
-    }
-
-    filter = g_list_nth_data (context->chain, context->next_func_index);
-
-    if (filter != NULL)
-    {
-        context->next_func_index++;
-        DEBUG ("Next filter");
-        mcd_dispatcher_context_ref (context, "CTXREF10");
-        filter->func (context, filter->user_data);
-        mcd_dispatcher_context_unref (context, "CTXREF10");
-        /* The state machine goes on... this function will be invoked again
-         * (perhaps recursively, or perhaps later) by filter->func. */
-        return;
-    }
-
-no_more:    /* either no more filters, or no more channels */
-    _mcd_dispatch_operation_run_clients (context->operation);
-    mcd_dispatcher_context_unref (context, "CTXREF01");
-}
-
-/**
- * mcd_dispatcher_context_forget_all:
- * @context: a #McdDispatcherContext
- *
- * Stop processing channels in @context, but do not close them. They will
- * no longer be dispatched, and the ChannelDispatchOperation (if any)
- * will emit ChannelLost.
- */
-void
-mcd_dispatcher_context_forget_all (McdDispatcherContext *context)
-{
-    g_return_if_fail (context);
-    _mcd_dispatch_operation_forget_channels (context->operation);
-}
-
-/**
- * mcd_dispatcher_context_destroy_all:
- * @context: a #McdDispatcherContext
- *
- * Consider all channels in the #McdDispatcherContext to be undispatchable,
- * and close them destructively. Information loss might result.
- *
- * Plugins must still call mcd_dispatcher_context_proceed() afterwards,
- * to release their reference to the dispatcher context.
- */
-void
-mcd_dispatcher_context_destroy_all (McdDispatcherContext *context)
-{
-    g_return_if_fail (context);
-    _mcd_dispatch_operation_destroy_channels (context->operation);
-}
-
-/**
- * mcd_dispatcher_context_close_all:
- * @context: a #McdDispatcherContext
- * @reason: a reason code
- * @message: a message to be used if applicable, which should be "" if
- *  no message is appropriate
- *
- * Close all channels in the #McdDispatcherContext. If @reason is not
- * %TP_CHANNEL_GROUP_CHANGE_REASON_NONE and/or @message is non-empty,
- * attempt to use the RemoveMembersWithReason D-Bus method to specify
- * a message and reason, falling back to the Close method if that doesn't
- * work.
- *
- * Plugins must still call mcd_dispatcher_context_proceed() afterwards,
- * to release their reference to the dispatcher context.
- */
-void
-mcd_dispatcher_context_close_all (McdDispatcherContext *context,
-                                  TpChannelGroupChangeReason reason,
-                                  const gchar *message)
-{
-    g_return_if_fail (context);
-    _mcd_dispatch_operation_leave_channels (context->operation, reason,
-                                            message);
-}
-
-/**
- * mcd_dispatcher_context_process:
- * @context: a #McdDispatcherContext
- * @result: %FALSE if the channels are to be destroyed
- *
- * Continue to process the @context.
- *
- * mcd_dispatcher_context_process (c, TRUE) is exactly equivalent to
- * mcd_dispatcher_context_proceed (c), which should be used instead in new
- * code.
- *
- * mcd_dispatcher_context_process (c, FALSE) is exactly equivalent to
- * mcd_dispatcher_context_destroy_all (c) followed by
- * mcd_dispatcher_context_proceed (c), which should be used instead in new
- * code.
- */
-void
-mcd_dispatcher_context_process (McdDispatcherContext * context, gboolean result)
-{
-    if (!result)
-    {
-        _mcd_dispatch_operation_destroy_channels (context->operation);
-    }
-
-    mcd_dispatcher_context_proceed (context);
-}
-
-static void
-mcd_dispatcher_context_unref (McdDispatcherContext * context,
-                              const gchar *tag)
-{
-    /* FIXME: check for leaks */
-    g_return_if_fail (context);
-    g_return_if_fail (context->ref_count > 0);
-
-    DEBUG ("%s on %p (ref = %d)", tag, context, context->ref_count);
-    context->ref_count--;
-    if (context->ref_count == 0)
-    {
-        DEBUG ("freeing the context %p", context);
-        g_object_unref (context->operation);
-        g_free (context);
-    }
-}
-
-/* CONTEXT API */
-
-/* Context getters */
-TpChannel *
-mcd_dispatcher_context_get_channel_object (McdDispatcherContext * ctx)
-{
-    TpChannel *tp_chan;
-    g_return_val_if_fail (ctx, 0);
-    g_object_get (G_OBJECT (mcd_dispatcher_context_get_channel (ctx)),
-                  "tp-channel", &tp_chan, NULL);
-    g_object_unref (G_OBJECT (tp_chan));
-    return tp_chan;
-}
-
-McdDispatcher*
-mcd_dispatcher_context_get_dispatcher (McdDispatcherContext * ctx)
-{
-    return ctx->dispatcher;
-}
-
-/**
- * mcd_dispatcher_context_get_connection:
- * @context: the #McdDispatcherContext.
- *
- * Returns: the #McdConnection.
- */
-McdConnection *
-mcd_dispatcher_context_get_connection (McdDispatcherContext *context)
-{
-    const GList *channels = mcd_dispatcher_context_get_channels (context);
-
-    g_return_val_if_fail (channels != NULL, NULL);
-    return MCD_CONNECTION (mcd_mission_get_parent
-                           (MCD_MISSION (channels->data)));
-}
-
-TpConnection *
-mcd_dispatcher_context_get_connection_object (McdDispatcherContext * ctx)
-{
-    const McdConnection *connection;
-    TpConnection *tp_conn;
-   
-    connection = mcd_dispatcher_context_get_connection (ctx); 
-    g_object_get (G_OBJECT (connection), "tp-connection",
-		  &tp_conn, NULL);
-   
-    g_object_unref (tp_conn); 
-    return tp_conn;
-}
-
-McdChannel *
-mcd_dispatcher_context_get_channel (McdDispatcherContext * ctx)
-{
-    const GList *channels = mcd_dispatcher_context_get_channels (ctx);
-
-    return channels ? MCD_CHANNEL (channels->data) : NULL;
-}
-
-/**
- * mcd_dispatcher_context_get_channels:
- * @context: the #McdDispatcherContext.
- *
- * Returns: a #GList of #McdChannel elements.
- */
-const GList *
-mcd_dispatcher_context_get_channels (McdDispatcherContext *context)
-{
-    g_return_val_if_fail (context != NULL, NULL);
-    return _mcd_dispatch_operation_peek_channels (context->operation);
-}
-
-/**
- * mcd_dispatcher_context_get_channel_by_type:
- * @context: the #McdDispatcherContext.
- * @type: the #GQuark representing the channel type.
- *
- * Returns: the first #McdChannel of the requested type, or %NULL.
- */
-McdChannel *
-mcd_dispatcher_context_get_channel_by_type (McdDispatcherContext *context,
-                                            GQuark type)
-{
-    const GList *list;
-
-    g_return_val_if_fail (context != NULL, NULL);
-    for (list = mcd_dispatcher_context_get_channels (context);
-         list != NULL;
-         list = list->next)
-    {
-        McdChannel *channel = MCD_CHANNEL (list->data);
-
-        if (mcd_channel_get_channel_type_quark (channel) == type)
-            return channel;
-    }
-    return NULL;
-}
-
-GPtrArray *
-_mcd_dispatcher_get_channel_capabilities (McdDispatcher *dispatcher)
-{
-    McdDispatcherPrivate *priv = dispatcher->priv;
-    GPtrArray *channel_handler_caps;
-    GHashTableIter iter;
-    gpointer key, value;
-
-    channel_handler_caps = g_ptr_array_new ();
-
-    /* Add the capabilities from the new-style clients */
-    _mcd_client_registry_init_hash_iter (priv->clients, &iter);
-    while (g_hash_table_iter_next (&iter, &key, &value))
-    {
-        McdClientProxy *client = value;
-        const GList *list;
-
-        for (list = _mcd_client_proxy_get_handler_filters (client);
-             list != NULL;
-             list = list->next)
-        {
-            GHashTable *channel_class = list->data;
-            const gchar *channel_type;
-            guint type_flags;
-
-            channel_type = tp_asv_get_string (channel_class,
-                                              TP_IFACE_CHANNEL ".ChannelType");
-            if (!channel_type) continue;
-
-            /* There is currently no way to map the HandlerChannelFilter client
-             * property into type-specific capabilities. Let's pretend we
-             * support everything. */
-            type_flags = 0xffffffff;
-
-            _build_channel_capabilities (channel_type, type_flags,
-                                         channel_handler_caps);
-        }
-    }
-    return channel_handler_caps;
-}
-
-GPtrArray *
-_mcd_dispatcher_get_channel_enhanced_capabilities (McdDispatcher *dispatcher)
-{
-    McdDispatcherPrivate *priv = dispatcher->priv;
-    GHashTableIter iter;
-    gpointer key, value;
-    GPtrArray *caps = g_ptr_array_new ();
-
-    _mcd_client_registry_init_hash_iter (priv->clients, &iter);
-    while (g_hash_table_iter_next (&iter, &key, &value))
-    {
-        McdClientProxy *client = value;
-        const GList *list;
-
-        for (list = _mcd_client_proxy_get_handler_filters (client);
-             list != NULL;
-             list = list->next)
-        {
-            GHashTable *channel_class = list->data;
-            guint i;
-            gboolean already_in_caps = FALSE;
-
-            /* Check if the filter is already in the caps variable */
-            for (i = 0 ; i < caps->len ; i++)
-            {
-                GHashTable *channel_class2 = g_ptr_array_index (caps, i);
-                if (channel_classes_equals (channel_class, channel_class2))
-                {
-                    already_in_caps = TRUE;
-                    break;
-                }
-            }
-
-            if (! already_in_caps)
-                g_ptr_array_add (caps, channel_class);
-        }
-    }
-
-    return caps;
-}
-
 /*
- * _mcd_dispatcher_take_channels:
+ * _mcd_dispatcher_add_channel:
  * @dispatcher: the #McdDispatcher.
- * @channels: a #GList of #McdChannel elements, each of which must own a
- *  #TpChannel
+ * @channel: (transfer none): a #McdChannel which must own a #TpChannel
  * @requested: whether the channels were requested by MC.
  *
- * Dispatch @channels. The #GList @channels will be no longer valid after this
- * function has been called.
+ * Add @channel to the dispatching state machine.
  */
 void
-_mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
-                               gboolean requested, gboolean only_observe)
+_mcd_dispatcher_add_channel (McdDispatcher *dispatcher,
+                             McdChannel *channel,
+                             gboolean requested,
+                             gboolean only_observe)
 {
-    GList *list;
-    GList *tp_channels = NULL;
+    TpChannel *tp_channel = NULL;
     GStrv possible_handlers;
     McdRequest *request = NULL;
     gboolean internal_request = FALSE;
 
-    if (channels == NULL)
-    {
-        DEBUG ("trivial case - no channels");
-        return;
-    }
+    g_return_if_fail (MCD_IS_DISPATCHER (dispatcher));
+    g_return_if_fail (MCD_IS_CHANNEL (channel));
 
-    DEBUG ("%s channel %p (%s): %s",
+    DEBUG ("%s channel %p: %s",
            requested ? "requested" : "unrequested",
-           channels->data,
-           channels->next == NULL ? "only" : "and more",
-           mcd_channel_get_object_path (channels->data));
+           channel,
+           mcd_channel_get_object_path (channel));
 
     if (only_observe)
     {
@@ -1464,29 +939,17 @@ _mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
 
         /* these channels were requested "behind our back", so only call
          * ObserveChannels on them */
-        _mcd_dispatcher_enter_state_machine (dispatcher, channels, NULL,
+        _mcd_dispatcher_enter_state_machine (dispatcher, channel, NULL,
                                              TRUE, TRUE);
-        g_list_free (channels);
         return;
     }
 
-    /* These channels must have the TpChannel part of McdChannel's double life.
-     * They might also have the McdRequest part. */
-    for (list = channels; list != NULL; list = list->next)
-    {
-        TpChannel *tp_channel = mcd_channel_get_tp_channel (list->data);
+    /* The channel must have the TpChannel part of McdChannel's double life.
+     * It might also have the McdRequest part. */
+    tp_channel = mcd_channel_get_tp_channel (channel);
+    g_assert (tp_channel != NULL);
 
-        g_assert (tp_channel != NULL);
-        tp_channels = g_list_prepend (tp_channels, g_object_ref (tp_channel));
-
-        /* We take the channel request from the first McdChannel that (has|is)
-         * one.*/
-        if (request == NULL)
-        {
-            request = _mcd_channel_get_request (list->data);
-        }
-    }
-
+    request = _mcd_channel_get_request (channel);
     internal_request = _mcd_request_is_internal (request);
 
     /* See if there are any handlers that can take all these channels */
@@ -1495,96 +958,26 @@ _mcd_dispatcher_take_channels (McdDispatcher *dispatcher, GList *channels,
     else
         possible_handlers = mcd_dispatcher_dup_possible_handlers (dispatcher,
                                                                   request,
-                                                                  tp_channels,
+                                                                  tp_channel,
                                                                   NULL);
-
-    g_list_foreach (tp_channels, (GFunc) g_object_unref, NULL);
-    g_list_free (tp_channels);
 
     if (possible_handlers == NULL)
     {
-        if (channels->next == NULL)
-        {
-            DEBUG ("One channel, which cannot be handled - making a CDO "
-                   "anyway, to get Observers run");
-        }
-        else
-        {
-            DEBUG ("Two or more channels, which cannot all be handled - "
-                   "will split up the batch and try again");
-
-            while (channels != NULL)
-            {
-                list = channels;
-                channels = g_list_remove_link (channels, list);
-                _mcd_dispatcher_take_channels (dispatcher, list, requested,
-                                               FALSE);
-            }
-
-            return;
-        }
+        DEBUG ("Channel cannot be handled - making a CDO "
+               "anyway, to get Observers run");
     }
     else
     {
-        DEBUG ("%s handler(s) found, dispatching %u channels",
-               internal_request ? "internal" : "possible",
-               g_list_length (channels));
+        DEBUG ("%s handler(s) found, dispatching channel",
+               internal_request ? "internal" : "possible");
     }
 
-    for (list = channels; list != NULL; list = list->next)
-        _mcd_channel_set_status (MCD_CHANNEL (list->data),
-                                 MCD_CHANNEL_STATUS_DISPATCHING);
+    _mcd_channel_set_status (channel, MCD_CHANNEL_STATUS_DISPATCHING);
 
-    _mcd_dispatcher_enter_state_machine (dispatcher, channels,
+    _mcd_dispatcher_enter_state_machine (dispatcher, channel,
         (const gchar * const *) possible_handlers, requested, FALSE);
-    g_list_free (channels);
 
     g_strfreev (possible_handlers);
-}
-
-/**
- * mcd_dispatcher_add_filter:
- * @dispatcher: The #McdDispatcher.
- * @filter: the filter function to be registered.
- * @priority: The priority of the filter.
- * @user_data: user data to be passed to @filter on invocation.
- *
- * Register a filter into the dispatcher chain: @filter will be invoked
- * whenever channels need to be dispatched.
- */
-void
-mcd_dispatcher_add_filter (McdDispatcher *dispatcher,
-                           McdFilterFunc filter,
-                           guint priority,
-                           gpointer user_data)
-{
-    McdDispatcherPrivate *priv;
-
-    g_return_if_fail (MCD_IS_DISPATCHER (dispatcher));
-    priv = dispatcher->priv;
-    priv->filters =
-        chain_add_filter (priv->filters, filter, priority, user_data);
-}
-
-/**
- * mcd_dispatcher_add_filters:
- * @dispatcher: The #McdDispatcher.
- * @filters: a zero-terminated array of #McdFilter elements.
- *
- * Convenience function to add a batch of filters at once.
- */
-void
-mcd_dispatcher_add_filters (McdDispatcher *dispatcher,
-                            const McdFilter *filters)
-{
-    const McdFilter *filter;
-
-    g_return_if_fail (filters != NULL);
-
-    for (filter = filters; filter->func != NULL; filter++)
-        mcd_dispatcher_add_filter (dispatcher, filter->func,
-                                   filter->priority,
-                                   filter->user_data);
 }
 
 static void
@@ -1793,10 +1186,7 @@ _mcd_dispatcher_recover_channel (McdDispatcher *dispatcher,
         DEBUG ("%s is unhandled, redispatching", path);
 
         requested = mcd_channel_is_requested (channel);
-        _mcd_dispatcher_take_channels (dispatcher,
-                                       g_list_prepend (NULL, channel),
-                                       requested,
-                                       FALSE);
+        _mcd_dispatcher_add_channel (dispatcher, channel, requested, FALSE);
     }
 }
 
@@ -1815,14 +1205,14 @@ check_preferred_handler (const gchar *preferred_handler,
   {
       /* The error is TP_DBUS_ERROR_INVALID_BUS_NAME, which has no D-Bus
        * representation; re-map to InvalidArgument. */
-      (*error)->domain = TP_ERRORS;
+      (*error)->domain = TP_ERROR;
       (*error)->code = TP_ERROR_INVALID_ARGUMENT;
       return FALSE;
   }
 
   if (!g_str_has_prefix (preferred_handler, TP_CLIENT_BUS_NAME_BASE))
   {
-      g_set_error (error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+      g_set_error (error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                    "Not a Telepathy Client: %s", preferred_handler);
       return FALSE;
   }
@@ -1862,7 +1252,7 @@ dispatcher_request_channel (McdDispatcher *self,
 
     if (account == NULL)
     {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                      "No such account: %s", account_path);
         goto despair;
     }
@@ -2131,13 +1521,6 @@ _mcd_dispatcher_add_connection (McdDispatcher *self,
      * for it */
 }
 
-McdClientRegistry *
-_mcd_dispatcher_get_client_registry (McdDispatcher *self)
-{
-    g_return_val_if_fail (MCD_IS_DISPATCHER (self), NULL);
-    return self->priv->clients;
-}
-
 /* org.freedesktop.Telepathy.ChannelDispatcher.Messages */
 typedef struct
 {
@@ -2223,7 +1606,7 @@ message_context_free (gpointer ctx)
     {
         GError *error;
 
-        error = g_error_new_literal (TP_ERRORS, TP_ERROR_TERMINATED,
+        error = g_error_new_literal (TP_ERROR, TP_ERROR_TERMINATED,
                                      "Channel request failed");
         dbus_g_method_return_error (context->dbus_context, error);
         g_error_free (error);
@@ -2305,7 +1688,7 @@ send_message_got_channel (McdRequest *request,
         }
         else
         {
-            GError *error = g_error_new_literal (TP_ERRORS, TP_ERROR_CANCELLED,
+            GError *error = g_error_new_literal (TP_ERROR, TP_ERROR_CANCELLED,
                                                  "Channel closed by owner");
 
             _mcd_request_unblock_account (message->account_path);
@@ -2347,7 +1730,7 @@ messages_send_message_start (DBusGMethodInvocation *dbus_context,
 
     if (tp_str_empty (message->account_path))
     {
-        g_set_error_literal (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error_literal (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                              "Account path not specified");
         goto failure;
     }
@@ -2361,7 +1744,7 @@ messages_send_message_start (DBusGMethodInvocation *dbus_context,
 
     if (account == NULL)
     {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                      "No such account: %s", message->account_path);
         goto failure;
     }
@@ -2392,7 +1775,7 @@ messages_send_message_start (DBusGMethodInvocation *dbus_context,
 
     if (channel == NULL || request == NULL)
     {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_RESOURCE_UNAVAILABLE,
+        g_set_error (&error, TP_ERROR, TP_ERROR_RESOURCE_UNAVAILABLE,
                      "Could not create channel request");
         goto failure;
     }
@@ -2632,11 +2015,11 @@ try_delegating (ChannelToDelegate *to_delegate)
 
         if (to_delegate->error == NULL)
           {
-            g_set_error (&to_delegate->error, TP_ERRORS, TP_ERROR_NOT_CAPABLE,
+            g_set_error (&to_delegate->error, TP_ERROR, TP_ERROR_NOT_CAPABLE,
                 "There is no other suitable handler");
           }
 
-        if (to_delegate->error->domain == TP_ERRORS)
+        if (to_delegate->error->domain == TP_ERROR)
           dbus_error = tp_error_get_dbus_name (to_delegate->error->code);
         else
           dbus_error = TP_ERROR_STR_NOT_AVAILABLE;
@@ -2681,16 +2064,11 @@ add_possible_handlers (McdDispatcher *self,
     const gchar *sender,
     const gchar *preferred_handler)
 {
-    GList *channels = NULL;
     GStrv possible_handlers;
     guint i;
 
-    channels = g_list_prepend (channels, tp_channel);
-
     possible_handlers = mcd_dispatcher_dup_possible_handlers (self,
-        NULL, channels, NULL);
-
-    g_list_free (channels);
+        NULL, tp_channel, NULL);
 
     for (i = 0; possible_handlers[i] != NULL; i++)
       {
@@ -2742,7 +2120,7 @@ dispatcher_delegate_channels (
 
     if (channels->len == 0)
       {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
             "Need at least one channel to delegate");
         goto error;
       }
@@ -2769,7 +2147,7 @@ dispatcher_delegate_channels (
 
         if (chan_account == NULL)
           {
-            g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+            g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                 "Unknown channel: %s", chan_path);
             goto error;
           }
@@ -2783,7 +2161,7 @@ dispatcher_delegate_channels (
             chan_path, NULL);
         if (tp_strdiff (sender, handler))
          {
-            g_set_error (&error, TP_ERRORS, TP_ERROR_NOT_YOURS,
+            g_set_error (&error, TP_ERROR, TP_ERROR_NOT_YOURS,
                 "Your are not handling channel %s", chan_path);
             goto error;
          }
@@ -2871,7 +2249,7 @@ dispatcher_present_channel (
 
     if (chan_account == NULL)
       {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
             "Unknown channel: %s", channel_path);
         goto error;
       }
@@ -2898,7 +2276,7 @@ dispatcher_present_channel (
             _mcd_channel_get_request (mcd_channel));
     if (client == NULL)
       {
-        g_set_error (&error, TP_ERRORS, TP_ERROR_INVALID_ARGUMENT,
+        g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
             "Channel %s is currently not handled", channel_path);
         goto error;
       }

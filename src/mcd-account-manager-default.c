@@ -78,11 +78,13 @@ _delete_from_keyring (const McpAccountStorage *self,
       /* flag the whole account as purged */
       gchar *removed = g_strdup (account);
       g_hash_table_replace (amd->removed_accounts, removed, removed);
+      g_key_file_remove_group (amd->secrets, removed, NULL);
     }
   else
     {
       /* remember to forget this one param */
       g_key_file_set_value (amd->removed, account, key, "");
+      g_key_file_remove_key (amd->secrets, account, key, NULL);
     }
 }
 
@@ -187,7 +189,7 @@ _keyring_commit (const McpAccountStorage *self,
     {
       gsize j;
       gsize k;
-      GStrv keys = g_key_file_get_keys (amd->secrets, accts[i], &k, NULL);
+      GStrv keys = g_key_file_get_keys (amd->removed, accts[i], &k, NULL);
 
       if (keys == NULL)
         k = 0;
@@ -195,15 +197,21 @@ _keyring_commit (const McpAccountStorage *self,
       for (j = 0; j < k; j++)
         {
           KeyringSetData *ksd = g_slice_new0 (KeyringSetData);
+          const gchar *key = keys[j];
+
+          /* for compatibility with old gnome keyring code we must strip  *
+           * the param- prefix from the name before saving to the keyring */
+          if (g_str_has_prefix (key, "param-"))
+            key += strlen ("param-");
 
           ksd->account = g_strdup (accts[i]);
-          ksd->name = g_strdup (keys[j]);
+          ksd->name = g_strdup (key);
           ksd->set = FALSE;
 
           gnome_keyring_delete_password (&keyring_schema,
               _keyring_set_cb, ksd, NULL,
               "account", accts[i],
-              "param", keys[j],
+              "param", key,
               NULL);
         }
 
@@ -411,19 +419,16 @@ _set (const McpAccountStorage *self,
   /* if we have a keyring, secrets are segregated */
   secret = mcp_account_manager_parameter_is_secret (am, account, key);
 
+  /* remove it from both sets, then re-add it to the right one if non-null */
+  g_key_file_remove_key (amd->secrets, account, key, NULL);
+  g_key_file_remove_key (amd->keyfile, account, key, NULL);
+
   if (val != NULL)
     {
       if (secret)
         g_key_file_set_value (amd->secrets, account, key, val);
       else
         g_key_file_set_value (amd->keyfile, account, key, val);
-    }
-  else
-    {
-      if (secret)
-        g_key_file_remove_key (amd->secrets, account, key, NULL);
-      else
-        g_key_file_remove_key (amd->keyfile, account, key, NULL);
     }
 
   /* if we removed the account before, it now exists again, so... */
@@ -519,6 +524,25 @@ _get (const McpAccountStorage *self,
   return TRUE;
 }
 
+static gchar *
+_create (const McpAccountStorage *self,
+    const McpAccountManager *am,
+    const gchar *manager,
+    const gchar *protocol,
+    GHashTable *params,
+    GError **error)
+{
+  gchar *unique_name;
+
+  /* See comment in plugin-account.c::_storage_create_account() before changing
+   * this implementation, it's more subtle than it looks */
+  unique_name = mcp_account_manager_get_unique_name (MCP_ACCOUNT_MANAGER (am),
+                                                     manager, protocol, params);
+  g_return_val_if_fail (unique_name != NULL, NULL);
+
+  return unique_name;
+}
+
 static gboolean
 _delete (const McpAccountStorage *self,
       const McpAccountManager *am,
@@ -561,8 +585,10 @@ _delete (const McpAccountStorage *self,
           g_key_file_remove_group (amd->keyfile, account, NULL);
           _delete_from_keyring (self, am, account, NULL);
         }
-      else if (mcp_account_manager_parameter_is_secret (am, account, key))
+      else
         {
+          /* always delete from keyring, even if we didn't previously
+           * think it was secret - we might have been wrong */
           _delete_from_keyring (self, am, account, key);
         }
 
@@ -639,6 +665,7 @@ account_storage_iface_init (McpAccountStorageIface *iface,
 
   mcp_account_storage_iface_implement_get (iface, _get);
   mcp_account_storage_iface_implement_set (iface, _set);
+  mcp_account_storage_iface_implement_create (iface, _create);
   mcp_account_storage_iface_implement_delete (iface, _delete);
   mcp_account_storage_iface_implement_commit_one (iface, _commit);
   mcp_account_storage_iface_implement_list (iface, _list);

@@ -23,8 +23,8 @@
 #define MCD_CLIENT_REGISTRY_H
 
 #include <glib-object.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/handle-repo.h>
+
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "mcd-client-priv.h"
 
@@ -82,7 +82,7 @@ G_GNUC_INTERNAL void _mcd_client_registry_init_hash_iter (
 
 G_GNUC_INTERNAL GList *_mcd_client_registry_list_possible_handlers (
     McdClientRegistry *self, const gchar *preferred_handler,
-    GHashTable *request_props, const GList *channels,
+    GHashTable *request_props, TpChannel *channel,
     const gchar *must_have_unique_name);
 
 G_END_DECLS

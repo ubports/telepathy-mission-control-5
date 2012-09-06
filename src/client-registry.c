@@ -19,9 +19,10 @@
  *
  */
 
+#include "config.h"
+
 #include "client-registry.h"
 
-#include <telepathy-glib/handle-repo-dynamic.h>
 #include <telepathy-glib/telepathy-glib.h>
 
 #include "mcd-debug.h"
@@ -54,10 +55,6 @@ struct _McdClientRegistryPrivate
   GHashTable *clients;
 
   TpDBusDaemon *dbus_daemon;
-
-  /* Not really handles as such, but TpHandleRepoIface gives us a convenient
-   * reference-counted string pool */
-  TpHandleRepoIface *string_pool;
 
   /* We don't want to start dispatching until startup has finished. This
    * is defined as:
@@ -155,8 +152,7 @@ _mcd_client_registry_found_name (McdClientRegistry *self,
   DEBUG ("Registering client %s", well_known_name);
 
   client = _mcd_client_proxy_new (self->priv->dbus_daemon,
-      self->priv->string_pool, well_known_name, unique_name_if_known,
-      activatable);
+      well_known_name, unique_name_if_known, activatable);
   g_hash_table_insert (self->priv->clients, g_strdup (well_known_name),
       client);
 
@@ -336,33 +332,13 @@ mcd_client_registry_name_owner_filter (DBusConnection *conn,
   return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 
-static gboolean
-add_match (DBusConnection *conn,
-    const gchar const *rule,
-    const gchar *msg)
-{
-  DBusError error = { 0 };
-
-  dbus_error_init (&error);
-  dbus_bus_add_match (conn, rule, &error);
-
-  if (dbus_error_is_set (&error))
-    {
-      g_warning ("Could not add %s match rule: %s", msg, error.message);
-      dbus_error_free (&error);
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
 static void
 watch_clients (McdClientRegistry *self)
 {
   TpDBusDaemon *dbus_daemon = self->priv->dbus_daemon;
   DBusGConnection *gconn = tp_proxy_get_dbus_connection (dbus_daemon);
   DBusConnection *dconn = dbus_g_connection_get_connection (gconn);
-  gboolean arg0_filtered = FALSE;
+  DBusError error = { 0 };
 
 #define MATCH_ITEM(t,x) #t "='" x "'"
 
@@ -376,13 +352,28 @@ watch_clients (McdClientRegistry *self)
     NAME_OWNER_RULE "," \
     MATCH_ITEM (arg0namespace, "org.freedesktop.Telepathy.Client")
 
-  arg0_filtered = dbus_connection_add_filter (dconn,
-      mcd_client_registry_name_owner_filter,
-      self,
-      NULL);
+  if (!dbus_connection_add_filter (dconn, mcd_client_registry_name_owner_filter,
+        self, NULL))
+    g_critical ("Could not add filter for NameOwnerChanged (out of memory?)");
 
-  if (arg0_filtered && !add_match (dconn, CLIENT_MATCH_RULE, "client names"))
-    add_match (dconn, NAME_OWNER_RULE, "all dbus names");
+  dbus_error_init (&error);
+
+  dbus_bus_add_match (dconn, CLIENT_MATCH_RULE, &error);
+  if (dbus_error_is_set (&error))
+    {
+      DEBUG ("Could not add client names match rule (D-Bus 1.6 required): %s",
+          error.message);
+
+      dbus_error_free (&error);
+
+      dbus_bus_add_match (dconn, NAME_OWNER_RULE, &error);
+      if (dbus_error_is_set (&error))
+        {
+          g_critical ("Could not add all dbus names match rule: %s",
+              error.message);
+          dbus_error_free (&error);
+        }
+    }
 }
 
 static void
@@ -403,10 +394,6 @@ mcd_client_registry_constructed (GObject *object)
 
   tp_cli_dbus_daemon_call_list_names (self->priv->dbus_daemon, -1,
       mcd_client_registry_list_names_cb, NULL, NULL, object);
-
-  /* Dummy handle type, we're just using this as a string pool */
-  self->priv->string_pool = tp_dynamic_handle_repo_new (TP_HANDLE_TYPE_CONTACT,
-      NULL, NULL);
 }
 
 static void
@@ -469,7 +456,6 @@ mcd_client_registry_dispose (GObject *object)
     }
 
   tp_clear_object (&self->priv->dbus_daemon);
-  tp_clear_object (&self->priv->string_pool);
 
   if (self->priv->clients != NULL)
     {
@@ -618,11 +604,10 @@ GList *
 _mcd_client_registry_list_possible_handlers (McdClientRegistry *self,
     const gchar *preferred_handler,
     GHashTable *request_props,
-    const GList *channels,
+    TpChannel *channel,
     const gchar *must_have_unique_name)
 {
   GList *handlers = NULL;
-  const GList *iter;
   GList *handlers_iter;
   GHashTableIter client_iter;
   gpointer client_p;
@@ -632,7 +617,8 @@ _mcd_client_registry_list_possible_handlers (McdClientRegistry *self,
   while (g_hash_table_iter_next (&client_iter, NULL, &client_p))
     {
       McdClientProxy *client = MCD_CLIENT_PROXY (client_p);
-      gsize total_quality = 0;
+      GHashTable *properties;
+      gsize quality;
 
       if (must_have_unique_name != NULL &&
           tp_strdiff (must_have_unique_name,
@@ -650,48 +636,33 @@ _mcd_client_registry_list_possible_handlers (McdClientRegistry *self,
             continue;
         }
 
-      if (channels == NULL)
+      if (channel == NULL)
         {
-          /* We don't know any channels' properties (the next loop will not
+          /* We don't know the channel's properties (the next part will not
            * execute), so we must work out the quality of match from the
            * channel request. We can assume that the request will return one
            * channel, with the requested properties, plus Requested == TRUE.
            */
           g_assert (request_props != NULL);
-          total_quality = _mcd_client_match_filters (request_props,
+          quality = _mcd_client_match_filters (request_props,
               _mcd_client_proxy_get_handler_filters (client), TRUE);
         }
-
-      for (iter = channels; iter != NULL; iter = iter->next)
+      else
         {
-          TpChannel *channel = iter->data;
-          GHashTable *properties;
-          guint quality;
-
           g_assert (TP_IS_CHANNEL (channel));
           properties = tp_channel_borrow_immutable_properties (channel);
 
           quality = _mcd_client_match_filters (properties,
               _mcd_client_proxy_get_handler_filters (client), FALSE);
-
-          if (quality == 0)
-            {
-              total_quality = 0;
-              break;
-            }
-          else
-            {
-              total_quality += quality;
-            }
         }
 
-      if (total_quality > 0)
+      if (quality > 0)
         {
           PossibleHandler *ph = g_slice_new0 (PossibleHandler);
 
           ph->client = client;
           ph->bypass = _mcd_client_proxy_get_bypass_approval (client);
-          ph->quality = total_quality;
+          ph->quality = quality;
 
           handlers = g_list_prepend (handlers, ph);
         }

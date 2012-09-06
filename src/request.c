@@ -20,15 +20,13 @@
  *
  */
 
+#include "config.h"
+
 #include "request.h"
 
 #include <dbus/dbus-glib.h>
-#include <telepathy-glib/dbus-properties-mixin.h>
-#include <telepathy-glib/gtypes.h>
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/svc-channel-request.h>
-#include <telepathy-glib/svc-generic.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include "mcd-account-priv.h"
 #include "mcd-connection-priv.h"
@@ -690,7 +688,7 @@ _mcd_request_proceed (McdRequest *self,
 
   if (self->proceeding)
     {
-      GError na = { TP_ERRORS, TP_ERROR_NOT_AVAILABLE,
+      GError na = { TP_ERROR, TP_ERROR_NOT_AVAILABLE,
           "Proceed has already been called; stop calling it" };
 
       if (context != NULL)
@@ -955,7 +953,7 @@ _mcd_request_cancel (McdRequest *self,
     }
   else
     {
-      g_set_error (error, TP_ERRORS, TP_ERROR_NOT_AVAILABLE,
+      g_set_error (error, TP_ERROR, TP_ERROR_NOT_AVAILABLE,
           "ChannelRequest is no longer cancellable");
       return FALSE;
     }

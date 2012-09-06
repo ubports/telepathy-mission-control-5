@@ -28,7 +28,7 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <telepathy-glib/connection-manager.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 #include "mcd-operation.h"
 
@@ -55,15 +55,6 @@ struct _McdConnection
 struct _McdConnectionClass
 {
     McdOperationClass parent_class;
-    gboolean (*need_dispatch) (McdConnection *connection,
-                               const GPtrArray *channels);
-    void (*_mc_reserved2) (void);
-    gboolean (*request_channel) (McdConnection *connection,
-                                 McdChannel *channel);
-    void (*_mc_reserved3) (void);
-    void (*_mc_reserved4) (void);
-    void (*_mc_reserved5) (void);
-    void (*_mc_reserved6) (void);
 };
 
 #include "mcd-dispatcher.h"
@@ -80,11 +71,6 @@ TpConnection *mcd_connection_get_tp_connection (McdConnection *connection);
 
 gboolean mcd_connection_request_channel (McdConnection *connection,
 					 McdChannel *channel);
-
-gboolean mcd_connection_cancel_channel_request (McdConnection *connection,
-					       	guint operation_id,
-						const gchar *requestor_client_id,
-					       	GError **error);
 
 void mcd_connection_close (McdConnection *connection);
 

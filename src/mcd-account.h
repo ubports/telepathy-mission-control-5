@@ -24,8 +24,7 @@
 #ifndef __MCD_ACCOUNT_H__
 #define __MCD_ACCOUNT_H__
 
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/enums.h>
+#include <telepathy-glib/telepathy-glib.h>
 
 G_BEGIN_DECLS
 #define MCD_TYPE_ACCOUNT         (mcd_account_get_type ())
@@ -83,8 +82,6 @@ GType mcd_account_get_type (void);
 McdAccount *mcd_account_new (McdAccountManager *account_manager,
 			     const gchar *name);
 
-TpDBusDaemon *mcd_account_get_dbus_daemon (McdAccount *account);
-
 void mcd_account_delete (McdAccount *account, McdAccountDeleteCb callback,
                          gpointer user_data);
 
@@ -118,19 +115,9 @@ void mcd_account_get_requested_presence (McdAccount *account,
 					 const gchar **status,
 					 const gchar **message);
 
-gboolean mcd_account_get_connect_automatically (McdAccount *account);
 gboolean mcd_account_would_like_to_connect (McdAccount *account);
-void mcd_account_get_automatic_presence (McdAccount *account,
-					 TpConnectionPresenceType *presence,
-					 const gchar **status,
-					 const gchar **message);
-
-gchar *mcd_account_get_normalized_name (McdAccount *account);
-
-gchar *mcd_account_get_alias (McdAccount *account);
 
 TpConnectionStatus mcd_account_get_connection_status (McdAccount *account);
-TpConnectionStatusReason mcd_account_get_connection_status_reason (McdAccount *account);
 
 McdConnection *mcd_account_get_connection (McdAccount *account);
 
@@ -147,6 +134,12 @@ gchar * mcd_account_dup_display_name (McdAccount *self);
 gboolean mcd_account_get_parameter (McdAccount *account, const gchar *name,
                            GValue *parameter,
                            GError **error);
+
+gboolean mcd_account_get_parameter_of_known_type (McdAccount *account,
+                                                  const gchar *name,
+                                                  GType type,
+                                                  GValue *parameter,
+                                                  GError **error);
 
 gchar * mcd_account_dup_icon (McdAccount *self);
 

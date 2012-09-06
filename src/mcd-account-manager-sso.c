@@ -23,7 +23,10 @@
 #include "mcd-account-manager-sso.h"
 #include "mcd-debug.h"
 
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
+
+#include <libaccounts-glib/ag-account.h>
+#include <libaccounts-glib/ag-service.h>
 
 #include <string.h>
 #include <ctype.h>
@@ -486,7 +489,7 @@ static void _sso_updated (AgAccount *account,
                   if (g_str_has_prefix (mc_key, MCPP))
                     params_updated = TRUE;
                   else
-                    g_signal_emit_by_name (mcpa, "altered-one", name, mc_key);
+                    mcp_account_storage_emit_altered_one (mcpa, name, mc_key);
                 }
             }
 
@@ -515,14 +518,14 @@ static void _sso_updated (AgAccount *account,
       if (g_str_has_prefix (deleted_key, MCPP))
         params_updated = TRUE;
       else
-        g_signal_emit_by_name (mcpa, "altered-one", name, deleted_key);
+        mcp_account_storage_emit_altered_one (mcpa, name, deleted_key);
     }
 
   g_hash_table_unref (unseen);
   g_strfreev (keys);
 
   if (params_updated)
-    g_signal_emit_by_name (mcpa, "altered-one", name, "Parameters");
+    mcp_account_storage_emit_altered_one (mcpa, name, "Parameters");
 
   /* put the selected service back the way it was when we found it */
   ag_account_select_service (account, service);
@@ -587,7 +590,7 @@ static void _sso_toggled (GObject *object,
       McpAccountManager *am = sso->manager_interface;
 
       mcp_account_manager_set_value (am, name, "Enabled", value);
-      g_signal_emit_by_name (mcpa, "toggled", name, on);
+      mcp_account_storage_emit_toggled (mcpa, name, on);
     }
   else
     {
@@ -620,7 +623,7 @@ static void _sso_deleted (GObject *object,
           /* stop watching for updates */
           unwatch_account_keys (sso, id);
 
-          g_signal_emit_by_name (mcpa, "deleted", signalled_name);
+          mcp_account_storage_emit_deleted (mcpa, signalled_name);
 
           g_free (signalled_name);
         }
@@ -739,7 +742,7 @@ static void _sso_created (GObject *object,
 
                   ag_account_store (account, _ag_account_stored_cb, sso);
 
-                  g_signal_emit_by_name (mcpa, "created", name);
+                  mcp_account_storage_emit_created (mcpa, name);
 
                   clear_setting_data (setting);
                 }
@@ -870,13 +873,12 @@ _ag_accountid_to_mc_key (McdAccountManagerSso *sso,
       g_value_unset (&value);
       return uid;
     }
-  else
-    {
-      g_value_unset (&value);
-    }
 
   if (!create)
-    return NULL;
+    {
+      g_value_unset (&value);
+      return NULL;
+    }
 
   DEBUG ("no " MC_IDENTITY_KEY " found, synthesising one:");
 

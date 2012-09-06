@@ -22,10 +22,13 @@
  *
  */
 
+#include "config.h"
+
 #include "mcd-connection-service-points.h"
 #include "mcd-connection-priv.h"
-#include <telepathy-glib/interfaces.h>
-#include <telepathy-glib/util.h>
+
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 static void
 service_handles_fetched_cb (TpConnection *tp_conn,
@@ -39,7 +42,7 @@ service_handles_fetched_cb (TpConnection *tp_conn,
 {
   guint i;
   McdConnection *connection = MCD_CONNECTION (weak);
-  TpIntSet *e_handles = tp_intset_new ();
+  TpIntset *e_handles = tp_intset_new ();
 
   if (error != NULL)
     return;

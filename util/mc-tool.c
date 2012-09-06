@@ -22,6 +22,8 @@
  *
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -43,6 +45,7 @@ show_help (gchar * err)
     printf ("Usage:\n"
 	    "    %1$s list\n"
 	    "    %1$s summary\n"
+	    "    %1$s dump\n"
 	    "    %1$s add <manager>/<protocol> <display name> [<param> ...]\n"
 	    "    %1$s update <account name> [<param>|clear:key] ...\n"
 	    "    %1$s display <account name> <display name>\n"
@@ -320,10 +323,7 @@ show_uri_schemes (const gchar * const *schemes)
   int result;
   gchar *tmp;
 
-  if (schemes == NULL || schemes[0] == NULL)
-    tmp = g_strdup ("");
-  else
-    tmp = g_strjoinv (", ", (gchar **) schemes);
+  tmp = g_strjoinv (", ", (gchar **) schemes);
 
   result = printf ("%12s: %s\n", "URIScheme", tmp);
 
@@ -682,6 +682,36 @@ command_remove (TpAccount *account)
     return TRUE;
 }
 
+static gchar *
+dup_storage_restrictions (TpAccount *account)
+{
+  TpStorageRestrictionFlags flags;
+  GPtrArray *tmp;
+  gchar *result;
+
+  flags = tp_account_get_storage_restrictions (account);
+  if (flags == 0)
+    return g_strdup ("(none)");
+
+  tmp = g_ptr_array_new ();
+
+  if (flags & TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_PARAMETERS)
+    g_ptr_array_add (tmp, "Cannot_Set_Parameters");
+  if (flags & TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_ENABLED)
+    g_ptr_array_add (tmp, "Cannot_Set_Enabled");
+  if (flags & TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_PRESENCE)
+    g_ptr_array_add (tmp, "Cannot_Set_Presence");
+  if (flags & TP_STORAGE_RESTRICTION_FLAG_CANNOT_SET_SERVICE)
+    g_ptr_array_add (tmp, "Cannot_Set_Service");
+
+  g_ptr_array_add (tmp, NULL);
+
+  result = g_strjoinv (", ", (gchar **) tmp->pdata);
+
+  g_ptr_array_unref (tmp);
+  return result;
+}
+
 static gboolean
 command_show (TpAccount *account)
 {
@@ -690,6 +720,8 @@ command_show (TpAccount *account)
     gpointer keyp, valuep;
     struct presence automatic, current, requested;
     const gchar * const *schemes;
+    const gchar *storage_provider;
+    const gchar * const *supersedes;
 
     show ("Account", tp_account_get_path_suffix (account));
     show ("Display Name", tp_account_get_display_name (account));
@@ -726,10 +758,50 @@ command_show (TpAccount *account)
     show ("Changing",
         tp_account_get_changing_presence (account) ? "yes" : "no");
 
-    puts ("");
-    puts ("Addressing:");
     schemes = tp_account_get_uri_schemes (account);
-    show_uri_schemes (schemes);
+    if (schemes != NULL && schemes[0] != NULL)
+      {
+        puts ("");
+        puts ("Addressing:");
+
+        show_uri_schemes (schemes);
+      }
+
+    storage_provider = tp_account_get_storage_provider (account);
+    if (!tp_str_empty (storage_provider))
+      {
+        GVariant *storage_identifier;
+        gchar *storage_restrictions;
+
+        puts ("");
+        puts ("Storage:");
+        show ("Provider", storage_provider);
+
+        storage_identifier = tp_account_dup_storage_identifier_variant (
+            account);
+        if (storage_identifier != NULL)
+          {
+            gchar *tmp = g_variant_print (storage_identifier, TRUE);
+
+            show ("Identifier", tmp);
+
+            g_free (tmp);
+            g_variant_unref (storage_identifier);
+          }
+
+        storage_restrictions = dup_storage_restrictions (account);
+        show ("Restrictions", storage_restrictions);
+        g_free (storage_restrictions);
+      }
+
+    supersedes = tp_account_get_supersedes (account);
+    if (supersedes != NULL && supersedes[0] != NULL)
+      {
+        puts ("");
+        puts ("Supersedes:");
+        for (; *supersedes != NULL; supersedes++)
+          printf ("  %s\n", *supersedes + strlen (TP_ACCOUNT_OBJECT_PATH_BASE));
+      }
 
     puts ("");
     parameters = tp_account_get_parameters (account);
@@ -742,6 +814,30 @@ command_show (TpAccount *account)
     command.common.ret = 0;
 
     return FALSE;
+}
+
+static gboolean
+command_dump (TpAccountManager *manager)
+{
+    GList *accounts, *l;
+
+    accounts = tp_account_manager_get_valid_accounts (manager);
+    if (accounts == NULL) {
+        return FALSE;
+    }
+    command.common.ret = 0;
+
+    for (l = accounts; l != NULL; l = l->next) {
+        TpAccount *account = TP_ACCOUNT (l->data);
+
+        command_show (account);
+
+        if (l->next != NULL)
+          printf ("\n------------------------------------------------------------\n\n");
+    }
+
+    g_list_free (accounts);
+    return FALSE; /* stop mainloop */
 }
 
 static gboolean
@@ -1028,6 +1124,14 @@ parse (int argc, char **argv)
 
         command.ready.manager = command_summary;
     }
+    else if (strcmp (argv[1], "dump") == 0)
+    {
+        /* Dump all accounts */
+        if (argc != 2)
+            show_help ("Invalid dump command.");
+
+        command.ready.manager = command_dump;
+    }
     else if (strcmp  (argv[1], "remove") == 0
 	     || strcmp (argv[1], "delete") == 0)
     {
@@ -1306,6 +1410,8 @@ main (int argc, char **argv)
     TpAccount *a = NULL;
     TpDBusDaemon *dbus = NULL;
     GError *error = NULL;
+    const GQuark features[] = { TP_ACCOUNT_FEATURE_CORE,
+        TP_ACCOUNT_FEATURE_ADDRESSING, TP_ACCOUNT_FEATURE_STORAGE, 0 };
 
     g_type_init ();
 
@@ -1323,11 +1429,16 @@ main (int argc, char **argv)
     }
 
     if (command.common.account == NULL) {
+        TpSimpleClientFactory *factory;
+
         am = tp_account_manager_new (dbus);
+        factory = tp_proxy_get_factory (am);
+
+        tp_simple_client_factory_add_account_features (factory, features);
+
         tp_proxy_prepare_async (am, NULL, manager_ready, NULL);
     }
     else {
-	const GQuark features[] = { TP_ACCOUNT_FEATURE_CORE, TP_ACCOUNT_FEATURE_ADDRESSING, 0 };
 
 	command.common.account = ensure_prefix (command.common.account);
 	a = tp_account_new (dbus, command.common.account, &error);

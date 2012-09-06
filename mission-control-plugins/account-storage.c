@@ -75,6 +75,8 @@
  * an account storage plugin in an account storage object, though.
  */
 
+#include "config.h"
+
 #include <mission-control-plugins/mission-control-plugins.h>
 #include <mission-control-plugins/mcp-signals-marshal.h>
 #include <mission-control-plugins/implementation.h>
@@ -102,6 +104,7 @@ enum
   TOGGLED,
   DELETED,
   ALTERED_ONE,
+  RECONNECT,
   NO_SIGNAL
 };
 
@@ -130,7 +133,7 @@ class_init (gpointer klass,
 
   /**
    * McpAccountStorage::altered
-   * @account: the unique name of the created account
+   * @account: the unique name of the altered account
    *
    * emitted if an external entity alters an account
    * in the backend the emitting plugin handles
@@ -147,7 +150,7 @@ class_init (gpointer klass,
 
   /**
    * McpAccountStorage::altered-one
-   * @account: the unique name of the created account
+   * @account: the unique name of the altered account
    * @name: the name of the altered property (its key)
    *
    * emitted if an external entity alters an account
@@ -158,7 +161,7 @@ class_init (gpointer klass,
    *
    * Should not be fired until mcp_account_storage_ready() has been called
    **/
-  signals[ALTERED] = g_signal_new ("altered-one",
+  signals[ALTERED_ONE] = g_signal_new ("altered-one",
       type, G_SIGNAL_RUN_LAST, 0, NULL, NULL,
       _mcp_marshal_VOID__STRING_STRING, G_TYPE_NONE,
       2, G_TYPE_STRING, G_TYPE_STRING);
@@ -166,7 +169,7 @@ class_init (gpointer klass,
 
   /**
    * McpAccountStorage::deleted
-   * @account: the unique name of the created account
+   * @account: the unique name of the deleted account
    *
    * emitted if an external entity deletes an account
    * in the backend the emitting plugin handles
@@ -181,7 +184,7 @@ class_init (gpointer klass,
 
   /**
    * McpAccountStorage::toggled
-   * @account: the unique name of the created account
+   * @account: the unique name of the toggled account
    * @enabled: #gboolean indicating whether the account is enabled
    *
    * emitted if an external entity enables/disables an account
@@ -195,6 +198,19 @@ class_init (gpointer klass,
       _mcp_marshal_VOID__STRING_BOOLEAN, G_TYPE_NONE,
       2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
+  /**
+   * McpAccountStorage::reconnect
+   * @account: the unique name of the account to reconnect
+   *
+   * emitted if an external entity modified important parameters of the
+   * account and a reconnection is required in order to apply them.
+   *
+   * Should not be fired until mcp_account_storage_ready() has been called
+   **/
+  signals[RECONNECT] = g_signal_new ("reconnect",
+      type, G_SIGNAL_RUN_LAST, 0, NULL, NULL,
+      g_cclosure_marshal_VOID__STRING, G_TYPE_NONE,
+      1, G_TYPE_STRING);
 }
 
 GType
@@ -330,6 +346,14 @@ mcp_account_storage_iface_implement_get_restrictions (
   iface->get_restrictions = method;
 }
 
+void
+mcp_account_storage_iface_implement_create (
+    McpAccountStorageIface *iface,
+    McpAccountStorageCreate method)
+{
+  iface->create = method;
+}
+
 /**
  * mcp_account_storage_priority:
  * @storage: an #McpAccountStorage instance
@@ -437,6 +461,52 @@ mcp_account_storage_set (const McpAccountStorage *storage,
   g_return_val_if_fail (iface != NULL, FALSE);
 
   return iface->set (storage, am, account, key, value);
+}
+
+/**
+ * mcp_account_storage_create:
+ * @storage: an #McpAccountStorage instance
+ * @manager: the name of the manager
+ * @protocol: the name of the protocol
+ * @params: A gchar * / GValue * hash table of account parameters
+ * @error: a GError to fill
+ *
+ * Inform the plugin that a new account is being created. @manager, @protocol
+ * and @params are given to help determining the account's unique name, but does
+ * not need to be stored on the account yet, mcp_account_storage_set() and
+ * mcp_account_storage_commit() will be called later.
+ *
+ * It is recommended to use mcp_account_manager_get_unique_name() to create the
+ * unique name, but it's not mandatory. One could base the unique name on an
+ * internal storage identifier, prefixed with the provider's name
+ * (e.g. goa__1234).
+ *
+ * #McpAccountStorage::created signal should not be emitted for this account,
+ * not even when mcp_account_storage_commit() will be called.
+ *
+ * Returns: the newly allocated account name, which should be freed
+ *  once the caller is done with it, or %NULL if that couldn't be done.
+ */
+gchar *
+mcp_account_storage_create (const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *manager,
+    const gchar *protocol,
+    GHashTable *params,
+    GError **error)
+{
+  McpAccountStorageIface *iface = MCP_ACCOUNT_STORAGE_GET_IFACE (storage);
+
+  g_return_val_if_fail (iface != NULL, NULL);
+
+  if (iface->create == NULL)
+    {
+      g_set_error (error, TP_ERROR, TP_ERROR_NOT_IMPLEMENTED,
+          "This storage does not implement create function");
+      return NULL;
+    }
+
+  return iface->create (storage, am, manager, protocol, params, error);
 }
 
 /**
@@ -735,4 +805,91 @@ mcp_account_storage_provider (const McpAccountStorage *storage)
   g_return_val_if_fail (iface != NULL, NULL);
 
   return iface->provider != NULL ? iface->provider : "";
+}
+
+/**
+ * mcp_account_storage_emit_create:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the created account
+ *
+ * Emits ::created signal
+ */
+void
+mcp_account_storage_emit_created (McpAccountStorage *storage,
+    const gchar *account)
+{
+  g_signal_emit (storage, signals[CREATED], 0, account);
+}
+
+/**
+ * mcp_account_storage_emit_altered:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the altered account
+ *
+ * Emits ::altered signal
+ */
+void
+mcp_account_storage_emit_altered (McpAccountStorage *storage,
+    const gchar *account)
+{
+  g_signal_emit (storage, signals[ALTERED], 0, account);
+}
+
+/**
+ * mcp_account_storage_emit_altered_one:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the altered account
+ * @key: the key of the altered property
+ *
+ * Emits ::created-one signal
+ */
+void
+mcp_account_storage_emit_altered_one (McpAccountStorage *storage,
+    const gchar *account,
+    const gchar *key)
+{
+  g_signal_emit (storage, signals[ALTERED_ONE], 0, account, key);
+}
+
+/**
+ * mcp_account_storage_emit_deleted:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the deleted account
+ *
+ * Emits ::deleted signal
+ */
+void
+mcp_account_storage_emit_deleted (McpAccountStorage *storage,
+    const gchar *account)
+{
+  g_signal_emit (storage, signals[DELETED], 0, account);
+}
+
+/**
+ * mcp_account_storage_emit_toggled:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the account
+ *
+ * Emits ::toggled signal
+ */
+void
+mcp_account_storage_emit_toggled (McpAccountStorage *storage,
+    const gchar *account,
+    gboolean enabled)
+{
+  g_signal_emit (storage, signals[TOGGLED], 0, account, enabled);
+}
+
+/**
+ * mcp_account_storage_emit_reconnect:
+ * @storage: an #McpAccountStorage instance
+ * @account: the unique name of the account to reconnect
+ *
+ * Emits ::reconnect signal
+ */
+void
+mcp_account_storage_emit_reconnect (McpAccountStorage *storage,
+    const gchar *account)
+{
+  g_signal_emit (storage, signals[RECONNECT], 0, account);
 }

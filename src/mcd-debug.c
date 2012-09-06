@@ -39,9 +39,8 @@
 
 #include <stdlib.h>
 
-#include <telepathy-glib/debug.h>
-#include <telepathy-glib/debug-sender.h>
-#include <telepathy-glib/util.h>
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 #include <mission-control-plugins/mission-control-plugins.h>
 
@@ -49,22 +48,6 @@
 #include "mcd-operation.h"
 
 gint mcd_debug_level = 0;
-
-gpointer
-mcd_debug_ref (gpointer obj,
-               const gchar *filename G_GNUC_UNUSED,
-               gint linenum G_GNUC_UNUSED)
-{
-    return g_object_ref (obj);
-}
-
-void
-mcd_debug_unref (gpointer obj,
-                 const gchar *filename G_GNUC_UNUSED,
-                 gint linenum G_GNUC_UNUSED)
-{
-    g_object_unref (obj);
-}
 
 static void
 mcd_debug_print_tree_real (gpointer object, gint level)

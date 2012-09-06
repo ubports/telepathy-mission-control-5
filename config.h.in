@@ -24,8 +24,11 @@
 /* Define if libaccounts SSO support is required */
 #undef ENABLE_LIBACCOUNTS_SSO
 
-/* Define if MCD plugins should be enabled */
-#undef ENABLE_MCD_PLUGINS
+/* Prevent post 2.30 APIs */
+#undef GLIB_VERSION_MAX_ALLOWED
+
+/* Ignore post 2.30 deprecations */
+#undef GLIB_VERSION_MIN_REQUIRED
 
 /* Define if you have connman dependencies */
 #undef HAVE_CONNMAN
@@ -102,6 +105,12 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
+
+/* Prevent post-0.20 APIs */
+#undef TP_VERSION_MAX_ALLOWED
+
+/* Ignore post-0.18 deprecations */
+#undef TP_VERSION_MIN_REQUIRED
 
 /* Version number of package */
 #undef VERSION

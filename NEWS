@@ -1,11 +1,58 @@
-telepathy-mission-control 5.12.1 (2012-07-11)
+telepathy-mission-control 5.13.1 (2012-09-06)
 =============================================
+
+The "Triceratops" release.
+
+Changes:
+
+• On Unix platforms, umask() is now required. (Simon)
+• If a connection manager announces two or more channels in the same
+  NewChannels signal, behave as if it had announced each channel
+  separately. Simplify things that previously had to cope with
+  multiple channels at a time. (fd.o #52305, Simon)
+• Improve mc-tool: display Account.Storage settings, add Supersedes,
+  add "dump" subcommand (fd.o #53202; Guillaume, Xavier)
+• More internal reorganisation (fd.o #54151, Simon)
+
+Fixes:
+
+• Passwords are now deleted from gnome-keyring correctly (fd.o #42088, Simon)
+• When migrating Butterfly accounts to Haze, do the migration even if Butterfly
+  isn't installed, and copy the password as well as the username
+  (Debian #686835, Simon)
+• If compiled with UPower support, do not attempt to connect while going
+  to sleep (Guillaume)
+• Set up the altered-one signal for account storage backends correctly
+  (fd.o #52231, Xavier)
+• If service-activated under both names o.fd.Telepathy.MissionControl5
+  and o.fd.Telepathy.AccountManager simultaneously, avoid one or both
+  failing to activate due to a race condition (fd.o #53220, Simon)
+• When built for Android, don't use GSettings (fd.o #53497, Simon)
+
+telepathy-mission-control 5.13.0 (2012-07-23)
+=============================================
+
+Changes:
+
+• Remove support for many deprecated interfaces (fd.o #49753, fd.o #24762,
+  fd.o #24899, fd.o #24914, fd.o #49648; Simon):
+  · old-style (mcd_*) plugins, including McdPlugin and McdFilter
+  · an obsolete auto-away mechanism
+  · the non-standard Compat and Query interfaces
+  · tracking group members in McdChannel
+  · Capabilities (the predecessor of ContactCapabilities)
+  · some remnants of ContactCapabilities draft 1
 
 Fixes:
 
 • Stop using deprecated telepathy-glib symbols. (Jonny)
 • fdo#51842 - fix access to freed memory. (Xavier)
 • fix existing channel dispatching after using present/delegate. (Jonny)
+• Invalid GValue in libaccounts storage plugin (fd.o#48646, fledermaus)
+• fdo#52259 - Do not change RequestedPresence when disabling the account,
+  otherwise it won't reconnect when enabling it.
+• fdo#52231 - Let client decide which storage provider to use when creating an
+  account.
 
 telepathy-mission-control 5.12.0 (2012-04-02)
 =============================================

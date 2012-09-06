@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>McpDispatchOperationPolicy</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch04.html" title="Channel dispatch operations">
 <link rel="prev" href="ch04.html" title="Channel dispatch operations">
@@ -93,24 +93,46 @@ A typical plugin might look like this:
 <p>
 </p>
 <div class="example">
-<a name="idp10268448"></a><p class="title"><b>Example 3. </b></p>
-<div class="example-contents"><pre class="programlisting">
-G_DEFINE_TYPE_WITH_CODE (MyPlugin, my_plugin,
-   G_TYPE_OBJECT,
-   G_IMPLEMENT_INTERFACE (...);
-   G_IMPLEMENT_INTERFACE (MCP_TYPE_DISPATCH_OPERATION_POLICY,
-     cdo_policy_iface_init);
-   G_IMPLEMENT_INTERFACE (...))
-/* ... */
-static void
-cdo_policy_iface_init (McpDispatchOperationPolicyIface *iface,
-    gpointer unused G_GNUC_UNUSED)
-{
-  iface-&gt;check = my_plugin_check_cdo;
-  iface-&gt;handler_is_suitable_async = my_plugin_handler_is_suitable_async;
-  iface-&gt;handler_is_suitable_finish = my_plugin_handler_is_suitable_finish;
-}
-</pre></div>
+<a name="idp10780912"></a><p class="title"><b>Example 3. </b></p>
+<div class="example-contents">
+  <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td class="listing_lines" align="right"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>MyPlugin<span class="gtkdoc opt">,</span> my_plugin<span class="gtkdoc opt">,</span>
+   G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_DISPATCH_OPERATION_POLICY<span class="gtkdoc opt">,</span>
+     cdo_policy_iface_init<span class="gtkdoc opt">);</span>
+   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...))</span>
+<span class="comment">/* ... */</span>
+<span class="gtkdoc kwb">static void</span>
+<span class="function">cdo_policy_iface_init</span> <span class="gtkdoc opt">(</span>McpDispatchOperationPolicyIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">,</span>
+    gpointer unused G_GNUC_UNUSED<span class="gtkdoc opt">)</span>
+<span class="gtkdoc opt">{</span>
+  iface<span class="gtkdoc opt">-&gt;</span>check <span class="gtkdoc opt">=</span> my_plugin_check_cdo<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>handler_is_suitable_async <span class="gtkdoc opt">=</span> my_plugin_handler_is_suitable_async<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>handler_is_suitable_finish <span class="gtkdoc opt">=</span> my_plugin_handler_is_suitable_finish<span class="gtkdoc opt">;</span>
+<span class="gtkdoc opt">}</span></pre></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </div>
 <p><br class="example-break">
 </p>

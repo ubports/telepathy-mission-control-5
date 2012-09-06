@@ -24,7 +24,7 @@
 #ifndef __MCD_ACCOUNT_MANAGER_H__
 #define __MCD_ACCOUNT_MANAGER_H__
 
-#include <telepathy-glib/dbus.h>
+#include <telepathy-glib/telepathy-glib.h>
 #include "mission-control-plugins/mission-control-plugins.h"
 #include "mcd-storage.h"
 
@@ -71,8 +71,6 @@ McdAccountManager *mcd_account_manager_new (TpDBusDaemon *dbus_daemon);
 
 TpDBusDaemon *mcd_account_manager_get_dbus_daemon
     (McdAccountManager *account_manager);
-
-GKeyFile *mcd_account_manager_get_config (McdAccountManager *account_manager);
 
 typedef void (McdAccountManagerWriteConfCb) (McdAccountManager *account_manager,
                                              const GError *error,

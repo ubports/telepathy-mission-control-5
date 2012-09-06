@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.12.1])
+AC_INIT([telepathy-mission-control], [5.13.1])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -45,9 +45,9 @@ AC_SUBST([MCP_API_VERSION])
 #     set revision to 0
 # else if library source has changed since last release
 #     increment revision
-MCP_LT_CURRENT=3
-MCP_LT_REVISION=1
-MCP_LT_AGE=3
+MCP_LT_CURRENT=4
+MCP_LT_REVISION=0
+MCP_LT_AGE=4
 AC_SUBST([MCP_LT_CURRENT])
 AC_SUBST([MCP_LT_REVISION])
 AC_SUBST([MCP_LT_AGE])
@@ -149,54 +149,6 @@ else
 fi
 AC_SUBST(ACCOUNTS_CACHE_DIR)
 AC_DEFINE_UNQUOTED(ACCOUNTS_CACHE_DIR,"$ACCOUNTS_CACHE_DIR", [Directory for account/connection mapping for crash recovery])
-
-server_enabled="yes"
-AC_MSG_CHECKING(whether to build the daemon)
-AC_ARG_ENABLE(server,
-	[  --enable-server         build server. default=yes],
-	[
-		AC_MSG_RESULT(${enableval})
-		server_enabled="${enableval}"
-	],
-	[
-		AC_MSG_RESULT(yes)
-		server_enabled="yes"
-	]
-)
-AM_CONDITIONAL(HAVE_SERVER, [test x$server_enabled = xyes])
-
-ENABLE_MC_SERVER_SO6="no"
-AC_MSG_CHECKING(whether to pretend libmissioncontrol-server is stable)
-AC_ARG_ENABLE(mcserver-so6,
-	[  --enable-mcserver-so6    pretend libmissioncontrol-server is ABI-stable],
-	[
-		AC_MSG_RESULT(${enableval})
-		ENABLE_MC_SERVER_SO6="${enableval}"
-	],
-	[
-		AC_MSG_RESULT(no)
-		ENABLE_MC_SERVER_SO6="no"
-	]
-)
-AM_CONDITIONAL(ENABLE_MC_SERVER_SO6, [test "x$ENABLE_MC_SERVER_SO6" = xyes])
-
-AC_MSG_CHECKING(whether to support plugins)
-AC_ARG_ENABLE(mcd-plugins,
-	[  --enable-mcd-plugins       support plugins that use internal APIs. default=no],
-	[
-		AC_MSG_RESULT(${enableval})
-		mcd_plugins_enabled="${enableval}"
-	],
-	[
-		AC_MSG_RESULT(no)
-		mcd_plugins_enabled="no"
-	]
-)
-AM_CONDITIONAL(ENABLE_MCD_PLUGINS, [test x$mcd_plugins_enabled = xyes])
-if test "x$mcd_plugins_enabled" = xyes
-then
-  AC_DEFINE([ENABLE_MCD_PLUGINS], [1], [Define if MCD plugins should be enabled])
-fi
 
 aegis_enabled="no"
 AC_MSG_CHECKING([whether to build with Aegis (libcreds) support])
@@ -304,18 +256,19 @@ PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.82])
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.17.5])
-AC_SUBST(TELEPATHY_LIBS)
-AC_SUBST(TELEPATHY_CFLAGS)
+PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.19.0])
+AC_DEFINE([TP_VERSION_MIN_REQUIRED], [TP_VERSION_0_18],
+  [Ignore post-0.18 deprecations])
+AC_DEFINE([TP_VERSION_MAX_ALLOWED], [TP_VERSION_0_20],
+  [Prevent post-0.20 APIs])
 
 PKG_CHECK_MODULES([GLIB],
 	[glib-2.0 >= 2.30, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
 
-PKG_CHECK_MODULES([GIO], [gio-2.0 >= 2.28])
-AC_SUBST(GIO_LIBS)
-AC_SUBST(GIO_CFLAGS)
+AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_30], [Ignore post 2.30 deprecations])
+AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_30], [Prevent post 2.30 APIs])
 
 dnl Check for MCE, a Maemo service used to determine when the device is idle.
 PKG_CHECK_MODULES([MCE], mce >= 1.5, [HAVE_MCE=yes], [HAVE_MCE=no])
@@ -435,7 +388,6 @@ doc/Makefile \
 doc/reference/Makefile \
 doc/reference/mission-control-plugins/Makefile \
 m4/Makefile \
-mission-control.pc \
 mission-control-plugins.pc \
 mission-control-plugins-uninstalled.pc \
 mission-control-plugins/Makefile \

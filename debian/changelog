@@ -1,3 +1,13 @@
+telepathy-mission-control-5 (1:5.13.1-1) experimental; urgency=low
+
+  * New upstream development release.
+    - don't pass --enable-server, it can no longer be disabled anyway
+    - don't pass --disable-mcd-plugins, they can no longer be enabled anyway
+    - increase telepathy-glib dependency
+    - bump symbols
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 06 Sep 2012 18:54:44 +0100
+
 telepathy-mission-control-5 (1:5.12.1-1) experimental; urgency=low
 
   * New upstream release.

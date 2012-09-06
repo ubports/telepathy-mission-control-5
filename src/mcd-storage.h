@@ -27,73 +27,42 @@
 
 G_BEGIN_DECLS
 
-typedef struct _McdStorage McdStorage;
-typedef struct _McdStorageIface McdStorageIface;
+typedef struct {
+  GObject parent;
+  TpDBusDaemon *dbusd;
+  GKeyFile *keyfile;
+  GKeyFile *secrets;
+} McdStorage;
 
-struct _McdStorageIface {
-  GTypeInterface parent;
-
-  void (*load) (McdStorage *storage);
-
-  GStrv (*dup_accounts) (McdStorage *storage, gsize *n);
-
-  GStrv (*dup_settings) (McdStorage *storage, const gchar *account, gsize *n);
-
-  gboolean (*set_string) (McdStorage *storage,
-      const gchar *account,
-      const gchar *key,
-      const gchar *value,
-      gboolean secret);
-
-  gboolean (*set_value) (McdStorage *storage,
-      const gchar *account,
-      const gchar *key,
-      const GValue *value,
-      gboolean secret);
-
-  void (*delete_account) (McdStorage *storage,
-      const gchar *account);
-
-  void (*commit) (McdStorage *storage, const gchar *account);
-
-  gchar * (*dup_string) (McdStorage *storage,
-    const gchar *account,
-    const gchar *key);
-
-  GValue * (*dup_value) (McdStorage *storage,
-    const gchar *account,
-    const gchar *key,
-    GType type,
-    GError **error);
-
-  gboolean  (*get_boolean) (McdStorage *storage,
-    const gchar *account,
-    const gchar *key);
-
-  gint (*get_integer) (McdStorage *storage,
-    const gchar *account,
-    const gchar *key);
-
-  gboolean (*has_value) (McdStorage *storage,
-      const gchar *account,
-      const gchar *key);
-
-  McpAccountStorage *(*get_storage_plugin) (McdStorage *storage,
-      const gchar *account);
-};
+typedef struct _McdStorageClass McdStorageClass;
+typedef struct _McdStoragePrivate McdStoragePrivate;
 
 #define MCD_TYPE_STORAGE (mcd_storage_get_type ())
 
 #define MCD_STORAGE(o) \
   (G_TYPE_CHECK_INSTANCE_CAST ((o), MCD_TYPE_STORAGE, McdStorage))
 
+#define MCD_STORAGE_CLASS(cls) \
+  (G_TYPE_CHECK_CLASS_CAST ((cls), MCD_TYPE_STORAGE, McdStorageClass))
+
 #define MCD_IS_STORAGE(o) \
   (G_TYPE_CHECK_INSTANCE_TYPE ((o), MCD_TYPE_STORAGE))
 
-#define MCD_STORAGE_GET_IFACE(o) \
-  (G_TYPE_INSTANCE_GET_INTERFACE ((o), MCD_TYPE_STORAGE, McdStorageIface))
+#define MCD_IS_STORAGE_CLASS(cls) \
+  (G_TYPE_CHECK_CLASS_TYPE ((cls), MCD_TYPE_STORAGE))
+
+#define MCD_STORAGE_GET_CLASS(o) \
+  (G_TYPE_INSTANCE_GET_CLASS ((o), MCD_TYPE_STORAGE, McdStorageClass))
 
 GType mcd_storage_get_type (void);
+
+McdStorage *mcd_storage_new (void);
+void mcd_storage_set_dbus_daemon (McdStorage *self,
+    TpDBusDaemon *dbusd);
+void mcd_storage_ready (McdStorage *self);
+void mcd_storage_connect_signal (const gchar *signal,
+    GCallback func,
+    gpointer user_data);
 
 void mcd_storage_load (McdStorage *storage);
 
@@ -120,6 +89,13 @@ gboolean mcd_storage_set_value (McdStorage *storage,
     const gchar *key,
     const GValue *value,
     gboolean secret);
+
+gchar *mcd_storage_create_account (McdStorage *storage,
+    const gchar *provider,
+    const gchar *manager,
+    const gchar *protocol,
+    GHashTable *params,
+    GError **error);
 
 void mcd_storage_delete_account (McdStorage *storage, const gchar *account);
 

@@ -29,8 +29,9 @@
 
 #include <glib.h>
 #include <glib-object.h>
-#include <telepathy-glib/dbus.h>
-#include <telepathy-glib/gtypes.h>
+
+#include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 G_BEGIN_DECLS
 
@@ -47,9 +48,6 @@ void _mcd_object_call_on_struct_when_ready (gpointer object, gpointer strukt,
                                             gpointer user_data);
 void _mcd_object_ready (gpointer object, GQuark quark, const GError *error);
 
-G_GNUC_INTERNAL
-gboolean _mcd_file_set_contents (const gchar *filename, const gchar *contents,
-                                 gssize length, GError **error);
 G_GNUC_INTERNAL
 void _mcd_ext_register_dbus_glib_marshallers (void);
 
