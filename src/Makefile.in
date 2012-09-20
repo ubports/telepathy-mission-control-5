@@ -147,7 +147,6 @@ am_libmcd_convenience_la_OBJECTS = mcd-account.lo \
 	plugin-request.lo request.lo $(am__objects_2) $(am__objects_3) \
 	$(am__objects_4)
 nodist_libmcd_convenience_la_OBJECTS = signals-marshal.lo \
-	svc-Account_Interface_Addressing.lo \
 	svc-Account_Interface_Conditions.lo \
 	svc-Account_Interface_External_Password_Storage.lo \
 	svc-Account_Interface_Hidden.lo \
@@ -386,7 +385,6 @@ mc_gen_headers = \
 	_gen/enums.h \
 	_gen/gtypes.h \
 	_gen/interfaces.h \
-	_gen/svc-Account_Interface_Addressing.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_External_Password_Storage.h \
 	_gen/svc-Account_Interface_Hidden.h \
@@ -401,7 +399,6 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/signals-marshal.c \
 	_gen/signals-marshal.h \
 	_gen/signals-marshal.list \
-	_gen/svc-Account_Interface_Addressing.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_External_Password_Storage.c \
 	_gen/svc-Account_Interface_Hidden.c \
@@ -544,7 +541,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/plugin-request.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/request.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/signals-marshal.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Addressing.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Conditions.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_External_Password_Storage.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/svc-Account_Interface_Hidden.Plo@am__quote@
@@ -578,13 +574,6 @@ signals-marshal.lo: _gen/signals-marshal.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='_gen/signals-marshal.c' object='signals-marshal.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o signals-marshal.lo `test -f '_gen/signals-marshal.c' || echo '$(srcdir)/'`_gen/signals-marshal.c
-
-svc-Account_Interface_Addressing.lo: _gen/svc-Account_Interface_Addressing.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Addressing.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Addressing.Tpo -c -o svc-Account_Interface_Addressing.lo `test -f '_gen/svc-Account_Interface_Addressing.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Addressing.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/svc-Account_Interface_Addressing.Tpo $(DEPDIR)/svc-Account_Interface_Addressing.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='_gen/svc-Account_Interface_Addressing.c' object='svc-Account_Interface_Addressing.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o svc-Account_Interface_Addressing.lo `test -f '_gen/svc-Account_Interface_Addressing.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Addressing.c
 
 svc-Account_Interface_Conditions.lo: _gen/svc-Account_Interface_Conditions.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT svc-Account_Interface_Conditions.lo -MD -MP -MF $(DEPDIR)/svc-Account_Interface_Conditions.Tpo -c -o svc-Account_Interface_Conditions.lo `test -f '_gen/svc-Account_Interface_Conditions.c' || echo '$(srcdir)/'`_gen/svc-Account_Interface_Conditions.c
@@ -955,7 +944,7 @@ _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-$* \
 		--signal-marshal-prefix=_mcd_ext \
-		--include='<telepathy-glib/dbus.h>' \
+		--include='<telepathy-glib/telepathy-glib.h>' \
 		--include='"_gen/signals-marshal.h"' \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \
 		--allow-unstable \

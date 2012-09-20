@@ -326,7 +326,6 @@ created_cb (GObject *storage_plugin_obj,
     McpAccountStorage *plugin = MCP_ACCOUNT_STORAGE (storage_plugin_obj);
     McdAccountManager *am = MCD_ACCOUNT_MANAGER (data);
     McdAccountManagerPrivate *priv = MCD_ACCOUNT_MANAGER_PRIV (am);
-    McdAccountManagerClass *mclass = MCD_ACCOUNT_MANAGER_GET_CLASS (am);
     McdLoadAccountsData *lad = g_slice_new (McdLoadAccountsData);
     McdAccount *account = NULL;
     McdStorage *storage = priv->storage;
@@ -342,7 +341,7 @@ created_cb (GObject *storage_plugin_obj,
     if (mcp_account_storage_get (plugin, MCP_ACCOUNT_MANAGER (storage),
                                  name, NULL))
     {
-        account = mclass->account_new (am, name);
+        account = mcd_account_new (am, name);
         lad->account = account;
     }
     else
@@ -604,12 +603,6 @@ list_connection_names_cb (const gchar * const *names, gsize n,
         }
     }
     g_free (contents);
-}
-
-static McdAccount *
-account_new (McdAccountManager *account_manager, const gchar *name)
-{
-    return mcd_account_new (account_manager, name);
 }
 
 static void
@@ -924,8 +917,7 @@ _mcd_account_manager_create_account (McdAccountManager *account_manager,
                                 MC_ACCOUNTS_KEY_DISPLAY_NAME, display_name,
                                 FALSE);
 
-    account = MCD_ACCOUNT_MANAGER_GET_CLASS (account_manager)->account_new
-        (account_manager, unique_name);
+    account = mcd_account_new (account_manager, unique_name);
     g_free (unique_name);
 
     if (G_LIKELY (account))
@@ -1245,8 +1237,8 @@ migrate_butterfly_haze_ready (McdManager *manager,
 {
     MigrateCtx *ctx = user_data;
     gchar *display_name;
-    GValue v = {0,};
-    GValue password_v = {0,};
+    GValue v = G_VALUE_INIT;
+    GValue password_v = G_VALUE_INIT;
     GHashTable *parameters, *properties;
     gchar *str;
     GPtrArray *supersedes;
@@ -1440,8 +1432,7 @@ _mcd_account_manager_setup (McdAccountManager *account_manager)
             continue;
         }
 
-        account = MCD_ACCOUNT_MANAGER_GET_CLASS (account_manager)->account_new
-            (account_manager, *name);
+        account = mcd_account_new (account_manager, *name);
 
         if (G_UNLIKELY (!account))
         {
@@ -1591,8 +1582,6 @@ mcd_account_manager_class_init (McdAccountManagerClass *klass)
     object_class->get_property = get_property;
     object_class->constructed = _mcd_account_manager_constructed;
 
-    klass->account_new = account_new;
-
     g_object_class_install_property
         (object_class, PROP_DBUS_DAEMON,
          g_param_spec_object ("dbus-daemon", "DBus daemon", "DBus daemon",
@@ -1622,6 +1611,18 @@ static void
 mcd_account_manager_init (McdAccountManager *account_manager)
 {
     McdAccountManagerPrivate *priv;
+
+    priv = G_TYPE_INSTANCE_GET_PRIVATE ((account_manager),
+					MCD_TYPE_ACCOUNT_MANAGER,
+					McdAccountManagerPrivate);
+    account_manager->priv = priv;
+}
+
+static void
+_mcd_account_manager_constructed (GObject *obj)
+{
+    McdAccountManager *account_manager = MCD_ACCOUNT_MANAGER (obj);
+    McdAccountManagerPrivate *priv = account_manager->priv;
     guint i = 0;
     static struct { const gchar *name; GCallback handler; } sig[] =
       { { "created", G_CALLBACK (created_cb) },
@@ -1634,12 +1635,7 @@ mcd_account_manager_init (McdAccountManager *account_manager)
 
     DEBUG ("");
 
-    priv = G_TYPE_INSTANCE_GET_PRIVATE ((account_manager),
-					MCD_TYPE_ACCOUNT_MANAGER,
-					McdAccountManagerPrivate);
-    account_manager->priv = priv;
-
-    priv->storage = mcd_storage_new ();
+    priv->storage = mcd_storage_new (priv->dbus_daemon);
     priv->accounts = g_hash_table_new_full (g_str_hash, g_str_equal,
                                             NULL, unref_account);
 
@@ -1660,19 +1656,6 @@ mcd_account_manager_init (McdAccountManager *account_manager)
 
     /* initializes the interfaces */
     mcd_dbus_init_interfaces_instances (account_manager);
-}
-
-static void
-_mcd_account_manager_constructed (GObject *obj)
-{
-    McdAccountManager *manager = MCD_ACCOUNT_MANAGER (obj);
-    McdAccountManagerPrivate *priv = MCD_ACCOUNT_MANAGER_PRIV (manager);
-
-    /* FIXME: I'm pretty sure we should just move most of the above code out of
-     * _init() to here and then mcd_plugin_account_manager_new() could take the
-     * TpDBusDaemon * as it should and everyone wins.
-     */
-    mcd_storage_set_dbus_daemon (priv->storage, priv->dbus_daemon);
 }
 
 McdAccountManager *

@@ -3,7 +3,7 @@
 /* Directory for account/connection mapping for crash recovery */
 #undef ACCOUNTS_CACHE_DIR
 
-/* Directory for storing accounts */
+/* Directory in which accounts were previously stored */
 #undef ACCOUNTS_DIR
 
 /* Defined to the non-IM service type for hidden accounts, if any */

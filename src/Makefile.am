@@ -52,7 +52,6 @@ mc_gen_headers = \
 	_gen/enums.h \
 	_gen/gtypes.h \
 	_gen/interfaces.h \
-	_gen/svc-Account_Interface_Addressing.h \
 	_gen/svc-Account_Interface_Conditions.h \
 	_gen/svc-Account_Interface_External_Password_Storage.h \
 	_gen/svc-Account_Interface_Hidden.h \
@@ -67,7 +66,6 @@ nodist_libmcd_convenience_la_SOURCES = \
 	_gen/signals-marshal.c \
 	_gen/signals-marshal.h \
 	_gen/signals-marshal.list \
-	_gen/svc-Account_Interface_Addressing.c \
 	_gen/svc-Account_Interface_Conditions.c \
 	_gen/svc-Account_Interface_External_Password_Storage.c \
 	_gen/svc-Account_Interface_Hidden.c \
@@ -315,7 +313,7 @@ _gen/svc-%.c _gen/svc-%.h: _gen/%.xml \
 	$(AM_V_GEN)$(PYTHON) $(tools_dir)/glib-ginterface-gen.py \
 		--filename=_gen/svc-$* \
 		--signal-marshal-prefix=_mcd_ext \
-		--include='<telepathy-glib/dbus.h>' \
+		--include='<telepathy-glib/telepathy-glib.h>' \
 		--include='"_gen/signals-marshal.h"' \
 		--not-implemented-func='tp_dbus_g_method_return_not_implemented' \
 		--allow-unstable \

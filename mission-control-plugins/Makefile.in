@@ -97,6 +97,7 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" \
+	"$(DESTDIR)$(plugins_includedir)" \
 	"$(DESTDIR)$(plugins_includedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
@@ -151,7 +152,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-HEADERS = $(plugins_include_HEADERS)
+HEADERS = $(nodist_plugins_include_HEADERS) $(plugins_include_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -354,7 +355,11 @@ plugins_include_HEADERS = \
 	loader.h \
 	request.h \
 	request-policy.h \
-	mcp-signals-marshal.h
+	$(NULL)
+
+nodist_plugins_include_HEADERS = \
+	mcp-signals-marshal.h \
+	$(NULL)
 
 libmission_control_plugins_la_LDFLAGS = \
 	-export-symbols-regex "^(mcp_)" \
@@ -499,6 +504,27 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-nodist_plugins_includeHEADERS: $(nodist_plugins_include_HEADERS)
+	@$(NORMAL_INSTALL)
+	@list='$(nodist_plugins_include_HEADERS)'; test -n "$(plugins_includedir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(plugins_includedir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(plugins_includedir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(plugins_includedir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(plugins_includedir)" || exit $$?; \
+	done
+
+uninstall-nodist_plugins_includeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nodist_plugins_include_HEADERS)'; test -n "$(plugins_includedir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(plugins_includedir)'; $(am__uninstall_files_from_dir)
 install-plugins_includeHEADERS: $(plugins_include_HEADERS)
 	@$(NORMAL_INSTALL)
 	@list='$(plugins_include_HEADERS)'; test -n "$(plugins_includedir)" || list=; \
@@ -608,7 +634,7 @@ check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(plugins_includedir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(plugins_includedir)" "$(DESTDIR)$(plugins_includedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -667,7 +693,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-plugins_includeHEADERS
+install-data-am: install-nodist_plugins_includeHEADERS \
+	install-plugins_includeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -714,6 +741,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-libLTLIBRARIES \
+	uninstall-nodist_plugins_includeHEADERS \
 	uninstall-plugins_includeHEADERS
 
 .MAKE: all check install install-am install-strip
@@ -725,13 +753,16 @@ uninstall-am: uninstall-libLTLIBRARIES \
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-plugins_includeHEADERS install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-libLTLIBRARIES uninstall-plugins_includeHEADERS
+	install-libLTLIBRARIES install-man \
+	install-nodist_plugins_includeHEADERS install-pdf \
+	install-pdf-am install-plugins_includeHEADERS install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-libLTLIBRARIES \
+	uninstall-nodist_plugins_includeHEADERS \
+	uninstall-plugins_includeHEADERS
 
 
 Android.mk: Makefile.am $(BUILT_SOURCES)

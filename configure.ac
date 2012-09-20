@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.13.1])
+AC_INIT([telepathy-mission-control], [5.13.2])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -46,7 +46,7 @@ AC_SUBST([MCP_API_VERSION])
 # else if library source has changed since last release
 #     increment revision
 MCP_LT_CURRENT=4
-MCP_LT_REVISION=0
+MCP_LT_REVISION=1
 MCP_LT_AGE=4
 AC_SUBST([MCP_LT_CURRENT])
 AC_SUBST([MCP_LT_REVISION])
@@ -131,14 +131,14 @@ AM_CONDITIONAL([ENABLE_INSTALLED_TESTS], [test "x$installed_tests" = xyes])
 mctestsdir=${libdir}/telepathy-mission-control-tests
 AC_SUBST(mctestsdir)
 
-AC_ARG_WITH(accounts_dir, AS_HELP_STRING([--with-accounts-dir=<path>],[Directory for storing accounts]))
+AC_ARG_WITH([accounts_dir], [AS_HELP_STRING([--with-accounts-dir=<path>],[Directory in which accounts were previously stored])])
 if test -z "$with_accounts_dir" ; then
     ACCOUNTS_DIR="~/.mission-control/accounts"
 else
     ACCOUNTS_DIR=$with_accounts_dir
 fi
 AC_SUBST(ACCOUNTS_DIR)
-AC_DEFINE_UNQUOTED(ACCOUNTS_DIR,"$ACCOUNTS_DIR", [Directory for storing accounts])
+AC_DEFINE_UNQUOTED([ACCOUNTS_DIR], ["$ACCOUNTS_DIR"], [Directory in which accounts were previously stored])
 
 
 AC_ARG_WITH(accounts_cache_dir, AS_HELP_STRING([--with-accounts-cache-dir=<path>],[Directory for account/connection mapping for crash recovery]))

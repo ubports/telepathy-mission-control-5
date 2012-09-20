@@ -1,3 +1,313 @@
+commit e80d7797aa038480701c6819bc178c9302d823e7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 15:41:12 +0100
+
+    Prepare version 5.13.2
+
+commit d33c6c16abd488f6ec3fae2dbc88ffc6a3514c0b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 15:35:49 +0100
+
+    NEWS
+
+commit b6f897048723dab0a1aefaacb969e8026a3d6e4d
+Merge: 5b5ee48 7095375
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 15:09:20 +0100
+
+    Merge branch 'xdg-keyfile-35896'
+    
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Conflicts:
+    	src/mcd-account-manager-default.c
+
+commit 5b5ee4862e11ab2b12d8f652d06b45600dc358af
+Merge: 0bb531d ef2ea07
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 15:07:13 +0100
+
+    Merge branch 'telepathy-mission-control-5.12' into master
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit ef2ea07d1b27dabd87e0ae028396138f78d1970a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 14:58:30 +0100
+
+    the obligatory version bump
+
+commit 010ab4ba86f557f89e1ec2045dc9fc5ae71513ad
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 13:21:47 +0100
+
+    Prepare version 5.12.3
+
+commit 17965ae51796f93771a6444e90f6846639b68a9b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 13:21:31 +0100
+
+    Do not distribute mcp-signals-marshal.h, which is generated at build-time
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit eaefb264316f206186b2ac7f1f36e6a4692deb3d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 12:28:59 +0100
+
+    Default accounts backend: finish password migrations that Empathy 3.0 started
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Bug-Debian: http://bugs.debian.org/687933
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 5c89fe0b540eaeecd72379f1f2b9da07883425e9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-30 16:53:36 +0100
+
+    Make the gnome-keyring test work again, with modern gnome-keyring
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
+    Cherry-picked-from: c21e2b09bf4cdda6fb05d64f9198f6db7b776c76
+
+commit 7095375b51547bea365ed321f06ba6a7c7cd2101
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 13:57:29 +0100
+
+    Update documentation of --with-accounts-dir
+    
+    It used to be where we kept accounts; now it's only the source for
+    account migration into XDG_DATA_HOME.
+    
+    Keep its name the same, so that if a user or distribution is configuring
+    with --with-accounts-dir="~/.mc-accounts" or something, the migration
+    works as intended as long as they continue to do so. (We don't
+    recommend doing so, though.)
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c710e7bc5c302d657184077e0cc5530646efdb5f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 13:54:19 +0100
+
+    Default account backend: write accounts to XDG_DATA_HOME, with fallback
+    
+    If the user has ~/.mission-control/accounts/accounts.cfg we migrate
+    from there to XDG_DATA_HOME/telepathy/mission-control/accounts.cfg,
+    and if successful, delete the old name.
+    
+    If the user has XDG_DATA_DIRS/telepathy/mission-control/accounts.cfg
+    (in a lower-priority path element than XDG_DATA_HOME), we use it,
+    with copy-on-write into XDG_DATA_HOME.
+    
+    (Limitation: the account-store executable used in some tests only reads
+    from XDG_DATA_HOME, and doesn't understand the XDG_DATA_DIRS and
+    MC_ACCOUNT_DIR fallback.)
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 8de58594deeff1d26046f17487c5752b6fa0aeeb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 13:06:41 +0100
+
+    Default account backend: include directory creation in _commit
+    
+    Also check for errors - we can at least give a useful warning.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 9a932a687f75be5238c533d928f914292a5e9c43
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 13:11:50 +0100
+
+    Default account backend: restructure to be able to look in multiple places
+    
+    This isolates all file-writing into _commit, and all file-reading into
+    am_default_load_keyfile.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit bd9334449d2ff1db6158ecfbb41f65327a40a078
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-04 15:43:33 +0100
+
+    McdAccount: migrate avatars to a XDG path
+    
+    This is the easy part of XDGification: there is no plugin involvement or
+    anything for avatars (yet!), it's just hard-coded.
+    
+    Changing the avatar location from a single directory to a search path
+    results in some new corner cases, so test them.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 416486d706a4d717ad5670abca61e333471bfbdc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-04 15:03:12 +0100
+
+    mcd_ensure_directory: add
+    
+    I keep calling g_mkdir_with_parents() and expecting it to return a
+    boolean (it doesn't, it returns 0 or -1), so it seems worth wrapping
+    it in something more sensible.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 947aaa3c91f7f286d37f803286d77070f0cc6fb2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-03 19:12:29 +0100
+
+    Tests: distinguish between XDG cache/config/data home, and MC_ACCOUNT_DIR
+    
+    We want to be sure that MC is using the right one in each situation.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=35896
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 0bb531d7856f4b79edd7d328cef59e58f7f08ac8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-31 19:49:30 +0100
+
+    servicetest: don't eavesdrop on method replies or errors
+    
+    Eavesdropping on method replies breaks libdbus if you call methods using the
+    same connection. You can get into a situation like this:
+    
+    * Test calls a method on MC; say the serial number is 42
+    * At around the same time, MC calls a method on gnome-keyring and also uses
+      serial number 42
+    * gnome-keyring replies, labelled "in reply to 42"
+    * Test is eavesdropping, so it sees the reply going from gnome-keyring to MC
+    * Test interprets the reply from gnome-keyring to MC as the reply it was
+      expecting from MC, sees completely the wrong types, and becomes
+      confused
+    
+    This seems unlikely - but because serial numbers are sequential and
+    start from 1 for each connection (as opposed to starting from a random
+    offset), two connections can quite easily happen to sync up. I saw it
+    happen most recently in the gnome-keyring test. With the benefit
+    of hindsight, I think I've seen this before: whenever the tests
+    made an Introspect() call which returned a type other than 's', that
+    was probably this bug.
+    
+    We never actually generated events for messages other than signals and
+    method calls, so match those ones specifically, and don't eavesdrop on
+    replies.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54495
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit 0675c366c5b326d50a1ad7f368ee47c4219a47bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 11:29:53 +0100
+
+    Don't generate code for Account.I.Addressing, use telepathy-glib's
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit 375a55b0bc2f92a0ec6f409695b397aa7f6ec82e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 11:15:52 +0100
+
+    Be single-include-compliant when generating service bindings
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit 37609dd9849871633f84192a0ce4fe65c40784e6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 11:11:23 +0100
+
+    Use G_VALUE_INIT instead of { 0 }
+    
+    We already depend on GLib 2.30, which is new enough.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit a729a511399712c4b8fbfbef9d3517aaaa4ad9d7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-29 11:36:37 +0100
+
+    mcd_service_new: use tp_dbus_daemon_dup()
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit 362ef681dbaea571ccfccc3dbe06f2218780d217
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-29 11:18:11 +0100
+
+    mcd-dbusprop: remove support for filtering property setting through an ACL
+    
+    This provided an asynchronous API for getting and setting properties,
+    which nothing actually calls into, and nothing in MC supports setting
+    properties asynchronously anyway. Into the bin it goes!
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit d14283c0220d24772372128d534e8e230a3b2088
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-28 17:10:13 +0100
+
+    McdMaster: remove unused variable left over from old-style plugins
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit 450f485e4e9bb3be2ddb023e42de1fcf1fa2b282
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-28 16:53:17 +0100
+
+    McdAccountManager: remove useless virtual method
+    
+    We no longer allow McdAccountManager or McdAccount to be subclassed.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit f1a2718edbe6392e399e4498dc86249ef3f90fac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-28 16:50:12 +0100
+
+    McdAccountManager: move initialization from init to constructed
+    
+    This lets us use the construct properties, and in particular the
+    TpDBusDaemon, which means we can make it a construct-time property
+    on McdStorage.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54633
+
+commit 9ead40da113ae477439c322d605d9dc35d38e062
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 19:04:42 +0100
+
+    Post-release version bump
+
 commit 329a390d283e44c2955e87600428fb7cd86b97bf
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2012-09-06 18:23:15 +0100
