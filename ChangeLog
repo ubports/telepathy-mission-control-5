@@ -1,3 +1,56 @@
+commit c1fe16e325d1622bea056dbc8679c23e72000386
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 18:11:25 +0100
+
+    fix Makefile syntax
+
+commit a433ba2a46c9fdcd73e365c88639a6e501762893
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-21 15:35:54 +0100
+
+    exec-with-log.sh: add gdb wrapper
+    
+    Based on a patch from Jonny Lamb; changed to use ${abs_top_srcdir} to
+    work out-of-tree, backtrace all threads, and put the gdb script in /tools.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 91006767d5ce8f95b43c7ff85fc6e5ec90d8895c
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-10-03 14:37:26 +0200
+
+    prepare 5.14.0
+
+commit 4e5a187773cb34de567e3cf90d62710830bbd876
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-08-27 10:50:08 +0100
+
+    Don't warn on deprecated declarations, this is a stable branch.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 5f156149b05e7b5ab9e54eeee729136d9d59128c
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-10-03 15:05:06 +0200
+
+    Upload documentation to the 5.14.x location
+    
+    To be reverted in the 5.15 branch.
+
+commit 2a0b73c02353a155e473504546a8b7e598da4449
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-10-03 14:57:48 +0200
+
+    Don't check documentation completeness in this stable branch
+    
+    To be reverted in the 5.15 branch.
+
+commit 90a3b33273dd4384ebf653c9ec4c7a5fbc752246
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-20 16:15:48 +0100
+
+    Post-release version bump
+
 commit e80d7797aa038480701c6819bc178c9302d823e7
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2012-09-20 15:41:12 +0100
