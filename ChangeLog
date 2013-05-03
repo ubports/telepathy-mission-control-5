@@ -1,3 +1,79 @@
+commit b613401b8f238ed633e72691d5a6716fdcaf9ee1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 11:54:47 +0100
+
+    Prepare 5.14.1
+
+commit 57b73f8f22f0e7fbc4b37c994ba0c96ec52b8c01
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-01 19:55:15 +0100
+
+    NEWS for 5.14
+
+commit 9e89a8ed3c54ad4c9ad9cc939c995a7196037889
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-01-16 17:15:01 +0000
+
+    Only ignore passwords in gnome-keyring if Empathy has copied them
+    
+    When passwords are stored in the Parameters by MC and no
+    SASLAuthentication handler is used, e.g. under Sugar, we currently
+    save passwords into gnome-keyring, if enabled at compile time; so, we
+    want to read them back out of gnome-keyring.
+    
+    This conflicts slightly with wanting to ignore passwords in gnome-keyring
+    that are left over from an Empathy 3.0 schema migration that failed
+    due to fd.o #42088. To avoid failure to authenticate/re-prompt if the
+    password has been changed on the service side, ignore passwords that
+    are going to be deleted; but to avoid breaking Sugar, don't ignore
+    any other passwords we might find in gnome-keyring.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=59468
+
+commit 07d5735d63a0dd1102fcec454159aad36cdbe30a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 13:09:05 +0100
+
+    NEWS for 5.14
+
+commit 1b45aa774e0869c10275adf5c02b778d48b7a2b7
+Author: Nuno Araujo <nuno.araujo@russo79.com>
+Date:   2013-01-18 22:47:00 +0100
+
+    Fix the build with automake 1.13
+    
+    In Automake 1.13, the long-deprecated macro AM_CONFIG_HEADER (deprecated
+    since 2002) has been removed in favour of AC_CONFIG_HEADERS.
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=59605
+
+commit cdfea3c5a600a18f2621c6249a374951496685ba
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-04 16:43:23 +0100
+
+    Merge fd.o #63119 from telepathy-glib
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=63119
+
+commit 060e148bd71f3989861ab374dba89cc20278fcec
+Author: Cosimo Cecchi <cosimoc@gnome.org>
+Date:   2012-11-15 12:04:30 -0500
+
+    build: honor NOCONFIGURE in autogen.sh
+    
+    Like telepathy-glib does already.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=57165
+    Reviewed-By: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 847e2b950aa18d530dc0f32b58e8bb11a1658039
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 19:08:22 +0100
+
+    development version
+
 commit c1fe16e325d1622bea056dbc8679c23e72000386
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2012-10-03 18:11:25 +0100
