@@ -1,3 +1,14 @@
+telepathy-mission-control-5 (1:5.14.1-2) unstable; urgency=low
+
+  * Use dh_autoreconf
+  * Bump symbol versioning for mcp_account_storage_get_type() to 1:5.13.0~
+    so that plugins that could rely on ::altered-one working correctly will
+    depend on this version
+  * Standards-Version: 3.9.4
+  * Upload to unstable
+
+ -- Simon McVittie <smcv@debian.org>  Fri, 17 May 2013 10:19:41 +0100
+
 telepathy-mission-control-5 (1:5.14.1-1) experimental; urgency=low
 
   * New upstream stable release
@@ -34,7 +45,7 @@ telepathy-mission-control-5 (1:5.13.1-1) experimental; urgency=low
 
 telepathy-mission-control-5 (1:5.12.1-1) experimental; urgency=low
 
-  * New upstream release.
+  * New upstream release. (Closes: #683151)
   * debian/gbp.conf: Set experimental branch names again.
 
  -- Jonny Lamb <jonny@debian.org>  Wed, 11 Jul 2012 16:17:34 +0100

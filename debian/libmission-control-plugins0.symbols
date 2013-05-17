@@ -21,7 +21,7 @@ libmission-control-plugins.so.0 libmission-control-plugins0 #MINVER#
  mcp_account_storage_get_additional_info@Base 1:5.5.4
  mcp_account_storage_get_identifier@Base 1:5.5.4
  mcp_account_storage_get_restrictions@Base 1:5.5.4
- mcp_account_storage_get_type@Base 5.5.0~
+ mcp_account_storage_get_type@Base 1:5.13.0~
  mcp_account_storage_iface_implement_commit@Base 5.5.0~
  mcp_account_storage_iface_implement_commit_one@Base 1:5.5.2
  mcp_account_storage_iface_implement_create@Base 1:5.13.1~

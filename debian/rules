@@ -23,7 +23,7 @@ CONFIGURE_FLAGS += --with-connectivity=nm
 endif
 
 %:
-	dh $@ --with autotools_dev --parallel
+	dh $@ --with autoreconf --parallel
 
 override_dh_makeshlibs:
 	dh_makeshlibs -V
