@@ -73,7 +73,7 @@ billy_idle (gpointer user_data)
 {
   DBusMessage *reply = user_data;
   DBusConnection *connection = dbus_g_connection_get_connection (
-      ((TpProxy *) bus_daemon)->dbus_connection);
+      tp_proxy_get_dbus_connection (bus_daemon));
 
   if (!dbus_connection_send (connection, reply, NULL))
     g_error ("Out of memory");
@@ -143,6 +143,7 @@ int
 main (int argc, char **argv)
 {
     GError *error = NULL;
+    GDBusConnection *gdbus = NULL;
     DBusConnection *connection = NULL;
     int ret = 1;
     GMainLoop *teardown_loop;
@@ -165,6 +166,18 @@ main (int argc, char **argv)
     g_log_set_fatal_mask ("GLib-GObject",
         G_LOG_FATAL_MASK | G_LOG_LEVEL_CRITICAL | G_LOG_LEVEL_WARNING);
 
+    gdbus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
+
+    if (gdbus == NULL)
+    {
+        g_warning ("%s", error->message);
+        g_error_free (error);
+        error = NULL;
+        goto out;
+    }
+
+    g_dbus_connection_set_exit_on_close (gdbus, FALSE);
+
     bus_daemon = tp_dbus_daemon_dup (&error);
 
     if (bus_daemon == NULL)
@@ -179,7 +192,7 @@ main (int argc, char **argv)
      * DBUS_HANDLER_RESULT_HANDLED for signals, so for *our* filter to have any
      * effect, we need to install it as soon as possible */
     connection = dbus_g_connection_get_connection (
-        ((TpProxy *) bus_daemon)->dbus_connection);
+	tp_proxy_get_dbus_connection (bus_daemon));
     dbus_connection_add_filter (connection, dbus_filter_function, NULL, NULL);
 
 #if ENABLE_GNOME_KEYRING
@@ -236,6 +249,7 @@ out:
         dbus_connection_flush (connection);
     }
 
+    tp_clear_object (&gdbus);
     tp_clear_object (&bus_daemon);
 
     dbus_shutdown ();

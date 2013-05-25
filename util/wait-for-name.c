@@ -38,6 +38,8 @@
  *
  */
 
+#include "config.h"
+
 #ifdef HAVE_SYSEXITS_H
 # include <sysexits.h>
 #else
@@ -50,6 +52,7 @@
 #include <glib.h>
 
 #include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 static int exit_status = EX_SOFTWARE;
 static guint timeout_id = 0;

@@ -32,18 +32,8 @@
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS"/>
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS"/>
     <keyword type="macro" name="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY" link="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS"/>
-    <keyword type="function" name="McpAccountStorageCommitFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc"/>
-    <keyword type="function" name="McpAccountStorageCommitOneFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc"/>
-    <keyword type="function" name="McpAccountStorageCreate ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate"/>
-    <keyword type="function" name="McpAccountStorageDeleteFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc"/>
-    <keyword type="function" name="McpAccountStorageGetAdditionalInfoFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc"/>
-    <keyword type="function" name="McpAccountStorageGetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc"/>
-    <keyword type="function" name="McpAccountStorageGetIdentifierFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc"/>
-    <keyword type="function" name="McpAccountStorageGetRestrictionsFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc"/>
-    <keyword type="struct" name="struct McpAccountStorageIface" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface"/>
-    <keyword type="function" name="McpAccountStorageListFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc"/>
-    <keyword type="function" name="McpAccountStorageReadyFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc"/>
-    <keyword type="function" name="McpAccountStorageSetFunc ()" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc"/>
+    <keyword type="struct" name="struct McpAccountStorage" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorage"/>
+    <keyword type="struct" name="McpAccountStorageIface" link="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface"/>
     <keyword type="function" name="mcp_account_storage_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit"/>
     <keyword type="function" name="mcp_account_storage_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one"/>
     <keyword type="function" name="mcp_account_storage_create ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-create"/>
@@ -59,35 +49,29 @@
     <keyword type="function" name="mcp_account_storage_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info"/>
     <keyword type="function" name="mcp_account_storage_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier"/>
     <keyword type="function" name="mcp_account_storage_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_commit ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_commit_one ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_create ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-create"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_delete ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_additional_info ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_identifier ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_get_restrictions ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready"/>
-    <keyword type="function" name="mcp_account_storage_iface_implement_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_desc ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority"/>
-    <keyword type="function" name="mcp_account_storage_iface_set_provider ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider"/>
     <keyword type="function" name="mcp_account_storage_list ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list"/>
     <keyword type="function" name="mcp_account_storage_name ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name"/>
+    <keyword type="function" name="mcp_account_storage_owns ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-owns" since="5.13.UNRELEASED"/>
     <keyword type="function" name="mcp_account_storage_priority ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority"/>
     <keyword type="function" name="mcp_account_storage_provider ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-provider"/>
     <keyword type="function" name="mcp_account_storage_ready ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready"/>
     <keyword type="function" name="mcp_account_storage_set ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set"/>
+    <keyword type="function" name="mcp_account_storage_set_attribute ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-attribute" since="5.13.UNRELEASED"/>
+    <keyword type="function" name="mcp_account_storage_set_parameter ()" link="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-parameter" since="5.13.UNRELEASED"/>
     <keyword type="struct" name="McpAccountManager" link="McpAccountManager.html#McpAccountManager-struct"/>
     <keyword type="struct" name="McpAccountManagerIface" link="McpAccountManager.html#McpAccountManagerIface"/>
+    <keyword type="function" name="mcp_account_manager_escape_value_for_keyfile ()" link="McpAccountManager.html#mcp-account-manager-escape-value-for-keyfile"/>
+    <keyword type="function" name="mcp_account_manager_escape_variant_for_keyfile ()" link="McpAccountManager.html#mcp-account-manager-escape-variant-for-keyfile"/>
     <keyword type="function" name="mcp_account_manager_get_unique_name ()" link="McpAccountManager.html#mcp-account-manager-get-unique-name"/>
     <keyword type="function" name="mcp_account_manager_get_value ()" link="McpAccountManager.html#mcp-account-manager-get-value"/>
+    <keyword type="function" name="mcp_account_manager_init_value_for_attribute ()" link="McpAccountManager.html#mcp-account-manager-init-value-for-attribute"/>
     <keyword type="function" name="mcp_account_manager_list_keys ()" link="McpAccountManager.html#mcp-account-manager-list-keys"/>
     <keyword type="function" name="mcp_account_manager_parameter_is_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-is-secret"/>
     <keyword type="function" name="mcp_account_manager_parameter_make_secret ()" link="McpAccountManager.html#mcp-account-manager-parameter-make-secret"/>
+    <keyword type="function" name="mcp_account_manager_set_attribute ()" link="McpAccountManager.html#mcp-account-manager-set-attribute"/>
+    <keyword type="function" name="mcp_account_manager_set_parameter ()" link="McpAccountManager.html#mcp-account-manager-set-parameter"/>
     <keyword type="function" name="mcp_account_manager_set_value ()" link="McpAccountManager.html#mcp-account-manager-set-value"/>
+    <keyword type="function" name="mcp_account_manager_unescape_value_from_keyfile ()" link="McpAccountManager.html#mcp-account-manager-unescape-value-from-keyfile"/>
     <keyword type="function" name="McpRequestPolicyCb ()" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb"/>
     <keyword type="struct" name="struct McpRequestPolicyIface" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface"/>
     <keyword type="function" name="mcp_request_policy_check ()" link="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check"/>

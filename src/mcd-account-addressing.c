@@ -32,8 +32,6 @@
 #include "mcd-account-priv.h"
 #include "_gen/interfaces.h"
 
-#define SCHEMES TP_IFACE_ACCOUNT_INTERFACE_ADDRESSING ".URISchemes"
-
 static void
 addressing_set_uri_scheme_association (TpSvcAccountInterfaceAddressing *iface,
     const gchar *uri_scheme,
@@ -43,16 +41,25 @@ addressing_set_uri_scheme_association (TpSvcAccountInterfaceAddressing *iface,
   McdAccount *self = MCD_ACCOUNT (iface);
   const gchar *account = mcd_account_get_unique_name (self);
   McdStorage *storage = _mcd_account_get_storage (self);
-  GValue *stored_value =
-    mcd_storage_dup_value (storage, account, SCHEMES, G_TYPE_STRV, NULL);
-  gchar **schemes = g_value_get_boxed (stored_value);
-  gboolean old_association = tp_strv_contains ((const gchar * const *) schemes,
-      uri_scheme);
+  GValue value = G_VALUE_INIT;
+  gchar **schemes = NULL;
+  gboolean old_association = FALSE;
+
+  g_value_init (&value, G_TYPE_STRV);
+
+  if (mcd_storage_get_attribute (storage, account, MC_ACCOUNTS_KEY_URI_SCHEMES,
+                                 &value, NULL))
+    {
+      schemes = g_value_get_boxed (&value);
+      old_association = tp_strv_contains ((const gchar * const *) schemes,
+          uri_scheme);
+    }
 
   if (old_association != association)
     {
       GPtrArray *new_schemes = g_ptr_array_new ();
       gchar **s;
+      GHashTable *changed;
 
       if (association)
         {
@@ -71,13 +78,21 @@ addressing_set_uri_scheme_association (TpSvcAccountInterfaceAddressing *iface,
         }
 
       g_ptr_array_add (new_schemes, NULL);
-      mcd_storage_set_strv (storage, account, SCHEMES,
-          (const gchar * const *) new_schemes->pdata, FALSE);
+      mcd_storage_set_strv (storage, account, MC_ACCOUNTS_KEY_URI_SCHEMES,
+          (const gchar * const *) new_schemes->pdata);
 
+      changed = tp_asv_new (
+          "URISchemes", G_TYPE_STRV, new_schemes->pdata,
+          NULL);
+
+      tp_svc_dbus_properties_emit_properties_changed (self,
+          TP_IFACE_ACCOUNT_INTERFACE_ADDRESSING, changed, NULL);
+
+      g_hash_table_unref (changed);
       g_ptr_array_unref (new_schemes);
     }
 
-  tp_g_value_slice_free (stored_value);
+  g_value_unset (&value);
   tp_svc_account_interface_addressing_return_from_set_uri_scheme_association (
       context);
 }
@@ -90,13 +105,14 @@ addressing_get_uri_schemes (TpSvcDBusProperties *iface,
   McdAccount *self = MCD_ACCOUNT (iface);
   const gchar *account = mcd_account_get_unique_name (self);
   McdStorage *storage = _mcd_account_get_storage (self);
-  GValue *stored_value =
-    mcd_storage_dup_value (storage, account, SCHEMES, G_TYPE_STRV, NULL);
 
   g_value_init (value, G_TYPE_STRV);
-  g_value_set_boxed (value, g_value_get_boxed (stored_value));
 
-  tp_g_value_slice_free (stored_value);
+  if (!mcd_storage_get_attribute (storage, account, MC_ACCOUNTS_KEY_URI_SCHEMES,
+                                  value, NULL))
+    {
+      g_value_set_boxed (value, NULL);
+    }
 }
 
 const McdDBusProp account_addressing_properties[] = {

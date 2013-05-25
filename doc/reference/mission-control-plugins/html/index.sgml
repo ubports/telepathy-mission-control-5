@@ -1,4 +1,4 @@
-<ONLINE href="http://telepathy.freedesktop.org/doc/mission-control-plugins-5.14.x/">
+<ONLINE href="http://telepathy.freedesktop.org/doc/mission-control-plugins/">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions.synopsis" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html#mission-control-plugins-Plugin-loader-and-global-functions.synopsis">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions.description" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html#mission-control-plugins-Plugin-loader-and-global-functions.description">
@@ -17,18 +17,8 @@
 <ANCHOR id="MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS">
 <ANCHOR id="MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS">
 <ANCHOR id="MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS">
-<ANCHOR id="McpAccountStorageCommitFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc">
-<ANCHOR id="McpAccountStorageCommitOneFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc">
-<ANCHOR id="McpAccountStorageCreate" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate">
-<ANCHOR id="McpAccountStorageDeleteFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc">
-<ANCHOR id="McpAccountStorageGetAdditionalInfoFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc">
-<ANCHOR id="McpAccountStorageGetFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc">
-<ANCHOR id="McpAccountStorageGetIdentifierFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc">
-<ANCHOR id="McpAccountStorageGetRestrictionsFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc">
+<ANCHOR id="McpAccountStorage" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorage">
 <ANCHOR id="McpAccountStorageIface" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface">
-<ANCHOR id="McpAccountStorageListFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc">
-<ANCHOR id="McpAccountStorageReadyFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc">
-<ANCHOR id="McpAccountStorageSetFunc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc">
 <ANCHOR id="mcp-account-storage-commit" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit">
 <ANCHOR id="mcp-account-storage-commit-one" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one">
 <ANCHOR id="mcp-account-storage-create" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-create">
@@ -44,27 +34,15 @@
 <ANCHOR id="mcp-account-storage-get-additional-info" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info">
 <ANCHOR id="mcp-account-storage-get-identifier" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier">
 <ANCHOR id="mcp-account-storage-get-restrictions" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions">
-<ANCHOR id="mcp-account-storage-iface-implement-commit" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit">
-<ANCHOR id="mcp-account-storage-iface-implement-commit-one" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one">
-<ANCHOR id="mcp-account-storage-iface-implement-create" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-create">
-<ANCHOR id="mcp-account-storage-iface-implement-delete" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete">
-<ANCHOR id="mcp-account-storage-iface-implement-get" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get">
-<ANCHOR id="mcp-account-storage-iface-implement-get-additional-info" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info">
-<ANCHOR id="mcp-account-storage-iface-implement-get-identifier" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier">
-<ANCHOR id="mcp-account-storage-iface-implement-get-restrictions" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions">
-<ANCHOR id="mcp-account-storage-iface-implement-list" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list">
-<ANCHOR id="mcp-account-storage-iface-implement-ready" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready">
-<ANCHOR id="mcp-account-storage-iface-implement-set" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set">
-<ANCHOR id="mcp-account-storage-iface-set-desc" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc">
-<ANCHOR id="mcp-account-storage-iface-set-name" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name">
-<ANCHOR id="mcp-account-storage-iface-set-priority" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority">
-<ANCHOR id="mcp-account-storage-iface-set-provider" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider">
 <ANCHOR id="mcp-account-storage-list" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list">
 <ANCHOR id="mcp-account-storage-name" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name">
+<ANCHOR id="mcp-account-storage-owns" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-owns">
 <ANCHOR id="mcp-account-storage-priority" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority">
 <ANCHOR id="mcp-account-storage-provider" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-provider">
 <ANCHOR id="mcp-account-storage-ready" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready">
 <ANCHOR id="mcp-account-storage-set" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set">
+<ANCHOR id="mcp-account-storage-set-attribute" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-attribute">
+<ANCHOR id="mcp-account-storage-set-parameter" href="mission-control-plugins/mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-parameter">
 <ANCHOR id="McpAccountManager" href="mission-control-plugins/McpAccountManager.html">
 <ANCHOR id="McpAccountManager.synopsis" href="mission-control-plugins/McpAccountManager.html#McpAccountManager.synopsis">
 <ANCHOR id="McpAccountManager.object-hierarchy" href="mission-control-plugins/McpAccountManager.html#McpAccountManager.object-hierarchy">
@@ -73,12 +51,18 @@
 <ANCHOR id="McpAccountManager.details" href="mission-control-plugins/McpAccountManager.html#McpAccountManager.details">
 <ANCHOR id="McpAccountManager-struct" href="mission-control-plugins/McpAccountManager.html#McpAccountManager-struct">
 <ANCHOR id="McpAccountManagerIface" href="mission-control-plugins/McpAccountManager.html#McpAccountManagerIface">
+<ANCHOR id="mcp-account-manager-escape-value-for-keyfile" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-escape-value-for-keyfile">
+<ANCHOR id="mcp-account-manager-escape-variant-for-keyfile" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-escape-variant-for-keyfile">
 <ANCHOR id="mcp-account-manager-get-unique-name" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-get-unique-name">
 <ANCHOR id="mcp-account-manager-get-value" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-get-value">
+<ANCHOR id="mcp-account-manager-init-value-for-attribute" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-init-value-for-attribute">
 <ANCHOR id="mcp-account-manager-list-keys" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-list-keys">
 <ANCHOR id="mcp-account-manager-parameter-is-secret" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-parameter-is-secret">
 <ANCHOR id="mcp-account-manager-parameter-make-secret" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-parameter-make-secret">
+<ANCHOR id="mcp-account-manager-set-attribute" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-set-attribute">
+<ANCHOR id="mcp-account-manager-set-parameter" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-set-parameter">
 <ANCHOR id="mcp-account-manager-set-value" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-set-value">
+<ANCHOR id="mcp-account-manager-unescape-value-from-keyfile" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-unescape-value-from-keyfile">
 <ANCHOR id="McpAccountManager.see-also" href="mission-control-plugins/McpAccountManager.html#McpAccountManager.see-also">
 <ANCHOR id="mission-control-plugins-McpRequestPolicy" href="mission-control-plugins/mission-control-plugins-McpRequestPolicy.html">
 <ANCHOR id="mission-control-plugins-McpRequestPolicy.synopsis" href="mission-control-plugins/mission-control-plugins-McpRequestPolicy.html#mission-control-plugins-McpRequestPolicy.synopsis">
@@ -147,6 +131,8 @@
 <ANCHOR id="mcp-dispatch-operation-ref-nth-channel-properties" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-ref-nth-channel-properties">
 <ANCHOR id="mcp-dispatch-operation-start-delay" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-start-delay">
 <ANCHOR id="McpDispatchOperation.see-also" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation.see-also">
+<ANCHOR id="annotation-glossterm-out" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-out">
 <ANCHOR id="annotation-glossterm-allow-none" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-allow-none">
 <ANCHOR id="annotation-glossterm-element-type" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-element-type">
+<ANCHOR id="annotation-glossterm-transfer container" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer container">
 <ANCHOR id="annotation-glossterm-transfer full" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer full">

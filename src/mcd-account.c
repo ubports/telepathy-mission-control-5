@@ -51,7 +51,6 @@
 #include "_gen/gtypes.h"
 #include "_gen/cli-Connection_Manager_Interface_Account_Storage-body.h"
 
-#define MAX_KEY_LENGTH (DBUS_MAXIMUM_NAME_LENGTH + 6)
 #define MC_OLD_AVATAR_FILENAME	"avatar.bin"
 
 #define MCD_ACCOUNT_PRIV(account) (MCD_ACCOUNT (account)->priv)
@@ -122,6 +121,7 @@ struct _McdAccountPrivate
     gchar *protocol_name;
 
     TpConnection *tp_connection;
+    TpContact *self_contact;
     McdConnection *connection;
     McdManager *manager;
 
@@ -172,6 +172,7 @@ struct _McdAccountPrivate
     gboolean removed;
     gboolean always_on;
     gboolean changing_presence;
+    gboolean setting_avatar;
 
     gboolean hidden;
     gboolean always_dispatch;
@@ -196,7 +197,6 @@ enum
 
 enum
 {
-    CONNECTION_STATUS_CHANGED,
     VALIDITY_CHANGED,
     CONNECTION_PATH_CHANGED,
     LAST_SIGNAL
@@ -381,25 +381,11 @@ _mcd_account_set_parameter (McdAccount *account, const gchar *name,
 {
     McdAccountPrivate *priv = account->priv;
     McdStorage *storage = priv->storage;
-    gchar key[MAX_KEY_LENGTH];
     const gchar *account_name = mcd_account_get_unique_name (account);
     gboolean secret = mcd_account_parameter_is_secret (account, name);
 
-    g_snprintf (key, sizeof (key), "param-%s", name);
-
-    mcd_storage_set_value (storage, account_name, key, value, secret);
+    mcd_storage_set_parameter (storage, account_name, name, value, secret);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 static GType mc_param_type (const TpConnectionManagerParam *param);
 
@@ -442,50 +428,22 @@ mcd_account_get_parameter_of_known_type (McdAccount *account,
 {
     const gchar *account_name = mcd_account_get_unique_name (account);
     McdStorage *storage = account->priv->storage;
-    gchar key[MAX_KEY_LENGTH];
+    GValue tmp = G_VALUE_INIT;
 
-    g_snprintf (key, sizeof (key), "param-%s", name);
+    g_value_init (&tmp, type);
 
-    if (mcd_storage_has_value (storage, account_name, key))
+    if (mcd_storage_get_parameter (storage, account_name, name, &tmp, error))
     {
-        GError *error2 = NULL;
-        GValue *value = mcd_storage_dup_value (storage, account_name, key,
-            type, &error2);
-
-        if (value != NULL)
+        if (parameter != NULL)
         {
-            if (error2 != NULL)
-            {
-                DEBUG ("type mismatch for parameter '%s': %s", name,
-                       error2->message);
-                DEBUG ("using default");
-                g_clear_error (&error2);
-            }
-
-            if (parameter != NULL)
-            {
-                g_value_init (parameter, type);
-                g_value_copy (value, parameter);
-            }
-
-            tp_g_value_slice_free (value);
-            return TRUE;
+            memcpy (parameter, &tmp, sizeof (tmp));
         }
-        else
-        {
-            g_propagate_error (error, error2);
-            return FALSE;
-        }
+
+        return TRUE;
     }
-    else
-    {
-        g_set_error (error, MCD_ACCOUNT_ERROR,
-                     MCD_ACCOUNT_ERROR_GET_PARAMETER,
-                     "Keyfile does not have key %s", key);
-        return FALSE;
-    }
+
+    return FALSE;
 }
-
 
 typedef void (*CheckParametersCb) (
     McdAccount *account,
@@ -750,7 +708,8 @@ mcd_account_delete (McdAccount *account,
 
     /* got to turn the account off before removing it, otherwise we can *
      * end up with an orphaned CM holding the account online            */
-    if (!_mcd_account_set_enabled (account, FALSE, FALSE, &error))
+    if (!_mcd_account_set_enabled (account, FALSE, FALSE,
+                                   MCD_DBUS_PROP_SET_FLAG_NONE, &error))
     {
         g_warning ("could not disable account %s (%s)", name, error->message);
         callback (account, error, user_data);
@@ -1054,8 +1013,11 @@ typedef enum {
  *  %SET_RESULT_ERROR on error
  */
 static SetResult
-mcd_account_set_string_val (McdAccount *account, const gchar *key,
-                            const GValue *value, GError **error)
+mcd_account_set_string_val (McdAccount *account,
+                            const gchar *key,
+                            const GValue *value,
+                            McdDBusPropSetFlags flags,
+                            GError **error)
 {
     McdAccountPrivate *priv = account->priv;
     McdStorage *storage = priv->storage;
@@ -1076,11 +1038,19 @@ mcd_account_set_string_val (McdAccount *account, const gchar *key,
         new_string = NULL;
     }
 
-    if (mcd_storage_set_string (storage, name, key, new_string, FALSE)) {
+    if (flags & MCD_DBUS_PROP_SET_FLAG_ALREADY_IN_STORAGE)
+    {
+        mcd_account_changed_property (account, key, value);
+        return SET_RESULT_CHANGED;
+    }
+    else if (mcd_storage_set_string (storage, name, key, new_string))
+    {
         mcd_storage_commit (storage, name);
         mcd_account_changed_property (account, key, value);
         return SET_RESULT_CHANGED;
-    } else {
+    }
+    else
+    {
         return SET_RESULT_UNCHANGED;
     }
 }
@@ -1091,33 +1061,29 @@ mcd_account_get_string_val (McdAccount *account, const gchar *key,
 {
     McdAccountPrivate *priv = account->priv;
     const gchar *name = mcd_account_get_unique_name (account);
-    GValue *fetched = NULL;
 
-    fetched =
-      mcd_storage_dup_value (priv->storage, name, key, G_TYPE_STRING, NULL);
     g_value_init (value, G_TYPE_STRING);
 
-    if (fetched != NULL)
-    {
-        g_value_copy (fetched, value);
-        tp_g_value_slice_free (fetched);
-    }
-    else
+    if (!mcd_storage_get_attribute (priv->storage, name, key, value, NULL))
     {
         g_value_set_static_string (value, NULL);
     }
 }
 
 static gboolean
-set_display_name (TpSvcDBusProperties *self, const gchar *name,
-                  const GValue *value, GError **error)
+set_display_name (TpSvcDBusProperties *self,
+                  const gchar *name,
+                  const GValue *value,
+                  McdDBusPropSetFlags flags,
+                  GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
     McdAccountPrivate *priv = account->priv;
 
     DEBUG ("called for %s", priv->unique_name);
-    return (mcd_account_set_string_val (account, name, value, error)
-            != SET_RESULT_ERROR);
+    return (mcd_account_set_string_val (account,
+        MC_ACCOUNTS_KEY_DISPLAY_NAME, value, flags,
+        error) != SET_RESULT_ERROR);
 }
 
 static void
@@ -1125,19 +1091,22 @@ get_display_name (TpSvcDBusProperties *self, const gchar *name, GValue *value)
 {
     McdAccount *account = MCD_ACCOUNT (self);
 
-    mcd_account_get_string_val (account, name, value);
+    mcd_account_get_string_val (account, MC_ACCOUNTS_KEY_DISPLAY_NAME, value);
 }
 
 static gboolean
-set_icon (TpSvcDBusProperties *self, const gchar *name, const GValue *value,
+set_icon (TpSvcDBusProperties *self,
+          const gchar *name,
+          const GValue *value,
+          McdDBusPropSetFlags flags,
           GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
     McdAccountPrivate *priv = account->priv;
 
     DEBUG ("called for %s", priv->unique_name);
-    return (mcd_account_set_string_val (account, name, value, error)
-            != SET_RESULT_ERROR);
+    return (mcd_account_set_string_val (account,
+        MC_ACCOUNTS_KEY_ICON, value, flags, error) != SET_RESULT_ERROR);
 }
 
 static void
@@ -1145,7 +1114,7 @@ get_icon (TpSvcDBusProperties *self, const gchar *name, GValue *value)
 {
     McdAccount *account = MCD_ACCOUNT (self);
 
-    mcd_account_get_string_val (account, name, value);
+    mcd_account_get_string_val (account, MC_ACCOUNTS_KEY_ICON, value);
 }
 
 static void
@@ -1181,6 +1150,7 @@ gboolean
 _mcd_account_set_enabled (McdAccount *account,
                           gboolean enabled,
                           gboolean write_out,
+                          McdDBusPropSetFlags flags,
                           GError **error)
 {
     McdAccountPrivate *priv = account->priv;
@@ -1209,11 +1179,14 @@ _mcd_account_set_enabled (McdAccount *account,
         g_value_init (&value, G_TYPE_BOOLEAN);
         g_value_set_boolean (&value, enabled);
 
-        mcd_storage_set_value (priv->storage, name,
-                               MC_ACCOUNTS_KEY_ENABLED, &value, FALSE);
+        if (!(flags & MCD_DBUS_PROP_SET_FLAG_ALREADY_IN_STORAGE))
+        {
+            mcd_storage_set_attribute (priv->storage, name,
+                                       MC_ACCOUNTS_KEY_ENABLED, &value);
 
-        if (write_out)
-            mcd_storage_commit (priv->storage, name);
+            if (write_out)
+                mcd_storage_commit (priv->storage, name);
+        }
 
         mcd_account_changed_property (account, "Enabled", &value);
 
@@ -1230,7 +1203,10 @@ _mcd_account_set_enabled (McdAccount *account,
 }
 
 static gboolean
-set_enabled (TpSvcDBusProperties *self, const gchar *name, const GValue *value,
+set_enabled (TpSvcDBusProperties *self,
+             const gchar *name,
+             const GValue *value,
+             McdDBusPropSetFlags flags,
              GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
@@ -1249,7 +1225,7 @@ set_enabled (TpSvcDBusProperties *self, const gchar *name, const GValue *value,
 
     enabled = g_value_get_boolean (value);
 
-    return _mcd_account_set_enabled (account, enabled, TRUE, error);
+    return _mcd_account_set_enabled (account, enabled, TRUE, flags, error);
 }
 
 static void
@@ -1264,7 +1240,9 @@ get_enabled (TpSvcDBusProperties *self, const gchar *name, GValue *value)
 
 static gboolean
 set_service (TpSvcDBusProperties *self, const gchar *name,
-             const GValue *value, GError **error)
+             const GValue *value,
+             McdDBusPropSetFlags flags,
+             GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
     SetResult ret = SET_RESULT_ERROR;
@@ -1289,7 +1267,8 @@ set_service (TpSvcDBusProperties *self, const gchar *name,
      * the appropriate error for us: don't duplicate that logic here */
     if (proceed)
     {
-        ret = mcd_account_set_string_val (account, name, value, error);
+        ret = mcd_account_set_string_val (account, MC_ACCOUNTS_KEY_SERVICE,
+                                          value, flags, error);
     }
     else
     {
@@ -1308,29 +1287,89 @@ get_service (TpSvcDBusProperties *self, const gchar *name, GValue *value)
 {
     McdAccount *account = MCD_ACCOUNT (self);
 
-    mcd_account_get_string_val (account, name, value);
+    mcd_account_get_string_val (account, MC_ACCOUNTS_KEY_SERVICE, value);
 }
+
+static void
+mcd_account_set_self_alias_cb (TpConnection *tp_connection,
+    const GError *error,
+    gpointer user_data,
+    GObject *weak_object)
+{
+  if (error)
+    DEBUG ("%s", error->message);
+}
+
+static void
+mcd_account_send_nickname_to_connection (McdAccount *self,
+    const gchar *nickname)
+{
+  if (self->priv->tp_connection == NULL)
+    return;
+
+  if (self->priv->self_contact == NULL)
+    return;
+
+  DEBUG ("%s: '%s'", self->priv->unique_name, nickname);
+
+  if (tp_proxy_has_interface_by_id (self->priv->tp_connection,
+          TP_IFACE_QUARK_CONNECTION_INTERFACE_ALIASING))
+    {
+      GHashTable *aliases = g_hash_table_new (NULL, NULL);
+
+      g_hash_table_insert (aliases,
+          GUINT_TO_POINTER (tp_contact_get_handle (self->priv->self_contact)),
+          (gchar *) nickname);
+      tp_cli_connection_interface_aliasing_call_set_aliases (
+          self->priv->tp_connection, -1, aliases,
+          mcd_account_set_self_alias_cb, NULL, NULL, NULL);
+      g_hash_table_unref (aliases);
+    }
+}
+
 
 static gboolean
 set_nickname (TpSvcDBusProperties *self, const gchar *name,
-              const GValue *value, GError **error)
+              const GValue *value,
+              McdDBusPropSetFlags flags,
+              GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
     McdAccountPrivate *priv = account->priv;
     SetResult ret;
+    GValue replacement = G_VALUE_INIT;
 
     DEBUG ("called for %s", priv->unique_name);
-    ret = mcd_account_set_string_val (account, name, value, error);
 
-    /* we need to call _mcd_connection_set_nickname for side effects,  *
-     * as that is how the CM is informed of the current nickname, even *
-     * if the nickname hasn't changed from our POV                     */
-    if (priv->connection != NULL)
+    /* If we're asked to set Nickname = "", set it to our identifier
+     * (NormalizedName) instead, so that we always have some sort of nickname.
+     * This matches what we do when connecting an account.
+     *
+     * Exception: if we're not fully connected yet (and hence have no
+     * self-contact), rely on the corresponding special-case
+     * when we do become connected.
+     */
+    if (G_VALUE_HOLDS_STRING (value) &&
+        tp_str_empty (g_value_get_string (value)) &&
+        priv->self_contact != NULL)
     {
-        /* this is a no-op if the connection doesn't support it */
-        _mcd_connection_set_nickname (priv->connection,
-                                      g_value_get_string (value));
+        g_value_init (&replacement, G_TYPE_STRING);
+        g_value_set_string (&replacement,
+            tp_contact_get_identifier (priv->self_contact));
+        value = &replacement;
     }
+
+    ret = mcd_account_set_string_val (account, MC_ACCOUNTS_KEY_NICKNAME,
+                                      value, flags, error);
+
+    if (ret != SET_RESULT_ERROR)
+    {
+        mcd_account_send_nickname_to_connection (account,
+            g_value_get_string (value));
+    }
+
+    if (value == &replacement)
+        g_value_unset (&replacement);
 
     return (ret != SET_RESULT_ERROR);
 }
@@ -1340,11 +1379,175 @@ get_nickname (TpSvcDBusProperties *self, const gchar *name, GValue *value)
 {
     McdAccount *account = MCD_ACCOUNT (self);
 
-    mcd_account_get_string_val (account, name, value);
+    mcd_account_get_string_val (account, MC_ACCOUNTS_KEY_NICKNAME, value);
+}
+
+static void
+mcd_account_self_contact_notify_avatar_file_cb (McdAccount *self,
+    GParamSpec *unused_param_spec G_GNUC_UNUSED,
+    TpContact *self_contact)
+{
+  const gchar *token;
+  gchar *prev_token;
+  GFile *file;
+  GError *error = NULL;
+  gboolean changed;
+
+  if (self_contact != self->priv->self_contact)
+    return;
+
+  file = tp_contact_get_avatar_file (self_contact);
+  token = tp_contact_get_avatar_token (self_contact);
+
+  if (self->priv->setting_avatar)
+    {
+      DEBUG ("Ignoring avatar change notification: we are setting ours");
+      return;
+    }
+
+  prev_token = _mcd_account_get_avatar_token (self);
+  changed = tp_strdiff (prev_token, token);
+  g_free (prev_token);
+
+  if (!changed)
+    {
+      DEBUG ("Avatar unchanged: '%s'", token);
+      return;
+    }
+
+  if (file == NULL)
+    {
+      if (!_mcd_account_set_avatar (self, NULL, "", "", &error))
+        {
+          DEBUG ("Attempt to clear avatar failed: %s", error->message);
+          g_clear_error (&error);
+        }
+    }
+  else
+    {
+      gchar *contents = NULL;
+      gsize len = 0;
+      GArray *arr;
+
+      if (!g_file_load_contents (file, NULL, &contents, &len, NULL, &error))
+        {
+          gchar *uri = g_file_get_uri (file);
+
+          WARNING ("Unable to read avatar file %s: %s", uri, error->message);
+          g_clear_error (&error);
+          g_free (uri);
+          return;
+        }
+
+      if (G_UNLIKELY (len > G_MAXUINT))
+        {
+          gchar *uri = g_file_get_uri (file);
+
+          WARNING ("Avatar file %s was ludicrously huge", uri);
+          g_free (uri);
+          g_free (contents);
+          return;
+        }
+
+      arr = g_array_sized_new (TRUE, FALSE, 1, (guint) len);
+      g_array_append_vals (arr, contents, (guint) len);
+      g_free (contents);
+
+      if (!_mcd_account_set_avatar (self, arr,
+              tp_contact_get_avatar_mime_type (self_contact),
+              tp_contact_get_avatar_token (self_contact), &error))
+        {
+          DEBUG ("Attempt to save avatar failed: %s", error->message);
+          g_clear_error (&error);
+        }
+
+      g_array_unref (arr);
+    }
+}
+
+static void
+avatars_set_avatar_cb (TpConnection *tp_connection,
+    const gchar *token,
+    const GError *error,
+    gpointer user_data,
+    GObject *weak_object)
+{
+  McdAccount *self = MCD_ACCOUNT (weak_object);
+
+  self->priv->setting_avatar = FALSE;
+
+  if (error != NULL)
+    {
+      DEBUG ("%s: %s", self->priv->unique_name, error->message);
+    }
+  else
+    {
+      DEBUG ("%s: new token %s", self->priv->unique_name, token);
+      _mcd_account_set_avatar_token (self, token);
+    }
+}
+
+static void
+avatars_clear_avatar_cb (TpConnection *tp_connection,
+    const GError *error,
+    gpointer user_data,
+    GObject *weak_object)
+{
+  McdAccount *self = MCD_ACCOUNT (weak_object);
+
+  self->priv->setting_avatar = FALSE;
+
+  if (error != NULL)
+    {
+      DEBUG ("%s: %s", self->priv->unique_name, error->message);
+    }
+  else
+    {
+      DEBUG ("%s: success", self->priv->unique_name);
+      _mcd_account_set_avatar_token (self, "");
+    }
+}
+
+static void
+mcd_account_send_avatar_to_connection (McdAccount *self,
+    const GArray *avatar,
+    const gchar *mime_type)
+{
+  if (self->priv->tp_connection == NULL)
+    return;
+
+  if (self->priv->self_contact == NULL)
+    return;
+
+  DEBUG ("%s: %u bytes", self->priv->unique_name, avatar->len);
+
+  if (tp_proxy_has_interface_by_id (self->priv->tp_connection,
+          TP_IFACE_QUARK_CONNECTION_INTERFACE_AVATARS))
+    {
+      self->priv->setting_avatar = TRUE;
+
+      if (avatar->len > 0 && avatar->len < G_MAXUINT)
+        {
+          tp_cli_connection_interface_avatars_call_set_avatar (
+            self->priv->tp_connection, -1, avatar, mime_type,
+            avatars_set_avatar_cb, NULL, NULL, (GObject *) self);
+        }
+      else
+        {
+          tp_cli_connection_interface_avatars_call_clear_avatar (
+              self->priv->tp_connection, -1, avatars_clear_avatar_cb,
+              NULL, NULL, (GObject *) self);
+        }
+    }
+  else
+    {
+      DEBUG ("unsupported, ignoring");
+    }
 }
 
 static gboolean
 set_avatar (TpSvcDBusProperties *self, const gchar *name, const GValue *value,
+            McdDBusPropSetFlags flags,
             GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
@@ -1449,7 +1652,10 @@ _presence_type_is_online (TpConnectionPresenceType type)
 
 static gboolean
 set_automatic_presence (TpSvcDBusProperties *self,
-                        const gchar *name, const GValue *value, GError **error)
+                        const gchar *name,
+                        const GValue *value,
+                        McdDBusPropSetFlags flags,
+                        GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
     McdAccountPrivate *priv = account->priv;
@@ -1486,29 +1692,12 @@ set_automatic_presence (TpSvcDBusProperties *self,
 
     if (priv->auto_presence_type != type)
     {
-        GValue presence = G_VALUE_INIT;
-
-        g_value_init (&presence, G_TYPE_INT);
-        g_value_set_int (&presence, type);
-
-        mcd_storage_set_value (priv->storage, account_name,
-                               MC_ACCOUNTS_KEY_AUTO_PRESENCE_TYPE,
-                               &presence, FALSE);
         priv->auto_presence_type = type;
         changed = TRUE;
     }
 
     if (tp_strdiff (priv->auto_presence_status, status))
     {
-        const gchar *new_status = NULL;
-
-        if (status != NULL && status[0] != 0)
-            new_status = status;
-
-        mcd_storage_set_string (priv->storage, account_name,
-                                MC_ACCOUNTS_KEY_AUTO_PRESENCE_STATUS,
-                                new_status, FALSE);
-
         g_free (priv->auto_presence_status);
         priv->auto_presence_status = g_strdup (status);
         changed = TRUE;
@@ -1516,23 +1705,16 @@ set_automatic_presence (TpSvcDBusProperties *self,
 
     if (tp_strdiff (priv->auto_presence_message, message))
     {
-        const gchar *new_message = NULL;
-
-        if (!tp_str_empty (message))
-            new_message = message;
-
-        mcd_storage_set_string (priv->storage, account_name,
-                                MC_ACCOUNTS_KEY_AUTO_PRESENCE_MESSAGE,
-                                new_message, FALSE);
-
         g_free (priv->auto_presence_message);
         priv->auto_presence_message = g_strdup (message);
         changed = TRUE;
     }
 
-
     if (changed)
     {
+        mcd_storage_set_attribute (priv->storage, account_name,
+                                   MC_ACCOUNTS_KEY_AUTOMATIC_PRESENCE,
+                                   value);
         mcd_storage_commit (priv->storage, account_name);
         mcd_account_changed_property (account, name, value);
     }
@@ -1566,7 +1748,9 @@ get_automatic_presence (TpSvcDBusProperties *self,
 
 static gboolean
 set_connect_automatically (TpSvcDBusProperties *self,
-                           const gchar *name, const GValue *value,
+                           const gchar *name,
+                           const GValue *value,
+                           McdDBusPropSetFlags flags,
                            GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
@@ -1596,12 +1780,16 @@ set_connect_automatically (TpSvcDBusProperties *self,
     if (priv->connect_automatically != connect_automatically)
     {
         const gchar *account_name = mcd_account_get_unique_name (account);
-        mcd_storage_set_value (priv->storage, account_name,
-                               MC_ACCOUNTS_KEY_CONNECT_AUTOMATICALLY,
-                               value, FALSE);
+
+        if (!(flags & MCD_DBUS_PROP_SET_FLAG_ALREADY_IN_STORAGE))
+        {
+            mcd_storage_set_attribute (priv->storage, account_name,
+                                       MC_ACCOUNTS_KEY_CONNECT_AUTOMATICALLY,
+                                       value);
+            mcd_storage_commit (priv->storage, account_name);
+        }
 
         priv->connect_automatically = connect_automatically;
-        mcd_storage_commit (priv->storage, account_name);
         mcd_account_changed_property (account, name, value);
 
         if (connect_automatically)
@@ -1708,7 +1896,9 @@ get_current_presence (TpSvcDBusProperties *self, const gchar *name,
 
 static gboolean
 set_requested_presence (TpSvcDBusProperties *self,
-                        const gchar *name, const GValue *value,
+                        const gchar *name,
+                        const GValue *value,
+                        McdDBusPropSetFlags flags,
                         GError **error)
 {
     McdAccount *account = MCD_ACCOUNT (self);
@@ -1793,13 +1983,15 @@ get_normalized_name (TpSvcDBusProperties *self,
 {
     McdAccount *account = MCD_ACCOUNT (self);
 
-    mcd_account_get_string_val (account, name, value);
+    mcd_account_get_string_val (account, MC_ACCOUNTS_KEY_NORMALIZED_NAME,
+                                value);
 }
 
 static gboolean
 set_supersedes (TpSvcDBusProperties *svc,
     const gchar *name,
     const GValue *value,
+    McdDBusPropSetFlags flags,
     GError **error)
 {
   McdAccount *self = MCD_ACCOUNT (svc);
@@ -1818,8 +2010,8 @@ set_supersedes (TpSvcDBusProperties *svc,
   self->priv->supersedes = g_value_dup_boxed (value);
   mcd_account_changed_property (self, name, value);
 
-  mcd_storage_set_value (self->priv->storage, self->priv->unique_name,
-      MC_ACCOUNTS_KEY_SUPERSEDES, value, FALSE);
+  mcd_storage_set_attribute (self->priv->storage, self->priv->unique_name,
+      MC_ACCOUNTS_KEY_SUPERSEDES, value);
   mcd_storage_commit (self->priv->storage, self->priv->unique_name);
 
   return TRUE;
@@ -1875,6 +2067,7 @@ static gboolean
 set_storage_provider (TpSvcDBusProperties *self,
     const gchar *name,
     const GValue *value,
+    McdDBusPropSetFlags flags,
     GError **error)
 {
   McdAccount *account = MCD_ACCOUNT (self);
@@ -2019,6 +2212,7 @@ static gboolean
 set_hidden (TpSvcDBusProperties *self,
     const gchar *name,
     const GValue *value,
+    McdDBusPropSetFlags flags,
     GError **error)
 {
   McdAccount *account = MCD_ACCOUNT (self);
@@ -2042,8 +2236,8 @@ set_hidden (TpSvcDBusProperties *self,
    * So for now we check whether the value has changed, and violate the spec
    * by making this property mutable (at least with the keyfile backend).
    */
-  if (mcd_storage_set_value (priv->storage, account_name,
-          MC_ACCOUNTS_KEY_HIDDEN, value, FALSE))
+  if (mcd_storage_set_attribute (priv->storage, account_name,
+          MC_ACCOUNTS_KEY_HIDDEN, value))
     {
       mcd_storage_commit (priv->storage, account_name);
       mcd_account_changed_property (account, MC_ACCOUNTS_KEY_HIDDEN, value);
@@ -2187,10 +2381,17 @@ properties_iface_init (TpSvcDBusPropertiesClass *iface, gpointer iface_data)
 static GType
 mc_param_type (const TpConnectionManagerParam *param)
 {
-    if (G_UNLIKELY (param == NULL)) return G_TYPE_INVALID;
-    if (G_UNLIKELY (!param->dbus_signature)) return G_TYPE_INVALID;
+    const gchar *dbus_signature;
 
-    switch (param->dbus_signature[0])
+    if (G_UNLIKELY (param == NULL))
+        return G_TYPE_INVALID;
+
+    dbus_signature = tp_connection_manager_param_get_dbus_signature (param);
+
+    if (G_UNLIKELY (!dbus_signature))
+        return G_TYPE_INVALID;
+
+    switch (dbus_signature[0])
     {
     case DBUS_TYPE_STRING:
 	return G_TYPE_STRING;
@@ -2222,13 +2423,13 @@ mc_param_type (const TpConnectionManagerParam *param)
         return G_TYPE_UINT64;
 
     case DBUS_TYPE_ARRAY:
-        if (param->dbus_signature[1] == DBUS_TYPE_STRING)
+        if (dbus_signature[1] == DBUS_TYPE_STRING)
             return G_TYPE_STRV;
         /* other array types are not supported:
          * fall through the default case */
     default:
         g_warning ("skipping parameter %s, unknown type %s",
-                   param->name, param->dbus_signature);
+            tp_connection_manager_param_get_name (param), dbus_signature);
     }
     return G_TYPE_INVALID;
 }
@@ -2276,23 +2477,53 @@ account_remove (TpSvcAccount *svc, DBusGMethodInvocation *context)
     mcd_account_delete (self, account_remove_delete_cb, data);
 }
 
-/* tell the account that one of its properties has changed behind its back:  *
- * (as opposed to an external change triggered by DBus, for example) - This  *
- * typically occurs because an internal component (such as a storage plugin) *
- * wishes to notify us that something has changed.
- * This will trigger an update when the callback receives the new value     */
+/*
+ * @account: the account
+ * @name: an attribute name, or "param-" + a parameter name
+ *
+ * Tell the account that one of its attributes or parameters has changed
+ * behind its back (as opposed to an external change triggered by DBus,
+ * for example). This occurs when a storage plugin wishes to notify us
+ * that something has changed. This will trigger an update when the
+ * callback receives the new value. */
 void
-mcd_account_property_changed (McdAccount *account, const gchar *name)
+mcd_account_altered_by_plugin (McdAccount *account,
+                               const gchar *name)
 {
     /* parameters are handled en bloc, reinvoke self with bloc key: */
     if (g_str_has_prefix (name, "param-"))
     {
-        mcd_account_property_changed (account, "Parameters");
+        mcd_account_altered_by_plugin (account, "Parameters");
     }
     else
     {
         guint i = 0;
         const McdDBusProp *prop = NULL;
+        GValue value = G_VALUE_INIT;
+        GError *error = NULL;
+
+        DEBUG ("%s", name);
+
+        if (tp_strdiff (name, "Parameters") &&
+            !mcd_storage_init_value_for_attribute (&value, name))
+        {
+            WARNING ("plugin wants to alter %s but I don't know what "
+                     "type that ought to be", name);
+            return;
+        }
+
+        if (!tp_strdiff (name, "Parameters"))
+        {
+            get_parameters (TP_SVC_DBUS_PROPERTIES (account), name, &value);
+        }
+        else if (!mcd_storage_get_attribute (account->priv->storage,
+                                             account->priv->unique_name,
+                                             name, &value, &error))
+        {
+            WARNING ("cannot get new value of %s: %s", name, error->message);
+            g_error_free (error);
+            return;
+        }
 
         /* find the property update handler */
         for (; prop == NULL && account_properties[i].name != NULL; i++)
@@ -2305,32 +2536,34 @@ mcd_account_property_changed (McdAccount *account, const gchar *name)
          * then issue the change notification (DBus signals etc) for it   */
         if (prop != NULL)
         {
-            TpSvcDBusProperties *self = TP_SVC_DBUS_PROPERTIES (account);
-
-            if (prop->getprop != NULL)
+            /* poke the value back into itself with the setter: this      *
+             * extra round-trip may trigger extra actions like notifying  *
+             * the connection manager of the change, even though our own  *
+             * internal storage already has this value and needn't change */
+            if (prop->setprop != NULL)
             {
-                GValue value = G_VALUE_INIT;
-
-                prop->getprop (self, name, &value);
-
-                /* poke the value back into itself with the setter: this      *
-                 * extra round-trip may trigger extra actions like notifying  *
-                 * the connection manager of the change, even though our own  *
-                 * internal storage already has this value and needn't change */
-                if (prop->setprop != NULL)
-                  prop->setprop (self, prop->name, &value, NULL);
-                else
-                  mcd_account_changed_property (account, prop->name, &value);
-
-                g_value_unset (&value);
+                DEBUG ("Calling property setter for %s", name);
+                if (!prop->setprop (TP_SVC_DBUS_PROPERTIES (account),
+                                    prop->name, &value,
+                                    MCD_DBUS_PROP_SET_FLAG_ALREADY_IN_STORAGE,
+                                    &error))
+                {
+                    WARNING ("Unable to set %s: %s", name, error->message);
+                    g_error_free (error);
+                }
             }
             else
             {
-                DEBUG ("Valid DBus property %s with no get method was changed"
-                       " - cannot notify change since we cannot get its value",
-                      name);
+                DEBUG ("Emitting signal directly for %s", name);
+                mcd_account_changed_property (account, prop->name, &value);
             }
         }
+        else
+        {
+            DEBUG ("%s does not appear to be an Account property", name);
+        }
+
+        g_value_unset (&value);
     }
 }
 
@@ -2341,8 +2574,9 @@ mcd_account_check_parameters (McdAccount *account,
                               gpointer user_data)
 {
     McdAccountPrivate *priv = account->priv;
-    TpConnectionManagerProtocol *protocol;
-    const TpConnectionManagerParam *param;
+    TpProtocol *protocol;
+    GList *params = NULL;
+    GList *iter;
     GError *error = NULL;
 
     g_return_if_fail (callback != NULL);
@@ -2358,15 +2592,20 @@ mcd_account_check_parameters (McdAccount *account,
         goto out;
     }
 
-    for (param = protocol->params; param->name != NULL; param++)
+    params = tp_protocol_dup_params (protocol);
+
+    for (iter = params; iter != NULL; iter = iter->next)
     {
-        if (!(param->flags & TP_CONN_MGR_PARAM_FLAG_REQUIRED))
+        TpConnectionManagerParam *param = iter->data;
+        const gchar *param_name = tp_connection_manager_param_get_name (param);
+
+        if (!tp_connection_manager_param_is_required ((param)))
             continue;
 
-        if (!mcd_account_get_parameter (account, param->name, NULL, NULL))
+        if (!mcd_account_get_parameter (account, param_name, NULL, NULL))
         {
             g_set_error (&error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
-                "missing required parameter '%s'", param->name);
+                "missing required parameter '%s'", param_name);
             goto out;
         }
     }
@@ -2379,7 +2618,9 @@ out:
 
     callback (account, error, user_data);
     g_clear_error (&error);
-    tp_clear_pointer (&protocol, tp_connection_manager_protocol_free);
+    g_list_free_full (params,
+                      (GDestroyNotify) tp_connection_manager_param_free);
+    g_clear_object (&protocol);
 }
 
 static void
@@ -2437,24 +2678,26 @@ set_parameter_changed (GHashTable *dbus_properties,
                        const TpConnectionManagerParam *param,
                        const GValue *new_value)
 {
-    DEBUG ("Parameter %s changed", param->name);
+    const gchar *name = tp_connection_manager_param_get_name (param);
+
+    DEBUG ("Parameter %s changed", name);
 
     /* can the param be updated on the fly? If yes, prepare to do so; and if
      * not, prepare to reset the connection */
-    if (param->flags & TP_CONN_MGR_PARAM_FLAG_DBUS_PROPERTY)
+    if (tp_connection_manager_param_is_dbus_property (param))
     {
-        g_hash_table_insert (dbus_properties, g_strdup (param->name),
+        g_hash_table_insert (dbus_properties, g_strdup (name),
             tp_g_value_slice_dup (new_value));
     }
     else
     {
-        g_ptr_array_add (not_yet, g_strdup (param->name));
+        g_ptr_array_add (not_yet, g_strdup (name));
     }
 }
 
 static gboolean
 check_one_parameter_update (McdAccount *account,
-                            TpConnectionManagerProtocol *protocol,
+                            TpProtocol *protocol,
                             GHashTable *dbus_properties,
                             GPtrArray *not_yet,
                             const gchar *name,
@@ -2462,14 +2705,14 @@ check_one_parameter_update (McdAccount *account,
                             GError **error)
 {
     const TpConnectionManagerParam *param =
-        tp_connection_manager_protocol_get_param (protocol, name);
+        tp_protocol_get_param (protocol, name);
     GType type;
 
     if (param == NULL)
     {
         g_set_error (error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                      "Protocol '%s' does not have parameter '%s'",
-                     protocol->name, name);
+                     tp_protocol_get_name (protocol), name);
         return FALSE;
     }
 
@@ -2480,7 +2723,7 @@ check_one_parameter_update (McdAccount *account,
         /* FIXME: use D-Bus type names, not GType names. */
         g_set_error (error, TP_ERROR, TP_ERROR_INVALID_ARGUMENT,
                      "parameter '%s' must be of type %s, not %s",
-                     param->name,
+                     tp_connection_manager_param_get_name (param),
                      g_type_name (type), G_VALUE_TYPE_NAME (new_value));
         return FALSE;
     }
@@ -2493,7 +2736,7 @@ check_one_parameter_update (McdAccount *account,
         /* Check if the parameter's current value (or its default, if it has
          * one and it's not set to anything) matches the new value.
          */
-        if (mcd_account_get_parameter (account, param->name,
+        if (mcd_account_get_parameter (account, tp_connection_manager_param_get_name (param),
                 &current_value, NULL) ||
             tp_connection_manager_param_get_default (param, &current_value))
         {
@@ -2517,14 +2760,14 @@ check_one_parameter_update (McdAccount *account,
 
 static gboolean
 check_one_parameter_unset (McdAccount *account,
-                           TpConnectionManagerProtocol *protocol,
+                           TpProtocol *protocol,
                            GHashTable *dbus_properties,
                            GPtrArray *not_yet,
                            const gchar *name,
                            GError **error)
 {
     const TpConnectionManagerParam *param =
-        tp_connection_manager_protocol_get_param (protocol, name);
+        tp_protocol_get_param (protocol, name);
 
     /* The spec decrees that “If the given parameters […] do not exist at all,
      * the account manager MUST accept this without error.”. Thus this function
@@ -2536,8 +2779,8 @@ check_one_parameter_unset (McdAccount *account,
     {
         GValue current_value = G_VALUE_INIT;
 
-        if (mcd_account_get_parameter (account, param->name, &current_value,
-                                       NULL))
+        if (mcd_account_get_parameter (account, tp_connection_manager_param_get_name (param),
+                                       &current_value, NULL))
         {
             /* There's an existing value; let's see if it's the same as the
              * default, if any.
@@ -2557,7 +2800,7 @@ check_one_parameter_unset (McdAccount *account,
                 /* It has no default; we're gonna have to reconnect to make
                  * this take effect.
                  */
-                 g_ptr_array_add (not_yet, g_strdup (param->name));
+                g_ptr_array_add (not_yet, g_strdup (tp_connection_manager_param_get_name (param)));
             }
 
             g_value_unset (&current_value);
@@ -2569,7 +2812,7 @@ check_one_parameter_unset (McdAccount *account,
 
 static gboolean
 check_parameters (McdAccount *account,
-                  TpConnectionManagerProtocol *protocol,
+                  TpProtocol *protocol,
                   GHashTable *params,
                   const gchar **unset,
                   GHashTable *dbus_properties,
@@ -2622,7 +2865,7 @@ _mcd_account_set_parameters (McdAccount *account, GHashTable *params,
     GHashTable *dbus_properties = NULL;
     GPtrArray *not_yet = NULL;
     GError *error = NULL;
-    TpConnectionManagerProtocol *protocol = NULL;
+    TpProtocol *protocol = NULL;
 
     DEBUG ("called");
     if (G_UNLIKELY (!priv->manager && !load_manager (account)))
@@ -2669,7 +2912,7 @@ out:
     g_clear_error (&error);
     tp_clear_pointer (&dbus_properties, g_hash_table_unref);
     tp_clear_pointer (&not_yet, g_ptr_array_unref);
-    tp_clear_pointer (&protocol, tp_connection_manager_protocol_free);
+    g_clear_object (&protocol);
 }
 
 static void
@@ -2804,7 +3047,7 @@ register_dbus_service (McdAccount *self,
     dbus_daemon = self->priv->dbus_daemon;
     g_return_if_fail (dbus_daemon != NULL);
 
-    dbus_connection = TP_PROXY (dbus_daemon)->dbus_connection;
+    dbus_connection = tp_proxy_get_dbus_connection (TP_PROXY (dbus_daemon));
 
     if (G_LIKELY (dbus_connection))
 	dbus_g_connection_register_g_object (dbus_connection,
@@ -3025,7 +3268,7 @@ mcd_account_setup (McdAccount *account)
     McdAccountPrivate *priv = account->priv;
     McdStorage *storage = priv->storage;
     const gchar *name = mcd_account_get_unique_name (account);
-    GValue *value;
+    GValue value = G_VALUE_INIT;
 
     priv->manager_name =
       mcd_storage_dup_string (storage, name, MC_ACCOUNTS_KEY_MANAGER);
@@ -3066,10 +3309,67 @@ mcd_account_setup (McdAccount *account)
     priv->always_dispatch =
       mcd_storage_get_boolean (storage, name, MC_ACCOUNTS_KEY_ALWAYS_DISPATCH);
 
-    /* load the automatic presence */
-    priv->auto_presence_type =
-      mcd_storage_get_integer (storage, name,
-                               MC_ACCOUNTS_KEY_AUTO_PRESENCE_TYPE);
+    g_value_init (&value, TP_STRUCT_TYPE_SIMPLE_PRESENCE);
+
+    g_free (priv->auto_presence_status);
+    g_free (priv->auto_presence_message);
+
+    if (mcd_storage_get_attribute (storage, name,
+                                   MC_ACCOUNTS_KEY_AUTOMATIC_PRESENCE, &value,
+                                   NULL))
+    {
+        GValueArray *va = g_value_get_boxed (&value);
+
+        priv->auto_presence_type = g_value_get_uint (va->values + 0);
+        priv->auto_presence_status = g_value_dup_string (va->values + 1);
+        priv->auto_presence_message = g_value_dup_string (va->values + 2);
+
+        if (priv->auto_presence_status == NULL)
+            priv->auto_presence_status = g_strdup ("");
+        if (priv->auto_presence_message == NULL)
+            priv->auto_presence_message = g_strdup ("");
+    }
+    else
+    {
+        /* try the old versions */
+        priv->auto_presence_type =
+          mcd_storage_get_integer (storage, name,
+                                   MC_ACCOUNTS_KEY_AUTO_PRESENCE_TYPE);
+        priv->auto_presence_status =
+          mcd_storage_dup_string (storage, name,
+                                  MC_ACCOUNTS_KEY_AUTO_PRESENCE_STATUS);
+        priv->auto_presence_message =
+          mcd_storage_dup_string (storage, name,
+                                  MC_ACCOUNTS_KEY_AUTO_PRESENCE_MESSAGE);
+
+        if (priv->auto_presence_status == NULL)
+            priv->auto_presence_status = g_strdup ("");
+        if (priv->auto_presence_message == NULL)
+            priv->auto_presence_message = g_strdup ("");
+
+        /* migrate to a more sensible storage format */
+        g_value_take_boxed (&value, tp_value_array_build (3,
+                G_TYPE_UINT, (guint) priv->auto_presence_type,
+                G_TYPE_STRING, priv->auto_presence_status,
+                G_TYPE_STRING, priv->auto_presence_message,
+                G_TYPE_INVALID));
+
+        if (mcd_storage_set_attribute (storage, name,
+                                       MC_ACCOUNTS_KEY_AUTOMATIC_PRESENCE,
+                                       &value))
+        {
+            mcd_storage_set_attribute (storage, name,
+                                       MC_ACCOUNTS_KEY_AUTO_PRESENCE_TYPE,
+                                       NULL);
+            mcd_storage_set_attribute (storage, name,
+                                       MC_ACCOUNTS_KEY_AUTO_PRESENCE_STATUS,
+                                       NULL);
+            mcd_storage_set_attribute (storage, name,
+                                       MC_ACCOUNTS_KEY_AUTO_PRESENCE_MESSAGE,
+                                       NULL);
+            mcd_storage_commit (storage, name);
+        }
+    }
 
     /* If invalid or something, force it to AVAILABLE - we want the auto
      * presence type to be an online status */
@@ -3079,35 +3379,24 @@ mcd_account_setup (McdAccount *account)
         g_free (priv->auto_presence_status);
         priv->auto_presence_status = g_strdup ("available");
     }
-    else
-    {
-        g_free (priv->auto_presence_status);
-        priv->auto_presence_status =
-          mcd_storage_dup_string (storage, name,
-                                  MC_ACCOUNTS_KEY_AUTO_PRESENCE_STATUS);
-    }
 
-    g_free (priv->auto_presence_message);
-    priv->auto_presence_message =
-      mcd_storage_dup_string (storage, name,
-                              MC_ACCOUNTS_KEY_AUTO_PRESENCE_MESSAGE);
-
-    value = mcd_storage_dup_value (storage, name,
-                                   MC_ACCOUNTS_KEY_SUPERSEDES,
-                                   TP_ARRAY_TYPE_OBJECT_PATH_LIST, NULL);
+    g_value_unset (&value);
+    g_value_init (&value, TP_ARRAY_TYPE_OBJECT_PATH_LIST);
 
     if (priv->supersedes != NULL)
         g_ptr_array_unref (priv->supersedes);
 
-    if (value == NULL)
+    if (mcd_storage_get_attribute (storage, name,
+                                   MC_ACCOUNTS_KEY_SUPERSEDES, &value, NULL))
     {
-        priv->supersedes = g_ptr_array_new ();
+        priv->supersedes = g_value_dup_boxed (&value);
     }
     else
     {
-        priv->supersedes = g_value_dup_boxed (value);
-        tp_g_value_slice_free (value);
+        priv->supersedes = g_ptr_array_new ();
     }
+
+    g_value_unset (&value);
 
     /* check the manager */
     if (!priv->manager && !load_manager (account))
@@ -3268,6 +3557,7 @@ _mcd_account_dispose (GObject *object)
     tp_clear_object (&priv->storage_plugin);
     tp_clear_object (&priv->storage);
     tp_clear_object (&priv->dbus_daemon);
+    tp_clear_object (&priv->self_contact);
 
     _mcd_account_set_connection_context (self, NULL);
     _mcd_account_set_connection (self, NULL);
@@ -3368,14 +3658,6 @@ mcd_account_class_init (McdAccountClass * klass)
                                FALSE,
                                G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
     /* Signals */
-    _mcd_account_signals[CONNECTION_STATUS_CHANGED] =
-	g_signal_new ("connection-status-changed",
-		      G_OBJECT_CLASS_TYPE (klass),
-		      G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-		      0,
-		      NULL, NULL, NULL,
-		      G_TYPE_NONE,
-		      2, G_TYPE_UINT, G_TYPE_UINT);
     _mcd_account_signals[VALIDITY_CHANGED] =
 	g_signal_new ("validity-changed",
 		      G_OBJECT_CLASS_TYPE (klass),
@@ -3532,8 +3814,9 @@ GHashTable *
 _mcd_account_dup_parameters (McdAccount *account)
 {
     McdAccountPrivate *priv;
-    TpConnectionManagerProtocol *protocol;
-    const TpConnectionManagerParam *param;
+    TpProtocol *protocol;
+    GList *protocol_params;
+    GList *iter;
     GHashTable *params;
 
     g_return_val_if_fail (MCD_IS_ACCOUNT (account), NULL);
@@ -3569,19 +3852,25 @@ _mcd_account_dup_parameters (McdAccount *account)
                                     g_free,
                                     (GDestroyNotify) tp_g_value_slice_free);
 
-    for (param = protocol->params; param->name != NULL; param++)
+    protocol_params = tp_protocol_dup_params (protocol);
+
+    for (iter = protocol_params; iter != NULL; iter = iter->next)
     {
+        TpConnectionManagerParam *param = iter->data;
+        const gchar *name = tp_connection_manager_param_get_name (param);
         GValue v = G_VALUE_INIT;
 
-        if (mcd_account_get_parameter (account, param->name, &v, NULL))
+        if (mcd_account_get_parameter (account, name, &v, NULL))
         {
-            g_hash_table_insert (params, g_strdup (param->name),
+            g_hash_table_insert (params, g_strdup (name),
                                  tp_g_value_slice_dup (&v));
             g_value_unset (&v);
         }
     }
 
-    tp_connection_manager_protocol_free (protocol);
+    g_list_free_full (protocol_params,
+                      (GDestroyNotify) tp_connection_manager_param_free);
+    g_object_unref (protocol);
     return params;
 }
 
@@ -3798,10 +4087,8 @@ _mcd_account_set_normalized_name (McdAccount *account, const gchar *name)
     g_value_init (&value, G_TYPE_STRING);
     g_value_set_static_string (&value, name);
 
-    mcd_storage_set_value (priv->storage,
-                           account_name,
-                           MC_ACCOUNTS_KEY_NORMALIZED_NAME,
-                           &value, FALSE);
+    mcd_storage_set_attribute (priv->storage, account_name,
+                               MC_ACCOUNTS_KEY_NORMALIZED_NAME, &value);
     mcd_storage_commit (priv->storage, account_name);
     mcd_account_changed_property (account, MC_ACCOUNTS_KEY_NORMALIZED_NAME,
                                   &value);
@@ -3819,7 +4106,7 @@ _mcd_account_set_avatar_token (McdAccount *account, const gchar *token)
     mcd_storage_set_string (priv->storage,
                             account_name,
                             MC_ACCOUNTS_KEY_AVATAR_TOKEN,
-                            token, FALSE);
+                            token);
 
     mcd_storage_commit (priv->storage, account_name);
 }
@@ -3868,7 +4155,7 @@ _mcd_account_set_avatar (McdAccount *account, const GArray *avatar,
         mcd_storage_set_string (priv->storage,
                                 account_name,
                                 MC_ACCOUNTS_KEY_AVATAR_MIME,
-                                mime_type, FALSE);
+                                mime_type);
 
     if (token)
     {
@@ -3879,7 +4166,7 @@ _mcd_account_set_avatar (McdAccount *account, const GArray *avatar,
         mcd_storage_set_string (priv->storage,
                                 account_name,
                                 MC_ACCOUNTS_KEY_AVATAR_TOKEN,
-                                token, FALSE);
+                                token);
 
         if (!prev_token || strcmp (prev_token, token) != 0)
             tp_svc_account_interface_avatar_emit_avatar_changed (account);
@@ -3888,16 +4175,10 @@ _mcd_account_set_avatar (McdAccount *account, const GArray *avatar,
     }
     else
     {
-        mcd_storage_set_value (priv->storage,
-                               account_name,
-                               MC_ACCOUNTS_KEY_AVATAR_TOKEN,
-                               NULL, FALSE);
+        mcd_storage_set_attribute (priv->storage, account_name,
+                                   MC_ACCOUNTS_KEY_AVATAR_TOKEN, NULL);
 
-        /* this is a no-op if the connection doesn't support avatars */
-        if (priv->connection != NULL)
-        {
-            _mcd_connection_set_avatar (priv->connection, avatar, mime_type);
-        }
+        mcd_account_send_avatar_to_connection (account, avatar, mime_type);
     }
 
     mcd_storage_commit (priv->storage, account_name);
@@ -3995,15 +4276,19 @@ _mcd_account_get_supersedes (McdAccount *self)
 }
 
 static void
-mcd_account_connection_self_nickname_changed_cb (McdAccount *account,
-                                                 const gchar *alias,
-                                                 McdConnection *connection)
+mcd_account_self_contact_notify_alias_cb (McdAccount *self,
+    GParamSpec *unused_param_spec G_GNUC_UNUSED,
+    TpContact *self_contact)
 {
     GValue value = G_VALUE_INIT;
 
+    if (self_contact != self->priv->self_contact)
+        return;
+
     g_value_init (&value, G_TYPE_STRING);
-    g_value_set_static_string (&value, alias);
-    mcd_account_set_string_val (account, MC_ACCOUNTS_KEY_ALIAS, &value, NULL);
+    g_object_get_property (G_OBJECT (self_contact), "alias", &value);
+    mcd_account_set_string_val (self, MC_ACCOUNTS_KEY_NICKNAME, &value,
+                                MCD_DBUS_PROP_SET_FLAG_NONE, NULL);
     g_value_unset (&value);
 }
 
@@ -4014,7 +4299,7 @@ mcd_account_get_alias (McdAccount *account)
     const gchar *account_name = mcd_account_get_unique_name (account);
 
     return mcd_storage_dup_string (priv->storage, account_name,
-                                   MC_ACCOUNTS_KEY_ALIAS);
+                                   MC_ACCOUNTS_KEY_NICKNAME);
 }
 
 static void
@@ -4067,16 +4352,10 @@ on_conn_status_changed (McdConnection *connection,
                         TpConnectionStatus status,
                         TpConnectionStatusReason reason,
                         TpConnection *tp_conn,
+                        const gchar *dbus_error,
+                        GHashTable *details,
                         McdAccount *account)
 {
-    const gchar *dbus_error = NULL;
-    const GHashTable *details = NULL;
-
-    if (tp_conn != NULL)
-    {
-        dbus_error = tp_connection_get_detailed_error (tp_conn, &details);
-    }
-
     _mcd_account_set_connection_status (account, status, reason, tp_conn,
                                         dbus_error, details);
 }
@@ -4177,6 +4456,7 @@ _mcd_account_set_connection_status (McdAccount *account,
         || (tp_conn != NULL && status == TP_CONNECTION_STATUS_DISCONNECTED))
     {
         tp_clear_object (&priv->tp_connection);
+        tp_clear_object (&priv->self_contact);
 
         if (tp_conn != NULL && status != TP_CONNECTION_STATUS_DISCONNECTED)
             priv->tp_connection = g_object_ref (tp_conn);
@@ -4231,11 +4511,6 @@ _mcd_account_set_connection_status (McdAccount *account,
     mcd_account_thaw_properties (account);
 
     process_online_requests (account, status, reason);
-
-    if (changed)
-	g_signal_emit (account,
-		       _mcd_account_signals[CONNECTION_STATUS_CHANGED], 0,
-		       status, reason);
 }
 
 TpConnectionStatus
@@ -4245,9 +4520,6 @@ mcd_account_get_connection_status (McdAccount *account)
     return priv->conn_status;
 }
 
-/* FIXME: if this was only called from _mcd_account_set_connection_status,
- * we could combine CONNECTION_STATUS_CHANGED and CONNECTION_PATH_CHANGED
- * into one signal... but for now, this is also called from McdConnection */
 void
 _mcd_account_tp_connection_changed (McdAccount *account,
                                     TpConnection *tp_conn)
@@ -4458,13 +4730,168 @@ _mcd_account_get_old_avatar_filename (McdAccount *account,
 }
 
 static void
+mcd_account_process_initial_avatar_token (McdAccount *self)
+{
+  gchar *prev_token;
+  const gchar *token;
+
+  g_assert (self->priv->self_contact != NULL);
+
+  prev_token = _mcd_account_get_avatar_token (self);
+  token = tp_contact_get_avatar_token (self->priv->self_contact);
+
+  /* If we have a stored avatar but no avatar token, we must have
+   * changed it locally; set it.
+   *
+   * Meanwhile, if the self-contact's avatar token is empty, this is a
+   * protocol like link-local XMPP where avatars don't persist.
+   * Upload ours, if any. */
+  if (tp_str_empty (prev_token) || tp_str_empty (token))
+    {
+      GArray *avatar = NULL;
+      gchar *mime_type = NULL;
+
+      _mcd_account_get_avatar (self, &avatar, &mime_type);
+
+      if (avatar != NULL)
+        {
+          if (tp_str_empty (prev_token))
+            DEBUG ("We have an avatar that has never been uploaded");
+          if (tp_str_empty (token))
+            DEBUG ("We have an avatar and the server doesn't");
+
+          mcd_account_send_avatar_to_connection (self, avatar, mime_type);
+          g_array_unref (avatar);
+          g_free (mime_type);
+          return;
+        }
+
+      tp_clear_pointer (&avatar, g_array_unref);
+      g_free (mime_type);
+    }
+
+  /* Otherwise, if the self-contact's avatar token
+   * differs from ours, one of our "other selves" must have changed
+   * it remotely. Behave the same as if it changes remotely
+   * mid-session - i.e. download it and use it as our new avatar. */
+  if (tp_strdiff (token, prev_token))
+    {
+      GFile *file = tp_contact_get_avatar_file (self->priv->self_contact);
+
+      DEBUG ("The server's avatar does not match ours");
+
+      if (file != NULL)
+        {
+          /* We have already downloaded it: copy it. */
+          mcd_account_self_contact_notify_avatar_file_cb (self, NULL,
+              self->priv->self_contact);
+        }
+      /* ... else we haven't downloaded it yet, but when we do,
+       * notify::avatar-file will go off. */
+    }
+
+  g_free (prev_token);
+}
+
+
+static void
+mcd_account_self_contact_upgraded_cb (GObject *source_object,
+    GAsyncResult *res,
+    gpointer user_data)
+{
+  McdAccount *self = tp_weak_ref_dup_object (user_data);
+  GPtrArray *contacts = NULL;
+  GError *error = NULL;
+
+  if (self == NULL)
+    return;
+
+  g_return_if_fail (MCD_IS_ACCOUNT (self));
+
+  if (tp_connection_upgrade_contacts_finish (TP_CONNECTION (source_object),
+          res, &contacts, &error))
+    {
+      TpContact *self_contact;
+
+      g_assert (contacts->len == 1);
+      self_contact = g_ptr_array_index (contacts, 0);
+
+      if (self_contact == self->priv->self_contact)
+        {
+          DEBUG ("%s", tp_contact_get_identifier (self_contact));
+
+          tp_g_signal_connect_object (self_contact, "notify::alias",
+              G_CALLBACK (mcd_account_self_contact_notify_alias_cb),
+              self, G_CONNECT_SWAPPED);
+          mcd_account_self_contact_notify_alias_cb (self, NULL, self_contact);
+
+          tp_g_signal_connect_object (self_contact, "notify::avatar-file",
+              G_CALLBACK (mcd_account_self_contact_notify_avatar_file_cb),
+              self, G_CONNECT_SWAPPED);
+          mcd_account_process_initial_avatar_token (self);
+        }
+      else
+        {
+          DEBUG ("self-contact '%s' has changed to '%s' since we asked to "
+              "upgrade it", tp_contact_get_identifier (self_contact),
+              tp_contact_get_identifier (self->priv->self_contact));
+        }
+
+      g_ptr_array_unref (contacts);
+    }
+  else
+    {
+      DEBUG ("failed to prepare self-contact: %s", error->message);
+      g_clear_error (&error);
+    }
+
+  g_object_unref (self);
+  tp_weak_ref_destroy (user_data);
+}
+
+static void
+mcd_account_self_contact_changed_cb (McdAccount *self,
+    GParamSpec *unused_param_spec G_GNUC_UNUSED,
+    TpConnection *tp_connection)
+{
+  static const TpContactFeature contact_features[] = {
+      TP_CONTACT_FEATURE_AVATAR_TOKEN,
+      TP_CONTACT_FEATURE_AVATAR_DATA,
+      TP_CONTACT_FEATURE_ALIAS
+  };
+  TpContact *self_contact;
+
+  if (tp_connection != self->priv->tp_connection)
+    return;
+
+  self_contact = tp_connection_get_self_contact (tp_connection);
+  g_assert (self_contact != NULL);
+
+  DEBUG ("%s", tp_contact_get_identifier (self_contact));
+
+  if (self_contact == self->priv->self_contact)
+    return;
+
+  g_clear_object (&self->priv->self_contact);
+  self->priv->self_contact = g_object_ref (self_contact);
+
+  _mcd_account_set_normalized_name (self,
+      tp_contact_get_identifier (self_contact));
+
+  tp_connection_upgrade_contacts_async (tp_connection,
+      1, &self_contact,
+      G_N_ELEMENTS (contact_features), contact_features,
+      mcd_account_self_contact_upgraded_cb,
+      tp_weak_ref_new (self, NULL, NULL));
+}
+
+static void
 mcd_account_connection_ready_cb (McdAccount *account,
                                  McdConnection *connection)
 {
     McdAccountPrivate *priv = account->priv;
     gchar *nickname;
     TpConnection *tp_connection;
-    TpContact *self_contact;
     TpConnectionStatus status;
     TpConnectionStatusReason reason;
     const gchar *dbus_error = NULL;
@@ -4485,22 +4912,36 @@ mcd_account_connection_ready_cb (McdAccount *account,
     _mcd_account_set_connection_status (account, status, reason,
                                         tp_connection, dbus_error, details);
 
-    self_contact = tp_connection_get_self_contact (tp_connection);
-    g_assert (self_contact != NULL);
-    _mcd_account_set_normalized_name (account, tp_contact_get_identifier (
-            self_contact));
+    tp_g_signal_connect_object (tp_connection, "notify::self-contact",
+        G_CALLBACK (mcd_account_self_contact_changed_cb), account,
+        G_CONNECT_SWAPPED);
+    mcd_account_self_contact_changed_cb (account, NULL, tp_connection);
+    g_assert (priv->self_contact != NULL);
 
     /* FIXME: ideally, on protocols with server-stored nicknames, this should
      * only be done if the local Nickname has been changed since last time we
      * were online; Aliasing doesn't currently offer a way to tell whether
-     * this is such a protocol, though. */
-
+     * this is such a protocol, though.
+     *
+     * As a first step towards doing the right thing, we assume that if our
+     * locally-stored nickname is just the protocol identifer, the
+     * server-stored nickname (if any) takes precedence.
+     */
     nickname = mcd_account_get_alias (account);
 
-    if (nickname != NULL)
+    if (tp_str_empty (nickname))
     {
-        /* this is a no-op if the connection doesn't support it */
-        _mcd_connection_set_nickname (connection, nickname);
+        DEBUG ("no nickname yet");
+    }
+    else if (!tp_strdiff (nickname,
+            tp_contact_get_identifier (priv->self_contact)))
+    {
+        DEBUG ("not setting nickname to '%s' since it matches the "
+            "NormalizedName", nickname);
+    }
+    else
+    {
+        mcd_account_send_nickname_to_connection (account, nickname);
     }
 
     g_free (nickname);
@@ -4565,10 +5006,6 @@ _mcd_account_set_connection (McdAccount *account, McdConnection *connection)
                 G_CALLBACK (mcd_account_connection_ready_cb), account);
         }
 
-        g_signal_connect_swapped (connection, "self-nickname-changed",
-                G_CALLBACK (mcd_account_connection_self_nickname_changed_cb),
-                account);
-
         g_signal_connect (connection, "self-presence-changed",
                           G_CALLBACK (on_conn_self_presence_changed), account);
         g_signal_connect (connection, "connection-status-changed",
@@ -4594,10 +5031,8 @@ _mcd_account_set_has_been_online (McdAccount *account)
         g_value_init (&value, G_TYPE_BOOLEAN);
         g_value_set_boolean (&value, TRUE);
 
-        mcd_storage_set_value (account->priv->storage,
-                               account_name,
-                               MC_ACCOUNTS_KEY_HAS_BEEN_ONLINE,
-                               &value, FALSE);
+        mcd_storage_set_attribute (account->priv->storage, account_name,
+                                   MC_ACCOUNTS_KEY_HAS_BEEN_ONLINE, &value);
         account->priv->has_been_online = TRUE;
         mcd_storage_commit (account->priv->storage, account_name);
         mcd_account_changed_property (account, MC_ACCOUNTS_KEY_HAS_BEEN_ONLINE,
@@ -4704,7 +5139,7 @@ mcd_account_parameter_is_secret (McdAccount *self, const gchar *name)
                                             priv->protocol_name, name);
 
     return (param != NULL &&
-        (param->flags & TP_CONN_MGR_PARAM_FLAG_SECRET) != 0);
+        tp_connection_manager_param_is_secret (param));
 }
 
 void

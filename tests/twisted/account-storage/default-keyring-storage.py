@@ -242,6 +242,7 @@ protocol=fakeprotocol
 param-account=dontdivert@example.com
 param-password=password_in_keyfile
 DisplayName=New and improved account
+AutomaticPresence=2;available;;
 """ % group)
 
     account_manager, properties, interfaces = resuscitate_mc(q, bus, mc)
@@ -292,6 +293,7 @@ manager=fakecm
 protocol=fakeprotocol
 param-account=dontdivert@example.com
 DisplayName=Ye olde account
+AutomaticPresence=2;available;;
 """ % group)
 
     account_manager, properties, interfaces = resuscitate_mc(q, bus, mc)
@@ -313,5 +315,5 @@ if __name__ == '__main__':
     except OSError:
         pass
     start_gnome_keyring_daemon(ctl_dir)
-    exec_test(test, {}, timeout=10)
+    exec_test(test, {}, timeout=10, use_fake_accounts_service=False)
     stop_gnome_keyring_daemon()

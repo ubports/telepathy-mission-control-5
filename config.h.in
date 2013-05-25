@@ -24,7 +24,7 @@
 /* Define if libaccounts SSO support is required */
 #undef ENABLE_LIBACCOUNTS_SSO
 
-/* Prevent post 2.30 APIs */
+/* Prevent post 2.32 APIs */
 #undef GLIB_VERSION_MAX_ALLOWED
 
 /* Ignore post 2.30 deprecations */
@@ -105,6 +105,12 @@
 
 /* Define to 1 if you have the ANSI C header files. */
 #undef STDC_HEADERS
+
+/* Avoid individual headers */
+#undef TP_DISABLE_SINGLE_INCLUDE
+
+/* Define to hide deprecated struct fields */
+#undef TP_SEAL_ENABLE
 
 /* Prevent post-0.20 APIs */
 #undef TP_VERSION_MAX_ALLOWED

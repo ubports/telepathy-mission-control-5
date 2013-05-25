@@ -44,6 +44,7 @@
 
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <gio/gio.h>
 
 #include <string.h>
 #include <stdlib.h>
@@ -102,10 +103,7 @@ struct _McdConnectionPrivate
 
     TpConnectionStatusReason abort_reason;
     guint got_contact_capabilities : 1;
-    guint setting_avatar : 1;
     guint has_presence_if : 1;
-    guint has_avatars_if : 1;
-    guint has_alias_if : 1;
     guint has_capabilities_if : 1;
     guint has_contact_capabilities_if : 1;
     guint has_power_saving_if : 1;
@@ -127,8 +125,6 @@ struct _McdConnectionPrivate
 
     /* FALSE until connected and the supported presence statuses retrieved */
     guint presence_info_ready : 1;
-
-    gchar *alias;
 
     gboolean is_disposed;
     gboolean service_points_watched;
@@ -164,7 +160,6 @@ enum
 {
     READY,
     SELF_PRESENCE_CHANGED,
-    SELF_NICKNAME_CHANGED,
     CONNECTION_STATUS_CHANGED,
     N_SIGNALS
 };
@@ -494,7 +489,8 @@ _mcd_connection_call_disconnect (McdConnection *connection)
 {
     TpConnection *tp_conn = connection->priv->tp_conn;
 
-    if (!tp_conn || TP_PROXY (tp_conn)->invalidated != NULL) return;
+    if (!tp_conn || tp_proxy_get_invalidated (TP_PROXY (tp_conn)) != NULL)
+        return;
 
     if (tp_connection_get_status (tp_conn, NULL) ==
         TP_CONNECTION_STATUS_DISCONNECTED) return;
@@ -588,396 +584,6 @@ _foreach_channel_remove (McdMission * mission, McdOperation * operation)
 }
 
 static void
-avatars_set_avatar_cb (TpConnection *proxy, const gchar *token,
-		       const GError *error, gpointer user_data,
-		       GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-
-    priv->setting_avatar = FALSE;
-    if (error)
-    {
-	g_warning ("%s: error: %s", G_STRFUNC, error->message);
-	return;
-    }
-    DEBUG ("received token: %s", token);
-    _mcd_account_set_avatar_token (priv->account, token);
-}
-
-static void
-avatars_clear_avatar_cb (TpConnection *proxy, const GError *error,
-			 gpointer user_data, GObject *weak_object)
-{
-    if (!error)
-    {
-        DEBUG ("Clear avatar succeeded");
-    }
-    else
-    {
-	g_warning ("%s: error: %s", G_STRFUNC, error->message);
-    }
-}
-
-/* this signal handler only deals with our own avatar updates */
-static void
-on_avatar_retrieved (TpConnection *proxy, guint contact_id, const gchar *token,
-		     const GArray *avatar, const gchar *mime_type,
-		     gpointer user_data, GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-    gchar *prev_token = NULL;
-
-    if (contact_id != tp_connection_get_self_handle (proxy)) return;
-
-    /* if we are setting the avatar, we must ignore this signal */
-    if (priv->setting_avatar) return;
-
-    DEBUG ("Avatar retrieved for contact %d, token: %s", contact_id, token);
-    prev_token = _mcd_account_get_avatar_token (priv->account);
-
-    if (!prev_token || strcmp (token, prev_token) != 0)
-    {
-        DEBUG ("received mime-type: %s", mime_type);
-        _mcd_account_set_avatar (priv->account, avatar, mime_type, token,
-                                 NULL);
-    }
-    g_free (prev_token);
-}
-
-static void
-avatars_request_avatars_cb (TpConnection *proxy, const GError *error,
-			    gpointer user_data, GObject *weak_object)
-{
-    if (error)
-    {
-	g_warning ("%s: error: %s", G_STRFUNC, error->message);
-    }
-}
-
-static void
-avatars_known_token_cb (TpConnection *proxy, GHashTable *tokens,
-                        const GError *error, gpointer user_data,
-                        GObject *weak_object)
-{
-    McdConnection *connection = MCD_CONNECTION (weak_object);
-    McdConnectionPrivate *priv = connection->priv;
-    const gchar *token;
-    TpHandle self_handle = tp_connection_get_self_handle (proxy);
-    gpointer handle = user_data;
-
-    if (error)
-    {
-        g_warning ("%s: error: %s", G_STRFUNC, error->message);
-        return;
-    }
-
-    if (handle != GUINT_TO_POINTER (self_handle))
-        return;
-
-    token = g_hash_table_lookup (tokens, handle);
-
-    /* we have a token and it is not the empty string (ie no avatar) */
-    if (token != NULL && *token != '\0')
-    {
-        GArray handles = { (gchar *) &handle, 1 };
-
-        /* if we have an avatar, set off the request to fetch it: this will *
-           get picked up as we connect to the retrieved signal elsewhere    */
-        tp_cli_connection_interface_avatars_call_request_avatars (priv->tp_conn,
-                                                                  -1,
-                                                                  &handles,
-                                                                  avatars_request_avatars_cb,
-                                                                  NULL,
-                                                                  NULL,
-                                                                  weak_object);
-    }
-    else
-    {   /* no avatar => will never get a retrieved signal - remove manually */
-        GError *avatar_error = NULL;
-        McdAccount *account = mcd_connection_get_account (connection);
-
-        if (!_mcd_account_set_avatar (account, NULL, "", "", &avatar_error))
-            DEBUG ("Attempt to clear avatar failed: %s", avatar_error->message);
-    }
-}
-
-/* this signal handler only deals with our own avatar updates */
-static void
-on_avatar_updated (TpConnection *proxy, guint contact_id, const gchar *token,
-		   gpointer user_data, GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-    McdConnection *connection = MCD_CONNECTION (weak_object);
-    gchar *prev_token;
-
-    if (contact_id != tp_connection_get_self_handle (proxy)) return;
-
-    /* if we are setting the avatar, we must ignore this signal */
-    if (priv->setting_avatar) return;
-
-    DEBUG ("contact %d, token: %s", contact_id, token);
-    prev_token = _mcd_account_get_avatar_token (priv->account);
-
-    if (!prev_token || strcmp (token, prev_token) != 0)
-    {
-        GArray handles = { (gchar *) &contact_id, 1 };
-
-        DEBUG ("avatar has changed or been erased");
-        tp_cli_connection_interface_avatars_call_get_known_avatar_tokens (priv->tp_conn,
-                                                                          -1,
-                                                                          &handles,
-                                                                          avatars_known_token_cb,
-                                                                          GUINT_TO_POINTER (contact_id),
-                                                                          NULL,
-                                                                          (GObject *)connection);
-    }
-    g_free (prev_token);
-}
-
-void
-_mcd_connection_set_avatar (McdConnection *connection,
-                            const GArray *avatar,
-                            const gchar *mime_type)
-{
-    McdConnectionPrivate *priv = connection->priv;
-
-    if (!priv->has_avatars_if)
-        return;
-
-    DEBUG ("called");
-    if (avatar->len > 0 && avatar->len < G_MAXUINT)
-    {
-	tp_cli_connection_interface_avatars_call_set_avatar (priv->tp_conn, -1,
-							     avatar, mime_type,
-							     avatars_set_avatar_cb,
-							     priv, NULL,
-							     (GObject *)connection);
-	priv->setting_avatar = TRUE;
-    }
-    else
-	tp_cli_connection_interface_avatars_call_clear_avatar (priv->tp_conn, -1,
-							       avatars_clear_avatar_cb,
-							       NULL,
-							       g_free,
-							       (GObject *)connection);
-}
-
-static void
-avatars_request_tokens_cb (TpConnection *proxy, GHashTable *tokens,
-			   const GError *error, gpointer user_data,
-			   GObject *weak_object)
-{
-    McdConnectionPrivate *priv = (McdConnectionPrivate *)user_data;
-    McdConnection *connection = MCD_CONNECTION (weak_object);
-    GArray *avatar = NULL;
-    const gchar *token;
-    gchar *mime_type;
-    TpHandle self_handle;
-
-    if (error)
-    {
-	g_warning ("%s: error: %s", G_STRFUNC, error->message);
-	return;
-    }
-
-    self_handle = tp_connection_get_self_handle (proxy);
-    token = g_hash_table_lookup (tokens, GUINT_TO_POINTER (self_handle));
-
-    if (token)
-    {
-        /* act as though the avatar had changed to this */
-        on_avatar_updated (proxy, self_handle, token, priv, weak_object);
-        return;
-    }
-
-    _mcd_account_get_avatar (priv->account, &avatar, &mime_type);
-    if (avatar)
-    {
-        DEBUG ("No avatar set, setting our own");
-        _mcd_connection_set_avatar (connection, avatar, mime_type);
-        g_array_unref (avatar);
-    }
-    g_free (mime_type);
-}
-
-static void
-_mcd_connection_setup_avatar (McdConnection *connection)
-{
-    McdConnectionPrivate *priv = connection->priv;
-    gchar *mime_type, *token;
-    GArray *avatar;
-
-    if (!priv->has_avatars_if)
-	return;
-
-    tp_cli_connection_interface_avatars_connect_to_avatar_updated (priv->tp_conn,
-								   on_avatar_updated,
-								   priv, NULL,
-								   (GObject *)connection,
-								   NULL);
-    tp_cli_connection_interface_avatars_connect_to_avatar_retrieved (priv->tp_conn,
-								     on_avatar_retrieved,
-								     priv, NULL,
-								     (GObject *)connection,
-								     NULL);
-    priv->setting_avatar = FALSE;
-
-    _mcd_account_get_avatar (priv->account, &avatar, &mime_type);
-
-    if (avatar)
-    {
-	token = _mcd_account_get_avatar_token (priv->account);
-	g_free (token);
-	if (!token)
-	    _mcd_connection_set_avatar (connection, avatar, mime_type);
-	else
-	{
-	    GArray handles;
-            TpHandle self_handle;
-
-            DEBUG ("checking for server token");
-	    /* Set the avatar only if no other one was set */
-            self_handle = tp_connection_get_self_handle (priv->tp_conn);
-	    handles.len = 1;
-            handles.data = (gchar *)&self_handle;
-	    tp_cli_connection_interface_avatars_call_get_known_avatar_tokens (priv->tp_conn, -1,
-									      &handles,
-									      avatars_request_tokens_cb,
-									      priv, NULL,
-									      (GObject *)connection);
-	}
-	g_array_unref (avatar);
-    }
-    g_free (mime_type);
-}
-
-static void
-on_aliases_changed (TpConnection *proxy, const GPtrArray *aliases,
-		    gpointer user_data, GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-    guint self_handle;
-    guint i;
-
-    DEBUG ("called");
-
-    self_handle = tp_connection_get_self_handle (proxy);
-
-    for (i = 0; i < aliases->len; i++)
-    {
-        GValueArray *structure = g_ptr_array_index (aliases, i);
-
-        if (g_value_get_uint (structure->values) == self_handle)
-        {
-            const gchar *alias = g_value_get_string (structure->values + 1);
-
-            DEBUG ("Our alias on %s changed to %s",
-                   tp_proxy_get_object_path (proxy), alias);
-
-            if (priv->alias == NULL || tp_strdiff (priv->alias, alias))
-            {
-                g_free (priv->alias);
-                priv->alias = g_strdup (alias);
-                g_signal_emit (weak_object, signals[SELF_NICKNAME_CHANGED],
-                               0, alias);
-            }
-            break;
-        }
-    }
-}
-
-static void
-aliasing_set_aliases_cb (TpConnection *proxy, const GError *error,
-			 gpointer user_data, GObject *weak_object)
-{
-    if (error)
-    {
-	g_warning ("%s: error: %s", G_STRFUNC, error->message);
-    }
-}
-
-void
-_mcd_connection_set_nickname (McdConnection *connection,
-                              const gchar *nickname)
-{
-    McdConnectionPrivate *priv = connection->priv;
-    GHashTable *aliases;
-    TpHandle self_handle;
-
-    if (!priv->has_alias_if)
-        return;
-
-    DEBUG ("setting nickname '%s' using Aliasing", nickname);
-
-    aliases = g_hash_table_new (NULL, NULL);
-    self_handle = tp_connection_get_self_handle (priv->tp_conn);
-    g_hash_table_insert (aliases, GUINT_TO_POINTER (self_handle),
-                         (gchar *) nickname);
-    tp_cli_connection_interface_aliasing_call_set_aliases (priv->tp_conn, -1,
-							   aliases,
-							   aliasing_set_aliases_cb,
-							   priv, NULL,
-							   (GObject *)connection);
-    g_hash_table_unref (aliases);
-}
-
-static void
-_mcd_connection_get_aliases_cb (TpConnection *proxy,
-                                GHashTable *aliases,
-                                const GError *error,
-                                gpointer user_data,
-                                GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-    guint self_handle;
-    const gchar *alias;
-
-    DEBUG ("called");
-
-    if (error != NULL)
-    {
-        DEBUG ("GetAliases([SelfHandle]) failed: %s", error->message);
-        return;
-    }
-
-    self_handle = tp_connection_get_self_handle (proxy);
-
-    alias = g_hash_table_lookup (aliases,GUINT_TO_POINTER (self_handle));
-
-    if (alias != NULL &&
-        (priv->alias == NULL || tp_strdiff (priv->alias, alias)))
-    {
-            g_free (priv->alias);
-            priv->alias = g_strdup (alias);
-            g_signal_emit (weak_object, signals[SELF_NICKNAME_CHANGED], 0,
-                           alias);
-    }
-}
-
-static void
-_mcd_connection_setup_alias (McdConnection *connection)
-{
-    McdConnectionPrivate *priv = connection->priv;
-    GArray *self_handle_array;
-    guint self_handle;
-
-    self_handle_array = g_array_sized_new (FALSE, FALSE, sizeof (guint), 1);
-    self_handle = tp_connection_get_self_handle (priv->tp_conn);
-    g_array_append_val (self_handle_array, self_handle);
-
-    tp_cli_connection_interface_aliasing_connect_to_aliases_changed (priv->tp_conn,
-								     on_aliases_changed,
-								     priv, NULL,
-								     (GObject *)connection,
-								     NULL);
-
-    tp_cli_connection_interface_aliasing_call_get_aliases
-        (priv->tp_conn, -1, self_handle_array, _mcd_connection_get_aliases_cb,
-         priv, NULL, (GObject *) connection);
-    g_array_unref (self_handle_array);
-}
-
-static void
 _mcd_connection_setup_power_saving (McdConnection *connection)
 {
   McdConnectionPrivate *priv = connection->priv;
@@ -1053,7 +659,7 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     {
     case TP_CONNECTION_STATUS_CONNECTING:
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
-                       conn_status, conn_reason, tp_conn);
+                       conn_status, conn_reason, tp_conn, NULL, NULL);
         priv->abort_reason = TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED;
         priv->connected = FALSE;
         break;
@@ -1061,7 +667,7 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     case TP_CONNECTION_STATUS_CONNECTED:
         {
             g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
-                           conn_status, conn_reason, tp_conn);
+                           conn_status, conn_reason, tp_conn, NULL, NULL);
 
             if (priv->probation_timer == 0)
             {
@@ -1097,6 +703,84 @@ on_connection_status_changed (TpConnection *tp_conn, GParamSpec *pspec,
     }
 }
 
+static gboolean
+connection_should_reconnect (TpConnection *tp_conn,
+                             guint domain,
+                             gint code)
+{
+    TpConnectionStatusReason reason;
+
+    if (domain == TP_ERROR)
+    {
+        switch (code)
+        {
+        case TP_ERROR_CONNECTION_FAILED:
+        case TP_ERROR_CONNECTION_LOST:
+        case TP_ERROR_DISCONNECTED:
+        case TP_ERROR_NETWORK_ERROR:
+            DEBUG ("error code %s, reconnecting",
+                tp_error_get_dbus_name (code));
+            return TRUE;
+
+        case TP_ERROR_SOFTWARE_UPGRADE_REQUIRED:
+        case TP_ERROR_SERVICE_BUSY:
+        case TP_ERROR_CONNECTION_REPLACED:
+        case TP_ERROR_ALREADY_CONNECTED:
+        case TP_ERROR_CONNECTION_REFUSED:
+        case TP_ERROR_INVALID_ARGUMENT:
+        case TP_ERROR_INVALID_HANDLE:
+        case TP_ERROR_CANCELLED:
+        case TP_ERROR_AUTHENTICATION_FAILED:
+        case TP_ERROR_ENCRYPTION_NOT_AVAILABLE:
+        case TP_ERROR_ENCRYPTION_ERROR:
+        case TP_ERROR_CERT_NOT_PROVIDED:
+        case TP_ERROR_CERT_UNTRUSTED:
+        case TP_ERROR_CERT_EXPIRED:
+        case TP_ERROR_CERT_NOT_ACTIVATED:
+        case TP_ERROR_CERT_FINGERPRINT_MISMATCH:
+        case TP_ERROR_CERT_HOSTNAME_MISMATCH:
+        case TP_ERROR_CERT_SELF_SIGNED:
+        case TP_ERROR_CERT_INVALID:
+        case TP_ERROR_CERT_REVOKED:
+        case TP_ERROR_CERT_INSECURE:
+        case TP_ERROR_CERT_LIMIT_EXCEEDED:
+            DEBUG ("error code %s, not reconnecting",
+                tp_error_get_dbus_name (code));
+            return FALSE;
+
+        default:
+            DEBUG ("TpError code %s not handled",
+                tp_error_get_dbus_name (code));
+        }
+    }
+    else if (domain == TP_DBUS_ERRORS)
+    {
+        switch (code)
+        {
+        case TP_DBUS_ERROR_NAME_OWNER_LOST:
+            /* CM crashed */
+            DEBUG ("dbus error code: OWNER_LOST, reconnecting", code);
+            return TRUE;
+        }
+    }
+
+    /* not sure what the GError meant, so check the generic status code */
+    tp_connection_get_status (tp_conn, &reason);
+
+    switch (reason)
+    {
+    case TP_CONNECTION_STATUS_REASON_NETWORK_ERROR:
+        DEBUG ("StatusReason %d, reconnecting", reason);
+        return TRUE;
+    default:
+        break;
+    }
+
+    DEBUG ("not reconnecting");
+
+    return FALSE;
+}
+
 static void
 mcd_connection_invalidated_cb (TpConnection *tp_conn,
                                guint domain,
@@ -1126,8 +810,7 @@ mcd_connection_invalidated_cb (TpConnection *tp_conn,
 
     priv->connected = FALSE;
 
-    if ((priv->abort_reason == TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED ||
-         priv->abort_reason == TP_CONNECTION_STATUS_REASON_NETWORK_ERROR) &&
+    if (connection_should_reconnect (tp_conn, domain, code) &&
         priv->probation_drop_count <= PROBATION_MAX_DROPPED)
     {
         /* we were disconnected by a network error or by a connection manager
@@ -1517,34 +1200,26 @@ on_connection_ready (GObject *source_object, GAsyncResult *result,
                      gpointer user_data)
 {
     TpConnection *tp_conn = TP_CONNECTION (source_object);
-    McdConnection *connection, **connection_ptr = user_data;
+    TpWeakRef *weak_ref = user_data;
+    McdConnection *connection = tp_weak_ref_dup_object (weak_ref);
     McdConnectionPrivate *priv;
     GError *error = NULL;
-
-    connection = *connection_ptr;
-    if (connection)
-	g_object_remove_weak_pointer ((GObject *)connection,
-				      (gpointer)connection_ptr);
-    g_slice_free (McdConnection *, connection_ptr);
 
     if (!tp_proxy_prepare_finish (tp_conn, result, &error))
     {
         DEBUG ("got error: %s", error->message);
         g_clear_error (&error);
-        return;
+        goto finally;
     }
 
-    if (!connection) return;
+    if (!connection)
+        goto finally;
 
     DEBUG ("connection is ready");
     priv = MCD_CONNECTION_PRIV (connection);
 
     priv->has_presence_if = tp_proxy_has_interface_by_id
         (tp_conn, TP_IFACE_QUARK_CONNECTION_INTERFACE_SIMPLE_PRESENCE);
-    priv->has_avatars_if = tp_proxy_has_interface_by_id (tp_conn,
-							 TP_IFACE_QUARK_CONNECTION_INTERFACE_AVATARS);
-    priv->has_alias_if = tp_proxy_has_interface_by_id (tp_conn,
-						       TP_IFACE_QUARK_CONNECTION_INTERFACE_ALIASING);
     priv->has_capabilities_if = tp_proxy_has_interface_by_id (tp_conn,
 							      TP_IFACE_QUARK_CONNECTION_INTERFACE_CAPABILITIES);
     priv->has_contact_capabilities_if = tp_proxy_has_interface_by_id (tp_conn,
@@ -1555,12 +1230,6 @@ on_connection_ready (GObject *source_object, GAsyncResult *result,
     if (priv->has_presence_if)
 	_mcd_connection_setup_presence (connection);
 
-    if (priv->has_avatars_if)
-	_mcd_connection_setup_avatar (connection);
-
-    if (priv->has_alias_if)
-	_mcd_connection_setup_alias (connection);
-
     if (priv->has_power_saving_if)
       _mcd_connection_setup_power_saving (connection);
 
@@ -1570,6 +1239,10 @@ on_connection_ready (GObject *source_object, GAsyncResult *result,
     request_unrequested_channels (connection);
 
     g_signal_emit (connection, signals[READY], 0);
+
+finally:
+    g_clear_object (&connection);
+    tp_weak_ref_destroy (weak_ref);
 }
 
 void
@@ -1758,35 +1431,47 @@ mcd_connection_early_get_interfaces_cb (TpConnection *tp_conn,
     mcd_connection_done_task_before_connect (self);
 }
 
-typedef struct {
-    /* really a McdConnection *, but g_object_add_weak_pointer wants a
-     * gpointer */
-    gpointer mcd_connection;
-} RequestConnectionData;
-
-static RequestConnectionData *
-request_connection_data_new (McdConnection *connection)
+static gchar *
+translate_g_error (GQuark domain,
+    gint code,
+    const gchar *message)
 {
-    RequestConnectionData *rcd = g_slice_new (RequestConnectionData);
-
-    rcd->mcd_connection = connection;
-    g_object_add_weak_pointer (rcd->mcd_connection, &rcd->mcd_connection);
-    return rcd;
-}
-
-static void
-request_connection_data_free (gpointer p)
-{
-    RequestConnectionData *rcd = p;
-
-    if (rcd->mcd_connection != NULL)
+  if (domain == TP_ERROR)
     {
-        g_object_remove_weak_pointer (rcd->mcd_connection,
-                                      &rcd->mcd_connection);
-        rcd->mcd_connection = NULL;
+      return g_strdup (tp_error_get_dbus_name (code));
+    }
+  else if (domain == TP_DBUS_ERRORS)
+    {
+      switch (code)
+        {
+        case TP_DBUS_ERROR_UNKNOWN_REMOTE_ERROR:
+            {
+              const gchar *p = strchr (message, ':');
+
+              if (p != NULL)
+                {
+                  gchar *tmp = g_strndup (message, message - p);
+
+                  /* The syntactic restrictions for error names are the same
+                   * as for interface names. */
+                  if (g_dbus_is_interface_name (tmp))
+                    return tmp;
+
+                  g_free (tmp);
+                }
+            }
+          break;
+
+        case TP_DBUS_ERROR_NO_INTERFACE:
+          return g_strdup (DBUS_ERROR_UNKNOWN_INTERFACE);
+
+        case TP_DBUS_ERROR_NAME_OWNER_LOST:
+          return g_strdup (DBUS_ERROR_NAME_HAS_NO_OWNER);
+        }
     }
 
-    g_slice_free (RequestConnectionData, rcd);
+  /* catch-all */
+  return g_strdup (DBUS_ERROR_FAILED);
 }
 
 static void
@@ -1794,8 +1479,8 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
                        const gchar *obj_path, const GError *tperror,
                        gpointer user_data, GObject *weak_object)
 {
-    RequestConnectionData *rcd = user_data;
-    McdConnection *connection = rcd->mcd_connection;
+    TpWeakRef *weak_ref = user_data;
+    McdConnection *connection = tp_weak_ref_dup_object (weak_ref);
     McdConnectionPrivate *priv;
     GError *error = NULL;
 
@@ -1827,23 +1512,33 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
         {
             g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                            TP_CONNECTION_STATUS_DISCONNECTED,
-                           TP_CONNECTION_STATUS_REASON_REQUESTED, NULL);
+                           TP_CONNECTION_STATUS_REASON_REQUESTED,
+                           NULL, "", NULL);
         }
 
-        return;
+        goto finally;
     }
 
     priv = connection->priv;
 
     if (tperror)
     {
+        gchar *dbus_error = translate_g_error (tperror->domain,
+            tperror->code, tperror->message);
+        GHashTable *details = tp_asv_new (
+            "debug-message", G_TYPE_STRING, tperror->message,
+            NULL);
+
         g_warning ("%s: RequestConnection failed: %s",
                    G_STRFUNC, tperror->message);
 
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
             TP_CONNECTION_STATUS_DISCONNECTED,
-            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR, NULL);
-        return;
+            TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED, NULL,
+            dbus_error, details);
+        g_hash_table_unref (details);
+        g_free (dbus_error);
+        goto finally;
     }
 
     DEBUG ("created %s", obj_path);
@@ -1853,7 +1548,7 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
     {
         g_warning ("%s: got error: %s", G_STRFUNC, error->message);
 	g_error_free (error);
-	return;
+        goto finally;
     }
 
     priv->tasks_before_connect = 1;
@@ -1863,6 +1558,10 @@ request_connection_cb (TpConnectionManager *proxy, const gchar *bus_name,
     tp_cli_connection_call_get_interfaces (priv->tp_conn, -1,
         mcd_connection_early_get_interfaces_cb, NULL, NULL,
         (GObject *) connection);
+
+finally:
+    g_clear_object (&connection);
+    /* weak_ref is freed by the telepathy-glib call's destructor */
 }
 
 static void
@@ -1879,7 +1578,7 @@ _mcd_connection_connect_with_params (McdConnection *connection,
 
     g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
                    TP_CONNECTION_STATUS_CONNECTING,
-                   TP_CONNECTION_STATUS_REASON_REQUESTED, NULL);
+                   TP_CONNECTION_STATUS_REASON_REQUESTED, NULL, NULL, NULL);
 
     /* If the McdConnection gets aborted (which results in it being freed!),
      * we need to kill off the Connection. So, we can't use connection as the
@@ -1890,8 +1589,8 @@ _mcd_connection_connect_with_params (McdConnection *connection,
      * that it is no longer useful in some way other than getting aborted. */
     tp_cli_connection_manager_call_request_connection (priv->tp_conn_mgr, -1,
         protocol_name, params, request_connection_cb,
-        request_connection_data_new (connection), request_connection_data_free,
-        NULL);
+        tp_weak_ref_new (connection, NULL, NULL),
+        (GDestroyNotify) tp_weak_ref_destroy, NULL);
 }
 
 static void
@@ -1900,7 +1599,6 @@ _mcd_connection_finalize (GObject * object)
     McdConnection *connection = MCD_CONNECTION (object);
     McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (connection);
 
-    g_free (priv->alias);
     if (priv->recognized_presences)
         g_hash_table_unref (priv->recognized_presences);
 
@@ -1916,9 +1614,27 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
     g_signal_emit (connection, signals[SELF_PRESENCE_CHANGED], 0,
                    TP_CONNECTION_PRESENCE_TYPE_OFFLINE, "offline", "");
 
-    g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
-                   TP_CONNECTION_STATUS_DISCONNECTED,
-                   priv->abort_reason, priv->tp_conn);
+    if (priv->abort_reason == TP_CONNECTION_STATUS_REASON_REQUESTED)
+    {
+        g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
+                       TP_CONNECTION_STATUS_DISCONNECTED,
+                       priv->abort_reason, priv->tp_conn, "", NULL);
+    }
+    else
+    {
+        const gchar *dbus_error = NULL;
+        const GHashTable *details = NULL;
+
+        if (priv->tp_conn != NULL)
+        {
+            dbus_error = tp_connection_get_detailed_error (priv->tp_conn,
+                &details);
+        }
+
+        g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
+                       TP_CONNECTION_STATUS_DISCONNECTED,
+                       priv->abort_reason, priv->tp_conn, dbus_error, details);
+    }
 
     if (priv->tp_conn)
     {
@@ -1941,11 +1657,6 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
 
         tp_clear_object (&priv->tp_conn);
     }
-
-    /* the interface proxies obtained from this connection must be deleted, too
-     */
-    g_free (priv->alias);
-    priv->alias = NULL;
 
     if (priv->recognized_presences)
         g_hash_table_remove_all (priv->recognized_presences);
@@ -2298,17 +2009,19 @@ mcd_connection_class_init (McdConnectionClass * klass)
         NULL, NULL, NULL,
         G_TYPE_NONE, 3, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING);
 
-    signals[SELF_NICKNAME_CHANGED] = g_signal_new ("self-nickname-changed",
-        G_OBJECT_CLASS_TYPE (klass),
-        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0,
-        NULL, NULL, g_cclosure_marshal_VOID__STRING,
-        G_TYPE_NONE, 1, G_TYPE_STRING);
-
+    /**
+     * @status:
+     * @status_reason:
+     * @connection:
+     * @dbus_error: a D-Bus error name, or %NULL
+     * @details: a #GHashTable from string to #GValue, or %NULL
+     */
     signals[CONNECTION_STATUS_CHANGED] = g_signal_new (
         "connection-status-changed", G_OBJECT_CLASS_TYPE (klass),
         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0,
         NULL, NULL, NULL,
-        G_TYPE_NONE, 3, G_TYPE_UINT, G_TYPE_UINT, TP_TYPE_CONNECTION);
+        G_TYPE_NONE, 5, G_TYPE_UINT, G_TYPE_UINT, TP_TYPE_CONNECTION,
+        G_TYPE_STRING, G_TYPE_HASH_TABLE);
 
     signals[READY] = g_signal_new ("ready",
         G_OBJECT_CLASS_TYPE (klass),
@@ -2536,7 +2249,7 @@ mcd_connection_get_object_path (McdConnection *connection)
     McdConnectionPrivate *priv = connection->priv;
 
     if (priv->tp_conn)
-	return TP_PROXY (priv->tp_conn)->object_path;
+        return tp_proxy_get_object_path (TP_PROXY (priv->tp_conn));
     else
 	return NULL;
 }
@@ -2547,7 +2260,7 @@ mcd_connection_get_name (McdConnection *connection)
     McdConnectionPrivate *priv = connection->priv;
 
     if (priv->tp_conn)
-	return TP_PROXY (priv->tp_conn)->bus_name;
+        return tp_proxy_get_bus_name (TP_PROXY (priv->tp_conn));
     else
 	return NULL;
 }
@@ -2590,14 +2303,15 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
                                    const gchar *bus_name,
                                    const gchar *obj_path, GError **error)
 {
-    McdConnection **connection_ptr;
     McdConnectionPrivate *priv;
     GQuark features[] = {
       TP_CONNECTION_FEATURE_CONNECTED,
       0
     };
+    GError *inner_error = NULL;
 
     g_return_if_fail (MCD_IS_CONNECTION (connection));
+    g_return_if_fail (error != NULL);
     priv = connection->priv;
 
     if (priv->tp_conn != NULL)
@@ -2617,14 +2331,23 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
 
     g_assert (priv->tp_conn == NULL);
     priv->tp_conn = tp_connection_new (priv->dbus_daemon, bus_name,
-                                       obj_path, error);
+                                       obj_path, &inner_error);
     DEBUG ("new connection is %p", priv->tp_conn);
     if (!priv->tp_conn)
     {
+        GHashTable *details = tp_asv_new (
+            "debug-message", inner_error->message,
+            NULL);
+
+        /* Constructing a TpConnection can only fail from invalid arguments,
+         * which would mean either MC or the connection manager is confused. */
         g_signal_emit (connection, signals[CONNECTION_STATUS_CHANGED], 0,
             TP_CONNECTION_STATUS_DISCONNECTED,
-            TP_CONNECTION_STATUS_REASON_NETWORK_ERROR,
-            NULL);
+            TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED,
+            NULL, TP_ERROR_STR_CONFUSED, details);
+
+        g_hash_table_unref (details);
+        g_propagate_error (error, inner_error);
         return;
     }
     /* FIXME: need some way to feed the status into the Account, but we don't
@@ -2639,12 +2362,9 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
                       connection);
     /* HACK for cancelling the _call_when_ready() callback when our object gets
      * destroyed */
-    connection_ptr = g_slice_alloc (sizeof (McdConnection *));
-    *connection_ptr = connection;
-    g_object_add_weak_pointer ((GObject *)connection,
-                               (gpointer)connection_ptr);
     tp_proxy_prepare_async (priv->tp_conn, features,
-                            on_connection_ready, connection_ptr);
+                            on_connection_ready,
+                            tp_weak_ref_new (connection, NULL, NULL));
 }
 
 /**

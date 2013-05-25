@@ -603,7 +603,7 @@ _mcd_client_recover_observer (McdClientProxy *self, TpChannel *channel,
         g_hash_table_new (NULL, NULL));
 
     channels_array = _mcd_tp_channel_details_build_from_tp_chan (channel);
-    conn = tp_channel_borrow_connection (channel);
+    conn = tp_channel_get_connection (channel);
     connection_path = tp_proxy_get_object_path (conn);
 
     DEBUG ("calling ObserveChannels on %s for channel %p",
@@ -1471,12 +1471,15 @@ _mcd_client_proxy_dup_handler_capabilities (McdClientProxy *self)
 
 /* returns TRUE if the channel matches one property criteria
  */
-gboolean
-_mcd_client_match_property (GHashTable *channel_properties,
+static gboolean
+_mcd_client_match_property (GVariant *channel_properties,
                             gchar *property_name,
                             GValue *filter_value)
 {
     GType filter_type = G_VALUE_TYPE (filter_value);
+
+    g_return_val_if_fail (g_variant_is_of_type (channel_properties,
+            G_VARIANT_TYPE_VARDICT), FALSE);
 
     g_assert (G_IS_VALUE (filter_value));
 
@@ -1484,7 +1487,7 @@ _mcd_client_match_property (GHashTable *channel_properties,
     {
         const gchar *string;
 
-        string = tp_asv_get_string (channel_properties, property_name);
+        string = tp_vardict_get_string (channel_properties, property_name);
         if (!string)
             return FALSE;
 
@@ -1495,7 +1498,7 @@ _mcd_client_match_property (GHashTable *channel_properties,
     {
         const gchar *path;
 
-        path = tp_asv_get_object_path (channel_properties, property_name);
+        path = tp_vardict_get_object_path (channel_properties, property_name);
         if (!path)
             return FALSE;
 
@@ -1507,7 +1510,7 @@ _mcd_client_match_property (GHashTable *channel_properties,
         gboolean valid;
         gboolean b;
 
-        b = tp_asv_get_boolean (channel_properties, property_name, &valid);
+        b = tp_vardict_get_boolean (channel_properties, property_name, &valid);
         if (!valid)
             return FALSE;
 
@@ -1520,7 +1523,7 @@ _mcd_client_match_property (GHashTable *channel_properties,
         gboolean valid;
         guint64 i;
 
-        i = tp_asv_get_uint64 (channel_properties, property_name, &valid);
+        i = tp_vardict_get_uint64 (channel_properties, property_name, &valid);
         if (!valid)
             return FALSE;
 
@@ -1537,7 +1540,7 @@ _mcd_client_match_property (GHashTable *channel_properties,
         gboolean valid;
         gint64 i;
 
-        i = tp_asv_get_int64 (channel_properties, property_name, &valid);
+        i = tp_vardict_get_int64 (channel_properties, property_name, &valid);
         if (!valid)
             return FALSE;
 
@@ -1559,12 +1562,15 @@ _mcd_client_match_property (GHashTable *channel_properties,
  * largest filter that matched)
  */
 guint
-_mcd_client_match_filters (GHashTable *channel_properties,
+_mcd_client_match_filters (GVariant *channel_properties,
                            const GList *filters,
                            gboolean assume_requested)
 {
     const GList *list;
     guint best_quality = 0;
+
+    g_return_val_if_fail (g_variant_is_of_type (channel_properties,
+            G_VARIANT_TYPE_VARDICT), 0);
 
     for (list = filters; list != NULL; list = list->next)
     {
@@ -1643,7 +1649,7 @@ borrow_channel_connection_path (McdChannel *channel)
 
     tp_channel = mcd_channel_get_tp_channel (channel);
     g_return_val_if_fail (tp_channel != NULL, "/");
-    tp_connection = tp_channel_borrow_connection (tp_channel);
+    tp_connection = tp_channel_get_connection (tp_channel);
     g_return_val_if_fail (tp_connection != NULL, "/");
     connection_path = tp_proxy_get_object_path (tp_connection);
     g_return_val_if_fail (connection_path != NULL, "/");

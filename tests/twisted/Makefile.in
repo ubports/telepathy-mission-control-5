@@ -137,7 +137,7 @@ mcp_dbus_caller_permission_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 @ENABLE_INSTALLED_TESTS_TRUE@am_mcp_dbus_caller_permission_la_rpath =  \
 @ENABLE_INSTALLED_TESTS_TRUE@	-rpath $(testplugindir)
 mcp_plugin_la_LIBADD =
-am_mcp_plugin_la_OBJECTS = mcp-plugin.lo
+am_mcp_plugin_la_OBJECTS = dbus-account-plugin.lo mcp-plugin.lo
 mcp_plugin_la_OBJECTS = $(am_mcp_plugin_la_OBJECTS)
 mcp_plugin_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -197,15 +197,17 @@ am__can_run_installinfo = \
   esac
 am__nobase_dist_twistedtests_DATA_DIST =  \
 	account-manager/account-basics.py account-manager/avatar.py \
+	account-manager/backend-makes-changes.py \
 	account-manager/bad-cm.py account-manager/crashy-cm.py \
 	account-manager/create-auto-connect.py \
 	account-manager/create-twice.py \
 	account-manager/create-with-properties.py \
 	account-manager/enable-auto-connect.py \
-	account-manager/enable.py account-manager/nickname.py \
-	account-manager/param-types.py account-manager/presence.py \
-	account-manager/reconnect.py \
+	account-manager/enable.py account-manager/irc.py \
+	account-manager/nickname.py account-manager/param-types.py \
+	account-manager/presence.py account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
+	account-manager/req-conn-fails.py \
 	account-manager/request-online.py account-manager/service.py \
 	account-manager/update-parameters.py \
 	account-requests/cancel.py account-requests/create-text.py \
@@ -243,9 +245,9 @@ am__nobase_dist_twistedtests_DATA_DIST =  \
 	dispatcher/respawn-observers.py \
 	dispatcher/some-delay-approvers.py \
 	dispatcher/undispatchable.py dispatcher/vanishing-client.py \
-	constants.py fakeclient.py fakecm.py fakeconnectivity.py \
-	mctest.py servicetest.py telepathy/clients/README \
-	telepathy/clients/AbiWord.client \
+	constants.py fakeaccountsservice.py fakeclient.py fakecm.py \
+	fakeconnectivity.py mctest.py servicetest.py \
+	telepathy/clients/README telepathy/clients/AbiWord.client \
 	telepathy/clients/Logger.client \
 	telepathy/managers/fakecm.manager \
 	telepathy/managers/onewitheverything.manager \
@@ -464,6 +466,7 @@ TWISTED_TESTS =
 TWISTED_BASIC_TESTS = \
 	account-manager/account-basics.py \
 	account-manager/avatar.py \
+	account-manager/backend-makes-changes.py \
 	account-manager/bad-cm.py \
 	account-manager/crashy-cm.py \
 	account-manager/create-auto-connect.py \
@@ -471,11 +474,13 @@ TWISTED_BASIC_TESTS = \
 	account-manager/create-with-properties.py \
 	account-manager/enable-auto-connect.py \
 	account-manager/enable.py \
+	account-manager/irc.py \
 	account-manager/nickname.py \
 	account-manager/param-types.py \
 	account-manager/presence.py \
 	account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
+	account-manager/req-conn-fails.py \
 	account-manager/request-online.py \
 	account-manager/service.py \
 	account-manager/update-parameters.py \
@@ -552,6 +557,7 @@ TWISTED_SEPARATE_TESTS = account-manager/auto-connect.py \
 # source
 TWISTED_OTHER_FILES = \
 	constants.py \
+	fakeaccountsservice.py \
 	fakeclient.py \
 	fakecm.py \
 	fakeconnectivity.py \
@@ -607,7 +613,12 @@ plugins_list = \
 @ENABLE_INSTALLED_TESTS_TRUE@	$(plugins_list) \
 @ENABLE_INSTALLED_TESTS_TRUE@	$(NULL)
 
-mcp_plugin_la_SOURCES = mcp-plugin.c
+mcp_plugin_la_SOURCES = \
+	dbus-account-plugin.c \
+	dbus-account-plugin.h \
+	mcp-plugin.c \
+	$(NULL)
+
 # these runes are necessary to make libtool build a dlopen()able shared
 # library even though it's not going to be installed - the default for noinst
 # libraries is static
@@ -816,6 +827,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dbus-account-plugin.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mc-debug-server.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-account-diversion.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mcp-dbus-caller-permission.Plo@am__quote@

@@ -44,167 +44,107 @@
 #define             <a class="link" href="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-KEYRING:CAPS" title="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING">MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING</a>
 #define             <a class="link" href="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-NORMAL:CAPS" title="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL">MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_NORMAL</a>
 #define             <a class="link" href="mission-control-plugins-McpAccountStorage.html#MCP-ACCOUNT-STORAGE-PLUGIN-PRIO-READONLY:CAPS" title="MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY">MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_READONLY</a>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc" title="McpAccountStorageCommitFunc ()">*McpAccountStorageCommitFunc</a>)      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+struct              <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage">McpAccountStorage</a>;
+                    <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="McpAccountStorageIface">McpAccountStorageIface</a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit" title="mcp_account_storage_commit ()">mcp_account_storage_commit</a>          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc" title="McpAccountStorageCommitOneFunc ()">*McpAccountStorageCommitOneFunc</a>)   (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one" title="mcp_account_storage_commit_one ()">mcp_account_storage_commit_one</a>      (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate" title="McpAccountStorageCreate ()">*McpAccountStorageCreate</a>)          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-create" title="mcp_account_storage_create ()">mcp_account_storage_create</a>          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc" title="McpAccountStorageDeleteFunc ()">*McpAccountStorageDeleteFunc</a>)      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-delete" title="mcp_account_storage_delete ()">mcp_account_storage_delete</a>          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc" title="McpAccountStorageGetAdditionalInfoFunc ()">*McpAccountStorageGetAdditionalInfoFunc</a>)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc" title="McpAccountStorageGetFunc ()">*McpAccountStorageGetFunc</a>)         (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<span class="returnvalue">void</span>                (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc" title="McpAccountStorageGetIdentifierFunc ()">*McpAccountStorageGetIdentifierFunc</a>)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *identifier</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc" title="McpAccountStorageGetRestrictionsFunc ()">*McpAccountStorageGetRestrictionsFunc</a>)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-struct              <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface">McpAccountStorageIface</a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc" title="McpAccountStorageListFunc ()">*McpAccountStorageListFunc</a>)        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-<span class="returnvalue">void</span>                (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc" title="McpAccountStorageReadyFunc ()">*McpAccountStorageReadyFunc</a>)       (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc" title="McpAccountStorageSetFunc ()">*McpAccountStorageSetFunc</a>)         (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *val</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit" title="mcp_account_storage_commit ()">mcp_account_storage_commit</a>          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one" title="mcp_account_storage_commit_one ()">mcp_account_storage_commit_one</a>      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-create" title="mcp_account_storage_create ()">mcp_account_storage_create</a>          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-delete" title="mcp_account_storage_delete ()">mcp_account_storage_delete</a>          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-description" title="mcp_account_storage_description ()">mcp_account_storage_description</a>     (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered" title="mcp_account_storage_emit_altered ()">mcp_account_storage_emit_altered</a>    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-description" title="mcp_account_storage_description ()">mcp_account_storage_description</a>     (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered" title="mcp_account_storage_emit_altered ()">mcp_account_storage_emit_altered</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered-one" title="mcp_account_storage_emit_altered_one ()">mcp_account_storage_emit_altered_one</a>
-                                                        (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-created" title="mcp_account_storage_emit_created ()">mcp_account_storage_emit_created</a>    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-created" title="mcp_account_storage_emit_created ()">mcp_account_storage_emit_created</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-deleted" title="mcp_account_storage_emit_deleted ()">mcp_account_storage_emit_deleted</a>    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-deleted" title="mcp_account_storage_emit_deleted ()">mcp_account_storage_emit_deleted</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-reconnect" title="mcp_account_storage_emit_reconnect ()">mcp_account_storage_emit_reconnect</a>  (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-reconnect" title="mcp_account_storage_emit_reconnect ()">mcp_account_storage_emit_reconnect</a>  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-toggled" title="mcp_account_storage_emit_toggled ()">mcp_account_storage_emit_toggled</a>    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-toggled" title="mcp_account_storage_emit_toggled ()">mcp_account_storage_emit_toggled</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get" title="mcp_account_storage_get ()">mcp_account_storage_get</a>             (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get" title="mcp_account_storage_get ()">mcp_account_storage_get</a>             (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-additional-info" title="mcp_account_storage_get_additional_info ()">mcp_account_storage_get_additional_info</a>
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier" title="mcp_account_storage_get_identifier ()">mcp_account_storage_get_identifier</a>  (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-identifier" title="mcp_account_storage_get_identifier ()">mcp_account_storage_get_identifier</a>  (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *identifier</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get-restrictions" title="mcp_account_storage_get_restrictions ()">mcp_account_storage_get_restrictions</a>
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit" title="mcp_account_storage_iface_implement_commit ()">mcp_account_storage_iface_implement_commit</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc" title="McpAccountStorageCommitFunc ()"><span class="type">McpAccountStorageCommitFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one" title="mcp_account_storage_iface_implement_commit_one ()">mcp_account_storage_iface_implement_commit_one</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc" title="McpAccountStorageCommitOneFunc ()"><span class="type">McpAccountStorageCommitOneFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-create" title="mcp_account_storage_iface_implement_create ()">mcp_account_storage_iface_implement_create</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate" title="McpAccountStorageCreate ()"><span class="type">McpAccountStorageCreate</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete" title="mcp_account_storage_iface_implement_delete ()">mcp_account_storage_iface_implement_delete</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc" title="McpAccountStorageDeleteFunc ()"><span class="type">McpAccountStorageDeleteFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get" title="mcp_account_storage_iface_implement_get ()">mcp_account_storage_iface_implement_get</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc" title="McpAccountStorageGetFunc ()"><span class="type">McpAccountStorageGetFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info" title="mcp_account_storage_iface_implement_get_additional_info ()">mcp_account_storage_iface_implement_get_additional_info</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc" title="McpAccountStorageGetAdditionalInfoFunc ()"><span class="type">McpAccountStorageGetAdditionalInfoFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier" title="mcp_account_storage_iface_implement_get_identifier ()">mcp_account_storage_iface_implement_get_identifier</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc" title="McpAccountStorageGetIdentifierFunc ()"><span class="type">McpAccountStorageGetIdentifierFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions" title="mcp_account_storage_iface_implement_get_restrictions ()">mcp_account_storage_iface_implement_get_restrictions</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc" title="McpAccountStorageGetRestrictionsFunc ()"><span class="type">McpAccountStorageGetRestrictionsFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list" title="mcp_account_storage_iface_implement_list ()">mcp_account_storage_iface_implement_list</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc" title="McpAccountStorageListFunc ()"><span class="type">McpAccountStorageListFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready" title="mcp_account_storage_iface_implement_ready ()">mcp_account_storage_iface_implement_ready</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc" title="McpAccountStorageReadyFunc ()"><span class="type">McpAccountStorageReadyFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set" title="mcp_account_storage_iface_implement_set ()">mcp_account_storage_iface_implement_set</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc" title="McpAccountStorageSetFunc ()"><span class="type">McpAccountStorageSetFunc</span></a> method</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc" title="mcp_account_storage_iface_set_desc ()">mcp_account_storage_iface_set_desc</a>  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *desc</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name" title="mcp_account_storage_iface_set_name ()">mcp_account_storage_iface_set_name</a>  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority" title="mcp_account_storage_iface_set_priority ()">mcp_account_storage_iface_set_priority</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> prio</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider" title="mcp_account_storage_iface_set_provider ()">mcp_account_storage_iface_set_provider</a>
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *provider</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list" title="mcp_account_storage_list ()">mcp_account_storage_list</a>            (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-list" title="mcp_account_storage_list ()">mcp_account_storage_list</a>            (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name" title="mcp_account_storage_name ()">mcp_account_storage_name</a>            (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority" title="mcp_account_storage_priority ()">mcp_account_storage_priority</a>        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-provider" title="mcp_account_storage_provider ()">mcp_account_storage_provider</a>        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready" title="mcp_account_storage_ready ()">mcp_account_storage_ready</a>           (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-name" title="mcp_account_storage_name ()">mcp_account_storage_name</a>            (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-owns" title="mcp_account_storage_owns ()">mcp_account_storage_owns</a>            (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-priority" title="mcp_account_storage_priority ()">mcp_account_storage_priority</a>        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-provider" title="mcp_account_storage_provider ()">mcp_account_storage_provider</a>        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-ready" title="mcp_account_storage_ready ()">mcp_account_storage_ready</a>           (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set" title="mcp_account_storage_set ()">mcp_account_storage_set</a>             (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set" title="mcp_account_storage_set ()">mcp_account_storage_set</a>             (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *value</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-attribute" title="mcp_account_storage_set_attribute ()">mcp_account_storage_set_attribute</a>   (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-parameter" title="mcp_account_storage_set_parameter ()">mcp_account_storage_set_parameter</a>   (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);
 </pre>
 </div>
 <div class="refsect1">
 <a name="mission-control-plugins-McpAccountStorage.description"></a><h2>Description</h2>
 <p>
-Plugins may implement <span class="type">McpAccountStorage</span> in order to provide account
+Plugins may implement <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> in order to provide account
 parameter storage backends to the AccountManager object.
 </p>
 <p>
 To do so, the plugin must implement a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> subclass that implements
-<span class="type">McpAccountStorage</span>, then return an instance of that subclass from
+<a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a>, then return an instance of that subclass from
 <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>.
 </p>
 <p>
-The contents of the <span class="type">McpAccountStorage</span> struct are not public,
-so to provide an implementation of the virtual methods,
-plugins should call mcp_account_operation_iface_implement_*()
-from the interface initialization function, like this:
+Many methods take "the unique name of an account" as an argument.
+In this plugin, that means the unique "tail" of the account's
+object path, for instance "gabble/jabber/chris_40example_2ecom".
+The account's full object path is obtained by prepending
+<a href="http://telepathy.freedesktop.org/doc/telepathy-glib-0.20.x/telepathy-glib-defs.html#TP-ACCOUNT-OBJECT-PATH-BASE:CAPS"><code class="literal">TP_ACCOUNT_OBJECT_PATH_BASE</code></a>.
+</p>
+<p>
+A complete implementation of this interface with all methods would
+look something like this:
 </p>
 <p>
 </p>
 <div class="example">
-<a name="idp8691008"></a><p class="title"><b>Example 1. </b></p>
+<a name="idp8382272"></a><p class="title"><b>Example 1. </b></p>
 <div class="example-contents">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -237,37 +177,35 @@ from the interface initialization function, like this:
 26
 27
 28
-29
-30</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>APlugin<span class="gtkdoc opt">,</span> a_plugin<span class="gtkdoc opt">,</span>
+29</pre></td>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>FooPlugin<span class="gtkdoc opt">,</span> foo_plugin<span class="gtkdoc opt">,</span>
    G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
    <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
    <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_ACCOUNT_STORAGE<span class="gtkdoc opt">,</span>
      account_storage_iface_init<span class="gtkdoc opt">));</span>
 <span class="comment">/* ... */</span>
 <span class="gtkdoc kwb">static void</span>
-<span class="function">account_storage_iface_init</span> <span class="gtkdoc opt">(</span>McpAccountStorageIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">,</span>
-    gpointer unused G_GNUC_UNUSED<span class="gtkdoc opt">)</span>
+<span class="function">account_storage_iface_init</span> <span class="gtkdoc opt">(</span>McpAccountStorageIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">)</span>
 <span class="gtkdoc opt">{</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-priority">mcp_account_storage_iface_set_priority</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="number">0</span><span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-name">mcp_account_storage_iface_set_name</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="string">&quot;foo&quot;</span><span class="gtkdoc opt">)</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-desc">mcp_account_storage_iface_set_desc</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> <span class="string">&quot;The FOO storage backend&quot;</span><span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-set-provider">mcp_account_storage_iface_set_provider</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
-    <span class="string">&quot;org.freedesktop.Telepathy.MissionControl5.FooStorage&quot;</span><span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get">mcp_account_storage_iface_implement_get</a></span>    <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_getval<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-set">mcp_account_storage_iface_implement_set</a></span>    <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_setval<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-delete">mcp_account_storage_iface_implement_delete</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_delete<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit">mcp_account_storage_iface_implement_commit</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_commit<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-commit-one">mcp_account_storage_iface_implement_commit_one</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_commit_one<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-list">mcp_account_storage_iface_implement_list</a></span>   <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_list<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-ready">mcp_account_storage_iface_implement_ready</a></span>  <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span> _plugin_ready<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-identifier">mcp_account_storage_iface_implement_get_identifier</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
-    _plugin_get_identifier<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-additional-info">mcp_account_storage_iface_implement_get_additional_info</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
-    _plugin_get_additional_info<span class="gtkdoc opt">);</span>
-  <span class="function"><a href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-iface-implement-get-restrictions">mcp_account_storage_iface_implement_get_restrictions</a></span> <span class="gtkdoc opt">(</span>iface<span class="gtkdoc opt">,</span>
-    _plugin_get_restrictions<span class="gtkdoc opt">);</span>
-<span class="comment">/* ... */</span>
+  iface<span class="gtkdoc opt">-&gt;</span>priority <span class="gtkdoc opt">=</span> <span class="number">0</span><span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>name <span class="gtkdoc opt">=</span> <span class="string">&quot;foo&quot;</span><span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>desc <span class="gtkdoc opt">=</span> <span class="string">&quot;The FOO storage backend&quot;</span><span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>provider <span class="gtkdoc opt">=</span> <span class="string">&quot;org.freedesktop.Telepathy.MissionControl5.FooStorage&quot;</span><span class="gtkdoc opt">;</span>
+
+  iface<span class="gtkdoc opt">-&gt;</span>get <span class="gtkdoc opt">=</span> foo_plugin_get<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>set <span class="gtkdoc opt">=</span> foo_plugin_get<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span><span class="keyword">delete</span> <span class="gtkdoc opt">=</span> foo_plugin_delete<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>commit <span class="gtkdoc opt">=</span> foo_plugin_commit<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>commit_one <span class="gtkdoc opt">=</span> foo_plugin_commit_one<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>list <span class="gtkdoc opt">=</span> foo_plugin_list<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>ready <span class="gtkdoc opt">=</span> foo_plugin_ready<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>get_identifier <span class="gtkdoc opt">=</span> foo_plugin_get_identifier<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>get_additional_info <span class="gtkdoc opt">=</span> foo_plugin_get_additional_info<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>get_restrictions <span class="gtkdoc opt">=</span> foo_plugin_get_restrictions<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>create <span class="gtkdoc opt">=</span> foo_plugin_create<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>owns <span class="gtkdoc opt">=</span> foo_plugin_owns<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>set_attribute <span class="gtkdoc opt">=</span> foo_plugin_set_attribute<span class="gtkdoc opt">;</span>
+  iface<span class="gtkdoc opt">-&gt;</span>set_parameter <span class="gtkdoc opt">=</span> foo_plugin_set_parameter<span class="gtkdoc opt">;</span>
 <span class="gtkdoc opt">}</span></pre></td>
       </tr>
     </tbody>
@@ -310,69 +248,77 @@ an account storage plugin in an account storage object, though.
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpAccountStorageCommitFunc"></a><h3>McpAccountStorageCommitFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpAccountStorageCommitFunc)      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageCommitOneFunc"></a><h3>McpAccountStorageCommitOneFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpAccountStorageCommitOneFunc)   (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageCreate"></a><h3>McpAccountStorageCreate ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             (*McpAccountStorageCreate)          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="type">GHashTable</span></a> *params</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageDeleteFunc"></a><h3>McpAccountStorageDeleteFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpAccountStorageDeleteFunc)      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageGetAdditionalInfoFunc"></a><h3>McpAccountStorageGetAdditionalInfoFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        (*McpAccountStorageGetAdditionalInfoFunc)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageGetFunc"></a><h3>McpAccountStorageGetFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpAccountStorageGetFunc)         (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageGetIdentifierFunc"></a><h3>McpAccountStorageGetIdentifierFunc ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                (*McpAccountStorageGetIdentifierFunc)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *identifier</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageGetRestrictionsFunc"></a><h3>McpAccountStorageGetRestrictionsFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               (*McpAccountStorageGetRestrictionsFunc)
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageIface"></a><h3>struct McpAccountStorageIface</h3>
-<pre class="programlisting">struct McpAccountStorageIface {
+<a name="McpAccountStorage"></a><h3>struct McpAccountStorage</h3>
+<pre class="programlisting">struct McpAccountStorage {
+ };
+#endif
+
+#define MCP_TYPE_ACCOUNT_STORAGE (mcp_account_storage_get_type ())
+
+#define MCP_ACCOUNT_STORAGE(o) \
+  (G_TYPE_CHECK_INSTANCE_CAST ((o), MCP_TYPE_ACCOUNT_STORAGE, \
+      McpAccountStorage))
+
+#define MCP_IS_ACCOUNT_STORAGE(o) \
+  (G_TYPE_CHECK_INSTANCE_TYPE ((o), MCP_TYPE_ACCOUNT_STORAGE))
+
+#define MCP_ACCOUNT_STORAGE_GET_IFACE(o) \
+  (G_TYPE_INSTANCE_GET_INTERFACE ((o), MCP_TYPE_ACCOUNT_STORAGE, \
+                                  McpAccountStorageIface))
+
+GType mcp_account_storage_get_type (void);
+
+/* Virtual method implementation signatures */
+typedef gboolean (*McpAccountStorageGetFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *account,
+    const gchar *key);
+typedef gboolean (*McpAccountStorageSetFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *account,
+    const gchar *key,
+    const gchar *val);
+typedef gchar * (*McpAccountStorageCreate) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *manager,
+    const gchar *protocol,
+    GHashTable *params,
+    GError **error);
+typedef gboolean (*McpAccountStorageDeleteFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *account,
+    const gchar *key);
+typedef GList * (*McpAccountStorageListFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am);
+typedef gboolean (*McpAccountStorageCommitFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am);
+typedef gboolean (*McpAccountStorageCommitOneFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am,
+    const gchar *account);
+typedef void (*McpAccountStorageReadyFunc) (
+    const McpAccountStorage *storage,
+    const McpAccountManager *am);
+typedef void (*McpAccountStorageGetIdentifierFunc) (
+    const McpAccountStorage *storage,
+    const gchar *account,
+    GValue *identifier);
+typedef GHashTable * (*McpAccountStorageGetAdditionalInfoFunc) (
+    const McpAccountStorage *storage,
+    const gchar *account);
+/* FIXME: when breaking API, make this return TpStorageRestrictionFlags */
+typedef guint (*McpAccountStorageGetRestrictionsFunc) (
+    const McpAccountStorage *storage,
+    const gchar *account);
+
+struct _McpAccountStorageIface
+{
   GTypeInterface parent;
 
   gint priority;
@@ -391,34 +337,45 @@ an account storage plugin in an account storage object, though.
   McpAccountStorageGetAdditionalInfoFunc get_additional_info;
   McpAccountStorageGetRestrictionsFunc get_restrictions;
   McpAccountStorageCreate create;
+
+  /* Since 5.13.UNRELEASED */
+  gboolean (*owns) (McpAccountStorage *storage,
+      McpAccountManager *am,
+      const gchar *account);
+  gboolean (*set_attribute) (McpAccountStorage *storage,
+      McpAccountManager *am,
+      const gchar *account,
+      const gchar *attribute,
+      GVariant *val,
+      McpAttributeFlags flags);
+  gboolean (*set_parameter) (McpAccountStorage *storage,
+      McpAccountManager *am,
+      const gchar *account,
+      const gchar *parameter,
+      GVariant *val,
+      McpParameterFlags flags);
 };
 </pre>
+<p>
+An object implementing the account storage plugin interface.
+</p>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpAccountStorageListFunc"></a><h3>McpAccountStorageListFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             (*McpAccountStorageListFunc)        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageReadyFunc"></a><h3>McpAccountStorageReadyFunc ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                (*McpAccountStorageReadyFunc)       (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpAccountStorageSetFunc"></a><h3>McpAccountStorageSetFunc ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpAccountStorageSetFunc)         (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
-                                                         <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *val</code></em>);</pre>
+<a name="McpAccountStorageIface"></a><h3>McpAccountStorageIface</h3>
+<pre class="programlisting">typedef struct _McpAccountStorageIface McpAccountStorageIface;</pre>
+<p>
+The interface vtable for an account storage plugin.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody></tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-commit"></a><h3>mcp_account_storage_commit ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_commit          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_commit          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
 <p>
 The plugin is expected to write its cache to long term storage,
@@ -440,7 +397,7 @@ implemented but <em class="parameter"><code>commit</code></em> is not, <em class
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -459,7 +416,7 @@ obvious.</td>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-commit-one"></a><h3>mcp_account_storage_commit_one ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_commit_one      (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_commit_one      (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
@@ -467,12 +424,17 @@ The same as <a class="link" href="mission-control-plugins-McpAccountStorage.html
 account. This is optional to implement; the default implementation
 is to call <em class="parameter"><code>commit</code></em>.
 </p>
+<p>
+If both <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one" title="mcp_account_storage_commit_one ()"><code class="function">mcp_account_storage_commit_one()</code></a> and <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit" title="mcp_account_storage_commit ()"><code class="function">mcp_account_storage_commit()</code></a>
+are implemented, Mission Control will never pass <em class="parameter"><code>account</code></em> = <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to
+this method.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -480,8 +442,10 @@ is to call <em class="parameter"><code>commit</code></em>.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
-<td>the unique suffix of an account's object path, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if
-all accounts are to be committed</td>
+<td>the unique suffix of an account's object path,
+or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if all accounts are to be committed and
+<a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit" title="mcp_account_storage_commit ()"><code class="function">mcp_account_storage_commit()</code></a> is unimplemented. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -496,7 +460,7 @@ obvious.</td>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-create"></a><h3>mcp_account_storage_create ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_storage_create          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mcp_account_storage_create          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *manager</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *protocol</code></em>,
@@ -523,7 +487,11 @@ not even when <a class="link" href="mission-control-plugins-McpAccountStorage.ht
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
+<td>an object which can be used to call back into the account manager</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
@@ -543,8 +511,10 @@ not even when <a class="link" href="mission-control-plugins-McpAccountStorage.ht
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>the newly allocated account name, which should be freed
-once the caller is done with it, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if that couldn't be done.</td>
+<td>the newly allocated account name, which should
+be freed once the caller is done with it, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if that couldn't
+be done. <span class="annotation">[<acronym title="Free data after the code is done."><span class="acronym">transfer full</span></acronym>]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -552,7 +522,7 @@ once the caller is done with it, or <a href="http://library.gnome.org/devel/glib
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-delete"></a><h3>mcp_account_storage_delete ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_delete          (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_delete          (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
@@ -564,7 +534,7 @@ its long term storage method makes this necessary.
 </p>
 <p>
 If <em class="parameter"><code>key</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>, the plugin should forget all its settings for
-<em class="parameter"><code>account</code></em> (and remember to delete <em class="parameter"><code>account</code></em> from its storage later)
+<em class="parameter"><code>account</code></em>,and remember to delete the entire account from its storage later.
 </p>
 <p>
 The plugin is not expected to update its long term storage at
@@ -575,7 +545,7 @@ this point.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -587,7 +557,10 @@ this point.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
-<td>the setting whose value we wish to fetch</td>
+<td>the setting whose value we wish to store - either an
+attribute like "DisplayName", or "param-" plus a parameter like
+"account" - or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> to delete the entire account. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -603,13 +576,16 @@ expected to be able to manipulate its own cache.</td>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-description"></a><h3>mcp_account_storage_description ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_description     (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);</pre>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_description     (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);</pre>
+<p>
+
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -621,17 +597,17 @@ expected to be able to manipulate its own cache.</td>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-emit-altered"></a><h3>mcp_account_storage_emit_altered ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_altered    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_altered    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
-Emits ::altered signal
+Emits the <span class="type">"altered"</span> signal
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -644,18 +620,18 @@ Emits ::altered signal
 <div class="refsect2">
 <a name="mcp-account-storage-emit-altered-one"></a><h3>mcp_account_storage_emit_altered_one ()</h3>
 <pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_altered_one
-                                                        (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
 <p>
-Emits ::created-one signal
+Emits the <span class="type">"altered-one"</span> signal
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -663,7 +639,8 @@ Emits ::created-one signal
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
-<td>the key of the altered property</td>
+<td>the key of the altered property: either an attribute name
+like "DisplayName", or "param-" plus a parameter name like "account"</td>
 </tr>
 </tbody>
 </table></div>
@@ -671,23 +648,23 @@ Emits ::created-one signal
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-emit-created"></a><h3>mcp_account_storage_emit_created ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_created    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_created    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 </div>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-emit-deleted"></a><h3>mcp_account_storage_emit_deleted ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_deleted    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_deleted    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
-Emits ::deleted signal
+Emits the <span class="type">"deleted"</span> signal
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -699,7 +676,7 @@ Emits ::deleted signal
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-emit-reconnect"></a><h3>mcp_account_storage_emit_reconnect ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_reconnect  (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_reconnect  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
 Emits ::reconnect signal
@@ -709,7 +686,7 @@ Emits ::reconnect signal
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -721,7 +698,7 @@ Emits ::reconnect signal
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-emit-toggled"></a><h3>mcp_account_storage_emit_toggled ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_toggled    (<em class="parameter"><code><span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_emit_toggled    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> enabled</code></em>);</pre>
 <p>
@@ -732,11 +709,16 @@ Emits ::toggled signal
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
 <td>the unique name of the account</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>enabled</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the account is now enabled</td>
 </tr>
 </tbody>
 </table></div>
@@ -744,29 +726,36 @@ Emits ::toggled signal
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-get"></a><h3>mcp_account_storage_get ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_get             (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_get             (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);</pre>
 <p>
-The plugin is expected to quickly and synchronously update
-the value associated with <em class="parameter"><code>key</code></em> using calls to <em class="parameter"><code>am</code></em>.
+Get a value from the plugin's in-memory cache.
+Before emitting this signal, the plugin must call
+either <a class="link" href="McpAccountManager.html#mcp-account-manager-set-attribute" title="mcp_account_manager_set_attribute ()"><code class="function">mcp_account_manager_set_attribute()</code></a>,
+<a class="link" href="McpAccountManager.html#mcp-account-manager-set-parameter" title="mcp_account_manager_set_parameter ()"><code class="function">mcp_account_manager_set_parameter()</code></a>,
+or <a class="link" href="McpAccountManager.html#mcp-account-manager-set-value" title="mcp_account_manager_set_value ()"><code class="function">mcp_account_manager_set_value()</code></a> and (if appropriate)
+<a class="link" href="McpAccountManager.html#mcp-account-manager-parameter-make-secret" title="mcp_account_manager_parameter_make_secret ()"><code class="function">mcp_account_manager_parameter_make_secret()</code></a>
+before returning from this method call.
 </p>
 <p>
-The plugin is not required to consult whatever long term storage
-it uses, and may fetch said value from its internal cache, if any.
+Note that <a class="link" href="McpAccountManager.html#mcp-account-manager-set-parameter" title="mcp_account_manager_set_parameter ()"><code class="function">mcp_account_manager_set_parameter()</code></a> does not use the
+"param-" prefix, even if called from this function.
 </p>
 <p>
-If <em class="parameter"><code>key</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> the plugin should write all its settings for <em class="parameter"><code>account</code></em>
-into the account manager via <em class="parameter"><code>am</code></em>. The return value in this case should
-be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if any settings were found.
+If <em class="parameter"><code>key</code></em> is <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> the plugin should iterate through all attributes and
+parameters, and push each of them into <em class="parameter"><code>am</code></em>, as if this method had
+been called once for each attribute or parameter. It must then return
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if any attributes or parameters were found, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> if it
+was not responsible for <em class="parameter"><code>account</code></em>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -778,12 +767,14 @@ be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.ht
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
-<td>the setting whose value we wish to fetch</td>
+<td>the setting whose value we wish to fetch: either an attribute
+like "DisplayName", or "param-" plus a parameter like "account"</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if a value was found and <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>storage</code></em> is responsible for <em class="parameter"><code>account</code></em>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -792,18 +783,22 @@ be <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.ht
 <div class="refsect2">
 <a name="mcp-account-storage-get-additional-info"></a><h3>mcp_account_storage_get_additional_info ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Hash-Tables.html#GHashTable"><span class="returnvalue">GHashTable</span></a> *        mcp_account_storage_get_additional_info
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
 <p>
 Return additional storage-specific information about this account, which is
 made available on D-Bus but not otherwise interpreted by Mission Control.
+</p>
+<p>
+This method will only be called for the storage plugin that "owns"
+the account.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -811,8 +806,9 @@ made available on D-Bus but not otherwise interpreted by Mission Control.
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a mapping from strings to <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a>s, which must be freed by
-the caller.</td>
+<td>additional
+storage-specific information. <span class="annotation">[<acronym title="Free data container after the code is done."><span class="acronym">transfer container</span></acronym>][<acronym title="Generics and defining elements of containers and arrays."><span class="acronym">element-type</span></acronym> utf8 GObject.Value]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -820,19 +816,23 @@ the caller.</td>
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-get-identifier"></a><h3>mcp_account_storage_get_identifier ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_get_identifier  (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_get_identifier  (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> *identifier</code></em>);</pre>
 <p>
 Get the storage-specific identifier for this account. The type is variant,
 hence the GValue.
 </p>
+<p>
+This method will only be called for the storage plugin that "owns"
+the account.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -840,8 +840,9 @@ hence the GValue.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>identifier</code></em> :</span></p></td>
-<td>a zero-filled <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> whose type can be sent over D-Bus by
-dbus-glib to hold the identifier.</td>
+<td>a zero-filled <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Generic-values.html#GValue"><span class="type">GValue</span></a> whose type
+can be sent over D-Bus by dbus-glib, to hold the identifier. <span class="annotation">[<acronym title="Parameter for returning results. Default is transfer full."><span class="acronym">out</span></acronym> caller-allocates]</span>
+</td>
 </tr>
 </tbody>
 </table></div>
@@ -850,14 +851,18 @@ dbus-glib to hold the identifier.</td>
 <div class="refsect2">
 <a name="mcp-account-storage-get-restrictions"></a><h3>mcp_account_storage_get_restrictions ()</h3>
 <pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mcp_account_storage_get_restrictions
-                                                        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+                                                        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
+<p>
+This method will only be called for the storage plugin that "owns"
+the account.
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
@@ -873,112 +878,13 @@ account storage.</td>
 </div>
 <hr>
 <div class="refsect2">
-<a name="mcp-account-storage-iface-implement-commit"></a><h3>mcp_account_storage_iface_implement_commit ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_commit
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitFunc" title="McpAccountStorageCommitFunc ()"><span class="type">McpAccountStorageCommitFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-commit-one"></a><h3>mcp_account_storage_iface_implement_commit_one ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_commit_one
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCommitOneFunc" title="McpAccountStorageCommitOneFunc ()"><span class="type">McpAccountStorageCommitOneFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-create"></a><h3>mcp_account_storage_iface_implement_create ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_create
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageCreate" title="McpAccountStorageCreate ()"><span class="type">McpAccountStorageCreate</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-delete"></a><h3>mcp_account_storage_iface_implement_delete ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_delete
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageDeleteFunc" title="McpAccountStorageDeleteFunc ()"><span class="type">McpAccountStorageDeleteFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-get"></a><h3>mcp_account_storage_iface_implement_get ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_get
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetFunc" title="McpAccountStorageGetFunc ()"><span class="type">McpAccountStorageGetFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-get-additional-info"></a><h3>mcp_account_storage_iface_implement_get_additional_info ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_get_additional_info
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetAdditionalInfoFunc" title="McpAccountStorageGetAdditionalInfoFunc ()"><span class="type">McpAccountStorageGetAdditionalInfoFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-get-identifier"></a><h3>mcp_account_storage_iface_implement_get_identifier ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_get_identifier
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetIdentifierFunc" title="McpAccountStorageGetIdentifierFunc ()"><span class="type">McpAccountStorageGetIdentifierFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-get-restrictions"></a><h3>mcp_account_storage_iface_implement_get_restrictions ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_get_restrictions
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageGetRestrictionsFunc" title="McpAccountStorageGetRestrictionsFunc ()"><span class="type">McpAccountStorageGetRestrictionsFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-list"></a><h3>mcp_account_storage_iface_implement_list ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_list
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageListFunc" title="McpAccountStorageListFunc ()"><span class="type">McpAccountStorageListFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-ready"></a><h3>mcp_account_storage_iface_implement_ready ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_ready
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageReadyFunc" title="McpAccountStorageReadyFunc ()"><span class="type">McpAccountStorageReadyFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-implement-set"></a><h3>mcp_account_storage_iface_implement_set ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_implement_set
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageSetFunc" title="McpAccountStorageSetFunc ()"><span class="type">McpAccountStorageSetFunc</span></a> method</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-set-desc"></a><h3>mcp_account_storage_iface_set_desc ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_set_desc  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *desc</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-set-name"></a><h3>mcp_account_storage_iface_set_name ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_set_name  (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-set-priority"></a><h3>mcp_account_storage_iface_set_priority ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_set_priority
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> prio</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-account-storage-iface-set-provider"></a><h3>mcp_account_storage_iface_set_provider ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_iface_set_provider
-                                                        (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorageIface" title="struct McpAccountStorageIface"><span class="type">McpAccountStorageIface</span></a> *iface</code></em>,
-                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *provider</code></em>);</pre>
-</div>
-<hr>
-<div class="refsect2">
 <a name="mcp-account-storage-list"></a><h3>mcp_account_storage_list ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mcp_account_storage_list            (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mcp_account_storage_list            (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
+<p>
+Load details of every account stored by this plugin into an in-memory cache
+so that it can respond to requests promptly.
+</p>
 <p>
 This method is called only at initialisation time, before the dbus name
 has been claimed, and is the only one permitted to block.
@@ -988,7 +894,7 @@ has been claimed, and is the only one permitted to block.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -1008,13 +914,16 @@ them. <span class="annotation">[<acronym title="Generics and defining elements o
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-name"></a><h3>mcp_account_storage_name ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_name            (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);</pre>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_name            (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);</pre>
+<p>
+
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -1025,14 +934,55 @@ them. <span class="annotation">[<acronym title="Generics and defining elements o
 </div>
 <hr>
 <div class="refsect2">
+<a name="mcp-account-storage-owns"></a><h3>mcp_account_storage_owns ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_owns            (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);</pre>
+<p>
+Check whether <em class="parameter"><code>account</code></em> is stored in <em class="parameter"><code>storage</code></em>. The highest-priority
+plugin for which this function returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> is considered to be
+responsible for <em class="parameter"><code>account</code></em>.
+</p>
+<p>
+There is a default implementation, which calls <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-get" title="mcp_account_storage_get ()"><code class="function">mcp_account_storage_get()</code></a>
+for the well-known key "manager".
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
+<td>the unique name (object-path tail) of an account</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>account</code></em> is stored in <em class="parameter"><code>storage</code></em>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 5.13.UNRELEASED</p>
+</div>
+<hr>
+<div class="refsect2">
 <a name="mcp-account-storage-priority"></a><h3>mcp_account_storage_priority ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mcp_account_storage_priority        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);</pre>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="returnvalue">gint</span></a>                mcp_account_storage_priority        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);</pre>
 <p>
 Gets the priority for this plugin.
 </p>
 <p>
 Priorities currently run from MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_DEFAULT
-(the default storage plugin priority) upwards.
+(the default storage plugin priority) upwards. More-positive numbers
+are higher priority.
 </p>
 <p>
 Plugins at a higher priority then MCP_ACCOUNT_STORAGE_PLUGIN_PRIO_KEYRING
@@ -1067,7 +1017,7 @@ setting in question.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
@@ -1079,17 +1029,21 @@ setting in question.
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-provider"></a><h3>mcp_account_storage_provider ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_provider        (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>);</pre>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mcp_account_storage_provider        (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>);</pre>
+<p>
+
+</p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a DBus namespaced name for this plugin.</td>
+<td>a D-Bus namespaced name for this plugin, or "" if none
+was provided in <span class="type">McpAccountStorageIface.provider</span>.</td>
 </tr>
 </tbody>
 </table></div>
@@ -1097,7 +1051,7 @@ setting in question.
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-ready"></a><h3>mcp_account_storage_ready ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_ready           (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_account_storage_ready           (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>);</pre>
 <p>
 Informs the plugin that it is now permitted to create new accounts,
@@ -1109,7 +1063,7 @@ signals.
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -1121,7 +1075,7 @@ signals.
 <hr>
 <div class="refsect2">
 <a name="mcp-account-storage-set"></a><h3>mcp_account_storage_set ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_set             (<em class="parameter"><code>const <span class="type">McpAccountStorage</span> *storage</code></em>,
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_set             (<em class="parameter"><code>const <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>,
@@ -1133,14 +1087,21 @@ decline to store the setting.
 </p>
 <p>
 The plugin is not expected to write to its long term storage
-at this point.
+at this point. It can expect Mission Control to call either
+<a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit" title="mcp_account_storage_commit ()"><code class="function">mcp_account_storage_commit()</code></a> or <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-commit-one" title="mcp_account_storage_commit_one ()"><code class="function">mcp_account_storage_commit_one()</code></a>
+after a short delay.
+</p>
+<p>
+Plugins that implement <code class="function">mcp_storage_set_attribute()</code> and
+<a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-parameter" title="mcp_account_storage_set_parameter ()"><code class="function">mcp_account_storage_set_parameter()</code></a> can just return <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> here.
+There is a default implementation, which just returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.
 </p>
 <div class="variablelist"><table border="0">
 <col align="left" valign="top">
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
-<td>an <span class="type">McpAccountStorage</span> instance</td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
@@ -1152,20 +1113,149 @@ at this point.
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>key</code></em> :</span></p></td>
-<td>the setting whose value we wish to fetch</td>
+<td>the non-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> setting whose value we wish to store: either an
+attribute like "DisplayName", or "param-" plus a parameter like "account"</td>
 </tr>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
-<td>a value to associate with <em class="parameter"><code>key</code></em>
+<td>a value to associate with <em class="parameter"><code>key</code></em>, escaped as if for a <a href="http://library.gnome.org/devel/glib/unstable/glib-Key-value-file-parser.html#GKeyFile"><span class="type">GKeyFile</span></a>
 </td>
 </tr>
 <tr>
 <td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
 <td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the setting was claimed, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the attribute was claimed, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
 </tr>
 </tbody>
 </table></div>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-account-storage-set-attribute"></a><h3>mcp_account_storage_set_attribute ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_set_attribute   (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);</pre>
+<p>
+Store an attribute.
+</p>
+<p>
+The plugin is expected to either quickly and synchronously
+update its internal cache of values with <em class="parameter"><code>value</code></em>, or to
+decline to store the attribute.
+</p>
+<p>
+The plugin is not expected to write to its long term storage
+at this point.
+</p>
+<p>
+There is a default implementation, which just returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.
+Mission Control will call <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set" title="mcp_account_storage_set ()"><code class="function">mcp_account_storage_set()</code></a> instead,
+using a keyfile-escaped version of <em class="parameter"><code>value</code></em>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
+<td>the unique name of the account</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>attribute</code></em> :</span></p></td>
+<td>the name of an attribute, e.g. "DisplayName"</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>a value to associate with <em class="parameter"><code>attribute</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>flags influencing how the attribute is to be stored</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the attribute was claimed, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 5.13.UNRELEASED</p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-account-storage-set-parameter"></a><h3>mcp_account_storage_set_parameter ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mcp_account_storage_set_parameter   (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
+                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);</pre>
+<p>
+Store a parameter.
+</p>
+<p>
+The plugin is expected to either quickly and synchronously
+update its internal cache of values with <em class="parameter"><code>value</code></em>, or to
+decline to store the parameter.
+</p>
+<p>
+The plugin is not expected to write to its long term storage
+at this point.
+</p>
+<p>
+There is a default implementation, which just returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a>.
+Mission Control will call <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set" title="mcp_account_storage_set ()"><code class="function">mcp_account_storage_set()</code></a> instead,
+using "param-" + <em class="parameter"><code>parameter</code></em> as key and a keyfile-escaped version
+of <em class="parameter"><code>value</code></em> as value.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>storage</code></em> :</span></p></td>
+<td>an <a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>am</code></em> :</span></p></td>
+<td>an <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> instance</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>account</code></em> :</span></p></td>
+<td>the unique name of the account</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>parameter</code></em> :</span></p></td>
+<td>the name of a parameter, e.g. "account" (note that there
+is no "param-" prefix here)</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>value</code></em> :</span></p></td>
+<td>a value to associate with <em class="parameter"><code>parameter</code></em>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>flags</code></em> :</span></p></td>
+<td>flags influencing how the parameter is to be stored</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the parameter was claimed, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> otherwise</td>
+</tr>
+</tbody>
+</table></div>
+<p class="since">Since 5.13.UNRELEASED</p>
 </div>
 </div>
 </div>

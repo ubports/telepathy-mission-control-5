@@ -1,7 +1,7 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.14.1])
+AC_INIT([telepathy-mission-control], [5.15.0])
 
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR(Makefile.am)
@@ -45,9 +45,9 @@ AC_SUBST([MCP_API_VERSION])
 #     set revision to 0
 # else if library source has changed since last release
 #     increment revision
-MCP_LT_CURRENT=4
-MCP_LT_REVISION=2
-MCP_LT_AGE=4
+MCP_LT_CURRENT=5
+MCP_LT_REVISION=0
+MCP_LT_AGE=5
 AC_SUBST([MCP_LT_CURRENT])
 AC_SUBST([MCP_LT_REVISION])
 AC_SUBST([MCP_LT_AGE])
@@ -73,7 +73,6 @@ TP_COMPILER_WARNINGS([ERROR_CFLAGS],
    init-self \
    ],
   [missing-field-initializers \
-   deprecated-declarations \
    unused-parameter])
 AC_SUBST([ERROR_CFLAGS])
 
@@ -83,7 +82,7 @@ if test -z "$XSLTPROC"; then
     AC_MSG_ERROR([xsltproc (from the libxslt source package) is required])
 fi
 
-AM_PATH_PYTHON([2.5])
+AM_PATH_PYTHON([2.6])
 AC_MSG_CHECKING([for enough Python for the tests])
 mc_want_twisted_tests=no
 if $PYTHON -c "import twisted.internet.reactor, dbus.mainloop.glib"\
@@ -257,19 +256,21 @@ PKG_CHECK_MODULES(DBUS, [dbus-1 >= 0.95, dbus-glib-1 >= 0.82])
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
-PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.19.0])
+PKG_CHECK_MODULES([TELEPATHY], [telepathy-glib >= 0.20.0])
 AC_DEFINE([TP_VERSION_MIN_REQUIRED], [TP_VERSION_0_18],
   [Ignore post-0.18 deprecations])
 AC_DEFINE([TP_VERSION_MAX_ALLOWED], [TP_VERSION_0_20],
   [Prevent post-0.20 APIs])
+AC_DEFINE([TP_SEAL_ENABLE], [], [Define to hide deprecated struct fields])
+AC_DEFINE([TP_DISABLE_SINGLE_INCLUDE], [], [Avoid individual headers])
 
 PKG_CHECK_MODULES([GLIB],
-	[glib-2.0 >= 2.30, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
+	[glib-2.0 >= 2.32, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
 
 AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_30], [Ignore post 2.30 deprecations])
-AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_30], [Prevent post 2.30 APIs])
+AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_32], [Prevent post 2.32 APIs])
 
 dnl Check for MCE, a Maemo service used to determine when the device is idle.
 PKG_CHECK_MODULES([MCE], mce >= 1.5, [HAVE_MCE=yes], [HAVE_MCE=no])

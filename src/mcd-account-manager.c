@@ -88,8 +88,8 @@ G_DEFINE_TYPE_WITH_CODE (McdAccountManager, mcd_account_manager, G_TYPE_OBJECT,
 
 struct _McdAccountManagerPrivate
 {
-    /* DBUS connection */
     TpDBusDaemon *dbus_daemon;
+    TpSimpleClientFactory *client_factory;
 
     McdStorage *storage;
     GHashTable *accounts;
@@ -124,13 +124,14 @@ typedef struct
 typedef struct
 {
     McdAccount *account;
-    gchar *property;
+    gchar *key;
 } McdAlterAccountData;
 
 enum
 {
     PROP_0,
     PROP_DBUS_DAEMON,
+    PROP_CLIENT_FACTORY
 };
 
 static guint write_conf_id = 0;
@@ -226,11 +227,11 @@ async_altered_one_manager_cb (McdManager *cm,
 
     /* this triggers the final parameter check which results in dbus signals *
      * being fired and (potentially) the account going online automatically  */
-    mcd_account_property_changed (altered->account, altered->property);
+    mcd_account_altered_by_plugin (altered->account, altered->key);
 
     g_object_unref (cm);
     g_object_unref (altered->account);
-    g_free (altered->property);
+    g_free (altered->key);
     g_slice_free (McdAlterAccountData, altered);
 }
 
@@ -267,7 +268,7 @@ altered_one_cb (GObject *storage,
 
         g_object_ref (cm);
         altered->account = g_object_ref (account);
-        altered->property = g_strdup (key);
+        altered->key = g_strdup (key);
 
         mcd_manager_call_when_ready (cm, async_altered_one_manager_cb, altered);
     }
@@ -338,16 +339,14 @@ created_cb (GObject *storage_plugin_obj,
     lad->account_lock = 1; /* will be released at the end of this function */
 
     /* actually fetch the data into our cache from the plugin: */
-    if (mcp_account_storage_get (plugin, MCP_ACCOUNT_MANAGER (storage),
-                                 name, NULL))
+    if (mcd_storage_add_account_from_plugin (storage, plugin, name))
     {
         account = mcd_account_new (am, name);
         lad->account = account;
     }
     else
     {
-        g_warning ("plugin %s disowned its own new account %s",
-                   mcp_account_storage_name (plugin), name);
+        /* that function already warned about it */
         goto finish;
     }
 
@@ -400,7 +399,8 @@ toggled_cb (GObject *plugin, const gchar *name, gboolean on, gpointer data)
       return;
     }
 
-  _mcd_account_set_enabled (account, on, FALSE, &error);
+  _mcd_account_set_enabled (account, on, FALSE,
+                            MCD_DBUS_PROP_SET_FLAG_NONE, &error);
 
   if (error != NULL)
     {
@@ -591,15 +591,23 @@ list_connection_names_cb (const gchar * const *names, gsize n,
         {
             /* Close the connection */
             TpConnection *proxy;
+            gchar *path;
+
+            path = g_strdup_printf ("/%s", names[i]);
+            g_strdelimit (path, ".", '/');
 
             DEBUG ("Killing connection");
-            proxy = tp_connection_new (priv->dbus_daemon, names[i], NULL, NULL);
+            proxy = tp_simple_client_factory_ensure_connection (
+                priv->client_factory, path, NULL, NULL);
+
             if (proxy)
             {
                 tp_cli_connection_call_disconnect (proxy, -1, NULL, NULL,
                                                    NULL, NULL);
                 g_object_unref (proxy);
             }
+
+            g_free (path);
         }
     }
     g_free (contents);
@@ -908,14 +916,13 @@ _mcd_account_manager_create_account (McdAccountManager *account_manager,
 
     /* create the basic account keys */
     mcd_storage_set_string (storage, unique_name,
-                            MC_ACCOUNTS_KEY_MANAGER, manager, FALSE);
+                            MC_ACCOUNTS_KEY_MANAGER, manager);
     mcd_storage_set_string (storage, unique_name,
-                            MC_ACCOUNTS_KEY_PROTOCOL, protocol, FALSE);
+                            MC_ACCOUNTS_KEY_PROTOCOL, protocol);
 
     if (display_name != NULL)
         mcd_storage_set_string (storage, unique_name,
-                                MC_ACCOUNTS_KEY_DISPLAY_NAME, display_name,
-                                FALSE);
+                                MC_ACCOUNTS_KEY_DISPLAY_NAME, display_name);
 
     account = mcd_account_new (account_manager, unique_name);
     g_free (unique_name);
@@ -1219,7 +1226,8 @@ migrate_create_account_cb (McdAccountManager *account_manager,
     if (error != NULL)
     {
         DEBUG ("Failed to create account: %s", error->message);
-        _mcd_account_set_enabled (ctx->account, FALSE, TRUE, NULL);
+        _mcd_account_set_enabled (ctx->account, FALSE, TRUE,
+                                  MCD_DBUS_PROP_SET_FLAG_NONE, NULL);
         migrate_ctx_free (ctx);
         return;
     }
@@ -1247,7 +1255,8 @@ migrate_butterfly_haze_ready (McdManager *manager,
     if (error != NULL)
     {
         DEBUG ("Can't find Haze: %s", error->message);
-        _mcd_account_set_enabled (ctx->account, FALSE, TRUE, NULL);
+        _mcd_account_set_enabled (ctx->account, FALSE, TRUE,
+                                  MCD_DBUS_PROP_SET_FLAG_NONE, NULL);
         goto error;
     }
 
@@ -1256,7 +1265,8 @@ migrate_butterfly_haze_ready (McdManager *manager,
                                                   "account", G_TYPE_STRING,
                                                   &v, NULL))
     {
-        _mcd_account_set_enabled (ctx->account, FALSE, TRUE, NULL);
+        _mcd_account_set_enabled (ctx->account, FALSE, TRUE,
+                                  MCD_DBUS_PROP_SET_FLAG_NONE, NULL);
         goto error;
     }
 
@@ -1343,7 +1353,8 @@ butterfly_account_loaded (McdAccount *account,
     if (manager == NULL)
     {
         DEBUG ("Can't find Haze");
-        _mcd_account_set_enabled (account, FALSE, TRUE, NULL);
+        _mcd_account_set_enabled (account, FALSE, TRUE,
+                                  MCD_DBUS_PROP_SET_FLAG_NONE, NULL);
         goto error;
     }
 
@@ -1387,7 +1398,7 @@ migrate_accounts (McdAccountManager *self,
         if (cm == NULL)
             continue;
 
-        if (!tp_strdiff (cm->name, "butterfly"))
+        if (!tp_strdiff (tp_connection_manager_get_name (cm), "butterfly"))
             migrate_butterfly_account (self, account, lad);
     }
 }
@@ -1475,13 +1486,10 @@ static void
 register_dbus_service (McdAccountManager *account_manager)
 {
     McdAccountManagerPrivate *priv = account_manager->priv;
-    DBusGConnection *dbus_connection;
     GError *error = NULL;
 
     if (priv->dbus_registered)
         return;
-
-    dbus_connection = TP_PROXY (priv->dbus_daemon)->dbus_connection;
 
     if (!tp_dbus_daemon_request_name (priv->dbus_daemon,
                                       TP_ACCOUNT_MANAGER_BUS_NAME,
@@ -1497,10 +1505,9 @@ register_dbus_service (McdAccountManager *account_manager)
 
     priv->dbus_registered = TRUE;
 
-    if (G_LIKELY (dbus_connection))
-        dbus_g_connection_register_g_object (dbus_connection,
-                                             TP_ACCOUNT_MANAGER_OBJECT_PATH,
-                                             (GObject *)account_manager);
+    tp_dbus_daemon_register_object (priv->dbus_daemon,
+                                    TP_ACCOUNT_MANAGER_OBJECT_PATH,
+                                    account_manager);
 }
 
 static void
@@ -1512,10 +1519,15 @@ set_property (GObject *obj, guint prop_id,
 
     switch (prop_id)
     {
-    case PROP_DBUS_DAEMON:
-        tp_clear_object (&priv->dbus_daemon);
-	priv->dbus_daemon = TP_DBUS_DAEMON (g_value_dup_object (val));
-	break;
+    case PROP_CLIENT_FACTORY:
+        g_assert (priv->client_factory == NULL);  /* construct-only */
+        priv->client_factory =
+            TP_SIMPLE_CLIENT_FACTORY (g_value_dup_object (val));
+        priv->dbus_daemon =
+            tp_simple_client_factory_get_dbus_daemon (priv->client_factory);
+        g_object_ref (priv->dbus_daemon);
+        break;
+
     default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, prop_id, pspec);
 	break;
@@ -1566,6 +1578,7 @@ _mcd_account_manager_dispose (GObject *object)
     McdAccountManagerPrivate *priv = MCD_ACCOUNT_MANAGER_PRIV (object);
 
     tp_clear_object (&priv->dbus_daemon);
+    tp_clear_object (&priv->client_factory);
 
     G_OBJECT_CLASS (mcd_account_manager_parent_class)->dispose (object);
 }
@@ -1586,7 +1599,15 @@ mcd_account_manager_class_init (McdAccountManagerClass *klass)
         (object_class, PROP_DBUS_DAEMON,
          g_param_spec_object ("dbus-daemon", "DBus daemon", "DBus daemon",
                               TP_TYPE_DBUS_DAEMON,
-                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                              G_PARAM_READABLE));
+
+    g_object_class_install_property
+        (object_class, PROP_CLIENT_FACTORY,
+         g_param_spec_object ("client-factory",
+                              "Client factory",
+                              "Client factory",
+                              TP_TYPE_SIMPLE_CLIENT_FACTORY,
+                              G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 static const gchar *
@@ -1659,13 +1680,13 @@ _mcd_account_manager_constructed (GObject *obj)
 }
 
 McdAccountManager *
-mcd_account_manager_new (TpDBusDaemon *dbus_daemon)
+mcd_account_manager_new (TpSimpleClientFactory *client_factory)
 {
     gpointer *obj;
 
     obj = g_object_new (MCD_TYPE_ACCOUNT_MANAGER,
-		       	"dbus-daemon", dbus_daemon,
-			NULL);
+                        "client-factory", client_factory,
+                        NULL);
     return MCD_ACCOUNT_MANAGER (obj);
 }
 

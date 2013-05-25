@@ -12,13 +12,13 @@ Build-Depends: debhelper (>= 9),
                gtk-doc-tools,
                libdbus-1-dev (>= 1.0),
                libdbus-glib-1-dev (>= 0.82),
-               libglib2.0-dev (>= 2.30),
+               libglib2.0-dev (>= 2.32),
                libgnome-keyring-dev,
-               libtelepathy-glib-dev (>= 0.19.1),
+               libtelepathy-glib-dev (>= 0.20),
                libupower-glib-dev,
                libnm-glib-dev [linux-any],
                pkg-config (>= 0.21),
-               python (>= 2.5),
+               python (>= 2.6),
                xsltproc
 Standards-Version: 3.9.4
 Vcs-Git: git://anonscm.debian.org/git/pkg-telepathy/telepathy-mission-control-5.git

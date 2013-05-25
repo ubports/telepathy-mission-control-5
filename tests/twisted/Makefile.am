@@ -3,6 +3,7 @@ TWISTED_TESTS =
 TWISTED_BASIC_TESTS = \
 	account-manager/account-basics.py \
 	account-manager/avatar.py \
+	account-manager/backend-makes-changes.py \
 	account-manager/bad-cm.py \
 	account-manager/crashy-cm.py \
 	account-manager/create-auto-connect.py \
@@ -10,11 +11,13 @@ TWISTED_BASIC_TESTS = \
 	account-manager/create-with-properties.py \
 	account-manager/enable-auto-connect.py \
 	account-manager/enable.py \
+	account-manager/irc.py \
 	account-manager/nickname.py \
 	account-manager/param-types.py \
 	account-manager/presence.py \
 	account-manager/reconnect.py \
 	account-manager/recover-from-disconnect.py \
+	account-manager/req-conn-fails.py \
 	account-manager/request-online.py \
 	account-manager/service.py \
 	account-manager/update-parameters.py \
@@ -94,6 +97,7 @@ TWISTED_SEPARATE_TESTS += $(TWISTED_SPECIAL_BUILD_TESTS)
 # source
 TWISTED_OTHER_FILES = \
 	constants.py \
+	fakeaccountsservice.py \
 	fakeclient.py \
 	fakecm.py \
 	fakeconnectivity.py \
@@ -183,7 +187,11 @@ noinst_LTLIBRARIES = $(plugins_list)
 
 endif
 
-mcp_plugin_la_SOURCES = mcp-plugin.c
+mcp_plugin_la_SOURCES = \
+	dbus-account-plugin.c \
+	dbus-account-plugin.h \
+	mcp-plugin.c \
+	$(NULL)
 # these runes are necessary to make libtool build a dlopen()able shared
 # library even though it's not going to be installed - the default for noinst
 # libraries is static

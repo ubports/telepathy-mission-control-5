@@ -35,7 +35,7 @@ cm_name_ref = dbus.service.BusName(
 
 account_id = 'fakecm/fakeprotocol/jc_2edenton_40unatco_2eint'
 
-def preseed():
+def preseed(q, bus, fake_accounts_service):
 
     accounts_dir = os.environ['MC_ACCOUNT_DIR']
 
@@ -44,28 +44,29 @@ def preseed():
     except OSError:
         pass
 
-    accounts_cfg = open(accounts_dir + '/accounts.cfg', 'w')
+    fake_accounts_service.update_attributes(account_id, changed={
+        'manager': 'fakecm',
+        'protocol': 'fakeprotocol',
+        'DisplayName': 'Work account',
+        'NormalizedName': 'jc.denton@unatco.int',
+        'Enabled': True,
+        'ConnectAutomatically': True,
+        # These are in the old format. They'll be combined shortly.
+        'AutomaticPresenceType': dbus.UInt32(2),
+        'AutomaticPresenceStatus': 'available',
+        'AutomaticPresenceMessage': 'My vision is augmented',
+        'Nickname': 'JC',
+        'AvatarMime': 'image/jpeg',
+        })
 
     # As a regression test for part of fd.o #28557, the password starts and
     # ends with a double backslash, which is represented in the file as a
-    # quadruple backslash.
-    accounts_cfg.write(r"""# Telepathy accounts
-[%s]
-manager=fakecm
-protocol=fakeprotocol
-DisplayName=Work account
-NormalizedName=jc.denton@unatco.int
-param-account=jc.denton@unatco.int
-param-password=\\\\ionstorm\\\\
-Enabled=1
-ConnectAutomatically=1
-AutomaticPresenceType=2
-AutomaticPresenceStatus=available
-AutomaticPresenceMessage=My vision is augmented
-Nickname=JC
-AvatarMime=image/jpeg
-""" % account_id)
-    accounts_cfg.close()
+    # quadruple backslash. We use the untyped-parameters dict in order to
+    # exercise that.
+    fake_accounts_service.update_parameters(account_id, untyped={
+        'account': 'jc.denton@unatco.int',
+        'password': r'\\\\ionstorm\\\\',
+        })
 
     os.makedirs(accounts_dir + '/' + account_id)
     avatar_bin = open(accounts_dir + '/' + account_id + '/avatar.bin', 'w')
@@ -76,14 +77,33 @@ AvatarMime=image/jpeg
     account_connections_file.write("")
     account_connections_file.close()
 
-def test(q, bus, unused):
+def test(q, bus, unused, **kwargs):
+    fake_accounts_service = kwargs['fake_accounts_service']
+    preseed(q, bus, fake_accounts_service)
 
     expected_params = {
             'account': 'jc.denton@unatco.int',
             'password': r'\\ionstorm\\',
             }
 
-    mc = MC(q, bus)
+    mc = MC(q, bus, wait_for_names=False)
+    mc.wait_for_names(
+            # Migration step: the three separate attributes get combined
+            # (before the names are taken, so we need to expect it here)
+            EventPattern('dbus-method-call',
+                interface=cs.TEST_DBUS_ACCOUNT_SERVICE_IFACE,
+                method='UpdateAttributes',
+                predicate=(lambda e:
+                    e.args[0] == account_id and
+                    e.args[1] == {'AutomaticPresence':
+                        (2, 'available', 'My vision is augmented')} and
+                    e.args[2] == {'AutomaticPresence': 0} and   # flags
+                    set(e.args[3]) == set([     # no particular order
+                        'AutomaticPresenceType',
+                        'AutomaticPresenceStatus',
+                        'AutomaticPresenceMessage',
+                        ])))
+            )
 
     request_conn, prop_changed = q.expect_many(
             EventPattern('dbus-method-call', method='RequestConnection',
@@ -173,5 +193,5 @@ def test(q, bus, unused):
     q.dbus_return(set_aliases.message, signature='')
 
 if __name__ == '__main__':
-    preseed()
-    exec_test(test, {}, preload_mc=False)
+    exec_test(test, {}, preload_mc=False, use_fake_accounts_service=True,
+            pass_kwargs=True)

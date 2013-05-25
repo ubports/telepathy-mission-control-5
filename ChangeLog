@@ -1,8 +1,63 @@
+commit 76c328175300821b1a2554391f0143c4d54fb779
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 15:02:59 +0100
+
+    Prepare 5.15.0
+
+commit 7877d99ed2f9ff2cd0888e8f762ebad932852767
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 13:01:44 +0100
+
+    McdSlacker: don't crash if SessionManager is absent or StatusChanged has no parameters
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=62530
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 1d3403089ab01ff5b5056cd360d5469099d0ff08
+Author: Xavier Claessens <xavier.claessens@collabora.co.uk>
+Date:   2013-05-02 18:05:50 +0200
+
+    McdSlacker: Use org.gnome.SessionManager DBus service
+    
+    MCE is a long dead Nokia closed source service for Maemo.
+    This rewrites McdSlacker using GDBus and the much more useful
+    GNOME SessionManager service. That interface is implemented in
+    both gnome-shell and unity desktops.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=62530
+
+commit d0419b28aa3ad45fa8f92b477ac65c32012b937b
+Merge: d7423ba 712ddaf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 12:28:30 +0100
+
+    Merge branch 'telepathy-mission-control-5.14'
+    
+    Conflicts:
+    	NEWS
+    	configure.ac
+
+commit 712ddaf9b57fdc03e0c6b0b2c45ec04eaf135248
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 12:25:45 +0100
+
+    resume development
+
 commit b613401b8f238ed633e72691d5a6716fdcaf9ee1
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-05-03 11:54:47 +0100
 
     Prepare 5.14.1
+
+commit d7423ba7794f57380440ffbf485462653bc060c0
+Merge: 7da30dc 57b73f8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-01 20:00:20 +0100
+
+    Merge branch 'telepathy-mission-control-5.14'
+    
+    Conflicts:
+    	NEWS
 
 commit 57b73f8f22f0e7fbc4b37c994ba0c96ec52b8c01
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -31,6 +86,16 @@ Date:   2013-01-16 17:15:01 +0000
     Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
     Bug: https://bugs.freedesktop.org/show_bug.cgi?id=59468
 
+commit 7da30dceb86e3bc38679e18e6deb30e82c877692
+Merge: c244460 07d5735
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 13:11:37 +0100
+
+    Merge branch 'telepathy-mission-control-5.14'
+    
+    Conflicts:
+    	NEWS
+
 commit 07d5735d63a0dd1102fcec454159aad36cdbe30a
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-04-30 13:09:05 +0100
@@ -49,6 +114,53 @@ Date:   2013-01-18 22:47:00 +0100
     Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
     Bug: https://bugs.freedesktop.org/show_bug.cgi?id=59605
 
+commit c244460e5179ac4089fcb3a2c1c1949fdbf20a35
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 12:49:23 +0100
+
+    tests: avoid an out-of-range int literal
+    
+    In this particular test case, the expected result according to the flags
+    is "it fails", so the second column (expected converted value) is not
+    relevant.
+    
+    This apparently causes build warnings (fatal by default) on ILP32
+    platforms, because 2147483648 is out-of-range for a signed int or
+    signed long on such platforms. It's certainly also out-of-range for
+    the struct member it's initializing, which is a gint32.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=64083
+
+commit 305be4e9c3fe0eb04b46ecaee7789935e2445dbd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 12:14:03 +0100
+
+    NEWS
+
+commit 393d6c8b6e64c487c8a426443d3b285c35093dce
+Author: Joshua Lock <joshua.lock@intel.com>
+Date:   2013-04-24 16:09:46 -0700
+
+    connectivity-monitor: ConnMan Services with ready State are online
+    
+    A ConnMan Service is connected if it has a State of online or ready.
+    
+    [This can matter if your only connectivity to the outside world is through
+    a proxy, in which case the State will remain 'ready' but Telepathy
+    accounts might be usable anyway. -smcv]
+    
+    Signed-off-by: Joshua Lock <joshua.lock@intel.com>
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit e7511f28cd233213457f9d712d1441add2500546
+Merge: 72cdbb7 cdfea3c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-04 16:45:46 +0100
+
+    Merge branch 'telepathy-mission-control-5.14'
+
 commit cdfea3c5a600a18f2621c6249a374951496685ba
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-04-04 16:43:23 +0100
@@ -56,6 +168,112 @@ Date:   2013-04-04 16:43:23 +0100
     Merge fd.o #63119 from telepathy-glib
     
     Bug: https://bugs.freedesktop.org/show_bug.cgi?id=63119
+
+commit 72cdbb73d092de176fed47508f108fed8d4627c6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 14:44:51 +0000
+
+    More NEWS
+
+commit edd77d23975fabc9a33779cc4011dd84122c9b2e
+Merge: 75ce9cd 0fda3bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 14:36:42 +0000
+
+    Merge branch 'altered-one-54780'
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54780
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+    [deleted a stray line from a comment as per wjt's review -smcv]
+    Conflicts:
+    	src/mcd-account.c
+
+commit 75ce9cdd98c102643ff3eddedf4cf328d034d283
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 14:33:11 +0000
+
+    More NEWS for 5.15
+
+commit 16f3e22820de84e7227dee7b85a690bdc1d561e0
+Merge: 5aeddb8 06a09cf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 14:20:16 +0000
+
+    Merge branch 'mock-account-store-54873'
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54873
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+    Conflicts:
+    	tests/twisted/account-manager/avatar.py
+
+commit 5aeddb8e0a314780585af7b8f19896a2be9815d4
+Merge: 128ceb7 3975989
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 14:13:42 +0000
+
+    Merge branch 'typed-settings-54872'
+    
+    Reviewed-by: Will Thompson <will.thompson@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54872
+    [amended to add GLib 2.32 dependency -smcv]
+    Conflicts:
+    	src/mcd-account.c
+
+commit 128ceb7d37ff5847a9e79f2bafa6127ae97f585b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-01-09 14:14:01 +0000
+
+    NEWS for 5.15
+
+commit 5047dc72737b9fcb2f1310f9b5cf8e5719a6fe52
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-01-09 14:01:57 +0000
+
+    Clean all generated files, so we can distcheck successfully
+
+commit 4ab810e7f3d7458bdd02549f631ee402ec6862a3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-01-09 12:05:13 +0000
+
+    Communicate the detailed error from McdConnection to McdAccount
+    
+    In particular, this propagates the error from RequestConnection failing
+    correctly, so add a regression test for that.
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=39334
+
+commit d9d0d64c5046668a0e7dc261216672143a699559
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 16:00:48 +0100
+
+    Remove McdAccount::connection-status-changed signal
+    
+    Nothing listens to it.
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=39334
+
+commit 9c038fb370c25a2fb87fd80e71b4591cb81c5fa5
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2013-01-07 16:18:09 +0100
+
+    account-addressing: fire PropertiesChanged on URISchemes change
+
+commit 4b5ccf8a74f6c80d4a9787fcaec445327d589800
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2013-01-08 13:53:06 +0100
+
+    addressing.py: 'mailto' is the proper URI scheme
+
+commit e34842e2101a54dc90d7496999da10f62c392d30
+Author: Will Thompson <will.thompson@collabora.co.uk>
+Date:   2013-01-09 09:51:07 +0000
+
+    Bump tp-glib dependency for tp_vardict_get_*
+    
+    a5a5d850 started using these functions, which were introduced in
+    telepathy-glib 0.20.0.
 
 commit 060e148bd71f3989861ab374dba89cc20278fcec
 Author: Cosimo Cecchi <cosimoc@gnome.org>
@@ -67,6 +285,455 @@ Date:   2012-11-15 12:04:30 -0500
     
     Bug: https://bugs.freedesktop.org/show_bug.cgi?id=57165
     Reviewed-By: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 52485ba01852a0fc7d46cb026adfbde16aa525d6
+Author: Cosimo Cecchi <cosimoc@gnome.org>
+Date:   2012-11-15 12:04:30 -0500
+
+    build: honor NOCONFIGURE in autogen.sh
+    
+    Like telepathy-glib does already.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=57165
+    Reviewed-By: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c3f9cd49aa0238922b5a0e972cf3cbe3a48be6eb
+Author: Mike Ruprecht <mike.ruprecht@collabora.co.uk>
+Date:   2012-11-01 00:24:35 -0500
+
+    Update to current ConnMan API
+    
+    ConnMan 0.79 removed the GetState method and StateChanged signal.
+    Use the GetProperties method and PropertyChanged signals as their
+    replacements.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=56600
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 077ac24ef7d324fded1ebba928ee6150ab583e9c
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2012-10-30 15:17:33 +0100
+
+    Add missing config.h includes
+    
+    g_type_init() has been deprecated in GLib master. By including those files I
+    can build without raising a deprecation error as we define
+    GLIB_VERSION_MIN_REQUIRED to 2.30.
+
+commit 2fe37c082b5db56513598beb638b331ccfff9b0b
+Merge: 9b04e1b 61566c4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 16:53:19 +0100
+
+    Merge branch 'aliasing-avatars'
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55668
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 9b04e1ba0a4cfe74345cb6eaa0496b3348e9a24a
+Author: Emilio Pozuelo Monfort <emilio.pozuelo@collabora.co.uk>
+Date:   2011-06-15 12:26:26 +0100
+
+    Check for the specific error codes when reconnecting
+    
+    The NetworkError connection status maps to several TpErrors,
+    so first check the error codes to decide whether we should
+    automatically reconnect, and fallback to the connection
+    status if we don't recognize the error.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=37844
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 61566c4ae43f312ed102eb1586e4aeb50dc03e6c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 11:36:28 +0100
+
+    mcd_account_self_contact_changed_cb: ignore no-op changes
+
+commit d4eec9aa5baa63fdfc0cf354561044786dfa23b5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 11:29:39 +0100
+
+    mcd_account_process_initial_avatar_token: don't take self_contact argument
+    
+    It can be retrieved from the McdAccount.
+
+commit d2a26f3b1a3d6e0fead0b2885347bb9e0d6d15bd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 11:27:57 +0100
+
+    Ignore changes to the avatar of former self-contacts
+    
+    This is highly theoretical, but in principle it could happen.
+
+commit 90dd8c46e8457629140397d6e6afacfe9f2eea6b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 11:25:55 +0100
+
+    Implement Set("Nickname", "") by using the normalized name instead
+    
+    This is consistent with what we do when we first connect, and ensures
+    that we always have some sort of nickname.
+
+commit a4355bb2eb2a682a4c1298c01683cffb4e42a666
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 11:10:12 +0100
+
+    nickname test: test what happens when we set an empty nickname
+
+commit 97b7748520960cc4cda2f9c9c25eb5c5ad27e326
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 10:55:45 +0100
+
+    Downgrade failure to prepare self-contact from WARNING to DEBUG
+
+commit 420ba08af8aa3d2b7300f683725dc8cc52858d51
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-09 10:54:53 +0100
+
+    Downgrade failure to set alias/avatar from WARNING to DEBUG
+
+commit e49b1405fd0242c2e28b62905cb0dcfe1b8091d5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 17:54:04 +0100
+
+    Track Avatars using McdAccount, and use the self-contact for it
+
+commit 2a1d4dce7e7bfa08e646485d36f4223c46915a33
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 17:53:34 +0100
+
+    Emulate the Aliasing interface a little more realistically
+
+commit 51641776d8cb3ac2db46ccf062bbe5aae2588230
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 16:20:20 +0100
+
+    Knock out most of the IRC test until fd.o #55666 is fixed
+
+commit b543e87d5fcb65ef61516b4bf6c03cb4f27583b4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 13:45:58 +0100
+
+    Add a regression test for an IRC-like protocol
+    
+    IRC has plenty of oddities, but the one we're interested in here
+    is that your nickname and your unique identifier are inextricably linked.
+
+commit eb7239987e2cddc1e2388428bf9f01bfc06fbb00
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 16:17:44 +0100
+
+    McdAccount: cope with self-contact changes; follow the self-contact
+
+commit f5333aaa31373ffc30bad96fb877b7a5915dd6bf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 12:42:39 +0100
+
+    nickname test: verify that a trivial nickname is not set on connect
+
+commit 121688c19cded284257b9e7a3690207d98899f82
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 13:21:16 +0100
+
+    enable_fakecm_account: copy parameters and alter the copy
+    
+    Mutable defaults for arguments are dangerous. If we call
+    enable_fakecm_account twice with default arguments, when we alter
+    expect_before_connect/expect_after_connect, we are actually altering
+    the default! Python doesn't construct a new empty list for us every
+    time. The C equivalent would be a static GPtrArray * or something.
+
+commit b6d933c6927a8b0b4c60a414ccd7c271fb14e0dd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 12:42:16 +0100
+
+    Don't set the nickname to the normalized name on connect
+    
+    We still allow the nickname to be set to the normalized name by
+    user action later, because in that case, the intention is unambiguous:
+    the user really does want their nickname to take that value.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=39381
+
+commit 4ab487bfbd4d8a8ed8f4fb6e42afaf2a35e8e59e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 12:04:02 +0100
+
+    McdAccount: take responsibility for setting the nickname
+    
+    As well as being implemented in a more streamlined way (using the
+    self-contact instead of calling D-Bus methods directly), this reduces
+    the circular dependencies between McdConnection and McdAccount.
+
+commit 8a27f3df35f58e48547a9d92711df16214edd5a4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-05 14:38:26 +0100
+
+    McdAccount: store the self-contact
+
+commit a5a5d85001669af4411d01daa98da0e6d3c3094c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-08 15:46:44 +0100
+
+    _mcd_client_match_property: take channel properties as GVariant
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit eee9cebcfe2e583dbb5fd1421b879a7837bc7a2c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 14:45:38 +0100
+
+    Generally use GVariant, not GHashTable, for channels' properties
+    
+    This means we can avoid the deprecated
+    tp_channel_borrow_immutable_properties().
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 552dcac1ea50fbe0d64e4ec122b40d3d8fb5b391
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-08 15:30:47 +0100
+
+    mc-tool: have a TpSimpleClientFactory to manufacture accounts
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 7f8f814ffc232cbfe903b66a418c52d2ce964f5d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 15:21:05 +0100
+
+    McpDispatchOperation: use a new factory for each connection
+    
+    This avoids the deprecated tp_channel_new_from_properties(). It has the
+    same disadvantages as that function, but is a bit more obvious about it.
+    Also comment how to change things at the next ABI break.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 4413b17df8a2e7e5df1167e4f3848a98a6395945
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 15:51:04 +0100
+
+    McdConnection: use TpWeakRef instead of replicating it
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit a41ad6c876407eeb47fa6ae4dc930d9fdae47c9e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 15:12:00 +0100
+
+    McdChannel: use the TpConnection's factory to make TpChannel objects
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit bd19b09f83087cfde65ff5f777b30a07cf07e22b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 15:02:02 +0100
+
+    McdAccountManager: have a TpSimpleClientFactory
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit ac8b57c149c9c84dc86427337d0b39999f96da2c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 15:00:20 +0100
+
+    McdAccountManager: use tp_dbus_daemon_register_object
+    
+    dbus_g_connection_register_g_object isn't deprecated, but it's more code.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit e913203ccfe06fbf3435be69b0e6b07d1828ce73
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 14:42:29 +0100
+
+    McdChannel: use tp_channel_get_requested instead of reinventing it
+    
+    MC's reinvention was potentially better if the channel might lack the
+    Requested property... but that property has been mandatory for years,
+    so CMs that haven't caught up can just deal with it.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 9f5aaffb018ce166c8181eb98cd13182112ead22
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 14:38:17 +0100
+
+    Use tp_channel_get_connection instead of tp_channel_borrow_connection
+    
+    This requires telepathy-glib 0.19.9, so depend on it.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 8310376a77d8a591d438dd65f5050081430bd5ff
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 13:30:00 +0100
+
+    mc-tool: use tp_account_manager_dup_valid_accounts
+    
+    tp_account_manager_get_valid_accounts has the confusing
+    (transfer container) transfer-mode, and is deprecated in telepathy-glib
+    0.19.9.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 534b0ed2fc2ddd4872bca3251025c30037fb3272
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 12:03:11 +0100
+
+    Enable TP_DISABLE_SINGLE_INCLUDE
+    
+    Tested with telepathy-glib 0.20.0.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 5ba8d233c1776da8ab894e744e749b760c94275d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 12:02:59 +0100
+
+    Update code generation tools from telepathy-glib 0.20.0
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 553120085c06d90a06f876a12344170b480c3846
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-14 11:58:27 +0100
+
+    Enable TP_SEAL_ENABLE
+    
+    Tested with telepathy-glib 0.20.0.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 2637ab782d2ff562c40e18bae1f86f4d850537ed
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-13 17:57:35 +0100
+
+    replace sealed struct members with getters and use TpProtocol
+    
+    Originally two patches for 'next' by Jonny Lamb.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit caacfe66c11a3c01fd29e935dd7b0ea7b9b474a6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-21 15:42:16 +0100
+
+    WARNING, etc. macros: add
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit f694362379baca962247f4b62630866332a969a7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-21 15:37:03 +0100
+
+    mc-debug-server: don't self-terminate when disconnected from GDBus
+    
+    It appears something in MC now connects to D-Bus for a second time,
+    using GDBus this time. We don't want to exit-on-disconnect for this
+    one either, again so we free all memory before exiting.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 33328b2b5cf1f8ea54dcadc639e90776544cad2c
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-08-29 18:33:21 +0100
+
+    add more telepathy-glib-dbus.h includes where appropriate
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit b265e18157aec3d387b344331fb2aa117f1257bb
+Author: Jonny Lamb <jonny.lamb@collabora.co.uk>
+Date:   2012-08-29 18:29:54 +0100
+
+    make-valid test: make connection object paths distinct
+    
+    If these object paths are the same, the factory will use the same
+    TpConnection (even though they are actually different connections) and
+    dispatching will happen twice.
+    
+    Signed-off-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit d98add74c5c5b142f4908dffdb6e0bac951d7564
+Merge: dae5f16 76c62bc
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-04 16:03:30 +0100
+
+    Merge branch 'storage-refactor-54870'
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=54870
+    Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
+
+commit dae5f16617519406eaf9a41bc050d99944805dc2
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 19:09:59 +0100
+
+    Start the 5.15 branch
+
+commit ff2df8e5eab56b0a5b013cb4333fbf41fd367414
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 19:09:33 +0100
+
+    Revert "Don't check documentation completeness in this stable branch"
+    
+    This reverts commit 2a0b73c02353a155e473504546a8b7e598da4449.
+
+commit e4b9946e98001d081c0e6bc15c16e27432782a29
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 19:08:52 +0100
+
+    Revert "Upload documentation to the 5.14.x location"
+    
+    This reverts commit 5f156149b05e7b5ab9e54eeee729136d9d59128c.
+
+commit 2a1ac0b29220b24a243124639e0bdd8b3c756022
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-03 19:08:48 +0100
+
+    Revert "Don't warn on deprecated declarations, this is a stable branch."
+    
+    This reverts commit 4e5a187773cb34de567e3cf90d62710830bbd876.
 
 commit 847e2b950aa18d530dc0f32b58e8bb11a1658039
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
@@ -204,6 +871,438 @@ Date:   2012-08-30 16:53:36 +0100
     Reviewed-by: Jonny Lamb <jonny.lamb@collabora.co.uk>
     Bug: https://bugs.freedesktop.org/show_bug.cgi?id=42088
     Cherry-picked-from: c21e2b09bf4cdda6fb05d64f9198f6db7b776c76
+
+commit 0fda3bd4b8217460a3c755e8eae8c48ad6478958
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 12:26:16 +0100
+
+    Test that an account storage backend can alter AutomaticPresence
+    
+    AutomaticPresenceType etc. don't work, but AutomaticPresence does.
+
+commit 06cb1df43b9113eb0f202b4ae9d95adc032b5d67
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 12:21:14 +0100
+
+    mc-tool: add getter for AutomaticPresence
+
+commit 287f7425b9069fae816f1e2872b5992dffb17074
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 12:21:04 +0100
+
+    Use combined AutomaticPresence in tests where either would do
+
+commit 5b21fc3d06fba26dfef4ebd5e4287e57e1a416db
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 12:20:29 +0100
+
+    McdAccount: store automatic presence as a single attribute
+    
+    This will be necessary to make its change-notification work correctly.
+    
+    Use tests/twisted/account-manager/auto-connect.py to exercise the
+    automatic migration.
+    
+    account-storage/default-keyring-storage.py is broken by this change,
+    because it asserts that keyfiles from a lower-priority XDG location
+    are not automatically migrated to a higher-priority location until
+    something actually changes, and the migration of AutomaticPresenceType
+    is a change. To avoid that, put the automatic presence in lower-priority
+    keyfiles in that test in the new format already.
+
+commit a90652ddf3103de75c345f198f3c8ce4d797d443
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 11:40:10 +0100
+
+    Add a regression test for (un)escaping things in keyfile format
+
+commit 938facb6517d2daecdf60a287f04d0cdf1f3fd66
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 14:28:07 +0100
+
+    McdStorage: add support for storing structs (uss) in keyfiles
+
+commit f2cfc78ac1a37cb9a85055602cf7c001045492bf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 18:42:22 +0100
+
+    McdAccount: consolidate AutomaticPresence setting
+
+commit 20661d5734d5d7c8f1e95b70be7b4f49f7cf4c04
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 18:35:16 +0100
+
+    TestDBusAccountPlugin: push typed parameters into MC
+
+commit 05d1af08748932319ac5133f716deac4fae9b698
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 18:35:01 +0100
+
+    Add a way for storage plugins to push typed parameters into MC
+
+commit 0a3f99bb6bb8703777e0060fa378360958a25032
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 18:01:04 +0100
+
+    McdAccount: add a way to tell property setters that storage has already been updated
+    
+    This lets us get AccountPropertyChanged signals for more attributes
+    changed via McpAccountStorage::altered-one, which would previously be
+    suppressed because altered-one's API is that the storage plugin has
+    already updated the McdStorage before emitting the signal. The
+    property setter would then notice that the value was the same as
+    in McdStorage, and assume that that meant it hadn't actually changed.
+
+commit 2c1a41059fec4657c59078525ca2527a06443b90
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 17:22:29 +0100
+
+    mcd_account_altered_by_plugin: get the new value from the McdStorage
+    
+    This means we pick up the new value a little more reliably: in
+    particular, this fixes processing of URISchemes, ConnectAutomatically
+    and Supersedes.
+
+commit d62d0742c69c81cd0299f8dc30d6f717bba0493a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 14:27:01 +0100
+
+    mcd_storage_init_value_for_attribute, mcd_storage_get_attribute_type: make extern
+
+commit 06a09cf70713999a11ba9227baa00264c95c25e8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 17:02:41 +0100
+
+    Add a regression test for an account storage plugin altering accounts
+
+commit a851f84c246259a3922b55cb1224ff5224809fd4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 17:12:06 +0100
+
+    WARNING macro: add
+
+commit 8c2c761e11c389bb243763b59cf3f1d63d94b283
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-11 14:24:16 +0100
+
+    Mock accounts service plugin: respond to change signals from service
+
+commit 8ffb3f507c35af24fac0b4fb28438d4af7fb298c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 19:12:10 +0100
+
+    Mock accounts service plugin: receive settings from MC as GVariant
+
+commit 8b602c52b9e2007740309ad1c84eaf2966143135
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 19:01:14 +0100
+
+    Let storage plugins receive new values as GVariants
+
+commit 4efea11d2ed33a92f6ef05a954acfb180083531d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 15:57:02 +0100
+
+    Preload accounts via fake accounts service when required
+    
+    The only tests left using real account storage are the three tests for
+    specific plugins: default keyfile/keyring, diverted keyfile and
+    libaccounts.
+
+commit d6c23d2fc528b3cff92ec78c706a78cd561a2a9b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 15:38:24 +0100
+
+    account-manager/avatar test: assert about mock accounts service interactions
+
+commit 2ecab4c8c5109722bbf7c0f2df8d7d2c6aa64c6c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 14:57:21 +0100
+
+    account-basics test: assert that the mock accounts service is used correctly
+
+commit 9d952ab91dfa2a87383492d0ad68a286c9236d49
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 14:57:15 +0100
+
+    Use the mock accounts service for the majority of our tests
+    
+    For tests that rely on special behaviour such as "preloading" keyfiles
+    with specific contents, don't provide the bus name of the mock accounts
+    service, resulting in fallback to the diverted-keyfile plugin.
+
+commit 73306e67755de2b2b16d3a88d2ac9c8efe40bd99
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 13:21:02 +0100
+
+    Add a fake account storage backend which uses a mock D-Bus service
+
+commit 3975989913b12fa1488d00085d8cdb84e5b3f46d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:31:43 +0100
+
+    mcp_account_storage_owns: add
+    
+    At the moment we use get() to see whether a plugin thinks it "owns" a
+    particular account, but it seems clearer and more self-documenting
+    to have a dedicated virtual method for this.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit fb470a3a8bde4e2bf07cf93722daa016a6344c2c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 13:19:57 +0100
+
+    mcp_account_manager_escape_variant_for_keyfile: add to plugin API
+
+commit 7cf22355325f32bcf9898cfeb253390ed6624923
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:30:11 +0100
+
+    Give account storage plugins a way to find out the GType for an attribute
+
+commit 7975d386c95469d2e5aa7626524dc906dfeb64ef
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 10:51:23 +0100
+
+    Require Python 2.6 so we can use "except A as b" etc.
+
+commit ee9b43cb446218b3fca3a0a753a4a3a94413c81c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:27:28 +0100
+
+    McdStorage: store parameters in-memory as GVariants, with a fallback
+    
+    We don't necessarily know a parameter's type until we come to use it,
+    so we can't necessarily decode it from a plugin straight away. However,
+    if a new value comes in from UpdateParameters, we do know the type for
+    that one.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 51b984b7cede7c2a2f2ec591846ac41573fd1887
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-12 14:20:13 +0100
+
+    McdStorage: store attributes in-memory as GVariants, not keyfile syntax
+
+commit 6cce93320368fb34ab7e13b8eb1e4d6b33634006
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:23:08 +0100
+
+    Consistently use the constants from mcd-account-config.h
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 8a264749eabe572c0a41a135281890ae660b2222
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 17:55:41 +0100
+
+    mcd-account-config.h: list every setting (i.e. all non-parameters)
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 51357aacd99dd5f0057aeb9f743a2e696e10d7b3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 17:55:06 +0100
+
+    Rename MC_ACCOUNTS_KEY_ALIAS to MC_ACCOUNTS_KEY_NICKNAME
+    
+    Its value is actually "Nickname" so its name should follow.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 444c32b0de9e97b0046ef613c1c15eb9e8ef5ff8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:21:33 +0100
+
+    McdStorage: in update_storage, take the escaped value as a parameter
+    
+    This saves looking it up again.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit c1152ed446503574f718a1cddaa5fcb80520dfd4
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 19:22:57 +0100
+
+    McdStorage: change internal storage away from GKeyFiles
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit fd9f5784098d774076a12a5dd0da693f2b417cca
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 12:23:53 +0100
+
+    mcd_keyfile_escape_value, mcd_keyfile_unescape_value: add
+    
+    Also make them available to account storage plugins.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 2a647cbf905ad47a3d597499efc3eaae1397b719
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 19:19:47 +0100
+
+    McdStorage: distinguish between parameters and attributes
+    
+    Parameters are part of the Parameters property, have CM-specified types
+    and can be secret, whereas "attributes" (everything else) mostly stand
+    alone, have known types hard-coded into MC, and are all non-secret.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 76c62bcf500acc21ef8db2064ed00d01e51b039d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 10:31:43 +0100
+
+    McpAccountStorage: don't double-register signals if implemented twice
+    
+    The base_init function of a GInterface is called once per implementor.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit d75df979a3cc8fe700197b3d96f5332187c52c2c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:12:39 +0100
+
+    McpAccountStorage: improve documentation
+
+commit 9bf797ebf0bac51b3647bd063b47ca8d78c0c84d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:10:52 +0100
+
+    Mark McpAccountStorage::altered as deprecated
+    
+    It would be nice to have, but apparently it doesn't actually work...
+    so I'm not going to waste any time on it.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=28288
+
+commit f976919e884fd85726b232eab3f76c558c904308
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:07:34 +0100
+
+    Deprecate and undocument McpAccountStorage's vtable-filling functions
+
+commit 48ca9d546d08df14cd4f79bc00627206c7a7efb6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 18:07:06 +0100
+
+    All account storage plugins: fill the vtable directly
+
+commit 2ce2e402e3325517470480a1734f9b4cda6d19e0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-10 16:37:58 +0100
+
+    McpAccountStorage: stop recommending mcp_account_storage_iface_set_desc, etc.
+    
+    Now that the vtable is public, you can just fill it in.
+
+commit 95ded438d50149b02e2ee36f39e92a19d9770de9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 12:13:02 +0100
+
+    mcp_account_manager_set_value: document
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 5ca771a0a76ef6fc41aba893bf3d100cda03a618
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-06 12:16:36 +0100
+
+    Unify loading of new accounts
+    
+    Rather than having both the AM and McdStorage know how to load a new
+    account, it's better to give the McdStorage a method to do it. This way,
+    when it gets more complicated, we only need to change one place.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit bf70a86c39902ccf4fdad8aec1be1bbcc661d148
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 14:23:01 +0100
+
+    mcd_account_property_changed: rename to mcd_account_altered_by_plugin
+    
+    The parameter is either "param-" + a parameter, or a setting. It's
+    not necessarily a property name!
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 0ca9a72ee4285af5c12bd120c66487f09dc3600a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 14:21:30 +0100
+
+    McdStorage: implement get_string, get_boolean, get_integer in terms of get_value
+
+commit ab6057bbb22d40fdf494aabdb9285a2556ff564c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 17:44:41 +0100
+
+    mcd_storage_dup_value: alter signature, rename to mcd_storage_get_value
+    
+    Its callers become considerably simpler if it takes a pre-initialized
+    GValue of the appropriate type and fills it, much like
+    g_object_get_property().
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 76a7c315686a94b7b56c2c5e3cd83de72aed2735
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 17:38:32 +0100
+
+    mcd_storage_has_value: remove, no longer needed
+    
+    Now that mcd_storage_dup_value() doesn't make up a value for parameters
+    that are missing or can't be parsed, we can just rely on dup_value()
+    raising an error for missing parameters.
+    
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 87b40cf09a3589daca09d9a54b466b0c0572f98b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-07 17:37:29 +0100
+
+    mcd_storage_dup_value: don't return non-NULL with error set
+    
+    The practical effect of this is:
+    
+    * addressing_set_uri_scheme_association() needs modification to cope
+      with a NULL return, which previously never happened (an empty
+      string-list was returned on error)
+    
+    * addressing_get_uri_schemes() needs the same change
+    
+    * mcd_account_get_parameter() treats parameters whose value in the
+      keyfile cannot be interpreted as the desired type as if they were
+      unset; previously, it treated them as 0, False, "", [], etc.
+    
+    The old behaviour of mcd_account_get_parameter() seems undesirable:
+    we shouldn't just make up parameter values. If the parameter is boolean
+    "require-tls" and its value gets set to 2 for some reason, we should
+    invalidate the account, rather than setting it to False and carrying on!
+
+commit 3e08626fafa696290162fb8baafa5bc4cece07fa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 10:07:33 +0100
+
+    mcd_storage_set_string: implement in terms of mcd_storage_set_value
+
+commit ed5ec4105052e5e86f7471855a5c234822fc1c74
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 10:03:37 +0100
+
+    mcd_storage_set_value: unset keys directly instead of via set_string
+
+commit a04220ab092e417f451d8ce55839d60469238ed1
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-09-05 10:02:27 +0100
+
+    McdStorage: include flagging-as-secret in update_storage()
+    
+    This guarantees that we don't forget to flag things as secret, and also
+    avoids unnecessary indirection through the McpAccountManager vtable.
 
 commit 7095375b51547bea365ed321f06ba6a7c7cd2101
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>

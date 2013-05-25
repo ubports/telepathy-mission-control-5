@@ -32,6 +32,7 @@
 #include <glib-object.h>
 
 #include <telepathy-glib/telepathy-glib.h>
+#include <telepathy-glib/telepathy-glib-dbus.h>
 
 static gchar *app_name;
 static GMainLoop *main_loop;
@@ -424,6 +425,7 @@ typedef enum {
     GET_PARAM,
     GET_STRING,
     GET_BOOLEAN,
+    GET_PRESENCE,
     GET_PRESENCE_TYPE,
     GET_PRESENCE_STATUS,
     GET_PRESENCE_MESSAGE
@@ -473,6 +475,8 @@ getter_list_init(void)
 		    tp_account_get_connect_automatically);
     getter_list_add("NormalizedName", GET_STRING, tp_account_get_normalized_name);
 
+    getter_list_add("AutomaticPresence",
+                    GET_PRESENCE, tp_account_get_automatic_presence);
     getter_list_add("AutomaticPresenceType",
 		    GET_PRESENCE_TYPE, tp_account_get_automatic_presence);
     getter_list_add("AutomaticPresenceStatus",
@@ -514,16 +518,16 @@ compare_accounts (gconstpointer a,
 }
 
 static GList *
-get_valid_accounts_sorted (TpAccountManager *manager)
+dup_valid_accounts_sorted (TpAccountManager *manager)
 {
-    return g_list_sort (tp_account_manager_get_valid_accounts (manager),
+    return g_list_sort (tp_account_manager_dup_valid_accounts (manager),
                         compare_accounts);
 }
 
 static gboolean
 command_list (TpAccountManager *manager)
 {
-    GList *accounts = get_valid_accounts_sorted (manager);
+    GList *accounts = dup_valid_accounts_sorted (manager);
 
     if (accounts != NULL) {
 	GList *ptr;
@@ -534,7 +538,7 @@ command_list (TpAccountManager *manager)
 	    puts (tp_account_get_path_suffix (ptr->data));
 	}
 
-	g_list_free (accounts);
+	g_list_free_full (accounts, g_object_unref);
     }
 
     return FALSE;                 /* stop mainloop */
@@ -546,7 +550,7 @@ command_summary (TpAccountManager *manager)
     GList *accounts, *l;
     guint longest_account = 0;
 
-    accounts = tp_account_manager_get_valid_accounts (manager);
+    accounts = tp_account_manager_dup_valid_accounts (manager);
     if (accounts == NULL) {
         return FALSE;
     }
@@ -579,7 +583,7 @@ command_summary (TpAccountManager *manager)
             status);
     }
 
-    g_list_free (accounts);
+    g_list_free_full (accounts, g_object_unref);
     return FALSE; /* stop mainloop */
 }
 
@@ -821,7 +825,7 @@ command_dump (TpAccountManager *manager)
 {
     GList *accounts, *l;
 
-    accounts = tp_account_manager_get_valid_accounts (manager);
+    accounts = tp_account_manager_dup_valid_accounts (manager);
     if (accounts == NULL) {
         return FALSE;
     }
@@ -836,7 +840,7 @@ command_dump (TpAccountManager *manager)
           printf ("\n------------------------------------------------------------\n\n");
     }
 
-    g_list_free (accounts);
+    g_list_free_full (accounts, g_object_unref);
     return FALSE; /* stop mainloop */
 }
 
@@ -893,6 +897,16 @@ command_get (TpAccount *account)
 	    else if (getter->type == GET_BOOLEAN) {
 		puts(getboolean(account) ? "true" : "false");
 	    }
+            else if (getter->type == GET_PRESENCE)
+            {
+                struct presence presence;
+
+                presence.type = getpresence(account, &presence.status,
+                    &presence.message);
+                printf ("(%u, \"%s\", \"%s\")\n", presence.type,
+                    presence.status, presence.message);
+                free_presence (&presence);
+            }
 	    else if (getter->type == GET_PRESENCE_TYPE ||
 		     getter->type == GET_PRESENCE_STATUS ||
 		     getter->type == GET_PRESENCE_MESSAGE) {
@@ -1409,6 +1423,7 @@ main (int argc, char **argv)
     TpAccountManager *am = NULL;
     TpAccount *a = NULL;
     TpDBusDaemon *dbus = NULL;
+    TpSimpleClientFactory *client_factory = NULL;
     GError *error = NULL;
     const GQuark features[] = { TP_ACCOUNT_FEATURE_CORE,
         TP_ACCOUNT_FEATURE_ADDRESSING, TP_ACCOUNT_FEATURE_STORAGE, 0 };
@@ -1427,6 +1442,7 @@ main (int argc, char **argv)
             app_name, command.common.name, error->message);
         goto out;
     }
+    client_factory = tp_simple_client_factory_new (dbus);
 
     if (command.common.account == NULL) {
         TpSimpleClientFactory *factory;
@@ -1441,7 +1457,8 @@ main (int argc, char **argv)
     else {
 
 	command.common.account = ensure_prefix (command.common.account);
-	a = tp_account_new (dbus, command.common.account, &error);
+        a = tp_simple_client_factory_ensure_account (client_factory,
+            command.common.account, NULL, &error);
 
 	if (error != NULL)
 	{
@@ -1459,6 +1476,7 @@ main (int argc, char **argv)
 
 out:
     g_clear_error (&error);
+    tp_clear_object (&client_factory);
     tp_clear_object (&dbus);
     tp_clear_object (&am);
     tp_clear_object (&a);

@@ -120,8 +120,6 @@ on_channel_ready (GObject *source_object, GAsyncResult *result, gpointer user_da
 {
     TpChannel *tp_chan = TP_CHANNEL (source_object);
     McdChannel *channel, **channel_ptr = user_data;
-    McdChannelPrivate *priv;
-    gboolean requested, valid;
     GError *error = NULL;
 
     if (!tp_proxy_prepare_finish (tp_chan, result, &error))
@@ -145,12 +143,7 @@ on_channel_ready (GObject *source_object, GAsyncResult *result, gpointer user_da
     if (!channel) return;
 
     DEBUG ("channel %p is ready", channel);
-    priv = channel->priv;
-    requested = tp_asv_get_boolean
-        (tp_channel_borrow_immutable_properties (tp_chan),
-         TP_IFACE_CHANNEL ".Requested", &valid);
-    if (valid)
-        priv->outgoing = requested;
+    channel->priv->outgoing = tp_channel_get_requested (tp_chan);
 }
 
 void
@@ -217,7 +210,6 @@ static void
 _mcd_channel_setup (McdChannel *channel, McdChannelPrivate *priv)
 {
     McdChannel **channel_ptr;
-    GHashTable *properties;
 
     channel_ptr = g_slice_alloc (sizeof (McdChannel *));
     *channel_ptr = channel;
@@ -227,15 +219,7 @@ _mcd_channel_setup (McdChannel *channel, McdChannelPrivate *priv)
     g_signal_connect (priv->tp_chan, "invalidated",
 		      G_CALLBACK (proxy_destroyed), channel);
 
-    properties = tp_channel_borrow_immutable_properties (priv->tp_chan);
-    if (properties)
-    {
-        gboolean requested, valid = FALSE;
-        requested = tp_asv_get_boolean
-            (properties, TP_IFACE_CHANNEL ".Requested", &valid);
-        if (valid)
-            priv->outgoing = requested;
-    }
+    priv->outgoing = tp_channel_get_requested (priv->tp_chan);
 }
 
 static void
@@ -620,9 +604,10 @@ mcd_channel_new_from_properties (TpConnection *connection,
     TpChannel *tp_chan;
     GError *error = NULL;
 
+    tp_chan = tp_simple_client_factory_ensure_channel (
+        tp_proxy_get_factory (connection), connection, object_path,
+        properties, &error);
 
-    tp_chan = tp_channel_new_from_properties (connection, object_path,
-                                              properties, &error);
     if (G_UNLIKELY (error))
     {
         g_warning ("%s: got error: %s", G_STRFUNC, error->message);
@@ -705,8 +690,11 @@ _mcd_channel_create_proxy (McdChannel *channel, TpConnection *connection,
     GError *error = NULL;
 
     g_return_val_if_fail (MCD_IS_CHANNEL (channel), FALSE);
-    tp_chan = tp_channel_new_from_properties (connection, object_path,
-                                              properties, &error);
+
+    tp_chan = tp_simple_client_factory_ensure_channel (
+        tp_proxy_get_factory (connection), connection, object_path,
+        properties, &error);
+
     if (G_UNLIKELY (error))
     {
         g_warning ("%s: got error: %s", G_STRFUNC, error->message);
@@ -749,19 +737,19 @@ mcd_channel_get_object_path (McdChannel *channel)
 {
     McdChannelPrivate *priv = MCD_CHANNEL_PRIV (channel);
 
-    return priv->tp_chan ? TP_PROXY (priv->tp_chan)->object_path : NULL;
+    return priv->tp_chan ? tp_proxy_get_object_path (priv->tp_chan) : NULL;
 }
 
 /*
- * _mcd_channel_get_immutable_properties:
+ * mcd_channel_dup_immutable_properties:
  * @channel: the #McdChannel.
  *
- * Returns: the #GHashTable of the immutable properties.
+ * Returns: the %G_VARIANT_TYPE_VARDICT of the immutable properties.
  */
-GHashTable *
-_mcd_channel_get_immutable_properties (McdChannel *channel)
+GVariant *
+mcd_channel_dup_immutable_properties (McdChannel *channel)
 {
-    GHashTable *ret;
+    GVariant *ret;
 
     g_return_val_if_fail (MCD_IS_CHANNEL (channel), NULL);
 
@@ -771,7 +759,7 @@ _mcd_channel_get_immutable_properties (McdChannel *channel)
         return NULL;
     }
 
-    ret = tp_channel_borrow_immutable_properties (channel->priv->tp_chan);
+    ret = tp_channel_dup_immutable_properties (channel->priv->tp_chan);
 
     if (ret == NULL)
     {
@@ -825,7 +813,7 @@ mcd_channel_get_error (McdChannel *channel)
         return priv->error;
 
     if (priv->tp_chan)
-        return TP_PROXY (priv->tp_chan)->invalidated;
+        return tp_proxy_get_invalidated (priv->tp_chan);
 
     return NULL;
 }
