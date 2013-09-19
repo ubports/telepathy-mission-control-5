@@ -1,3 +1,213 @@
+commit 739b5414ec3fe1fc7896d34f09f510a9e8029473
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 17:54:18 +0100
+
+    5.16.0
+
+commit 52a6ac31f6d3b52332f6678c67c0c6013adf4c17
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 17:40:58 +0100
+
+    Upload documentation to the 5.16.x location
+
+commit 9d74acccde6b41a9e06c115def43bbea77efacf9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 17:40:57 +0100
+
+    Don't warn on deprecated declarations, this is a stable branch.
+
+commit 41f675da7cd97b9a3771881c22788e73eb99f99a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 17:41:55 +0100
+
+    Don't check documentation completeness in this stable branch
+
+commit 17a5d31769e9da52797df968c8881732f29d0f45
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 16:33:42 +0100
+
+    NEWS: adjust note about ServerAuthentication handlers
+    
+    rishi pointed out on IRC that ServerAuthentication still makes
+    passwords available to eavesdroppers on the session bus (if LOGIN,
+    PLAIN or X-TELEPATHY-PASSWORD are used). ServerAuthentication doesn't
+    allow arbitrary applications to ask MC "what is the password for
+    account X?", which is what I was thinking of.
+    
+    The session bus is not generally modelled to be a security
+    boundary; if yours is, you will need to write a security policy,
+    then ensure that that policy is applied. Telepathy components are not
+    designed to be used unmodified on an untrusted session bus. (Starting
+    points include turning off eavesdropping, applying a "default-deny"
+    policy, preventing processes other than Mission Control from
+    calling HandleChannels on your ServerAuthentication client, and
+    preventing processes from subverting each other with ptrace.)
+
+commit d0af8d654ae439a1a333c33f6e44084d3dad2afb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 13:44:10 +0100
+
+    avatar-refresh test: subsume avatar-persist, and test more situations
+    
+    We have some sort of combinatorial explosion going on here, and it
+    seems best to test it in a somewhat systematic way:
+    
+    * is the protocol one where avatars persist on the server (Gabble)
+      or not (Salut)?
+    * if it's like Gabble, does it download our own avatar token
+      before signalling CONNECTED (as I suspect Haze does), or
+      on-demand after GetKnownAvatarTokens (as Gabble appears to)?
+    * if it's like Gabble, is the server storing an avatar for us?
+    * in either case, do we have an avatar stored locally, and has
+      it previously been uploaded or not?
+    
+    In addition, the avatar-refresh and avatar-persist tests exercised
+    migration from ~/.missioncontrol and a low-priority XDG_DATA_DIRS entry
+    (respectively) to ~/.local/share. I didn't do that in a loop, because
+    it isn't applicable in all cases and would lead to even more
+    combinations - testing each case once should be enough.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69885
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    [cherry-picked from master commit d780671 plus the test part of
+    4f4ed24, adjusted for old constant naming and to replace
+    unforbid_all() with unforbid_events() -smcv]
+    Conflicts:
+    	tests/twisted/account-manager/avatar-persist.py
+    	tests/twisted/account-manager/avatar-refresh.py
+
+commit b89f6fe0bcacef9340f633ab09b275122c6db644
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 13:08:45 +0100
+
+    Implement Contacts properly on SimulatedConnection, and fix tests
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69885
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    [Cherry-picked from commit 15510bd on master. -smcv]
+    Conflicts:
+    	tests/twisted/constants.py
+    	tests/twisted/mctest.py
+
+commit 54b9660d32a611100b87fedde559ebb1d4ec35a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 12:58:31 +0100
+
+    McdAccount: go back to using GetKnownAvatarTokens
+    
+    Sadly, contact attributes aren't enough to distinguish between
+    "this protocol doesn't store avatars and you haven't re-sent your
+    avatar since you last connected", "this protocol stores avatars but
+    the CM hasn't checked for your current avatar yet", and "this protocol
+    stores avatars, but there is no avatar on the server for you".
+    
+    GetKnownAvatarTokens specifically excludes the middle option (blocking
+    on a server round-trip if it needs to), and uses "avatar token missing"
+    for the first and "avatar token empty" for the last.
+    
+    Tested to work with the telepathy-glib 0.20 branch, and with the 0.22
+    branch when fdo#70010 is fixed.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69885
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    [This is a cherry-pick of commit 4f4ed24 from master, omitting the
+    regression test change, to make sure the existing tests still pass -smcv]
+
+commit 9fa3c65e038f66dcf4c28bd10a26680229c2843c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-20 12:59:50 +0100
+
+    Update extension interfaces to their telepathy-spec 0.27.1 versions
+    
+    No functional changes.
+    
+    The remaining interfaces (A.I.Conditions, CD.I.Messages) are still
+    not in telepathy-spec at all. :-(
+
+commit 6a24c5e5d0a95dd11b82956c1186092bab617701
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-20 12:54:38 +0100
+
+    Update CHECK_FOR_UNRELEASED to check the right files
+
+commit 972b515a0294d78c7a34dfe8ebd0f6a8e6f415e7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-20 12:53:28 +0100
+
+    Fix a wrong deprecation annotation
+
+commit 439309bfede3afe68469f39bbde332ff5f668ba6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-20 12:49:27 +0100
+
+    Document the new test logging arrangement
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+
+commit 089c6a1562a74b86f7e60c87d43abc1c7a6cb446
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 19:41:27 +0100
+
+    connectivity test: make sure we've caught up on GDBus messages
+    
+    Otherwise, the message from the FakeNetworkMonitor saying we've gone
+    offline might not be received until after the message from the fake NM
+    saying we've gone online - which would be a problem. There's no
+    side-effect we can wait for here, so we just have to make sure the
+    GDBus queue has been processed.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit eb6a6bf52c1ed476f6dab871cad491d3fff5c8f5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 19:39:24 +0100
+
+    connectivity_monitor_nm_state_change_cb: if NM says DISCONNECTED, believe it
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 5336208b2848c810c0e9168cc629f9a63593f9ac
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 19:44:03 +0100
+
+    Log verbose test output and give it the same treatment as MC's log
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 38bbbf49bd1e357d1a4a9e6508c718c5edb9baf7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 18:48:38 +0100
+
+    run-test.sh.in: dump logfiles to stdout on failure
+    
+    This is a lot of very spammy output, but the failures are basically
+    undebuggable without it, so...
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 83d08c87a251824f6f5f52037e1f79587bc9446c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 19:43:29 +0100
+
+    run-test.sh.in: now that we run under 'set -e', catch failures
+    
+    If we just let with-session-bus.sh exit nonzero, the script aborts.
+    We want to catch the nonzero exit status and do some more things
+    before failing.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69585
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 79e1df1b5818e3bb323b040a708f3d91d616d2d6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 15:22:25 +0100
+
+    Nano version
+
 commit 2bd064c78030932544ceca652510c526f6f001dd
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-09-19 14:37:22 +0100

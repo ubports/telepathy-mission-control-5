@@ -86,9 +86,9 @@
     <keyword type="function" name="mcp_request_deny ()" link="McpRequest.html#mcp-request-deny"/>
     <keyword type="function" name="mcp_request_start_delay ()" link="McpRequest.html#mcp-request-start-delay"/>
     <keyword type="function" name="mcp_request_end_delay ()" link="McpRequest.html#mcp-request-end-delay"/>
-    <keyword type="struct" name="McpRequestDelay" link="McpRequest.html#McpRequestDelay"/>
     <keyword type="struct" name="McpRequestIface" link="McpRequest.html#McpRequestIface"/>
     <keyword type="struct" name="McpRequest" link="McpRequest.html#McpRequest-struct"/>
+    <keyword type="struct" name="McpRequestDelay" link="McpRequest.html#McpRequestDelay"/>
     <keyword type="function" name="McpDispatchOperationPolicyCb ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb"/>
     <keyword type="function" name="mcp_dispatch_operation_policy_check ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check"/>
     <keyword type="function" name="McpDispatchOperationPolicyHandlerIsSuitableAsync ()" link="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync"/>
@@ -112,8 +112,8 @@
     <keyword type="function" name="mcp_dispatch_operation_leave_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-leave-channels" deprecated=""/>
     <keyword type="function" name="mcp_dispatch_operation_close_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-close-channels"/>
     <keyword type="function" name="mcp_dispatch_operation_destroy_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels"/>
-    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
-    <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
     <keyword type="struct" name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>
+    <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
+    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
   </functions>
 </book>

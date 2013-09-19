@@ -879,16 +879,8 @@ clean-mcp:
 @ENABLE_GTK_DOC_TRUE@			echo "$$file missing from $(DOC_MODULE)-docs.sgml"; \
 @ENABLE_GTK_DOC_TRUE@			err=1; \
 @ENABLE_GTK_DOC_TRUE@		fi; \
-@ENABLE_GTK_DOC_TRUE@	done; \
-@ENABLE_GTK_DOC_TRUE@	case $(ENABLE_DOC_CHECKS)/$$err in \
-@ENABLE_GTK_DOC_TRUE@		(yes/1) \
-@ENABLE_GTK_DOC_TRUE@			echo "Documentation check failed" >&2; \
-@ENABLE_GTK_DOC_TRUE@			exit $$err; \
-@ENABLE_GTK_DOC_TRUE@			;; \
-@ENABLE_GTK_DOC_TRUE@		(*) \
-@ENABLE_GTK_DOC_TRUE@			exit 0; \
-@ENABLE_GTK_DOC_TRUE@			;; \
-@ENABLE_GTK_DOC_TRUE@	esac
+@ENABLE_GTK_DOC_TRUE@	done
+# ... but don't fail on incomplete documentation, this is a stable branch
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

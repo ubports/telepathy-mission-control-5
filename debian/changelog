@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (1:5.16.0-1) unstable; urgency=low
+
+  * Canonicalize Vcs-Git field
+  * New upstream release
+
+ -- Simon McVittie <smcv@debian.org>  Thu, 19 Sep 2013 15:10:07 +0100
+
 telepathy-mission-control-5 (1:5.15.1-1) unstable; urgency=low
 
   * New upstream release (stable release candidate for 5.16)

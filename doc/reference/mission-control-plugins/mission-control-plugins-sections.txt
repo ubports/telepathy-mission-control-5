@@ -107,9 +107,9 @@ mcp_dispatch_operation_end_delay
 mcp_dispatch_operation_leave_channels
 mcp_dispatch_operation_close_channels
 mcp_dispatch_operation_destroy_channels
-McpDispatchOperation
-McpDispatchOperationDelay
 McpDispatchOperationIface
+McpDispatchOperationDelay
+McpDispatchOperation
 <SUBSECTION Standard>
 MCP_DISPATCH_OPERATION
 MCP_DISPATCH_OPERATION_GET_IFACE
@@ -165,9 +165,9 @@ mcp_request_ref_nth_request
 mcp_request_deny
 mcp_request_start_delay
 mcp_request_end_delay
-McpRequestDelay
 McpRequestIface
 McpRequest
+McpRequestDelay
 <SUBSECTION Standard>
 MCP_IS_REQUEST
 MCP_REQUEST
