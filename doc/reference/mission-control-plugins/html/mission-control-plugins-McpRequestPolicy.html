@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>McpRequestPolicy</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch03.html" title="Channel requests">
 <link rel="prev" href="ch03.html" title="Channel requests">
 <link rel="next" href="McpRequest.html" title="McpRequest">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -42,12 +42,12 @@
 
 <span class="returnvalue">void</span>                (<a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb" title="McpRequestPolicyCb ()">*McpRequestPolicyCb</a>)               (<em class="parameter"><code><span class="type">McpRequestPolicy</span> *policy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *request</code></em>);
-struct              <a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface" title="struct McpRequestPolicyIface">McpRequestPolicyIface</a>;
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()">mcp_request_policy_check</a>            (<em class="parameter"><code><span class="type">McpRequestPolicy</span> *policy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpRequest.html" title="McpRequest"><span class="type">McpRequest</span></a> *request</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-iface-implement-check" title="mcp_request_policy_iface_implement_check ()">mcp_request_policy_iface_implement_check</a>
                                                         (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface" title="struct McpRequestPolicyIface"><span class="type">McpRequestPolicyIface</span></a> *iface</code></em>,
                                                          <em class="parameter"><code><span class="type">void</span> (*impl) (McpRequestPolicy *, McpRequest *)</code></em>);
+struct              <a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface" title="struct McpRequestPolicyIface">McpRequestPolicyIface</a>;
 </pre>
 </div>
 <div class="refsect1">
@@ -70,7 +70,7 @@ An implementation of this plugin might look like this:
 <p>
 </p>
 <div class="example">
-<a name="idp8028352"></a><p class="title"><b>Example 2. </b></p>
+<a name="id-1.4.2.4.5.1"></a><p class="title"><b>Example 2. </b></p>
 <div class="example-contents">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -123,8 +123,11 @@ may be useful to combine this interface with <span class="type">McpDispatchOpera
 <p>
 Signature of an implementation of <a class="link" href="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()"><code class="function">mcp_request_policy_check()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -133,30 +136,6 @@ Signature of an implementation of <a class="link" href="mission-control-plugins-
 <tr>
 <td><p><span class="term"><em class="parameter"><code>request</code></em> :</span></p></td>
 <td>an object representing a channel request</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="McpRequestPolicyIface"></a><h3>struct McpRequestPolicyIface</h3>
-<pre class="programlisting">struct McpRequestPolicyIface {
-    GTypeInterface parent;
-
-    McpRequestPolicyCb check;
-};
-</pre>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.parent"></a>parent</code></em>;</span></p></td>
-<td>the parent type</td>
-</tr>
-<tr>
-<td><p><span class="term"><a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb" title="McpRequestPolicyCb ()"><span class="type">McpRequestPolicyCb</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.check"></a>check</code></em>;</span></p></td>
-<td>an implementation of <a class="link" href="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()"><code class="function">mcp_request_policy_check()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
-to do nothing</td>
 </tr>
 </tbody>
 </table></div>
@@ -178,8 +157,11 @@ client calls the Proceed method on the Telepathy ChannelRequest. If the
 plugin makes the request fail, this does not take effect until all plugins
 have been notified.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -202,8 +184,11 @@ have been notified.
 This function is no longer needed, since <a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyIface" title="struct McpRequestPolicyIface"><span class="type">McpRequestPolicyIface</span></a> is now
 public API. Use "iface-&gt;check = impl" instead.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>iface</code></em> :</span></p></td>
@@ -217,6 +202,33 @@ public API. Use "iface-&gt;check = impl" instead.
 </tbody>
 </table></div>
 </div>
+<hr>
+<div class="refsect2">
+<a name="McpRequestPolicyIface"></a><h3>struct McpRequestPolicyIface</h3>
+<pre class="programlisting">struct McpRequestPolicyIface {
+    GTypeInterface parent;
+
+    McpRequestPolicyCb check;
+};
+</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.parent"></a>parent</code></em>;</span></p></td>
+<td>the parent type</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb" title="McpRequestPolicyCb ()"><span class="type">McpRequestPolicyCb</span></a> <em class="structfield"><code><a name="McpRequestPolicyIface.check"></a>check</code></em>;</span></p></td>
+<td>an implementation of <a class="link" href="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check" title="mcp_request_policy_check ()"><code class="function">mcp_request_policy_check()</code></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+to do nothing</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 </div>
 <div class="refsect1">
 <a name="mission-control-plugins-McpRequestPolicy.see-also"></a><h2>See Also</h2>
@@ -225,6 +237,6 @@ public API. Use "iface-&gt;check = impl" instead.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

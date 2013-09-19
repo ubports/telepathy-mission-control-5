@@ -1,9 +1,10 @@
 dnl Set the version number to e.g. 5.x.y immediately before a release.
 dnl Set the version number to e.g. 5.x.y+ immediately after (this will
 dnl enable -Werror).
-AC_INIT([telepathy-mission-control], [5.15.0])
+AC_INIT([telepathy-mission-control], [5.15.1])
 
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR(Makefile.am)
 AM_INIT_AUTOMAKE([1.9 tar-ustar -Wno-portability])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES])
@@ -173,39 +174,7 @@ AC_ARG_ENABLE(aegis,
 
 AM_CONDITIONAL(ENABLE_AEGIS, [test x$aegis_enabled = xyes])
 
-keyring_enabled="no"
-AC_MSG_CHECKING(whether to build with gnome-keyring support)
-AC_ARG_ENABLE(gnome-keyring,
-        [ --enable-gnome-keyring    build with gnome-keyring support. default=no],
-        [
-                AC_MSG_RESULT(${enableval})
-                keyring_enabled="${enableval}"
-        ],
-        [
-                AC_MSG_RESULT(no)
-                keyring_enabled="no"
-        ]
-)
-
 PKG_PROG_PKG_CONFIG()
-
-if test "x$keyring_enabled" = xauto
-then
-    PKG_CHECK_EXISTS([gnome-keyring-1], [keyring_enabled=yes],
-                     [keyring_enabled=no])
-fi
-
-AM_CONDITIONAL(ENABLE_GNOME_KEYRING, [test x$keyring_enabled = xyes])
-
-if test "x$keyring_enabled" = xyes
-then
-  PKG_CHECK_MODULES([GNOME_KEYRING], [gnome-keyring-1])
-  AC_SUBST([GNOME_KEYRING_LIBS])
-  AC_SUBST([GNOME_KEYRING_CFLAGS])
-  AC_DEFINE([ENABLE_GNOME_KEYRING], [1], [Define whether gnome-keyring support is enabled])
-else
-  AC_DEFINE([ENABLE_GNOME_KEYRING], [0], [Define whether gnome-keyring support is enabled])
-fi
 
 dnl libaccounts-glib SSO
 libaccounts_sso_enabled="no"
@@ -266,8 +235,14 @@ AC_DEFINE([TP_DISABLE_SINGLE_INCLUDE], [], [Avoid individual headers])
 
 PKG_CHECK_MODULES([GLIB],
 	[glib-2.0 >= 2.32, gobject-2.0, gmodule-no-export-2.0, gio-2.0])
-AC_SUBST(GLIB_LIBS)
-AC_SUBST(GLIB_CFLAGS)
+
+PKG_CHECK_MODULES([GIO_UNIX], [gio-unix-2.0],
+  [
+  AC_DEFINE(HAVE_GIO_UNIX, [], [Define if GIO-Unix is available])
+  GLIB_CFLAGS="$GLIB_CFLAGS $GIO_UNIX_CFLAGS"
+  GLIB_LIBS="$GLIB_LIBS $GIO_UNIX_LIBS"
+  ],
+  [])
 
 AC_DEFINE([GLIB_VERSION_MIN_REQUIRED], [GLIB_VERSION_2_30], [Ignore post 2.30 deprecations])
 AC_DEFINE([GLIB_VERSION_MAX_ALLOWED], [GLIB_VERSION_2_32], [Prevent post 2.32 APIs])
@@ -283,29 +258,15 @@ fi
 # Connectivity integration
 # -----------------------------------------------------------
 AC_ARG_WITH(connectivity,
-              AS_HELP_STRING([--with-connectivity=@<:@nm/connman/auto/no@:>@],
+              AS_HELP_STRING([--with-connectivity=@<:@nm/auto/no@:>@],
                              [build with connectivity support]), ,
                              with_connectivity=auto)
 
-if test "x$with_connectivity" = "xno"; then
+# --with-connectivity=connman always used to turn off NM support,
+# so treat it as "no" now that ConnMan doesn't need anything special.
+if test "x$with_connectivity" = "xno" || test "x$with_connectivity" = "xconnman"; then
    have_nm=no
-   have_connman=no
-
-elif test "x$with_connectivity" = "xconnman"; then
-   have_nm=no
-
-   PKG_CHECK_MODULES(CONNMAN,
-   [
-      dbus-glib-1
-   ], have_connman="yes", have_connman="no")
-
-   if test "x$have_connman" = "xyes"; then
-      AC_DEFINE(HAVE_CONNMAN, 1, [Define if you have connman dependencies])
-   fi
-
 else
-   have_connman=no
-
    PKG_CHECK_MODULES(NETWORK_MANAGER,
    [
       libnm-glib >= 0.7.0
@@ -316,12 +277,6 @@ else
    fi
 fi
 
-if test "x$with_connectivity" = "xconnman" -a "x$have_connman" != "xyes"; then
-   AC_MSG_ERROR([Couldn't find connman dependencies:
-
-$CONNMAN_PKG_ERRORS])
-fi
-
 if test "x$with_connectivity" = "xnm" -a "x$have_nm" != "xyes"; then
    AC_MSG_ERROR([Couldn't find Network Manager dependencies:
 
@@ -329,7 +284,6 @@ $NETWORK_MANAGER_PKG_ERRORS])
 fi
 
 AM_CONDITIONAL(HAVE_NM, test "x$have_nm" = "xyes")
-AM_CONDITIONAL(HAVE_CONNMAN, test "x$have_connman" = "xyes")
 
 AC_ARG_ENABLE([conn-setting],
     [AS_HELP_STRING([--enable-conn-setting],
@@ -421,7 +375,6 @@ Configure summary:
 
     Features:
         Plugin API documentation.....:  ${enable_gtk_doc}
-        Gnome Keyring................:  ${keyring_enabled}
         Network Manager integration..:  ${have_nm}
         ConnMan integration..........:  ${have_connman}
         Connectivity GSetting........:  ${enable_conn_setting}

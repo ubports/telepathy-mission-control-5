@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>McpDispatchOperationPolicy</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch04.html" title="Channel dispatch operations">
 <link rel="prev" href="ch04.html" title="Channel dispatch operations">
 <link rel="next" href="McpDispatchOperation.html" title="McpDispatchOperation">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -42,10 +42,8 @@
 
 <span class="returnvalue">void</span>                (<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb" title="McpDispatchOperationPolicyCb ()">*McpDispatchOperationPolicyCb</a>)     (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>);
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher" title="McpDispatchOperationPolicyFinisher ()">*McpDispatchOperationPolicyFinisher</a>)
-                                                        (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *result</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check" title="mcp_dispatch_operation_policy_check ()">mcp_dispatch_operation_policy_check</a> (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>);
 <span class="returnvalue">void</span>                (<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync" title="McpDispatchOperationPolicyHandlerIsSuitableAsync ()">*McpDispatchOperationPolicyHandlerIsSuitableAsync</a>)
                                                         (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib-0.20.x/telepathy-glib-client.html#TpClient"><span class="type">TpClient</span></a> *handler</code></em>,
@@ -53,9 +51,10 @@
                                                          <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);
-struct              <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface" title="struct McpDispatchOperationPolicyIface">McpDispatchOperationPolicyIface</a>;
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check" title="mcp_dispatch_operation_policy_check ()">mcp_dispatch_operation_policy_check</a> (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher" title="McpDispatchOperationPolicyFinisher ()">*McpDispatchOperationPolicyFinisher</a>)
+                                                        (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async" title="mcp_dispatch_operation_policy_handler_is_suitable_async ()">mcp_dispatch_operation_policy_handler_is_suitable_async</a>
                                                         (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
                                                          <em class="parameter"><code><a href="http://telepathy.freedesktop.org/doc/telepathy-glib-0.20.x/telepathy-glib-client.html#TpClient"><span class="type">TpClient</span></a> *handler</code></em>,
@@ -70,6 +69,7 @@ struct              <a class="link" href="mission-control-plugins-McpDispatchOpe
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-iface-implement-check" title="mcp_dispatch_operation_policy_iface_implement_check ()">mcp_dispatch_operation_policy_iface_implement_check</a>
                                                         (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface" title="struct McpDispatchOperationPolicyIface"><span class="type">McpDispatchOperationPolicyIface</span></a> *iface</code></em>,
                                                          <em class="parameter"><code><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb" title="McpDispatchOperationPolicyCb ()"><span class="type">McpDispatchOperationPolicyCb</span></a> impl</code></em>);
+struct              <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyIface" title="struct McpDispatchOperationPolicyIface">McpDispatchOperationPolicyIface</a>;
 </pre>
 </div>
 <div class="refsect1">
@@ -93,7 +93,7 @@ A typical plugin might look like this:
 <p>
 </p>
 <div class="example">
-<a name="idp13187264"></a><p class="title"><b>Example 3. </b></p>
+<a name="id-1.5.2.4.5.1"></a><p class="title"><b>Example 3. </b></p>
 <div class="example-contents">
   <table class="listing_frame" border="0" cellpadding="0" cellspacing="0">
     <tbody>
@@ -150,8 +150,11 @@ may be useful to combine this interface with <span class="type">McpRequestPolicy
 <p>
 Signature of an implementation of <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check" title="mcp_dispatch_operation_policy_check ()"><code class="function">mcp_dispatch_operation_policy_check()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -167,36 +170,34 @@ a bundle of channels being dispatched</td>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpDispatchOperationPolicyFinisher"></a><h3>McpDispatchOperationPolicyFinisher ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpDispatchOperationPolicyFinisher)
-                                                        (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *result</code></em>,
-                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
+<a name="mcp-dispatch-operation-policy-check"></a><h3>mcp_dispatch_operation_policy_check ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_policy_check (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>);</pre>
 <p>
-Signature of a virtual method used to finish an asynchronous operation
-that succeeds or fails, but does not return any additional value.
+Check what to do with a bundle of channels. Implementations of this method
+can use methods on <em class="parameter"><code>dispatch_operation</code></em> to examine the channels, delay
+dispatching, close the channels, etc. in order to impose whatever policy
+the plugin requires.
 </p>
-<div class="variablelist"><table border="0">
+<p>
+Mission Control calls this function in each plugin after invoking
+Observers, but before Approvers, and without waiting for Observers to
+reply.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
 <td>an implementation of this interface, provided by a plugin</td>
 </tr>
 <tr>
-<td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
-<td>the asynchronous result passed to a <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
-<td>used to return an error. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the operation succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> on error</td>
+<td><p><span class="term"><em class="parameter"><code>dispatch_operation</code></em> :</span></p></td>
+<td>an object representing a dispatch operation, i.e.
+a bundle of channels being dispatched</td>
 </tr>
 </tbody>
 </table></div>
@@ -214,8 +215,11 @@ that succeeds or fails, but does not return any additional value.
 <p>
 Signature of <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async" title="mcp_dispatch_operation_policy_handler_is_suitable_async ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_async()</code></a>
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -249,73 +253,39 @@ a bundle of channels being dispatched</td>
 </div>
 <hr>
 <div class="refsect2">
-<a name="McpDispatchOperationPolicyIface"></a><h3>struct McpDispatchOperationPolicyIface</h3>
-<pre class="programlisting">struct McpDispatchOperationPolicyIface {
-    GTypeInterface parent;
-
-    McpDispatchOperationPolicyCb check;
-    McpDispatchOperationPolicyHandlerIsSuitableAsync handler_is_suitable_async;
-    McpDispatchOperationPolicyFinisher handler_is_suitable_finish;
-};
-</pre>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.parent"></a>parent</code></em>;</span></p></td>
-<td>the parent type</td>
-</tr>
-<tr>
-<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb" title="McpDispatchOperationPolicyCb ()"><span class="type">McpDispatchOperationPolicyCb</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.check"></a>check</code></em>;</span></p></td>
-<td>an implementation of <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check" title="mcp_dispatch_operation_policy_check ()"><code class="function">mcp_dispatch_operation_policy_check()</code></a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is equivalent to an implementation that does nothing</td>
-</tr>
-<tr>
-<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync" title="McpDispatchOperationPolicyHandlerIsSuitableAsync ()"><span class="type">McpDispatchOperationPolicyHandlerIsSuitableAsync</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.handler-is-suitable-async"></a>handler_is_suitable_async</code></em>;</span></p></td>
-<td>an implementation of
-<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async" title="mcp_dispatch_operation_policy_handler_is_suitable_async ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_async()</code></a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is treated as equivalent to an implementation that accepts
-every handler, i.e. always asynchronously returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
-</td>
-</tr>
-<tr>
-<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher" title="McpDispatchOperationPolicyFinisher ()"><span class="type">McpDispatchOperationPolicyFinisher</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.handler-is-suitable-finish"></a>handler_is_suitable_finish</code></em>;</span></p></td>
-<td>an implementation of
-<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-finish" title="mcp_dispatch_operation_policy_handler_is_suitable_finish ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_finish()</code></a>;
-<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is treated as equivalent to an implementation that accepts any
-<a href="http://library.gnome.org/devel/gio/unstable/GSimpleAsyncResult.html"><span class="type">GSimpleAsyncResult</span></a>
-</td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-dispatch-operation-policy-check"></a><h3>mcp_dispatch_operation_policy_check ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_dispatch_operation_policy_check (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
-                                                         <em class="parameter"><code><a class="link" href="McpDispatchOperation.html" title="McpDispatchOperation"><span class="type">McpDispatchOperation</span></a> *dispatch_operation</code></em>);</pre>
+<a name="McpDispatchOperationPolicyFinisher"></a><h3>McpDispatchOperationPolicyFinisher ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            (*McpDispatchOperationPolicyFinisher)
+                                                        (<em class="parameter"><code><span class="type">McpDispatchOperationPolicy</span> *policy</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *result</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>
-Check what to do with a bundle of channels. Implementations of this method
-can use methods on <em class="parameter"><code>dispatch_operation</code></em> to examine the channels, delay
-dispatching, close the channels, etc. in order to impose whatever policy
-the plugin requires.
+Signature of a virtual method used to finish an asynchronous operation
+that succeeds or fails, but does not return any additional value.
 </p>
-<p>
-Mission Control calls this function in each plugin after invoking
-Observers, but before Approvers, and without waiting for Observers to
-reply.
-</p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
 <td>an implementation of this interface, provided by a plugin</td>
 </tr>
 <tr>
-<td><p><span class="term"><em class="parameter"><code>dispatch_operation</code></em> :</span></p></td>
-<td>an object representing a dispatch operation, i.e.
-a bundle of channels being dispatched</td>
+<td><p><span class="term"><em class="parameter"><code>result</code></em> :</span></p></td>
+<td>the asynchronous result passed to a <a href="http://library.gnome.org/devel/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>error</code></em> :</span></p></td>
+<td>used to return an error. <span class="annotation">[<acronym title="NULL is ok, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the operation succeeded, <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS"><code class="literal">FALSE</code></a> on error</td>
 </tr>
 </tbody>
 </table></div>
@@ -341,8 +311,11 @@ Mission Control calls all implementations of this method in parallel
 and waits for them all to return. If any of them raises an error,
 the handler is considered to be unsuitable.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -384,8 +357,11 @@ a bundle of channels being dispatched</td>
 <p>
 Finish a call to <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async" title="mcp_dispatch_operation_policy_handler_is_suitable_async ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_async()</code></a>.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>policy</code></em> :</span></p></td>
@@ -419,8 +395,11 @@ unsuitable or there was an error</td>
 <p>
 This method is no longer necessary: just set iface-&gt;check = impl instead.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody>
 <tr>
 <td><p><span class="term"><em class="parameter"><code>iface</code></em> :</span></p></td>
@@ -435,6 +414,51 @@ This method is no longer necessary: just set iface-&gt;check = impl instead.
 </tbody>
 </table></div>
 </div>
+<hr>
+<div class="refsect2">
+<a name="McpDispatchOperationPolicyIface"></a><h3>struct McpDispatchOperationPolicyIface</h3>
+<pre class="programlisting">struct McpDispatchOperationPolicyIface {
+    GTypeInterface parent;
+
+    McpDispatchOperationPolicyCb check;
+    McpDispatchOperationPolicyHandlerIsSuitableAsync handler_is_suitable_async;
+    McpDispatchOperationPolicyFinisher handler_is_suitable_finish;
+};
+</pre>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#GTypeInterface"><span class="type">GTypeInterface</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.parent"></a>parent</code></em>;</span></p></td>
+<td>the parent type</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyCb" title="McpDispatchOperationPolicyCb ()"><span class="type">McpDispatchOperationPolicyCb</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.check"></a>check</code></em>;</span></p></td>
+<td>an implementation of <a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-check" title="mcp_dispatch_operation_policy_check ()"><code class="function">mcp_dispatch_operation_policy_check()</code></a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is equivalent to an implementation that does nothing</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyHandlerIsSuitableAsync" title="McpDispatchOperationPolicyHandlerIsSuitableAsync ()"><span class="type">McpDispatchOperationPolicyHandlerIsSuitableAsync</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.handler-is-suitable-async"></a>handler_is_suitable_async</code></em>;</span></p></td>
+<td>an implementation of
+<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-async" title="mcp_dispatch_operation_policy_handler_is_suitable_async ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_async()</code></a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is treated as equivalent to an implementation that accepts
+every handler, i.e. always asynchronously returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#McpDispatchOperationPolicyFinisher" title="McpDispatchOperationPolicyFinisher ()"><span class="type">McpDispatchOperationPolicyFinisher</span></a> <em class="structfield"><code><a name="McpDispatchOperationPolicyIface.handler-is-suitable-finish"></a>handler_is_suitable_finish</code></em>;</span></p></td>
+<td>an implementation of
+<a class="link" href="mission-control-plugins-McpDispatchOperationPolicy.html#mcp-dispatch-operation-policy-handler-is-suitable-finish" title="mcp_dispatch_operation_policy_handler_is_suitable_finish ()"><code class="function">mcp_dispatch_operation_policy_handler_is_suitable_finish()</code></a>;
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> is treated as equivalent to an implementation that accepts any
+<a href="http://library.gnome.org/devel/gio/unstable/GSimpleAsyncResult.html"><span class="type">GSimpleAsyncResult</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
 </div>
 <div class="refsect1">
 <a name="mission-control-plugins-McpDispatchOperationPolicy.see-also"></a><h2>See Also</h2>
@@ -443,6 +467,6 @@ This method is no longer necessary: just set iface-&gt;check = impl instead.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

@@ -75,8 +75,8 @@ G_DEFINE_TYPE (McdConnection, mcd_connection, MCD_TYPE_OPERATION);
 /* Private */
 struct _McdConnectionPrivate
 {
-    /* DBUS connection */
-    TpDBusDaemon *dbus_daemon;
+    /* Factory for TpConnection objects */
+    TpSimpleClientFactory *client_factory;
 
     /* Channel dispatcher */
     McdDispatcher *dispatcher;
@@ -114,9 +114,6 @@ struct _McdConnectionPrivate
      * dispatched */
     guint dispatched_initial_channels : 1;
 
-    /* FALSE until we got the first PresencesChanged for the self handle */
-    guint got_presences_changed : 1;
-
     /* TRUE if the last status change was to CONNECTED */
     guint connected : 1;
 
@@ -131,11 +128,12 @@ struct _McdConnectionPrivate
 
     McdSlacker *slacker;
 
-    struct
-    {
-        TpIntset *handles;
-        GSList *numbers;
-    } emergency;
+    /* Emergency service points' handles.
+     * Set of handles, lazily-allocated. */
+    TpIntset *service_point_handles;
+    /* Emergency service points' identifiers.
+     * Set of (transfer full) (type utf8), lazily-allocated. */
+    GHashTable *service_point_ids;
 };
 
 typedef struct
@@ -148,7 +146,7 @@ typedef struct
 enum
 {
     PROP_0,
-    PROP_DBUS_DAEMON,
+    PROP_CLIENT_FACTORY,
     PROP_TP_MANAGER,
     PROP_TP_CONNECTION,
     PROP_ACCOUNT,
@@ -159,7 +157,6 @@ enum
 enum
 {
     READY,
-    SELF_PRESENCE_CHANGED,
     CONNECTION_STATUS_CHANGED,
     N_SIGNALS
 };
@@ -175,7 +172,8 @@ static const gchar * const *presence_fallbacks[] = {
     _available_fb, _away_fb, _ext_away_fb, _hidden_fb, _busy_fb
 };
 
-static void _mcd_connection_release_tp_connection (McdConnection *connection);
+static void _mcd_connection_release_tp_connection (McdConnection *connection,
+                                                   McdInhibit *inhibit);
 static gboolean request_channel_new_iface (McdConnection *connection,
                                            McdChannel *channel);
 
@@ -411,64 +409,9 @@ presence_get_statuses_cb (TpProxy *proxy, const GValue *v_statuses,
 }
 
 static void
-on_presences_changed (TpConnection *proxy, GHashTable *presences,
-                      gpointer user_data, GObject *weak_object)
-{
-    McdConnectionPrivate *priv = user_data;
-    GValueArray *va;
-    TpHandle self_handle;
-
-    self_handle = tp_connection_get_self_handle (proxy);
-    va = g_hash_table_lookup (presences, GUINT_TO_POINTER (self_handle));
-    if (va)
-    {
-        TpConnectionPresenceType presence;
-        const gchar *status, *message;
-
-        presence = g_value_get_uint (va->values);
-        status = g_value_get_string (va->values + 1);
-        message = g_value_get_string (va->values + 2);
-        g_signal_emit (weak_object, signals[SELF_PRESENCE_CHANGED], 0,
-                       presence, status, message);
-        priv->got_presences_changed = TRUE;
-    }
-}
-
-static void
-mcd_connection_initial_presence_cb (TpConnection *proxy,
-                                    GHashTable *presences,
-                                    const GError *error,
-                                    gpointer user_data,
-                                    GObject *weak_object)
-{
-    if (error != NULL)
-    {
-        DEBUG ("GetPresences([SelfHandle]) failed: %s", error->message);
-        return;
-    }
-
-    on_presences_changed (proxy, presences, user_data, weak_object);
-}
-
-static void
 _mcd_connection_setup_presence (McdConnection *connection)
 {
     McdConnectionPrivate *priv =  connection->priv;
-    GArray *self_handle_array;
-    guint self_handle;
-
-    tp_cli_connection_interface_simple_presence_connect_to_presences_changed
-        (priv->tp_conn, on_presences_changed, priv, NULL,
-         (GObject *)connection, NULL);
-
-    self_handle_array = g_array_new (FALSE, FALSE, sizeof (guint));
-    self_handle = tp_connection_get_self_handle (priv->tp_conn);
-    g_array_append_val (self_handle_array, self_handle);
-    tp_cli_connection_interface_simple_presence_call_get_presences
-        (priv->tp_conn, -1, self_handle_array,
-         mcd_connection_initial_presence_cb, priv, NULL,
-         (GObject *) connection);
-    g_array_unref (self_handle_array);
 
     tp_cli_dbus_properties_call_get
         (priv->tp_conn, -1, TP_IFACE_CONNECTION_INTERFACE_SIMPLE_PRESENCE,
@@ -480,12 +423,15 @@ static void
 disconnect_cb (TpConnection *proxy, const GError *error, gpointer user_data,
 	       GObject *weak_object)
 {
-    if (error)
-	g_warning ("Disconnect failed: %s", error->message);
+  if (error != NULL)
+    WARNING ("Disconnect failed: %s", error->message);
+  else
+    DEBUG ("Disconnected %s", tp_proxy_get_object_path (TP_PROXY (proxy)));
 }
 
 static void
-_mcd_connection_call_disconnect (McdConnection *connection)
+_mcd_connection_call_disconnect (McdConnection *connection,
+                                 McdInhibit *inhibit)
 {
     TpConnection *tp_conn = connection->priv->tp_conn;
 
@@ -494,10 +440,10 @@ _mcd_connection_call_disconnect (McdConnection *connection)
 
     if (tp_connection_get_status (tp_conn, NULL) ==
         TP_CONNECTION_STATUS_DISCONNECTED) return;
-    tp_cli_connection_call_disconnect (tp_conn, -1,
-				       disconnect_cb,
-				       NULL, NULL,
-				       (GObject *)connection);
+    tp_cli_connection_call_disconnect (tp_conn, -1, disconnect_cb,
+        inhibit ? mcd_inhibit_hold (inhibit) : NULL,
+        inhibit ? (GDestroyNotify) mcd_inhibit_release : NULL,
+        NULL);
 
 }
 
@@ -525,7 +471,7 @@ _mcd_connection_request_presence (McdConnection *self,
         /* Connection Proxy */
         self->priv->abort_reason = TP_CONNECTION_STATUS_REASON_REQUESTED;
         mcd_mission_disconnect (MCD_MISSION (self));
-        _mcd_connection_call_disconnect (self);
+        _mcd_connection_call_disconnect (self, NULL);
 
         /* if a reconnection attempt is scheduled, cancel it */
         if (self->priv->reconnect_timer)
@@ -759,7 +705,7 @@ connection_should_reconnect (TpConnection *tp_conn,
         {
         case TP_DBUS_ERROR_NAME_OWNER_LOST:
             /* CM crashed */
-            DEBUG ("dbus error code: OWNER_LOST, reconnecting", code);
+            DEBUG ("dbus error code: OWNER_LOST, reconnecting");
             return TRUE;
         }
     }
@@ -792,7 +738,7 @@ mcd_connection_invalidated_cb (TpConnection *tp_conn,
 
     DEBUG ("Proxy destroyed (%s)!", message);
 
-    _mcd_connection_release_tp_connection (connection);
+    _mcd_connection_release_tp_connection (connection, NULL);
 
     if (priv->connected &&
         priv->abort_reason != TP_CONNECTION_STATUS_REASON_REQUESTED &&
@@ -1602,17 +1548,19 @@ _mcd_connection_finalize (GObject * object)
     if (priv->recognized_presences)
         g_hash_table_unref (priv->recognized_presences);
 
+    tp_clear_pointer (&priv->service_point_handles, tp_intset_destroy);
+    tp_clear_pointer (&priv->service_point_ids, g_hash_table_unref);
+
     G_OBJECT_CLASS (mcd_connection_parent_class)->finalize (object);
 }
 
 static void
-_mcd_connection_release_tp_connection (McdConnection *connection)
+_mcd_connection_release_tp_connection (McdConnection *connection,
+                                       McdInhibit *inhibit)
 {
     McdConnectionPrivate *priv = MCD_CONNECTION_PRIV (connection);
 
     DEBUG ("%p", connection);
-    g_signal_emit (connection, signals[SELF_PRESENCE_CHANGED], 0,
-                   TP_CONNECTION_PRESENCE_TYPE_OFFLINE, "offline", "");
 
     if (priv->abort_reason == TP_CONNECTION_STATUS_REASON_REQUESTED)
     {
@@ -1645,7 +1593,7 @@ _mcd_connection_release_tp_connection (McdConnection *connection)
         g_signal_handlers_disconnect_by_func (G_OBJECT (priv->tp_conn),
             G_CALLBACK (mcd_connection_invalidated_cb), connection);
 
-	_mcd_connection_call_disconnect (connection);
+        _mcd_connection_call_disconnect (connection, inhibit);
 
         /* the tp_connection has gone away, so we no longer need (or want) *
            the probation timer to go off: there's nothing for it to check  */
@@ -1727,7 +1675,7 @@ _mcd_connection_dispose (GObject * object)
     mcd_operation_foreach (MCD_OPERATION (connection),
 			   (GFunc) _foreach_channel_remove, connection);
 
-    _mcd_connection_release_tp_connection (connection);
+    _mcd_connection_release_tp_connection (connection, NULL);
     g_assert (priv->tp_conn == NULL);
 
     if (priv->account)
@@ -1749,7 +1697,7 @@ _mcd_connection_dispose (GObject * object)
 
     tp_clear_object (&priv->tp_conn_mgr);
     tp_clear_object (&priv->dispatcher);
-    tp_clear_object (&priv->dbus_daemon);
+    tp_clear_object (&priv->client_factory);
 
     G_OBJECT_CLASS (mcd_connection_parent_class)->dispose (object);
 }
@@ -1775,10 +1723,12 @@ _mcd_connection_set_property (GObject * obj, guint prop_id,
 	tp_clear_object (&priv->dispatcher);
 	priv->dispatcher = dispatcher;
 	break;
-    case PROP_DBUS_DAEMON:
-	tp_clear_object (&priv->dbus_daemon);
-	priv->dbus_daemon = TP_DBUS_DAEMON (g_value_dup_object (val));
-	break;
+
+    case PROP_CLIENT_FACTORY:
+        g_assert (priv->client_factory == NULL); /* construct-only */
+        priv->client_factory = g_value_dup_object (val);
+        break;
+
     case PROP_TP_MANAGER:
 	tp_conn_mgr = g_value_get_object (val);
 	g_object_ref (tp_conn_mgr);
@@ -1813,9 +1763,6 @@ _mcd_connection_get_property (GObject * obj, guint prop_id,
 
     switch (prop_id)
     {
-    case PROP_DBUS_DAEMON:
-	g_value_set_object (val, priv->dbus_daemon);
-	break;
     case PROP_ACCOUNT:
 	g_value_set_object (val, priv->account);
 	break;
@@ -1880,31 +1827,19 @@ mcd_connection_need_dispatch (McdConnection *connection,
 }
 
 gboolean
-_mcd_connection_target_id_is_urgent (McdConnection *self, const gchar *name)
+_mcd_connection_target_id_is_urgent (McdConnection *self,
+    const gchar *name)
 {
-  GSList *list = self->priv->emergency.numbers;
-
-  for (; list != NULL; list = g_slist_next (list))
-    {
-      const gchar **number = list->data;
-
-      for (; number != NULL && *number != NULL; number++)
-        {
-          if (!tp_strdiff (*number, name))
-            return TRUE;
-        }
-    }
-
-  return FALSE;
+  return self->priv->service_point_ids != NULL &&
+      g_hash_table_contains (self->priv->service_point_ids, name);
 }
 
 gboolean
-_mcd_connection_target_handle_is_urgent (McdConnection *self, guint handle)
+_mcd_connection_target_handle_is_urgent (McdConnection *self,
+    guint handle)
 {
-  if (handle != 0 && self->priv->emergency.handles != NULL)
-    return tp_intset_is_member (self->priv->emergency.handles, handle);
-
-  return FALSE;
+  return self->priv->service_point_handles != NULL &&
+      tp_intset_is_member (self->priv->service_point_handles, handle);
 }
 
 static gboolean
@@ -1969,11 +1904,12 @@ mcd_connection_class_init (McdConnectionClass * klass)
                               "Dispatcher",
                               MCD_TYPE_DISPATCHER,
                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-    g_object_class_install_property
-        (object_class, PROP_DBUS_DAEMON,
-         g_param_spec_object ("dbus-daemon", "DBus daemon", "DBus daemon",
-                              TP_TYPE_DBUS_DAEMON,
-                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+    g_object_class_install_property (object_class, PROP_CLIENT_FACTORY,
+        g_param_spec_object ("client-factory", "Client factory",
+            "Client factory", TP_TYPE_SIMPLE_CLIENT_FACTORY,
+            G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
+
     g_object_class_install_property
         (object_class, PROP_TP_MANAGER,
          g_param_spec_object ("tp-manager",
@@ -2002,12 +1938,6 @@ mcd_connection_class_init (McdConnectionClass * klass)
                               "Slacker object notifies us of user inactivity",
                               MCD_TYPE_SLACKER,
                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
-
-    signals[SELF_PRESENCE_CHANGED] = g_signal_new ("self-presence-changed",
-        G_OBJECT_CLASS_TYPE (klass),
-        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED, 0,
-        NULL, NULL, NULL,
-        G_TYPE_NONE, 3, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING);
 
     /**
      * @status:
@@ -2186,13 +2116,14 @@ mcd_connection_request_channel (McdConnection *connection,
 }
 
 void
-mcd_connection_close (McdConnection *connection)
+mcd_connection_close (McdConnection *connection,
+                      McdInhibit *inhibit)
 {
     g_return_if_fail (MCD_IS_CONNECTION (connection));
 
     connection->priv->closed = TRUE;
     connection->priv->abort_reason = TP_CONNECTION_STATUS_REASON_REQUESTED;
-    _mcd_connection_release_tp_connection (connection);
+    _mcd_connection_release_tp_connection (connection, inhibit);
     mcd_mission_abort (MCD_MISSION (connection));
 }
 
@@ -2326,12 +2257,12 @@ _mcd_connection_set_tp_connection (McdConnection *connection,
         }
 
         DEBUG ("releasing old connection first");
-        _mcd_connection_release_tp_connection (connection);
+        _mcd_connection_release_tp_connection (connection, NULL);
     }
 
     g_assert (priv->tp_conn == NULL);
-    priv->tp_conn = tp_connection_new (priv->dbus_daemon, bus_name,
-                                       obj_path, &inner_error);
+    priv->tp_conn = tp_simple_client_factory_ensure_connection (
+        priv->client_factory, obj_path, NULL, &inner_error);
     DEBUG ("new connection is %p", priv->tp_conn);
     if (!priv->tp_conn)
     {
@@ -2397,46 +2328,40 @@ _mcd_connection_presence_info_is_ready (McdConnection *self)
     return self->priv->presence_info_ready;
 }
 
-static void clear_emergency_handles (McdConnectionPrivate *priv)
+void
+_mcd_connection_take_emergency_numbers (McdConnection *self,
+    GSList *numbers)
 {
-  tp_clear_pointer (&priv->emergency.handles, tp_intset_destroy);
-}
+  GSList *iter;
 
-static void clear_emergency_numbers (McdConnectionPrivate *priv)
-{
-  g_slist_foreach (priv->emergency.numbers, (GFunc) g_strfreev, NULL);
-  tp_clear_pointer (&priv->emergency.numbers, g_slist_free);
-}
+  if (self->priv->service_point_ids == NULL)
+    self->priv->service_point_ids = g_hash_table_new_full (g_str_hash,
+        g_str_equal, g_free, NULL);
 
-void _mcd_connection_clear_emergency_data (McdConnection *self)
-{
-    clear_emergency_handles (self->priv);
-    clear_emergency_numbers (self->priv);
-}
+  for (iter = numbers; iter != NULL; iter = iter->next)
+    {
+      GStrv ids = iter->data;
+      gchar **id_p;
 
-void _mcd_connection_take_emergency_numbers (McdConnection *self, GSList *numbers)
-{
-    McdConnectionPrivate *priv = self->priv;
+      /* We treat emergency numbers as "sticky": if a given ID has ever
+       * been considered an emergency number, it stays an emergency number.
+       * This seems safer than ever removing one and losing their special
+       * treatment. */
+      for (id_p = ids; id_p != NULL && *id_p != NULL; id_p++)
+        g_hash_table_add (self->priv->service_point_ids, *id_p);
+    }
 
-    if (priv->emergency.numbers != NULL)
-      {
-        clear_emergency_numbers (priv);
-        g_critical ("Overwriting old emergency numbers");
-      }
-
-    priv->emergency.numbers = numbers;
+  /* GStrv members' ownership has already been transferred */
+  g_slist_free_full (numbers, g_free);
 }
 
 void
-_mcd_connection_take_emergency_handles (McdConnection *self, TpIntset *handles)
+mcd_connection_add_emergency_handle (McdConnection *self,
+    TpHandle handle)
 {
-    McdConnectionPrivate *priv = self->priv;
+  if (self->priv->service_point_handles == NULL)
+    self->priv->service_point_handles = tp_intset_new ();
 
-    if (priv->emergency.handles != NULL)
-      {
-        clear_emergency_handles (priv);
-        g_critical ("Overwriting old emergency handles");
-      }
-
-    priv->emergency.handles = handles;
+  /* As above, we treat emergency numbers as "sticky". */
+  tp_intset_add (self->priv->service_point_handles, handle);
 }

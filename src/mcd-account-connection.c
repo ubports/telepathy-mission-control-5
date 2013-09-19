@@ -39,11 +39,8 @@
 
 struct _McdAccountConnectionContext {
     GHashTable *params;
-    gint i_filter;
     gboolean user_initiated;
 };
-
-static guint _mcd_account_signal_connection_process = 0;
 
 void
 _mcd_account_connection_context_free (McdAccountConnectionContext *c)
@@ -69,7 +66,6 @@ _mcd_account_connection_begin (McdAccount *account,
     /* create dynamic params HT */
     /* run the handlers */
     ctx = g_malloc (sizeof (McdAccountConnectionContext));
-    ctx->i_filter = 0;
     ctx->user_initiated = user_initiated;
 
     /* If we get this far, the account should be valid, so getting the
@@ -92,9 +88,7 @@ mcd_account_connection_proceed_with_reason (McdAccount *account,
                                             TpConnectionStatusReason reason)
 {
     McdAccountConnectionContext *ctx;
-    McdAccountConnectionFunc func = NULL;
-    gpointer userdata;
-    McdMaster *master;
+    gboolean delayed;
 
     /* call next handler, or terminate the chain (emitting proper signal).
      * if everything is fine, call mcd_manager_create_connection() and
@@ -106,19 +100,37 @@ mcd_account_connection_proceed_with_reason (McdAccount *account,
 
     if (success)
     {
-        master = mcd_master_get_default ();
-        _mcd_master_get_nth_account_connection (master, ctx->i_filter++,
-                                                &func, &userdata);
-    }
-    if (func)
-    {
-	func (account, ctx->params, userdata);
+        if (mcd_connectivity_monitor_is_online (
+              mcd_account_get_connectivity_monitor (account)))
+        {
+            DEBUG ("%s wants to connect and we're online - go for it",
+                mcd_account_get_unique_name (account));
+            delayed = FALSE;
+        }
+        else if (!mcd_account_get_waiting_for_connectivity (account))
+        {
+            DEBUG ("%s wants to connect, but we're offline; queuing it up",
+                mcd_account_get_unique_name (account));
+            delayed = TRUE;
+            mcd_account_set_waiting_for_connectivity (account, TRUE);
+        }
+        else
+        {
+            DEBUG ("%s wants to connect, but is already waiting for "
+                "connectivity?", mcd_account_get_unique_name (account));
+            delayed = TRUE;
+        }
     }
     else
     {
+        DEBUG ("%s failed to connect: reason code %d",
+            mcd_account_get_unique_name (account), reason);
+        delayed = FALSE;
+    }
+
+    if (!delayed)
+    {
 	/* end of the chain */
-	g_signal_emit (account, _mcd_account_signal_connection_process, 0,
-		       success);
 	if (success)
 	{
 	    _mcd_account_connect (account, ctx->params);
@@ -138,32 +150,4 @@ mcd_account_connection_proceed (McdAccount *account, gboolean success)
 {
     mcd_account_connection_proceed_with_reason
         (account, success, TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED);
-}
-
-inline void
-_mcd_account_connection_class_init (McdAccountClass *klass)
-{
-    _mcd_account_signal_connection_process =
-	g_signal_new ("connection-process",
-		      G_OBJECT_CLASS_TYPE (klass),
-		      G_SIGNAL_RUN_LAST,
-		      0,
-		      NULL, NULL, g_cclosure_marshal_VOID__BOOLEAN,
-		      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-}
-
-/**
- * Returns: %TRUE if the current attempt to connect was user-initiated.
- */
-gboolean
-mcd_account_connection_is_user_initiated (McdAccount *account)
-{
-    McdAccountConnectionContext *ctx;
-
-    ctx = _mcd_account_get_connection_context (account);
-
-    if (ctx == NULL)
-        return FALSE;
-
-    return ctx->user_initiated;
 }

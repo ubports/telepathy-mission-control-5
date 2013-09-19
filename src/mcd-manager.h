@@ -57,18 +57,12 @@ struct _McdManager
 struct _McdManagerClass
 {
     McdOperationClass parent_class;
-    void (*_mc_reserved1) (void);
-    void (*_mc_reserved2) (void);
-    void (*_mc_reserved3) (void);
-    void (*_mc_reserved4) (void);
-    void (*_mc_reserved5) (void);
-    void (*_mc_reserved6) (void);
 };
 
 GType mcd_manager_get_type (void);
 McdManager *mcd_manager_new (const gchar *unique_name,
 			     McdDispatcher *dispatcher,
-			     TpDBusDaemon *dbus_daemon);
+                             TpSimpleClientFactory *client_factory);
 
 const gchar *mcd_manager_get_name (McdManager *manager);
 

@@ -65,7 +65,6 @@
 #include <io.h>
 #endif
 
-#include "kludge-transport.h"
 #include "mcd-master.h"
 #include "mcd-master-priv.h"
 #include "mcd-manager.h"
@@ -74,7 +73,6 @@
 #include "mcd-account-manager-priv.h"
 #include "mcd-account-conditions.h"
 #include "mcd-account-priv.h"
-#include "mcd-transport.h"
 #include "plugin-loader.h"
 
 #ifdef G_OS_UNIX
@@ -83,13 +81,9 @@
 # endif
 #endif
 
-#define MCD_MASTER_PRIV(master) (G_TYPE_INSTANCE_GET_PRIVATE ((master), \
-				  MCD_TYPE_MASTER, \
-				  McdMasterPrivate))
-
 G_DEFINE_TYPE (McdMaster, mcd_master, MCD_TYPE_OPERATION);
 
-typedef struct _McdMasterPrivate
+struct _McdMasterPrivate
 {
     McdAccountManager *account_manager;
     McdDispatcher *dispatcher;
@@ -98,16 +92,13 @@ typedef struct _McdMasterPrivate
     TpDBusDaemon *dbus_daemon;
     TpSimpleClientFactory *client_factory;
 
-    GPtrArray *transport_plugins;
-    GList *account_connections;
-
     /* Current pending sleep timer */
     gint shutdown_timeout_id;
 
     gboolean is_disposed;
     gboolean low_memory;
     gboolean idle;
-} McdMasterPrivate;
+};
 
 enum
 {
@@ -119,165 +110,17 @@ enum
     PROP_ACCOUNT_MANAGER,
 };
 
-typedef struct {
-    gint priority;
-    McdAccountConnectionFunc func;
-    gpointer userdata;
-} McdAccountConnectionData;
-
 /* Used to poison 'default_master' when the object it points to is disposed.
  * The default_master should basically be alive for the duration of the MC run.
  */
 #define POISONED_MASTER ((McdMaster *) 0xdeadbeef)
 static McdMaster *default_master = NULL;
 
-
-static void
-mcd_master_transport_connected (McdMaster *master, McdTransportPlugin *plugin,
-				McdTransport *transport)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    GHashTable *accounts;
-    GHashTableIter iter;
-    gpointer v;
-
-    DEBUG ("%s", mcd_transport_get_name (plugin, transport));
-
-    accounts = _mcd_account_manager_get_accounts (priv->account_manager);
-    g_hash_table_iter_init (&iter, accounts);
-
-    while (g_hash_table_iter_next (&iter, NULL, &v))
-    {
-        McdAccount *account = MCD_ACCOUNT (v);
-        GHashTable *conditions;
-
-        if (!mcd_account_would_like_to_connect (account))
-            continue;
-
-        DEBUG ("account %s would like to connect",
-               mcd_account_get_unique_name (account));
-        conditions = mcd_account_get_conditions (account);
-        if (mcd_transport_plugin_check_conditions (plugin, transport,
-                                                   conditions))
-        {
-            DEBUG ("conditions matched");
-            _mcd_account_connect_with_auto_presence (account, FALSE);
-            mcd_account_connection_bind_transport (account, transport);
-        }
-        g_hash_table_unref (conditions);
-    }
-}
-
-static void
-mcd_master_transport_disconnected (McdMaster *master, McdTransportPlugin *plugin,
-				   McdTransport *transport)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    GHashTable *accounts;
-    GHashTableIter iter;
-    gpointer v;
-
-    DEBUG ("%s", mcd_transport_get_name (plugin, transport));
-
-    accounts = _mcd_account_manager_get_accounts (priv->account_manager);
-    g_hash_table_iter_init (&iter, accounts);
-
-    while (g_hash_table_iter_next (&iter, NULL, &v))
-    {
-        McdAccount *account = MCD_ACCOUNT (v);
-
-        if (transport == _mcd_account_connection_get_transport (account))
-        {
-            McdConnection *connection;
-
-            DEBUG ("account %s must disconnect",
-                   mcd_account_get_unique_name (account));
-            connection = mcd_account_get_connection (account);
-            if (connection)
-                mcd_connection_close (connection);
-            mcd_account_connection_bind_transport (account, NULL);
-
-            /* it may be that there is another transport to which the account
-             * can reconnect */
-            if (_mcd_master_account_replace_transport (master, account))
-            {
-                DEBUG ("conditions matched");
-                _mcd_account_connect_with_auto_presence (account, FALSE);
-            }
-
-        }
-    }
-}
-
-static void
-mcd_master_connect_automatic_accounts (McdMaster *master)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    GHashTable *accounts;
-    GHashTableIter iter;
-    gpointer ht_key, ht_value;
-
-    accounts = _mcd_account_manager_get_accounts (priv->account_manager);
-    g_hash_table_iter_init (&iter, accounts);
-    while (g_hash_table_iter_next (&iter, &ht_key, &ht_value))
-    {
-        _mcd_account_maybe_autoconnect (ht_value);
-    }
-}
-
-static const gchar *
-mcd_transport_status_to_string (McdTransportStatus status)
-{
-    switch (status)
-    {
-        case MCD_TRANSPORT_STATUS_CONNECTED:
-            return "connected";
-        case MCD_TRANSPORT_STATUS_CONNECTING:
-            return "connecting";
-        case MCD_TRANSPORT_STATUS_DISCONNECTED:
-            return "disconnected";
-        case MCD_TRANSPORT_STATUS_DISCONNECTING:
-            return "disconnecting";
-    }
-
-    return "invalid";
-}
-
-static void
-on_transport_status_changed (McdTransportPlugin *plugin,
-			     McdTransport *transport,
-			     McdTransportStatus status, McdMaster *master)
-{
-    DEBUG ("Transport %s changed status to %u (%s)",
-           mcd_transport_get_name (plugin, transport), status,
-           mcd_transport_status_to_string (status));
-
-    if (status == MCD_TRANSPORT_STATUS_CONNECTED)
-	mcd_master_transport_connected (master, plugin, transport);
-    else if (status == MCD_TRANSPORT_STATUS_DISCONNECTING ||
-	     status == MCD_TRANSPORT_STATUS_DISCONNECTED)
-    {
-	/* disconnect all accounts that were using this transport */
-	mcd_master_transport_disconnected (master, plugin, transport);
-    }
-}
-
-static void
-_mcd_master_finalize (GObject * object)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (object);
-
-    g_list_foreach (priv->account_connections, (GFunc)g_free, NULL);
-    g_list_free (priv->account_connections);
-
-    G_OBJECT_CLASS (mcd_master_parent_class)->finalize (object);
-}
-
 static void
 _mcd_master_get_property (GObject * obj, guint prop_id,
 			  GValue * val, GParamSpec * pspec)
 {
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (obj);
+    McdMasterPrivate *priv = MCD_MASTER (obj)->priv;
 
     switch (prop_id)
     {
@@ -304,17 +147,13 @@ static void
 _mcd_master_set_property (GObject *obj, guint prop_id,
 			  const GValue *val, GParamSpec *pspec)
 {
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (obj);
+    McdMasterPrivate *priv = MCD_MASTER (obj)->priv;
 
     switch (prop_id)
     {
     case PROP_DBUS_DAEMON:
 	g_assert (priv->dbus_daemon == NULL);
 	priv->dbus_daemon = g_value_dup_object (val);
-	break;
-    case PROP_ACCOUNT_MANAGER:
-	g_assert (priv->account_manager == NULL);
-	priv->account_manager = g_value_dup_object (val);
 	break;
     default:
 	G_OBJECT_WARN_INVALID_PROPERTY_ID (obj, prop_id, pspec);
@@ -325,30 +164,13 @@ _mcd_master_set_property (GObject *obj, guint prop_id,
 static void
 _mcd_master_dispose (GObject * object)
 {
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (object);
+    McdMasterPrivate *priv = MCD_MASTER (object)->priv;
     
     if (priv->is_disposed)
     {
 	return;
     }
     priv->is_disposed = TRUE;
-
-    if (priv->transport_plugins)
-    {
-	guint i;
-
-	for (i = 0; i < priv->transport_plugins->len; i++)
-	{
-	    McdTransportPlugin *plugin;
-	    plugin = g_ptr_array_index (priv->transport_plugins, i);
-	    g_signal_handlers_disconnect_by_func (plugin, 
-						  on_transport_status_changed,
-						  object);
-	    g_object_unref (plugin);
-	}
-	g_ptr_array_unref (priv->transport_plugins);
-	priv->transport_plugins = NULL;
-    }
 
     tp_clear_object (&priv->account_manager);
     tp_clear_object (&priv->dbus_daemon);
@@ -372,7 +194,7 @@ mcd_master_constructor (GType type, guint n_params,
     McdMasterPrivate *priv;
 
     master =  MCD_MASTER (object_class->constructor (type, n_params, params));
-    priv = MCD_MASTER_PRIV (master);
+    priv = master->priv;
 
     g_return_val_if_fail (master != NULL, NULL);
 
@@ -382,9 +204,7 @@ mcd_master_constructor (GType type, guint n_params,
 #endif
 
     priv->client_factory = tp_simple_client_factory_new (priv->dbus_daemon);
-
-    if (!priv->account_manager)
-	priv->account_manager = mcd_account_manager_new (priv->client_factory);
+    priv->account_manager = mcd_account_manager_new (priv->client_factory);
 
     priv->dispatcher = mcd_dispatcher_new (priv->dbus_daemon, master);
     g_assert (MCD_IS_DISPATCHER (priv->dispatcher));
@@ -396,22 +216,7 @@ mcd_master_constructor (GType type, guint n_params,
             tp_proxy_get_dbus_connection (TP_PROXY (priv->dbus_daemon))),
         TRUE);
 
-    mcd_kludge_transport_install (master);
-
-    /* we assume that at this point all transport plugins have been registered.
-     * We get the active transports and check whether some accounts should be
-     * automatically connected */
-    mcd_master_connect_automatic_accounts (master);
-
     return (GObject *) master;
-}
-
-static McdManager *
-mcd_master_create_manager (McdMaster *master, const gchar *unique_name)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-
-    return mcd_manager_new (unique_name, priv->dispatcher, priv->dbus_daemon);
 }
 
 static void
@@ -421,12 +226,9 @@ mcd_master_class_init (McdMasterClass * klass)
     g_type_class_add_private (object_class, sizeof (McdMasterPrivate));
 
     object_class->constructor = mcd_master_constructor;
-    object_class->finalize = _mcd_master_finalize;
     object_class->get_property = _mcd_master_get_property;
     object_class->set_property = _mcd_master_set_property;
     object_class->dispose = _mcd_master_dispose;
-
-    klass->create_manager = mcd_master_create_manager;
 
     /* Properties */
     g_object_class_install_property
@@ -455,18 +257,17 @@ mcd_master_class_init (McdMasterClass * klass)
          g_param_spec_object ("account-manager",
                               "AccountManager", "AccountManager",
                               MCD_TYPE_ACCOUNT_MANAGER,
-                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                              G_PARAM_READABLE));
 }
 
 static void
 mcd_master_init (McdMaster * master)
 {
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
+    master->priv = G_TYPE_INSTANCE_GET_PRIVATE (master,
+        MCD_TYPE_MASTER, McdMasterPrivate);
 
     if (!default_master)
 	default_master = master;
-
-    priv->transport_plugins = g_ptr_array_new ();
 
     /* This newer plugin API is currently always enabled       */
     /* .... and is enabled before anything else as potentially *
@@ -512,8 +313,9 @@ _mcd_master_lookup_manager (McdMaster *master,
 	    return manager;
     }
 
-    manager = MCD_MASTER_GET_CLASS (master)->create_manager
-        (master, unique_name);
+    manager = mcd_manager_new (unique_name,
+                               master->priv->dispatcher,
+                               master->priv->client_factory);
     if (G_UNLIKELY (!manager))
 	g_warning ("Manager %s not created", unique_name);
     else
@@ -533,137 +335,7 @@ TpDBusDaemon *
 mcd_master_get_dbus_daemon (McdMaster *master)
 {
     g_return_val_if_fail (MCD_IS_MASTER (master), NULL);
-    return MCD_MASTER_PRIV (master)->dbus_daemon;
-}
-
-/**
- * mcd_plugin_register_transport:
- * @master: the #McdMaster.
- * @transport_plugin: the #McdTransportPlugin.
- *
- * Registers @transport_plugin as a transport monitoring object.
- * The @master takes ownership of the transport (i.e., it doesn't increment its
- * reference count).
- */
-void
-mcd_master_register_transport (McdMaster *master,
-			       McdTransportPlugin *transport_plugin)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-
-    DEBUG ("called");
-    g_signal_connect (transport_plugin, "status-changed",
-		      G_CALLBACK (on_transport_status_changed),
-		      master);
-    g_ptr_array_add (priv->transport_plugins, transport_plugin);
-}
-
-void
-mcd_master_register_account_connection (McdMaster *master,
-					McdAccountConnectionFunc func,
-					gint priority,
-					gpointer userdata)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    McdAccountConnectionData *acd;
-    GList *list;
-
-    DEBUG ("called");
-    acd = g_malloc (sizeof (McdAccountConnectionData));
-    acd->priority = priority;
-    acd->func = func;
-    acd->userdata = userdata;
-    for (list = priv->account_connections; list; list = list->next)
-	if (((McdAccountConnectionData *)list->data)->priority >= priority) break;
-
-    priv->account_connections =
-       	g_list_insert_before (priv->account_connections, list, acd);
-}
-
-void
-_mcd_master_get_nth_account_connection (McdMaster *master,
-                                        gint i,
-                                        McdAccountConnectionFunc *func,
-                                        gpointer *userdata)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    McdAccountConnectionData *acd;
-
-    acd = g_list_nth_data (priv->account_connections, i);
-    if (acd)
-    {
-	*func = acd->func;
-	*userdata = acd->userdata;
-    }
-    else
-	*func = NULL;
-}
-
-gboolean
-_mcd_master_account_replace_transport (McdMaster *master,
-                                       McdAccount *account)
-{
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (master);
-    GHashTable *conditions;
-    gboolean connected = FALSE;
-    gboolean unconditional = FALSE;
-    const gchar *name;
-    const guint n_plugins = priv->transport_plugins->len;
-    guint n_conds;
-    guint i;
-
-    g_return_val_if_fail (MCD_IS_ACCOUNT (account), FALSE);
-
-    /* no transport plugins, decision is always "go for it" */
-    if (n_plugins == 0)
-        return TRUE;
-
-    name = mcd_account_get_unique_name (account);
-
-    if (_mcd_account_needs_dispatch (account))
-    {
-        DEBUG ("Always-dispatchable account %s needs no transport", name);
-        return TRUE;
-    }
-
-    conditions = mcd_account_get_conditions (account);
-    n_conds = g_hash_table_size (conditions);
-    unconditional = (n_conds == 0);
-
-    DEBUG ("Checking %s [%u conditions, %u plugins]", name, n_conds, n_plugins);
-
-    for (i = 0; !connected && i < priv->transport_plugins->len; i++)
-    {
-        McdTransportPlugin *plugin;
-        const GList *transports;
-
-        plugin = g_ptr_array_index (priv->transport_plugins, i);
-        transports = mcd_transport_plugin_get_transports (plugin);
-
-        while (transports != NULL)
-        {
-            McdTransport *transport = transports->data;
-            McdTransportStatus status =
-              mcd_transport_get_status (plugin, transport);
-
-            transports = g_list_next (transports);
-
-            if (status != MCD_TRANSPORT_STATUS_CONNECTED)
-                continue;
-
-            if (unconditional ||
-                mcd_transport_plugin_check_conditions (plugin, transport,
-                                                       conditions))
-            {
-                mcd_account_connection_bind_transport (account, transport);
-                connected = TRUE;
-                break;
-            }
-        }
-    }
-
-    g_hash_table_unref (conditions);
-    return connected;
+    return master->priv->dbus_daemon;
 }
 
 /* Milliseconds to wait for Connectivity coming back up before exiting MC */
@@ -673,9 +345,8 @@ static gboolean
 _mcd_master_exit_by_timeout (gpointer data)
 {
     McdMaster *self = MCD_MASTER (data);
-    McdMasterPrivate *priv = MCD_MASTER_PRIV (self);
 
-    priv->shutdown_timeout_id = 0;
+    self->priv->shutdown_timeout_id = 0;
 
     /* Notify sucide */
     mcd_mission_abort (MCD_MISSION (self));
@@ -689,7 +360,7 @@ mcd_master_shutdown (McdMaster *self,
     McdMasterPrivate *priv;
 
     g_return_if_fail (MCD_IS_MASTER (self));
-    priv = MCD_MASTER_PRIV (self);
+    priv = self->priv;
 
     if(!priv->shutdown_timeout_id)
     {

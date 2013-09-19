@@ -4,7 +4,7 @@
  * This file is part of mission-control
  *
  * Copyright © 2008–2010 Nokia Corporation.
- * Copyright © 2009–2012 Collabora Ltd.
+ * Copyright © 2009–2013 Collabora Ltd.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public License
@@ -37,7 +37,6 @@
 #include "mcd-account-conditions.h"
 #include "mcd-account-manager-priv.h"
 #include "mcd-account-addressing.h"
-#include "mcd-connection-plugin.h"
 #include "mcd-connection-priv.h"
 #include "mcd-misc.h"
 #include "mcd-manager.h"
@@ -127,8 +126,8 @@ struct _McdAccountPrivate
 
     McdStorage *storage;
     TpDBusDaemon *dbus_daemon;
+    McdConnectivityMonitor *connectivity;
 
-    McdTransport *transport;
     McdAccountConnectionContext *connection_context;
     GKeyFile *keyfile;		/* configuration file */
     McpAccountStorage *storage_plugin;
@@ -173,8 +172,11 @@ struct _McdAccountPrivate
     gboolean always_on;
     gboolean changing_presence;
     gboolean setting_avatar;
+    gboolean waiting_for_connectivity;
 
     gboolean hidden;
+    /* In addition to affecting dispatching, this flag also makes this
+     * account bypass connectivity checks. */
     gboolean always_dispatch;
 
     /* These fields are used to cache the changed properties */
@@ -189,6 +191,7 @@ enum
 {
     PROP_0,
     PROP_DBUS_DAEMON,
+    PROP_CONNECTIVITY_MONITOR,
     PROP_STORAGE,
     PROP_NAME,
     PROP_ALWAYS_ON,
@@ -226,7 +229,6 @@ void
 _mcd_account_maybe_autoconnect (McdAccount *account)
 {
     McdAccountPrivate *priv;
-    McdMaster *master;
 
     g_return_if_fail (MCD_IS_ACCOUNT (account));
     priv = account->priv;
@@ -236,12 +238,20 @@ _mcd_account_maybe_autoconnect (McdAccount *account)
         return;
     }
 
-    master = mcd_master_get_default ();
-
-    if (!_mcd_master_account_replace_transport (master, account))
+    if (_mcd_account_needs_dispatch (account))
     {
-        DEBUG ("%s conditions not satisfied", priv->unique_name);
-        return;
+        DEBUG ("Always-dispatchable account %s needs no transport",
+            priv->unique_name);
+    }
+    else if (mcd_connectivity_monitor_is_online (priv->connectivity))
+    {
+        DEBUG ("Account %s has connectivity, connecting",
+            priv->unique_name);
+    }
+    else
+    {
+        DEBUG ("Account %s needs connectivity, not connecting",
+            priv->unique_name);
     }
 
     DEBUG ("connecting account %s", priv->unique_name);
@@ -2663,7 +2673,7 @@ apply_parameter_updates (McdAccount *account,
         g_hash_table_iter_init (&iter, dbus_properties);
         while (g_hash_table_iter_next (&iter, &name, &value))
         {
-            DEBUG ("updating parameter %s", name);
+            DEBUG ("updating parameter %s", (const gchar *) name);
             _mcd_connection_update_property (priv->connection, name, value);
         }
     }
@@ -2971,7 +2981,7 @@ _mcd_account_reconnect (McdAccount *self,
      * back from the CM yet, the old parameters will still be used, I think
      * (I can't quite make out what actually happens). */
     if (self->priv->connection)
-        mcd_connection_close (self->priv->connection);
+        mcd_connection_close (self->priv->connection, NULL);
 
     _mcd_account_connection_begin (self, user_initiated);
 }
@@ -3440,6 +3450,11 @@ set_property (GObject *obj, guint prop_id,
         priv->dbus_daemon = g_value_dup_object (val);
         break;
 
+      case PROP_CONNECTIVITY_MONITOR:
+        g_assert (priv->connectivity == NULL);
+        priv->connectivity = g_value_dup_object (val);
+        break;
+
     case PROP_NAME:
 	g_assert (priv->unique_name == NULL);
 	priv->unique_name = g_value_dup_string (val);
@@ -3478,6 +3493,11 @@ get_property (GObject *obj, guint prop_id,
     case PROP_DBUS_DAEMON:
         g_value_set_object (val, priv->dbus_daemon);
 	break;
+
+    case PROP_CONNECTIVITY_MONITOR:
+        g_value_set_object (val, priv->connectivity);
+        break;
+
     case PROP_NAME:
 	g_value_set_string (val, priv->unique_name);
 	break;
@@ -3558,6 +3578,7 @@ _mcd_account_dispose (GObject *object)
     tp_clear_object (&priv->storage);
     tp_clear_object (&priv->dbus_daemon);
     tp_clear_object (&priv->self_contact);
+    tp_clear_object (&priv->connectivity);
 
     _mcd_account_set_connection_context (self, NULL);
     _mcd_account_set_connection (self, NULL);
@@ -3588,6 +3609,59 @@ _mcd_account_constructor (GType type, guint n_params,
 }
 
 static void
+monitor_state_changed_cb (
+    McdConnectivityMonitor *monitor,
+    gboolean connected,
+    McdInhibit *inhibit,
+    gpointer user_data)
+{
+  McdAccount *self = MCD_ACCOUNT (user_data);
+
+  if (connected)
+    {
+      if (mcd_account_would_like_to_connect (self))
+        {
+          DEBUG ("account %s would like to connect",
+              self->priv->unique_name);
+          _mcd_account_connect_with_auto_presence (self, FALSE);
+        }
+    }
+  else
+    {
+      if (_mcd_account_needs_dispatch (self))
+        {
+          /* special treatment for cellular accounts */
+          DEBUG ("account %s is always dispatched and does not need a "
+              "transport", self->priv->unique_name);
+        }
+      else
+        {
+          McdConnection *connection;
+
+          DEBUG ("account %s must disconnect", self->priv->unique_name);
+          connection = mcd_account_get_connection (self);
+
+          if (connection != NULL)
+            mcd_connection_close (connection, inhibit);
+        }
+    }
+
+  if (!self->priv->waiting_for_connectivity)
+    return;
+
+  /* If we've gone online, allow the account to actually try to connect;
+   * if we've fallen offline, say as much. (I don't actually think this
+   * code will be reached if !connected, but.)
+   */
+  DEBUG ("telling %s to %s", self->priv->unique_name,
+      connected ? "proceed" : "give up");
+  mcd_account_connection_proceed_with_reason (self, connected,
+      connected ? TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED
+                : TP_CONNECTION_STATUS_REASON_NETWORK_ERROR);
+  self->priv->waiting_for_connectivity = FALSE;
+}
+
+static void
 _mcd_account_constructed (GObject *object)
 {
     GObjectClass *object_class = (GObjectClass *)mcd_account_parent_class;
@@ -3600,6 +3674,9 @@ _mcd_account_constructed (GObject *object)
 
     mcd_account_migrate_avatar (account);
     mcd_account_setup (account);
+
+    tp_g_signal_connect_object (account->priv->connectivity, "state-change",
+        (GCallback) monitor_state_changed_cb, account, 0);
 }
 
 static void
@@ -3632,6 +3709,14 @@ mcd_account_class_init (McdAccountClass * klass)
          g_param_spec_object ("dbus-daemon", "DBus daemon", "DBus daemon",
                               TP_TYPE_DBUS_DAEMON,
                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+    g_object_class_install_property
+        (object_class, PROP_CONNECTIVITY_MONITOR,
+         g_param_spec_object ("connectivity monitor",
+                              "Connectivity monitor",
+                              "Connectivity monitor",
+                              MCD_TYPE_CONNECTIVITY_MONITOR,
+                              G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY));
 
     g_object_class_install_property
         (object_class, PROP_STORAGE,
@@ -3673,8 +3758,6 @@ mcd_account_class_init (McdAccountClass * klass)
                       0,
                       NULL, NULL, g_cclosure_marshal_VOID__STRING,
                       G_TYPE_NONE, 1, G_TYPE_STRING);
-
-    _mcd_account_connection_class_init (klass);
 
     account_ready_quark = g_quark_from_static_string ("mcd_account_load");
 
@@ -3728,7 +3811,9 @@ mcd_account_init (McdAccount *account)
 }
 
 McdAccount *
-mcd_account_new (McdAccountManager *account_manager, const gchar *name)
+mcd_account_new (McdAccountManager *account_manager,
+    const gchar *name,
+    McdConnectivityMonitor *connectivity)
 {
     gpointer *obj;
     McdStorage *storage = mcd_account_manager_get_storage (account_manager);
@@ -3737,6 +3822,7 @@ mcd_account_new (McdAccountManager *account_manager, const gchar *name)
     obj = g_object_new (MCD_TYPE_ACCOUNT,
                         "storage", storage,
                         "dbus-daemon", dbus,
+                        "connectivity-monitor", connectivity,
 			"name", name,
 			NULL);
     return MCD_ACCOUNT (obj);
@@ -3895,13 +3981,17 @@ mcd_account_request_presence (McdAccount *account,
 
 static void
 mcd_account_update_self_presence (McdAccount *account,
-                                  TpConnectionPresenceType presence,
+                                  guint presence,
                                   const gchar *status,
-                                  const gchar *message)
+                                  const gchar *message,
+                                  TpContact *self_contact)
 {
     McdAccountPrivate *priv = account->priv;
     gboolean changed = FALSE;
     GValue value = G_VALUE_INIT;
+
+    if (self_contact != account->priv->self_contact)
+        return;
 
     if (priv->curr_presence_type != presence)
     {
@@ -3937,21 +4027,6 @@ mcd_account_update_self_presence (McdAccount *account,
                                               G_TYPE_INVALID));
     mcd_account_changed_property (account, "CurrentPresence", &value);
     g_value_unset (&value);
-}
-
-
-static void
-on_conn_self_presence_changed (McdConnection *connection,
-                               TpConnectionPresenceType presence,
-                               const gchar *status,
-                               const gchar *message,
-                               gpointer user_data)
-{
-    McdAccount *account = MCD_ACCOUNT (user_data);
-    McdAccountPrivate *priv = account->priv;
-
-    g_assert (priv->connection == connection);
-    mcd_account_update_self_presence (account, presence, status, message);
 }
 
 /* TODO: remove when the relative members will become public */
@@ -4422,6 +4497,14 @@ _mcd_account_set_connection_status (McdAccount *account,
     }
     else if (status == TP_CONNECTION_STATUS_DISCONNECTED)
     {
+        /* we'll get this from the TpContact soon, but it makes sense
+         * to bundle everything together into one signal */
+        mcd_account_update_self_presence (account,
+            TP_CONNECTION_PRESENCE_TYPE_OFFLINE,
+            "offline",
+            "",
+            priv->self_contact);
+
         if (dbus_error == NULL)
             dbus_error = "";
 
@@ -4829,6 +4912,23 @@ mcd_account_self_contact_upgraded_cb (GObject *source_object,
               G_CALLBACK (mcd_account_self_contact_notify_avatar_file_cb),
               self, G_CONNECT_SWAPPED);
           mcd_account_process_initial_avatar_token (self);
+
+          tp_g_signal_connect_object (self_contact, "presence-changed",
+              G_CALLBACK (mcd_account_update_self_presence),
+              self, G_CONNECT_SWAPPED);
+
+          /* If the connection doesn't support SimplePresence then the
+           * presence will be (UNSET, '', '') which is what we want anyway. */
+          mcd_account_update_self_presence (self,
+              tp_contact_get_presence_type (self_contact),
+              tp_contact_get_presence_status (self_contact),
+              tp_contact_get_presence_message (self_contact),
+              self_contact);
+        }
+      else if (self->priv->self_contact == NULL)
+        {
+          DEBUG ("self-contact '%s' has disappeared since we asked to "
+              "upgrade it", tp_contact_get_identifier (self_contact));
         }
       else
         {
@@ -4857,7 +4957,8 @@ mcd_account_self_contact_changed_cb (McdAccount *self,
   static const TpContactFeature contact_features[] = {
       TP_CONTACT_FEATURE_AVATAR_TOKEN,
       TP_CONTACT_FEATURE_AVATAR_DATA,
-      TP_CONTACT_FEATURE_ALIAS
+      TP_CONTACT_FEATURE_ALIAS,
+      TP_CONTACT_FEATURE_PRESENCE
   };
   TpContact *self_contact;
 
@@ -4945,21 +5046,6 @@ mcd_account_connection_ready_cb (McdAccount *account,
     }
 
     g_free (nickname);
-
-    if (!tp_proxy_has_interface_by_id (tp_connection,
-            TP_IFACE_QUARK_CONNECTION_INTERFACE_SIMPLE_PRESENCE))
-    {
-        /* This connection doesn't have SimplePresence, but it's online.
-         * TpConnection only emits connection-ready when the account is online
-         * and we've introspected it, so we know that if this interface isn't
-         * present now, it's not going to appear.
-         *
-         * So, the spec says that we should set CurrentPresence to Unset.
-         */
-        mcd_account_update_self_presence (account,
-            TP_CONNECTION_PRESENCE_TYPE_UNSET, "", "");
-    }
-
 }
 
 void
@@ -4975,9 +5061,6 @@ _mcd_account_set_connection (McdAccount *account, McdConnection *connection)
     {
         g_signal_handlers_disconnect_by_func (priv->connection,
                                               on_connection_abort, account);
-        g_signal_handlers_disconnect_by_func (priv->connection,
-                                              on_conn_self_presence_changed,
-                                              account);
         g_signal_handlers_disconnect_by_func (priv->connection,
                                               on_conn_status_changed,
                                               account);
@@ -5006,8 +5089,6 @@ _mcd_account_set_connection (McdAccount *account, McdConnection *connection)
                 G_CALLBACK (mcd_account_connection_ready_cb), account);
         }
 
-        g_signal_connect (connection, "self-presence-changed",
-                          G_CALLBACK (on_conn_self_presence_changed), account);
         g_signal_connect (connection, "connection-status-changed",
                           G_CALLBACK (on_conn_status_changed), account);
         g_signal_connect (connection, "abort",
@@ -5016,7 +5097,6 @@ _mcd_account_set_connection (McdAccount *account, McdConnection *connection)
     else
     {
         priv->conn_status = TP_CONNECTION_STATUS_DISCONNECTED;
-        priv->transport = NULL;
     }
 }
 
@@ -5039,56 +5119,6 @@ _mcd_account_set_has_been_online (McdAccount *account)
                                       &value);
         g_value_unset (&value);
     }
-}
-
-/**
- * mcd_account_connection_bind_transport:
- * @account: the #McdAccount.
- * @transport: the #McdTransport.
- *
- * Set @account as dependent on @transport; connectivity plugins should call
- * this function in the callback they registered with
- * mcd_plugin_register_account_connection(). This tells the account manager to
- * disconnect @account when @transport goes away.
- */
-void
-mcd_account_connection_bind_transport (McdAccount *account,
-                                       McdTransport *transport)
-{
-    g_return_if_fail (MCD_IS_ACCOUNT (account));
-
-    if (transport == account->priv->transport)
-    {
-        DEBUG ("account %s transport remains %p",
-               account->priv->unique_name, transport);
-    }
-    else if (transport == NULL)
-    {
-        DEBUG ("unbinding account %s from transport %p",
-               account->priv->unique_name, account->priv->transport);
-        account->priv->transport = NULL;
-    }
-    else if (account->priv->transport == NULL)
-    {
-        DEBUG ("binding account %s to transport %p",
-               account->priv->unique_name, transport);
-
-        account->priv->transport = transport;
-    }
-    else
-    {
-        DEBUG ("disallowing migration of account %s from transport %p to %p",
-               account->priv->unique_name, account->priv->transport,
-               transport);
-    }
-}
-
-McdTransport *
-_mcd_account_connection_get_transport (McdAccount *account)
-{
-    g_return_val_if_fail (MCD_IS_ACCOUNT (account), NULL);
-
-    return account->priv->transport;
 }
 
 McdAccountConnectionContext *
@@ -5181,4 +5211,23 @@ mcd_account_dup_nickname (McdAccount *self)
     const gchar *name = mcd_account_get_unique_name (self);
 
     return mcd_storage_dup_string (self->priv->storage, name, "Nickname");
+}
+
+McdConnectivityMonitor *
+mcd_account_get_connectivity_monitor (McdAccount *self)
+{
+    return self->priv->connectivity;
+}
+
+gboolean
+mcd_account_get_waiting_for_connectivity (McdAccount *self)
+{
+  return self->priv->waiting_for_connectivity;
+}
+
+void
+mcd_account_set_waiting_for_connectivity (McdAccount *self,
+    gboolean waiting)
+{
+  self->priv->waiting_for_connectivity = waiting;
 }

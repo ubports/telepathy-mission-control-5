@@ -51,7 +51,6 @@ typedef struct {
   gboolean (*delete) (const gchar *account);
   gboolean (*exists) (const gchar *account);
   GStrv    (*list) (void);
-  guint    (*count_passwords) (void);
 } Backend;
 
 typedef enum {
@@ -60,8 +59,7 @@ typedef enum {
   OP_SET,
   OP_DELETE,
   OP_EXISTS,
-  OP_LIST,
-  OP_COUNT_PASSWORDS
+  OP_LIST
 } Operation;
 
 const Backend backends[] = {
@@ -70,8 +68,7 @@ const Backend backends[] = {
     default_set,
     default_delete,
     default_exists,
-    default_list,
-    default_count_passwords },
+    default_list },
 
 #if ENABLE_LIBACCOUNTS_SSO
   { "libaccounts",
@@ -79,46 +76,14 @@ const Backend backends[] = {
     libaccounts_set,
     libaccounts_delete,
     libaccounts_exists,
-    libaccounts_list,
-    NULL },
+    libaccounts_list },
 #endif
 
   { NULL }
 };
 
 static void usage (const gchar *name, const gchar *fmt,
-    ...) G_GNUC_NORETURN;
-
-#if ENABLE_GNOME_KEYRING
-#include <gnome-keyring.h>
-
-static void
-setup_default_keyring (void)
-{
-  GnomeKeyringResult result;
-
-  g_debug ("Setting default keyring to: %s", g_getenv ("MC_KEYRING_NAME"));
-
-  if (g_getenv ("MC_KEYRING_NAME") != NULL)
-  {
-      const gchar *keyring_name = g_getenv ("MC_KEYRING_NAME");
-
-      g_debug ("MC Keyring name: %s", keyring_name);
-
-      if ((result = gnome_keyring_set_default_keyring_sync (keyring_name)) ==
-           GNOME_KEYRING_RESULT_OK)
-      {
-          g_debug ("Successfully set up temporary keyring %s for tests",
-                   keyring_name);
-      }
-      else
-      {
-          g_warning ("Failed to set %s as the default keyring: %s",
-                     keyring_name, gnome_keyring_result_to_message (result));
-      }
-  }
-}
-#endif
+    ...) G_GNUC_NORETURN G_GNUC_PRINTF (2, 3);
 
 int main (int argc, char **argv)
 {
@@ -136,12 +101,8 @@ int main (int argc, char **argv)
   g_type_init ();
   g_set_application_name (argv[0]);
 
-#if ENABLE_GNOME_KEYRING
-  setup_default_keyring ();
-#endif
-
   if (argc < 3)
-    usage (argv[0], "");
+    usage (argv[0], "Not enough arguments");
 
   op_name = argv[1];
   backend = argv[2];
@@ -168,8 +129,6 @@ int main (int argc, char **argv)
     op = OP_EXISTS;
   else if (g_str_equal (op_name, "list"))
     op = OP_LIST;
-  else if (g_str_equal (op_name, "count-passwords"))
-    op = OP_COUNT_PASSWORDS;
 
   switch (op)
     {
@@ -204,11 +163,6 @@ int main (int argc, char **argv)
         break;
 
       case OP_LIST:
-        if (argc < 3)
-          usage (argv[0], "op '%s' requires an backend", op_name);
-        break;
-
-      case OP_COUNT_PASSWORDS:
         if (argc < 3)
           usage (argv[0], "op '%s' requires an backend", op_name);
         break;
@@ -248,19 +202,6 @@ int main (int argc, char **argv)
         list = store->list ();
         output = g_strjoinv ("\n", list);
         g_strfreev (list);
-        break;
-
-      case OP_COUNT_PASSWORDS:
-        if (store->count_passwords == NULL)
-          {
-            g_printerr ("Password-counting is unimplemented\n");
-          }
-        else
-          {
-            guint n = store->count_passwords ();
-            output = g_strdup_printf ("%u", n);
-            success = TRUE;
-          }
         break;
 
       default:

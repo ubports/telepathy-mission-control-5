@@ -90,6 +90,7 @@ struct _McdAccountManagerPrivate
 {
     TpDBusDaemon *dbus_daemon;
     TpSimpleClientFactory *client_factory;
+    McdConnectivityMonitor *minotaur;
 
     McdStorage *storage;
     GHashTable *accounts;
@@ -341,7 +342,7 @@ created_cb (GObject *storage_plugin_obj,
     /* actually fetch the data into our cache from the plugin: */
     if (mcd_storage_add_account_from_plugin (storage, plugin, name))
     {
-        account = mcd_account_new (am, name);
+        account = mcd_account_new (am, name, priv->minotaur);
         lad->account = account;
     }
     else
@@ -924,7 +925,7 @@ _mcd_account_manager_create_account (McdAccountManager *account_manager,
         mcd_storage_set_string (storage, unique_name,
                                 MC_ACCOUNTS_KEY_DISPLAY_NAME, display_name);
 
-    account = mcd_account_new (account_manager, unique_name);
+    account = mcd_account_new (account_manager, unique_name, priv->minotaur);
     g_free (unique_name);
 
     if (G_LIKELY (account))
@@ -1065,9 +1066,11 @@ get_supported_account_properties (TpSvcDBusProperties *svc,
         TP_IFACE_ACCOUNT ".ConnectAutomatically",
         TP_IFACE_ACCOUNT ".RequestedPresence",
         TP_IFACE_ACCOUNT ".Supersedes",
+        TP_PROP_ACCOUNT_SERVICE,
         TP_IFACE_ACCOUNT_INTERFACE_AVATAR ".Avatar",
         MC_IFACE_ACCOUNT_INTERFACE_CONDITIONS ".Condition",
         TP_PROP_ACCOUNT_INTERFACE_STORAGE_STORAGE_PROVIDER,
+        MC_IFACE_ACCOUNT_INTERFACE_HIDDEN ".Hidden",
         NULL
     };
 
@@ -1417,6 +1420,8 @@ _mcd_account_manager_setup (McdAccountManager *account_manager)
     McdStorage *storage = priv->storage;
     McdLoadAccountsData *lad;
     gchar **accounts, **name;
+    GHashTableIter iter;
+    gpointer v;
 
     tp_list_connection_names (priv->dbus_daemon,
                               list_connection_names_cb, NULL, NULL,
@@ -1443,7 +1448,7 @@ _mcd_account_manager_setup (McdAccountManager *account_manager)
             continue;
         }
 
-        account = mcd_account_new (account_manager, *name);
+        account = mcd_account_new (account_manager, *name, priv->minotaur);
 
         if (G_UNLIKELY (!account))
         {
@@ -1480,6 +1485,11 @@ _mcd_account_manager_setup (McdAccountManager *account_manager)
     migrate_accounts (account_manager, lad);
 
     release_load_accounts_lock (lad);
+
+    g_hash_table_iter_init (&iter, account_manager->priv->accounts);
+
+    while (g_hash_table_iter_next (&iter, NULL, &v))
+      _mcd_account_maybe_autoconnect (v);
 }
 
 static void
@@ -1579,6 +1589,7 @@ _mcd_account_manager_dispose (GObject *object)
 
     tp_clear_object (&priv->dbus_daemon);
     tp_clear_object (&priv->client_factory);
+    tp_clear_object (&priv->minotaur);
 
     G_OBJECT_CLASS (mcd_account_manager_parent_class)->dispose (object);
 }
@@ -1656,6 +1667,8 @@ _mcd_account_manager_constructed (GObject *obj)
 
     DEBUG ("");
 
+    priv->minotaur = mcd_connectivity_monitor_new ();
+
     priv->storage = mcd_storage_new (priv->dbus_daemon);
     priv->accounts = g_hash_table_new_full (g_str_hash, g_str_equal,
                                             NULL, unref_account);
@@ -1702,6 +1715,13 @@ mcd_account_manager_get_dbus_daemon (McdAccountManager *account_manager)
     g_return_val_if_fail (MCD_IS_ACCOUNT_MANAGER (account_manager), NULL);
 
     return account_manager->priv->dbus_daemon;
+}
+
+McdConnectivityMonitor *
+mcd_account_manager_get_connectivity_monitor (McdAccountManager *self)
+{
+  g_return_val_if_fail (MCD_IS_ACCOUNT_MANAGER (self), NULL);
+  return self->priv->minotaur;
 }
 
 /**

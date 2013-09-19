@@ -1,3 +1,625 @@
+commit 2bd064c78030932544ceca652510c526f6f001dd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 14:37:22 +0100
+
+    5.15.1 (5.16 rc1)
+
+commit c3cba937c429b7121270b19734a669211bebba19
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-19 14:22:13 +0100
+
+    Put Autoconf, Automake, Libtool droppings in /build-aux
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 04a2f757879caf21d474c03a5728ec5e1ffe7c29
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 19:42:56 +0100
+
+    document MC_TEST_KEEP_TEMP
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 3dcc0f4ebb90b80c8ee39794a65e906013d692a5
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 19:23:52 +0100
+
+    mcd_account_self_contact_upgraded_cb: don't crash on bad timing
+    
+    If the account is disconnecting, we might get the callback for
+    upgrading after we've already NULLed out self->priv->self_contact.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit af998be5e6638671d05097176c7405258b30e315
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 19:04:40 +0100
+
+    tests: cd into the directory from which we were run
+    
+    dbus-daemon does a chdir("/") for activated services. We want to
+    undo that, and put our logs (and core dumps, if any) in a more
+    obvious place.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit cfb5810baf0b6f28223d2ebf7b9c20eddf2940cf
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 17:00:35 +0100
+
+    Tests: clean up all built sources
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 545ffc1f455a14bea9f77497a009ec6811bae6c7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 16:00:49 +0100
+
+    tests: write logs to MC_TEST_LOG_DIR, with latest log in `pwd`
+    
+    This makes the logs' location rather more obvious. Not altering MC's
+    working directory also means the core dump (if any) comes out in
+    tests/twisted, which makes sense, instead of tests/twisted/tools,
+    which doesn't.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 30dc2928196aefd112db7047a98900c047f27bae
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 15:07:33 +0100
+
+    run-mc.sh.in: set DBUS_SYSTEM_BUS_ADDRESS
+    
+    This is used in the "installed" case, and this change is necessary to
+    catch up with exec-with-log.sh.in in the "uninstalled" case. We want
+    to use the fake NetworkManager, ConnMan etc., not the real ones.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 1978058f83f3bb30196985302fd917cb43473cfa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 15:27:42 +0100
+
+    Always use run-test.sh to run tests
+    
+    There are three modes here:
+    
+    - make check: run tests in ${srcdir} against MC in ${builddir}
+    - make installcheck: run tests in ${srcdir} against MC in
+      ${DESTDIR}${prefix}
+    - ${mctestsdir}/twisted/run-test.sh: run tests in ${mctestsdir}
+      against MC in ${prefix}
+    
+    Also simplify the last of those cases, and avoid a potential symlink
+    attack, by requiring that the current working directory for run-test.sh
+    is a directory controlled by us. In practice we already required that,
+    because with-session-bus.sh creates files in the current directory.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 2d769630290d17c20c0db1e32c61a725c6559fb7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 12:39:04 +0100
+
+    installcheck-twisted: test the just-installed MC if using a DESTDIR
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 12ecdbabc19628e19109666d8534ce6d99035a95
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 12:45:29 +0100
+
+    Ignore /test-driver, installed by Automake 1.13
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit cc2af09f608511bf316e94e4462ff041406c455b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-18 14:07:57 +0100
+
+    Flag printf-ish functions with G_GNUC_PRINTF and fix resulting warnings
+    
+    In particular, mcd-account-manager-default could crash when migrating
+    an account, since it would dereference arbitrary stack contents
+    as a pointer-to-string.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69542
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit fe1e8ce4b830f665fbe098b1928969d26c553441
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-10 12:00:14 +0100
+
+    _mcd_channel_depart: use tp_channel_leave_async or tp_channel_close_async
+    
+    This avoids some deprecated APIs, and is considerably simpler.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55392
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 966ca2d58f87f9cfa7b1551885dd2f160971e19b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-09 18:19:58 +0100
+
+    Switch from tp_g_key_file_get_[u]int64 to g_key_file_get_[u]int64
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69146
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 9219b4282cc9c6465dc1f9efd9e549c97bc6e3a9
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-09 17:21:47 +0100
+
+    Service points: use tp_connection_dup_contact_by_id_async
+    
+    tp_connection_request_handles is deprecated. Ideally, we should drop
+    this whole chunk of code, but it seems best to save that for
+    Telepathy 1.0.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 74744b3a1b792895089d5104109e3b56eeedea11
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-09 17:19:58 +0100
+
+    McdConnection: use tp_simple_client_factory_ensure_connection
+    
+    This means we need to pass the client factory through the McdManager
+    from the McdMaster, so, do.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit a9afabf2a6219f27038b34e29d36cc20dd2965eb
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-02-13 15:01:54 +0000
+
+    Deprecate mcp_dispatch_operation_leave_channels
+    
+    It was designed for StreamedMedia, and is the wrong thing for Call.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55391
+    Reviewed-by: Xavier Claessens <xavier.claessens@collabora.co.uk>
+
+commit 9becae7459f2762217f08eadc53ac0f9a85ab693
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 19:44:08 +0100
+
+    List Service and Hidden in create-time account properties
+    
+    Also test them.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=33127
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 82abc7249f071d86b3ac7b9e5a7f9815372c041b
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-05 15:31:29 +0100
+
+    Remove further remnants of gnome-keyring support
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=32578
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit a7d10e5e24129a608d3d3f00cfdeae67c9f745be
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-05 15:07:10 +0100
+
+    NEWS
+
+commit 05fcc81b1684975e9d20a4ecba55f46b11ccd7e8
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-05 15:01:02 +0100
+
+    drop unused variables
+
+commit b0eedd06b5b9f51de060d91ca6eab0c3d2061d09
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 14:44:58 +0100
+
+    Remove gnome-keyring support
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=32578
+    Reviewed-by: Marco Barisione <marco.barisione@collabora.co.uk>
+
+commit 0c905a9ad4f3a90ed97e16a360097f17be777887
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-08 19:34:22 +0100
+
+    Add a regression test for service-points (matched by identifier)
+    
+    The side-effect they have within MC is that plugins aren't allowed to
+    delay or reject channel requests; we ought to test that, really.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55773
+    Reviewed-by: Marco Barisione <marco.barisione@collabora.co.uk>
+
+commit 8198d1ec4a318338d02800cf6d021734e7590daa
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2012-10-08 19:33:15 +0100
+
+    McdConnection: build up our sets of emergency numbers over time
+    
+    To facilitate this, use nicer data structures.
+    
+    Most importantly, this means we don't critical whenever we get more
+    than one distinct service point, as Jonny noticed while porting to
+    Telepathy 1.0. It might slightly defeat the intention of the
+    ServicePointsChanged signal, but in practice the list is probably
+    never going to shrink, and if it does, it's probably wise to
+    keep considering its old members to be an emergency number (the effect
+    that that has is that plugins aren't allowed to influence channel
+    requests).
+    
+    Also, don't leak the sets of emergency numbers when finalized.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=55773
+    Reviewed-by: Marco Barisione <marco.barisione@collabora.co.uk>
+
+commit edf39cf46747c269dcd1470b92185601fb898f99
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-04 13:36:09 +0100
+
+    Drop fake-network-monitor.h from SOURCES
+    
+    It doesn't exist, and breaks distcheck.
+
+commit 2f3f113042ad117f35e2ebb2a26556b2c550e8af
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 15:36:14 +0100
+
+    Add a regression test for a "no SimplePresence" special case
+    
+    CurrentPresence should toggle between OFFLINE and UNSET if the account
+    has no concept of presence.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68905
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 6e88e909f5f1cb4b0f0d33f88b26f5cb6d3fc9c7
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 15:35:38 +0100
+
+    Track presence via TpContact, not McdConnection
+    
+    Now that McdAccount has a TpContact for the self-contact, this is
+    really easy.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68905
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit c5e96690fd558b4de8de794bce04fb3937b03799
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 19:16:32 +0100
+
+    Add CONNECTIVITY_NONE, and make state transitions clearer
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68758
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 425a6cb46cabf35bde272f99c5b8260b29a70201
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 19:06:06 +0100
+
+    McdConnectivityMonitor: comment how McdInhibit works
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68758
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 3a2a10d424c3033aabd5eb830321cfad852077ae
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-02 15:24:22 +0100
+
+    Listen to systemd sleep/shutdown signals, and inhibit until disconnected
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68758
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit d50b659542f829ccd411828a35a53c5f4678c581
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:55:06 +0100
+
+    Remove unused signal McdAccount::connection-process
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 7220e55986ca13ac14bb56bae51986e21be892af
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:53:47 +0100
+
+    Remove the remains of McdTransportPlugin
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit ea78c344fce0373188ac5549f664da0a6de1f500
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:48:40 +0100
+
+    _mcd_master_account_replace_transport: inline into caller and simplify
+    
+    There's only one transport plugin, it only has one transport, and
+    its state is basically boolean, so we can delete a lot of code.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 3ec7b1947bf5c595edc1f2329aa6ce7b9feda816
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:41:54 +0100
+
+    mcd_master_connect_automatic_accounts: move to McdAccountManager
+    
+    Iterating over all accounts? Looks like a job for the account manager.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit cb99598acaa71edd6efcedadaaff3103acf76571
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:41:22 +0100
+
+    McdAccount: respond to connectivity status changes
+    
+    Instead of proxying through the transport plugin and the McdMaster, just
+    watch the McdConnectivityMonitor. Much simpler!
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 1ed0e969eadfa4a5c9d7e3156413588d6b083d09
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:28:45 +0100
+
+    Move "waiting for connectivity" functionality into McdAccount
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit e076d7f16e23cd7246a20a45164a71d9e53058af
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 18:40:06 +0100
+
+    McdAccount: have a reference to the connectivity monitor
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit e2bcc5b94496d755c28490f28925da6f54a4cf4d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 18:39:36 +0100
+
+    Put the connectivity monitor in the McdAccountManager
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 957795838715b3b95f2bf8bc116b2328bf6a2881
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 15:38:53 +0100
+
+    Remove the concept of binding accounts to transports
+    
+    We only have one transport now, so there are two options: either the
+    account is a special one that "needs dispatch" and also bypasses the
+    transport check (in practice this means cellular accounts), or it is
+    connected via the Internet.
+    
+    Binding accounts to transports never made a vast amount of sense. If we
+    have many parallel Internet connections (e.g. wired + wifi + cellular +
+    VPN), Mission Control can't know which one a Connection is relying on -
+    only the connection manager can know that - so we have to err on the
+    side of disconnecting everything on a connectivity change anyway.
+    
+    A possible refinement in future Tp versions would be a way for a CM
+    to tell MC "this connection does its own connectivity-monitoring,
+    so don't kick it when we get disconnected". For now, we assume that
+    everything needs the Internet, unless it's one of the accounts that
+    wouldn't previously have been bound to a connection (i.e.
+    _mcd_account_needs_dispatch() returns FALSE).
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 7c598edf86939a630c9fb51c030bf4d1436e56a6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 16:52:04 +0100
+
+    mcd_operation_take_mission, _remove_mission: do not be virtual
+    
+    Nothing overrides them, they're no longer API, and one day I'd like to
+    get rid of McdOperation entirely.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 0327ccfcf5047aa785f6c127296817d6b7e73c05
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-09-03 18:28:45 +0100
+
+    Update NEWS, and note the bug number of an older bug
+
+commit e6974e3dac274982dedcb5451106473dea3294fd
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 16:59:08 +0100
+
+    McdConnectivityMonitor: take responsibility for monitoring use-conn
+    
+    I want to get rid of the kludge-transport.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit e9c73ea3f027d2f156bcbcabab722e17221afbed
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 17:49:54 +0100
+
+    McdMaster: remove support for writing account-manager property
+    
+    Nothing constructs a McdMaster with a non-default McdAccountManager.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 289c461e9c5020a4da70dc12d066a61af2276b41
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-29 15:22:45 +0100
+
+    Remove support for checking conditions on accounts
+    
+    We no longer have API for external transport providers, and we've never
+    defined any conditions on the transport provider we do have.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 327f0bd220aacb909e9ecde066121f3ca0f65f35
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 16:51:18 +0100
+
+    Remove various useless virtual method padding
+    
+    This part of Mission Control is no longer API.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 3d77940b7b2b7394a695a46efc008dc31e85b45d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 16:42:47 +0100
+
+    mcd_master_create_manager: unvirtualize
+    
+    There's no point in this being virtual: there are no subclasses,
+    and it isn't API any more.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 68f45847f9a3259be4fcb7a8d5647c46109b6c0e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-08-28 16:40:38 +0100
+
+    McdMaster: use modern idiom for priv
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=68712
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 3ad533ac34481c4305a9093687f8042757a6cf96
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 17:29:40 +0100
+
+    Replace ConnMan connectivity support with GNetworkMonitor
+    
+    The information we're getting from ConnMan is no more informative
+    than GNetworkMonitor, and a ConnMan GNetworkMonitor implementation
+    exists (e.g. <https://github.com/jukkar/connman-network-monitor>),
+    so we might as well go via that.
+    
+    On NetworkManager systems, we now use NetworkManager to detect
+    transient states like DISCONNECTING, but use the GNetworkMonitor
+    to detect whether the interface is up. If NetworkManager is the only
+    thing managing an interface, that makes no difference, but if there is
+    an interface not managed by NetworkManager, the default netlink
+    GNetworkMonitor will say we're online even while NM is DISCONNECTED,
+    which is what we want.
+    
+    On non-NetworkManager, non-ConnMan systems where netlink works,
+    netlink will tell us at least the basics of what's going on, and we
+    can avoid trying to connect while there is no Internet route.
+    
+    On systems without a working GNetworkMonitor, GIO's default
+    implementation will say "yes, you are online" at all times, which is
+    no worse than we had previously.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=56635
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 2f94a6529c60cdd01e8418cabfe92fc4bccd6b34
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 16:37:28 +0100
+
+    Add a fake GNetworkMonitor, using a subset of the ConnMan D-Bus API
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=56635
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit eb0b99097edaa27a381c79733cd121d3ce68565d
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 16:54:14 +0100
+
+    Split connectivity state into the concepts of "up" and "stable"
+    
+    ConnMan and GNetworkMonitor only give us two states: either we have
+    some level of Internet connectivity, or we don't. NetworkManager adds
+    a third category of states (CONNECTING, DISCONNECTING, ASLEEP):
+    "you might have connectivity, but things are changing, so you might
+    want to disconnect now". I've represented this as "not stable".
+    
+    The flag is deliberately "stable", not "unstable", so that all the
+    boolean flags have the same sense: if they are TRUE, we're
+    "more connected".
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=56635
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 5dbd8df6bd212ede2075dce3cbf3a6b5ebf4e8d3
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-04-30 17:08:08 +0100
+
+    Add a regression test for NetworkManager's "not quite offline" states
+    
+    We were only testing the intersection of ConnMan and NM functionality,
+    but NM actually has a bit more.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=56635
+    Signed-off-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit 01ee75652ec19b94681147ec0700d502bafb6e78
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-05-03 15:39:51 +0100
+
+    resume development
+
 commit 76c328175300821b1a2554391f0143c4d54fb779
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-05-03 15:02:59 +0100

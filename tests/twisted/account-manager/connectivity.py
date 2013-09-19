@@ -30,10 +30,6 @@ import constants as cs
 
 import config
 
-if not config.HAVE_CONNECTIVITY:
-    print "NOTE: built without ConnMan or NM support"
-    raise SystemExit(77)
-
 def sync_connectivity_state(mc):
     # We cannot simply use sync_dbus here, because nm-glib reports property
     # changes in an idle (presumably to batch them all together). This is fine
@@ -91,6 +87,29 @@ def test(q, bus, mc):
             EventPattern('dbus-method-call', method='SetPresence',
                 args=list(requested_presence[1:])),
         ])
+
+    if config.HAVE_NM:
+        # If NetworkManager tells us that it is going to disconnect soon,
+        # the connection should be banished. GNetworkMonitor can't tell us
+        # that; either it's online or it isn't.
+        mc.connectivity.go_indeterminate()
+        q.expect('dbus-method-call', method='Disconnect')
+
+        mc.connectivity.go_offline()
+
+        # When we turn the network back on, MC should try to sign us back on.
+        # In the process, our RequestedPresence should not have been
+        # trampled on, as below.
+        mc.connectivity.go_online()
+        expect_fakecm_connection(q, bus, mc, account, params,
+            has_presence=True,
+            expect_before_connect=[
+                EventPattern('dbus-method-call', method='SetPresence',
+                    args=list(requested_presence[1:])),
+            ])
+
+        assertEquals(requested_presence,
+            account.Properties.Get(cs.ACCOUNT, 'RequestedPresence'))
 
     # If we turn the network off, the connection should be banished.
     mc.connectivity.go_offline()

@@ -3,12 +3,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Plugin loader and global functions</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.76.1">
+<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
 <link rel="home" href="index.html" title="Mission Control Plugins Reference Manual">
 <link rel="up" href="ch01.html" title="Global functions">
 <link rel="prev" href="ch01.html" title="Global functions">
 <link rel="next" href="ch02.html" title="Account storage">
-<meta name="generator" content="GTK-Doc V1.18 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.19 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -40,12 +40,12 @@
 <pre class="synopsis">
 #include &lt;mission-control-plugins/mission-control-plugins.h&gt;
 
-#define             <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS" title="MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL">MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL</a>
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-add-object" title="mcp_add_object ()">mcp_add_object</a>                      (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>);
-const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-list-objects" title="mcp_list_objects ()">mcp_list_objects</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
 <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()">mcp_plugin_ref_nth_object</a>           (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);
-<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-read-dir" title="mcp_read_dir ()">mcp_read_dir</a>                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+#define             <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS" title="MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL">MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL</a>
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-set-debug" title="mcp_set_debug ()">mcp_set_debug</a>                       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> debug</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-add-object" title="mcp_add_object ()">mcp_add_object</a>                      (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> object</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-read-dir" title="mcp_read_dir ()">mcp_read_dir</a>                        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *path</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-list-objects" title="mcp_list_objects ()">mcp_list_objects</a>                    (<em class="parameter"><code><span class="type">void</span></code></em>);
 </pre>
 </div>
 <div class="refsect1">
@@ -70,12 +70,66 @@ the plugins.
 <div class="refsect1">
 <a name="mission-control-plugins-Plugin-loader-and-global-functions.details"></a><h2>Details</h2>
 <div class="refsect2">
+<a name="mcp-plugin-ref-nth-object"></a><h3>mcp_plugin_ref_nth_object ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           mcp_plugin_ref_nth_object           (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
+<p>
+Implemented by each plugin (not implemented in this library!) as a hook
+point; it will be called repeatedly with an increasing argument, and must
+return a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> reference each time, until it returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+</p>
+<p>
+Mission Control will query each object for the <span class="type">GInterface</span>s it
+implements, and behave accordingly; for instance, the objects might
+implement <span class="type">McpRequestPolicy</span> and/or <span class="type">McpDispatchOperationPolicy</span>.
+</p>
+<p>
+As currently implemented, these objects are never unreferenced.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
+<td>object number, starting from 0</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a new reference to a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is at least the
+number of objects supported by this plugin</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2">
 <a name="MCP-PLUGIN-REF-NTH-OBJECT-SYMBOL:CAPS"></a><h3>MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL</h3>
 <pre class="programlisting">#define MCP_PLUGIN_REF_NTH_OBJECT_SYMBOL "mcp_plugin_ref_nth_object"
 </pre>
 <p>
 A string constant whose value is the name <a class="link" href="mission-control-plugins-Plugin-loader-and-global-functions.html#mcp-plugin-ref-nth-object" title="mcp_plugin_ref_nth_object ()"><code class="function">mcp_plugin_ref_nth_object()</code></a>.
 </p>
+</div>
+<hr>
+<div class="refsect2">
+<a name="mcp-set-debug"></a><h3>mcp_set_debug ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mcp_set_debug                       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> debug</code></em>);</pre>
+<p>
+Set whether debug output will be produced via <a href="http://library.gnome.org/devel/glib/unstable/glib-Message-Logging.html#g-debug"><code class="function">g_debug()</code></a> for the plugin
+loader. Plugins shouldn't normally need to call this function.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
+<col align="left" valign="top">
+<col>
+</colgroup>
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>debug</code></em> :</span></p></td>
+<td>whether to log debug output</td>
+</tr></tbody>
+</table></div>
 </div>
 <hr>
 <div class="refsect2">
@@ -94,63 +148,15 @@ As currently implemented, these objects are never unreferenced.
 Mission Control uses this function to load its plugins; plugins shouldn't
 call it.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>object</code></em> :</span></p></td>
 <td>an object implementing one or more plugin interfaces</td>
 </tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-list-objects"></a><h3>mcp_list_objects ()</h3>
-<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       mcp_list_objects                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
-<p>
-Return a list of objects that might implement plugin interfaces.
-</p>
-<p>
-Mission Control uses this function to iterate through the loaded plugin
-objects; plugins shouldn't need to call it.
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody><tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a constant list of plugin objects</td>
-</tr></tbody>
-</table></div>
-</div>
-<hr>
-<div class="refsect2">
-<a name="mcp-plugin-ref-nth-object"></a><h3>mcp_plugin_ref_nth_object ()</h3>
-<pre class="programlisting"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="returnvalue">GObject</span></a> *           mcp_plugin_ref_nth_object           (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> n</code></em>);</pre>
-<p>
-Implemented by each plugin (not implemented in this library!) as a hook
-point; it will be called repeatedly with an increasing argument, and must
-return a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a> reference each time, until it returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
-</p>
-<p>
-Mission Control will query each object for the <span class="type">GInterface</span>s it
-implements, and behave accordingly; for instance, the objects might
-implement <span class="type">McpRequestPolicy</span> and/or <span class="type">McpDispatchOperationPolicy</span>.
-</p>
-<p>
-As currently implemented, these objects are never unreferenced.
-</p>
-<div class="variablelist"><table border="0">
-<col align="left" valign="top">
-<tbody>
-<tr>
-<td><p><span class="term"><em class="parameter"><code>n</code></em> :</span></p></td>
-<td>object number, starting from 0</td>
-</tr>
-<tr>
-<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
-<td>a new reference to a <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject"><span class="type">GObject</span></a>, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if <em class="parameter"><code>n</code></em> is at least the
-number of objects supported by this plugin</td>
-</tr>
-</tbody>
 </table></div>
 </div>
 <hr>
@@ -167,8 +173,11 @@ resident, then that symbol is called as a function until it returns <a href="htt
 Mission Control uses this function to load its plugins; plugins shouldn't
 call it.
 </p>
-<div class="variablelist"><table border="0">
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
 <td><p><span class="term"><em class="parameter"><code>path</code></em> :</span></p></td>
 <td>full path to a plugins directory</td>
@@ -177,17 +186,23 @@ call it.
 </div>
 <hr>
 <div class="refsect2">
-<a name="mcp-set-debug"></a><h3>mcp_set_debug ()</h3>
-<pre class="programlisting"><span class="returnvalue">void</span>                mcp_set_debug                       (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> debug</code></em>);</pre>
+<a name="mcp-list-objects"></a><h3>mcp_list_objects ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *       mcp_list_objects                    (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>
-Set whether debug output will be produced via <a href="http://library.gnome.org/devel/glib/unstable/glib-Message-Logging.html#g-debug"><code class="function">g_debug()</code></a> for the plugin
-loader. Plugins shouldn't normally need to call this function.
+Return a list of objects that might implement plugin interfaces.
 </p>
-<div class="variablelist"><table border="0">
+<p>
+Mission Control uses this function to iterate through the loaded plugin
+objects; plugins shouldn't need to call it.
+</p>
+<div class="variablelist"><table border="0" class="variablelist">
+<colgroup>
 <col align="left" valign="top">
+<col>
+</colgroup>
 <tbody><tr>
-<td><p><span class="term"><em class="parameter"><code>debug</code></em> :</span></p></td>
-<td>whether to log debug output</td>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td>a constant list of plugin objects</td>
 </tr></tbody>
 </table></div>
 </div>
@@ -195,6 +210,6 @@ loader. Plugins shouldn't normally need to call this function.
 </div>
 <div class="footer">
 <hr>
-          Generated by GTK-Doc V1.18</div>
+          Generated by GTK-Doc V1.19</div>
 </body>
 </html>

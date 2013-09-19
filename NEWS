@@ -1,3 +1,60 @@
+telepathy-mission-control 5.15.1 (2013-09-19)
+=============================================
+
+The “where can I put giant plastic arthopods?” release.
+
+This is a release candidate for Mission Control 5.16.
+
+Dependencies:
+
+• There is no longer a special configuration option for ConnMan connectivity
+  monitoring. MC now can use any GNetworkMonitor plugin, such as the Linux
+  Netlink plugin provided with GLib, or
+  <https://github.com/jukkar/connman-network-monitor/>.
+
+• On systems with NetworkManager, basic connectivity monitoring support
+  no longer requires libnm-glib, although compiling with libnm-glib might
+  still mean that disconnection can be detected more quickly.
+
+• gnome-keyring support has been removed. Use a ServerAuthentication Handler
+  similar to the ones provided in Empathy or KDE-Telepathy if you
+  don't want passwords to be stored in a file as clear text.
+
+Deprecations:
+
+• mcp_dispatch_operation_leave_channels() is deprecated.
+  To hang up and close Call channels in a dispatch policy plugin,
+  use tp_call_channel_hangup_async() and
+  mcp_dispatch_operation_close_channels() instead.
+
+Enhancements:
+
+• Use GIO's GNetworkMonitor plugins to monitor connectivity
+  (fd.o #56635, Simon)
+
+• Remove gnome-keyring integration in favour of recommending
+  ServerAuthentication Handlers, which have better UI and don't expose
+  passwords on D-Bus (fd.o #32578, Simon)
+
+• Internal cleanup related to the connectivity code (fd.o #68712, Simon)
+
+Fixes:
+
+• Don't emit critical warnings if more than one emergency "service point" is
+  provided, and don't leak memory if any are provided (fd.o #55773, Simon)
+
+• Advertise Service and Hidden as properties that can be given when creating
+  an account (fd.o #33127, Simon)
+
+• Fix a likely crash when upgrading the storage format of accounts,
+  a regression in 5.15.0 (fd.o #69542, Simon)
+
+• Fix a crash when an account is disconnected while inspecting the
+  self-contact, a regression in 5.15.0 (fd.o #69542, Simon)
+
+• Make the regression tests pass with the parallel test harness used by
+  default in Automake 1.13+ (fd.o #69542, Simon)
+
 telepathy-mission-control 5.15.0 (2013-05-03)
 =============================================
 
@@ -182,7 +239,7 @@ Fixes:
   isn't installed, and copy the password as well as the username
   (Debian #686835, Simon)
 • If compiled with UPower support, do not attempt to connect while going
-  to sleep (Guillaume)
+  to sleep (fd.o #50009, Guillaume)
 • Set up the altered-one signal for account storage backends correctly
   (fd.o #52231, Xavier)
 • If service-activated under both names o.fd.Telepathy.MissionControl5
