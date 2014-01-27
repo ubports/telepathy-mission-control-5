@@ -1,3 +1,60 @@
+commit 4eb0184ff5c7020cfcbada0ee66e4336158fc49e
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-27 12:25:18 +0000
+
+    5.16.1
+
+commit 4d107b2c4b2a5161b6e113fb60e283017b700255
+Author: Michael Kuhn <suraia@ikkoku.de>
+Date:   2014-01-22 09:56:02 +0100
+
+    Release inhibitor on sleep and shutdown.
+    
+    Also fix a memory leak in login1_inhibit_cb.
+    
+    [The intention was to hold one "ref" to the inhibit fd for each
+    connection that was waiting to disconnect, plus one "ref" for the
+    idle state of "waiting to be notified by logind". We correctly took
+    one "ref" per connection, but did not release the extra one. -smcv]
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=73599
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+
+commit 07955827bba3ed6a6426ca4f2cb32efef2dc04c0
+Author: John Brooks <john.brooks@jollamobile.com>
+Date:   2013-12-12 15:46:27 -0700
+
+    Prevent assert for offline accounts with power saving
+    
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=72652
+
+commit 0932dba29fa9de8e7268a924c4c93ccebb7dc65c
+Author: Sebastien Bacher <seb128@ubuntu.com>
+Date:   2013-12-04 18:34:30 +0100
+
+    reset the error to NULL, so the next call is working
+    
+    [fixed argument type -smcv]
+    Reviewed-by: Simon McVittie <simon.mcvittie@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=72138
+
+commit 51eb9027ec1b72591166ecde65793c9f5877ac16
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2013-11-26 10:19:54 +0100
+
+    connectivity-monitor: start watching 'use-conn' key in constructed
+    
+    We have to wait for the default GObject properties to be set before calling
+    g_settings_bind(). If we don't, they override the value fetched from
+    GSettings.
+
+commit f1de10a0f71638da502a77cae189b5fa6a047be6
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2013-10-02 18:48:17 +0100
+
+    5.16.0+
+
 commit 739b5414ec3fe1fc7896d34f09f510a9e8029473
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2013-10-02 17:54:18 +0100

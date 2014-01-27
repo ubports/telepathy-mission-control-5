@@ -70,8 +70,8 @@
     <keyword type="function" name="mcp_account_manager_escape_variant_for_keyfile ()" link="McpAccountManager.html#mcp-account-manager-escape-variant-for-keyfile"/>
     <keyword type="function" name="mcp_account_manager_unescape_value_from_keyfile ()" link="McpAccountManager.html#mcp-account-manager-unescape-value-from-keyfile"/>
     <keyword type="function" name="mcp_account_manager_init_value_for_attribute ()" link="McpAccountManager.html#mcp-account-manager-init-value-for-attribute"/>
-    <keyword type="struct" name="McpAccountManagerIface" link="McpAccountManager.html#McpAccountManagerIface"/>
     <keyword type="struct" name="McpAccountManager" link="McpAccountManager.html#McpAccountManager-struct"/>
+    <keyword type="struct" name="McpAccountManagerIface" link="McpAccountManager.html#McpAccountManagerIface"/>
     <keyword type="function" name="McpRequestPolicyCb ()" link="mission-control-plugins-McpRequestPolicy.html#McpRequestPolicyCb"/>
     <keyword type="function" name="mcp_request_policy_check ()" link="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-check"/>
     <keyword type="function" name="mcp_request_policy_iface_implement_check ()" link="mission-control-plugins-McpRequestPolicy.html#mcp-request-policy-iface-implement-check"/>
@@ -113,7 +113,7 @@
     <keyword type="function" name="mcp_dispatch_operation_close_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-close-channels"/>
     <keyword type="function" name="mcp_dispatch_operation_destroy_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels"/>
     <keyword type="struct" name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>
-    <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
     <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
+    <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
   </functions>
 </book>

@@ -1,3 +1,12 @@
+telepathy-mission-control-5 (1:5.16.1-1) unstable; urgency=medium
+
+  * debian/watch: only watch for stable versions (5.y.z, y even)
+  * Standards-Version: 3.9.5 (no changes)
+  * Drop obsolete versioned dependency on pkg-config, similar to #734487
+  * New upstream bugfix release
+
+ -- Simon McVittie <smcv@debian.org>  Mon, 27 Jan 2014 12:44:13 +0000
+
 telepathy-mission-control-5 (1:5.16.0-1) unstable; urgency=low
 
   * Canonicalize Vcs-Git field
