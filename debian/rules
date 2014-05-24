@@ -7,7 +7,7 @@ CONFIGURE_FLAGS = --libexecdir=\$${prefix}/lib/telepathy \
                   --enable-gtk-doc \
                   --enable-gnome-keyring \
                   --with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc \
-                  --enable-upower
+                  --disable-upower
 
 # We specifically do not want multiarch: only one version of MC can be
 # installed anyway, the plugin directory is based on the ${libdir}, and
