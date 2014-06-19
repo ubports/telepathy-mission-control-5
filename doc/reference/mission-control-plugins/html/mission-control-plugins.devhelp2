@@ -112,8 +112,8 @@
     <keyword type="function" name="mcp_dispatch_operation_leave_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-leave-channels" deprecated=""/>
     <keyword type="function" name="mcp_dispatch_operation_close_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-close-channels"/>
     <keyword type="function" name="mcp_dispatch_operation_destroy_channels ()" link="McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels"/>
-    <keyword type="struct" name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>
-    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
     <keyword type="struct" name="McpDispatchOperationDelay" link="McpDispatchOperation.html#McpDispatchOperationDelay"/>
+    <keyword type="struct" name="McpDispatchOperation" link="McpDispatchOperation.html#McpDispatchOperation-struct"/>
+    <keyword type="struct" name="McpDispatchOperationIface" link="McpDispatchOperation.html#McpDispatchOperationIface"/>
   </functions>
 </book>

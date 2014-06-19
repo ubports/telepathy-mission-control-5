@@ -107,9 +107,9 @@ mcp_dispatch_operation_end_delay
 mcp_dispatch_operation_leave_channels
 mcp_dispatch_operation_close_channels
 mcp_dispatch_operation_destroy_channels
-McpDispatchOperationIface
-McpDispatchOperation
 McpDispatchOperationDelay
+McpDispatchOperation
+McpDispatchOperationIface
 <SUBSECTION Standard>
 MCP_DISPATCH_OPERATION
 MCP_DISPATCH_OPERATION_GET_IFACE

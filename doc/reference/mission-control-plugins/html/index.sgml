@@ -1,4 +1,4 @@
-<ONLINE href="http://telepathy.freedesktop.org/doc/mission-control-plugins/">
+<ONLINE href="http://telepathy.freedesktop.org/doc/mission-control-plugins-5.16.x/">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions.synopsis" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html#mission-control-plugins-Plugin-loader-and-global-functions.synopsis">
 <ANCHOR id="mission-control-plugins-Plugin-loader-and-global-functions.description" href="mission-control-plugins/mission-control-plugins-Plugin-loader-and-global-functions.html#mission-control-plugins-Plugin-loader-and-global-functions.description">
@@ -127,12 +127,12 @@
 <ANCHOR id="mcp-dispatch-operation-leave-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-leave-channels">
 <ANCHOR id="mcp-dispatch-operation-close-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-close-channels">
 <ANCHOR id="mcp-dispatch-operation-destroy-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels">
-<ANCHOR id="McpDispatchOperationIface" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationIface">
-<ANCHOR id="McpDispatchOperation-struct" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation-struct">
 <ANCHOR id="McpDispatchOperationDelay" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationDelay">
+<ANCHOR id="McpDispatchOperation-struct" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation-struct">
+<ANCHOR id="McpDispatchOperationIface" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationIface">
 <ANCHOR id="McpDispatchOperation.see-also" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation.see-also">
-<ANCHOR id="annotation-glossterm-transfer full" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer full">
-<ANCHOR id="annotation-glossterm-element-type" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-element-type">
 <ANCHOR id="annotation-glossterm-allow-none" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-allow-none">
-<ANCHOR id="annotation-glossterm-transfer container" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer container">
+<ANCHOR id="annotation-glossterm-element-type" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-element-type">
 <ANCHOR id="annotation-glossterm-out caller-allocates" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-out caller-allocates">
+<ANCHOR id="annotation-glossterm-transfer container" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer container">
+<ANCHOR id="annotation-glossterm-transfer full" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-transfer full">

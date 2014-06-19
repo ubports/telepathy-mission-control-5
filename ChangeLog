@@ -1,3 +1,95 @@
+commit fb8000842e0b20f4aa4928edd62736b5cea2e8d5
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-06-11 15:44:01 +0200
+
+    5.16.2
+
+commit 42c485ff56f5425cd592ae73c1c0e6c0f1de2b13
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-06-11 10:15:05 +0200
+
+    mcd_account_delete: make sure that the account stays alive
+    
+    Fix a regression introduced when backporting fix for
+    https://bugs.freedesktop.org/show_bug.cgi?id=79827
+
+commit 224443c1843ab0df7ef8ee1eda0409c35a4745a9
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-06-09 15:39:23 +0200
+
+    mcd-account: unregister the account once we're done deleting it
+    
+    The McdAccount object may still be alive for a short while because of pending
+    async operations. We want to get rid of the D-Bus object as soon as possible
+    and so, for example, a new Account object replacing the deleted one can be
+    created.
+    
+    Fix https://bugs.freedesktop.org/show_bug.cgi?id=79827
+
+commit 9c8e148e3ba00e53d0323aa75bdf6a5528968554
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-06-09 15:34:13 +0200
+
+    use G_STRFUNC in mission-control-plugins's DEBUG macro
+    
+    It's more useful when reading logs than G_STRLOC and that's what we already
+    use in src/mcd-debug.h
+
+commit c86536f3b5fcc21eac60a836954d1aa002b67cc0
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-30 13:04:56 +0000
+
+    codegen: avoid generating more than one thing in the same command
+    
+    As with telepathy-glib commit 36c2a545c9, a rule like this:
+    
+        _gen/x.c _gen/x.h: prerequisites
+            $(AM_V_GEN)x-generator
+    
+    doesn't consider x.c and x.h together. Instead, it expands to two rules,
+    one to generate x.c and one to generate x.h, which happen to run the
+    same commands.
+    
+    This means that in the worst case, you can end up running x-generator
+    twice in parallel, and they'll race with each other and overwrite or
+    delete each other's output.
+    
+    Updated version of a patch from Ross Burton, taking into account that
+    we now generate a separate header for the gtk-doc. I use the gtk-doc
+    header as the one that "matters", because it's the last to be generated.
+    
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=69446
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+
+commit d4471ccad3163ee33fe5b5bd5947ca47ad01158a
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-29 19:24:54 +0000
+
+    NEWS
+
+commit a4bcc16f16f72d7a2b8fe74e715183b7b6985427
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-28 16:28:16 +0000
+
+    mc-tool: fix setting automatic presence
+    
+    We were using the wrong finish-function.
+    
+    Reviewed-by: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+    Bug: https://bugs.freedesktop.org/show_bug.cgi?id=74187
+
+commit 84f1f56a114738c622bcd926868f5c232b3e6d8c
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-28 11:08:33 +0000
+
+    start 5.16.2
+
+commit 53f6d1cf3fecd6667591a43bf511518f5a4b345f
+Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
+Date:   2014-01-27 14:51:36 +0000
+
+    forgot a NEWS entry
+
 commit 4eb0184ff5c7020cfcbada0ee66e4336158fc49e
 Author: Simon McVittie <simon.mcvittie@collabora.co.uk>
 Date:   2014-01-27 12:25:18 +0000

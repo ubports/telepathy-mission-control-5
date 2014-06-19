@@ -53,12 +53,12 @@
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpAttributeFlags"><span class="type">McpAttributeFlags</span></a> flags</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="McpAccountManager.html#mcp-account-manager-set-parameter" title="mcp_account_manager_set_parameter ()">mcp_account_manager_set_parameter</a>   (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpParameterFlags"><span class="type">McpParameterFlags</span></a> flags</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="McpAccountManager.html#mcp-account-manager-get-value" title="mcp_account_manager_get_value ()">mcp_account_manager_get_value</a>       (<em class="parameter"><code>const <a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *mcpa</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *key</code></em>);
@@ -175,7 +175,7 @@ the setting/parameter</td>
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpAttributeFlags"><span class="type">McpAttributeFlags</span></a> flags</code></em>);</pre>
 <p>
 Inform Mission Control that <em class="parameter"><code>attribute</code></em> has changed its value to <em class="parameter"><code>value</code></em>.
 </p>
@@ -224,7 +224,7 @@ or just before emitting <span class="type">"altered-one"</span>.
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpParameterFlags"><span class="type">McpParameterFlags</span></a> flags</code></em>);</pre>
 <p>
 Inform Mission Control that <em class="parameter"><code>parameter</code></em> has changed its value to <em class="parameter"><code>value</code></em>.
 </p>

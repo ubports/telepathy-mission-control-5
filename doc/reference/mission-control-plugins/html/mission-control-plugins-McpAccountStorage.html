@@ -94,13 +94,13 @@ const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.htm
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpAttributeFlags"><span class="type">McpAttributeFlags</span></a> flags</code></em>);
 <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-set-parameter" title="mcp_account_storage_set_parameter ()">mcp_account_storage_set_parameter</a>   (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code><a class="link" href="McpAccountManager.html" title="McpAccountManager"><span class="type">McpAccountManager</span></a> *am</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpParameterFlags"><span class="type">McpParameterFlags</span></a> flags</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-created" title="mcp_account_storage_emit_created ()">mcp_account_storage_emit_created</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>);
 <span class="returnvalue">void</span>                <a class="link" href="mission-control-plugins-McpAccountStorage.html#mcp-account-storage-emit-altered" title="mcp_account_storage_emit_altered ()">mcp_account_storage_emit_altered</a>    (<em class="parameter"><code><a class="link" href="mission-control-plugins-McpAccountStorage.html#McpAccountStorage" title="struct McpAccountStorage"><span class="type">McpAccountStorage</span></a> *storage</code></em>,
@@ -178,35 +178,35 @@ look something like this:
 27
 28
 29</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>FooPlugin<span class="gtkdoc opt">,</span> foo_plugin<span class="gtkdoc opt">,</span>
-   G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_ACCOUNT_STORAGE<span class="gtkdoc opt">,</span>
-     account_storage_iface_init<span class="gtkdoc opt">));</span>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">FooPlugin</span><span class="symbol">,</span><span class="normal"> foo_plugin</span><span class="symbol">,</span>
+<span class="normal">   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-OBJECT:CAPS">G_TYPE_OBJECT</a></span><span class="symbol">,</span>
+<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(...);</span>
+<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">MCP_TYPE_ACCOUNT_STORAGE</span><span class="symbol">,</span>
+<span class="normal">     account_storage_iface_init</span><span class="symbol">));</span>
 <span class="comment">/* ... */</span>
-<span class="gtkdoc kwb">static void</span>
-<span class="function">account_storage_iface_init</span> <span class="gtkdoc opt">(</span>McpAccountStorageIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">)</span>
-<span class="gtkdoc opt">{</span>
-  iface<span class="gtkdoc opt">-&gt;</span>priority <span class="gtkdoc opt">=</span> <span class="number">0</span><span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>name <span class="gtkdoc opt">=</span> <span class="string">&quot;foo&quot;</span><span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>desc <span class="gtkdoc opt">=</span> <span class="string">&quot;The FOO storage backend&quot;</span><span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>provider <span class="gtkdoc opt">=</span> <span class="string">&quot;org.freedesktop.Telepathy.MissionControl5.FooStorage&quot;</span><span class="gtkdoc opt">;</span>
+<span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">account_storage_iface_init</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">McpAccountStorageIface</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">iface</span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">priority </span><span class="symbol">=</span><span class="normal"> </span><span class="number">0</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">name </span><span class="symbol">=</span><span class="normal"> </span><span class="string">"foo"</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">desc </span><span class="symbol">=</span><span class="normal"> </span><span class="string">"The FOO storage backend"</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">provider </span><span class="symbol">=</span><span class="normal"> </span><span class="string">"org.freedesktop.Telepathy.MissionControl5.FooStorage"</span><span class="symbol">;</span>
 
-  iface<span class="gtkdoc opt">-&gt;</span>get <span class="gtkdoc opt">=</span> foo_plugin_get<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>set <span class="gtkdoc opt">=</span> foo_plugin_get<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span><span class="keyword">delete</span> <span class="gtkdoc opt">=</span> foo_plugin_delete<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>commit <span class="gtkdoc opt">=</span> foo_plugin_commit<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>commit_one <span class="gtkdoc opt">=</span> foo_plugin_commit_one<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>list <span class="gtkdoc opt">=</span> foo_plugin_list<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>ready <span class="gtkdoc opt">=</span> foo_plugin_ready<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>get_identifier <span class="gtkdoc opt">=</span> foo_plugin_get_identifier<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>get_additional_info <span class="gtkdoc opt">=</span> foo_plugin_get_additional_info<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>get_restrictions <span class="gtkdoc opt">=</span> foo_plugin_get_restrictions<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>create <span class="gtkdoc opt">=</span> foo_plugin_create<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>owns <span class="gtkdoc opt">=</span> foo_plugin_owns<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>set_attribute <span class="gtkdoc opt">=</span> foo_plugin_set_attribute<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>set_parameter <span class="gtkdoc opt">=</span> foo_plugin_set_parameter<span class="gtkdoc opt">;</span>
-<span class="gtkdoc opt">}</span></pre></td>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">get </span><span class="symbol">=</span><span class="normal"> foo_plugin_get</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">set </span><span class="symbol">=</span><span class="normal"> foo_plugin_get</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">delete </span><span class="symbol">=</span><span class="normal"> foo_plugin_delete</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">commit </span><span class="symbol">=</span><span class="normal"> foo_plugin_commit</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">commit_one </span><span class="symbol">=</span><span class="normal"> foo_plugin_commit_one</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">list </span><span class="symbol">=</span><span class="normal"> foo_plugin_list</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">ready </span><span class="symbol">=</span><span class="normal"> foo_plugin_ready</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">get_identifier </span><span class="symbol">=</span><span class="normal"> foo_plugin_get_identifier</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">get_additional_info </span><span class="symbol">=</span><span class="normal"> foo_plugin_get_additional_info</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">get_restrictions </span><span class="symbol">=</span><span class="normal"> foo_plugin_get_restrictions</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">create </span><span class="symbol">=</span><span class="normal"> foo_plugin_create</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">owns </span><span class="symbol">=</span><span class="normal"> foo_plugin_owns</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">set_attribute </span><span class="symbol">=</span><span class="normal"> foo_plugin_set_attribute</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">set_parameter </span><span class="symbol">=</span><span class="normal"> foo_plugin_set_parameter</span><span class="symbol">;</span>
+<span class="cbracket">}</span></pre></td>
       </tr>
     </tbody>
   </table>
@@ -1043,7 +1043,7 @@ for the well-known key "manager".
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *attribute</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpAttributeFlags</span> flags</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpAttributeFlags"><span class="type">McpAttributeFlags</span></a> flags</code></em>);</pre>
 <p>
 Store an attribute.
 </p>
@@ -1109,7 +1109,7 @@ using a keyfile-escaped version of <em class="parameter"><code>value</code></em>
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *account</code></em>,
                                                          <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *parameter</code></em>,
                                                          <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-GVariant.html#GVariant"><span class="type">GVariant</span></a> *value</code></em>,
-                                                         <em class="parameter"><code><span class="type">McpParameterFlags</span> flags</code></em>);</pre>
+                                                         <em class="parameter"><code><a href="mission-control-plugins-McpAccountStorage.html#McpParameterFlags"><span class="type">McpParameterFlags</span></a> flags</code></em>);</pre>
 <p>
 Store a parameter.
 </p>

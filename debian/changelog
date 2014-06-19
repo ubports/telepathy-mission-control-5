@@ -1,3 +1,9 @@
+telepathy-mission-control-5 (1:5.16.2-1) unstable; urgency=low
+
+  * New upstream bugfix release
+
+ -- Laurent Bigonville <bigon@debian.org>  Fri, 20 Jun 2014 00:42:27 +0200
+
 telepathy-mission-control-5 (1:5.16.1-2) unstable; urgency=medium
 
   * Disable UPower support and rely on logind to be notified about suspend,

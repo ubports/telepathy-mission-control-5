@@ -113,21 +113,21 @@ A typical plugin might look like this:
 13
 14
 15</pre></td>
-        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span> <span class="gtkdoc opt">(</span>MyPlugin<span class="gtkdoc opt">,</span> my_plugin<span class="gtkdoc opt">,</span>
-   G_TYPE_OBJECT<span class="gtkdoc opt">,</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...);</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(</span>MCP_TYPE_DISPATCH_OPERATION_POLICY<span class="gtkdoc opt">,</span>
-     cdo_policy_iface_init<span class="gtkdoc opt">);</span>
-   <span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span> <span class="gtkdoc opt">(...))</span>
+        <td class="listing_code"><pre class="programlisting"><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-DEFINE-TYPE-WITH-CODE:CAPS">G_DEFINE_TYPE_WITH_CODE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">MyPlugin</span><span class="symbol">,</span><span class="normal"> my_plugin</span><span class="symbol">,</span>
+<span class="normal">   <a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-TYPE-OBJECT:CAPS">G_TYPE_OBJECT</a></span><span class="symbol">,</span>
+<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(...);</span>
+<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">MCP_TYPE_DISPATCH_OPERATION_POLICY</span><span class="symbol">,</span>
+<span class="normal">     cdo_policy_iface_init</span><span class="symbol">);</span>
+<span class="normal">   </span><span class="function"><a href="http://library.gnome.org/devel/gobject/unstable/gobject-Type-Information.html#G-IMPLEMENT-INTERFACE:CAPS">G_IMPLEMENT_INTERFACE</a></span><span class="normal"> </span><span class="symbol">(...))</span>
 <span class="comment">/* ... */</span>
-<span class="gtkdoc kwb">static void</span>
-<span class="function">cdo_policy_iface_init</span> <span class="gtkdoc opt">(</span>McpDispatchOperationPolicyIface <span class="gtkdoc opt">*</span>iface<span class="gtkdoc opt">,</span>
-    gpointer unused G_GNUC_UNUSED<span class="gtkdoc opt">)</span>
-<span class="gtkdoc opt">{</span>
-  iface<span class="gtkdoc opt">-&gt;</span>check <span class="gtkdoc opt">=</span> my_plugin_check_cdo<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>handler_is_suitable_async <span class="gtkdoc opt">=</span> my_plugin_handler_is_suitable_async<span class="gtkdoc opt">;</span>
-  iface<span class="gtkdoc opt">-&gt;</span>handler_is_suitable_finish <span class="gtkdoc opt">=</span> my_plugin_handler_is_suitable_finish<span class="gtkdoc opt">;</span>
-<span class="gtkdoc opt">}</span></pre></td>
+<span class="keyword">static</span><span class="normal"> </span><span class="type">void</span>
+<span class="function">cdo_policy_iface_init</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">McpDispatchOperationPolicyIface</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">iface</span><span class="symbol">,</span>
+<span class="normal">    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer">gpointer</a> </span><span class="usertype">unused</span><span class="normal"> <a href="http://library.gnome.org/devel/glib/unstable/glib-Miscellaneous-Macros.html#G-GNUC-UNUSED:CAPS">G_GNUC_UNUSED</a></span><span class="symbol">)</span>
+<span class="cbracket">{</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">check </span><span class="symbol">=</span><span class="normal"> my_plugin_check_cdo</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">handler_is_suitable_async </span><span class="symbol">=</span><span class="normal"> my_plugin_handler_is_suitable_async</span><span class="symbol">;</span>
+<span class="normal">  iface</span><span class="symbol">-&gt;</span><span class="normal">handler_is_suitable_finish </span><span class="symbol">=</span><span class="normal"> my_plugin_handler_is_suitable_finish</span><span class="symbol">;</span>
+<span class="cbracket">}</span></pre></td>
       </tr>
     </tbody>
   </table>
