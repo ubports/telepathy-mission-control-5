@@ -61,8 +61,8 @@
 <ANCHOR id="mcp-account-manager-escape-variant-for-keyfile" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-escape-variant-for-keyfile">
 <ANCHOR id="mcp-account-manager-unescape-value-from-keyfile" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-unescape-value-from-keyfile">
 <ANCHOR id="mcp-account-manager-init-value-for-attribute" href="mission-control-plugins/McpAccountManager.html#mcp-account-manager-init-value-for-attribute">
-<ANCHOR id="McpAccountManager-struct" href="mission-control-plugins/McpAccountManager.html#McpAccountManager-struct">
 <ANCHOR id="McpAccountManagerIface" href="mission-control-plugins/McpAccountManager.html#McpAccountManagerIface">
+<ANCHOR id="McpAccountManager-struct" href="mission-control-plugins/McpAccountManager.html#McpAccountManager-struct">
 <ANCHOR id="McpAccountManager.see-also" href="mission-control-plugins/McpAccountManager.html#McpAccountManager.see-also">
 <ANCHOR id="mission-control-plugins-McpRequestPolicy" href="mission-control-plugins/mission-control-plugins-McpRequestPolicy.html">
 <ANCHOR id="mission-control-plugins-McpRequestPolicy.synopsis" href="mission-control-plugins/mission-control-plugins-McpRequestPolicy.html#mission-control-plugins-McpRequestPolicy.synopsis">
@@ -127,9 +127,9 @@
 <ANCHOR id="mcp-dispatch-operation-leave-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-leave-channels">
 <ANCHOR id="mcp-dispatch-operation-close-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-close-channels">
 <ANCHOR id="mcp-dispatch-operation-destroy-channels" href="mission-control-plugins/McpDispatchOperation.html#mcp-dispatch-operation-destroy-channels">
+<ANCHOR id="McpDispatchOperationIface" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationIface">
 <ANCHOR id="McpDispatchOperationDelay" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationDelay">
 <ANCHOR id="McpDispatchOperation-struct" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation-struct">
-<ANCHOR id="McpDispatchOperationIface" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperationIface">
 <ANCHOR id="McpDispatchOperation.see-also" href="mission-control-plugins/McpDispatchOperation.html#McpDispatchOperation.see-also">
 <ANCHOR id="annotation-glossterm-allow-none" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-allow-none">
 <ANCHOR id="annotation-glossterm-element-type" href="mission-control-plugins/annotation-glossary.html#annotation-glossterm-element-type">

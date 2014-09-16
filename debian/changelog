@@ -1,3 +1,10 @@
+telepathy-mission-control-5 (1:5.16.3-1) unstable; urgency=medium
+
+  * debian/watch: mangle version number to omit epoch
+  * New upstream stable release
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 16 Sep 2014 19:03:28 +0100
+
 telepathy-mission-control-5 (1:5.16.2-1) unstable; urgency=low
 
   * New upstream bugfix release

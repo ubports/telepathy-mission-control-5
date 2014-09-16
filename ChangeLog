@@ -1,3 +1,25 @@
+commit 84dc7d0fd952a9ef3d200ac5557cdf2daccca145
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-08-25 14:34:18 +0200
+
+    5.16.3
+
+commit ab29ae42f751bf7e4ecc9a601e09cafab499fd14
+Author: Steffen Kieß <Steffen.Kiess@ipvs.uni-stuttgart.de>
+Date:   2014-08-25 14:11:35 +0200
+
+    mcd-connection: use tp_asv_new() properly
+    
+    The second argument has to be the type of the value.
+    
+    https://bugs.freedesktop.org/show_bug.cgi?id=81751
+
+commit 810b32e92f2896a1ad8ee204bf6b8d5456a5db08
+Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
+Date:   2014-06-11 15:50:37 +0200
+
+    nano flag
+
 commit fb8000842e0b20f4aa4928edd62736b5cea2e8d5
 Author: Guillaume Desmottes <guillaume.desmottes@collabora.co.uk>
 Date:   2014-06-11 15:44:01 +0200
