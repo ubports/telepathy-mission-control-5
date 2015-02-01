@@ -53,4 +53,12 @@ override_dh_installdocs:
 		--link-doc=libmission-control-plugins0
 	dh_installdocs --remaining-packages
 
+# Install the AppArmor and apport hook. Override dh_compress since it is
+# sufficiently late in the package creation to do what we want.
+override_dh_compress:
+	dh_compress
+	cp debian/apparmor-profile debian/telepathy-mission-control-5/etc/apparmor.d/usr.lib.telepathy
+	dh_apparmor --profile-name=usr.lib.telepathy -ptelepathy-mission-control-5
+	cp debian/telepathy-mission-control-5.apport debian/telepathy-mission-control-5/usr/share/apport/package-hooks/source_telepathy-mission-control-5.py
+
 export DPKG_GENSYMBOLS_CHECK_LEVEL = 4

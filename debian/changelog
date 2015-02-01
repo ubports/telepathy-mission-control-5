@@ -1,9 +1,45 @@
+telepathy-mission-control-5 (1:5.16.3-1ubuntu1) vivid; urgency=low
+
+  * Merge from Debian unstable.  Remaining changes:
+    - debian/apparmor-profile, debian/control, debian/rules:
+      + AppArmor confinement.
+    - debian/telepathy-mission-control-5.apport, debian/rules:
+      + Apport hook.
+
+ -- Artur Rona <ari-tczew@ubuntu.com>  Sun, 01 Feb 2015 21:43:02 +0100
+
 telepathy-mission-control-5 (1:5.16.3-1) unstable; urgency=medium
 
   * debian/watch: mangle version number to omit epoch
   * New upstream stable release
 
  -- Simon McVittie <smcv@debian.org>  Tue, 16 Sep 2014 19:03:28 +0100
+
+telepathy-mission-control-5 (1:5.16.2-1ubuntu3) utopic; urgency=medium
+
+  * debian/apparmor-profile: allows read of /etc/gss/mech.d/**
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Tue, 02 Sep 2014 21:06:42 -0500
+
+telepathy-mission-control-5 (1:5.16.2-1ubuntu2) utopic; urgency=medium
+
+  * debian/apparmor-profile: allow read of /custom/etc/dconf/* (LP: #1352436)
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 04 Aug 2014 12:33:35 -0500
+
+telepathy-mission-control-5 (1:5.16.2-1ubuntu1) utopic; urgency=medium
+
+  * Resynchronize with Debian. Remaining Ubuntu changes:
+    - AppArmor confinement:
+      + debian/apparmor-profile: Profile
+      + debian/control: build-depend on dh-apparmor, suggest apparmor
+      + debian/rules: install apparmor profile
+    - Apport hook:
+      + debian/telepathy-mission-control-5.apport
+      + debian/rules: Install hook
+  * Moves from upower to logind (LP: #1330037)
+
+ -- Martin Pitt <martin.pitt@ubuntu.com>  Wed, 23 Jul 2014 07:13:35 +0200
 
 telepathy-mission-control-5 (1:5.16.2-1) unstable; urgency=low
 
@@ -17,6 +53,61 @@ telepathy-mission-control-5 (1:5.16.1-2) unstable; urgency=medium
     the current UPower support is incompatible with 0.99 (Closes: #748938)
 
  -- Laurent Bigonville <bigon@debian.org>  Sat, 24 May 2014 20:11:30 +0200
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu7) utopic; urgency=medium
+
+  * debian/apparmor-profile: allowing writes for telepathy-ofono within its
+    cache dir.
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Mon, 30 Jun 2014 14:16:14 -0300
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu6) utopic; urgency=medium
+
+  * debian/apparmor-profile: allow ptrace read by peer=@{profile_name}
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 23 Jun 2014 13:22:47 -0500
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu5) utopic; urgency=medium
+
+  * debian/apparmor-profile: accesses for lightdm in support of split
+    greeter
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 09 Jun 2014 08:03:28 -0500
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu4) utopic; urgency=medium
+
+  * debian/apparmor-profile: allow read access to
+    $HOME/.local/share/nuntium/store
+
+ -- Sergio Schvezov <sergio.schvezov@canonical.com>  Tue, 29 Apr 2014 08:05:38 -0300
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu3) trusty; urgency=medium
+
+  * debian/apparmor-profile: allow creation of /run/user/[0-9]*/
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Mon, 07 Apr 2014 09:15:07 -0500
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu2) trusty; urgency=medium
+
+  * debian/apparmor-profile: Allow read access to
+    /usr/local/share/glib-*/schemas too, in common with other profiles.
+    Stops a denial if the user has any local schemas installed.
+
+ -- Iain Lane <iain.lane@canonical.com>  Thu, 03 Apr 2014 15:52:33 +0100
+
+telepathy-mission-control-5 (1:5.16.1-1ubuntu1) trusty; urgency=medium
+
+  * Resynchronize on Debian, remaining changes:
+  * debian/apparmor-profile, debian/control:
+    - build-depends on dh-apparmor, suggests apparmor
+  * debian/rules: 
+    - install apparmor and apport files
+  * debian/telepathy-mission-control-5.apport: 
+    - include extra debug informations
+  * debian/telepathy-mission-control-5.dirs:
+    - create apparmor and apport directories
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Wed, 05 Feb 2014 16:36:32 +0000
 
 telepathy-mission-control-5 (1:5.16.1-1) unstable; urgency=medium
 
