@@ -78,6 +78,7 @@ Architecture: any
 Section: libdevel
 Priority: extra
 Depends: libmission-control-plugins0 (= ${binary:Version}),
+         libtelepathy-glib-dev,
          ${misc:Depends}
 Suggests: libmission-control-plugins-doc
 Description: management daemon for Telepathy (headers for plugins)
