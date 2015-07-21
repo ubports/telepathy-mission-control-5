@@ -1,3 +1,18 @@
+telepathy-mission-control-5 (1:5.16.3-1ubuntu3) wily; urgency=medium
+
+  [ Ken VanDine ]
+  * debian/apparmor-profile:
+    - Allow getprop execution by mission-control and its plugins
+    - LP: #1442962
+
+  [ Jamie Strandboge ]
+  * debian/apparmor-profile: additional rules for mako:
+    - use attach_disconnected, allow write to /dev/socket/property_service
+      (requires attach_disconnected) and read on @{PROC}/cmdline
+    - LP: #1476781
+
+ -- Jamie Strandboge <jamie@ubuntu.com>  Tue, 21 Jul 2015 14:10:53 -0500
+
 telepathy-mission-control-5 (1:5.16.3-1ubuntu2) wily; urgency=medium
 
   * debian/control:

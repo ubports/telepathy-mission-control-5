@@ -3,7 +3,7 @@
 
 #include <tunables/global>
 
-/usr/lib/telepathy/mission-control-5 {
+/usr/lib/telepathy/mission-control-5 (attach_disconnected) {
     #include <abstractions/base>
     #include <abstractions/dbus>
     #include <abstractions/dbus-session>
@@ -58,6 +58,13 @@
     owner @{HOME}/.config/libaccounts-glib/**        rwk,
     /usr/share/accounts/services/                    r,
     /usr/share/accounts/services/**                  r,
+
+    # for mcp-account-manager-ofono.so loaded dynamically by mission-control
+    owner @{PROC}/[0-9]*/fd/ r,
+    /usr/bin/getprop ix,
+    /{,android/}system/build.prop r,
+    /dev/socket/property_service rw,
+    @{PROC}/cmdline r,
 
     # Site-specific additions and overrides. See local/README for details.
     # Please note that accesses in local/usr.lib.telepathy are also applied to
