@@ -3,16 +3,12 @@
 include /usr/share/dpkg/default.mk
 
 CONFIGURE_FLAGS = --libexecdir=\$${prefix}/lib/telepathy \
+                  --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
                   --disable-Werror \
                   --enable-gtk-doc \
                   --enable-gnome-keyring \
                   --with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc \
                   --disable-upower
-
-# We specifically do not want multiarch: only one version of MC can be
-# installed anyway, the plugin directory is based on the ${libdir}, and
-# empathy/experimental ships a plugin in the non-multiarch location
-CONFIGURE_FLAGS += --libdir=\$${prefix}/lib
 
 # Having a static library for a plugin loader is pretty useless, so get rid
 # of it.
@@ -30,7 +26,7 @@ override_dh_makeshlibs:
 
 override_dh_auto_install:
 	dh_auto_install
-	rm -f debian/tmp/usr/lib/libmission-control-plugins*.la
+	rm -f debian/tmp/usr/lib/*/libmission-control-plugins*.la
 
 override_dh_strip:
 	dh_strip --dbg-package=telepathy-mission-control-5-dbg

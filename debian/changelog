@@ -1,3 +1,11 @@
+telepathy-mission-control-5 (1:5.16.3-1ubuntu5) xenial; urgency=medium
+
+  * Multiarchify the library packages, removing the comment why the should
+    not be M-A same packages. Allows installation of the library packages
+    for cross builds.
+
+ -- Matthias Klose <doko@ubuntu.com>  Thu, 04 Feb 2016 20:40:57 +0100
+
 telepathy-mission-control-5 (1:5.16.3-1ubuntu4) wily; urgency=medium
 
   * debian/patches/fix-1473011.patch
