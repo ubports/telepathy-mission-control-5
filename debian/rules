@@ -3,12 +3,16 @@
 include /usr/share/dpkg/default.mk
 
 CONFIGURE_FLAGS = --libexecdir=\$${prefix}/lib/telepathy \
-                  --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
                   --disable-Werror \
                   --enable-gtk-doc \
                   --enable-gnome-keyring \
                   --with-html-dir=\$${prefix}/share/doc/libmission-control-plugins-doc \
                   --disable-upower
+
+# The package has to be configured with --libdir=\$${prefix}/lib, because
+# the plugindir is derived from the libdir.  Move the library to the final
+# multiarch libdir location manually.
+CONFIGURE_FLAGS += --libdir=\$${prefix}/lib
 
 # Having a static library for a plugin loader is pretty useless, so get rid
 # of it.
@@ -39,6 +43,9 @@ override_dh_auto_configure:
 	dh_auto_configure -- ${CONFIGURE_FLAGS}
 
 override_dh_install:
+	mkdir -p debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
+	mv debian/tmp/usr/lib/libmission-control-plugins.so* debian/tmp/usr/lib/pkgconfig \
+		debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)
 	dh_install --list-missing
 
 # we symlink some of the doc directories together

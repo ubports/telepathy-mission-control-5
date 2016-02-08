@@ -1,3 +1,9 @@
+telepathy-mission-control-5 (1:5.16.3-1ubuntu6) xenial; urgency=medium
+
+  * Manually move the library files to the multiarch location. LP: #1542747.
+
+ -- Matthias Klose <doko@ubuntu.com>  Mon, 08 Feb 2016 11:57:56 +0100
+
 telepathy-mission-control-5 (1:5.16.3-1ubuntu5) xenial; urgency=medium
 
   * Multiarchify the library packages, removing the comment why the should
