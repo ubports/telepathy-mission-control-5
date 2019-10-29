@@ -1,3 +1,12 @@
+telepathy-mission-control-5 (1:5.16.3-2ubports1) xenial; urgency=medium
+
+  * debian/apparmor-profile:
+    - Allow *-ofono access to property_service
+    - Change property_service path reflect libhybris change
+  * Import to ubports
+
+ -- Marius Gripsgard <marius@ubports.com>  Tue, 29 Oct 2019 19:20:10 +0100
+
 telepathy-mission-control-5 (1:5.16.3-1ubuntu6) xenial; urgency=medium
 
   * Manually move the library files to the multiarch location. LP: #1542747.
