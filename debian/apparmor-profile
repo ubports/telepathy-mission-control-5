@@ -63,7 +63,7 @@
     owner @{PROC}/[0-9]*/fd/ r,
     /usr/bin/getprop ix,
     /{,android/}system/build.prop r,
-    /dev/socket/property_service rw,
+    /{,dev/}socket/property_service rw,
     @{PROC}/cmdline r,
 
     # Site-specific additions and overrides. See local/README for details.
@@ -79,6 +79,9 @@
     #include <abstractions/audio>
 
     /dev/binder rw,
+
+    # Allow *-ofono access android properties
+    /{,dev/}socket/property_service rw,
 
     # TODO: move to base abstraction
     ptrace (read) peer=@{profile_name},
