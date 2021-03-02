@@ -97,6 +97,8 @@
     # telepathy-ofono needs to store a database for tracking pending messages
     owner @{HOME}/.local/share/telepathy-ofono/  rw,
     owner @{HOME}/.local/share/telepathy-ofono/** rwk,
+    # telepathy-ofono uses QTemporaryFile, which creates hardlinks, for its attachments
+    owner @{HOME}/.local/share/telepathy-ofono/attachments/** rwkl,
 
     # for telepathy-ofono to read nuntium MMS messages
     owner @{HOME}/.local/share/nuntium/store/*.mms r,
